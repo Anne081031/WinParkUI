@@ -1,0 +1,11 @@
+注意: 如果Release代码编译时候出现如下错误
+
+error LNK2001: unresolved external symbol "char * __fastcall
+   _com_util::ConvertBSTRToString(unsigned short *)"
+   (?ConvertBSTRToString@_com_util@@YIPADPAG@Z) 
+
+   error LNK2001: unresolved external symbol "unsigned short * __fastcall
+   _com_util::ConvertStringToBS
+   TR(char const *)" (?ConvertStringToBSTR@_com_util@@YIPAGPBD@Z) 
+
+解决: 在Link页加入comsupp.lib就可以了.

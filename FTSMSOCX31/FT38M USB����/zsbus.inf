@@ -1,0 +1,207 @@
+;*****************************************************************************
+;
+; zsbus.inf   -- Install the FT38M GSM MODEM drivers
+;
+; Copyright (c) 1997-2004 by MCCI 
+;
+; MCCI is a registered trademark of Moore Computer Consultants, Inc.
+;
+; NOTICE: This software is licensed, not sold.  Any modification of this
+; inf file to change the reference to an operating system or to change the
+; reference to a device is not permitted unless authorized in writing by
+; Moore Computer Consultants, Inc..
+;
+;*****************************************************************************
+
+[version]
+signature="$CHICAGO$"
+Class=USB
+ClassGuid={36FC9E60-c465-11cf-8056-444553540000}
+Provider=%Provider%
+DriverVer=03/11/2004, 4.20.0.2700
+;CatalogFile=zsbus.cat
+
+[ControlFlags]
+ExcludeFromSelect = *
+
+;-----------------------------------------------------------------------------
+; Specify target paths...
+;-----------------------------------------------------------------------------
+[DestinationDirs]
+DefaultDestDir                  = 11                    ; LDID_SYS
+SLABWdm.W95.CopyFiles       = 11                    ; LDID_SYS
+SLABWdm.NT.CopyFiles        = 12                    ; system32\drivers
+SLABWdm.NT.CopyFiles2        = 11                    ; system32
+PropPages.CopyFiles             = 11                    ; system
+
+;-----------------------------------------------------------------------------
+; Specify the install disks.  A bit unwieldy during development.
+;-----------------------------------------------------------------------------
+[SourceDisksNames]
+; diskid = description[, [tagfile] [, <unused>, subdir]]
+1=%DiskString%,"slabbus.sys",,
+
+[SourceDisksFiles]
+; filename = diskid[, [subdir] [, size]]
+slabbus.sys = 1
+slabwh95.sys = 1
+slabwhnt.sys = 1
+zsunin2k.exe = 1
+zsunin.exe = 1
+zsunin.u2k = 1
+zsunin.u98 = 1
+
+;-----------------------------------------------------------------------------
+; Table of Contents:  manufacturer, then devices.
+;-----------------------------------------------------------------------------
+[Manufacturer]
+%SLAB%=SLAB
+
+;-----------------------------------------------------------------------------
+; The devices
+;-----------------------------------------------------------------------------
+[SLAB]
+%SLAB.CdcBus.Desc% = SLABWdm.Install, USB\VID_0103&PID_EA60
+
+;-----------------------------------------------------------------------------
+; How to install them:  On W9x, the [section] name is used directly.
+; On NT, the system first tries [section.NT], then [section].
+;-----------------------------------------------------------------------------
+
+;-----------------------------------------------------------------------------
+; Diagnostics Files CopyFiles List Section
+;-----------------------------------------------------------------------------
+[SLAB.CopyFiles]
+
+;-----------------------------------------------------------------------------
+; XXX when we have a property page DLL, add it to the following section.
+;-----------------------------------------------------------------------------
+[PropPages.CopyFiles]
+
+;-----------------------------------------------------------------------------
+;       How to install the WDM driver on W95/W98
+;-----------------------------------------------------------------------------
+[SLABWdm.Install]
+DriverVer=03/11/2004, 4.20.0.2700
+CopyFiles       = SLABWdm.W95.CopyFiles, SLAB.CopyFiles, PropPages.CopyFiles
+AddReg          = SLABWdm.AddReg, SLABWdm.W95.AddReg, SLABWdmUnInst.Reg
+RemoveDevice 	= SLABWdm.RemDev
+
+;-----------------------------------------------------------------------------
+;       How to install the WDM driver on NT
+;-----------------------------------------------------------------------------
+[SLABWdm.Install.NT]
+DriverVer=03/11/2004, 4.20.0.2700
+CopyFiles       = SLABWdm.NT.CopyFiles, SLABWdm.NT.CopyFiles2
+AddReg          = SLABWdm.AddReg, SLABWdm.NT.AddReg, SLABWdmUnInst.NT.Reg
+
+
+;-----------------------------------------------------------------------------
+;       How to start the WDM driver on NT
+;-----------------------------------------------------------------------------
+[SLABWdm.Install.NT.Services]
+AddService      = slabbus, 2, SLABWdm.AddService
+
+[SLABWdm.AddService]
+DisplayName             = %SLAB.Service.Desc%
+ServiceType             = 1     ; SERVICE_KERNEL_DRIVER
+StartType               = 3     ; SERVICE_DEMAND_START
+ErrorControl            = 1     ; SERVICE_ERROR_NORMAL
+ServiceBinary           = %12%\slabbus.sys
+LoadOrderGroup          = Base
+
+;-----------------------------------------------------------------------------
+;       WDM registry entries (all platforms)
+;-----------------------------------------------------------------------------
+[SLABWdm.AddReg]
+
+
+;-----------------------------------------------------------------------------
+;       WDM registry entries (W95/98) (including how to start the driver)
+;-----------------------------------------------------------------------------
+[SLABWdm.W95.AddReg]
+HKR,,DevLoader,,*ntkern
+HKR,,NTMPDriver,,slabbus.sys
+
+;-----------------------------------------------------------------------------
+;       WDM registry entries (NT only)
+;-----------------------------------------------------------------------------
+[SLABWdm.NT.AddReg]
+
+;-----------------------------------------------------------------------------
+;       The WDM copy list for Win95 -- different because things go in
+;       different places.  Also, we probably need to rename drivers 
+;       during the install.
+;-----------------------------------------------------------------------------
+[SLABWdm.W95.CopyFiles]
+slabbus.sys
+slabwh.sys,slabwh95.sys
+slabwh95.sys
+slabwhnt.sys
+zsunin.exe
+zsunin.u98
+
+;-----------------------------------------------------------------------------
+;       The WDM copy list for NT -- different because things go in
+;       different places.
+;-----------------------------------------------------------------------------
+[SLABWdm.NT.CopyFiles]
+slabbus.sys
+slabwh.sys,slabwhnt.sys
+slabwhnt.sys
+
+[SLABWdm.NT.CopyFiles2]
+zsunin2k.exe
+zsunin.u2k
+
+;-----------------------------------------------------------------------------
+;       The WDM uninstall list and registry entries -- 
+;       
+;-----------------------------------------------------------------------------
+
+[SLABWdm.RemDev]
+DELKEY=HKLM,%WINUN%\ZSCOMM&0103&EA60
+
+[SLABWdmUnInst.Reg]
+HKLM,%WINUN%,"ZSCOMM&0103&EA60"
+HKLM,%WINUN%\ZSCOMM&0103&EA60 , "UninstallString",,"%11%\zsunin.exe %11%\zsunin.u98"
+HKLM,%WINUN%\ZSCOMM&0103&EA60 , "DisplayName",,"FT38M GSM MODEM"
+
+[SLABWdm.DelFiles]
+zsunin2k.exe = 1
+
+;-----------------------------------------------------------------------------
+;       The WDM uninstall list and registry entries for NT -- 
+;       
+;-----------------------------------------------------------------------------
+
+[SLABWdmUnInst.NT.Reg]
+HKLM,%WINUN%,"ZSCOMM&0103&EA60"
+HKLM,%WINUN%\ZSCOMM&0103&EA60 , "UninstallString",,"%11%\zsunin2k.exe %11%\zsunin.u2k"
+HKLM,%WINUN%\ZSCOMM&0103&EA60 , "DisplayName",,"FT38M GSM MODEM"
+
+;****************************************************************************
+; Localizable Strings
+;****************************************************************************
+[strings]
+
+;BEGIN ENG - US English Strings
+Provider = "zhongshan Laboratories"
+SLAB = "zhongshan Laboratories"
+DiskString = "FT38M GSM MODEM Installation disk"
+WINUN="Software\Microsoft\Windows\CurrentVersion\Uninstall"
+
+SLAB.CdcBus.Desc = "FT38M GSM MODEM"
+SLAB.Service.Desc = "FT38M GSM MODEM driver (WDM)"
+
+CustomerDataPath = "FT38M GSM MODEM"
+DriverSet = "FT38M GSM MODEM Software"
+
+
+;END ENG - US English Strings
+
+;-----------------------------------------------------------------------------
+; Following are symbolic constants which don't change per locale.
+;-----------------------------------------------------------------------------
+
+;*** end of file ***

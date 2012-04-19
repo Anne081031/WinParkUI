@@ -1,0 +1,51 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: testactivex - Win32 Debug--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating command line "rc.exe /l 0x804 /fo"Debug/testactivex.res" /d "_DEBUG" /d "_AFXDLL" "D:\WinParkUI\FTSMSOCX31\例程代码\VcSample多通道\testactivex.rc"" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP21D.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/testactivex.pch" /Yu"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\WinParkUI\FTSMSOCX31\例程代码\VcSample多通道\smsx.cpp"
+"D:\WinParkUI\FTSMSOCX31\例程代码\VcSample多通道\testactivex.cpp"
+"D:\WinParkUI\FTSMSOCX31\例程代码\VcSample多通道\testactivexDlg.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP21D.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP21E.tmp" with contents
+[
+/nologo /MDd /W3 /Gm /GX /ZI /Od /D "WIN32" /D "_DEBUG" /D "_WINDOWS" /D "_AFXDLL" /D "_MBCS" /Fp"Debug/testactivex.pch" /Yc"stdafx.h" /Fo"Debug/" /Fd"Debug/" /FD /GZ /c 
+"D:\WinParkUI\FTSMSOCX31\例程代码\VcSample多通道\StdAfx.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP21E.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP21F.tmp" with contents
+[
+comsupp.lib /nologo /subsystem:windows /incremental:yes /pdb:"Debug/testactivex.pdb" /debug /machine:I386 /out:"Debug/testactivex.exe" /pdbtype:sept 
+".\Debug\smsx.obj"
+".\Debug\StdAfx.obj"
+".\Debug\testactivex.obj"
+".\Debug\testactivexDlg.obj"
+".\Debug\testactivex.res"
+]
+Creating command line "link.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP21F.tmp"
+<h3>Output Window</h3>
+Compiling resources...
+Compiling...
+StdAfx.cpp
+Compiling...
+smsx.cpp
+testactivex.cpp
+testactivexDlg.cpp
+Generating Code...
+Linking...
+
+
+
+<h3>Results</h3>
+testactivex.exe - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

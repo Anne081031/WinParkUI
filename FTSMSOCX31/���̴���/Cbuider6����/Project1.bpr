@@ -1,0 +1,153 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!-- C++Builder XML Project -->
+<PROJECT>
+  <MACROS>
+    <VERSION value="BCB.06.00"/>
+    <PROJECT value="Project1.exe"/>
+    <OBJFILES value="Project1.obj Unit1.obj"/>
+    <RESFILES value="Project1.res"/>
+    <IDLFILES value=""/>
+    <IDLGENFILES value=""/>
+    <DEFFILE value=""/>
+    <RESDEPEN value="$(RESFILES) Unit1.dfm"/>
+    <LIBFILES value=""/>
+    <LIBRARIES value="bcbsmp.lib vclx.lib DCLUSR.lib vcl.lib rtl.lib"/>
+    <SPARELIBS value="rtl.lib vcl.lib DCLUSR.lib vclx.lib bcbsmp.lib"/>
+    <PACKAGES value="rtl.bpi vcl.bpi vclx.bpi DCLUSR.bpi dbrtl.bpi vcldb.bpi adortl.bpi 
+      bdertl.bpi vcldbx.bpi ibsmp.bpi bcbsmp.bpi bcbie.bpi bcb2kaxserver.bpi 
+      dss.bpi vclie.bpi inetdb.bpi inet.bpi webdsnap.bpi dsnap.bpi dclocx.bpi 
+      ibxpress.bpi nmfast.bpi qrpt.bpi teeqr.bpi proide50.bpi crbide50.bpi 
+      teeui.bpi teedb.bpi tee.bpi direct50.bpi rcpkg50.bpi stride50.bpi"/>
+    <PATHCPP value=".;"/>
+    <PATHPAS value=".;"/>
+    <PATHRC value=".;"/>
+    <PATHASM value=".;"/>
+    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
+    <RELEASELIBPATH value="$(BCB)\lib\release"/>
+    <LINKER value="ilink32"/>
+    <USERDEFINES value="_DEBUG"/>
+    <SYSDEFINES value="NO_STRICT"/>
+    <MAINSOURCE value="Project1.cpp"/>
+    <INCLUDEPATH value="$(BCB)\Imports;d:\Borland\CBuilder5\vccomm32\;f:\ouxcomm\;d:\Borland\CBuilder5\Projects\Gnokii\win32\;d:\Borland\CBuilder5\Projects\;d:\Borland\CBuilder5\Projects\Gnokii\common\;d:\Borland\CBuilder5\Projects\Gnokii\gnokii\;$(BCB)\include;$(BCB)\include\vcl;d:\Borland\CBuilder5\Source\cport260\Sources\;&quot;d:\Borland\CBuilder5\Projects\Gnokii\include\&quot;"/>
+    <LIBPATH value="$(BCB)\Imports;d:\Borland\CBuilder5\vccomm32\;f:\ouxcomm\;d:\Borland\CBuilder5\Projects\Gnokii\win32\;d:\Borland\CBuilder5\Projects\;d:\Borland\CBuilder5\Projects\Gnokii\common\;d:\Borland\CBuilder5\Projects\Gnokii\gnokii\;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib"/>
+    <WARNINGS value="-w-par"/>
+    <OTHERFILES value=""/>
+  </MACROS>
+  <OPTIONS>
+    <IDLCFLAGS value="-src_suffix cpp -D_DEBUG -I$(BCB)\Imports 
+      -Id:\Borland\CBuilder5\vccomm32\. -If:\ouxcomm\. 
+      -Id:\Borland\CBuilder5\Projects\Gnokii\win32\. 
+      -Id:\Borland\CBuilder5\Projects\. 
+      -Id:\Borland\CBuilder5\Projects\Gnokii\common\. 
+      -Id:\Borland\CBuilder5\Projects\Gnokii\gnokii\. -I$(BCB)\include 
+      -I$(BCB)\include\vcl -Id:\Borland\CBuilder5\Source\cport260\Sources\. 
+      -I&quot;d:\Borland\CBuilder5\Projects\Gnokii\include\.&quot; -boa"/>
+    <CFLAG1 value="-Od -H=c:\PROGRA~1\borland\CBUILD~2\lib\vcl60.csm -Hc -w- -Vx -Ve -X- -r- 
+      -a8 -b- -k -y -v -vi- -c -tW -tWM"/>
+    <PFLAGS value="-$Y+ -$W -$O- -$A8 -v -JPHNE -M"/>
+    <RFLAGS value=""/>
+    <AFLAGS value="/mx /w2 /zi"/>
+    <LFLAGS value="-D&quot;&quot; -aa -Tpe -x"/>
+    <OTHERFILES value=""/>
+  </OPTIONS>
+  <LINKER>
+    <ALLOBJ value="c0w32.obj sysinit.obj $(OBJFILES)"/>
+    <ALLRES value="$(RESFILES)"/>
+    <ALLLIB value="$(LIBFILES) $(LIBRARIES) import32.lib cp32mt.lib"/>
+    <OTHERFILES value=""/>
+  </LINKER>
+  <FILELIST>
+      <FILE FILENAME="Project1.cpp" FORMNAME="" UNITNAME="Project1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Project1.res" FORMNAME="" UNITNAME="Project1" CONTAINERID="ResTool" DESIGNCLASS="" LOCALCOMMAND=""/>
+      <FILE FILENAME="Unit1.cpp" FORMNAME="Form1" UNITNAME="Unit1" CONTAINERID="CCompiler" DESIGNCLASS="" LOCALCOMMAND=""/>
+  </FILELIST>
+  <BUILDTOOLS>
+  </BUILDTOOLS>
+
+  <IDEOPTIONS>
+[Version Info]
+IncludeVerInfo=0
+AutoIncBuild=0
+MajorVer=1
+MinorVer=0
+Release=0
+Build=0
+Debug=0
+PreRelease=0
+Special=0
+Private=0
+DLL=0
+Locale=2052
+CodePage=936
+
+[Version Info Keys]
+CompanyName=
+FileDescription=
+FileVersion=1.0.0.0
+InternalName=
+LegalCopyright=
+LegalTrademarks=
+OriginalFilename=
+ProductName=
+ProductVersion=1.0.0.0
+Comments=
+
+[Excluded Packages]
+c:\program files\borland\cbuilder6\Bin\vclide50.bpl=Integrated Development Environment Specific Components
+c:\program files\borland\cbuilder6\Bin\DbX50.bpl=(untitled)
+
+[HistoryLists\hlIncludePath]
+Count=6
+Item0=..\vccomm32;f:\ouxcomm\;Gnokii\win32;d:\borland\CBuilder5\Projects\;Gnokii\common;Gnokii\gnokii;$(BCB)\include;$(BCB)\include\vcl;d:\borland\CBuilder5\Source\cport260\Sources\;Gnokii\include
+Item1=..\vccomm32;f:\ouxcomm;Gnokii\win32;d:\borland\CBuilder5\Projects;Gnokii\common;Gnokii\gnokii;$(BCB)\include;$(BCB)\include\vcl;d:\borland\CBuilder5\Source\cport260\Sources\;Gnokii\include
+Item2=Gnokii\gnokii;$(BCB)\include;$(BCB)\include\vcl;d:\borland\CBuilder5\Source\cport260\Sources\;D:\WORK\CPhoneCat\Gnokii\include
+Item3=Gnokii\gnokii;$(BCB)\include;$(BCB)\include\vcl;d:\borland\CBuilder5\Source\cport260\Sources\
+Item4=$(BCB)\include;$(BCB)\include\vcl;D:\Borland\CBuilder5\Source\cport260\Sources
+Item5=$(BCB)\include;$(BCB)\include\vcl
+
+[HistoryLists\hlLibraryPath]
+Count=4
+Item0=..\vccomm32;f:\ouxcomm\;Gnokii\win32;d:\borland\CBuilder5\Projects\;Gnokii\common;Gnokii\gnokii;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item1=..\vccomm32;f:\ouxcomm;Gnokii\win32;d:\borland\CBuilder5\Projects;Gnokii\common;Gnokii\gnokii;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item2=Gnokii\gnokii;$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+Item3=$(BCB)\Projects\Lib;$(BCB)\lib\obj;$(BCB)\lib
+
+[HistoryLists\hlDebugSourcePath]
+Count=1
+Item0=$(BCB)\source\vcl
+
+[HistoryLists\hlConditionals]
+Count=1
+Item0=_DEBUG
+
+[Debugging]
+DebugSourceDirs=$(BCB)\source\vcl
+
+[Parameters]
+RunParams=
+Launcher=
+UseLauncher=0
+DebugCWD=
+HostApplication=
+RemoteHost=
+RemotePath=
+RemoteLauncher=
+RemoteCWD=
+RemoteDebug=0
+
+[Compiler]
+ShowInfoMsgs=0
+LinkDebugVcl=0
+LinkCGLIB=0
+
+[CORBA]
+AddServerUnit=1
+AddClientUnit=1
+PrecompiledHeaders=1
+
+[Language]
+ActiveLang=
+ProjectLang=
+RootDir=
+  </IDEOPTIONS>
+</PROJECT>

@@ -1,0 +1,2 @@
+LIBRARY skeleton
+EXPORTS TestHello
