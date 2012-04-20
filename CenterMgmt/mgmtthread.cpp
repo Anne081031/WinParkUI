@@ -73,7 +73,7 @@ void CMgmtThread::NotifyMsg( QString strMsg )
 
 void CMgmtThread::PeerData( ) // Server --> Client
 {
- //
+ // Test
 }
 
 void CMgmtThread::ClientRun( )
