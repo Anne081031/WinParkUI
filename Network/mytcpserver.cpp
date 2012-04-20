@@ -33,6 +33,11 @@ bool CMyTcpServer::GetMgmtTCPFlag( )
     return bRet;
 }
 
+QHash< QString, CPeerSocket* >& CMyTcpServer::GetPeerSocketHash( )
+{
+    return clientHash;
+}
+
 void CMyTcpServer::incomingConnection( int socketDescriptor )
 {
     // client endpoint / connectToHost

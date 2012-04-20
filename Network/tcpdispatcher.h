@@ -11,6 +11,7 @@ public:
     explicit CTcpDispatcher(QObject *parent = 0);
     ~CTcpDispatcher( );
     bool InitServer( quint16 nPort, int nConnections, quint16 nThreadPool );
+    void GetPeerSocketHash( QHash< QString, CPeerSocket* >*& peerHash );
 
 private:
     CMyTcpServer* tcpServer;

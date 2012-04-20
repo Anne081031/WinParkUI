@@ -14,6 +14,18 @@ CTcpDispatcher::~CTcpDispatcher( )
     }
 }
 
+void CTcpDispatcher::GetPeerSocketHash( QHash< QString, CPeerSocket* >*& peerHash )
+{
+    if ( NULL == tcpServer ) {
+#ifdef QT_NO_DEBUG
+        qDebug( ) << "Please call InitServer( ... ) fucntion firstly." << endl;
+#endif
+        return;
+    }
+
+    *peerHash = tcpServer->GetPeerSocketHash( );
+}
+
 bool CTcpDispatcher::InitServer( quint16 nPort, int nConnections, quint16 nThreadPool )
 {
     if ( NULL == tcpServer ) {

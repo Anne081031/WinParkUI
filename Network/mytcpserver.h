@@ -13,6 +13,8 @@ public:
     explicit CMyTcpServer( quint16 nThreadPool, QObject *parent = 0);
     ~CMyTcpServer( );
 
+    QHash< QString, CPeerSocket* >& GetPeerSocketHash( );
+
 protected:
     void incomingConnection( int socketDescriptor );
 
