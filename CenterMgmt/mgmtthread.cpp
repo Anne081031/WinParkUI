@@ -15,6 +15,7 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
 
     if ( bClient ) {
         pTcpClient = new CTcpClient( this );
+        connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) );
         pMySQL = new CMySqlDatabase( );
         connect( pTcpClient, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
         CCommonFunction::GetPath( strPath, CommonDataType::PathSnapshot );
@@ -68,6 +69,11 @@ CMgmtThread* CMgmtThread::GetThread( bool bSender )
 void CMgmtThread::NotifyMsg( QString strMsg )
 {
     qDebug( ) << strMsg << endl;
+}
+
+void CMgmtThread::PeerData( ) // Server --> Client
+{
+
 }
 
 void CMgmtThread::ClientRun( )
