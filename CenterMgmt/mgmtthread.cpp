@@ -77,7 +77,7 @@ void CMgmtThread::ClientRun( )
     config.GetMgmtSvrIP( strIP );
     QHostAddress hostAddr( strIP );
     pTcpClient->Connect2Server( hostAddr, config.GetMgmtSvrPort( ) );
-    exec( ); // Message Loop / Event Loop //
+    exec( ); // Message Loop / Event Loop
 }
 
 void CMgmtThread::ServerRun( )
