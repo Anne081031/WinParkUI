@@ -36,14 +36,17 @@ void CMgmtThread::ThreadExit( )
 
     if ( NULL != pMySQL ) {
         delete pMySQL;
+        pMySQL = NULL;
     }
 
     if ( NULL != pTcpClient ) {
         delete pTcpClient;
+        pTcpClient = NULL;
     }
 
     if ( NULL != pTcpServer ) {
         delete pTcpServer;
+        pTcpServer = NULL;
     }
 
     CNetProcessData::ReleaseResource( );
@@ -95,6 +98,10 @@ void CMgmtThread::ServerRun( )
 
 void CMgmtThread::run( )
 {
+    if ( !config.GetMgmtTcpFlag( )  ) {
+        return;
+    }
+
     bClient ? ClientRun( ) : ServerRun( );
 }
 

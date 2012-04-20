@@ -11,6 +11,7 @@ public:
     explicit CGetConfig(QObject *parent = 0);
 
     bool GetStartupThreadFlag( bool bSender );
+    bool GetMgmtTcpFlag( );
     void GetMgmtSvrIP( QString& strIP );
     quint16 GetMgmtSvrPort( );
     int GetInterval( );
