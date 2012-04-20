@@ -43,6 +43,7 @@ signals:
 public slots:
     void ThreadExit( );
     void NotifyMsg( QString strMsg );
+    void PeerData( );
 };
 
 #endif // MGMTTHREAD_H
