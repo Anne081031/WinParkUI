@@ -92,6 +92,11 @@ void CMgmtThread::run( )
     bClient ? ClientRun( ) : ServerRun( );
 }
 
+void CMgmtThread::PeerRequest( )
+{
+
+}
+
 void CMgmtThread::timerEvent( QTimerEvent *event )
 {
     if ( nTimer != event->timerId( ) ) {
