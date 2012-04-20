@@ -22,6 +22,7 @@ private:
     void ClientRun( );
     void ServerRun( );
     bool SendTableData( QString& strFile, const QString& strTable );
+    void PeerRequest( );
 
 private:
     CGetConfig config;
