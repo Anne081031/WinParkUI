@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mgmtthread.h'
 **
-** Created: Fri Apr 20 10:57:50 2012
+** Created: Fri Apr 20 15:14:10 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CMgmtThread[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,13 +33,14 @@ static const uint qt_meta_data_CMgmtThread[] = {
  // slots: signature, parameters, type, tag, flags
       13,   12,   12,   12, 0x0a,
       33,   26,   12,   12, 0x0a,
+      52,   12,   12,   12, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CMgmtThread[] = {
     "CMgmtThread\0\0ThreadExit()\0strMsg\0"
-    "NotifyMsg(QString)\0"
+    "NotifyMsg(QString)\0PeerData()\0"
 };
 
 const QMetaObject CMgmtThread::staticMetaObject = {
@@ -73,9 +74,10 @@ int CMgmtThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: ThreadExit(); break;
         case 1: NotifyMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: PeerData(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

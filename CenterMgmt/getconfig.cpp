@@ -7,6 +7,11 @@ CGetConfig::CGetConfig(QObject *parent) :
     GetAllTableSql( );
 }
 
+bool CGetConfig::GetMgmtTcpFlag( )
+{
+    return pSystemSet->value( "Mgmt/MgmtTCP", false ).toBool( );
+}
+
 bool CGetConfig::GetStartupThreadFlag( bool bSender )
 {
     bool bRet = false;
