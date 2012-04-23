@@ -42,6 +42,7 @@ public:
     explicit CCommonFunction(QObject *parent = 0);
 
 public:
+    static QString GetCarTypeString( QString& strIndex );
     static void OperationSuccess( QString strInfo = "" );
     static int MsgBox( QWidget* pParent, QString strTitle, QString strText, QMessageBox::Icon nType, QString strStyle = "" );
     static int FindComboBoxItem( QComboBox* pCBX, QString strText );

@@ -3,10 +3,57 @@
 CTcpClient::CTcpClient(QObject *parent) :
     QTcpSocket(parent)
 {
+    pData = NULL;
+    Clear( );
+    pData = new QByteArray( );
+
     pTextCodec = NULL;
     connect( this, SIGNAL( disconnected( ) ), this, SLOT( HandleDisconnect( ) ) );
     connect( this, SIGNAL( error( QAbstractSocket::SocketError ) ),
                   this, SLOT( TcpError( QAbstractSocket::SocketError ) ) );
+}
+
+CTcpClient::~CTcpClient( )
+{
+    if ( NULL != pData ) {
+        delete pData;
+        pData = NULL;
+    }
+}
+
+void CTcpClient::SetMaxDataSize( quint64 nSize )
+{
+    nDataLen = nSize;
+}
+
+quint64 CTcpClient::GetMaxDataSize( )
+{
+    return nDataLen;
+}
+
+void CTcpClient::Clear( )
+{
+    if ( NULL != pData ) {
+        pData->resize( 0 );
+    }
+
+    nDataLen = 0;
+    nCurrentLen = 0;
+}
+
+void CTcpClient::SetCurrentDataSize( quint64 nSize )
+{
+    nCurrentLen += nSize;
+}
+
+quint64 CTcpClient::GetCurrentDataSize( )
+{
+    return nCurrentLen;
+}
+
+QByteArray* CTcpClient::GetData( )
+{
+    return pData;
 }
 
 void CTcpClient::SetTextCodec( QTextCodec *pCodec )

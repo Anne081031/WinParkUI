@@ -132,3 +132,38 @@ const char* CManipulateMessage::GetMgmtBody( const char* pData )
     return ( const char* ) ( pData + sizeof ( NetTransport::CommonHeader ) +
                              sizeof ( NetTransport::MgmtHeader ) );
 }
+
+quint32 CManipulateMessage::GetCommonHeaderSize( )
+{
+    return sizeof ( NetTransport::CommonHeader );
+}
+
+quint32 CManipulateMessage::GetTableHeaderSize( )
+{
+    return sizeof ( NetTransport::TableHeader );
+}
+
+quint32 CManipulateMessage::GetImageHeaderSize( )
+{
+    return sizeof ( NetTransport::ImageHeader );
+}
+
+quint32 CManipulateMessage::GetHeartbeatHeaderSize( )
+{
+    return sizeof ( NetTransport::HeartbeatHeader );
+}
+
+quint32 CManipulateMessage::GetSvrMsgHeaderSize( )
+{
+    return sizeof ( NetTransport::SvrMsgHeader );
+}
+
+quint32 CManipulateMessage::GetCltMsgHeaderSize( )
+{
+    return sizeof ( NetTransport::CltMsgHeader );
+}
+
+quint32 CManipulateMessage::GetMgmtHeaderSize( )
+{
+    return sizeof ( NetTransport::MgmtHeader );
+}

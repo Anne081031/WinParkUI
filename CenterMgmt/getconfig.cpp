@@ -4,12 +4,10 @@ CGetConfig::CGetConfig(QObject *parent) :
     QObject(parent)
 {
     pSystemSet = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
-    GetAllTableSql( );
-}
-
-bool CGetConfig::GetMgmtTcpFlag( )
-{
-    return pSystemSet->value( "Mgmt/MgmtTCP", false ).toBool( );
+    GetAllTableSql( true );
+    GetAllTableSql( false );
+    GetTableFilterSQL( );
+    GetAllClientIP( );
 }
 
 bool CGetConfig::GetStartupThreadFlag( bool bSender )
@@ -33,37 +31,76 @@ quint16 CGetConfig::GetMgmtSvrPort( )
     return pSystemSet->value( strKey, 8000 ).toUInt( );
 }
 
-int CGetConfig::GetInterval( )
+int CGetConfig::GetInterval( bool bRequest  )
 {
-    int nInterval = pSystemSet->value( "Mgmt/SendErInterval", 5 ).toInt( );
+    int nInterval = pSystemSet->value( QString( "Mgmt/%1Interval" ).arg( bRequest ? "Receiver" : "Sender" ), 0 ).toInt( );
 
     return nInterval;
 }
 
-void CGetConfig::GetAllTableSql( )
+void CGetConfig::GetTableFilterSQL( )
 {
-    hashSQL.clear( );
-
-    QString strSeperator = "@";
-    lstTables = pSystemSet->value( "Mgmt/Tables", "" ).toString( ).split( strSeperator );
+    hashFilterWhereSQL.clear( );
     QString strSql = "";
 
-    foreach ( const QString strTable, lstTables ) {
-        strSql = pSystemSet->value( QString( "Mgmt/%1Select" ).arg( strTable ), "" ).toString( );
+    foreach ( const QString strTable, lstRequestTables ) {
+        strSql = pSystemSet->value( QString( "Mgmt/%1Filter" ).arg( strTable ), "" ).toString( );
 
         if ( !strSql.isEmpty( ) ) {
-            strSql.replace( strSeperator, "," );
-            hashSQL.insert( strTable, strSql );
+           hashFilterWhereSQL.insert( strTable, strSql );
         }
     }
 }
 
-QStringList& CGetConfig::GetAllTables( )
+void CGetConfig::GetAllClientIP( )
 {
-    return lstTables;
+    lstClientIP.clear( );
+    QString strSeperator = "@";
+
+    lstClientIP = pSystemSet->value( "Mgmt/%MgmtClientIP", "" ).toString( ).split( strSeperator );
 }
 
-void CGetConfig::GetSQL( QString &strSql, const QString &strKey )
+QStringList& CGetConfig::GetClientIP( )
 {
-    strSql = hashSQL.value( strKey );
+    return lstClientIP;
+}
+
+void CGetConfig::GetFilterSQL( QString &strSql, const QString &strKey )
+{
+    strSql = hashFilterWhereSQL.value( strKey );
+}
+
+void CGetConfig::GetAllTableSql( bool bRequest )
+{
+    ( bRequest ? hashRequestSQL : hashSQL ).clear( );
+
+    QString strSeperator = "@";
+    QStringList lstTmpTables = pSystemSet->value(
+                QString( "Mgmt/%1Tables" ).arg( bRequest ? "Request" : "" ), "" ).toString( ).split( strSeperator );
+    QString strSql = "";
+
+    if ( bRequest ) {
+        lstRequestTables = lstTmpTables;
+    } else {
+        lstTables = lstTmpTables;
+    }
+
+    foreach ( const QString strTable, lstTmpTables ) {
+        strSql = pSystemSet->value( QString( "Mgmt/%1Select" ).arg( strTable ), "" ).toString( );
+
+        if ( !strSql.isEmpty( ) ) {
+            strSql.replace( strSeperator, "," );
+            ( bRequest ? hashRequestSQL : hashSQL ).insert( strTable, strSql );
+        }
+    }
+}
+
+QStringList& CGetConfig::GetAllTables( bool bRequest )
+{
+    return bRequest ? lstRequestTables : lstTables;
+}
+
+void CGetConfig::GetSQL( bool bRequest, QString &strSql, const QString &strKey )
+{
+    strSql = ( bRequest ? hashRequestSQL : hashSQL ).value( strKey );
 }

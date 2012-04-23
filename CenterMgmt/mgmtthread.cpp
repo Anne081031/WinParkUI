@@ -1,6 +1,10 @@
 #include "mgmtthread.h"
 #include  "Network/netprocessdata.h"
 
+//CManipulateMessage
+//CMyTcpServer
+//CTcpClient
+
 CMgmtThread* CMgmtThread::pReceiverThread = NULL;
 CMgmtThread* CMgmtThread::pSenderThread = NULL;
 
@@ -10,19 +14,29 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
     pTcpClient = NULL;
     pTcpServer = NULL;
     pMySQL = NULL;
-    nInterval = config.GetInterval( );
-    nTimer = 0;
+
+    nClientTimer = 0;
+    nServerTimer = 0;
+
+    pMySQL = new CMySqlDatabase( );
+    pTxtCodec = CCommonFunction::GetTextCodec( );
 
     if ( bClient ) {
         pTcpClient = new CTcpClient( this );
         connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) );
-        pMySQL = new CMySqlDatabase( );
         connect( pTcpClient, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
         CCommonFunction::GetPath( strPath, CommonDataType::PathSnapshot );
-        nTimer = startTimer( nInterval * 60 * 1000 );
+        nInterval = config.GetInterval( false );
+        if ( 0 < nInterval ) {
+            nClientTimer = startTimer( nInterval * 60 * 1000 );
+        }
     } else {
         pTcpServer = new CTcpDispatcher( this );
         connect( pTcpServer, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
+        nInterval = config.GetInterval( true );
+        if ( 0 < nInterval ) {
+            nServerTimer = startTimer( nInterval * 60 * 1000 );
+        }
     }
 
     connect( this, SIGNAL( finished( ) ), this, SLOT( ThreadExit( ) ) );
@@ -30,28 +44,34 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
 
 void CMgmtThread::ThreadExit( )
 {
-    if ( 0 != nTimer ) {
-        killTimer( nTimer );
+    if ( 0 != nClientTimer ) {
+        killTimer( nClientTimer );
+    }
+
+    if ( 0 != nServerTimer ) {
+        killTimer( nServerTimer );
     }
 
     if ( NULL != pMySQL ) {
         delete pMySQL;
-        pMySQL = NULL;
     }
 
     if ( NULL != pTcpClient ) {
         delete pTcpClient;
-        pTcpClient = NULL;
     }
 
     if ( NULL != pTcpServer ) {
         delete pTcpServer;
-        pTcpServer = NULL;
     }
 
     CNetProcessData::ReleaseResource( );
 
     delete this;
+}
+
+void CMgmtThread::customEvent( QEvent *event )
+{
+
 }
 
 CMgmtThread* CMgmtThread::GetThread( bool bSender )
@@ -74,9 +94,122 @@ void CMgmtThread::NotifyMsg( QString strMsg )
     qDebug( ) << strMsg << endl;
 }
 
+quint32 CMgmtThread::GetCommonHeaderSize( )
+{
+    return sizeof ( Mgmt::CommonHeader );
+}
+
+Mgmt::CommonHeader& CMgmtThread::GetCommonHeader( const char *pData )
+{
+    return *( Mgmt::PCommonHeader ) pData;
+}
+
+quint32 CMgmtThread::GetContentHeaderSize( )
+{
+    return sizeof ( Mgmt::ContentHeader );
+}
+
+Mgmt::ContentHeader& CMgmtThread::GetContentHeader( const char *pData )
+{
+    return *( ( Mgmt::PContentHeader ) ( pData + GetCommonHeaderSize( ) ) );
+}
+
+const char* CMgmtThread::GetBody( const char *pData )
+{
+    return ( const char* ) ( pData + GetCommonHeaderSize( ) + GetContentHeaderSize( ) );
+}
+
+void CMgmtThread::SetPacketType( Mgmt::CommonHeader &sHeader, Mgmt::ePacketType eType )
+{
+    sHeader.dgType.nRequestType = ( 1 << eType );
+}
+
+Mgmt::ePacketType CMgmtThread::GetPacketType( Mgmt::CommonHeader &sHeader )
+{
+    int nType = 0;
+
+    for ( quint32 nIndex = 0; nIndex < sizeof ( sHeader.dgType ); nIndex++ ) {
+        if ( sHeader.dgType.nRequestType & ( 1 << nIndex ) ) {
+            nType = nIndex;
+            break;
+        }
+    }
+
+    return ( Mgmt::ePacketType ) nType;
+}
+
 void CMgmtThread::PeerData( ) // Server --> Client
 {
- // Test Hello
+    CTcpClient* pSocket = qobject_cast< CTcpClient* >( sender( ) );
+    quint64 nDataLen = pSocket->bytesAvailable( );
+
+    QByteArray* pByteArray = pSocket->GetData( );
+    quint64 nPreSize = pSocket->GetCurrentDataSize( );
+    quint64 nCurDataSize = nPreSize + nDataLen;
+    if ( 0 == pSocket->GetMaxDataSize( ) || GetCommonHeaderSize( ) > nCurDataSize ) {
+        pByteArray->resize( nCurDataSize );
+    }
+
+    char* pSegData = ( char* ) ( ( quint64 ) pByteArray->data( ) + nPreSize );
+    quint64 nDataRetLen = pSocket->read( pSegData, nDataLen );
+    pSocket->SetCurrentDataSize( nDataRetLen );
+
+    if ( strlen( HANDSHAKE )== nDataLen ) {
+        qDebug( ) << HANDSHAKE << endl;
+        pSocket->Clear( );
+        return;
+    }
+
+    if ( 0 == pSocket->GetMaxDataSize( ) && GetCommonHeaderSize( ) <= nCurDataSize ) {
+        Mgmt::CommonHeader& commHeader = GetCommonHeader( pSegData );
+        pSocket->SetMaxDataSize( commHeader.nPacketSize );
+        pByteArray->resize( commHeader.nPacketSize );
+    }
+
+#ifndef QT_NO_DEBUG
+    if ( nDataRetLen != nDataLen ) {
+        qDebug( ) << "Read Client : " << pSocket->peerAddress( ).toString( ) << " error" << endl;
+    }
+#endif
+
+    if ( pSocket->GetCurrentDataSize( ) == pSocket->GetMaxDataSize( ) ) {
+        const char* pData = pByteArray->data( );
+        ProcessRequest( pData );
+        pSocket->Clear( );
+
+        //pSocket->write( HANDSHAKE );
+    }
+}
+
+void CMgmtThread::ProcessTableRequest( const char *pData )
+{
+    QString strTableName( GetContentHeader( pData ).cName );
+    pData = GetBody( pData );
+    QString strWhere( pData );
+    SendTableData( true, strWhere, strTableName );
+}
+
+void CMgmtThread::ProcessHandshakeRequest( const char *pData )
+{
+
+}
+
+void CMgmtThread::ProcessRequest( const char *pData ) // Client Process Server Request
+{
+    Mgmt::CommonHeader& commHeader = GetCommonHeader( pData );
+
+    switch ( GetPacketType( commHeader ) ) {
+    case Mgmt::PacketTable :
+        ProcessTableRequest( pData );
+        break;
+
+    case Mgmt::PacketOther :
+        break;
+
+    case Mgmt::PacketHandshake :
+        ProcessHandshakeRequest( pData );
+        break;
+    }
 }
 
 void CMgmtThread::ClientRun( )
@@ -98,59 +231,167 @@ void CMgmtThread::ServerRun( )
 
 void CMgmtThread::run( )
 {
-    if ( !config.GetMgmtTcpFlag( )  ) {
-        return;
-    }
-
     bClient ? ClientRun( ) : ServerRun( );
 }
 
-void CMgmtThread::PeerRequest( )
+CPeerSocket* CMgmtThread::GetPeerSocket( const QString &strKey )
 {
+    CPeerSocket* pPeer = NULL;
 
+
+    QHash< QString, CPeerSocket* >* pPeerSocketHash = NULL;
+    pTcpServer->GetPeerSocketHash( pPeerSocketHash );
+
+    if ( NULL == pPeerSocketHash || pPeerSocketHash->isEmpty( ) ) {
+        return pPeer;
+    }
+
+    QList< QString > lstKeys = pPeerSocketHash->keys();
+
+    for ( int nIndex = 0; nIndex < lstKeys.count( ); nIndex++ ) {
+        const QString& strValue = lstKeys.at( nIndex );
+        if ( !strValue.startsWith(  strKey ) ) {
+            continue;
+        }
+
+        pPeer = pPeerSocketHash->value( strValue );
+        break;
+    }
+
+    return pPeer;
 }
 
-void CMgmtThread::timerEvent( QTimerEvent *event )
+bool CMgmtThread::SendFilterData( CPeerSocket *pPeer, QString &strWhere, const QString& strTable )
 {
-    if ( nTimer != event->timerId( ) ) {
+    bool bRet = false;
+
+    QByteArray byData = pTxtCodec->fromUnicode( strWhere );
+    int nDataLen = byData.count( );
+
+    Mgmt::DispatcherData data;
+    memset( &data, 0, sizeof ( data ) );
+
+    SetPacketType( data.CommHeader, Mgmt::PacketTable );
+    strcpy( data.auxHeader.cntHeader.cName, strTable.toAscii( ).data( ) );
+    data.auxHeader.cntHeader.nDataLen = nDataLen;
+
+    int nCommHeader = GetCommonHeaderSize( );
+    int nAuxHeader = GetContentHeaderSize( );
+    data.CommHeader.nPacketSize = nDataLen + nCommHeader + nAuxHeader;
+
+    byData.insert( 0, ( char* ) &data.auxHeader.cntHeader, nAuxHeader );
+    byData.insert( 0, ( char* ) &data.CommHeader, nCommHeader );
+
+    bRet =( ( qint64 ) nDataLen == pPeer->write( byData ) );
+    if ( !pPeer->flush( ) ) {
+        pPeer->waitForBytesWritten( );
+    }
+
+    return bRet;
+}
+
+void CMgmtThread::SendPeerRequest( QStringList &lstRows, const QString &strTable )
+{
+    if ( 0 > lstRows.count( ) || strTable.isEmpty( ) ) {
         return;
     }
 
-    QStringList& lstTables = config.GetAllTables( );
+    QString strSeperator = "','";
+    QString strWhere = "'" + lstRows.join( strSeperator ) + "'";
+    QStringList& lstClientIP = config.GetClientIP( );
+    CPeerSocket* pPeer = NULL;
+
+    foreach ( const QString strIP, lstClientIP ) {
+        pPeer = GetPeerSocket( strIP );
+        if ( NULL == pPeer ) {
+            continue;
+        }
+
+        SendFilterData( pPeer, strWhere, strTable );
+        Sleep( 60000 );
+    }
+}
+
+void CMgmtThread::PeerRequest( ) // Server Request
+{
+    QStringList& lstTables = config.GetAllTables( true );
     QString strSql = "";
-    QString strError;
-    bool bRet = true;
-    QString strFile = "";
-    static bool bFirst = true;
+    QString strError = "";
+    QStringList lstRows;
+    bool bRet = false;
 
     foreach ( const QString strTable, lstTables ) {
-        config.GetSQL( strSql, strTable );
+        config.GetFilterSQL( strSql, strTable );
 
         if ( strSql.isEmpty( ) ) {
             continue;
         }
 
-        strFile = strPath + strTable;
-        strSql = strSql.arg( strTable, strFile );
+        bRet = ConnectMySQL( );
 
-        if ( bFirst || !pMySQL->PingMysql( ) ) {
-            QStringList lstParams;
-            CCommonFunction::ConnectMySql( lstParams );
-            int nCounter = 0;
-
-            while ( 6 > nCounter ) {
-                nCounter++;
-                bRet = pMySQL->DbConnect( lstParams[ 0 ], lstParams[ 1 ], lstParams[ 2 ], lstParams[ 3 ], lstParams[ 4 ].toUInt( ) );
-                bFirst = false;
-
-                if ( bRet ) {
-                    break;
-                } else {
-                    Sleep(10000 );
-                    continue;
-                }
-            }
+        if ( !bRet ) {
+            continue;
         }
+
+        if ( pMySQL->DbCrud( strSql, strError ) && 0 <= pMySQL->GetRowData( lstRows, strError ) ) {
+            SendPeerRequest( lstRows, strTable );
+            Sleep( 30000 );
+        }
+
+#ifdef QT_NO_DBUS
+        if ( !strError.isEmpty( ) ) {
+            qDebug( ) << strError << endl;
+        }
+#endif
+    }
+}
+
+bool CMgmtThread::ConnectMySQL( )
+{
+     static bool bFirst = true;
+     bool bRet = true;
+
+     if ( bFirst || !pMySQL->PingMysql( ) ) {
+         QStringList lstParams;
+         CCommonFunction::ConnectMySql( lstParams );
+         int nCounter = 0;
+
+         while ( 6 > nCounter ) {
+             nCounter++;
+             bRet = pMySQL->DbConnect( lstParams[ 0 ], lstParams[ 1 ], lstParams[ 2 ], lstParams[ 3 ], lstParams[ 4 ].toUInt( ) );
+             bFirst = false;
+
+             if ( bRet ) {
+                 break;
+             } else {
+                 Sleep(10000 );
+                 continue;
+             }
+         }
+     }
+
+     return bRet;
+}
+
+void CMgmtThread::SendTableData( bool bRequest, QString& strWhere, QString& strTableName )
+{
+    QStringList& lstTables = config.GetAllTables( bRequest );
+    QString strSql = "";
+    QString strError;
+    bool bRet = false;
+    QString strFile = "";
+
+    foreach ( const QString strTable, lstTables ) {
+        config.GetSQL( bRequest, strSql, strTable );
+
+        if ( strSql.isEmpty( ) || ( bRequest && strTable != strTableName )) {
+            continue;
+        }
+
+        strFile = strPath + strTable;
+        strSql = bRequest ? strSql.arg( strTable, strWhere, strFile ) : strSql.arg( strTable, strFile );
+
+        bRet = ConnectMySQL( );
 
         if ( !bRet ) {
             continue;
@@ -158,7 +399,7 @@ void CMgmtThread::timerEvent( QTimerEvent *event )
 
         if ( pMySQL->DbCrud( strSql, strError ) ) {
             SendTableData( strFile, strTable );
-            Sleep( 10000 );
+            Sleep( bRequest ? 60000 : 10000 );
             QFile::remove( strFile );
         }
 
@@ -168,8 +409,19 @@ void CMgmtThread::timerEvent( QTimerEvent *event )
         }
 #endif
     }
+}
 
-    qDebug( ) << "Mgmt Timer" << endl;
+void CMgmtThread::timerEvent( QTimerEvent *event )
+{
+    if ( nClientTimer == event->timerId( ) ) {
+        QString strWhere = "";
+        QString strTable = "";
+        SendTableData( false, strWhere, strTable );
+        qDebug( ) << "Mgmt Client Timer" << endl;
+    } else if ( nServerTimer == event->timerId( ) ) {
+        PeerRequest( );
+        qDebug( ) << "Mgmt Server Timer" << endl;
+    }
 }
 
 bool CMgmtThread::SendTableData( QString& strFile, const QString& strTable  )
@@ -210,7 +462,7 @@ bool CMgmtThread::SendTableData( QString& strFile, const QString& strTable  )
     byData.insert( 0, ( char* ) &data.auxHeader.tabHeader, nAuxHeader );
     byData.insert( 0, ( char* ) &data.CommHeader, nCommHeader );
 
-    bRet =(  ( quint64 ) nDataLen == pTcpClient->SendData( byData ) );
+    bRet =( ( quint64 ) nDataLen == pTcpClient->SendData( byData ) );
 
     return bRet;
 }

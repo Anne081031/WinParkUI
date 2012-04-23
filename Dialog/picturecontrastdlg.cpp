@@ -175,7 +175,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
         ui->edtExpiration->clear( );
         ui->edtSurplus->clear( );
 
-
+        strTmp = CCommonFunction::GetCarTypeString( lstRows[ lstRows.count( ) -1 ] );
         lstRows.clear( );
         //CLogicInterface::GetInterface()->ExecuteSql( strSql, lstRows );
         //if ( ( 0 == nAmount ) && ( 0 >= lstRows.count( ) ) ) {
@@ -184,7 +184,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
             //return;
         //}
 
-        strTmp = "小型车";
+        //strTmp = "小型车";
         SetCarType( strTmp );
 
         nField = 0;

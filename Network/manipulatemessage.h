@@ -26,6 +26,14 @@ public:
     NetTransport::CltMsgHeader& GetCltMsgHeader( const char* pData );
     NetTransport::MgmtHeader& GetMgmtHeader( const char* pData );
 
+    quint32 GetCommonHeaderSize( );
+    quint32 GetTableHeaderSize( );
+    quint32 GetImageHeaderSize( );
+    quint32 GetHeartbeatHeaderSize( );
+    quint32 GetSvrMsgHeaderSize( );
+    quint32 GetCltMsgHeaderSize( );
+    quint32 GetMgmtHeaderSize( );
+
     const char* GetTableBody( const char* pData );
     const char* GetImageBody( const char* pData );
     const char* GetHeartbeatBody( const char* pData );

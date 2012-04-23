@@ -52,6 +52,16 @@ QHash< char, QString > CCommonFunction::hashCanParkIndex;
 QHash< char, QString > CCommonFunction::hashCanParkNum;
 QHash< char, QString > CCommonFunction::hashCanParkName;
 
+QString CCommonFunction::GetCarTypeString( QString &strIndex )
+{
+    QString strType = "Ð¡ÐÍ³µ";
+    if ( NULL != pFeeSettings ) {
+        strType = pFeeSettings->value( QString( "CarType/Count%1" ).arg( strIndex ), strType ).toString( );
+    }
+
+    return strType;
+}
+
 void CCommonFunction::PlayMusic( QString strName, bool bStop )
 {
     static Phonon::MediaObject* pMediaObj = NULL;

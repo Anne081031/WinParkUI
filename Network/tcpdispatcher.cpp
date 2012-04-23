@@ -23,7 +23,7 @@ void CTcpDispatcher::GetPeerSocketHash( QHash< QString, CPeerSocket* >*& peerHas
         return;
     }
 
-    *peerHash = tcpServer->GetPeerSocketHash( );
+    peerHash = &tcpServer->GetPeerSocketHash( );
 }
 
 bool CTcpDispatcher::InitServer( quint16 nPort, int nConnections, quint16 nThreadPool )

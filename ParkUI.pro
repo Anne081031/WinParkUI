@@ -272,7 +272,8 @@ HEADERS  += Header/valuecard.h \
     SerialPort/dbhistorythread.h \
     SMS/smsevent.h \
     CenterMgmt/mgmtthread.h \
-    CenterMgmt/getconfig.h
+    CenterMgmt/getconfig.h \
+    CenterMgmt/DataType.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

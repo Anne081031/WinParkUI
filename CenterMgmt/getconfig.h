@@ -11,20 +11,27 @@ public:
     explicit CGetConfig(QObject *parent = 0);
 
     bool GetStartupThreadFlag( bool bSender );
-    bool GetMgmtTcpFlag( );
     void GetMgmtSvrIP( QString& strIP );
     quint16 GetMgmtSvrPort( );
-    int GetInterval( );
-    void GetSQL( QString& strSql, const QString& strKey );
-    QStringList& GetAllTables( );
+    int GetInterval( bool bRequest );
+    void GetSQL( bool bRequest, QString& strSql, const QString& strKey );
+    QStringList& GetAllTables( bool bRequest );
+    void GetFilterSQL( QString &strSql, const QString &strKey );
+    QStringList& GetClientIP( );
 
 private:
-    void GetAllTableSql( );
+    void GetAllTableSql( bool bRequest );
+    void GetTableFilterSQL( );
+    void GetAllClientIP( );
 
 private:
     QSettings* pSystemSet;
     QHash< QString, QString > hashSQL;
+    QHash< QString, QString > hashRequestSQL;
+    QHash< QString, QString > hashFilterWhereSQL;
+    QStringList lstClientIP;
     QStringList lstTables;
+    QStringList lstRequestTables;
     
 signals:
     

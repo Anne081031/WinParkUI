@@ -2447,6 +2447,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
         lstInit << QString::number( nAmount );
         lstInit << strTable << strParkName;
         lstInit << lstInOut[ 1 ] << strEnd << strPlate;
+        lstInit << GetFeeStd( lstRows[ 0 ] );
 
         bool bGate = PictureContrast( lstInit, nAmount, byData, lstRows[ 0 ] );
         if ( bGate ) {
@@ -2549,6 +2550,7 @@ void CProcessData::GetCardType2( QString &strCardNo, QStringList &lstRows, bool 
         lstRows << pInfo->carInfo.value( strKey );
         lstRows << "";
         lstRows << pInfo->cardStatus;
+        lstRows << pInfo->strFeeStd;
     }
 }
 

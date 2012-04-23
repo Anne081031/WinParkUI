@@ -105,16 +105,17 @@ void CMyTcpServer::GetStream( )
     quint64 nDataLen = pSocket->bytesAvailable( );
 
     QByteArray* pByteArray = pSocket->GetData( );
-    quint64 nPreSize = pByteArray->count( );
-    if ( 0 == pSocket->GetMaxDataSize( ) ) {
-        pByteArray->resize( nDataLen );
+    quint64 nPreSize = pSocket->GetCurrentDataSize( );
+    quint64 nCurDataSize = nPreSize + nDataLen;
+    if ( 0 == pSocket->GetMaxDataSize( ) || processMsg.GetCommonHeaderSize( ) > nCurDataSize ) {
+        pByteArray->resize( nCurDataSize );
     }
 
     char* pSegData = ( char* ) ( ( quint64 ) pByteArray->data( ) + nPreSize );
     quint64 nDataRetLen = pSocket->read( pSegData, nDataLen );
     pSocket->SetCurrentDataSize( nDataRetLen );
 
-    if ( 0 == pSocket->GetMaxDataSize( ) ) {
+    if ( 0 == pSocket->GetMaxDataSize( ) && processMsg.GetCommonHeaderSize( ) <= nCurDataSize ) {
         NetTransport::CommonHeader& commHeader = processMsg.GetCommonHeader( pSegData );
         pSocket->SetMaxDataSize( commHeader.nDataLen );
         pByteArray->resize( commHeader.nDataLen );
@@ -127,7 +128,7 @@ void CMyTcpServer::GetStream( )
 #endif
 
     if ( pSocket->GetCurrentDataSize( ) == pSocket->GetMaxDataSize( ) ) {
-        nDataLen =  pSocket->GetCurrentDataSize( );
+        nDataLen = pSocket->GetCurrentDataSize( );
         char* pData = new char[ nDataLen + 1 ];
         memcpy( pData, pByteArray->data( ), nDataLen );
         pData[ nDataLen ] = '\0';
@@ -146,15 +147,16 @@ void CMyTcpServer::GetMgmtStream( )
 
     QByteArray* pByteArray = pSocket->GetData( );
     quint64 nPreSize = pSocket->GetCurrentDataSize( );
-    if ( 0 == pSocket->GetMaxDataSize( ) ) {
-        pByteArray->resize( nDataLen );
+    quint64 nCurDataSize = nPreSize + nDataLen;
+    if ( 0 == pSocket->GetMaxDataSize( ) || processMsg.GetCommonHeaderSize( ) > nCurDataSize ) {
+        pByteArray->resize( nCurDataSize );
     }
 
     char* pSegData = ( char* ) ( ( quint64 ) pByteArray->data( ) + nPreSize );
     quint64 nDataRetLen = pSocket->read( pSegData, nDataLen );
     pSocket->SetCurrentDataSize( nDataRetLen );
 
-    if ( 0 == pSocket->GetMaxDataSize( ) ) {
+    if ( 0 == pSocket->GetMaxDataSize( ) && processMsg.GetCommonHeaderSize( ) <= nCurDataSize ) {
         NetTransport::CommonHeader& commHeader = processMsg.GetCommonHeader( pSegData );
         pSocket->SetMaxDataSize( commHeader.nDataLen );
         pByteArray->resize( commHeader.nDataLen );
