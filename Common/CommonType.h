@@ -12,7 +12,9 @@ namespace CommonDataType {
         ReportDaily,
         ReportPerson,
         ReportTimeCardDetail,
-        ReportChannel
+        ReportChannel,
+        ReportProvince,
+        ReportInProvince
     } ReportType;
 
     typedef enum __UserRequest {

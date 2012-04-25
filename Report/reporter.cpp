@@ -22,9 +22,15 @@ void CReporter::Print( CommonDataType::ReportType rType, QWebView& wvReport )
 
     printer.setPageSize( QPrinter::A4 );
     printer.setOutputFormat( QPrinter::PdfFormat );
+
     QString strFile;
     CCommonFunction::GetPath( strFile, CommonDataType::PathSnapshot );
     strFile += "reporter.pdf";
+    if ( QFile::exists( strFile ) ) {
+        QFile::remove( strFile );
+        Sleep( 1000 );
+    }
+
     printer.setOutputFileName( strFile );
     wvReport.print( &printer );
 
@@ -275,6 +281,90 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         strSql += strEnd;
         strSql += "' order by ftime desc";
         break;
+
+    case CommonDataType::ReportProvince :
+        strSql = "select case substring( carcp, 1, 1 ) \
+                                   when '川' then '四川省'  \
+                                   when '渝' then '重庆市' \
+                                   when '京' then '北京市' \
+                                   when '津' then '天津市' \
+                                   when '沪' then '上海市' \
+                                   when '冀' then '河北省' \
+                                   when '豫' then '河南省' \
+                                   when '云' then '云南省' \
+                                   when '辽' then '辽宁省' \
+                                   when '黑' then '黑龙江省' \
+                                   when '湘' then '湖南省' \
+                                   when '皖' then '安徽省' \
+                                   when '鲁' then '山东省' \
+                                   when '新' then '新疆维吾尔族自治区' \
+                                   when '苏' then '江苏省' \
+                                   when '浙' then '浙江省' \
+                                   when '赣' then '江西省' \
+                                   when '鄂' then '湖北省' \
+                                   when '桂' then '广西壮族自治区' \
+                                   when '甘' then '甘肃省' \
+                                   when '晋' then '山西省' \
+                                   when '蒙' then '内蒙古自治区' \
+                                   when '陕' then '陕西省' \
+                                   when '吉' then '吉林省' \
+                                   when '闽' then '福建省' \
+                                   when '贵' then '贵州省' \
+                                   when '粤' then '广东省' \
+                                   when '青' then '青海省' \
+                                   when '藏' then '西藏自治区' \
+                                   when '宁' then '宁夏回族自治区' \
+                                   when '琼' then '海南省' \
+                                   else '未知' end  as 车辆所属辖区, \
+                                   feekind as 车型, \
+                                   count( carcp ) as 车辆数 \
+                                   from stoprd \
+                                   where intime between '"
+                                   + strStart +
+                                   "' and '"
+                                   + strEnd +
+                                   "' and cardkind = '计时卡' group by substring( carcp, 1, 1 ), feekind with rollup";
+        break;
+
+    case CommonDataType::ReportInProvince :
+        strSql =  "select case UPPER( substring( carcp, 2, 1 ) )  \
+                                   when 'A' then '成都市' \
+                                   when 'B' then '绵阳市' \
+                                   when 'C' then '自贡市' \
+                                   when 'D' then '攀枝花市' \
+                                   when 'E' then '泸州市' \
+                                   when 'F' then '德阳市' \
+                                   when 'G' then '未知' \
+                                   when 'H' then '广元市' \
+                                   when 'I' then '未知' \
+                                   when 'J' then '遂宁市' \
+                                   when 'K' then '内江市' \
+                                   when 'L' then '乐山市' \
+                                   when 'M' then '资阳市' \
+                                   when 'N' then '未知' \
+                                   when 'O' then '未知' \
+                                   when 'P' then '未知' \
+                                   when 'Q' then '宜宾市' \
+                                   when 'R' then '南充市' \
+                                   when 'S' then '达州市' \
+                                   when 'T' then '雅安市' \
+                                   when 'U' then '阿坝藏族羌族自治州' \
+                                   when 'V' then '甘孜藏族自治州' \
+                                   when 'W' then '凉山彝族自治州' \
+                                   when 'X' then '广安市' \
+                                   when 'Y' then '巴中市' \
+                                   when 'Z' then '眉山市' \
+                                   else '未知' end  as 车辆所属辖区,  \
+                                   feekind as 车型, \
+                                   count( carcp ) as 车辆数 \
+                                   from stoprd \
+                                   where intime between '"
+                                   + strStart +
+                                   "' and '"
+                                   + strEnd +
+                                   "' and cardkind = '计时卡' and substring( carcp, 1, 1 ) = '川' \
+                                   group by substring( carcp, 2, 1 ), feekind with rollup";
+        break;
     }
 
 #ifdef QT_NO_DBUS
@@ -376,6 +466,8 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
     case CommonDataType::ReportPerson :
     case CommonDataType::ReportChannel :
     case CommonDataType::ReportTimeCardDetail :
+    case CommonDataType::ReportProvince :
+    case CommonDataType::ReportInProvince :
         if ( strStart == strEnd ) {
             strTitle = strStart + "日";
         } else {
@@ -471,6 +563,13 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
        strFooter = "";
        nCols = 7;
        break;
+
+  case CommonDataType::ReportProvince :
+  case CommonDataType::ReportInProvince :
+       strTitle = "<tr><th>车辆所属辖区</th><th>车型</th><th>车辆数</th></tr>";
+       strFooter = "";
+       nCols = 3;
+       break;
    }
 
    int nRows = lstData.count( ) / nCols;
@@ -537,6 +636,15 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
                   << lstData[ nField + 4 ]
                   << lstData[ nField + 5 ]
                   << lstData[ nField + 6 ];
+       } else if ( CommonDataType::ReportProvince == rType ||
+                      CommonDataType::ReportInProvince == rType ) {
+           lstTmp << lstData[ nField ]
+                       << lstData[ nField + 1 ]
+                       << lstData[ nField + 2 ];
+
+           if ( nRow + 1 == nRows ) {
+               lstTmp[ 0 ] = "全部总计";
+           }
        }
 
        GetRowHtml( strRow, lstTmp );
@@ -555,9 +663,9 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
        break;
 
    case CommonDataType::ReportChannel :
-       break;
-
    case CommonDataType::ReportTimeCardDetail :
+   case CommonDataType::ReportInProvince :
+   case CommonDataType::ReportProvince :
        break;
    }
 }

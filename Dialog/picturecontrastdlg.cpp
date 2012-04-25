@@ -197,7 +197,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
        // }
 
         //strTmp = lstRows[ nField++ ];
-        //ui->edtVechileType->setText( strTmp );
+        ui->edtVechileType->setText( strTmp );
         //Calculate( SetCarType( strTmp ) );
         //ui->edtOwner->setText( lstRows[ nField++ ] );
 
@@ -246,6 +246,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
         if ( 2 == nCardType ) {
             strPlates[ 0 ] = lstRows[ nField++ ];
             strPlates[ 1 ] = lstRows[ nField++ ];
+            ui->edtVechileType->setText( lstRows[ nField++ ] );
         }
 
         if ( !strStart.isEmpty( ) && !strEnd.isEmpty( ) ) {

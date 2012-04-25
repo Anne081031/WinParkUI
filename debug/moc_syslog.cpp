@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'syslog.h'
 **
-** Created: Mon Apr 23 09:30:25 2012
+** Created: Tue Apr 24 16:51:13 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

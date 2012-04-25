@@ -116,13 +116,10 @@ bool CNetProcessData::WriteFile( const char *pData, const QString& strPath, quin
     return bRet;
 }
 
-void CNetProcessData::GetAllMgmtSql( )
+void CNetProcessData::GetAllMgmtSql( bool bRequest )
 {
-    hashMgmtSql.clear( );
-
-
     QString strSeperator = "@";
-    QStringList lstTables = pSettings->value( "Mgmt/Tables", "" ).toString( ).split( strSeperator );
+    QStringList lstTables = pSettings->value( QString( "Mgmt/%1Tables" ).arg( bRequest ? "Request" : "" ), "" ).toString( ).split( strSeperator );
     QString strSql = "";
 
     foreach ( const QString strTable, lstTables ) {
@@ -145,7 +142,8 @@ void CNetProcessData::WriteDb( QString &strPath, const char *pName )
 {
     if ( NULL == pMySQL ) {
         pMySQL = new CMySqlDatabase( );
-        GetAllMgmtSql( );
+        GetAllMgmtSql( true );
+        GetAllMgmtSql( false);
     }
 
     bool bRet = true;

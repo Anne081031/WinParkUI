@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgperipheralstatus.h'
 **
-** Created: Fri Apr 20 18:06:59 2012
+** Created: Tue Apr 24 16:52:28 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

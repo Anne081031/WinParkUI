@@ -51,7 +51,7 @@ color: rgb(170, 0, 0);</string>
      <x>50</x>
      <y>60</y>
      <width>631</width>
-     <height>511</height>
+     <height>461</height>
     </rect>
    </property>
    <property name="url">
@@ -64,9 +64,9 @@ color: rgb(170, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>580</y>
+     <y>560</y>
      <width>621</width>
-     <height>41</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -160,6 +160,38 @@ color: rgb(170, 0, 0);</string>
     </property>
     <property name="text">
      <string>计时卡收费明细</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rdChx7">
+    <property name="geometry">
+     <rect>
+      <x>17</x>
+      <y>40</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>按省统计</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rdChx8">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>40</y>
+      <width>111</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>省内统计</string>
     </property>
     <property name="checked">
      <bool>false</bool>

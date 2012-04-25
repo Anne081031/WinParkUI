@@ -35,6 +35,7 @@
 #include <QLabel>
 #include <QTimeEdit>
 #include <QHeaderView>
+#include <QPushButton>
 
 QSettings* CCommonFunction::pSysSettings = NULL;
 QSettings* CCommonFunction::pFeeSettings = NULL;
@@ -205,6 +206,18 @@ void CCommonFunction::LoadFourImages( CommonDataType::BlobType blob, QString& st
 
 void CCommonFunction::ConnectCloseButton( QLabel *lblClose )
 {
+    QString strPath;
+    GetPath( strPath, CommonDataType::PathUIImage);
+    QString strBtnStyle = QString( "background-image:url(%1NewIcon/Close.JPG);\nborder: none; \nbackground-color: white;" ).arg( strPath );
+    QCursor cursor( Qt::OpenHandCursor );
+    lblClose->setVisible( false );
+    QWidget* pWidget = ( QWidget* ) lblClose->parent( );
+    QPushButton* pBtn = new QPushButton( pWidget );
+    pBtn->setGeometry( lblClose->geometry( ) );
+    pBtn->setStyleSheet( strBtnStyle );
+    pBtn->setCursor( cursor );
+    pWidget->connect( pBtn, SIGNAL( clicked( ) ), pWidget, SLOT( close( ) ) );
+    return;
     static QString strLink = "<a href=\"/\" style = \"text-decoration:none;color: rgb(255, 255, 255);\">X</a>";
     lblClose->setStyleSheet( "background-image:url(none);" );
     lblClose->setAlignment( Qt::AlignHCenter );

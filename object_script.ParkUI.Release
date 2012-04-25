@@ -120,6 +120,7 @@ INPUT(
 ./release\smsevent.o
 ./release\mgmtthread.o
 ./release\getconfig.o
+./release\sendrequest.o
 ./release\moc_valuecard.o
 ./release\moc_tolldiscounttypeset.o
 ./release\moc_timecard.o

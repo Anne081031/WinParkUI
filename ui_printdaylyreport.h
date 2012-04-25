@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'printdaylyreport.ui'
 **
-** Created: Fri Mar 23 16:28:38 2012
+** Created: Tue Apr 24 16:46:15 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -37,6 +37,8 @@ public:
     QRadioButton *rdChx4;
     QRadioButton *rdChx6;
     QRadioButton *rdChx5;
+    QRadioButton *rdChx7;
+    QRadioButton *rdChx8;
     QLabel *label_2;
     QLabel *label;
     QLabel *lblClose;
@@ -65,11 +67,11 @@ public:
 "color: rgb(170, 0, 0);"));
         wvReport = new QWebView(CPrintDaylyReport);
         wvReport->setObjectName(QString::fromUtf8("wvReport"));
-        wvReport->setGeometry(QRect(50, 60, 631, 511));
+        wvReport->setGeometry(QRect(50, 60, 631, 461));
         wvReport->setUrl(QUrl("about:blank"));
         gbType = new QGroupBox(CPrintDaylyReport);
         gbType->setObjectName(QString::fromUtf8("gbType"));
-        gbType->setGeometry(QRect(50, 580, 621, 41));
+        gbType->setGeometry(QRect(50, 560, 621, 61));
         gbType->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         rdChx1 = new QRadioButton(gbType);
         rdChx1->setObjectName(QString::fromUtf8("rdChx1"));
@@ -93,6 +95,14 @@ public:
         rdChx5->setObjectName(QString::fromUtf8("rdChx5"));
         rdChx5->setGeometry(QRect(340, 20, 111, 16));
         rdChx5->setChecked(false);
+        rdChx7 = new QRadioButton(gbType);
+        rdChx7->setObjectName(QString::fromUtf8("rdChx7"));
+        rdChx7->setGeometry(QRect(17, 40, 111, 20));
+        rdChx7->setChecked(false);
+        rdChx8 = new QRadioButton(gbType);
+        rdChx8->setObjectName(QString::fromUtf8("rdChx8"));
+        rdChx8->setGeometry(QRect(160, 40, 111, 20));
+        rdChx8->setChecked(false);
         label_2 = new QLabel(CPrintDaylyReport);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(253, 630, 16, 16));
@@ -143,6 +153,8 @@ public:
         rdChx4->setText(QApplication::translate("CPrintDaylyReport", "\351\207\221\351\242\235\346\214\211\346\224\266\350\264\271\344\272\272\345\221\230", 0, QApplication::UnicodeUTF8));
         rdChx6->setText(QApplication::translate("CPrintDaylyReport", "\350\277\233\345\207\272\346\225\260\351\207\217\346\214\211\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
         rdChx5->setText(QApplication::translate("CPrintDaylyReport", "\350\256\241\346\227\266\345\215\241\346\224\266\350\264\271\346\230\216\347\273\206", 0, QApplication::UnicodeUTF8));
+        rdChx7->setText(QApplication::translate("CPrintDaylyReport", "\346\214\211\347\234\201\347\273\237\350\256\241", 0, QApplication::UnicodeUTF8));
+        rdChx8->setText(QApplication::translate("CPrintDaylyReport", "\347\234\201\345\206\205\347\273\237\350\256\241", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("CPrintDaylyReport", "\350\207\263", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("CPrintDaylyReport", "\346\237\245\350\257\242\350\214\203\345\233\264\357\274\232", 0, QApplication::UnicodeUTF8));
         lblClose->setText(QString());

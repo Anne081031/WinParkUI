@@ -57,7 +57,7 @@ void CGetConfig::GetAllClientIP( )
     lstClientIP.clear( );
     QString strSeperator = "@";
 
-    lstClientIP = pSystemSet->value( "Mgmt/%MgmtClientIP", "" ).toString( ).split( strSeperator );
+    lstClientIP = pSystemSet->value( "Mgmt/MgmtClientIP", "" ).toString( ).split( strSeperator );
 }
 
 QStringList& CGetConfig::GetClientIP( )

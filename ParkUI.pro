@@ -149,7 +149,8 @@ SOURCES += mainwindow.cpp \
     SerialPort/dbhistorythread.cpp \
     SMS/smsevent.cpp \
     CenterMgmt/mgmtthread.cpp \
-    CenterMgmt/getconfig.cpp
+    CenterMgmt/getconfig.cpp \
+    CenterMgmt/sendrequest.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -273,7 +274,8 @@ HEADERS  += Header/valuecard.h \
     SMS/smsevent.h \
     CenterMgmt/mgmtthread.h \
     CenterMgmt/getconfig.h \
-    CenterMgmt/DataType.h
+    CenterMgmt/DataType.h \
+    CenterMgmt/sendrequest.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

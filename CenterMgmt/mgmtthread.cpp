@@ -1,5 +1,6 @@
 #include "mgmtthread.h"
 #include  "Network/netprocessdata.h"
+#include "sendrequest.h"
 
 //CManipulateMessage
 //CMyTcpServer
@@ -14,6 +15,8 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
     pTcpClient = NULL;
     pTcpServer = NULL;
     pMySQL = NULL;
+    pUdpClient = NULL;
+    pUdpServer = NULL;
 
     nClientTimer = 0;
     nServerTimer = 0;
@@ -22,16 +25,21 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
     pTxtCodec = CCommonFunction::GetTextCodec( );
 
     if ( bClient ) {
-        pTcpClient = new CTcpClient( this );
-        connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) );
+        pTcpClient = new CTcpClient(  );
+        pUdpServer = new QUdpSocket(   );
+        //connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) );
+        connect( pUdpServer, SIGNAL( readyRead( ) ), this, SLOT( UdpPeerData( ) ) );
         connect( pTcpClient, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
         CCommonFunction::GetPath( strPath, CommonDataType::PathSnapshot );
         nInterval = config.GetInterval( false );
         if ( 0 < nInterval ) {
             nClientTimer = startTimer( nInterval * 60 * 1000 );
         }
+
+        pUdpServer->bind( QHostAddress::Any, config.GetMgmtSvrPort( ), QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint );
     } else {
-        pTcpServer = new CTcpDispatcher( this );
+        pTcpServer = new CTcpDispatcher(  );
+        //pUdpClient = new QUdpSocket(  );
         connect( pTcpServer, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
         nInterval = config.GetInterval( true );
         if ( 0 < nInterval ) {
@@ -62,6 +70,14 @@ void CMgmtThread::ThreadExit( )
 
     if ( NULL != pTcpServer ) {
         delete pTcpServer;
+    }
+
+    if ( NULL != pUdpClient ) {
+        delete pUdpClient;
+    }
+
+    if ( NULL != pUdpServer ) {
+        delete pUdpServer;
     }
 
     CNetProcessData::ReleaseResource( );
@@ -136,6 +152,26 @@ Mgmt::ePacketType CMgmtThread::GetPacketType( Mgmt::CommonHeader &sHeader )
     }
 
     return ( Mgmt::ePacketType ) nType;
+}
+
+void CMgmtThread::UdpPeerData( ) // Get Request
+{
+    QUdpSocket* pUdpServer = qobject_cast< QUdpSocket* > ( sender( ) );
+    QByteArray byData;
+    quint64 nReadLen = 0;
+    quint64 nDataLen = 0;
+    int nPreSize = 0;
+
+    while ( pUdpServer->hasPendingDatagrams( ) ) { // Sender Wait for a moment
+        nDataLen = pUdpServer->pendingDatagramSize( );
+        nPreSize = byData.count( );
+        byData.resize( nPreSize + nDataLen );
+        nReadLen += pUdpServer->readDatagram( byData.data( ), nDataLen );
+    }
+
+    if ( GetCommonHeaderSize( ) + GetContentHeaderSize( ) <  nReadLen ) {
+        ProcessRequest( byData.data( ) );
+    }
 }
 
 void CMgmtThread::PeerData( ) // Server --> Client
@@ -261,6 +297,43 @@ CPeerSocket* CMgmtThread::GetPeerSocket( const QString &strKey )
     return pPeer;
 }
 
+bool CMgmtThread::SendFilterData( QUdpSocket *pUdpSocket, QString &strWhere, const QString &strTable, const QString& strIP )
+{
+    bool bRet = false;
+
+    QByteArray byData = pTxtCodec->fromUnicode( strWhere );
+    int nDataLen = byData.count( );
+
+    Mgmt::DispatcherData data;
+    memset( &data, 0, sizeof ( data ) );
+
+    SetPacketType( data.CommHeader, Mgmt::PacketTable );
+    strcpy( data.auxHeader.cntHeader.cName, strTable.toAscii( ).data( ) );
+    data.auxHeader.cntHeader.nDataLen = nDataLen;
+
+    int nCommHeader = GetCommonHeaderSize( );
+    int nAuxHeader = GetContentHeaderSize( );
+    data.CommHeader.nPacketSize = nDataLen + nCommHeader + nAuxHeader + 1;
+
+    byData.insert( 0, ( char* ) &data.auxHeader.cntHeader, nAuxHeader );
+    byData.insert( 0, ( char* ) &data.CommHeader, nCommHeader );
+    byData.append( '\0' );
+
+    QHostAddress hostAddr( strIP );
+    quint16 nPort = config.GetMgmtSvrPort( );
+
+    if ( QAbstractSocket::ConnectedState == pUdpSocket->state( ) ) {
+        pUdpSocket->disconnectFromHost( );
+    }
+    pUdpSocket->connectToHost( hostAddr, nPort );
+    bRet =( ( qint64 ) nDataLen == pUdpSocket->writeDatagram( byData, hostAddr, nPort ) );
+    if ( !pUdpSocket->flush( ) ) {
+        pUdpSocket->waitForBytesWritten( );
+    }
+
+    return bRet;
+}
+
 bool CMgmtThread::SendFilterData( CPeerSocket *pPeer, QString &strWhere, const QString& strTable )
 {
     bool bRet = false;
@@ -277,10 +350,11 @@ bool CMgmtThread::SendFilterData( CPeerSocket *pPeer, QString &strWhere, const Q
 
     int nCommHeader = GetCommonHeaderSize( );
     int nAuxHeader = GetContentHeaderSize( );
-    data.CommHeader.nPacketSize = nDataLen + nCommHeader + nAuxHeader;
+    data.CommHeader.nPacketSize = nDataLen + nCommHeader + nAuxHeader + 1;
 
     byData.insert( 0, ( char* ) &data.auxHeader.cntHeader, nAuxHeader );
     byData.insert( 0, ( char* ) &data.CommHeader, nCommHeader );
+    byData.append( '\0' );
 
     bRet =( ( qint64 ) nDataLen == pPeer->write( byData ) );
     if ( !pPeer->flush( ) ) {
@@ -288,6 +362,22 @@ bool CMgmtThread::SendFilterData( CPeerSocket *pPeer, QString &strWhere, const Q
     }
 
     return bRet;
+}
+
+void CMgmtThread::UdpSendPeerRequest( QUdpSocket* pUdpSocket, QStringList &lstRows, const QString &strTable )
+{
+    if ( 0 > lstRows.count( ) || strTable.isEmpty( ) ) {
+        return;
+    }
+
+    QString strSeperator = "','";
+    QString strWhere = "'" + lstRows.join( strSeperator ) + "'";
+    QStringList& lstClientIP = config.GetClientIP( );
+
+    foreach ( const QString strIP, lstClientIP ) {
+        SendFilterData( pUdpSocket, strWhere, strTable, strIP );
+        //Sleep( 10000 );
+    }
 }
 
 void CMgmtThread::SendPeerRequest( QStringList &lstRows, const QString &strTable )
@@ -308,11 +398,11 @@ void CMgmtThread::SendPeerRequest( QStringList &lstRows, const QString &strTable
         }
 
         SendFilterData( pPeer, strWhere, strTable );
-        Sleep( 60000 );
+        //Sleep( 60000 );
     }
 }
 
-void CMgmtThread::PeerRequest( ) // Server Request
+void CMgmtThread::PeerRequest( QUdpSocket* pUdpSocket ) // Server Request
 {
     QStringList& lstTables = config.GetAllTables( true );
     QString strSql = "";
@@ -334,8 +424,9 @@ void CMgmtThread::PeerRequest( ) // Server Request
         }
 
         if ( pMySQL->DbCrud( strSql, strError ) && 0 <= pMySQL->GetRowData( lstRows, strError ) ) {
-            SendPeerRequest( lstRows, strTable );
-            Sleep( 30000 );
+            //SendPeerRequest( lstRows, strTable );
+            UdpSendPeerRequest( pUdpSocket, lstRows, strTable );
+            Sleep( 5000 );
         }
 
 #ifdef QT_NO_DBUS
@@ -380,6 +471,8 @@ void CMgmtThread::SendTableData( bool bRequest, QString& strWhere, QString& strT
     QString strError;
     bool bRet = false;
     QString strFile = "";
+    QString strStopRd = "STOPRD";
+    QString strFeeRd = "FEERD";
 
     foreach ( const QString strTable, lstTables ) {
         config.GetSQL( bRequest, strSql, strTable );
@@ -389,7 +482,15 @@ void CMgmtThread::SendTableData( bool bRequest, QString& strWhere, QString& strT
         }
 
         strFile = strPath + strTable;
-        strSql = bRequest ? strSql.arg( strTable, strWhere, strFile ) : strSql.arg( strTable, strFile );
+        if ( bRequest ) {
+            strSql = strSql.arg( strTable, strWhere, strFile );
+        } else {
+            if ( strStopRd == strTable.toUpper( ) ) {
+                strSql = strSql.arg( strTable, strWhere, strFile );
+            } else {
+                strSql = strSql.arg( strTable, strFile );
+            }
+        }
 
         bRet = ConnectMySQL( );
 
@@ -398,8 +499,14 @@ void CMgmtThread::SendTableData( bool bRequest, QString& strWhere, QString& strT
         }
 
         if ( pMySQL->DbCrud( strSql, strError ) ) {
+            if ( strStopRd == strTable.toUpper( ) ) {
+                UpdateStopRdTransferFlag( strWhere );
+            } else if ( strFeeRd == strTable.toUpper( ) ) {
+                UpdateFeeRdTransferFlag( );
+            }
+
             SendTableData( strFile, strTable );
-            Sleep( bRequest ? 60000 : 10000 );
+            Sleep( 10000 );
             QFile::remove( strFile );
         }
 
@@ -411,15 +518,51 @@ void CMgmtThread::SendTableData( bool bRequest, QString& strWhere, QString& strT
     }
 }
 
+void CMgmtThread::GetFeeRdWhere( QString &strWhere )
+{
+    strWhere = " Where Transfered = 0 ";
+}
+
+void CMgmtThread::GetStopRdWhere( QString &strWhere )
+{
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
+    bool bMode = pSet->value( "CommonSet/MonthlyWorkMode", false ).toBool( );
+
+    strWhere = " Where ( Transfered = 0 and MayDelete = 3 ) ";
+    if ( bMode ) {
+        strWhere += "  or ( cardkind = 'ÔÂ×â¿¨'  and Transfered = 0  and MayDelete = 1 ) ";
+    }
+}
+
+void CMgmtThread::UpdateStopRdTransferFlag( QString &strWhere )
+{
+    QString strSql = "Update Stoprd set Transfered  = 1 "  + strWhere;
+    QString strError;
+    pMySQL->DbCrud( strSql, strError );
+    qDebug( ) << strError << endl;
+}
+
+void CMgmtThread::UpdateFeeRdTransferFlag(  )
+{
+    QString strSql = "Update Feerd set Transfered  = 1 where Transfered = 0";
+    QString strError;
+    pMySQL->DbCrud( strSql, strError );
+    qDebug( ) << strError << endl;
+}
+
 void CMgmtThread::timerEvent( QTimerEvent *event )
 {
     if ( nClientTimer == event->timerId( ) ) {
         QString strWhere = "";
         QString strTable = "";
+
+        GetStopRdWhere( strWhere );
         SendTableData( false, strWhere, strTable );
+
         qDebug( ) << "Mgmt Client Timer" << endl;
     } else if ( nServerTimer == event->timerId( ) ) {
-        PeerRequest( );
+        //PeerRequest( );
+        QThreadPool::globalInstance( )->start( CSendRequest::GetTask( this ) );
         qDebug( ) << "Mgmt Server Timer" << endl;
     }
 }

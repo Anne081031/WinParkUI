@@ -32,7 +32,7 @@ private:
     void WriteData2Db( const char* pData, const char* pName, quint32 nDataLen );
     bool WriteFile( const char* pData, const QString& strPath, quint32 nDataLen );
     void WriteDb( QString& strPath, const char* pName );
-    void GetAllMgmtSql( );
+    void GetAllMgmtSql( bool bRequest );
     inline void GetTableSql( QString& strSql, QString& strPath, const char* pName );
 
 private:

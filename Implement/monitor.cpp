@@ -313,8 +313,8 @@ void CMonitor::FillDataGrid( QStringList &lstData )
         return;
     }
 
-    if ( 500 <= ui->tabRecord->rowCount( ) ) {
-        for ( int nIndex = ui->tabRecord->rowCount( ) - 1; nIndex >= 100; nIndex-- ) {
+    if ( 100 < ui->tabRecord->rowCount( ) ) {
+        for ( int nIndex = ui->tabRecord->rowCount( ) - 1; nIndex > 99; nIndex-- ) {
             ui->tabRecord->removeRow( nIndex );
         }
     }
@@ -1634,7 +1634,7 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
 
         if ( 2 == nType ) {
             strSql  = QString( "select a.cardno, a.cardselfno, %1 '%2', '', \
-                      d.inshebeiname, d.intime, d.outshebeiname, d.outtime, d.cardkind, d.carcp, d.carcpout \
+                      d.inshebeiname, d.intime, d.outshebeiname, d.outtime, d.cardkind, d.carcp, d.carcpout, d.feekind \
                       from %3 a \
                       %4 \
                       inner join stoprd d on a.cardno = d.cardno and %5 = '%6' and %7 = '%8'" ).arg(
@@ -1643,7 +1643,7 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
                       strTimeField, strDateTime );
         } else if ( bFreeCard ) {
             strSql = QString( "Select cardno, cardselfno, feefactnum, '%1', '', inshebeiname, intime,outshebeiname,\
-                              outtime,cardkind, carcp, carcpout from stoprd " ).arg( ui->tabRecord->item( row, 0 )->text( ) );
+                              outtime,cardkind, carcp, carcpout, feekind from stoprd " ).arg( ui->tabRecord->item( row, 0 )->text( ) );
             strSql += strWhere;
             nType = 2;
         } else if ( 0 == nType || 1 == nType ) {

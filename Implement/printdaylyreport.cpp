@@ -13,7 +13,7 @@ CPrintDaylyReport::CPrintDaylyReport(QWidget* mainWnd, QWidget *parent) :
     ui->lblTitle->setText( windowTitle( ) );
     nReportType = 0;
     QString strName = "rdChx%1";
-    for ( int nIndex = 1; nIndex <= 6; nIndex++ ) {
+    for ( int nIndex = 1; nIndex <= 8; nIndex++ ) {
         QString strTmp = strName.arg( nIndex );
         QRadioButton* pRd = ui->gbType->findChild< QRadioButton* >( strTmp );
         if ( NULL != pRd ) {
@@ -46,7 +46,7 @@ void CPrintDaylyReport::SetDateTimeFormat( QString &strFormat )
 void CPrintDaylyReport::OnRdChkClicked( )
 {
     QRadioButton* pBtn = qobject_cast< QRadioButton* >( sender( ) );
-    nReportType = pBtn->objectName( ).right( 1 ).toInt( ) - 1; // 1 - 6
+    nReportType = pBtn->objectName( ).right( 1 ).toInt( ) - 1; // 1 - 8
 
     QString strFormat = "yyyy-MM-dd";
     if ( CommonDataType::ReportTimeCardDetail == nReportType ) {
