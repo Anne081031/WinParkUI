@@ -164,7 +164,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
             strPlates[ 1 ] = strPlates[ 0 ];
         }
         ui->edtStayTime->setText( QString::number( nHour ) + "Ê±" + QString::number( nMin ) + "·Ö" );
-        ui->edtVechilePlate->setText( strPlates[ 0 ] );
+        ui->edtVechilePlate->setText( strPlates[ 0 ].isEmpty( ) ? "Î´Öª" : strPlates[ 0 ] );
 
         //QString strSql = QString( "select a.cardselfno, b.carcp, b.carmodel, c.username from tmpcard a \
         //                 inner join carinfo b on a.cardno = '%1' and a.cardno = b.cardindex \

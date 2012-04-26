@@ -25,8 +25,8 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
     pTxtCodec = CCommonFunction::GetTextCodec( );
 
     if ( bClient ) {
-        pTcpClient = new CTcpClient(  );
-        pUdpServer = new QUdpSocket(   );
+        pTcpClient = new CTcpClient( this );
+        pUdpServer = new QUdpSocket( this );
         //connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) );
         connect( pUdpServer, SIGNAL( readyRead( ) ), this, SLOT( UdpPeerData( ) ) );
         connect( pTcpClient, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
@@ -38,8 +38,8 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
 
         pUdpServer->bind( QHostAddress::Any, config.GetMgmtSvrPort( ), QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint );
     } else {
-        pTcpServer = new CTcpDispatcher(  );
-        //pUdpClient = new QUdpSocket(  );
+        pTcpServer = new CTcpDispatcher( this );
+        //pUdpClient = new QUdpSocket( this );
         connect( pTcpServer, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
         nInterval = config.GetInterval( true );
         if ( 0 < nInterval ) {
@@ -426,7 +426,7 @@ void CMgmtThread::PeerRequest( QUdpSocket* pUdpSocket ) // Server Request
         if ( pMySQL->DbCrud( strSql, strError ) && 0 <= pMySQL->GetRowData( lstRows, strError ) ) {
             //SendPeerRequest( lstRows, strTable );
             UdpSendPeerRequest( pUdpSocket, lstRows, strTable );
-            Sleep( 5000 );
+            Sleep( 10000 );
         }
 
 #ifdef QT_NO_DBUS
@@ -506,7 +506,7 @@ void CMgmtThread::SendTableData( bool bRequest, QString& strWhere, QString& strT
             }
 
             SendTableData( strFile, strTable );
-            Sleep( 10000 );
+            Sleep( 5000 );
             QFile::remove( strFile );
         }
 

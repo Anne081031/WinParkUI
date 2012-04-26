@@ -2398,7 +2398,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
         bool bBuffer = GetTimeCardBuffer( );
         QString strBufferTable = bBuffer ? "tmpcardintime" : "stoprd";
         QStringList lstInOut;
-        QString strSql = QString( "select cardno, intime from %1" ).arg( strBufferTable );
+        QString strSql = QString( "select cardno, intime, inshebeiname from %1" ).arg( strBufferTable );
         QString strWhere = QString( " Where cardno = '%1' And intime in \
                                     ( Select intime From ( Select Max( intime ) As intime \
                                                            From %2 \
@@ -2441,7 +2441,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
         //CCommonFunction::GetAllChannels( lstChan, strParkName, bEnter );
         QString strEnd = dtEnd.toString( "yyyy-MM-dd HH:mm:ss" );
         lstInit << lstRows[ 0 ] << strCardType;
-        lstInit << lstInOut[ 0 ] << lstInOut[ 1 ];
+        lstInit << lstInOut[ 2 ] << lstInOut[ 1 ];
         lstInit << strChannel << strEnd;
         lstInit << QString::number( nHour ) << QString::number( nMin);
         lstInit << QString::number( nAmount );

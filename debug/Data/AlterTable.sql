@@ -1,4 +1,54 @@
-﻿;MySQL Restart
+﻿//////////////////////////////////////////////////////////////////////////////////////////////
+-- Stoprd Trigger DDL Statements
+DELIMITER $$
+
+USE `parkadmin`$$
+
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `parkadmin`.`InsertStoprd`
+AFTER INSERT ON `parkadmin`.`stoprd`
+FOR EACH ROW
+BEGIN
+ if ( ( '计时卡' = new.cardkind ) && Exists( Select Table_name from information_schema.tables as a where a.table_name = 'tmpcardintime' and table_schema = 'parkadmin' ) )  then
+    insert tmpcardintime( cardno, intime ) values( new.cardno, new.intime );
+ end if;
+END$$
+
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `parkadmin`.`BeforeUpdateStoprd`
+BEFORE UPDATE ON `parkadmin`.`stoprd`
+FOR EACH ROW
+BEGIN
+ if ( true and new.Transfered = 0 ) then -- 青城山 true else false
+    set new.MayDelete = old.Maydelete + 1;
+ end if;
+END$$
+
+CREATE
+DEFINER=`root`@`localhost`
+TRIGGER `parkadmin`.`UpdateStoprd`
+AFTER UPDATE ON `parkadmin`.`stoprd`
+FOR EACH ROW
+BEGIN
+ if ( ( '计时卡' = new.cardkind ) && Exists( Select Table_name from information_schema.tables as a where a.table_name = 'tmpcardintime'  and table_schema = 'parkadmin' ) ) then
+  if ( old.invideo1 is null && new.invideo1 is not null ) then
+    update tmpcardintime set invideo1 = new.invideo1 where cardno = old.cardno and intime = old.intime;
+    elseif ( new.MayDelete ) then
+    delete from tmpcardintime where cardno = old.cardno and intime <= old.intime;
+  end if;
+ end if;
+END$$
+
+
+
+
+alter table parkadmin.Stoprd add column Transerfed tinyint( 1 ) default 0;
+alter table parkadmin.Feerd add column Transerfed tinyint( 1 ) default 0;
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+;MySQL Restart
 SET GLOBAL EVENT_SCHEDULER = TRUE
 
 

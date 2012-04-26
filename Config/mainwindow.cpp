@@ -39,6 +39,7 @@ void MainWindow::ReadFile( )
     ui->edtLedCan->setText( pSystemCfg->value( "CommonCfg/IndependentLedCan").toString( ) );
     ui->chkOpenGate->setChecked( pSystemCfg->value( "CommonCfg/SenseOpenGate", false ).toBool( ) );
     ui->chkCapture->setChecked( pSystemCfg->value( "CommonCfg/SenseGetImg", true ).toBool( ) );
+    ui->edtParkID->setText( pSystemCfg->value( "CommonCfg/ParkID", "5101070001" ).toString( ) );
 
     QString strKey = "CommonCfg/Video%1";
     QString strChannelKey = "CommonCfg/Name%1";
@@ -89,6 +90,7 @@ void MainWindow::WriteFile( )
     pSystemCfg->setValue( "CommonCfg/IndependentLedCan", ui->edtLedCan->text( ) );
     pSystemCfg->setValue( "CommonCfg/SenseOpenGate", ui->chkOpenGate->isChecked( ) );
     pSystemCfg->setValue( "CommonCfg/SenseGetImg", ui->chkCapture->isChecked( ) );
+    pSystemCfg->setValue( "CommonCfg/ParkID", ui->edtParkID->text( ) );
 
     QString strKey = "CommonCfg/Video%1";
     QString strChannelKey = "CommonCfg/Name%1";

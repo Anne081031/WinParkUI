@@ -14,6 +14,12 @@
 #include <QFile>
 
 bool CMySqlDatabase::bExpiration = false;
+//
+// 单(多)版本 单(多)实例 实例独占(共享)库
+//
+// Oracle MySQL(InnoDB) PostgreSQL
+// MVCC Multiversion Concurrency Control( Snapshot )
+//
 
 CMySqlDatabase::CMySqlDatabase(QObject *parent) :
     QObject(parent)
