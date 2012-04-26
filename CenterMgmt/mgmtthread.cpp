@@ -27,7 +27,7 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
     if ( bClient ) {
         pTcpClient = new CTcpClient( this );
         pUdpServer = new QUdpSocket( this );
-        //connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) );
+        //connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) ); Test
         connect( pUdpServer, SIGNAL( readyRead( ) ), this, SLOT( UdpPeerData( ) ) );
         connect( pTcpClient, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
         CCommonFunction::GetPath( strPath, CommonDataType::PathSnapshot );
@@ -530,7 +530,7 @@ void CMgmtThread::GetStopRdWhere( QString &strWhere )
 
     strWhere = " Where ( Transfered = 0 and MayDelete = 3 ) ";
     if ( bMode ) {
-        strWhere += "  or ( cardkind = 'ÔÂ×â¿¨'  and Transfered = 0  and MayDelete = 1 ) ";
+        strWhere += "  or ( cardkind = 'ï¿½ï¿½ï¿½â¿¨'  and Transfered = 0  and MayDelete = 1 ) ";
     }
 }
 
