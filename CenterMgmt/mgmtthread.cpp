@@ -27,7 +27,7 @@ CMgmtThread::CMgmtThread( bool bSender, QObject *parent) :
     if ( bClient ) {
         pTcpClient = new CTcpClient( this );
         pUdpServer = new QUdpSocket( this );
-        //connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) ); 
+        //connect( pTcpClient, SIGNAL( readyRead( ) ), this, SLOT( PeerData( ) ) );  git pull RemoteRepositoryAlias branchName
         connect( pUdpServer, SIGNAL( readyRead( ) ), this, SLOT( UdpPeerData( ) ) );
         connect( pTcpClient, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMsg( QString ) ) );
         CCommonFunction::GetPath( strPath, CommonDataType::PathSnapshot );
