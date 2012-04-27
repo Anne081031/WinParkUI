@@ -41,6 +41,8 @@ void CTimeCard::ControlDataGrid( )
     pHeader->resizeSection( nIndex, pHeader->sectionSize( nIndex ) * 2 );
     nIndex = 3;
     pHeader->resizeSection( nIndex, pHeader->sectionSize( nIndex ) * 2 );
+
+    ui->tableEntranceRight->horizontalHeader( )->hideSection( 3 );
 }
 
 void CTimeCard::GetDataFromDb( )

@@ -19,6 +19,12 @@ CDlgBulkRegister::CDlgBulkRegister( CommonDataType::CardType card, QTableWidget*
     CCommonFunction::ConnectCloseButton( ui->lblClose );
     ui->lblTitle->setText( statusTip( ).arg( strType[ cardType ] ) );
     setWindowFlags( Qt::FramelessWindowHint );
+
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+    nBulkEndMonth = 1;
+    if ( NULL != pSet ) {
+        nBulkEndMonth = pSet->value( "CommonCfg/CardBulkRegEndTime", 1 ).toInt( );
+    }
 }
 
 CDlgBulkRegister::~CDlgBulkRegister()
@@ -183,7 +189,7 @@ void CDlgBulkRegister::AddMonthRow( const QString &strCardID )
         case 4 :
         case 5 :
             if ( 5 == nIndex ) {
-                dt = dt.addMonths( 1 );
+                dt = dt.addMonths( nBulkEndMonth );
             }
             AddDateTimeItem( 0, nIndex, dt, ui->tabRecord );
             break;

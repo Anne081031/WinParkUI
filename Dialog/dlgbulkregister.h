@@ -54,6 +54,7 @@ private:
     CommonDataType::CardType cardType;
     QString strCreator;
     QTableWidget* tabWidget;
+    int nBulkEndMonth;
 
 private:
     Ui::CDlgBulkRegister *ui;

@@ -94,7 +94,7 @@ void CAccess2Records::FillTable( QString& strWhere )
     int nRows; // = CLogicInterface::GetInterface( )->OperateOutInInfo( lstData, CommonDataType::SelectData, strWhere );
 
     QString strSql = QString( "select a.cardno, a.cardkind, a.feenum, a.feefactnum, a.feezkyy, a.cardselfno, \
-            a.inshebeiname, a.intime, a.outshebeiname, a.outtime, a.carkind, a.carcp, a.carcpout from stoprd a " ).arg( strWhere );
+            a.inshebeiname, a.intime, a.outshebeiname, a.outtime, a.carkind, a.carcp, a.carcpout from stoprd a %1" ).arg( strWhere );
 
     nRows = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData, CCommonFunction::GetHistoryDb( ) );
 
@@ -224,6 +224,7 @@ void CAccess2Records::on_btnQuery_clicked()
         CCommonFunction::MsgBox( NULL, "提示", "请输入查询条件！", QMessageBox::Information );
         return;
     }
+
     FillTable( strWhere );
 }
 

@@ -30,7 +30,7 @@
 background-image:url(D:/WinParkUI/debug/Image/NewIcon/SysMiddleSet.jpg);</string>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tabCommonSetting">
     <attribute name="title">

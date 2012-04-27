@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'syssettingdialog.ui'
 **
-** Created: Fri Mar 23 16:28:39 2012
+** Created: Fri Apr 27 10:53:58 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -463,7 +463,7 @@ public:
 
         retranslateUi(CSysSettingDialog);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
         lsResolution->setCurrentRow(0);
 
 
