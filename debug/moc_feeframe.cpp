@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'feeframe.h'
 **
-** Created: Fri Mar 23 16:48:38 2012
+** Created: Fri Apr 27 12:19:19 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
