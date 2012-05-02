@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgbulkregister.h'
 **
-** Created: Fri Apr 27 12:20:29 2012
+** Created: Wed May 2 15:27:59 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CDlgBulkRegister[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,6 +35,8 @@ static const uint qt_meta_data_CDlgBulkRegister[] = {
       57,   17,   17,   17, 0x08,
       92,   17,   17,   17, 0x08,
      113,   17,   17,   17, 0x08,
+     143,  135,   17,   17, 0x08,
+     173,  166,   17,   17, 0x08,
 
        0        // eod
 };
@@ -44,6 +46,8 @@ static const char qt_meta_stringdata_CDlgBulkRegister[] = {
     "on_edtCardID_textChanged(QString)\0"
     "on_lblClose_linkActivated(QString)\0"
     "on_btnSave_clicked()\0on_btnClose_clicked()\0"
+    "checked\0on_chkID_clicked(bool)\0nIndex\0"
+    "OnBulkCarType(int)\0"
 };
 
 const QMetaObject CDlgBulkRegister::staticMetaObject = {
@@ -79,9 +83,11 @@ int CDlgBulkRegister::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 1: on_lblClose_linkActivated((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 2: on_btnSave_clicked(); break;
         case 3: on_btnClose_clicked(); break;
+        case 4: on_chkID_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 5: OnBulkCarType((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 4;
+        _id -= 6;
     }
     return _id;
 }

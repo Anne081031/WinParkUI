@@ -41,6 +41,9 @@ private:
     inline void AddDateTimeItem( int nRow, int nCol, const QDateTime& dtDefault, QTableWidget* pTable );
     inline void AddComboBoxItem( int nRow, int nCol, int nDefault, int nItem, QTableWidget* pTable );
 
+    void GetSelfNumber( QString& strNumber );
+    void AddCbxValue( QComboBox* pCbx );
+
 private slots:
     void on_edtCardID_textChanged(const QString &arg1);
 
@@ -49,6 +52,10 @@ private slots:
     void on_btnSave_clicked();
 
     void on_btnClose_clicked();
+
+    void on_chkID_clicked(bool checked);
+
+    void OnBulkCarType( int nIndex );
 
 private:
     CommonDataType::CardType cardType;

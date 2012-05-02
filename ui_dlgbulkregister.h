@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgbulkregister.ui'
 **
-** Created: Fri Apr 27 12:12:47 2012
+** Created: Wed May 2 15:31:05 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,12 +14,15 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QCheckBox>
+#include <QtGui/QComboBox>
 #include <QtGui/QDialog>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
+#include <QtGui/QSpinBox>
 #include <QtGui/QTableWidget>
 #include <QtGui/QWidget>
 
@@ -36,6 +39,15 @@ public:
     QHBoxLayout *horizontalLayout;
     QPushButton *btnSave;
     QPushButton *btnClose;
+    QWidget *layoutWidget1;
+    QHBoxLayout *horizontalLayout_2;
+    QCheckBox *chkID;
+    QLabel *label;
+    QSpinBox *spValue;
+    QLabel *label_2;
+    QSpinBox *spDigit;
+    QLabel *label_3;
+    QComboBox *cbxCarType;
 
     void setupUi(QDialog *CDlgBulkRegister)
     {
@@ -60,7 +72,7 @@ public:
         lblClose->setGeometry(QRect(689, 5, 31, 16));
         tabRecord = new QTableWidget(CDlgBulkRegister);
         tabRecord->setObjectName(QString::fromUtf8("tabRecord"));
-        tabRecord->setGeometry(QRect(45, 61, 631, 541));
+        tabRecord->setGeometry(QRect(45, 71, 631, 531));
         tabRecord->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
         edtCardID = new QLineEdit(CDlgBulkRegister);
         edtCardID->setObjectName(QString::fromUtf8("edtCardID"));
@@ -84,6 +96,62 @@ public:
 
         horizontalLayout->addWidget(btnClose);
 
+        layoutWidget1 = new QWidget(CDlgBulkRegister);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(45, 43, 536, 22));
+        horizontalLayout_2 = new QHBoxLayout(layoutWidget1);
+        horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
+        horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
+        chkID = new QCheckBox(layoutWidget1);
+        chkID->setObjectName(QString::fromUtf8("chkID"));
+        chkID->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+
+        horizontalLayout_2->addWidget(chkID);
+
+        label = new QLabel(layoutWidget1);
+        label->setObjectName(QString::fromUtf8("label"));
+        label->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+
+        horizontalLayout_2->addWidget(label);
+
+        spValue = new QSpinBox(layoutWidget1);
+        spValue->setObjectName(QString::fromUtf8("spValue"));
+        spValue->setEnabled(false);
+        spValue->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        spValue->setMaximum(999999999);
+        spValue->setValue(1);
+
+        horizontalLayout_2->addWidget(spValue);
+
+        label_2 = new QLabel(layoutWidget1);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+        label_2->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+
+        horizontalLayout_2->addWidget(label_2);
+
+        spDigit = new QSpinBox(layoutWidget1);
+        spDigit->setObjectName(QString::fromUtf8("spDigit"));
+        spDigit->setEnabled(false);
+        spDigit->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        spDigit->setMinimum(4);
+        spDigit->setMaximum(999999999);
+
+        horizontalLayout_2->addWidget(spDigit);
+
+        label_3 = new QLabel(layoutWidget1);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+        label_3->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+
+        horizontalLayout_2->addWidget(label_3);
+
+        cbxCarType = new QComboBox(layoutWidget1);
+        cbxCarType->setObjectName(QString::fromUtf8("cbxCarType"));
+        cbxCarType->setEnabled(false);
+        cbxCarType->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+
+        horizontalLayout_2->addWidget(cbxCarType);
+
+        layoutWidget->raise();
         layoutWidget->raise();
         edtCardID->raise();
         lblTitle->raise();
@@ -105,6 +173,10 @@ public:
         lblClose->setText(QString());
         btnSave->setText(QApplication::translate("CDlgBulkRegister", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
         btnClose->setText(QApplication::translate("CDlgBulkRegister", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));
+        chkID->setText(QApplication::translate("CDlgBulkRegister", "\350\207\252\345\212\250\344\272\247\347\224\237\350\207\252\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("CDlgBulkRegister", "\345\274\200\345\247\213\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("CDlgBulkRegister", "\350\207\252\347\274\226\345\217\267\344\275\215\346\225\260", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("CDlgBulkRegister", "\346\211\271\351\207\217\350\275\246\345\236\213", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

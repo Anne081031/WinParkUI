@@ -665,7 +665,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     //CCommonFunction::ShowSplashMessage( "同步时间开始。" );
    //CCommonFunction::ShowSplashMessage( "同步时间结束。" );
 
-    ui->actPlateService->menuAction()->setVisible( false );
+    ui->actPlateService->menuAction( )->setVisible( false );
     ui->actVideoService->menuAction( )->setVisible( false );
 
     QString strText = "%1%2端功能。";

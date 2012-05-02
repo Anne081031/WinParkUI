@@ -100,6 +100,9 @@ void CDlgBulkRegister::AddColumn( )
     case CommonDataType::TimeCard :
         nCols = 5;
         lstColName << "卡号" << "卡类型" << "收费标准" << "卡片自编号"<< "卡状态";
+        ui->cbxCarType->setEnabled( true );
+        AddCbxValue( ui->cbxCarType );
+        connect( ui->cbxCarType, SIGNAL( currentIndexChanged( int ) ), this, SLOT( OnBulkCarType( int ) ) );
         break;
     }
 
@@ -110,6 +113,34 @@ void CDlgBulkRegister::AddColumn( )
         pItem = new QTableWidgetItem( lstColName[ nCol ] );
         ui->tabRecord->setHorizontalHeaderItem( nCol, pItem );
     }
+}
+
+void CDlgBulkRegister::OnBulkCarType( int nIndex )
+{
+    QComboBox* pCbx = NULL;
+
+    for ( int nRow = 0; nRow < ui->tabRecord->rowCount( ); nRow++ ) {
+        pCbx = ( QComboBox* ) ui->tabRecord->cellWidget( nRow, 2 );
+        pCbx->setCurrentIndex( nIndex );
+    }
+}
+
+void CDlgBulkRegister::GetSelfNumber( QString &strNumber )
+{
+    if ( Qt::Unchecked == ui->chkID->checkState( ) ) {
+        strNumber = "未知";
+        return;
+    }
+
+    char cValue[ 32 ] = { 0 };
+    int nValue = ui->spValue->value(  );
+
+    QString strDigit = "%." + ui->spDigit->text( ) + "d";
+    QByteArray byData = strDigit.toAscii( );
+    ::sprintf( cValue, byData.data( ), nValue );
+
+    strNumber = cValue;
+    ui->spValue->setValue( nValue + 1 );
 }
 
 void CDlgBulkRegister::AddItem( const QString &strText, int nRow, int nCol, QTableWidget* pTable )
@@ -134,6 +165,17 @@ void CDlgBulkRegister::AddDateTimeItem( int nRow, int nCol, const QDateTime& dtD
     pTable->setCellWidget( nRow, nCol, pDateTime );
 }
 
+void CDlgBulkRegister::AddCbxValue( QComboBox *pCbx )
+{
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgTariff );
+    QString strKey = "CarType/Count%1";
+    int nCount = pSet->value( strKey.arg( "" ), 0 ).toInt( );
+
+    for ( int nIndex = 0; nIndex < nCount; nIndex++ ) {
+        pCbx->addItem( pSet->value( strKey.arg( nIndex ), "" ).toString( ) );
+    }
+}
+
 void CDlgBulkRegister::AddComboBoxItem( int nRow, int nCol, int nDefault, int nItem, QTableWidget* pTable )
 {
     QComboBox* pCB = new QComboBox(  );
@@ -150,13 +192,7 @@ void CDlgBulkRegister::AddComboBoxItem( int nRow, int nCol, int nDefault, int nI
         break;
 
     case 2 :
-        QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgTariff );
-        QString strKey = "CarType/Count%1";
-        int nCount = pSet->value( strKey.arg( "" ), 0 ).toInt( );
-
-        for ( int nIndex = 0; nIndex < nCount; nIndex++ ) {
-            pCB->addItem( pSet->value( strKey.arg( nIndex ), "" ).toString( ) );
-        }
+        AddCbxValue( pCB );
         break;
     }
 
@@ -168,7 +204,7 @@ void CDlgBulkRegister::AddMonthRow( const QString &strCardID )
 {
     ui->tabRecord->insertRow( 0 );
     QDateTime dt = QDateTime::currentDateTime( );
-    QString strText = "未知";
+    QString strText;
 
     for ( int nIndex = 0; nIndex  < ui->tabRecord->columnCount( ); nIndex++ ) {
         switch ( nIndex ) {
@@ -195,7 +231,12 @@ void CDlgBulkRegister::AddMonthRow( const QString &strCardID )
             break;
 
         case 7 :
+            GetSelfNumber( strText );
+            AddItem( strText, 0, nIndex, ui->tabRecord );
+            break;
+
         case 8 :
+            strText = "未知";
             AddItem( strText, 0, nIndex, ui->tabRecord );
             break;
 
@@ -236,8 +277,12 @@ void CDlgBulkRegister::AddValueRow( const QString &strCardID )
             break;
 
         case 7 :
-        case 8 :
             strText = "未知";
+            AddItem( strText, 0, nIndex, ui->tabRecord );
+            break;
+
+        case 8 :
+            GetSelfNumber( strText );
             AddItem( strText, 0, nIndex, ui->tabRecord );
             break;
 
@@ -251,7 +296,7 @@ void CDlgBulkRegister::AddValueRow( const QString &strCardID )
 void CDlgBulkRegister::AddTimeRow( const QString &strCardID )
 {
     ui->tabRecord->insertRow( 0 );
-    QString strText = "未知";
+    QString strText;
 
     for ( int nIndex = 0; nIndex  < ui->tabRecord->columnCount( ); nIndex++ ) {
         switch ( nIndex ) {
@@ -268,6 +313,7 @@ void CDlgBulkRegister::AddTimeRow( const QString &strCardID )
             break;
 
         case 3 :
+            GetSelfNumber( strText );
             AddItem( strText, 0, nIndex, ui->tabRecord );
             break;
 
@@ -513,4 +559,10 @@ void CDlgBulkRegister::on_btnClose_clicked()
     if ( QMessageBox::Ok == CCommonFunction::MsgBox( NULL, "提示", "确定要放弃吗？", QMessageBox::Information ) ) {
         close( );
     }
+}
+
+void CDlgBulkRegister::on_chkID_clicked(bool checked)
+{
+    ui->spValue->setEnabled( checked );
+    ui->spDigit->setEnabled( checked );
 }

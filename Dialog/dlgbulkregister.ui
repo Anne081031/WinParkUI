@@ -62,9 +62,9 @@ color: rgb(85, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>45</x>
-     <y>61</y>
+     <y>71</y>
      <width>631</width>
-     <height>541</height>
+     <height>531</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -116,6 +116,101 @@ color: rgb(85, 0, 0);</string>
     </item>
    </layout>
   </widget>
+  <widget class="QWidget" name="layoutWidget">
+   <property name="geometry">
+    <rect>
+     <x>45</x>
+     <y>43</y>
+     <width>536</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QCheckBox" name="chkID">
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+      <property name="text">
+       <string>自动产生自编号</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+      <property name="text">
+       <string>开始编号</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="spValue">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+      <property name="maximum">
+       <number>999999999</number>
+      </property>
+      <property name="value">
+       <number>1</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_2">
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+      <property name="text">
+       <string>自编号位数</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="spDigit">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+      <property name="minimum">
+       <number>4</number>
+      </property>
+      <property name="maximum">
+       <number>999999999</number>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_3">
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+      <property name="text">
+       <string>批量车型</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QComboBox" name="cbxCarType">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>edtCardID</zorder>
   <zorder>lblTitle</zorder>
