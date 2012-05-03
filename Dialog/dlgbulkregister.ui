@@ -116,12 +116,12 @@ color: rgb(85, 0, 0);</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
-     <x>45</x>
-     <y>43</y>
-     <width>536</width>
+     <x>40</x>
+     <y>44</y>
+     <width>651</width>
      <height>22</height>
     </rect>
    </property>
@@ -205,6 +205,35 @@ color: rgb(85, 0, 0);</string>
       </property>
       <property name="styleSheet">
        <string notr="true">background-image: url(none);</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_4">
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+      <property name="text">
+       <string>批量有效期(月)</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QSpinBox" name="spMonth">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-image: url(none);</string>
+      </property>
+      <property name="minimum">
+       <number>0</number>
+      </property>
+      <property name="maximum">
+       <number>1200</number>
+      </property>
+      <property name="value">
+       <number>0</number>
       </property>
      </widget>
     </item>

@@ -57,6 +57,8 @@ private slots:
 
     void OnBulkCarType( int nIndex );
 
+    void OnBulkMonth( int nMonth );
+
 private:
     CommonDataType::CardType cardType;
     QString strCreator;

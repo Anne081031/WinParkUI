@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgbulkregister.ui'
 **
-** Created: Wed May 2 15:31:05 2012
+** Created: Thu May 3 12:46:28 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,7 +39,7 @@ public:
     QHBoxLayout *horizontalLayout;
     QPushButton *btnSave;
     QPushButton *btnClose;
-    QWidget *layoutWidget1;
+    QWidget *widget;
     QHBoxLayout *horizontalLayout_2;
     QCheckBox *chkID;
     QLabel *label;
@@ -48,6 +48,8 @@ public:
     QSpinBox *spDigit;
     QLabel *label_3;
     QComboBox *cbxCarType;
+    QLabel *label_4;
+    QSpinBox *spMonth;
 
     void setupUi(QDialog *CDlgBulkRegister)
     {
@@ -96,25 +98,25 @@ public:
 
         horizontalLayout->addWidget(btnClose);
 
-        layoutWidget1 = new QWidget(CDlgBulkRegister);
-        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(45, 43, 536, 22));
-        horizontalLayout_2 = new QHBoxLayout(layoutWidget1);
+        widget = new QWidget(CDlgBulkRegister);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(40, 44, 651, 22));
+        horizontalLayout_2 = new QHBoxLayout(widget);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
-        chkID = new QCheckBox(layoutWidget1);
+        chkID = new QCheckBox(widget);
         chkID->setObjectName(QString::fromUtf8("chkID"));
         chkID->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
 
         horizontalLayout_2->addWidget(chkID);
 
-        label = new QLabel(layoutWidget1);
+        label = new QLabel(widget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
 
         horizontalLayout_2->addWidget(label);
 
-        spValue = new QSpinBox(layoutWidget1);
+        spValue = new QSpinBox(widget);
         spValue->setObjectName(QString::fromUtf8("spValue"));
         spValue->setEnabled(false);
         spValue->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
@@ -123,13 +125,13 @@ public:
 
         horizontalLayout_2->addWidget(spValue);
 
-        label_2 = new QLabel(layoutWidget1);
+        label_2 = new QLabel(widget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
 
         horizontalLayout_2->addWidget(label_2);
 
-        spDigit = new QSpinBox(layoutWidget1);
+        spDigit = new QSpinBox(widget);
         spDigit->setObjectName(QString::fromUtf8("spDigit"));
         spDigit->setEnabled(false);
         spDigit->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
@@ -138,18 +140,34 @@ public:
 
         horizontalLayout_2->addWidget(spDigit);
 
-        label_3 = new QLabel(layoutWidget1);
+        label_3 = new QLabel(widget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
         label_3->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
 
         horizontalLayout_2->addWidget(label_3);
 
-        cbxCarType = new QComboBox(layoutWidget1);
+        cbxCarType = new QComboBox(widget);
         cbxCarType->setObjectName(QString::fromUtf8("cbxCarType"));
         cbxCarType->setEnabled(false);
         cbxCarType->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
 
         horizontalLayout_2->addWidget(cbxCarType);
+
+        label_4 = new QLabel(widget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+        label_4->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+
+        horizontalLayout_2->addWidget(label_4);
+
+        spMonth = new QSpinBox(widget);
+        spMonth->setObjectName(QString::fromUtf8("spMonth"));
+        spMonth->setEnabled(false);
+        spMonth->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        spMonth->setMinimum(0);
+        spMonth->setMaximum(1200);
+        spMonth->setValue(0);
+
+        horizontalLayout_2->addWidget(spMonth);
 
         layoutWidget->raise();
         layoutWidget->raise();
@@ -177,6 +195,7 @@ public:
         label->setText(QApplication::translate("CDlgBulkRegister", "\345\274\200\345\247\213\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("CDlgBulkRegister", "\350\207\252\347\274\226\345\217\267\344\275\215\346\225\260", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("CDlgBulkRegister", "\346\211\271\351\207\217\350\275\246\345\236\213", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("CDlgBulkRegister", "\346\211\271\351\207\217\346\234\211\346\225\210\346\234\237(\346\234\210)", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

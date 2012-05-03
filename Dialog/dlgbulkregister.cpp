@@ -79,6 +79,20 @@ void CDlgBulkRegister::AddRecord( const QString &strCardID )
     }
 }
 
+void CDlgBulkRegister::OnBulkMonth( int nMonth )
+{
+    QDateTimeEdit* pDt = NULL;
+    QDateTime dtStart;
+
+    for ( int nRow = 0; nRow < ui->tabRecord->rowCount( ); nRow++ ) {
+        pDt = ( QDateTimeEdit* ) ui->tabRecord->cellWidget( nRow, 4 );
+        dtStart = pDt->dateTime( );
+
+        pDt = ( QDateTimeEdit* ) ui->tabRecord->cellWidget( nRow, 5 );
+        pDt->setDateTime( dtStart.addMonths( nMonth ) );
+    }
+}
+
 void CDlgBulkRegister::AddColumn( )
 {
     int nCols = 0;
@@ -89,6 +103,8 @@ void CDlgBulkRegister::AddColumn( )
         nCols = 10;
         lstColName << "卡号" << "入场必须刷卡" << "出场必须刷卡" << "卡类型"  << "有效期开始时间"
                               << "有效期结束时间" << "卡状态" << "卡片自编号" << "备注" << "登记者";
+        ui->spMonth->setEnabled( true );
+        connect( ui->spMonth, SIGNAL( valueChanged( int ) ), this, SLOT( OnBulkMonth( int  ) ) );
         break;
 
     case CommonDataType::ValueCard :
