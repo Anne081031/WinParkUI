@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgmakelicense.h'
 **
-** Created: Fri Apr 27 12:20:38 2012
+** Created: Tue May 8 19:00:03 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

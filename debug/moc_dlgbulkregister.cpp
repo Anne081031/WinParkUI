@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgbulkregister.h'
 **
-** Created: Thu May 3 12:36:01 2012
+** Created: Tue May 8 18:59:51 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -117,6 +117,7 @@ private:
     static void AddFee4( QString& strSection, QString& strMin, QString& strFootSufix,
                  int &nFee, int& nMinDiff, QSettings &pSet, QStringList& lstText );
     static int GetTimeDiff( QTime time1, QTime time2 );
+    static int GetDateTimeDiff( QDateTime& dt1, QDateTime& dt2, int  nT );
     static inline int GetQuotaValue( int nQuota, int nFee );
     static bool GetSectionAround( QTime& tSectionBegin, QTime& tSectionEnd, QDateTime& dtStart, QDateTime& dtEnd );
     static bool GetSectionAround( QTime& tSectionBegin, QTime& tSectionEnd, QDateTime& dtStart );
