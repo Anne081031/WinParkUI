@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgserach.ui'
 **
-** Created: Fri Apr 27 12:12:47 2012
+** Created: Thu May 17 11:59:42 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -161,7 +161,7 @@ public:
         QTableWidgetItem *___qtablewidgetitem13 = tabResult->horizontalHeaderItem(13);
         ___qtablewidgetitem13->setText(QApplication::translate("CDlgSerach", "\350\241\214\351\251\266\350\257\201\345\217\267", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        tabResult->setToolTip(QApplication::translate("CDlgSerach", "\345\217\214\345\207\273\345\215\225\345\205\203\346\240\274\357\274\214\345\256\232\344\275\215\345\210\260\347\233\270\345\272\224\347\232\204\346\234\210\347\247\237\345\215\241\350\256\260\345\275\225\343\200\202", 0, QApplication::UnicodeUTF8));
+        tabResult->setToolTip(QApplication::translate("CDlgSerach", "\345\217\214\345\207\273\345\215\225\345\205\203\346\240\274\357\274\214\345\256\232\344\275\215\345\210\260\347\233\270\345\272\224\347\232\204\345\215\241\350\256\260\345\275\225\343\200\202", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         btnClose->setText(QApplication::translate("CDlgSerach", "\346\237\245\350\257\242", 0, QApplication::UnicodeUTF8));
         lblClose->setText(QString());

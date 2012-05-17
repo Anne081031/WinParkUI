@@ -303,15 +303,18 @@ void CMonthlyCard::PositionRow( QString strCardID )
 
     QTableWidgetItem* pItem = lstItem.at( 0 );
     int nRow = ui->tableMonthly->row( pItem );
-    ui->tableMonthly->setCurrentItem( pItem, QItemSelectionModel::ToggleCurrent );
+    //ui->tableMonthly->setCurrentItem( pItem, QItemSelectionModel::ToggleCurrent );
     on_tableMonthly_cellClicked( nRow, 0 );
+    ui->tableMonthly->selectRow( nRow );
 }
 
 void CMonthlyCard::Serach( )
 {
     CDlgSerach dlg( CommonDataType::MonthlyCard );
     connect( &dlg, SIGNAL( PositionRow( QString ) ), this, SLOT( PositionRow( QString ) ) );
+    pParent->SetCardControl( dlg.GetEditCntrl(  ) );
     dlg.exec( );
+    pParent->SetCardControl( NULL );
 }
 
 void CMonthlyCard::ChangeCard( )

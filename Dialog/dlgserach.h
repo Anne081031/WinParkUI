@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QResizeEvent>
 #include "Common/CommonType.h"
+#include <QLineEdit>
 
 namespace Ui {
     class CDlgSerach;
@@ -16,6 +17,8 @@ class CDlgSerach : public QDialog
 public:
     explicit CDlgSerach( CommonDataType::CardType nType, QWidget *parent = 0);
     ~CDlgSerach();
+
+    QLineEdit* GetEditCntrl( );
 
 protected:
     void resizeEvent( QResizeEvent* event );

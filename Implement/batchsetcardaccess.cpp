@@ -2,6 +2,7 @@
 #include "ui_batchsetcardaccess.h"
 #include "Common/commonfunction.h"
 #include "Common/logicinterface.h"
+#include "Dialog/dlgreadcardid.h"
 
 CBatchSetCardAccess::CBatchSetCardAccess(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
@@ -182,7 +183,7 @@ void CBatchSetCardAccess::closeEvent( QCloseEvent *event )
     pParent->ControlChild( event, this );
 }
 
-void CBatchSetCardAccess::DisplayData( int nIndex )
+void CBatchSetCardAccess::DisplayData( int nIndex, QString& strWhere )
 {
 #if false
     QString strSql = "select a.cardno, a.cardselfno, b.username, \
@@ -199,17 +200,17 @@ void CBatchSetCardAccess::DisplayData( int nIndex )
 
     switch ( nIndex ) {
     case 0 :
-        strTmp = strSql.arg( "monthcard" );
+        strTmp = strSql.arg( "monthcard" ) + strWhere;
         FillTable( ui->tableBatchMonth, strTmp, nCols );
         break;
 
     case 1:
-        strTmp = "Select cardno, cardselfno,'' from tmpcard ";
+        strTmp = "Select cardno, cardselfno,'' from tmpcard " + strWhere;
         FillTable( ui->tableBatchTime, strTmp, nCols );
         break;
 
     case 2 :
-        strTmp = strSql.arg( "savecard" );
+        strTmp = strSql.arg( "savecard" ) + strWhere;
         FillTable( ui->tableBatchValue, strTmp, nCols );
         break;
     }
@@ -227,7 +228,7 @@ void CBatchSetCardAccess::resizeEvent( QResizeEvent* )
 
 void CBatchSetCardAccess::showEvent(QShowEvent *)
 {
-    DisplayData( 0 );
+    //DisplayData( 0 );
 }
 
 void CBatchSetCardAccess::CalculatePos( )
@@ -252,7 +253,7 @@ void CBatchSetCardAccess::on_btnMinimalize_clicked()
 
 void CBatchSetCardAccess::on_tableWidget_currentChanged(int index)
 {
-    DisplayData( index );
+    //DisplayData( index );
 }
 
 void CBatchSetCardAccess::on_lblClose_linkActivated(QString)
@@ -268,4 +269,25 @@ void CBatchSetCardAccess::on_btnAllSecleted_2_clicked()
 void CBatchSetCardAccess::on_btnAllUnselected_2_clicked()
 {
     SelectAllCards( ui->tableBatchChannel, false );
+}
+
+void CBatchSetCardAccess::on_btnSerach_clicked()
+{
+    CDlgReadCardID dlg;
+    pParent->SetCardControl( dlg.GetEditCntrl(  ) );
+    int nRet = dlg.exec( );
+    pParent->SetCardControl( NULL );
+
+    if ( QDialog::Accepted == nRet ) {
+        QStringList& lstCardNo = dlg.GetCardNoLst( );
+        QString strWhere = "";
+
+        int nIndex = ui->tableWidget->currentIndex( );
+
+        if ( 0 < lstCardNo.count( ) ) {
+            strWhere = ( ( 1== nIndex ) ? QString( " where " ) : QString( " and " ) )  + " cardno in ( " + lstCardNo.join( "," ) + " ) ";
+        }
+
+        DisplayData( nIndex, strWhere );
+    }
 }

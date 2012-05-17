@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'valuecarddialog.h'
 **
-** Created: Fri Apr 27 12:18:51 2012
+** Created: Thu May 17 10:07:44 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

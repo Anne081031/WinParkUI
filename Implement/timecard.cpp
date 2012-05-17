@@ -139,7 +139,9 @@ void CTimeCard::Serach( )
 {
     CDlgSerach dlg( CommonDataType::TimeCard );
     connect( &dlg, SIGNAL( PositionRow( QString ) ), this, SLOT( PositionRow( QString ) ) );
+    pParent->SetCardControl( dlg.GetEditCntrl(  ) );
     dlg.exec( );
+    pParent->SetCardControl( NULL );
 }
 
 void CTimeCard::PositionRow( QString strCardID )
@@ -151,8 +153,9 @@ void CTimeCard::PositionRow( QString strCardID )
 
     QTableWidgetItem* pItem = lstItem.at( 0 );
     int nRow = ui->tableTime->row( pItem );
-    ui->tableTime->setCurrentItem( pItem, QItemSelectionModel::ToggleCurrent );
+    //ui->tableTime->setCurrentItem( pItem, QItemSelectionModel::ToggleCurrent );
     on_tableTime_cellClicked( nRow, 0 );
+    ui->tableTime->selectRow( nRow );
 }
 
 void CTimeCard::PrintCardInfo( )

@@ -52,6 +52,9 @@
     <property name="selectionMode">
      <enum>QAbstractItemView::SingleSelection</enum>
     </property>
+    <property name="selectionBehavior">
+     <enum>QAbstractItemView::SelectRows</enum>
+    </property>
     <column>
      <property name="text">
       <string>卡号</string>
@@ -590,29 +593,13 @@
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QPushButton" name="btnQuery">
-     <property name="geometry">
-      <rect>
-       <x>1220</x>
-       <y>5</y>
-       <width>75</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>全【无】查询所有记录。</string>
-     </property>
-     <property name="text">
-      <string>查询</string>
-     </property>
-    </widget>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>7</y>
-       <width>1191</width>
-       <height>22</height>
+       <width>1166</width>
+       <height>25</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout">
@@ -630,6 +617,23 @@
        <widget class="QComboBox" name="cb0">
         <property name="statusTip">
          <string>cardno like '%%1%'</string>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>卡自编号</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QComboBox" name="cb2">
+        <property name="statusTip">
+         <string>cardselfno like '%%1%'</string>
         </property>
         <property name="editable">
          <bool>true</bool>
@@ -756,6 +760,26 @@
         </property>
        </widget>
       </item>
+      <item>
+       <widget class="QPushButton" name="btnQuery">
+        <property name="toolTip">
+         <string>全【无】查询所有记录。</string>
+        </property>
+        <property name="text">
+         <string>查询</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnSerach">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+        <property name="text">
+         <string>查找</string>
+        </property>
+       </widget>
+      </item>
      </layout>
     </widget>
    </widget>
@@ -828,33 +852,14 @@ color: rgb(170, 0, 0);</string>
     <string>卡类型</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="cb2">
+  <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
-     <x>390</x>
+     <x>430</x>
      <y>40</y>
-     <width>69</width>
+     <width>113</width>
      <height>20</height>
     </rect>
-   </property>
-   <property name="statusTip">
-    <string>cardselfno like '%%1%'</string>
-   </property>
-   <property name="editable">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>316</x>
-     <y>40</y>
-     <width>68</width>
-     <height>20</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>卡自编号</string>
    </property>
   </widget>
  </widget>

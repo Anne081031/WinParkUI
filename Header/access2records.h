@@ -31,6 +31,7 @@ private:
     void GetImage( CommonDataType::BlobType blob, int nRow );
     void InitQuery( );
     void GetWhere( QString& strWhere );
+    inline bool Search( QComboBox* pCB, int nRow, int nCol );
 
 private:
     Ui::CAccess2Records *ui;
@@ -47,6 +48,8 @@ private slots:
     void on_btnMinimalize_clicked();
     void HideCtrl( bool bVisible );
     void on_btnQuery_clicked();
+    void on_btnSerach_clicked();
+    void on_lineEdit_textChanged(const QString &arg1);
 };
 
 #endif // ACCESS2RECORDS_H

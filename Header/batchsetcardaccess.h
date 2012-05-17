@@ -31,7 +31,7 @@ private:
     void SetTimeValue( bool bAllTime );
     void GetData( QStringList& lstData, QTableWidget& table );
     void FillTable( QTableWidget* table, QString& strSql, int nCols );
-    void DisplayData( int nIndex );
+    void DisplayData( int nIndex, QString& strWhere );
 
 private:
     Ui::CBatchSetCardAccess *ui;
@@ -48,6 +48,7 @@ private slots:
     void on_btnOk_clicked( );
     void on_btnAllTime_clicked( );
     void on_btnForbidden_clicked( );
+    void on_btnSerach_clicked();
 };
 
 #endif // BATCHSETCARDACCESS_H

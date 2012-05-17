@@ -1093,6 +1093,9 @@ bool CCommonFunction::GetSectionAround( QTime& tSectionBegin, QTime& tSectionEnd
     return bRet;
 }
 
+// Delete content in TariffCfg.ini except [ CarType ]
+// alter table parkadmin.feerate1 add column Section tinyint( 1 ) default 0;
+
 int CCommonFunction::CalculateFee( QSettings& pSet, QString &strParkName, QString &strCarType,
                                    QDateTime& dtStart, QDateTime& dtEnd, QStringList& lstText, bool bManual, bool bSect )
 {
@@ -1135,6 +1138,8 @@ int CCommonFunction::CalculateFee( QSettings& pSet, QString &strParkName, QStrin
     QString strFootInner = "FootInner";
     QString strFootOut = "FootOuter";
 
+    pSet.sync( );
+
     bool bSection = bManual ? bSect : pSet.value( strSection.arg( "Section" ), false ).toBool( ); // 是否分段
 
     if ( bSection ) { // 分段
@@ -1155,7 +1160,8 @@ int CCommonFunction::CalculateFee( QSettings& pSet, QString &strParkName, QStrin
         QTime tTmpStart = dtStart.time( ); // 周期开头部分
         QTime tTmpEnd = dtEnd.time( ); // 周期结尾部分
         QTime t24Hour( 23, 59, 59 );
-        QTime t0Hour( 0, 0, 1 );
+        QTime t0Hour( 0, 0, 0 );
+        bool bTimeEqual = false ;
 
         if ( 0 != nTerm ) { //  跨完整的一天
             // 段内
@@ -1295,12 +1301,156 @@ int CCommonFunction::CalculateFee( QSettings& pSet, QString &strParkName, QStrin
             }
 #endif
 #endif
+
+            // Precision Minute
+            tTmpStart.addSecs( tTmpStart.second( ) * -1 );
+            tTmpEnd.addSecs( tTmpEnd.second( ) * -1 );
+            tStart.addSecs( tStart.second( ) * -1 );
+            tEnd.addSecs( tEnd.second( ) * -1 );
+
+            if ( tTmpStart == tTmpEnd && ( tTmpStart != tEnd || tTmpStart != tStart ) ) {
+                bTimeEqual = true;
+            }
         }
 
         //QTime& tTmpStart = dtStart.time( ); // 周期开头部分
         int nDayDiff = dtStart.date( ).daysTo( dtEnd.date( ) );
-        if ( 0 != nDayDiff ) { //不完整跨天
-            dtEnd = dtEnd.addDays( -1 * nTerm );
+        if ( 0 != nDayDiff && tTmpStart >= tTmpEnd ) { //不完整跨天
+            if ( tTmpStart > tTmpEnd ) {
+                if ( tStart <= tTmpStart && tTmpStart <= tEnd ) {
+                    if ( tTmpEnd < tStart ) {
+                        nMinDiff = GetTimeDiff( tTmpStart, tEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff = 24 * 60 - GetTimeDiff( tTmpEnd, tStart ) -
+                                          GetTimeDiff( tStart, tEnd );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    } else {
+                        nMinDiff = GetTimeDiff( tTmpStart, tEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff = GetTimeDiff( tStart, tTmpEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    }
+                } else {
+                    if ( tEnd < tTmpStart && tTmpStart <= t24Hour ) {
+                        if ( tTmpEnd < tStart ) {
+                            nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tTmpEnd, tStart ) -
+                                              GetTimeDiff( tEnd, tTmpStart );
+                            nFeeOuter = 0;
+                            AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+                        } else if ( tStart <= tTmpEnd && tTmpEnd <= tEnd ) {
+                            nMinDiff = GetTimeDiff( tStart, tTmpEnd );
+                            nFeeInner = 0;
+                            AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                            nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tEnd, tTmpStart );
+                            nFeeOuter = 0;
+                            AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+                        } else if ( tEnd < tTmpEnd ) {
+                            nMinDiff = GetTimeDiff( tStart, tEnd );
+                            nFeeInner = 0;
+                            AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                            nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tEnd, tTmpStart );
+                            nFeeOuter = 0;
+                            AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+                            nMinDiff = GetTimeDiff( tEnd, tTmpEnd );
+                            nFeeOuter = 0;
+                            AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                        }
+                    } else {
+                        nMinDiff = GetTimeDiff( tStart, tEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff = GetTimeDiff( tTmpStart, tStart );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+                        nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tTmpStart, tStart ) -
+                                          GetTimeDiff( tTmpEnd, tTmpStart );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    }
+                }
+            } else if ( bTimeEqual ) { // 时间点重合，但不与分段时间点重合
+                nFee -= nFee / nTerm;
+
+                if ( tStart < tTmpStart && tTmpStart < tEnd ) {
+                    nMinDiff = GetTimeDiff( tTmpStart, tEnd );
+                    nFeeInner = 0;
+                    AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                    nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                    nMinDiff = GetTimeDiff( tStart, tTmpEnd );
+                    nFeeInner = 0;
+                    AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                    nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                    nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd );
+                    nFeeOuter = 0;
+                    AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                    nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                } else {
+                    if ( tEnd < tTmpStart && tTmpStart <= t24Hour ) {
+                        nMinDiff = GetTimeDiff( tStart, tEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tEnd, tTmpEnd );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+                        nMinDiff = GetTimeDiff( tEnd, tTmpEnd );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    } else if ( t0Hour <= tTmpStart && tTmpStart < tStart ) {
+                        nMinDiff = GetTimeDiff( tStart, tEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff = GetTimeDiff( tTmpStart, tStart );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+                        nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tTmpStart, tStart );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    }
+                }
+            }
         } else {
             if ( tStart <= tTmpStart && tTmpStart <= tEnd )  { //
                 if ( tTmpEnd <=tEnd  ) {

@@ -178,6 +178,16 @@ void CTariffSetting::GetTariff(  )
     ui->perMinFootNoSection->setValue( lstRows[ nField++ ].toInt( ) );
 
     ui->perMinNoSectionFirst->setValue( lstRows[ nField++ ].toInt( ) );
+
+    bool bSection = lstRows[ nField++ ].toInt( ) == 0 ? false : true;
+
+    if ( bSection ) {
+        ui->rbtnSection->setChecked( true );
+    } else {
+        ui->rbtnNoSection->setChecked( true );
+    }
+
+    ControlUI( !ui->rbtnNoSection->isChecked( ) );
 }
 
 void CTariffSetting::GetAllParking( )
@@ -292,6 +302,14 @@ void CTariffSetting::ReadIniFile( )
     ui->perMinFootNoSection->setValue( pSettings->value( strSection.arg( "perMinFootNoSection" ), 0 ).toInt( ) );
 
     ui->perMinNoSectionFirst->setValue( pSettings->value( strSection.arg( "perMinNoSectionFirst" ), 0 ).toInt( ) );
+
+    bool bSection = pSettings->value( strSection.arg( "Section" ), 0 ).toInt( ) == 0 ? false : true;
+
+    if ( bSection ) {
+        ui->rbtnSection->setChecked( true );
+    } else {
+        ui->rbtnNoSection->setChecked( true );
+    }
 }
 
 void CTariffSetting::WriteIniFile( )
@@ -318,8 +336,8 @@ void CTariffSetting::WriteIniFile( )
     pSettings->setValue( strSection.arg( "Section1" ), ui->tdtSection1->time( ).toString( "hh:mm:ss" ) );//QTime
     pSettings->setValue( strSection.arg( "Section2" ), ui->tdtSection2->time( ).toString( "hh:mm:ss" ) );
 
-    pSettings->setValue( strSection.arg( "NoSection" ), ui->rbtnNoSection->isChecked( ) );// bool
-    pSettings->setValue( strSection.arg( "Section" ), ui->rbtnSection->isChecked( ) );
+    //pSettings->setValue( strSection.arg( "NoSection" ), ui->rbtnNoSection->isChecked( ) );// bool
+    pSettings->setValue( strSection.arg( "Section" ), ui->rbtnSection->isChecked( ) ? 1 : 0 );
 
     pSettings->setValue( strSection.arg( "rule1MinInner" ), ui->rule1MinInner->value( ) );//int
     pSettings->setValue( strSection.arg( "rule1FootInner" ), ui->rule1FootInner->value( ) );
@@ -363,6 +381,7 @@ void CTariffSetting::WriteIniFile( )
     pSettings->setValue( strSection.arg( "perMinFootNoSection" ), ui->perMinFootNoSection->value( ) );
 
     pSettings->setValue( strSection.arg( "perMinNoSectionFirst" ), ui->perMinNoSectionFirst->value( ) );
+    //pSettings->setValue( strSection.arg( "Section" ), ui->->value( ) );
 
     pSettings->endGroup( );
 
@@ -432,6 +451,7 @@ void CTariffSetting::GetValue( QStringList& lstValues )
     lstValues << QString::number( ui->perMinFootNoSection->value( ) );
 
     lstValues << QString::number( ui->perMinNoSectionFirst->value( ) );
+    lstValues << QString::number( ui->rbtnSection->isChecked( ) ? 1 : 0 );
 }
 
 CTariffSetting::~CTariffSetting()

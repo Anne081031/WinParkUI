@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'access2records.ui'
 **
-** Created: Fri Apr 27 12:12:46 2012
+** Created: Thu May 17 11:59:41 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -21,6 +21,7 @@
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
+#include <QtGui/QLineEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QTabWidget>
 #include <QtGui/QTableWidget>
@@ -60,11 +61,12 @@ public:
     QLabel *lblImg7;
     QPushButton *btnMinimalize;
     QFrame *frame;
-    QPushButton *btnQuery;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QComboBox *cb0;
+    QLabel *label_3;
+    QComboBox *cb2;
     QLabel *label_7;
     QComboBox *cb3;
     QLabel *label_8;
@@ -77,12 +79,13 @@ public:
     QComboBox *cb7;
     QLabel *label_11;
     QComboBox *cb8;
+    QPushButton *btnQuery;
+    QPushButton *btnSerach;
     QLabel *lblTitle;
     QLabel *lblClose;
     QComboBox *cb1;
     QLabel *label_2;
-    QComboBox *cb2;
-    QLabel *label_3;
+    QLineEdit *lineEdit;
 
     void setupUi(QFrame *CAccess2Records)
     {
@@ -129,6 +132,7 @@ public:
         tableAccessRecord->setGeometry(QRect(0, 40, 1301, 311));
         tableAccessRecord->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableAccessRecord->setSelectionMode(QAbstractItemView::SingleSelection);
+        tableAccessRecord->setSelectionBehavior(QAbstractItemView::SelectRows);
         tabWidget = new QTabWidget(widget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setGeometry(QRect(0, 360, 1411, 321));
@@ -259,12 +263,9 @@ public:
         frame->setGeometry(QRect(0, 0, 1301, 31));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
-        btnQuery = new QPushButton(frame);
-        btnQuery->setObjectName(QString::fromUtf8("btnQuery"));
-        btnQuery->setGeometry(QRect(1220, 5, 75, 23));
         layoutWidget = new QWidget(frame);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 7, 1191, 22));
+        layoutWidget->setGeometry(QRect(10, 7, 1166, 25));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
@@ -279,6 +280,17 @@ public:
         cb0->setEditable(true);
 
         horizontalLayout->addWidget(cb0);
+
+        label_3 = new QLabel(layoutWidget);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        horizontalLayout->addWidget(label_3);
+
+        cb2 = new QComboBox(layoutWidget);
+        cb2->setObjectName(QString::fromUtf8("cb2"));
+        cb2->setEditable(true);
+
+        horizontalLayout->addWidget(cb2);
 
         label_7 = new QLabel(layoutWidget);
         label_7->setObjectName(QString::fromUtf8("label_7"));
@@ -352,6 +364,17 @@ public:
 
         horizontalLayout->addWidget(cb8);
 
+        btnQuery = new QPushButton(layoutWidget);
+        btnQuery->setObjectName(QString::fromUtf8("btnQuery"));
+
+        horizontalLayout->addWidget(btnQuery);
+
+        btnSerach = new QPushButton(layoutWidget);
+        btnSerach->setObjectName(QString::fromUtf8("btnSerach"));
+        btnSerach->setEnabled(false);
+
+        horizontalLayout->addWidget(btnSerach);
+
         lblTitle = new QLabel(CAccess2Records);
         lblTitle->setObjectName(QString::fromUtf8("lblTitle"));
         lblTitle->setGeometry(QRect(30, 5, 141, 21));
@@ -372,13 +395,9 @@ public:
         label_2 = new QLabel(CAccess2Records);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(182, 40, 52, 20));
-        cb2 = new QComboBox(CAccess2Records);
-        cb2->setObjectName(QString::fromUtf8("cb2"));
-        cb2->setGeometry(QRect(390, 40, 69, 20));
-        cb2->setEditable(true);
-        label_3 = new QLabel(CAccess2Records);
-        label_3->setObjectName(QString::fromUtf8("label_3"));
-        label_3->setGeometry(QRect(316, 40, 68, 20));
+        lineEdit = new QLineEdit(CAccess2Records);
+        lineEdit->setObjectName(QString::fromUtf8("lineEdit"));
+        lineEdit->setGeometry(QRect(430, 40, 113, 20));
 
         retranslateUi(CAccess2Records);
 
@@ -442,13 +461,13 @@ public:
         lblImg7->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("CAccess2Records", "\350\275\246\350\276\206\347\246\273\345\274\200\345\233\276\345\203\217", 0, QApplication::UnicodeUTF8));
         btnMinimalize->setText(QApplication::translate("CAccess2Records", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_TOOLTIP
-        btnQuery->setToolTip(QApplication::translate("CAccess2Records", "\345\205\250\343\200\220\346\227\240\343\200\221\346\237\245\350\257\242\346\211\200\346\234\211\350\256\260\345\275\225\343\200\202", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_TOOLTIP
-        btnQuery->setText(QApplication::translate("CAccess2Records", "\346\237\245\350\257\242", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("CAccess2Records", "\345\215\241\345\217\267", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_STATUSTIP
         cb0->setStatusTip(QApplication::translate("CAccess2Records", "cardno like '%%1%'", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_STATUSTIP
+        label_3->setText(QApplication::translate("CAccess2Records", "\345\215\241\350\207\252\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_STATUSTIP
+        cb2->setStatusTip(QApplication::translate("CAccess2Records", "cardselfno like '%%1%'", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_STATUSTIP
         label_7->setText(QApplication::translate("CAccess2Records", "\350\277\233\345\205\245\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_STATUSTIP
@@ -474,16 +493,17 @@ public:
 #ifndef QT_NO_STATUSTIP
         cb8->setStatusTip(QApplication::translate("CAccess2Records", "carcpout like '%%1%'", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_STATUSTIP
+#ifndef QT_NO_TOOLTIP
+        btnQuery->setToolTip(QApplication::translate("CAccess2Records", "\345\205\250\343\200\220\346\227\240\343\200\221\346\237\245\350\257\242\346\211\200\346\234\211\350\256\260\345\275\225\343\200\202", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        btnQuery->setText(QApplication::translate("CAccess2Records", "\346\237\245\350\257\242", 0, QApplication::UnicodeUTF8));
+        btnSerach->setText(QApplication::translate("CAccess2Records", "\346\237\245\346\211\276", 0, QApplication::UnicodeUTF8));
         lblTitle->setText(QString());
         lblClose->setText(QString());
 #ifndef QT_NO_STATUSTIP
         cb1->setStatusTip(QApplication::translate("CAccess2Records", "cardkind like '%%1%'", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_STATUSTIP
         label_2->setText(QApplication::translate("CAccess2Records", "\345\215\241\347\261\273\345\236\213", 0, QApplication::UnicodeUTF8));
-#ifndef QT_NO_STATUSTIP
-        cb2->setStatusTip(QApplication::translate("CAccess2Records", "cardselfno like '%%1%'", 0, QApplication::UnicodeUTF8));
-#endif // QT_NO_STATUSTIP
-        label_3->setText(QApplication::translate("CAccess2Records", "\345\215\241\350\207\252\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

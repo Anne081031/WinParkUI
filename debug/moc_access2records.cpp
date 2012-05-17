@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'access2records.h'
 **
-** Created: Tue May 8 18:58:12 2012
+** Created: Thu May 17 12:02:04 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CAccess2Records[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -37,6 +37,8 @@ static const uint qt_meta_data_CAccess2Records[] = {
      158,   16,   16,   16, 0x08,
      194,  185,   16,   16, 0x08,
      209,   16,   16,   16, 0x08,
+     231,   16,   16,   16, 0x08,
+     259,  254,   16,   16, 0x08,
 
        0        // eod
 };
@@ -48,6 +50,8 @@ static const char qt_meta_stringdata_CAccess2Records[] = {
     "row,column\0on_tableAccessRecord_cellClicked(int,int)\0"
     "on_btnMinimalize_clicked()\0bVisible\0"
     "HideCtrl(bool)\0on_btnQuery_clicked()\0"
+    "on_btnSerach_clicked()\0arg1\0"
+    "on_lineEdit_textChanged(QString)\0"
 };
 
 const QMetaObject CAccess2Records::staticMetaObject = {
@@ -85,9 +89,11 @@ int CAccess2Records::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 3: on_btnMinimalize_clicked(); break;
         case 4: HideCtrl((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 5: on_btnQuery_clicked(); break;
+        case 6: on_btnSerach_clicked(); break;
+        case 7: on_lineEdit_textChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 6;
+        _id -= 8;
     }
     return _id;
 }

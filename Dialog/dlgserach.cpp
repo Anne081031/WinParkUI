@@ -178,3 +178,8 @@ void CDlgSerach::on_tabResult_cellDoubleClicked(int row, int)
 {
     emit PositionRow( ui->tabResult->item( row, 0 )->text( ) );
 }
+
+QLineEdit* CDlgSerach::GetEditCntrl( )
+{
+    return ui->edtCardno;
+}

@@ -121,6 +121,7 @@ INPUT(
 ./debug\mgmtthread.o
 ./debug\getconfig.o
 ./debug\sendrequest.o
+./debug\dlgreadcardid.o
 ./debug\moc_valuecard.o
 ./debug\moc_tolldiscounttypeset.o
 ./debug\moc_timecard.o
@@ -227,4 +228,5 @@ INPUT(
 ./debug\moc_dbhistorythread.o
 ./debug\moc_mgmtthread.o
 ./debug\moc_getconfig.o
+./debug\moc_dlgreadcardid.o
 );

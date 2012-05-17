@@ -70,6 +70,7 @@ protected:
     void showEvent(QShowEvent *);
     void CalculatePos( );
     void ControlDataGrid( QTableWidget& tw );
+    void keyPressEvent ( QKeyEvent * event );
 
 private:
     void GetAllParkSpaceLot( bool bChannel, bool bEnter = true );

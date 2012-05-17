@@ -39,6 +39,7 @@ protected:
     void closeEvent( QCloseEvent *e );
     void showEvent(QShowEvent *  );
     void resizeEvent( QResizeEvent *event );
+    void keyPressEvent ( QKeyEvent * event );
 
 signals:
     void SendTimeCardInfo( QByteArray &byData, QByteArray &vData, int nMin, int nHour, int nAmount, bool bEnter );
@@ -53,6 +54,7 @@ private:
     int GetDiscount( int nPrevValue );
     QRadioButton& SetCarType( QString& strType );
     void SetCurrentRadioBox( QRadioButton* pRbx );
+    void AnalogClicked( QRadioButton* pBtn );
 
 private slots:
     void on_btnPass_clicked();

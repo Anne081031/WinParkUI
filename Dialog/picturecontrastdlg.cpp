@@ -5,6 +5,33 @@
 #include "Common/logicinterface.h"
 #include "Header/printmonthlyreport.h"
 
+void CPictureContrastDlg::keyPressEvent( QKeyEvent *event )
+{
+    QSettings* pSystem = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+    bool bRet = pSystem->value( "CommonCfg/HotKeyCarType", false ).toBool( );
+    if ( !bRet ) {
+        return;
+    }
+
+    switch ( event->key( ) ) {
+    case Qt::Key_F9 :
+        AnalogClicked( ui->rdx1 );
+        break;
+
+    case Qt::Key_F10 :
+        AnalogClicked( ui->rdx5 );
+        break;
+
+    case Qt::Key_F11 :
+        AnalogClicked( ui->rdx2 );
+        break;
+
+    case Qt::Key_F12 :
+        AnalogClicked( ui->rdx6 );
+        break;
+    }
+}
+
 CPictureContrastDlg::CPictureContrastDlg( QWidget *parent ) :
     QDialog(parent),
     ui(new Ui::CPictureContrastDlg)
@@ -454,9 +481,15 @@ void CPictureContrastDlg::RbtnClicked( )
 {
     QRadioButton* pBtn = dynamic_cast< QRadioButton* > ( sender( ) );
     if ( NULL != pBtn ) {
-        SetCurrentRadioBox( pBtn );
-        CaculateAndPlay( *pBtn );
+        AnalogClicked( pBtn );
     }
+}
+
+void CPictureContrastDlg::AnalogClicked( QRadioButton* pBtn )
+{
+    pBtn->setChecked( true );
+    SetCurrentRadioBox( pBtn );
+    CaculateAndPlay( *pBtn );
 }
 
 int CPictureContrastDlg::GetAmount( )

@@ -294,7 +294,9 @@ void CValueCard::Serach( )
 {
     CDlgSerach dlg( CommonDataType::ValueCard );
     connect( &dlg, SIGNAL( PositionRow( QString ) ), this, SLOT( PositionRow( QString ) ) );
+    pParent->SetCardControl( dlg.GetEditCntrl(  ) );
     dlg.exec( );
+    pParent->SetCardControl( NULL );
 }
 
 void CValueCard::PositionRow( QString strCardID )
@@ -306,8 +308,9 @@ void CValueCard::PositionRow( QString strCardID )
 
     QTableWidgetItem* pItem = lstItem.at( 0 );
     int nRow = ui->tableValue->row( pItem );
-    ui->tableValue->setCurrentItem( pItem, QItemSelectionModel::ToggleCurrent );
+    //ui->tableValue->setCurrentItem( pItem, QItemSelectionModel::ToggleCurrent );
     on_tableValue_cellClicked( nRow, 0 );
+    ui->tableValue->selectRow( nRow );
 }
 
 void CValueCard::ChangeCard( )

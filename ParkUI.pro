@@ -150,7 +150,8 @@ SOURCES += mainwindow.cpp \
     SMS/smsevent.cpp \
     CenterMgmt/mgmtthread.cpp \
     CenterMgmt/getconfig.cpp \
-    CenterMgmt/sendrequest.cpp
+    CenterMgmt/sendrequest.cpp \
+    Dialog/dlgreadcardid.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -275,7 +276,8 @@ HEADERS  += Header/valuecard.h \
     CenterMgmt/mgmtthread.h \
     CenterMgmt/getconfig.h \
     CenterMgmt/DataType.h \
-    CenterMgmt/sendrequest.h
+    CenterMgmt/sendrequest.h \
+    Dialog/dlgreadcardid.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \
@@ -337,7 +339,8 @@ FORMS    += UIWnd/valuecard.ui \
     Dialog/dlgabout.ui \
     Dialog/dlgbulkregister.ui \
     Dialog/dlgmakelicense.ui \
-    Dialog/dlgparkdongleinfo.ui
+    Dialog/dlgparkdongleinfo.ui \
+    Dialog/dlgreadcardid.ui
 
 OTHER_FILES += \
     Doc/LedProtocol.doc \

@@ -58,6 +58,8 @@ CAccess2Records::CAccess2Records(QWidget* mainWnd, QWidget *parent) :
     }
 
     InitQuery( );
+
+    ui->lineEdit->setVisible( false );
 }
 
 void CAccess2Records::HideCtrl( bool bVisible )
@@ -96,15 +98,91 @@ void CAccess2Records::FillTable( QString& strWhere )
     QString strSql = QString( "select a.cardno, a.cardkind, a.feenum, a.feefactnum, a.feezkyy, a.cardselfno, \
             a.inshebeiname, a.intime, a.outshebeiname, a.outtime, a.carkind, a.carcp, a.carcpout from stoprd a %1" ).arg( strWhere );
 
+    strSql += " order by a.cardno, a.cardselfno, a.intime";
+
     nRows = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData, CCommonFunction::GetHistoryDb( ) );
 
     ui->tableAccessRecord->setRowCount( nRows );
 
+    QStringList lstMonthID;
+    QStringList lstSaveID;
+    QStringList lstTimeID;
+    QString strID;
+    QMultiHash<  QString,QTableWidgetItem* > hashItem;
+
     for ( int nRow = 0; nRow < nRows; nRow++ ) {
         for ( int nCol = 0; nCol < nCols; nCol++ ) {
-            QTableWidgetItem* pItem = new QTableWidgetItem( lstData[ nRow * nCols + nCol ]);
+            QString& strValue = lstData[ nRow * nCols + nCol ];
+            QTableWidgetItem* pItem = new QTableWidgetItem( strValue );
             ui->tableAccessRecord->setItem( nRow, nCol, pItem );
             pItem->setFlags( Qt::ItemIsEnabled | Qt::ItemIsSelectable );
+
+            switch ( nCol ) {
+            case 0 :
+                strID = strValue;
+                break;
+
+            case 1 :
+                if ( "月租卡" == strValue ) {
+                    if ( strID.contains( "(" ) )  {
+                        strID = strID.left( strID.indexOf( "(" ) );
+                    }
+
+                    if ( !lstMonthID.contains("'" + strID + "'" ) ) {
+                        lstMonthID << "'" + strID + "'";
+                    }
+                } else if ( "储值卡" == strValue ) {
+                    if ( !lstSaveID.contains( "'" + strID + "'" ) ) {
+                        lstSaveID << "'" + strID + "'";
+                    }
+                } else if ( "计时卡" == strValue ) {
+                    if ( !lstTimeID.contains( "'" + strID + "'" ) ) {
+                        lstTimeID << "'" + strID + "'";
+                    }
+                }
+                break;
+
+            case 5 :
+                hashItem.insertMulti( strID, pItem );
+                break;
+            }
+        }
+    }
+
+    if ( 0 < nRows ) {
+        ui->btnSerach->setEnabled( true );
+        strSql = "";
+
+        if ( lstMonthID.count( ) > 0 ) {
+            strSql = "Select cardno,cardselfno from monthcard where cardno in(" + lstMonthID.join( "," ) + ") ";
+        }
+
+        if ( lstSaveID.count( ) > 0 ) {
+            if ( !strSql.isEmpty( ) ) {
+                strSql += " union ";
+            }
+
+            strSql += "Select cardno,cardselfno from savecard where cardno in(" + lstSaveID.join( "," ) + ") ";
+        }
+
+        if ( lstTimeID.count( ) > 0 ) {
+            if ( !strSql.isEmpty( ) ) {
+                strSql += " union ";
+            }
+
+            strSql += "Select cardno,cardselfno from tmpcard where cardno in(" + lstTimeID.join( "," ) + ") ";
+        }
+
+        lstData.clear( );
+        nRows = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData );
+
+        for ( int nRow = 0; nRow < nRows; nRow++ ) {
+            QString& strValue = lstData[ nRow * 2 + 0 ];
+            QList< QTableWidgetItem* > lstItem = hashItem.values( strValue );
+
+            foreach ( QTableWidgetItem* item,  lstItem ) {
+                 item->setText( lstData[ nRow * 2 + 1 ] );
+            }
         }
     }
 }
@@ -117,6 +195,7 @@ void CAccess2Records::resizeEvent( QResizeEvent* )
 
 void CAccess2Records::showEvent(QShowEvent *)
 {
+    pParent->SetCardControl( ui->lineEdit );
     //FillTable( );
 }
 
@@ -136,6 +215,7 @@ void CAccess2Records::CalculatePos( )
 
 void CAccess2Records::on_btnMinimalize_clicked()
 {
+    pParent->SetCardControl( NULL );
     setVisible( false );
     pParent->ControlMonitor( true );
 }
@@ -232,8 +312,8 @@ void CAccess2Records::InitQuery( )
 {
     ui->label_2->setVisible( false );
     ui->cb1->setVisible( false );
-    ui->label_3->setVisible( false );
-    ui->cb2->setVisible( false );
+    //ui->label_3->setVisible( false );
+    //ui->cb2->setVisible( false );
     return;
     QDateTime dtCurrent = QDateTime::currentDateTime( );
     dtCurrent = dtCurrent.addMonths( -1 );
@@ -307,4 +387,76 @@ void CAccess2Records::InitQuery( )
             lstTmp = lstValues.at( nSection ).split( strSeperator );
             cbxQuery[ nSection ]->addItems( lstTmp );
         }
+}
+
+bool CAccess2Records::Search( QComboBox *pCB, int nRow, int nCol )
+{
+    bool bRet = true;
+    QString strText = pCB->currentText( );
+
+    if ( !strText.isEmpty( ) && "无"  != strText ) {
+        QString strRaw = ui->tableAccessRecord->item( nRow, nCol )->text( );
+        bRet = strRaw.contains( strText );
+    }
+
+    return bRet;
+}
+
+void CAccess2Records::on_btnSerach_clicked()
+{
+    QString strWhere = "";
+    GetWhere( strWhere );
+
+    if ( strWhere.isEmpty( ) ) {
+        CCommonFunction::MsgBox( NULL, "提示", "请输入查找条件！", QMessageBox::Information );
+        return;
+    }
+
+    int nRows = ui->tableAccessRecord->rowCount( );
+    bool bFound = true;
+
+    for ( int nRow = 0; nRow < nRows; nRow++ ) {
+        bFound = true;
+
+        for ( uint nSection = 0; nSection < sizeof ( cbxQuery ) / sizeof ( QComboBox* ); nSection++ ) {
+            int nTmp = 0;
+            switch ( nSection ) {
+            case 0 :
+                nTmp = nSection;
+                break;
+
+            case 2 :
+            case 3 :
+            case 6 :
+                nTmp = nSection + 3;
+                break;
+
+            case 5 :
+                nTmp = nSection + 2;
+                break;
+
+            case 4 :
+            case 7 :
+            case 8 :
+                nTmp = nSection + 4;
+                break;
+            }
+
+            bFound &= Search( cbxQuery[ nSection ], nRow, nTmp );
+            if ( !bFound ) {
+                continue;
+            }
+        }
+
+        if ( bFound ) {
+            ui->tableAccessRecord->selectRow( nRow );
+            break;
+        }
+    }
+}
+
+void CAccess2Records::on_lineEdit_textChanged(const QString &arg1)
+{
+    ui->cb0->clear( );
+    ui->cb0->addItem( arg1 );
 }

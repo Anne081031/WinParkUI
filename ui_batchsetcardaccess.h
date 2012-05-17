@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'batchsetcardaccess.ui'
 **
-** Created: Fri Apr 27 12:12:46 2012
+** Created: Thu May 17 11:44:13 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -57,6 +57,7 @@ public:
     QPushButton *btnAllUnselected;
     QPushButton *btnAllSecleted;
     QPushButton *btnMinimalize;
+    QPushButton *btnSerach;
     QPushButton *btnOk;
     QLabel *lblTitle;
     QLabel *lblClose;
@@ -207,11 +208,11 @@ public:
         tableWidget->addTab(tab_2, QString());
         widget_3 = new QWidget(widget);
         widget_3->setObjectName(QString::fromUtf8("widget_3"));
-        widget_3->setGeometry(QRect(495, 680, 311, 31));
+        widget_3->setGeometry(QRect(405, 680, 401, 31));
         widget_3->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         btnAllUnselected = new QPushButton(widget_3);
         btnAllUnselected->setObjectName(QString::fromUtf8("btnAllUnselected"));
-        btnAllUnselected->setGeometry(QRect(120, 0, 75, 23));
+        btnAllUnselected->setGeometry(QRect(100, 0, 75, 23));
         btnAllUnselected->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         btnAllSecleted = new QPushButton(widget_3);
         btnAllSecleted->setObjectName(QString::fromUtf8("btnAllSecleted"));
@@ -219,8 +220,11 @@ public:
         btnAllSecleted->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         btnMinimalize = new QPushButton(widget_3);
         btnMinimalize->setObjectName(QString::fromUtf8("btnMinimalize"));
-        btnMinimalize->setGeometry(QRect(230, 0, 75, 23));
+        btnMinimalize->setGeometry(QRect(210, 0, 75, 23));
         btnMinimalize->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
+        btnSerach = new QPushButton(widget_3);
+        btnSerach->setObjectName(QString::fromUtf8("btnSerach"));
+        btnSerach->setGeometry(QRect(320, 0, 75, 23));
         btnOk = new QPushButton(widget);
         btnOk->setObjectName(QString::fromUtf8("btnOk"));
         btnOk->setGeometry(QRect(1070, 680, 75, 23));
@@ -294,6 +298,7 @@ public:
         btnAllUnselected->setText(QApplication::translate("CBatchSetCardAccess", "\345\205\250\345\217\226\346\266\210", 0, QApplication::UnicodeUTF8));
         btnAllSecleted->setText(QApplication::translate("CBatchSetCardAccess", "\345\205\250\351\200\211\344\270\255", 0, QApplication::UnicodeUTF8));
         btnMinimalize->setText(QApplication::translate("CBatchSetCardAccess", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));
+        btnSerach->setText(QApplication::translate("CBatchSetCardAccess", "\346\237\245\346\211\276", 0, QApplication::UnicodeUTF8));
         btnOk->setText(QApplication::translate("CBatchSetCardAccess", "\347\241\256\350\256\244\344\277\256\346\224\271", 0, QApplication::UnicodeUTF8));
         lblTitle->setText(QString());
         lblClose->setText(QString());

@@ -30,6 +30,32 @@ TH_PlateIDResult CMonitor::structPlates[ VIDEO_USEDWAY ] = { { 0 } };
 CMonitor* pMainWnd = NULL;
 QString CMonitor::strPlates[ VIDEO_USEDWAY ] = { "" };
 
+void CMonitor::keyPressEvent( QKeyEvent *event )
+{
+    bool bRet = pSystem->value( "CommonCfg/HotKeyGate", false ).toBool( );
+    if ( !bRet ) {
+        return;
+    }
+
+    switch ( event->key( ) ) {
+    case Qt::Key_F5 :
+        ControlGate( true, true, ui->btnEnterGateOpen );
+        break;
+
+    case Qt::Key_F6 :
+        ControlGate( false, true, ui->btnEnterGateOpen );
+        break;
+
+    case Qt::Key_F7 :
+        ControlGate( true, false, ui->btnLeaveGateOpen );
+        break;
+
+    case Qt::Key_F8 :
+        ControlGate( true, false, ui->btnLeaveGateClose );
+        break;
+    }
+}
+
 void CMonitor::GetCanParkIndexNum( )
 {
     int nCols = 4;

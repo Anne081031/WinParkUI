@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgserach.h'
 **
-** Created: Fri Apr 27 12:19:22 2012
+** Created: Thu May 17 11:52:35 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

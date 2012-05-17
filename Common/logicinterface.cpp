@@ -853,7 +853,7 @@ void CLogicInterface::GetAllTariff2File( )
 
     OperateTariffInfo( lstRows, CommonDataType::SelectData, strWhere );
     int nCount = lstRows.count( );
-    int nCols = 39;
+    int nCols = 40;
     int nRows = nCount / nCols;
 
     QSettings* pSettings = CCommonFunction::GetSettings( CommonDataType::CfgTariff );
@@ -919,6 +919,7 @@ void CLogicInterface::GetAllTariff2File( )
         pSettings->setValue( strSection.arg( "perMinFootNoSection" ), lstRows[ nField++ ] );
 
         pSettings->setValue( strSection.arg( "perMinNoSectionFirst" ), lstRows[ nField++ ] );
+        pSettings->setValue( strSection.arg( "Section" ), lstRows[ nField++ ] );
 
         if ( 0 == ( nRow + 1 ) % nTypes ) {
             pSettings->endGroup(  );
@@ -941,11 +942,11 @@ void CLogicInterface::OperateTariffInfo( QStringList &lstRows, CommonDataType::D
                  gz1t,gz1f,gz2t,gz2f,gz3t,gz3f,gz4t,gz4f,gz5t,gz5f,gz6t,gz6f,\
                  gz7t,gz7f,gz8t,gz8f,gz9t,gz9f,gz10t,gz10f,gz11t,gz11f,gz12t,gz12f,\
                  dldwt,dldwf,dwdwt,dwdwf,dlxianfee,dwxianfee,\
-                 xhdw,xhfh,firstjstime \
+                 xhdw,xhfh,firstjstime,section \
                  FROM feerate1 %1 \
                  order by rparkid, rfeemodel asc" ).arg( strWhere );
 
-        nCols = 39;
+        nCols = 40;
         if ( !GetMysqlDb( ).DbCrud( strSql, strError ) ) {
         return;
     }
@@ -960,9 +961,9 @@ void CLogicInterface::OperateTariffInfo( QStringList &lstRows, CommonDataType::D
                            gz7f = %18,gz8t = %19,gz8f = %20,gz9t = %21,gz9f = %22,gz10t = %23,\
                            gz10f = %24,gz11t = %25,gz11f = %26,gz12t = %27,gz12f = %28, dldwt = %29,\
                            dldwf = %30,dwdwt = %31,dwdwf = %32,dlxianfee = %33,dwxianfee = %34, \
-                           xhdw = %35,xhfh = %36,firstjstime = %37 " ) +  strWhere;
+                           xhdw = %35,xhfh = %36,firstjstime = %37, section = %38 " ) +  strWhere;
 
-        nCols = 37;
+        nCols = 38;
         nRows = lstRows.count( ) / nCols;
         ReplaceSqlParam( nRows, nCols, strSql, lstRows );
         break;
@@ -977,9 +978,9 @@ void CLogicInterface::OperateTariffInfo( QStringList &lstRows, CommonDataType::D
                  dldwt,dldwf,dwdwt,dwdwf,dlxianfee,dwxianfee,\
                  xhdw,xhfh,firstjstime,rparkid,rfeemodel ) Values( %1,%2,'%3','%4',%5,\
                  %6,%7,%8,%9,%10,%11,%12,%13,%14,%15,%16,%17,%18,%19,%20,%21,%22,%23,\
-                 %25,%26,%27,%28,%29,%30,%31,%32,%33,%34,%35,%36,%37,%38,%39 )" );
+                 %25,%26,%27,%28,%29,%30,%31,%32,%33,%34,%35,%36,%37,%38,%39, %40 )" );
 
-        nCols = 39;
+        nCols = 40;
         nRows = lstRows.count( ) / nCols;
         ReplaceSqlParam( nRows, nCols, strSql, lstRows );
         break;
