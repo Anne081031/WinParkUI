@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu May 17 10:01:09 2012
+** Created: Tue May 22 10:59:18 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -70,6 +70,7 @@ public:
     QAction *actSyncTime;
     QAction *actRestart;
     QAction *actLicense;
+    QAction *actStay;
     QWidget *centralWidget;
     QMenuBar *menuBar;
     QMenu *menuSysMgm;
@@ -202,6 +203,8 @@ public:
         actLicense->setObjectName(QString::fromUtf8("actLicense"));
         actLicense->setEnabled(false);
         actLicense->setVisible(false);
+        actStay = new QAction(MainWindow);
+        actStay->setObjectName(QString::fromUtf8("actStay"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         MainWindow->setCentralWidget(centralWidget);
@@ -288,6 +291,8 @@ public:
         menuQueryReport->addAction(actPrintMonthlyReport);
         menuQueryReport->addAction(actPrintYearlyReport);
         menuQueryReport->addAction(actHandheldICProcess);
+        menuQueryReport->addSeparator();
+        menuQueryReport->addAction(actStay);
         menuHelp->addAction(actDocment);
         menuHelp->addSeparator();
         menuHelp->addAction(actAbout);
@@ -348,6 +353,7 @@ public:
         actSyncTime->setText(QApplication::translate("MainWindow", "\346\227\266\351\227\264\345\220\214\346\255\245", 0, QApplication::UnicodeUTF8));
         actRestart->setText(QApplication::translate("MainWindow", "\351\207\215\345\220\257\350\275\257\344\273\266", 0, QApplication::UnicodeUTF8));
         actLicense->setText(QApplication::translate("MainWindow", "\346\234\215\345\212\241\345\231\250\345\257\274\345\205\245\346\216\210\346\235\203\346\225\260\346\215\256", 0, QApplication::UnicodeUTF8));
+        actStay->setText(QApplication::translate("MainWindow", "\346\273\236\347\225\231\350\275\246\350\276\206", 0, QApplication::UnicodeUTF8));
         menuSysMgm->setTitle(QApplication::translate("MainWindow", "\347\263\273\347\273\237\347\256\241\347\220\206", 0, QApplication::UnicodeUTF8));
         actVideoService->setTitle(QApplication::translate("MainWindow", "\350\247\206\351\242\221\346\234\215\345\212\241", 0, QApplication::UnicodeUTF8));
         actPlateService->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\350\257\206\345\210\253\346\234\215\345\212\241", 0, QApplication::UnicodeUTF8));

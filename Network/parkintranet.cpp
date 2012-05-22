@@ -13,6 +13,12 @@ CNetwork* CNetwork::pNetwork = NULL;
 CNetwork::CNetwork(QObject *parent) :
     QObject(parent)
 {
+    QSettings* pSystem = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+    bMultiCast = !pSystem->value( "CommonCfg/BroadCastData", false ).toBool( );
+    if ( bMultiCast ) {
+        GetTargetHostIP( );
+    }
+
     QString strFile = "sensapi.dll";
     WCHAR* pPath = ( WCHAR* ) strFile.utf16( );
     hDllMod = ::LoadLibrary( pPath );
@@ -28,6 +34,12 @@ CNetwork::CNetwork(QObject *parent) :
     connect( this, SIGNAL( OnReceiveDatagram( QStringList& ) ), pParent, SLOT( ProcessDatagram( QStringList& ) ) );
     InitBroadcastSocket( );
     Server( );
+}
+
+void CNetwork::GetTargetHostIP( )
+{
+    QString strSql = "select distinct video1ip from roadconerinfo";
+    CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstTargetHostIP );
 }
 
 CNetwork& CNetwork::Singleton( QObject* parent )
@@ -106,6 +118,18 @@ void CNetwork::ProcessData( QByteArray &byData )
     emit OnReceiveDatagram( lstData );
 }
 
+void CNetwork::MultiCastData( const QByteArray& byData )
+{
+    QHostAddress hostAddr;
+
+    foreach ( const QString& strIP, lstTargetHostIP ) {
+        hostAddr.setAddress( strIP );
+        //udpClient->connectToHost( hostAddr, BROADCAST_PORT ); // read write / QIODevice
+        udpClient->writeDatagram( byData, hostAddr, BROADCAST_PORT ); // bind
+        //udpClient->disconnectFromHost( );
+    }
+}
+
 void CNetwork::BroadcastDatagram( CommonDataType::DatagramType dgType, QStringList &lstData )
 {
     bool bType = ( -1 < dgType && dgType < CommonDataType::DGTypeCount );
@@ -140,7 +164,11 @@ void CNetwork::BroadcastDatagram( CommonDataType::DatagramType dgType, QStringLi
     }
 
     if ( bRet ) {
-        udpClient->writeDatagram( byType, QHostAddress::Broadcast, BROADCAST_PORT );
+        if ( bMultiCast ) {
+            MultiCastData( byType );
+        } else {
+            udpClient->writeDatagram( byType, QHostAddress::Broadcast, BROADCAST_PORT );
+        }
     } else {
         udpClient->writeDatagram( byType, QHostAddress::LocalHost, LOCALHOST_PORT );
     }

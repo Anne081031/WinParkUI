@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu May 17 10:06:51 2012
+** Created: Tue May 22 11:16:58 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      50,   14, // methods
+      51,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -83,6 +83,7 @@ static const uint qt_meta_data_MainWindow[] = {
     1458,   11,   11,   11, 0x08,
     1495, 1469,   11,   11, 0x08,
     1525,   11,   11,   11, 0x08,
+    1551,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -137,6 +138,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "strMsg,bExpiration,bRetry\0"
     "Expiration(QString,bool,bool)\0"
     "on_actLicense_triggered()\0"
+    "on_actStay_triggered()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
@@ -218,9 +220,10 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 47: SendTime(); break;
         case 48: Expiration((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
         case 49: on_actLicense_triggered(); break;
+        case 50: on_actStay_triggered(); break;
         default: ;
         }
-        _id -= 50;
+        _id -= 51;
     }
     return _id;
 }

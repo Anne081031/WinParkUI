@@ -505,6 +505,32 @@ void CProcessData::GetCaptureFile( QString& strPath, QString& strCardNo, int nCh
     CCommonFunction::GetPath( strPath, CommonDataType::PathSnapshot );
 }
 
+void CProcessData::ClearSenseImage( QByteArray &byData )
+{
+    int nChannel = GetChannelByCan( ( char ) byData[ 5 ] );
+    if ( bCardCapture[ nChannel ] ) {
+        return;
+    }
+
+    pSettings->sync( );
+    bool bQueue = pSettings->value( "CommonCfg/SenseGetImg", true ).toBool( );
+    QString strFile = "";
+
+    if ( bQueue ) {
+        if ( !imgQueue[ nChannel ].isEmpty( ) ) {
+            strFile = imgQueue[ nChannel ].dequeue( );
+        }
+    } else {
+        if ( !imgStack[ nChannel ].isEmpty( ) ) {
+            strFile = imgStack[ nChannel ].pop( );
+        }
+    }
+
+    if ( !strFile.isEmpty( ) ) {
+        QFile::remove( strFile );
+    }
+}
+
 void CProcessData::CaptureSenseImage( QByteArray &byData, CommonDataType::CaptureImageType capType )
 {
     int nChannel = GetChannelByCan( ( char ) byData[ 5 ] );
@@ -2806,6 +2832,7 @@ void CProcessData::ProcessCmd( QByteArray &byData, CPortCmd::PortUpCmd cmdType )
     case CPortCmd::UpInBallotSenseVehcleLeave :
         bSendOnlyOnce = false;
         BallotSense( byData, vData, bEnter, false );
+        ClearSenseImage( byData );
         break;
     case CPortCmd::UpOutBallotSenseVehcleEnter : // Vehcle Enter
         BallotSense( byData, vData, bEnter, true );
@@ -2815,6 +2842,7 @@ void CProcessData::ProcessCmd( QByteArray &byData, CPortCmd::PortUpCmd cmdType )
         break;
     case CPortCmd::UpOutBallotSenseVehcleLeave :
         BallotSense( byData, vData, bEnter, false );
+        ClearSenseImage( byData );
         break;
     case CPortCmd::UpButtonDownCar : //
     case CPortCmd::UpButtonDownNoCar :

@@ -24,6 +24,8 @@ private:
     void InitBroadcastSocket( );
     void Server( );
     void ProcessData( QByteArray& byData );
+    void GetTargetHostIP( );
+    void MultiCastData( const QByteArray& byData );
 
 signals:
     void OnReceiveDatagram( QStringList& lstData );
@@ -40,6 +42,8 @@ private:
     HMODULE hDllMod;
     IsNetworkAlive MyIsNetworkAlive;
     static CNetwork* pNetwork;
+    bool bMultiCast;
+    QStringList lstTargetHostIP;
 };
 
 #endif // NETWORK_H

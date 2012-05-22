@@ -18,6 +18,7 @@ CParkSpaceLotDialog::CParkSpaceLotDialog(QWidget *parent) :
     strParkName = "";
 
     CCommonFunction::ControlSysMenu( *this );
+    CCommonFunction::SetWindowIcon( this );
 }
 
 CParkSpaceLotDialog::~CParkSpaceLotDialog()

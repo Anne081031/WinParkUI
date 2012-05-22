@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>CDlgStaying</class>
+ <widget class="QDialog" name="CDlgStaying">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>885</width>
+    <height>587</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>885</width>
+    <height>587</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>885</width>
+    <height>587</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>当前滞留车辆信息</string>
+  </property>
+  <widget class="QTabWidget" name="tabWidget">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>851</width>
+     <height>551</height>
+    </rect>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>851</width>
+     <height>551</height>
+    </size>
+   </property>
+   <property name="currentIndex">
+    <number>0</number>
+   </property>
+   <widget class="QWidget" name="tab">
+    <attribute name="title">
+     <string>月主卡车辆</string>
+    </attribute>
+    <widget class="QTableWidget" name="tableWidgetMonth">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>821</width>
+       <height>511</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>卡号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>自编号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>车主</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>联系电话</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>车牌</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>进入通道</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>进入时间</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="tab_2">
+    <attribute name="title">
+     <string>计时卡车辆</string>
+    </attribute>
+    <widget class="QTableWidget" name="tableWidgetTime">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>821</width>
+       <height>511</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>卡号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>自编号</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>车牌</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>进入通道</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>进入时间</string>
+      </property>
+     </column>
+    </widget>
+   </widget>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

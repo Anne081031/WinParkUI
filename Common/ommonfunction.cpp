@@ -53,6 +53,19 @@ QHash< char, QString > CCommonFunction::hashCanParkIndex;
 QHash< char, QString > CCommonFunction::hashCanParkNum;
 QHash< char, QString > CCommonFunction::hashCanParkName;
 
+void CCommonFunction::SetWindowIcon( QWidget *pWidget )
+{
+    QString strPath;
+    GetPath( strPath, CommonDataType::PathUIImage );
+    strPath += "Icon.JPG";
+    QIcon icon( strPath );
+    pWidget->setWindowIcon( icon );
+
+    Qt::WindowFlags flags = pWidget->windowFlags( );
+    flags &= ( ~Qt::WindowContextHelpButtonHint );
+    pWidget->setWindowFlags( flags ); // Help
+}
+
 QString CCommonFunction::GetCarTypeString( QString &strIndex )
 {
     QString strType = "Ð¡ÐÍ³µ";

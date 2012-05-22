@@ -119,6 +119,8 @@
     <addaction name="actPrintMonthlyReport"/>
     <addaction name="actPrintYearlyReport"/>
     <addaction name="actHandheldICProcess"/>
+    <addaction name="separator"/>
+    <addaction name="actStay"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -449,6 +451,11 @@
    </property>
    <property name="visible">
     <bool>false</bool>
+   </property>
+  </action>
+  <action name="actStay">
+   <property name="text">
+    <string>滞留车辆</string>
    </property>
   </action>
  </widget>

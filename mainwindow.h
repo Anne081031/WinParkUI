@@ -184,6 +184,8 @@ private slots:
 
     void on_actLicense_triggered();
 
+    void on_actStay_triggered();
+
 signals:
     void OnUserChanged( QString& strUser, QString& strID );
     void OnPermission( bool bNormal, int nIndex );

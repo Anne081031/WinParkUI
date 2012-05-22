@@ -9,6 +9,7 @@ CChannelAttribute::CChannelAttribute(QWidget *parent) :
     ui->setupUi(this);
 
     CCommonFunction::ControlSysMenu( *this );
+    CCommonFunction::SetWindowIcon( this );
 }
 
 CChannelAttribute::~CChannelAttribute()

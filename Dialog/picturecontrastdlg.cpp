@@ -7,6 +7,12 @@
 
 void CPictureContrastDlg::keyPressEvent( QKeyEvent *event )
 {
+    QDialog::keyPressEvent( event );
+
+    if ( !ui->gbFee->isEnabled( ) ) {
+        return;
+    }
+
     QSettings* pSystem = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     bool bRet = pSystem->value( "CommonCfg/HotKeyCarType", false ).toBool( );
     if ( !bRet ) {
@@ -14,19 +20,19 @@ void CPictureContrastDlg::keyPressEvent( QKeyEvent *event )
     }
 
     switch ( event->key( ) ) {
-    case Qt::Key_F9 :
+    case Qt::Key_F5 :
         AnalogClicked( ui->rdx1 );
         break;
 
-    case Qt::Key_F10 :
+    case Qt::Key_F6 :
         AnalogClicked( ui->rdx5 );
         break;
 
-    case Qt::Key_F11 :
+    case Qt::Key_F7 :
         AnalogClicked( ui->rdx2 );
         break;
 
-    case Qt::Key_F12 :
+    case Qt::Key_F8 :
         AnalogClicked( ui->rdx6 );
         break;
     }

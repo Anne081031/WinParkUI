@@ -75,6 +75,7 @@ private:
     void GetCaptureFile( QString& strPath, QString& strCardNo, int nChannel, CommonDataType::CaptureImageType capType );
     void CaptureImage( QString& strCardNo, int nChannel, CommonDataType::CaptureImageType capType );
     void CaptureSenseImage( QByteArray& byData, CommonDataType::CaptureImageType capType );
+    void ClearSenseImage( QByteArray& byData );
     void LoadEntranceImg( QString& strCardNo, CommonDataType::CaptureImageType capType );
     inline bool WriteData( QByteArray& byData );
     inline void PlayAudioDisplayInfo( QByteArray& byData, QByteArray& vData,

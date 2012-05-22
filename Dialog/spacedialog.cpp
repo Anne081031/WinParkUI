@@ -9,6 +9,7 @@ CSpaceDialog::CSpaceDialog(QWidget *parent) :
     ui->setupUi(this);
 
     CCommonFunction::ControlSysMenu( *this );
+    CCommonFunction::SetWindowIcon( this );
 }
 
 CSpaceDialog::~CSpaceDialog()

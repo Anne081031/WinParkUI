@@ -58,6 +58,7 @@
 #include "Dialog/dlgmakelicense.h"
 #include <QPushButton>
 #include "CenterMgmt/mgmtthread.h"
+#include "Dialog/dlgstaying.h"
 
 CHeartbeatThread* g_pHeartbeatThread = NULL;
 CLocalCltCommunication* g_pLocalCltComm = NULL;
@@ -597,7 +598,6 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     //startup.start( );
     //QEvent* pEvent = new QEvent( QEvent::User );
     //QApplication::postEvent( &startup, pEvent );
-    CNetwork::Singleton( this );
 
     CCommonFunction::ShowSplashMessage( "初始化时间格式开始。" );
     SetDateTimeFormat( );
@@ -625,6 +625,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     pDlgLogin = new CLoginDialog( NULL );
     connect( pDlgLogin, SIGNAL( OnReconnect( ) ), this, SLOT( ReconnectDatabase( ) ) );
     ControlDatabase( true );
+    CNetwork::Singleton( this );
     ControlSerial( true );
     //GetCardEntityInfo( );
     setWindowFlags( Qt::FramelessWindowHint );
@@ -1923,4 +1924,10 @@ void MainWindow::on_actLicense_triggered()
 
     //QString strMsg = "导入授权数据到数据库%1！" ;
     //CCommonFunction::MsgBox( NULL, "提示", strMsg.arg( bRet ? "成功" : "失败" ), QMessageBox::Information );
+}
+
+void MainWindow::on_actStay_triggered()
+{
+        CDlgStaying dlg;
+        dlg.exec( );
 }

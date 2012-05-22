@@ -70,6 +70,7 @@ void MainWindow::ReadFile( )
 
     ui->chkVideo->setChecked( pSysSetCfg->value( "VideoMode/AutoVideo", false ).toBool( ) );
     ui->chkPlate->setChecked( pSysSetCfg->value( "CarLicence/AutoRecognize", false ).toBool( ) );
+    ui->chkBroadcastData->setChecked( pSystemCfg->value( "CommonCfg/BroadCastData", false ).toBool( ) );
 }
 
 void MainWindow::WriteFile( )
@@ -91,6 +92,7 @@ void MainWindow::WriteFile( )
     pSystemCfg->setValue( "CommonCfg/SenseOpenGate", ui->chkOpenGate->isChecked( ) );
     pSystemCfg->setValue( "CommonCfg/SenseGetImg", ui->chkCapture->isChecked( ) );
     pSystemCfg->setValue( "CommonCfg/ParkID", ui->edtParkID->text( ) );
+    pSystemCfg->setValue( "CommonCfg/BroadCastData", ui->chkBroadcastData->isChecked( ) );
 
     QString strKey = "CommonCfg/Video%1";
     QString strChannelKey = "CommonCfg/Name%1";

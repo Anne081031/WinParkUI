@@ -32,25 +32,33 @@ QString CMonitor::strPlates[ VIDEO_USEDWAY ] = { "" };
 
 void CMonitor::keyPressEvent( QKeyEvent *event )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+    QString str1 = "ÄãºÃ";
+    QString str2 = "Âð£¿";
+
+    Q_UNUSED( str1 );
+    Q_UNUSED( str2 );
+    QFrame::keyPressEvent( event );
+
     bool bRet = pSystem->value( "CommonCfg/HotKeyGate", false ).toBool( );
     if ( !bRet ) {
         return;
     }
 
     switch ( event->key( ) ) {
-    case Qt::Key_F5 :
+    case Qt::Key_F9 :
         ControlGate( true, true, ui->btnEnterGateOpen );
         break;
 
-    case Qt::Key_F6 :
+    case Qt::Key_F10 :
         ControlGate( false, true, ui->btnEnterGateOpen );
         break;
 
-    case Qt::Key_F7 :
+    case Qt::Key_F11 :
         ControlGate( true, false, ui->btnLeaveGateOpen );
         break;
 
-    case Qt::Key_F8 :
+    case Qt::Key_F12 :
         ControlGate( true, false, ui->btnLeaveGateClose );
         break;
     }
@@ -491,6 +499,8 @@ void CMonitor::OnClickedDlgPopup(  )
         static CPublishLEDInfo dlg( true, pParent, this );
         QString strStyle = QString( "background-image:url(%1NewIcon/CommonMiddleBG-normal.jpg)" ).arg( strImagePath );
         dlg.setStyleSheet( strStyle );
+        HWND hChildWnd = dlg.winId( );
+        ::BringWindowToTop( hChildWnd );
         dlg.show( );
         return;
     } else if ( strObjName == ui->btnEnterPeripheralStatus->objectName( ) ) {

@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'recognizeparamdlg.ui'
 **
-** Created: Mon Sep 19 10:37:10 2011
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Mon May 21 14:25:52 2012
+**      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -15,6 +15,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QCheckBox>
+#include <QtGui/QComboBox>
 #include <QtGui/QDialog>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
@@ -100,6 +101,10 @@ public:
     QCheckBox *val136;
     QCheckBox *val137;
     QSpinBox *val138;
+    QLabel *label_89;
+    QComboBox *val139;
+    QCheckBox *val140;
+    QCheckBox *val141;
     QWidget *tab2;
     QCheckBox *val29;
     QLabel *lblParam15_2;
@@ -169,6 +174,10 @@ public:
     QCheckBox *val236;
     QSpinBox *val238;
     QLabel *label_86;
+    QLabel *label_90;
+    QComboBox *val239;
+    QCheckBox *val241;
+    QCheckBox *val240;
     QWidget *tab3;
     QCheckBox *val39;
     QSpinBox *val31;
@@ -236,8 +245,12 @@ public:
     QCheckBox *val334;
     QCheckBox *val335;
     QCheckBox *val336;
-    QSpinBox *va338;
+    QSpinBox *val338;
     QLabel *label_87;
+    QLabel *label_91;
+    QComboBox *val339;
+    QCheckBox *val341;
+    QCheckBox *val340;
     QWidget *tab4;
     QCheckBox *val49;
     QSpinBox *val41;
@@ -307,12 +320,17 @@ public:
     QCheckBox *val436;
     QSpinBox *val438;
     QLabel *label_88;
+    QLabel *label_92;
+    QComboBox *val439;
+    QCheckBox *val441;
+    QCheckBox *val440;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_37;
     QPushButton *btnDefault;
     QPushButton *btnSave;
     QPushButton *btnExit;
     QLabel *lblTitle;
+    QLabel *lblClose;
 
     void setupUi(QDialog *CRecognizeParamDlg)
     {
@@ -320,10 +338,10 @@ public:
             CRecognizeParamDlg->setObjectName(QString::fromUtf8("CRecognizeParamDlg"));
         CRecognizeParamDlg->resize(440, 630);
         CRecognizeParamDlg->setMinimumSize(QSize(359, 443));
-        CRecognizeParamDlg->setStyleSheet(QString::fromUtf8(""));
+        CRecognizeParamDlg->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/PlateSet.JPG);"));
         tabParam = new QTabWidget(CRecognizeParamDlg);
         tabParam->setObjectName(QString::fromUtf8("tabParam"));
-        tabParam->setGeometry(QRect(46, 52, 341, 491));
+        tabParam->setGeometry(QRect(46, 46, 341, 521));
         tabParam->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
         tab1 = new QWidget();
         tab1->setObjectName(QString::fromUtf8("tab1"));
@@ -626,6 +644,18 @@ public:
         val138->setGeometry(QRect(190, 440, 36, 20));
         val138->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
         val138->setValue(30);
+        label_89 = new QLabel(tab1);
+        label_89->setObjectName(QString::fromUtf8("label_89"));
+        label_89->setGeometry(QRect(12, 471, 72, 16));
+        val139 = new QComboBox(tab1);
+        val139->setObjectName(QString::fromUtf8("val139"));
+        val139->setGeometry(QRect(260, 210, 69, 20));
+        val140 = new QCheckBox(tab1);
+        val140->setObjectName(QString::fromUtf8("val140"));
+        val140->setGeometry(QRect(94, 472, 71, 16));
+        val141 = new QCheckBox(tab1);
+        val141->setObjectName(QString::fromUtf8("val141"));
+        val141->setGeometry(QRect(174, 472, 71, 16));
         tabParam->addTab(tab1, QString());
         tab2 = new QWidget();
         tab2->setObjectName(QString::fromUtf8("tab2"));
@@ -863,6 +893,18 @@ public:
         label_86->setObjectName(QString::fromUtf8("label_86"));
         label_86->setGeometry(QRect(12, 440, 171, 16));
         label_86->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        label_90 = new QLabel(tab2);
+        label_90->setObjectName(QString::fromUtf8("label_90"));
+        label_90->setGeometry(QRect(12, 471, 72, 16));
+        val239 = new QComboBox(tab2);
+        val239->setObjectName(QString::fromUtf8("val239"));
+        val239->setGeometry(QRect(250, 220, 69, 20));
+        val241 = new QCheckBox(tab2);
+        val241->setObjectName(QString::fromUtf8("val241"));
+        val241->setGeometry(QRect(174, 472, 71, 16));
+        val240 = new QCheckBox(tab2);
+        val240->setObjectName(QString::fromUtf8("val240"));
+        val240->setGeometry(QRect(94, 472, 71, 16));
         tabParam->addTab(tab2, QString());
         tab3 = new QWidget();
         tab3->setObjectName(QString::fromUtf8("tab3"));
@@ -1156,15 +1198,27 @@ public:
         val336->setObjectName(QString::fromUtf8("val336"));
         val336->setGeometry(QRect(290, 340, 35, 16));
         val336->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
-        va338 = new QSpinBox(tab3);
-        va338->setObjectName(QString::fromUtf8("va338"));
-        va338->setGeometry(QRect(190, 440, 36, 20));
-        va338->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
-        va338->setValue(30);
+        val338 = new QSpinBox(tab3);
+        val338->setObjectName(QString::fromUtf8("val338"));
+        val338->setGeometry(QRect(190, 440, 36, 20));
+        val338->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        val338->setValue(30);
         label_87 = new QLabel(tab3);
         label_87->setObjectName(QString::fromUtf8("label_87"));
         label_87->setGeometry(QRect(12, 440, 161, 16));
         label_87->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        label_91 = new QLabel(tab3);
+        label_91->setObjectName(QString::fromUtf8("label_91"));
+        label_91->setGeometry(QRect(12, 471, 72, 16));
+        val339 = new QComboBox(tab3);
+        val339->setObjectName(QString::fromUtf8("val339"));
+        val339->setGeometry(QRect(250, 180, 69, 20));
+        val341 = new QCheckBox(tab3);
+        val341->setObjectName(QString::fromUtf8("val341"));
+        val341->setGeometry(QRect(174, 472, 71, 16));
+        val340 = new QCheckBox(tab3);
+        val340->setObjectName(QString::fromUtf8("val340"));
+        val340->setGeometry(QRect(94, 472, 71, 16));
         tabParam->addTab(tab3, QString());
         tab4 = new QWidget();
         tab4->setObjectName(QString::fromUtf8("tab4"));
@@ -1465,12 +1519,24 @@ public:
         val438->setValue(30);
         label_88 = new QLabel(tab4);
         label_88->setObjectName(QString::fromUtf8("label_88"));
-        label_88->setGeometry(QRect(12, 440, 151, 16));
+        label_88->setGeometry(QRect(12, 440, 161, 16));
         label_88->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        label_92 = new QLabel(tab4);
+        label_92->setObjectName(QString::fromUtf8("label_92"));
+        label_92->setGeometry(QRect(12, 471, 72, 16));
+        val439 = new QComboBox(tab4);
+        val439->setObjectName(QString::fromUtf8("val439"));
+        val439->setGeometry(QRect(250, 220, 69, 20));
+        val441 = new QCheckBox(tab4);
+        val441->setObjectName(QString::fromUtf8("val441"));
+        val441->setGeometry(QRect(174, 472, 71, 16));
+        val440 = new QCheckBox(tab4);
+        val440->setObjectName(QString::fromUtf8("val440"));
+        val440->setGeometry(QRect(94, 472, 71, 16));
         tabParam->addTab(tab4, QString());
         layoutWidget = new QWidget(CRecognizeParamDlg);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(99, 563, 239, 25));
+        layoutWidget->setGeometry(QRect(99, 576, 239, 25));
         layoutWidget->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
         horizontalLayout_37 = new QHBoxLayout(layoutWidget);
         horizontalLayout_37->setObjectName(QString::fromUtf8("horizontalLayout_37"));
@@ -1497,6 +1563,9 @@ public:
         lblTitle->setObjectName(QString::fromUtf8("lblTitle"));
         lblTitle->setGeometry(QRect(30, 5, 141, 21));
         lblTitle->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        lblClose = new QLabel(CRecognizeParamDlg);
+        lblClose->setObjectName(QString::fromUtf8("lblClose"));
+        lblClose->setGeometry(QRect(400, 6, 30, 15));
 
         retranslateUi(CRecognizeParamDlg);
 
@@ -1561,6 +1630,14 @@ public:
         val135->setText(QApplication::translate("CRecognizeParamDlg", "\345\217\263", 0, QApplication::UnicodeUTF8));
         val136->setText(QApplication::translate("CRecognizeParamDlg", "\344\270\212", 0, QApplication::UnicodeUTF8));
         val137->setText(QApplication::translate("CRecognizeParamDlg", "\344\270\213", 0, QApplication::UnicodeUTF8));
+        label_89->setText(QApplication::translate("CRecognizeParamDlg", "\350\275\246\347\211\214\346\270\205\351\231\244\346\227\266\346\234\272", 0, QApplication::UnicodeUTF8));
+        val139->clear();
+        val139->insertItems(0, QStringList()
+         << QApplication::translate("CRecognizeParamDlg", "\347\246\273\345\274\200\347\245\250\347\256\261", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("CRecognizeParamDlg", "\345\274\200\345\220\257\351\201\223\351\227\270", 0, QApplication::UnicodeUTF8)
+        );
+        val140->setText(QApplication::translate("CRecognizeParamDlg", "\347\246\273\345\274\200\347\245\250\347\256\261", 0, QApplication::UnicodeUTF8));
+        val141->setText(QApplication::translate("CRecognizeParamDlg", "\345\274\200\345\220\257\351\201\223\351\227\270", 0, QApplication::UnicodeUTF8));
         tabParam->setTabText(tabParam->indexOf(tab1), QApplication::translate("CRecognizeParamDlg", "\347\254\254\344\270\200\350\267\257\350\247\206\351\242\221", 0, QApplication::UnicodeUTF8));
         val29->setStyleSheet(QApplication::translate("CRecognizeParamDlg", "background-image: url(none);", 0, QApplication::UnicodeUTF8));
         val29->setText(QApplication::translate("CRecognizeParamDlg", "\350\247\206\351\242\221\344\270\255\346\257\217\344\270\252\350\275\246\347\211\214\345\217\252\350\276\223\345\207\272\344\270\200\346\254\241", 0, QApplication::UnicodeUTF8));
@@ -1672,6 +1749,14 @@ public:
         val236->setStyleSheet(QApplication::translate("CRecognizeParamDlg", "background-image: url(none);", 0, QApplication::UnicodeUTF8));
         val236->setText(QApplication::translate("CRecognizeParamDlg", "\344\270\212", 0, QApplication::UnicodeUTF8));
         label_86->setText(QApplication::translate("CRecognizeParamDlg", "\345\220\214\344\270\200\350\275\246\350\277\233\345\207\272\346\234\200\345\260\217\351\227\264\351\232\224\346\227\266\351\227\264(\347\247\222)", 0, QApplication::UnicodeUTF8));
+        label_90->setText(QApplication::translate("CRecognizeParamDlg", "\350\275\246\347\211\214\346\270\205\351\231\244\346\227\266\346\234\272", 0, QApplication::UnicodeUTF8));
+        val239->clear();
+        val239->insertItems(0, QStringList()
+         << QApplication::translate("CRecognizeParamDlg", "\347\246\273\345\274\200\347\245\250\347\256\261", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("CRecognizeParamDlg", "\345\274\200\345\220\257\351\201\223\351\227\270", 0, QApplication::UnicodeUTF8)
+        );
+        val241->setText(QApplication::translate("CRecognizeParamDlg", "\345\274\200\345\220\257\351\201\223\351\227\270", 0, QApplication::UnicodeUTF8));
+        val240->setText(QApplication::translate("CRecognizeParamDlg", "\347\246\273\345\274\200\347\245\250\347\256\261", 0, QApplication::UnicodeUTF8));
         tabParam->setTabText(tabParam->indexOf(tab2), QApplication::translate("CRecognizeParamDlg", "\347\254\254\344\272\214\350\267\257\350\247\206\351\242\221", 0, QApplication::UnicodeUTF8));
         val39->setText(QApplication::translate("CRecognizeParamDlg", "\350\247\206\351\242\221\344\270\255\346\257\217\344\270\252\350\275\246\347\211\214\345\217\252\350\276\223\345\207\272\344\270\200\346\254\241", 0, QApplication::UnicodeUTF8));
         lblParam11_3->setText(QApplication::translate("CRecognizeParamDlg", "\350\275\246\347\211\214\346\234\200\345\260\217\345\256\275\345\272\246", 0, QApplication::UnicodeUTF8));
@@ -1718,6 +1803,14 @@ public:
         val335->setText(QApplication::translate("CRecognizeParamDlg", "\345\217\263", 0, QApplication::UnicodeUTF8));
         val336->setText(QApplication::translate("CRecognizeParamDlg", "\344\270\212", 0, QApplication::UnicodeUTF8));
         label_87->setText(QApplication::translate("CRecognizeParamDlg", "\345\220\214\344\270\200\350\275\246\350\277\233\345\207\272\346\234\200\345\260\217\351\227\264\351\232\224\346\227\266\351\227\264(\347\247\222)", 0, QApplication::UnicodeUTF8));
+        label_91->setText(QApplication::translate("CRecognizeParamDlg", "\350\275\246\347\211\214\346\270\205\351\231\244\346\227\266\346\234\272", 0, QApplication::UnicodeUTF8));
+        val339->clear();
+        val339->insertItems(0, QStringList()
+         << QApplication::translate("CRecognizeParamDlg", "\347\246\273\345\274\200\347\245\250\347\256\261", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("CRecognizeParamDlg", "\345\274\200\345\220\257\351\201\223\351\227\270", 0, QApplication::UnicodeUTF8)
+        );
+        val341->setText(QApplication::translate("CRecognizeParamDlg", "\345\274\200\345\220\257\351\201\223\351\227\270", 0, QApplication::UnicodeUTF8));
+        val340->setText(QApplication::translate("CRecognizeParamDlg", "\347\246\273\345\274\200\347\245\250\347\256\261", 0, QApplication::UnicodeUTF8));
         tabParam->setTabText(tabParam->indexOf(tab3), QApplication::translate("CRecognizeParamDlg", "\347\254\254\344\270\211\350\267\257\350\247\206\351\242\221", 0, QApplication::UnicodeUTF8));
         val49->setText(QApplication::translate("CRecognizeParamDlg", "\350\247\206\351\242\221\344\270\255\346\257\217\344\270\252\350\275\246\347\211\214\345\217\252\350\276\223\345\207\272\344\270\200\346\254\241", 0, QApplication::UnicodeUTF8));
         lblParam11_4->setText(QApplication::translate("CRecognizeParamDlg", "\350\275\246\347\211\214\346\234\200\345\260\217\345\256\275\345\272\246", 0, QApplication::UnicodeUTF8));
@@ -1764,11 +1857,20 @@ public:
         val435->setText(QApplication::translate("CRecognizeParamDlg", "\345\217\263", 0, QApplication::UnicodeUTF8));
         val436->setText(QApplication::translate("CRecognizeParamDlg", "\344\270\212", 0, QApplication::UnicodeUTF8));
         label_88->setText(QApplication::translate("CRecognizeParamDlg", "\345\220\214\344\270\200\350\275\246\350\277\233\345\207\272\346\234\200\345\260\217\351\227\264\351\232\224\346\227\266\351\227\264(\347\247\222)", 0, QApplication::UnicodeUTF8));
+        label_92->setText(QApplication::translate("CRecognizeParamDlg", "\350\275\246\347\211\214\346\270\205\351\231\244\346\227\266\346\234\272", 0, QApplication::UnicodeUTF8));
+        val439->clear();
+        val439->insertItems(0, QStringList()
+         << QApplication::translate("CRecognizeParamDlg", "\347\246\273\345\274\200\347\245\250\347\256\261", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("CRecognizeParamDlg", "\345\274\200\345\220\257\351\201\223\351\227\270", 0, QApplication::UnicodeUTF8)
+        );
+        val441->setText(QApplication::translate("CRecognizeParamDlg", "\345\274\200\345\220\257\351\201\223\351\227\270", 0, QApplication::UnicodeUTF8));
+        val440->setText(QApplication::translate("CRecognizeParamDlg", "\347\246\273\345\274\200\347\245\250\347\256\261", 0, QApplication::UnicodeUTF8));
         tabParam->setTabText(tabParam->indexOf(tab4), QApplication::translate("CRecognizeParamDlg", "\347\254\254\345\233\233\350\267\257\350\247\206\351\242\221", 0, QApplication::UnicodeUTF8));
         btnDefault->setText(QApplication::translate("CRecognizeParamDlg", "\351\273\230\350\256\244\345\200\274", 0, QApplication::UnicodeUTF8));
         btnSave->setText(QApplication::translate("CRecognizeParamDlg", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
         btnExit->setText(QApplication::translate("CRecognizeParamDlg", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));
         lblTitle->setText(QString());
+        lblClose->setText(QString());
     } // retranslateUi
 
 };

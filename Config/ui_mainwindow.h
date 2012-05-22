@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Apr 26 12:59:15 2012
+** Created: Tue May 22 13:45:50 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -140,6 +140,7 @@ public:
     QSpinBox *spRemoteTime;
     QLabel *label_29;
     QLineEdit *edtParkID;
+    QCheckBox *chkBroadcastData;
     QGroupBox *groupBox_9;
     QWidget *layoutWidget9;
     QHBoxLayout *horizontalLayout_12;
@@ -433,7 +434,7 @@ public:
 
         groupBox_5 = new QGroupBox(centralWidget);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
-        groupBox_5->setGeometry(QRect(290, 410, 231, 131));
+        groupBox_5->setGeometry(QRect(290, 418, 231, 131));
         layoutWidget_5 = new QWidget(groupBox_5);
         layoutWidget_5->setObjectName(QString::fromUtf8("layoutWidget_5"));
         layoutWidget_5->setGeometry(QRect(10, 20, 211, 22));
@@ -493,7 +494,7 @@ public:
         chkAlert->setGeometry(QRect(10, 110, 201, 16));
         groupBox_6 = new QGroupBox(centralWidget);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(290, 320, 231, 80));
+        groupBox_6->setGeometry(QRect(290, 328, 231, 80));
         layoutWidget_7 = new QWidget(groupBox_6);
         layoutWidget_7->setObjectName(QString::fromUtf8("layoutWidget_7"));
         layoutWidget_7->setGeometry(QRect(10, 20, 211, 22));
@@ -532,7 +533,7 @@ public:
 
         groupBox_7 = new QGroupBox(centralWidget);
         groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
-        groupBox_7->setGeometry(QRect(290, 170, 231, 141));
+        groupBox_7->setGeometry(QRect(290, 178, 231, 141));
         layoutWidget_10 = new QWidget(groupBox_7);
         layoutWidget_10->setObjectName(QString::fromUtf8("layoutWidget_10"));
         layoutWidget_10->setGeometry(QRect(20, 50, 201, 22));
@@ -607,7 +608,7 @@ public:
 
         groupBox_8 = new QGroupBox(centralWidget);
         groupBox_8->setObjectName(QString::fromUtf8("groupBox_8"));
-        groupBox_8->setGeometry(QRect(290, 10, 231, 141));
+        groupBox_8->setGeometry(QRect(290, 10, 231, 161));
         chkOpenGate = new QCheckBox(groupBox_8);
         chkOpenGate->setObjectName(QString::fromUtf8("chkOpenGate"));
         chkOpenGate->setGeometry(QRect(10, 43, 211, 16));
@@ -634,10 +635,13 @@ public:
         spRemoteTime->setValue(0);
         label_29 = new QLabel(groupBox_8);
         label_29->setObjectName(QString::fromUtf8("label_29"));
-        label_29->setGeometry(QRect(13, 110, 54, 12));
+        label_29->setGeometry(QRect(13, 108, 54, 12));
         edtParkID = new QLineEdit(groupBox_8);
         edtParkID->setObjectName(QString::fromUtf8("edtParkID"));
-        edtParkID->setGeometry(QRect(78, 107, 141, 20));
+        edtParkID->setGeometry(QRect(78, 105, 141, 20));
+        chkBroadcastData = new QCheckBox(groupBox_8);
+        chkBroadcastData->setObjectName(QString::fromUtf8("chkBroadcastData"));
+        chkBroadcastData->setGeometry(QRect(20, 130, 141, 16));
         groupBox_9 = new QGroupBox(centralWidget);
         groupBox_9->setObjectName(QString::fromUtf8("groupBox_9"));
         groupBox_9->setGeometry(QRect(30, 210, 230, 101));
@@ -798,6 +802,7 @@ public:
         label_24->setText(QApplication::translate("MainWindow", "\347\247\222", 0, QApplication::UnicodeUTF8));
         label_25->setText(QApplication::translate("MainWindow", "\350\277\234\350\267\235\347\246\273\345\215\241\350\257\206\345\210\253\351\227\264\351\232\224\357\274\232", 0, QApplication::UnicodeUTF8));
         label_29->setText(QApplication::translate("MainWindow", "\345\201\234\350\275\246\345\234\272ID", 0, QApplication::UnicodeUTF8));
+        chkBroadcastData->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\345\271\277\346\222\255\350\277\233\345\207\272\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
         groupBox_9->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\345\256\236\346\227\266\346\230\276\347\244\272", 0, QApplication::UnicodeUTF8));
         label_12->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\200\350\267\257\357\274\232", 0, QApplication::UnicodeUTF8));
         chkPlateReal1->setText(QString());

@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Sep 19 11:30:55 2011
-**      by: Qt User Interface Compiler version 4.7.0
+** Created: Mon May 21 14:32:19 2012
+**      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -34,8 +34,6 @@ public:
     QLabel *lblVideo1;
     QGroupBox *groupBox;
     QLabel *lblImage;
-    QLabel *lblVideo4;
-    QLabel *lblVideo3;
     QGroupBox *groupBox_2;
     QLabel *lblPlateImage;
     QGroupBox *groupBox_3;
@@ -48,6 +46,8 @@ public:
     QPushButton *btnClear;
     QPushButton *btnCapture;
     QLabel *lblVideo2;
+    QLabel *lblVideo4;
+    QLabel *lblVideo3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -61,7 +61,7 @@ public:
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         lblVideo1 = new QLabel(centralWidget);
         lblVideo1->setObjectName(QString::fromUtf8("lblVideo1"));
-        lblVideo1->setGeometry(QRect(20, 10, 381, 381));
+        lblVideo1->setGeometry(QRect(10, 10, 381, 381));
         lblVideo1->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 255);"));
         lblVideo1->setFrameShape(QFrame::Panel);
         lblVideo1->setFrameShadow(QFrame::Sunken);
@@ -77,22 +77,6 @@ public:
         lblImage->setFrameShadow(QFrame::Sunken);
         lblImage->setLineWidth(2);
         lblImage->setScaledContents(true);
-        lblVideo4 = new QLabel(groupBox);
-        lblVideo4->setObjectName(QString::fromUtf8("lblVideo4"));
-        lblVideo4->setGeometry(QRect(60, 30, 51, 61));
-        lblVideo4->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 255);"));
-        lblVideo4->setFrameShape(QFrame::Panel);
-        lblVideo4->setFrameShadow(QFrame::Sunken);
-        lblVideo4->setLineWidth(3);
-        lblVideo4->setScaledContents(true);
-        lblVideo3 = new QLabel(groupBox);
-        lblVideo3->setObjectName(QString::fromUtf8("lblVideo3"));
-        lblVideo3->setGeometry(QRect(80, 130, 81, 41));
-        lblVideo3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 255);"));
-        lblVideo3->setFrameShape(QFrame::Panel);
-        lblVideo3->setFrameShadow(QFrame::Sunken);
-        lblVideo3->setLineWidth(3);
-        lblVideo3->setScaledContents(true);
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
         groupBox_2->setGeometry(QRect(800, 220, 291, 111));
@@ -152,12 +136,28 @@ public:
         btnCapture->setGeometry(QRect(20, 740, 75, 23));
         lblVideo2 = new QLabel(centralWidget);
         lblVideo2->setObjectName(QString::fromUtf8("lblVideo2"));
-        lblVideo2->setGeometry(QRect(440, 10, 381, 381));
+        lblVideo2->setGeometry(QRect(400, 10, 381, 381));
         lblVideo2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 255);"));
         lblVideo2->setFrameShape(QFrame::Panel);
         lblVideo2->setFrameShadow(QFrame::Sunken);
         lblVideo2->setLineWidth(3);
         lblVideo2->setScaledContents(true);
+        lblVideo4 = new QLabel(centralWidget);
+        lblVideo4->setObjectName(QString::fromUtf8("lblVideo4"));
+        lblVideo4->setGeometry(QRect(70, 420, 51, 61));
+        lblVideo4->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 255);"));
+        lblVideo4->setFrameShape(QFrame::Panel);
+        lblVideo4->setFrameShadow(QFrame::Sunken);
+        lblVideo4->setLineWidth(3);
+        lblVideo4->setScaledContents(true);
+        lblVideo3 = new QLabel(centralWidget);
+        lblVideo3->setObjectName(QString::fromUtf8("lblVideo3"));
+        lblVideo3->setGeometry(QRect(10, 420, 51, 61));
+        lblVideo3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 0, 255);"));
+        lblVideo3->setFrameShape(QFrame::Panel);
+        lblVideo3->setFrameShadow(QFrame::Sunken);
+        lblVideo3->setLineWidth(3);
+        lblVideo3->setScaledContents(true);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -181,8 +181,6 @@ public:
         lblVideo1->setText(QString());
         groupBox->setTitle(QApplication::translate("MainWindow", "\345\233\276\347\211\207", 0, QApplication::UnicodeUTF8));
         lblImage->setText(QString());
-        lblVideo4->setText(QString());
-        lblVideo3->setText(QString());
         groupBox_2->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\345\233\276\347\211\207", 0, QApplication::UnicodeUTF8));
         lblPlateImage->setText(QString());
         groupBox_3->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\345\217\267\347\240\201", 0, QApplication::UnicodeUTF8));
@@ -208,6 +206,8 @@ public:
         btnClear->setText(QApplication::translate("MainWindow", "\346\270\205\351\231\244\350\275\246\347\211\214", 0, QApplication::UnicodeUTF8));
         btnCapture->setText(QApplication::translate("MainWindow", " \346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
         lblVideo2->setText(QString());
+        lblVideo4->setText(QString());
+        lblVideo3->setText(QString());
     } // retranslateUi
 
 };
