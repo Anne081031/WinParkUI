@@ -506,8 +506,8 @@ int CLogicInterface::OperateChargeRecord( QStringList& lstRows, CommonDataType::
         nCols = 5;
         strSql += strWhere;
         if ( !GetMysqlDb( ).DbCrud( strSql, strError ) ) {
-        return 0;
-    }
+            return 0;
+        }
         GetMysqlDb( ).GetRowData( lstRows, strError );
         nRows = lstRows.count( ) / nCols;
         break;

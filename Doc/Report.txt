@@ -1,0 +1,32 @@
+use parkadmin;
+
+
+select c.f1, c.f2, c.f4, d.f4, e.f4,f.f4,g.f4,h.f4 from ( 
+
+select year( intime ) f1, month( intime ) f2, count( cardno ) f4 from stoprd a 
+where  ( '2012-01-01 00:00:00' <= a.intime and a.intime < '2013-01-01 00:00:00' ) and a.cardkind = '月租卡' 
+group by year( a.intime ), month( a.intime ) // 进出车辆数 一时间关联
+
+) c 
+
+left join ( 
+select year( feetime ) f1, month( feetime ) f2, 
+sum( feenumb ) f4 from feerd where feekind like '月租卡%' group by year( feetime ), month( feetime ) ) d 
+on c.f1 = d.f1 and c.f2 = d.f2 //所收金额
+
+left join ( 
+select year( intime ) f1, month( intime ) f2, count( cardno ) f4 
+from stoprd a where  ( '2012-01-01 00:00:00' <= a.intime and a.intime < '2013-01-01 00:00:00' ) and a.cardkind = '计时卡' 
+group by year( a.intime ), month( a.intime ) ) e 
+on c.f1 = e.f1 and c.f2 = e.f2 
+
+left join ( select year( feetime ) f1, 
+month( feetime ) f2, sum( feenumb ) f4 from feerd where feekind like '计时卡%' group by year( feetime ), month( feetime ) ) f 
+on c.f1 = f.f1 and c.f2 = f.f2 
+
+left join ( select year( intime ) f1, month( intime ) f2, count( cardno ) f4 from stoprd a 
+where  ( '2012-01-01 00:00:00' <= a.intime and a.intime < '2013-01-01 00:00:00' ) and a.cardkind = '储值卡' 
+group by year( a.intime ), month( a.intime ) ) g on c.f1 = g.f1 and c.f2 = g.f2 
+left join ( select year( feetime ) f1, 
+month( feetime ) f2, sum( feenumb ) f4 from feerd where feekind like '储值卡充值%' group by year( feetime ), month( feetime ) ) h 
+on c.f1 = h.f1 and c.f2 = h.f2

@@ -59,7 +59,7 @@ void CMonitor::keyPressEvent( QKeyEvent *event )
         break;
 
     case Qt::Key_F12 :
-        ControlGate( true, false, ui->btnLeaveGateClose );
+        ControlGate( false, false, ui->btnLeaveGateClose );
         break;
     }
 }
@@ -1402,6 +1402,7 @@ void CMonitor::ControlGate( bool bOpen, bool bEnter, QObject* sender )
     }
 
     dlg.InitDlg( true, lstRows, bEnter );
+    dlg.setWindowTitle( dlg.windowTitle( ) + ( bOpen ? QString( "¡ª¡ª¿ªÕ¢" ) : QString( "¡ª¡ª¹ØÕ¢" ) ) );
     if ( 2 != lstRows.count( ) && CParkSpaceLotDialog::Rejected == dlg.exec( ) ) {
         goto ENABLEBUTTON;
     }
