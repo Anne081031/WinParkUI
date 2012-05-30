@@ -34,8 +34,8 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
 
     pSerialPort = pWinPort;
     pMainWindow = pWindow;
-    cardType[ 0 ] = CardNone;
-    cardType[ 1 ] = CardNone;
+    //cardType[ 0 ] = CardNone;
+    //cardType[ 1 ] = CardNone;
     strCurrentPlate[ 0 ] = "";
     strCurrentPlate[ 1 ] = "";
     bPlateRecognize[ 0 ] = false;
@@ -820,10 +820,10 @@ bool CProcessData::PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumb
     return bRet;
 }
 
-bool CProcessData::PlateCardComfirm( QString &strCardNumber, QByteArray& byData, QString& strPlate )
+bool CProcessData::PlateCardComfirm( QString &strCardNumber, QByteArray& byData, QString& strPlate, ParkCardType& cardKind )
 {
     bool bEnter = ( 0 != byData[ 5 ] % 2 );
-    bool bRet = ( cardType[ bEnter ] != CardTime );
+    bool bRet = ( cardKind != CardTime );
 
     if ( !bRet) {
         bRet = true;
@@ -948,13 +948,15 @@ quint32 CProcessData::GetCardNoByCom( QByteArray& byData )
 
 void CProcessData::DefaultClicked( QByteArray &byData )
 {
-    bool bEnter = ( 0 != byData[ 5 ] % 2 );
-    if ( CardTime != cardType[ bEnter ] || !pFeeDlg->isVisible( ) ) {
-        return;
-    }
-
     quint32 nCardNumber = GetCardNoByCom( byData );
     QString strCardno = QString( "%1" ).arg( nCardNumber );
+
+    ParkCardType cardKind = CardNone;
+    QStringList lstRows;
+    GetCardType2( strCardno, lstRows, cardKind );
+    if ( CardTime != cardKind || !pFeeDlg->isVisible( ) ) {
+        return;
+    }
 
     if ( strCardno == pMainWindow->GetCurrentUserID( ) ) {
         pFeeDlg->DefaultClicked(  );
@@ -976,15 +978,16 @@ void CProcessData::PlateCardComfirmPass( QString strCardNo, char cCan, QString s
     bool bEnter = ( 0 != cCan % 2 );
     QByteArray vData;
     QStringList lstRows;
-    GetCardType2( strCardNo, lstRows, bEnter );
+    ParkCardType cardKind = CardNone;
+    GetCardType2( strCardNo, lstRows, cardKind );
 
     bPlateRecognize[ bEnter ] = false;
 
-    if ( !CheckCardRight( strCardNo, bEnter, byData ) ) { // Check
+    if ( !CheckCardRight( strCardNo, bEnter, byData, cardKind ) ) { // Check
         return;
     }
 
-    AssertCard( byData, vData, lstRows, strPlate );
+    AssertCard( byData, vData, lstRows, strPlate, cardKind );
 }
 
 void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString strCurPlate )
@@ -1051,13 +1054,14 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
 
     QByteArray vData;
     QStringList lstRows;
-    GetCardType2( strCardNumber, lstRows, bEnter );
+    ParkCardType cardKind = CardNone;
+    GetCardType2( strCardNumber, lstRows, cardKind );
 
     //if ( !bPlate && ExcludeRemoteCardDuplication( nCardNumber, bEnter ) ) { // Remote card interval
     //    return;
     //}
 
-    if ( CardNone == cardType[ bEnter ] ) {
+    if ( CardNone == cardKind ) {
         PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCardInvalid, CPortCmd::AudioCardInvalid );
         QString strText = "未知卡";
         pMainWindow->SetAlertMsg( strText );
@@ -1065,7 +1069,7 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
     }
 
     int nStateIndex = 4;
-    if ( CardSave == cardType[ bEnter ] ) {
+    if ( CardSave == cardKind ) {
         nStateIndex = 2;
     }
 
@@ -1089,7 +1093,7 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
     //    return;
     //}
 
-    if ( !bPlate && !PlateCardComfirm( strCardNumber, byData, strCurPlate ) ) {
+    if ( !bPlate && !PlateCardComfirm( strCardNumber, byData, strCurPlate, cardKind ) ) {
         return;
     }
 
@@ -1097,7 +1101,7 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
         bPlateRecognize[ bEnter ] = false;
     }
 
-    if ( !CheckCardRight( strCardNumber, bEnter, byData ) ) { // Check
+    if ( !CheckCardRight( strCardNumber, bEnter, byData, cardKind ) ) { // Check
         return;
     }
     /////////////////////
@@ -1106,18 +1110,18 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
         pConfirm[ bEnter ]->close( );
     }
 
-    bool bRet = AssertCard( byData, vData, lstRows, strCurPlate );
+    bool bRet = AssertCard( byData, vData, lstRows, strCurPlate,cardKind );
     bRet = vData.contains( 0x32 );
     if ( false == bRet ) {
         return;
     }
 }
 
-bool CProcessData::ExcludeRemoteCardDuplication( quint32 nCardID, bool bEnter )
+bool CProcessData::ExcludeRemoteCardDuplication( quint32 nCardID, ParkCardType& cardKind )
 {
     bool bRet = false;
 
-    if ( CardMonthly != cardType[ bEnter ] ) {
+    if ( CardMonthly != cardKind ) {
         return bRet;
     }
 
@@ -1147,10 +1151,10 @@ bool CProcessData::ExcludeRemoteCardDuplication( quint32 nCardID, bool bEnter )
     return bRet;
 }
 
-bool CProcessData::CheckCardRight( QString& strCardID, bool bEnter, QByteArray& byData )
+bool CProcessData::CheckCardRight( QString& strCardID, bool bEnter, QByteArray& byData,ParkCardType& cardKind )
 {
     bool bRet = true;
-    if ( CardNone == cardType[ bEnter ] ) {
+    if ( CardNone == cardKind ) {
         return bRet;
     }
 
@@ -1187,7 +1191,7 @@ bool CProcessData::CheckCardRight( QString& strCardID, bool bEnter, QByteArray& 
     EXITPROCESS:
     if ( !bRet ) { // No right
         QByteArray vData;
-        if ( !ExcludeRemoteCardDuplication( strCardID.toUInt( ), bEnter ) ) {
+        if ( !ExcludeRemoteCardDuplication( strCardID.toUInt( ), cardKind ) ) {
             PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCardNoRight, CPortCmd::AudioCardNoRight );
         }
     }
@@ -1195,26 +1199,26 @@ bool CProcessData::CheckCardRight( QString& strCardID, bool bEnter, QByteArray& 
     return bRet;
 }
 
-bool CProcessData::AssertCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString& strPlate )
+bool CProcessData::AssertCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString& strPlate, ParkCardType& cardKind )
 {
     bool bRet = false;
-    bool bEnter = ( 0 != byData[ 5 ] % 2 );
-    switch ( cardType[ bEnter ] ) {
+    //bool bEnter = ( 0 != byData[ 5 ] % 2 );
+    switch ( cardKind) {
     case CardNone :
         //PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCardInvalid, CPortCmd::AudioCardInvalid );
         //PlayAudioDisplayInfo( byData, vData, CPortCmd::LedContactAdmin, CPortCmd::AudioContactAdmin );
         break;
 
     case CardMonthly :
-        bRet = ProcessMonthlyCard( byData, vData, lstRows, strPlate );
+        bRet = ProcessMonthlyCard( byData, vData, lstRows, strPlate, cardKind );
         break;
 
     case CardSave :
-        bRet = ProcessSaveCard( byData, vData, lstRows, strPlate );
+        bRet = ProcessSaveCard( byData, vData, lstRows, strPlate, cardKind );
         break;
 
     case CardTime :
-        bRet = ProcessTimeCard( byData, vData, lstRows, strPlate );
+        bRet = ProcessTimeCard( byData, vData, lstRows, strPlate, cardKind );
         break;
 
     case CardEmployee :
@@ -1225,7 +1229,7 @@ bool CProcessData::AssertCard( QByteArray& byData, QByteArray& vData, QStringLis
 }
 
 bool CProcessData::CarInsideOutside( bool bEnter, QString& strCardNumber, QString& strTable,
-                                     QByteArray& byData, QByteArray& vData, char cCan )
+                                     QByteArray& byData, QByteArray& vData, char cCan, ParkCardType& cardKind )
 {
     //inshebeiname, intime, outshebeiname, outtime
     bool bRet = true;
@@ -1250,13 +1254,13 @@ bool CProcessData::CarInsideOutside( bool bEnter, QString& strCardNumber, QStrin
         bRet = false;
         strText = "已入场" ;
 
-        if ( !ExcludeRemoteCardDuplication( strCardNumber.toUInt( ), bEnter ) ) {
+        if ( !ExcludeRemoteCardDuplication( strCardNumber.toUInt( ), cardKind ) ) {
             PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCarInside, CPortCmd::AudioCarInside );
         }
     } else if ( !bEnter && strFlag == strInside ) {
         bRet = false;
         strText = "未入场" ;
-        if ( !ExcludeRemoteCardDuplication( strCardNumber.toUInt( ), bEnter ) ) {
+        if ( !ExcludeRemoteCardDuplication( strCardNumber.toUInt( ), cardKind ) ) {
             PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCarOutside, CPortCmd::AudioCarOutside );
         }
     }
@@ -1348,7 +1352,7 @@ bool CProcessData::GetMonthDeadline( QDateTime &dtEndTime, QString &strCardNo )
     return bRet;
 }
 
-bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate )
+bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate, ParkCardType& cardKind )
 {
     // Select cardno, cardkind, starttime, endtime, cardstate, cardselfno, cardcomment, cardcreator
     // 该卡已挂失
@@ -1378,7 +1382,7 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
             QString strText = "已过期";
             pMainWindow->SetAlertMsg( strText );
 
-            if ( !ExcludeRemoteCardDuplication( lstRows[ 0 ] .toUInt( ), bEnter ) ) {
+            if ( !ExcludeRemoteCardDuplication( lstRows[ 0 ] .toUInt( ), cardKind ) ) {
                 PlayAudioDisplayInfo( byData, vData, CPortCmd::LedMonthlyExceed, CPortCmd::AudioMonthlyExceed );
                 //PlayAudioDisplayInfo( byData, vData, CPortCmd::LedContactAdmin, CPortCmd::AudioContactAdmin );
             }
@@ -1389,13 +1393,13 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
 
     QString strTable;
     CCommonFunction::GetTableName( CommonDataType::MonthlyCard, strTable );
-    if ( !MonthCardWorkMode( ) && !CarInsideOutside( bEnter, lstRows[ 0 ], strTable, byData, vData, byte5 ) ) {
+    if ( !MonthCardWorkMode( ) && !CarInsideOutside( bEnter, lstRows[ 0 ], strTable, byData, vData, byte5, cardKind ) ) {
         return bRet;
     }
     // Open Gate
     QString strCardType = "月租卡";
     ClearListContent( bEnter );
-    ControlGate( bEnter, byData, vData ); //第一次：通行
+    ControlGate( bEnter, byData, vData, cardKind ); //第一次：通行
 
     int nDay = CCommonFunction::GetDateTimeDiff( true, 24 * 60 * 60, dtCurrent, dtEndTime );
     if ( nMonthWakeup >= nDay ) {
@@ -1410,7 +1414,7 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
 
     ProcessPlayDisplayList(  bEnter );
 
-    WriteInOutRecord( bEnter, lstRows[ 0 ], strTable, strCardType, strPlate, byte5 );
+    WriteInOutRecord( bEnter, lstRows[ 0 ], strTable, strCardType, strPlate, byte5, cardKind );
 
     if ( bLeave ) {
         ControlChargeInfo( lstRows[ 0 ], QDateTime::currentDateTime( ), "0", "0" );
@@ -1517,7 +1521,7 @@ void CProcessData::ControlGate( bool bOpen, char cCan ) // Manual
     //////////////////////////////////////////////////////////////////////////
 }
 
-void CProcessData::ControlGate( bool bEnter, QByteArray &byData, QByteArray &vData ) // Auto
+void CProcessData::ControlGate( bool bEnter, QByteArray &byData, QByteArray &vData, ParkCardType& cardKind ) // Auto
 {
     if ( IfSenseOpenGate( ) ) {
         return;
@@ -1537,13 +1541,13 @@ void CProcessData::ControlGate( bool bEnter, QByteArray &byData, QByteArray &vDa
 
     QString strType = "";
     char cAudio[ 2 ] = { 0 };
-    if ( CardMonthly == cardType[ bEnter ] ) {
+    if ( CardMonthly == cardKind ) {
         strType = "月租卡";
         cAudio[ 0 ] = 0xFA;
-    } else if ( CardSave == cardType[ bEnter ] ) {
+    } else if ( CardSave == cardKind ) {
         strType = "储值卡";
         cAudio[ 0 ] = 0x27;
-    } else if ( CardTime == cardType[ bEnter ] ) {
+    } else if ( CardTime == cardKind ) {
         strType = "计时卡";
         cAudio[ 0 ] = 0x84;
         return;
@@ -1694,7 +1698,7 @@ int CProcessData::CalculateFee( QDateTime &dtStart, QDateTime &dtEnd, QString& s
     return nFee;
 }
 
-bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate )
+bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate, ParkCardType& cardKind )
 {
     // Select cardno, cardkind, cardstate, cardfee, cardfeebz, cardselfno, cardcomment, cardcreator
     // 该卡已挂失
@@ -1718,7 +1722,7 @@ bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStri
 
     QString strTable;
     CCommonFunction::GetTableName( CommonDataType::ValueCard, strTable );
-    if ( !CarInsideOutside( bEnter, lstRows[ 0 ], strTable, byData, vData, byte5 ) ) {
+    if ( !CarInsideOutside( bEnter, lstRows[ 0 ], strTable, byData, vData, byte5, cardKind ) ) {
         return bRet;
     }
 
@@ -1727,7 +1731,7 @@ bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStri
 
     if ( bEnter ) {
         // Open Gate
-        ControlGate( bEnter, byData, vData ); // 第一次
+        ControlGate( bEnter, byData, vData, cardKind ); // 第一次
         // 第二次
         CardRemainder( byData, vData, strFee, CPortCmd::LedSaveRemainder, CPortCmd::AudioSaveRemainder, bEnter );
     } else if ( bLeave ) {
@@ -1765,7 +1769,7 @@ bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStri
         strFee = lstRows[ 3 ];
 
         // Open Gate
-        ControlGate( bEnter, byData, vData );// 第一次
+        ControlGate( bEnter, byData, vData, cardKind );// 第一次
         //CardRemainder( byData, vData, strFee, CPortCmd::LedSaveRemainder, CPortCmd::AudioSaveRemainder );
         CardExitInfo( byData, vData, true, nMin, nHour, nAmount, nRemainder, bEnter ); // 第二次
         CCDisplayInfo( byData, vData, nMin, nHour, nAmount, bEnter );
@@ -1780,7 +1784,7 @@ bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStri
 
     ProcessPlayDisplayList( bEnter );
     QString strCardType = "储值卡";
-    WriteInOutRecord( bEnter, lstRows[ 0 ], strTable, strCardType, strPlate, byte5, nAmount );
+    WriteInOutRecord( bEnter, lstRows[ 0 ], strTable, strCardType, strPlate, byte5, cardKind, nAmount );
 
     return bRet;
 }
@@ -2105,7 +2109,7 @@ void CProcessData::GetCan2Channel( QString &strWhere )
 }
 
 void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QString& strTable,
-                                     QString& strCardType, QString& strPlate, char cCan, int nAmount )
+                                     QString& strCardType, QString& strPlate, char cCan, ParkCardType& cardKind, int nAmount )
 {
     if ( bEnter ) {
         cardCan.insert( strCardNumber, cCan );
@@ -2120,7 +2124,7 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     QDateTime dtCurrent = QDateTime::currentDateTime( );
     CCommonFunction::DateTime2String( dtCurrent, strDateTime );
 
-    bool bMonthCard = ( CardMonthly == cardType[ bEnter ] );
+    bool bMonthCard = ( CardMonthly == cardKind );
     bool bMonthMultipleCard = bMonthCard && MonthCardWorkMode( );
     QString strMonthMultipleCardNo = "%1(%2)";
     if ( bMonthMultipleCard ) {
@@ -2180,10 +2184,10 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     if ( !bMonthCard && !bEnter ) {
         QString strTmp = strCardType + "%1";
 
-        if ( CardTime == cardType[ bEnter ] ) {
+        if ( CardTime == cardKind ) {
             strTmp = strTmp.arg( "收费" );
             nRealAmount = pFeeDlg->GetAmount( );
-        } else if ( CardSave == cardType[ bEnter ] ) {
+        } else if ( CardSave == cardKind ) {
             strTmp = strTmp.arg( "扣费" );
         }
 
@@ -2222,7 +2226,7 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     if ( bMonthMultipleCard ) {
         BroadcastRecord( strMonthMultipleCardNo, dtCurrent, 10, strPlate, strCardType, strChannel, cCan );
     } else {
-        BroadcastRecord( strCardNumber, dtCurrent, cardType[ bEnter ], strPlate, strCardType, strChannel, cCan );
+        BroadcastRecord( strCardNumber, dtCurrent, cardKind, strPlate, strCardType, strChannel, cCan );
     }
     /////////////////////////////////
     if ( bMonthMultipleCard ) {
@@ -2256,7 +2260,7 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     if ( GetDirectDb( ) ) {
         CLogicInterface::GetInterface( )->ExecuteSql( strSql );
     } else {
-        bool bTimeCard = ( CardTime == cardType[ bEnter ] );
+        bool bTimeCard = ( CardTime == cardKind );
         if ( bTimeCard && !bEnter && CCommonFunction::GetHistoryDb( ) ) {
             QString strSql = QString( "Update IGNORE stoprd Set MayDelete = 1\
                                       Where cardno = '%1' And intime in ( select * from ( Select Max( intime ) \
@@ -2376,14 +2380,17 @@ void CProcessData::ControlVehicleImage( QString &strCardNo, bool bSave2Db, int n
         QByteArray byData = file.readAll( );
         file.close( );
         //CLogicInterface::GetInterface( )->OperateBlob( byData, bSave2Db, blob, strWhere );
+        ParkCardType cardKind = CardNone;
+        QStringList lstRows;
+        GetCardType2( strCardNo, lstRows, cardKind );
         SendDbWriteMessage( CDbEvent::ImgExternal, strWhere, CCommonFunction::GetHistoryDb( ),
-                            bEnter && ( CardTime == cardType[ bEnter ] ), blob, byData );
+                            bEnter && ( CardTime == cardKind ), blob, byData );
     } else {
         CLogicInterface::GetInterface( )->OperateBlob( strPath, bSave2Db, blob, strWhere );
     }
 }
 
-bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate )
+bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate, ParkCardType& cardKind )
 {
     // Select cardno, cardkind, cardfeebz, cardselfno, cardstate
     // 该卡已挂失
@@ -2408,13 +2415,13 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
     QString strTable;
     QString strCardType = "计时卡";
     CCommonFunction::GetTableName( CommonDataType::TimeCard, strTable );
-    if ( !CarInsideOutside( bEnter, lstRows[ 0 ], strTable, byData, vData, byte5 ) ) {
+    if ( !CarInsideOutside( bEnter, lstRows[ 0 ], strTable, byData, vData, byte5, cardKind ) ) {
         return bRet;
     }
 
     if ( bEnter ) {
         // lstInOut[ 1 ] 数据 已入场
-        ControlGate( bEnter, byData, vData );
+        ControlGate( bEnter, byData, vData, cardKind );
         PlayAudioDisplayInfo( byData, vData, CPortCmd::LedTimeCardEnter, CPortCmd::AudioTimeCardEnter );
     } else if ( bLeave ) {
         if ( pFeeDlg->isVisible( ) ) {
@@ -2479,7 +2486,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
         if ( bGate ) {
             pMainWindow->UpdateStatistics( nAmount, 2 );
             pMainWindow->UpdateStatistics( pFeeDlg->GetAmount( ) - nAmount, 5 );
-            ControlGate( bEnter, byData, vData );
+            ControlGate( bEnter, byData, vData, cardKind );
         } else {
             return bRet;
         }
@@ -2495,7 +2502,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
         //ControlGate( true, byData, vData );
     }
 
-    WriteInOutRecord( bEnter, lstRows[ 0 ], strTable, strCardType, strPlate, byte5, nAmount );
+    WriteInOutRecord( bEnter, lstRows[ 0 ], strTable, strCardType, strPlate, byte5, cardKind, nAmount );
 
     return bRet;
 }
@@ -2533,20 +2540,20 @@ bool CProcessData::ExitConfirmDlg( bool bEnter,)
 }
 #endif
 
-void CProcessData::GetCardType2( QString &strCardNo, QStringList &lstRows, bool bEnter )
+void CProcessData::GetCardType2( QString &strCardNo, QStringList &lstRows, ParkCardType& cardKind )
 {
-    cardType[ bEnter ] = CardNone;
+    cardKind = CardNone;
     CommonDataType::QEntityHash& entInfo = CCommonFunction::GetCardEntity( );
     CommonDataType::PEntityInfo pInfo = entInfo.value( strCardNo );
     lstRows.clear( );
     if ( NULL == pInfo ) {
-        GetCardType1( strCardNo, lstRows, bEnter ); // Read DB to get new card
+        GetCardType1( strCardNo, lstRows, cardKind ); // Read DB to get new card
         return;
     }
 
     QString strDateTime;
 
-    cardType[ bEnter ] = ( ParkCardType )pInfo->cardType;
+    cardKind = ( ParkCardType )pInfo->cardType;
 
     lstRows.clear( );
     lstRows << pInfo->strCardNumber;
@@ -2562,17 +2569,17 @@ void CProcessData::GetCardType2( QString &strCardNo, QStringList &lstRows, bool 
 
     QString& strKey = lstKey.first( );
 
-    if ( CardMonthly == cardType[ bEnter ] ) {
+    if ( CardMonthly == cardKind ) {
         CCommonFunction::DateTime2String( pInfo->MonthDateTime.dtStart, strDateTime );
         lstRows << strDateTime;
         CCommonFunction::DateTime2String( pInfo->MonthDateTime.dtEnd, strDateTime );
         lstRows << strDateTime;
         lstRows << pInfo->cardStatus;
-    } else if ( CardSave == cardType[ bEnter ] ) {
+    } else if ( CardSave == cardKind ) {
         lstRows << pInfo->cardStatus;
         lstRows << QString::number( pInfo->ValueFees.nSurplus );
         lstRows << pInfo->carInfo.value( strKey );
-    } else if ( CardTime == cardType[ bEnter ] ) {
+    } else if ( CardTime == cardKind ) {
         lstRows << pInfo->carInfo.value( strKey );
         lstRows << "";
         lstRows << pInfo->cardStatus;
@@ -2580,45 +2587,45 @@ void CProcessData::GetCardType2( QString &strCardNo, QStringList &lstRows, bool 
     }
 }
 
-void CProcessData::GetCardType1( QString &strCardNo, QStringList& lstRows, bool bEnter )
+void CProcessData::GetCardType1( QString &strCardNo, QStringList& lstRows, ParkCardType& cardKind )
 {
     CommonDataType::CardType card = CommonDataType::MonthlyCard;
     CommonDataType::DatabaseOperation dbOperation = CommonDataType::SelectData;
     QString strWhere = QString( " Where cardno = '%1' " ).arg( strCardNo );
-    cardType[ bEnter ] = CardNone;
+    cardKind = CardNone;
 
     int nRows = CLogicInterface::GetInterface( )->OperateCardInfo( lstRows, card, dbOperation, strWhere );
     if ( 0 < nRows ) {
-        cardType[ bEnter ] = CardMonthly;
+        cardKind = CardMonthly;
         return;
     }
 
-    if ( CardNone == cardType[ bEnter ] ) {
+    if ( CardNone == cardKind ) {
         card = CommonDataType::ValueCard;
         nRows = CLogicInterface::GetInterface( )->OperateCardInfo( lstRows, card, dbOperation, strWhere );
         if ( 0 < nRows ) {
-            cardType[ bEnter ] = CardSave;
+            cardKind = CardSave;
             return;
         }
     }
 
-    if ( CardNone == cardType[ bEnter ] ) {
+    if ( CardNone == cardKind ) {
         card = CommonDataType::TimeCard;
         nRows = CLogicInterface::GetInterface( )->OperateCardInfo( lstRows, card, dbOperation, strWhere );
         if ( 0 < nRows ) {
-            cardType[ bEnter ] = CardTime;
+            cardKind = CardTime;
             return;
         }
     }
 
-    if ( CardNone == cardType[ bEnter ] ) {
+    if ( CardNone == cardKind ) {
         //card = CommonDataType::TimeCard;
 #if true
         QString strSql = QString( "Select EmployeeID from operator where EmployeeID ='%1'" ).arg( strCardNo );
         nRows = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRows );
         if ( 0 < nRows ) {
             //cardType[ bEnter ] = CardEmployee;
-            cardType[ bEnter ] = CardTime;
+            cardKind = CardTime;
         }
 #endif
     }
