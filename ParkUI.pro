@@ -152,7 +152,8 @@ SOURCES += mainwindow.cpp \
     CenterMgmt/getconfig.cpp \
     CenterMgmt/sendrequest.cpp \
     Dialog/dlgreadcardid.cpp \
-    Dialog/dlgstaying.cpp
+    Dialog/dlgstaying.cpp \
+    ThirdParty/scu.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -279,7 +280,8 @@ HEADERS  += Header/valuecard.h \
     CenterMgmt/DataType.h \
     CenterMgmt/sendrequest.h \
     Dialog/dlgreadcardid.h \
-    Dialog/dlgstaying.h
+    Dialog/dlgstaying.h \
+    ThirdParty/scu.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \
