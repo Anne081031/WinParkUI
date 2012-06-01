@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue May 22 13:45:50 2012
+** Created: Fri Jun 1 10:30:58 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -158,13 +158,27 @@ public:
     QHBoxLayout *horizontalLayout_25;
     QLabel *label_28;
     QCheckBox *chkPlateReal4;
+    QGroupBox *groupBox_10;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_26;
+    QCheckBox *chkPublish;
+    QLabel *label_30;
+    QLineEdit *edtPublishIP;
+    QLabel *label_31;
+    QLineEdit *edtPublishPort;
+    QWidget *widget1;
+    QHBoxLayout *horizontalLayout_27;
+    QLabel *label_32;
+    QLineEdit *edtPublishDevType;
+    QLabel *label_33;
+    QLineEdit *edtPublishDevID;
     QMenuBar *menuBar;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(551, 673);
+        MainWindow->resize(554, 728);
         MainWindow->setMinimumSize(QSize(293, 347));
         MainWindow->setMaximumSize(QSize(554, 16777215));
         centralWidget = new QWidget(MainWindow);
@@ -313,7 +327,7 @@ public:
 
         layoutWidget7 = new QWidget(centralWidget);
         layoutWidget7->setObjectName(QString::fromUtf8("layoutWidget7"));
-        layoutWidget7->setGeometry(QRect(200, 610, 158, 25));
+        layoutWidget7->setGeometry(QRect(200, 660, 158, 25));
         horizontalLayout_7 = new QHBoxLayout(layoutWidget7);
         horizontalLayout_7->setSpacing(6);
         horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
@@ -717,10 +731,74 @@ public:
 
         horizontalLayout_25->addWidget(chkPlateReal4);
 
+        groupBox_10 = new QGroupBox(centralWidget);
+        groupBox_10->setObjectName(QString::fromUtf8("groupBox_10"));
+        groupBox_10->setGeometry(QRect(30, 560, 491, 91));
+        widget = new QWidget(groupBox_10);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(10, 20, 461, 22));
+        horizontalLayout_26 = new QHBoxLayout(widget);
+        horizontalLayout_26->setSpacing(6);
+        horizontalLayout_26->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_26->setObjectName(QString::fromUtf8("horizontalLayout_26"));
+        horizontalLayout_26->setContentsMargins(0, 0, 0, 0);
+        chkPublish = new QCheckBox(widget);
+        chkPublish->setObjectName(QString::fromUtf8("chkPublish"));
+
+        horizontalLayout_26->addWidget(chkPublish);
+
+        label_30 = new QLabel(widget);
+        label_30->setObjectName(QString::fromUtf8("label_30"));
+
+        horizontalLayout_26->addWidget(label_30);
+
+        edtPublishIP = new QLineEdit(widget);
+        edtPublishIP->setObjectName(QString::fromUtf8("edtPublishIP"));
+
+        horizontalLayout_26->addWidget(edtPublishIP);
+
+        label_31 = new QLabel(widget);
+        label_31->setObjectName(QString::fromUtf8("label_31"));
+
+        horizontalLayout_26->addWidget(label_31);
+
+        edtPublishPort = new QLineEdit(widget);
+        edtPublishPort->setObjectName(QString::fromUtf8("edtPublishPort"));
+
+        horizontalLayout_26->addWidget(edtPublishPort);
+
+        widget1 = new QWidget(groupBox_10);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        widget1->setGeometry(QRect(10, 50, 461, 22));
+        horizontalLayout_27 = new QHBoxLayout(widget1);
+        horizontalLayout_27->setSpacing(6);
+        horizontalLayout_27->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_27->setObjectName(QString::fromUtf8("horizontalLayout_27"));
+        horizontalLayout_27->setContentsMargins(0, 0, 0, 0);
+        label_32 = new QLabel(widget1);
+        label_32->setObjectName(QString::fromUtf8("label_32"));
+
+        horizontalLayout_27->addWidget(label_32);
+
+        edtPublishDevType = new QLineEdit(widget1);
+        edtPublishDevType->setObjectName(QString::fromUtf8("edtPublishDevType"));
+
+        horizontalLayout_27->addWidget(edtPublishDevType);
+
+        label_33 = new QLabel(widget1);
+        label_33->setObjectName(QString::fromUtf8("label_33"));
+
+        horizontalLayout_27->addWidget(label_33);
+
+        edtPublishDevID = new QLineEdit(widget1);
+        edtPublishDevID->setObjectName(QString::fromUtf8("edtPublishDevID"));
+
+        horizontalLayout_27->addWidget(edtPublishDevID);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 551, 19));
+        menuBar->setGeometry(QRect(0, 0, 554, 19));
         MainWindow->setMenuBar(menuBar);
 
         retranslateUi(MainWindow);
@@ -812,6 +890,12 @@ public:
         chkPlateReal3->setText(QString());
         label_28->setText(QApplication::translate("MainWindow", "\347\254\254\345\233\233\350\267\257\357\274\232", 0, QApplication::UnicodeUTF8));
         chkPlateReal4->setText(QString());
+        groupBox_10->setTitle(QApplication::translate("MainWindow", "\350\275\246\344\275\215\344\277\241\346\201\257\344\270\212\344\274\240\350\256\276\347\275\256", 0, QApplication::UnicodeUTF8));
+        chkPublish->setText(QApplication::translate("MainWindow", "\345\220\257\347\224\250\344\270\212\344\274\240\345\212\237\350\203\275", 0, QApplication::UnicodeUTF8));
+        label_30->setText(QApplication::translate("MainWindow", "\346\266\210\346\201\257\344\270\255\345\277\203IP\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_31->setText(QApplication::translate("MainWindow", "\346\266\210\346\201\257\344\270\255\345\277\203\347\253\257\345\217\243\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_32->setText(QApplication::translate("MainWindow", "\350\256\276\345\244\207\347\261\273\345\236\213(0-255)\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_33->setText(QApplication::translate("MainWindow", "\350\256\276\345\244\207ID(10\344\275\215ASIIC\345\255\227\347\254\246)\357\274\232", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

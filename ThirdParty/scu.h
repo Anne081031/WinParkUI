@@ -22,7 +22,7 @@ private:
     QByteArray bySendData;
     QBuffer byBuffer;
     QSettings* pSystemSet;
-    QTextCodec* txtCodec;
+    QTextCodec* pTxtCodec;
     
 signals:
     

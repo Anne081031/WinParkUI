@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'batchsetcardaccess.h'
 **
-** Created: Tue May 22 12:31:46 2012
+** Created: Thu May 31 17:23:22 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

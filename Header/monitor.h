@@ -98,6 +98,8 @@ private:
 
     void GetCanParkIndexNum( );
 
+    void PublishSpaceInfo( int nUsed, int nTmpCar );
+
 private:
     static quint8 imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ];
     static TH_PlateIDResult recogResult[ VIDEO_USEDWAY ][ RECOG_RES ];

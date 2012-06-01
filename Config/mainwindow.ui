@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>551</width>
-    <height>673</height>
+    <width>554</width>
+    <height>728</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -253,7 +253,7 @@
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>610</y>
+      <y>660</y>
       <width>158</width>
       <height>25</height>
      </rect>
@@ -994,13 +994,97 @@
      </layout>
     </widget>
    </widget>
+   <widget class="QGroupBox" name="groupBox_10">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>560</y>
+      <width>491</width>
+      <height>91</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>车位信息上传设置</string>
+    </property>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>461</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_26">
+      <item>
+       <widget class="QCheckBox" name="chkPublish">
+        <property name="text">
+         <string>启用上传功能</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_30">
+        <property name="text">
+         <string>消息中心IP：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="edtPublishIP"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_31">
+        <property name="text">
+         <string>消息中心端口：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="edtPublishPort"/>
+      </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>50</y>
+       <width>461</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_27">
+      <item>
+       <widget class="QLabel" name="label_32">
+        <property name="text">
+         <string>设备类型(0-255)：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="edtPublishDevType"/>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_33">
+        <property name="text">
+         <string>设备ID(10位ASIIC字符)：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="edtPublishDevID"/>
+      </item>
+     </layout>
+    </widget>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>551</width>
+     <width>554</width>
      <height>19</height>
     </rect>
    </property>

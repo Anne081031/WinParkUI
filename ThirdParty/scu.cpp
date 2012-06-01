@@ -3,13 +3,19 @@
 CScu::CScu(QObject *parent) :
     QObject(parent)
 {
-    txtCodec = CCommonFunction::GetTextCodec( );
+    pTxtCodec = CCommonFunction::GetTextCodec( );
     pSystemSet = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     byBuffer.setBuffer( &bySendData );
 }
 
 void CScu::InteractWithScu( QStringList &lstData )
 {
+    pSystemSet->sync( );
+    bool bScuMsgCenter = pSystemSet->value( "ThirdParty/ScuMsgCenter", false ).toBool( );
+    if ( !bScuMsgCenter ) {
+        return;
+    }
+
     ContructDatagram( lstData );
     SendDatagram( );
 }
@@ -22,7 +28,7 @@ void CScu::ContructDatagram( QStringList &lstData )
         return;
     }
 
-    QByteArray byContent = txtCodec->fromUnicode( lstData.join( "##" ) );
+    QByteArray byContent = pTxtCodec->fromUnicode( lstData.join( "##" ) );
 
     QDataStream stream( &byBuffer );
     //数据	长度(字节)	数据类型	偏移量
@@ -38,14 +44,15 @@ void CScu::ContructDatagram( QStringList &lstData )
     //内容	N	string	19
     //校验结束符	2	string	19+N
     //校验和	2	string	21+N
+    quint8 nDeviceType = ( quint8 ) pSystemSet->value( "ThirdParty/DeviceType", 100 ).toUInt( );
+    QString strDeviceID = pSystemSet->value( "ThirdParty/DeviceID", "0000000001" ).toString( );
+    QByteArray byDeviceID = pTxtCodec->fromUnicode( strDeviceID );
 
-    stream << '$' << 1 << 25 << 100;
-    stream << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 0 << 1;
-    stream << 2 << 1;
-    stream << ( qint16 ) byContent.count( );
-    stream << 2;
-    stream << byContent;
-    stream << '*' << '*';
+    stream << ( quint8 ) '$' << ( quint8 ) 1 << ( quint8 ) 25 << nDeviceType;
+    byBuffer.write( byDeviceID );
+    stream << ( quint8 ) 2 << ( quint8 ) 1 << ( qint16 ) byContent.count( ) <<( quint8 ) 2;
+    byBuffer.write( byContent );
+    stream << ( quint8 ) '*' << ( quint8 ) '*';
 
     qint16 nCheckSum = bySendData.at( 1 );
     for ( int nIndex = 2; nIndex < bySendData.count( ) - 2; nIndex++ ) {
@@ -54,7 +61,7 @@ void CScu::ContructDatagram( QStringList &lstData )
 
     QChar fillChar( '0' );
     QString strCheckSum = QString( "%1" ).arg( nCheckSum, 2, 16, fillChar );
-    byContent.append( txtCodec->fromUnicode( strCheckSum ) );
+    byBuffer.write( pTxtCodec->fromUnicode( strCheckSum ) );
 
     byBuffer.close( );
 }
@@ -70,5 +77,6 @@ void CScu::SendDatagram( )
         udpClient.Connect2Server( address, nPort );
     }
 
-    udpClient.SendData( bySendData );
+    quint64 nRet = udpClient.SendData( bySendData );
+    qDebug( ) << "Scu:" << nRet << endl;
 }

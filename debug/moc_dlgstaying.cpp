@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgstaying.h'
 **
-** Created: Tue May 22 12:12:17 2012
+** Created: Fri Jun 1 10:06:46 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

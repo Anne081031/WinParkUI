@@ -71,6 +71,12 @@ void MainWindow::ReadFile( )
     ui->chkVideo->setChecked( pSysSetCfg->value( "VideoMode/AutoVideo", false ).toBool( ) );
     ui->chkPlate->setChecked( pSysSetCfg->value( "CarLicence/AutoRecognize", false ).toBool( ) );
     ui->chkBroadcastData->setChecked( pSystemCfg->value( "CommonCfg/BroadCastData", false ).toBool( ) );
+
+    ui->chkPublish->setChecked( pSystemCfg->value( "ThirdParty/ScuMsgCenter", false ).toBool( ) );
+    ui->edtPublishIP->setText( pSystemCfg->value( "ThirdParty/ScuMsgCenterIP", "127.0.0.1" ).toString( ) );
+    ui->edtPublishPort->setText( pSystemCfg->value( "ThirdParty/ScuMsgCenterPort", "32009" ).toString( ) );
+    ui->edtPublishDevType->setText( pSystemCfg->value( "ThirdParty/DeviceType", "100" ).toString( ) );
+    ui->edtPublishDevID->setText( pSystemCfg->value( "ThirdParty/DeviceID", "0000000001" ).toString( ) );
 }
 
 void MainWindow::WriteFile( )
@@ -126,6 +132,12 @@ void MainWindow::WriteFile( )
 
     pSysSetCfg->setValue( "VideoMode/AutoVideo", ui->chkVideo->isChecked( ) );
     pSysSetCfg->setValue( "CarLicence/AutoRecognize", ui->chkPlate->isChecked( ) );
+
+    pSystemCfg->setValue( "ThirdParty/ScuMsgCenter", ui->chkPublish->isChecked( ) );
+    pSystemCfg->setValue( "ThirdParty/ScuMsgCenterIP", ui->edtPublishIP->text( ) );
+    pSystemCfg->setValue( "ThirdParty/ScuMsgCenterPort", ui->edtPublishPort->text( ) );
+    pSystemCfg->setValue( "ThirdParty/DeviceType", ui->edtPublishDevType->text( ) );
+    pSystemCfg->setValue( "ThirdParty/DeviceID", ui->edtPublishDevID->text( ) );
 }
 
 void MainWindow::on_btnOk_clicked()

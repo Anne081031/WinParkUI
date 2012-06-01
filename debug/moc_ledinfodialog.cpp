@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ledinfodialog.h'
 **
-** Created: Thu May 17 10:07:33 2012
+** Created: Fri Jun 1 10:04:24 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

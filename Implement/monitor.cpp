@@ -20,6 +20,7 @@
 #include "Header/printmonthlyreport.h"
 #include "windows.h"
 #include "PmsLog/pmslog.h"
+#include "ThirdParty/scu.h"
 
 quint8 CMonitor::imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ] = { { 0 } };
 TH_PlateIDResult CMonitor::recogResult[ VIDEO_USEDWAY ][ RECOG_RES ] = { { 0 } };
@@ -1140,6 +1141,17 @@ void CMonitor::StartSpaceTimer( )
     timer.start( nRefreshParkspaceTime );
 }
 
+void CMonitor::PublishSpaceInfo( int nUsed, int nTmpCar )
+{
+    static QStringList lstData;
+    static CScu scu;
+
+    lstData.clear( );
+    lstData << QString::number( nUsed ) << QString::number( nTmpCar );
+
+    scu.InteractWithScu( lstData );
+}
+
 void CMonitor::SpaceInfo(  ) //最外围
 {
     if ( strParkName.isEmpty( ) ) {
@@ -1151,11 +1163,11 @@ void CMonitor::SpaceInfo(  ) //最外围
     bool bFull;
     QString strSql;
     QStringList lstData;
-    int nFree;
-    int nUsed;
-    int nM;
-    int nS;
-    int nT;
+    int nFree = 0;
+    int nUsed = 0;
+    int nM = 0;
+    int nS = 0;
+    int nT = 0;
 
     CProcessData* pProcessor = CProcessData::GetProcessor( );
     if ( NULL == pProcessor ) {
@@ -1213,6 +1225,8 @@ void CMonitor::SpaceInfo(  ) //最外围
 
     strInfo = bFull ? "车位已满！" : QString( "空闲车位：%1" ).arg( QString::number( nFree ) );
     pProcessor->ParkspaceFull( bFull, strInfo, 0 );
+
+    PublishSpaceInfo( nUsed, nT );
 }
 
 void CMonitor::GetImgBasePath(QString &strPath)
