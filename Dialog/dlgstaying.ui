@@ -10,18 +10,6 @@
     <height>587</height>
    </rect>
   </property>
-  <property name="minimumSize">
-   <size>
-    <width>885</width>
-    <height>587</height>
-   </size>
-  </property>
-  <property name="maximumSize">
-   <size>
-    <width>885</width>
-    <height>587</height>
-   </size>
-  </property>
   <property name="windowTitle">
    <string>当前滞留车辆信息</string>
   </property>
@@ -29,16 +17,10 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>20</y>
+     <y>6</y>
      <width>851</width>
-     <height>551</height>
+     <height>571</height>
     </rect>
-   </property>
-   <property name="minimumSize">
-    <size>
-     <width>851</width>
-     <height>551</height>
-    </size>
    </property>
    <property name="currentIndex">
     <number>0</number>
@@ -55,6 +37,9 @@
        <width>821</width>
        <height>511</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>单击【卡号】单元格，查看对应车辆图片。</string>
      </property>
      <column>
       <property name="text">
@@ -105,6 +90,9 @@
        <width>821</width>
        <height>511</height>
       </rect>
+     </property>
+     <property name="toolTip">
+      <string>单击【卡号】单元格，查看对应车辆图片。</string>
      </property>
      <column>
       <property name="text">

@@ -16,6 +16,7 @@ class CPrintYearlyReport : public QFrame
 public:
     explicit CPrintYearlyReport( QWidget* mainWnd, QWidget *parent = 0);
     ~CPrintYearlyReport();
+    void DisplayPicture( QString& strFile );
 
 protected:
     void  closeEvent ( QCloseEvent * event );

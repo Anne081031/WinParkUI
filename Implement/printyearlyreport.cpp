@@ -7,6 +7,7 @@ CPrintYearlyReport::CPrintYearlyReport(QWidget* mainWnd, QWidget *parent) :
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );
+    setWindowFlags( Qt::FramelessWindowHint );
 }
 
 CPrintYearlyReport::~CPrintYearlyReport()
@@ -16,5 +17,11 @@ CPrintYearlyReport::~CPrintYearlyReport()
 
 void CPrintYearlyReport::closeEvent( QCloseEvent *event )
 {
-    pParent->ControlChild( event, this );
+    //pParent->ControlChild( event, this );
+}
+
+void CPrintYearlyReport::DisplayPicture( QString &strFile )
+{
+    QPixmap pixPic( strFile );
+    ui->lblPicture->setPixmap( pixPic );
 }
