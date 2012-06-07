@@ -28,6 +28,14 @@ Create Event IF NOT EXISTS parkadmin.DeleteDataTimer
                             COMMENT 'Delete Stoprd Data' 
                             DO DELETE FROM Stoprd WHERE MayDelete;
 
+Create Event IF NOT EXISTS parkadmin.UploadRecTimer
+                            ON SCHEDULE EVERY 1 DAY 
+                            STARTS TIMESTAMP( STR_TO_DATE( concat( Date_Format( curdate( ), '%Y-%m-%d' ), '02:00:00' ), '%Y-%m-%d %H:%i:%S' ) )
+                            ON COMPLETION PRESERVE 
+                            ENABLE 
+                            COMMENT 'Upload data' 
+                            DO call TimerUploadRec( );
+
 Create Event IF NOT EXISTS pmshistory.SplitDataXTimer
                             ON SCHEDULE EVERY 2 HOUR 
                             STARTS NOW( ) 

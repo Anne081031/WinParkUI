@@ -991,7 +991,7 @@ background-color: rgb(255, 255, 255);</string>
     <enum>Qt::CustomDashLine</enum>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <attribute name="horizontalHeaderDefaultSectionSize">
     <number>100</number>
@@ -1097,6 +1097,11 @@ background-color: rgb(255, 255, 255);</string>
    <column>
     <property name="text">
      <string>CardNumber</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>TargetIP</string>
     </property>
    </column>
   </widget>

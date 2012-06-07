@@ -79,6 +79,7 @@ private:
     void SetDateTimeFormat( );
     void ServerFunction( );
     void ClientFunction( );
+    void GatherData( );
     void ForwardPassRecord( QStringList& lstData );
     void StartLicense( );
     bool GenerateLicense( QString& strSpecialUser, QString& strSpecialPwd );

@@ -10,6 +10,8 @@
 #include <QComboBox>
 #include <QDateTimeEdit>
 #include <QDateTime>
+#include "Common/logicinterface.h"
+#include <QFile>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -34,7 +36,7 @@ MainWindow::MainWindow(QWidget *parent) :
     //setPalette( pal );
     //setAutoFillBackground( true );
 
-    mysql.DbConnect( "192.168.1.51", "test", "test", "parkadmin", 3306 );
+    //mysql.DbConnect( "192.168.1.51", "test", "test", "parkadmin", 3306 );
 
     //QSplitter *splitter = new QSplitter(this);
     //splitter->setGeometry( this->geometry( ) );
@@ -62,12 +64,42 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
-    mysql.DbDisconnect( );
+    //mysql.DbDisconnect( );
     delete ui;
 }
 
 void MainWindow::on_pushButton_clicked()
 {
+
+    QString strSql = "select stoprdid from stoprd";
+    QStringList lstStoprdID;
+    CLogicInterface intef;
+
+    QStringList lstParams;
+    CCommonFunction::ConnectMySql( lstParams );
+    bool bRet = intef.GetMysqlDb().DbConnect( lstParams[ 0 ], lstParams[ 1 ], lstParams[ 2 ], lstParams[ 3 ], lstParams[ 4 ].toUInt( ) );
+
+    if ( !bRet ) {
+        CCommonFunction::MsgBox( NULL, "提示", "连接数据库失败！" ,QMessageBox::Information );
+        return;
+    }
+
+    intef.ExecuteSql( strSql, lstStoprdID );
+    QString strFile = qApp->applicationDirPath( ) + "/Pic/%1%2.jpg";
+    QString strTmp;
+    QString strWhere = " where stoprdid = %1";
+    QString strTmpWhere;
+
+    foreach ( const QString& strID, lstStoprdID ) {
+        strTmp = strFile.arg( strID, "In" );
+        strTmpWhere = strWhere.arg( strID );
+        intef.OperateBlob( strTmp, false, CommonDataType::BlobVehicleIn1, strTmpWhere );
+
+        strTmp = strFile.arg( strID, "Out" );
+        intef.OperateBlob( strTmp, false, CommonDataType::BlobVehicleOut1, strTmpWhere );
+    }
+
+    intef.GetMysqlDb( ).DbDisconnect( );
 
 #if 0
     QFrame *frame = new QFrame;
@@ -90,7 +122,7 @@ void MainWindow::on_pushButton_clicked()
    frame->setPalette( pal );
    frame->setAutoFillBackground( true );
    frame->show();
-  #endif
+
    QDialog dlg;
 
    QPalette pal;
@@ -100,7 +132,7 @@ void MainWindow::on_pushButton_clicked()
    dlg.setPalette( pal );
    dlg.setAutoFillBackground( true );
    dlg.exec();
-
+#endif
 }
 
 void MainWindow::on_pushButton_2_clicked()
@@ -115,6 +147,6 @@ void MainWindow::on_pushButton_2_clicked()
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    QWidget* pWG = ui->tableWidget->cellWidget( 0, 0 );
-    qDebug ( ) << pWG->metaObject( )->className( )<< endl;
+    //QWidget* pWG = ui->tableWidget->cellWidget( 0, 0 );
+    //qDebug ( ) << pWG->metaObject( )->className( )<< endl;
 }

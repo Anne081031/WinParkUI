@@ -4,6 +4,28 @@
 -- --------------------------------------------------------------------------------
 DELIMITER $$
 
+CREATE DEFINER=`test`@`%` PROCEDURE `TimerUploadRec`()
+BEGIN
+select feenumb, feetime, feekind, feeoperator, cardno, timelen From feerd where Transfered = 0 limit 0, 100000000000000 Into Outfile 'd:\\feerd';
+update feerd set Transfered = 1 where Transfered = 0;
+
+Select Cardno, Inshebeiname, Outshebeiname, Intime, Outtime, Childrdindx, Feebeizhu, Feenum, Feetime, Feeoperator, Feefactnum, Carcp, 
+Username, Cardselfno, Carkind, Feekind, Cardkind, Parkid, Feezkh, Feezkyy, carcpout, MayDelete 
+From stoprd 
+where Transfered = 0 and ( ( MayDelete = 3 ) or ( cardno like '%(%)') )
+limit 0, 100000000000000 Into Outfile 'd:\\stoprd';
+
+update stoprd set Transfered = 1 where Transfered = 0 and ( ( MayDelete = 3 ) or ( cardno like '%(%)') );
+
+END
+
+
+-- --------------------------------------------------------------------------------
+-- Routine DDL
+-- Note: comments before and after the routine body will not be stored by the server
+-- --------------------------------------------------------------------------------
+DELIMITER $$
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `StartTimer`( in bStart bool )
 BEGIN
     If bStart = 0 then 

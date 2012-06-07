@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'monitor.ui'
 **
-** Created: Thu May 31 17:17:22 2012
+** Created: Thu Jun 7 09:33:22 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -415,8 +415,8 @@ public:
         video4->setScaledContents(true);
         video4->setAlignment(Qt::AlignCenter);
         tabRecord = new QTableWidget(CMonitor);
-        if (tabRecord->columnCount() < 10)
-            tabRecord->setColumnCount(10);
+        if (tabRecord->columnCount() < 11)
+            tabRecord->setColumnCount(11);
         QFont font1;
         font1.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
         font1.setPointSize(12);
@@ -446,6 +446,8 @@ public:
         tabRecord->setHorizontalHeaderItem(8, __qtablewidgetitem8);
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
         tabRecord->setHorizontalHeaderItem(9, __qtablewidgetitem9);
+        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
+        tabRecord->setHorizontalHeaderItem(10, __qtablewidgetitem10);
         tabRecord->setObjectName(QString::fromUtf8("tabRecord"));
         tabRecord->setGeometry(QRect(1001, 554, 393, 241));
         QPalette palette;
@@ -478,7 +480,7 @@ public:
         tabRecord->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
         tabRecord->setShowGrid(true);
         tabRecord->setGridStyle(Qt::CustomDashLine);
-        tabRecord->horizontalHeader()->setVisible(true);
+        tabRecord->horizontalHeader()->setVisible(false);
         tabRecord->horizontalHeader()->setDefaultSectionSize(100);
         tabRecord->horizontalHeader()->setProperty("showSortIndicator", QVariant(false));
         tabRecord->horizontalHeader()->setStretchLastSection(true);
@@ -1141,6 +1143,8 @@ public:
         ___qtablewidgetitem8->setText(QApplication::translate("CMonitor", "Can", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem9 = tabRecord->horizontalHeaderItem(9);
         ___qtablewidgetitem9->setText(QApplication::translate("CMonitor", "CardNumber", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem10 = tabRecord->horizontalHeaderItem(10);
+        ___qtablewidgetitem10->setText(QApplication::translate("CMonitor", "TargetIP", 0, QApplication::UnicodeUTF8));
         btnSysMan->setText(QString());
         btnCardMan->setText(QString());
         btnAdvSet->setText(QString());

@@ -47,6 +47,7 @@ private slots:
     void Refresh( );
     void PrintCardInfo( );
     void Download2CC( );
+    void CardLossProcess( );
     void PositionRow( QString strCardID );
 
     void on_pushButton_8_clicked();

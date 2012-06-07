@@ -7,6 +7,7 @@
 #include "Dialog/valuerechargedialog.h"
 #include "Dialog/dlgserach.h"
 #include "Dialog/dlgbulkregister.h"
+#include "Dialog/dlgcardloss.h"
 
 CValueCard::CValueCard(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
@@ -345,6 +346,14 @@ void CValueCard::AddBulkRecord( )
     pParent->SetCardControl( NULL );
 }
 
+void CValueCard::CardLossProcess( )
+{
+    QString strID = ui->tableValue->item( ui->tableValue->currentRow( ), 0 )->text( );
+    CDlgCardLoss dlg( strID, CommonDataType::ValueCard );
+    dlg.exec( );
+}
+
+
 void CValueCard::CreateContextMenu( QTableWidget *parent )
 {
     if ( NULL == pMenu ) {
@@ -356,6 +365,7 @@ void CValueCard::CreateContextMenu( QTableWidget *parent )
         pMenu->addAction( "续费", this, SLOT( Recharge( ) ) );
         pMenu->addAction( "查找", this, SLOT( Serach( ) ) );
         pMenu->addAction( "换卡", this, SLOT( ChangeCard( ) ) );
+        pMenu->addAction( "车进场 卡遗失处理", this, SLOT( CardLossProcess( ) ) );
         pMenu->addSeparator( );
         pMenu->addAction( "刷新", this, SLOT( Refresh( ) ) );
         pMenu->addSeparator( );

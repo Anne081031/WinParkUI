@@ -111,6 +111,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     //qobject_cast()
     pSysSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
     pSystem= CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+    nRealTimeRecord = pSystem->value( "CommonCfg/RealTimeRecord", 100 ).toInt( );
 
     InitChannelHandle( );
 
@@ -342,14 +343,14 @@ void CMonitor::DisplayAlert( QStringList &lstData )
 void CMonitor::FillDataGrid( QStringList &lstData )
 {
     int nField = 1;
-    int nCols = 11;
+    int nCols = 12;
     int nRows = lstData.count( ) / nCols;
     if ( 0 >= nRows ) {
         return;
     }
 
-    if ( 100 < ui->tabRecord->rowCount( ) ) {
-        for ( int nIndex = ui->tabRecord->rowCount( ) - 1; nIndex > 99; nIndex-- ) {
+    if ( nRealTimeRecord < ui->tabRecord->rowCount( ) ) {
+        for ( int nIndex = ui->tabRecord->rowCount( ) - 1; nIndex > nRealTimeRecord - 1; nIndex-- ) {
             ui->tabRecord->removeRow( nIndex );
         }
     }
@@ -624,6 +625,7 @@ void CMonitor::ControlDataGrid( QTableWidget& tw )
     pHeader->hideSection( 7 );
     pHeader->hideSection( 8 );
     pHeader->hideSection( 9 );
+    pHeader->hideSection( 10 );
 }
 
 void CALLBACK PrcPicMessage( long lnCardID, long pBuf, long lnWidth, long lnHeight )
@@ -1141,13 +1143,13 @@ void CMonitor::StartSpaceTimer( )
     timer.start( nRefreshParkspaceTime );
 }
 
-void CMonitor::PublishSpaceInfo( int nUsed, int nTmpCar )
+void CMonitor::PublishSpaceInfo( int nTotal, int nUsed)
 {
     static QStringList lstData;
     static CScu scu;
 
     lstData.clear( );
-    lstData << QString::number( nUsed ) << QString::number( nTmpCar );
+    lstData << QString::number( nTotal ) << QString::number( nUsed );
 
     scu.InteractWithScu( lstData );
 }
@@ -1226,7 +1228,7 @@ void CMonitor::SpaceInfo(  ) //最外围
     strInfo = bFull ? "车位已满！" : QString( "空闲车位：%1" ).arg( QString::number( nFree ) );
     pProcessor->ParkspaceFull( bFull, strInfo, 0 );
 
-    PublishSpaceInfo( nUsed, nT );
+    PublishSpaceInfo( nTotalParkSpace, nUsed );
 }
 
 void CMonitor::GetImgBasePath(QString &strPath)
@@ -1710,8 +1712,20 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
         }
         qDebug( ) << strSql << endl;
 
-        CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData, CCommonFunction::GetHistoryDb( ) );
+        //CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData, CCommonFunction::GetHistoryDb( ) );
 
+        CLogicInterface logInterf;
+        CMySqlDatabase& mySql = logInterf.GetMysqlDb( );
+        QStringList lstParams;
+        CCommonFunction::ConnectMySql( lstParams );
+        lstParams[ 0 ] = pWG->item( row, 10 )->text( ); //IP
+        bool bRet = mySql.DbConnect( lstParams[ 0 ], lstParams[ 1 ], lstParams[ 2 ], lstParams[ 3 ], lstParams[ 4 ].toUInt( ) );
+        if ( !bRet ) {
+            return;
+        }
+
+        logInterf.ExecuteSql( strSql, lstData );
+        mySql.DbDisconnect( );
 
         if ( 0 == lstData.count( ) ) { // InOut Record empty
             QStringList lstLog;

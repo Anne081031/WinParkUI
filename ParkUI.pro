@@ -153,7 +153,10 @@ SOURCES += mainwindow.cpp \
     CenterMgmt/sendrequest.cpp \
     Dialog/dlgreadcardid.cpp \
     Dialog/dlgstaying.cpp \
-    ThirdParty/scu.cpp
+    ThirdParty/scu.cpp \
+    Timer/timerthread.cpp \
+    Timer/timerproc.cpp \
+    Dialog/dlgcardloss.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -281,7 +284,10 @@ HEADERS  += Header/valuecard.h \
     CenterMgmt/sendrequest.h \
     Dialog/dlgreadcardid.h \
     Dialog/dlgstaying.h \
-    ThirdParty/scu.h
+    ThirdParty/scu.h \
+    Timer/timerthread.h \
+    Timer/timerproc.h \
+    Dialog/dlgcardloss.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \
@@ -345,7 +351,8 @@ FORMS    += UIWnd/valuecard.ui \
     Dialog/dlgmakelicense.ui \
     Dialog/dlgparkdongleinfo.ui \
     Dialog/dlgreadcardid.ui \
-    Dialog/dlgstaying.ui
+    Dialog/dlgstaying.ui \
+    Dialog/dlgcardloss.ui
 
 OTHER_FILES += \
     Doc/LedProtocol.doc \

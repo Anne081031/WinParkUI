@@ -59,6 +59,7 @@
 #include <QPushButton>
 #include "CenterMgmt/mgmtthread.h"
 #include "Dialog/dlgstaying.h"
+#include "Timer/timerthread.h"
 
 CHeartbeatThread* g_pHeartbeatThread = NULL;
 CLocalCltCommunication* g_pLocalCltComm = NULL;
@@ -679,6 +680,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     qRegisterMetaType< QAbstractSocket::SocketError >( "QAbstractSocket::SocketError" );
     //pEvent = new QEvent( ( QEvent::Type ) ( QEvent::User + 1 ) );
     //QApplication::postEvent( &startup, pEvent );
+    GatherData( );
 }
 
 void MainWindow::RegisterAxCtrl( )
@@ -782,6 +784,16 @@ void MainWindow::Expiration( QString strMsg, bool bExpiration, bool bRetry )
     if ( bExpiration ) {
         exit( 0 );
     }
+}
+
+void MainWindow::GatherData( )
+{
+    bool bGather = pSettings->value( "Mgmt/Gather", false ).toBool( );
+    if ( !bGather ) {
+        return;
+    }
+
+    CTimerThread::GetInstance( )->start( );
 }
 
 void MainWindow::ClientFunction( )

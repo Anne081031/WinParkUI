@@ -28,6 +28,7 @@ void CScu::ContructDatagram( QStringList &lstData )
         return;
     }
 
+    int nItems = lstData.count( );
     QByteArray byContent = pTxtCodec->fromUnicode( lstData.join( "##" ) );
 
     QDataStream stream( &byBuffer );
@@ -48,9 +49,9 @@ void CScu::ContructDatagram( QStringList &lstData )
     QString strDeviceID = pSystemSet->value( "ThirdParty/DeviceID", "0000000001" ).toString( );
     QByteArray byDeviceID = pTxtCodec->fromUnicode( strDeviceID );
 
-    stream << ( quint8 ) '$' << ( quint8 ) 1 << ( quint8 ) 25 << nDeviceType;
+    stream << ( quint8 ) '$' << ( quint8 ) 1 << ( quint8 ) 12 << nDeviceType;
     byBuffer.write( byDeviceID );
-    stream << ( quint8 ) 2 << ( quint8 ) 1 << ( qint16 ) byContent.count( ) <<( quint8 ) 2;
+    stream << ( quint8 ) 2 << ( quint8 ) 1 << ( qint16 ) byContent.count( ) <<( quint8 ) nItems;
     byBuffer.write( byContent );
     stream << ( quint8 ) '*' << ( quint8 ) '*';
 

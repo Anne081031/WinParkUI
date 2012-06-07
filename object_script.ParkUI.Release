@@ -124,6 +124,9 @@ INPUT(
 ./release\dlgreadcardid.o
 ./release\dlgstaying.o
 ./release\scu.o
+./release\timerthread.o
+./release\timerproc.o
+./release\dlgcardloss.o
 ./release\moc_valuecard.o
 ./release\moc_tolldiscounttypeset.o
 ./release\moc_timecard.o
@@ -233,4 +236,6 @@ INPUT(
 ./release\moc_dlgreadcardid.o
 ./release\moc_dlgstaying.o
 ./release\moc_scu.o
+./release\moc_timerthread.o
+./release\moc_dlgcardloss.o
 );

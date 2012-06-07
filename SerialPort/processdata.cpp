@@ -1987,11 +1987,12 @@ void CProcessData::BroadcastRecord( QString& strCardNumber, QDateTime& dtCurrent
     CCommonFunction::Date2String( date, strDate );
     QString strCan = QString::number( cCan );
     bool bEnter = ( 0 != ( cCan % 2 ) );
+    QString strDbIP = pSettings->value( "Database/Host", "127.0.0.1" ).toString( );
 
     lstData << strPlate << strTime << strCardType << strChannel <<
             strCardNumber << ( bEnter ? "1" : "0" )
             << QString::number( nCardTypeID )
-            << strDate << strCan << strCardNumber;
+            << strDate << strCan << strCardNumber << strDbIP;
     CNetwork::Singleton( ).BroadcastDatagram( CommonDataType::DGPassRecord, lstData );
 }
 

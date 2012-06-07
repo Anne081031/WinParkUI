@@ -46,6 +46,7 @@ END$$
 
 alter table parkadmin.Stoprd add column Transerfed tinyint( 1 ) default 0;
 alter table parkadmin.Feerd add column Transerfed tinyint( 1 ) default 0;
+alter table parkadmin.Feerate1 add column Section tinyint( 1 ) default 0;
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ;MySQL Restart

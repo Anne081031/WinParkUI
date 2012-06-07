@@ -7,6 +7,7 @@
 #include "Common/logicinterface.h"
 #include "Dialog/dlgserach.h"
 #include "Dialog/dlgbulkregister.h"
+#include "Dialog/dlgcardloss.h"
 
 CMonthlyCard::CMonthlyCard(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
@@ -355,6 +356,13 @@ void CMonthlyCard::AddBulkRecord( )
     pParent->SetCardControl( NULL );
 }
 
+void CMonthlyCard::CardLossProcess( )
+{
+    QString strID = ui->tableMonthly->item( ui->tableMonthly->currentRow( ), 0 )->text( );
+    CDlgCardLoss dlg( strID, CommonDataType::MonthlyCard );
+    dlg.exec( );
+}
+
 void CMonthlyCard::CreateContextMenu( QTableWidget *parent )
 {
     if ( NULL == pMenu ) {
@@ -366,6 +374,7 @@ void CMonthlyCard::CreateContextMenu( QTableWidget *parent )
         pMenu->addAction( "续费", this, SLOT( Recharge( ) ) );
         pMenu->addAction( "查找", this, SLOT( Serach( ) ) );
         pMenu->addAction( "换卡", this, SLOT( ChangeCard( ) ) );
+        pMenu->addAction( "车进场 卡遗失处理", this, SLOT( CardLossProcess( ) ) );
         pMenu->addSeparator( );
         pMenu->addAction( "刷新", this, SLOT( Refresh( ) ) );
         pMenu->addSeparator( );

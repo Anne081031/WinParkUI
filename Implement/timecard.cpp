@@ -4,6 +4,7 @@
 #include "Dialog/timecarddialog.h"
 #include "Dialog/dlgserach.h"
 #include "Dialog/dlgbulkregister.h"
+#include "Dialog/dlgcardloss.h"
 
 CTimeCard::CTimeCard(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
@@ -180,6 +181,13 @@ void CTimeCard::AddBulkRecord( )
     pParent->SetCardControl( NULL );
 }
 
+void CTimeCard::CardLossProcess( )
+{
+    QString strID = ui->tableTime->item( ui->tableTime->currentRow( ), 0 )->text( );
+    CDlgCardLoss dlg( strID, CommonDataType::TimeCard );
+    dlg.exec( );
+}
+
 void CTimeCard::CreateContextMenu( QTableWidget *parent )
 {
     if ( NULL == pMenu ) {
@@ -189,6 +197,7 @@ void CTimeCard::CreateContextMenu( QTableWidget *parent )
         pMenu->addAction( "编辑", this, SLOT( ModifyRecord( ) ) );
         pMenu->addAction( "删除", this, SLOT( DeleteRecord( ) ) );
         pMenu->addAction( "查找", this, SLOT( Serach( ) ) );
+        pMenu->addAction( "车进场 卡遗失处理", this, SLOT( CardLossProcess( ) ) );
         pMenu->addSeparator( );
         pMenu->addAction( "刷新", this, SLOT( Refresh( ) ) );
         pMenu->addSeparator( );

@@ -4,7 +4,7 @@
 #include <QMainWindow>
 #include <QMdiArea>
 #include "monitor.h"
-#include "Database/mysqldatabase.h"
+#include "../Database/mysqldatabase.h"
 
 namespace Ui {
     class MainWindow;

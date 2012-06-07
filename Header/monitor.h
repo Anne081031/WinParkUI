@@ -98,7 +98,7 @@ private:
 
     void GetCanParkIndexNum( );
 
-    void PublishSpaceInfo( int nUsed, int nTmpCar );
+    void PublishSpaceInfo( int nTotal, int nUsed );
 
 private:
     static quint8 imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ];
@@ -134,6 +134,7 @@ private:
     QString strUserID;
     QSettings* pSysSet;
     QSettings* pSystem;
+    int nRealTimeRecord;
     void PlayVideo( int nIndex, QFrame* pVideo );
     void StopVideo( int nIndex );
     inline void ControlGate( bool bOpen, bool bEnter, QObject* sender );

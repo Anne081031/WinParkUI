@@ -152,7 +152,7 @@ int CLogicInterface::OperateRechargeInfo( QStringList &lstRows, CommonDataType::
                      select distinct cardno, cardselfno from monthcard \
                      union select distinct cardno, cardselfno from savecard \
                      union select distinct cardno, cardselfno from tmpcard ) d \
-                     on a.cardno = d.cardno";
+                     on a.cardno = d.cardno and a.feekind not like '%สีทั'";
 
     nCols = 11;
     strSql += strWhere;
