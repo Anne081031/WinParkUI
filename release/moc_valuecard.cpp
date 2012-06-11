@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'valuecard.h'
 **
-** Created: Thu May 31 17:22:23 2012
+** Created: Fri Jun 8 16:51:53 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CValueCard[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      21,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -47,11 +47,12 @@ static const uint qt_meta_data_CValueCard[] = {
      306,   11,   11,   11, 0x08,
      322,   11,   11,   11, 0x08,
      336,   11,   11,   11, 0x08,
-     366,   11,   11,   11, 0x08,
-     392,   11,   11,   11, 0x08,
-     426,  421,   11,   11, 0x08,
-     457,  447,   11,   11, 0x08,
-     478,   11,   11,   11, 0x08,
+     354,   11,   11,   11, 0x08,
+     384,   11,   11,   11, 0x08,
+     410,   11,   11,   11, 0x08,
+     444,  439,   11,   11, 0x08,
+     475,  465,   11,   11, 0x08,
+     496,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -65,7 +66,8 @@ static const char qt_meta_stringdata_CValueCard[] = {
     "AddRecord()\0AddBulkRecord()\0ModifyRecord()\0"
     "DeleteRecord()\0Recharge()\0Serach()\0"
     "ChangeCard()\0Refresh()\0PrintCardInfo()\0"
-    "Download2CC()\0on_btnValueRecharge_clicked()\0"
+    "Download2CC()\0CardLossProcess()\0"
+    "on_btnValueRecharge_clicked()\0"
     "on_btnValueSave_clicked()\0"
     "on_btnEntranceSave_clicked()\0text\0"
     "textChanged(QString)\0strCardID\0"
@@ -116,15 +118,16 @@ int CValueCard::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 12: Refresh(); break;
         case 13: PrintCardInfo(); break;
         case 14: Download2CC(); break;
-        case 15: on_btnValueRecharge_clicked(); break;
-        case 16: on_btnValueSave_clicked(); break;
-        case 17: on_btnEntranceSave_clicked(); break;
-        case 18: textChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 19: PositionRow((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 20: on_btnSaveRight_clicked(); break;
+        case 15: CardLossProcess(); break;
+        case 16: on_btnValueRecharge_clicked(); break;
+        case 17: on_btnValueSave_clicked(); break;
+        case 18: on_btnEntranceSave_clicked(); break;
+        case 19: textChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 20: PositionRow((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 21: on_btnSaveRight_clicked(); break;
         default: ;
         }
-        _id -= 21;
+        _id -= 22;
     }
     return _id;
 }

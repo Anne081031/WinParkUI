@@ -53,6 +53,9 @@ color: rgb(255, 0, 0);</string>
     <property name="text">
      <string>按该用户放行</string>
     </property>
+    <property name="autoDefault">
+     <bool>false</bool>
+    </property>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
@@ -332,6 +335,9 @@ color: rgb(255, 0, 0);</string>
     <property name="text">
      <string>按该用户放行</string>
     </property>
+    <property name="default">
+     <bool>true</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QLabel" name="lblTitle">
@@ -384,6 +390,9 @@ color: rgb(255, 0, 0);</string>
    </property>
    <property name="text">
     <string>不放行</string>
+   </property>
+   <property name="autoDefault">
+    <bool>false</bool>
    </property>
   </widget>
  </widget>

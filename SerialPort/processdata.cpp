@@ -700,6 +700,7 @@ void CProcessData::MakeCardCmd(QString &strCardNo, QByteArray &byData, char cCan
 void CProcessData::RecognizePlate( QString &strPlate, int nChannel )
 {
     bool bEnter = ( 0 == nChannel % 2 );
+    bPlateRecognize[ bEnter ] = true;
 
     if ( IfSenseOpenGate( ) ) {
         //plateQueue[ nChannel ].enqueue( strPlate );
@@ -742,7 +743,7 @@ void CProcessData::RecognizePlate( QString &strPlate, int nChannel )
     QByteArray byData;
     MakeCardCmd( strCardNo, byData, cCan );
 
-    bPlateRecognize[ bEnter ] = true;
+    //bPlateRecognize[ bEnter ] = true;
 
     //////////////////////////////
     QDateTime time = QDateTime::currentDateTime( );
@@ -803,18 +804,23 @@ void CProcessData::GetChannelInfo( QString &strCardNo )
     }
 }
 
-bool CProcessData::PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumber, QString& strPlate )
+bool CProcessData::PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumber, QString& strPlate /*识别到的*/, ParkCardType& cardKind)
 {
     QByteArray vData;
     bool bEnter = ( 0 != byData[ 5 ] % 2 );
-    PlayAudioDisplayInfo( byData, vData, CPortCmd::LedExitConfirm, CPortCmd::AudioExitConfirm );
-    pConfirm[ bEnter ]->GetInfomation( bEnter, strPlate,  strCardNumber, byData[ 5 ] );
-    bool bRet = false;
 
     if ( pConfirm[ bEnter ]->isVisible( ) ) {
+        PlayAudioDisplayInfo( byData, vData, CPortCmd::LedExitConfirm, CPortCmd::AudioExitConfirm );
+        return false;
+    }
+
+    bool bRet = pConfirm[ bEnter ]->GetInfomation( bEnter, strPlate,  strCardNumber, byData[ 5 ] );
+
+    if ( bRet && ( CardTime == cardKind ) ) {
         return bRet;
     }
 
+    PlayAudioDisplayInfo( byData, vData, CPortCmd::LedExitConfirm, CPortCmd::AudioExitConfirm );
     bRet = ( CDlgInconformity::Accepted == pConfirm[ bEnter ]->exec( ) );
 
     return bRet;
@@ -829,7 +835,7 @@ bool CProcessData::PlateCardComfirm( QString &strCardNumber, QByteArray& byData,
         bRet = true;
         // TmpCard
         if ( bPlateRecognize[ bEnter ] ) {
-            bRet = PlateCardComfirmDlg( byData, strCardNumber, strPlate );
+            bRet = PlateCardComfirmDlg( byData, strCardNumber, strPlate, cardKind );
             //bPlateRecognize[ bEnter ] = false;
         }
 
@@ -866,8 +872,8 @@ bool CProcessData::PlateCardComfirm( QString &strCardNumber, QByteArray& byData,
     }
 
     bRet = MustCard( bEnter, strCardNumber );
-    if ( bPlateRecognize[ bEnter ] || bRet ) {
-        bRet = PlateCardComfirmDlg( byData, strCardNumber, strPlate );
+    if ( bPlateRecognize[ bEnter ] && bRet ) {
+        bRet = PlateCardComfirmDlg( byData, strCardNumber, strPlate, cardKind );
         //bPlateRecognize[ bEnter ] = false;
     } else {
         bRet = true;
@@ -950,15 +956,29 @@ void CProcessData::DefaultClicked( QByteArray &byData )
 {
     quint32 nCardNumber = GetCardNoByCom( byData );
     QString strCardno = QString( "%1" ).arg( nCardNumber );
+    bool bEmployee = ( strCardno == pMainWindow->GetCurrentUserID( ) );
 
-    ParkCardType cardKind = CardNone;
-    QStringList lstRows;
-    GetCardType2( strCardno, lstRows, cardKind );
-    if ( CardTime != cardKind || !pFeeDlg->isVisible( ) ) {
+    if ( !bEmployee ) {
         return;
     }
 
-    if ( strCardno == pMainWindow->GetCurrentUserID( ) ) {
+    //ParkCardType cardKind = CardNone;
+    //QStringList lstRows;
+    //GetCardType2( strCardno, lstRows, cardKind );
+
+    if ( pConfirm[ 0 ]->isVisible( ) ) {
+        pConfirm[ 0 ]->DefaultClicked(  );
+    }
+
+    if ( pConfirm[ 1 ]->isVisible( ) ) {
+        pConfirm[ 1 ]->DefaultClicked(  );
+    }
+
+    //if ( CardTime != cardKind || !pFeeDlg->isVisible( ) ) {
+    //    return;
+    //}
+
+    if ( pFeeDlg->isVisible( ) ) {
         pFeeDlg->DefaultClicked(  );
     }
 }
@@ -1025,17 +1045,19 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
 
     bEnter = CCommonFunction::ContainAddress( char ( byData[ 5 ] ), true );
     if ( strCurPlate.isEmpty( ) ) {
-        QString strPlate = "";
-        GetPlate( strCardNumber, strPlate );
-        strCurPlate = strPlate;
+        //QString strPlate = "";
+        //GetPlate( strCardNumber, strPlate );
+        //strCurPlate = strPlate;
 
-        if ( !strCurrentPlate[ bEnter ].isEmpty( ) &&
-             ( strCurPlate.isEmpty( ) || "未知" == strCurPlate ) ) {
-            strCurPlate = strCurrentPlate[ bEnter ];
-        }
+        //if ( !strCurrentPlate[ bEnter ].isEmpty( ) &&
+        //     ( strCurPlate.isEmpty( ) || "未知" == strCurPlate ) ) {
+        //    strCurPlate = strCurrentPlate[ bEnter ];
+       // }
+
+        strCurPlate = strCurrentPlate[ bEnter ];//识别到的车牌
     }
 
-    strCurrentPlate[ bEnter ].clear( ) ;
+    strCurrentPlate[ bEnter ].clear( );
 
     if ( !bPlate && 0x80 != byte5 && 0x00 == byte4 ) {//!bPlateRecognize[ bEnter ]
         QString strEnter = "UserRequest/NoCarCardValidedEntrance";
@@ -1094,6 +1116,7 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
     //}
 
     if ( !bPlate && !PlateCardComfirm( strCardNumber, byData, strCurPlate, cardKind ) ) {
+        //bPlateRecognize[ bEnter ] = false;
         return;
     }
 

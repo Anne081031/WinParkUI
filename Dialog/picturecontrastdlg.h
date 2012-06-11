@@ -8,6 +8,7 @@
 #include <QShowEvent>
 #include <QResizeEvent>
 #include "Common/CommonType.h"
+#include "Common/logicinterface.h"
 
 namespace Ui {
     class CPictureContrastDlg;
@@ -30,10 +31,12 @@ public:
     void InitDlg( QStringList& lstData, QString& strWhere, QString& strCardNo, int nType, bool bEnter  );
     int GetAmount( );
     int GetDisAmount( );
-    void LoadMyImage( CommonDataType::BlobType blob, QString& strCardNo, bool bHistory );
+    void LoadMyImage( CommonDataType::BlobType blob, QString& strCardNo, bool bHistory, bool bAuto = true );
+    void LoadRemoteImg( CommonDataType::BlobType blob, QString& strWhere, bool bHistory, QLabel *pLbl );
     void SetParkID( QString& strID );
 
     void DefaultClicked(  );
+    void SetDbInterf( CLogicInterface* pInterf );
 
 protected:
     void closeEvent( QCloseEvent *e );
@@ -92,6 +95,7 @@ private:
     bool bEnter1;
 
     QString strFeeRateType;
+    CLogicInterface* pDbInterface;
 };
 
 #endif // PICTURECONTRASTDLG_H

@@ -187,7 +187,7 @@ void MainWindow::StartSycnTime( )
     }
     //CStartupProcess::GetFrame( )->UpdateInfo( "同步时间！" );
 
-    static QTimer timer( this );
+    static QTimer timer;
 
     int nInterval = int ( dInterval * 3600 * 1000 );
     timer.setInterval( nInterval );
@@ -534,6 +534,12 @@ void MainWindow::ControlDatabase(bool bOpen)
 #endif
         QStringList lstParams;
         CCommonFunction::ConnectMySql( lstParams );
+
+        QString localLoop = "127.0.0.1";
+        QString strHost = pSettings->value( "CommonCfg/Host", localLoop ).toString( );
+        if ( lstParams[ 0 ] == strHost ) {
+            lstParams[ 0 ] = localLoop;
+        }
         bool bRet = pLogicInterface->GetMysqlDb().DbConnect( lstParams[ 0 ], lstParams[ 1 ], lstParams[ 2 ], lstParams[ 3 ], lstParams[ 4 ].toUInt( ) );
 
 

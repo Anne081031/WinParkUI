@@ -235,7 +235,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
         //ui->edtOwner->setText( lstRows[ nField++ ] );
 
         CommonDataType ::BlobType blob = bBuffer ? CommonDataType::BlobTimeInImg : CommonDataType::BlobVehicleIn1;
-        LoadMyImage( blob, strCardID, false );
+        LoadMyImage( blob, strCardID, false, true );
     } else {
         ui->edtCardID->setText( lstRows[ nField++ ] );
         ui->edtCardSelf->setText( lstRows[ nField++ ] );
@@ -308,16 +308,21 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
     }
 }
 
+void CPictureContrastDlg::SetDbInterf( CLogicInterface *pInterf )
+{
+    pDbInterface = pInterf;
+}
+
 void CPictureContrastDlg::InitDlg( QStringList &lstData, QString &strWhere, QString &strCardNo, int nType, bool bEnter  )
 {
     strVideoWhere = strWhere;
     bool bHistory = CCommonFunction::GetHistoryDb( );
-    LoadMyImage( CommonDataType::BlobVehicleIn1, strCardNo, bHistory );
+    LoadMyImage( CommonDataType::BlobVehicleIn1, strCardNo, bHistory, false );
     if ( !bEnter ) {
-        LoadMyImage( CommonDataType::BlobVehicleOut1, strCardNo, bHistory );
+        LoadMyImage( CommonDataType::BlobVehicleOut1, strCardNo, bHistory, false );
     }
-    LoadMyImage( CommonDataType::BlobOwner, strCardNo, false );
-    LoadMyImage( CommonDataType::BlobVehicle, strCardNo, false );
+    LoadMyImage( CommonDataType::BlobOwner, strCardNo, false, false );
+    LoadMyImage( CommonDataType::BlobVehicle, strCardNo, false, false );
 
     nCardType = nType;
     Write2UI( lstData, bEnter, false );
@@ -563,7 +568,7 @@ void CPictureContrastDlg::OnClickedDlgPopup( )
     }
 }
 
-void CPictureContrastDlg::LoadMyImage( CommonDataType::BlobType blob, QString& strCardNo, bool bHistory )
+void CPictureContrastDlg::LoadMyImage( CommonDataType::BlobType blob, QString& strCardNo, bool bHistory, bool bAuto )
 {
     QLabel* pLbl = NULL;
     QString strWhere = " Where %1 = '%2'";
@@ -612,5 +617,24 @@ void CPictureContrastDlg::LoadMyImage( CommonDataType::BlobType blob, QString& s
         }
     }
 
-    CCommonFunction::LoadFourImages( blob, strWhere, *pLbl, bHistory );
+    if ( bAuto ) {
+        CCommonFunction::LoadFourImages( blob, strWhere, *pLbl, bHistory );
+    } else {
+        LoadRemoteImg( blob, strWhere, bHistory, pLbl );
+    }
+}
+
+void CPictureContrastDlg::LoadRemoteImg( CommonDataType::BlobType blob, QString& strWhere, bool bHistory, QLabel *pLbl )
+{
+    QString strFile = "";
+    CCommonFunction::GetPath( strFile, CommonDataType::PathSnapshot );
+    strFile += "tmp.jpg";
+
+    pDbInterface->OperateBlob( strFile, false, blob, strWhere, bHistory );
+    if ( QFile::exists( strFile ) ) {
+        QPixmap map( strFile );
+         pLbl->setPixmap( map );
+
+        QFile::remove( strFile );
+    }
 }

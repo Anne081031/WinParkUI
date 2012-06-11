@@ -47,9 +47,10 @@ void CScu::ContructDatagram( QStringList &lstData )
     //Ð£ÑéºÍ	2	string	21+N
     quint8 nDeviceType = ( quint8 ) pSystemSet->value( "ThirdParty/DeviceType", 100 ).toUInt( );
     QString strDeviceID = pSystemSet->value( "ThirdParty/DeviceID", "0000000001" ).toString( );
+    quint32 nSystemType = pSystemSet->value( "ThirdParty/SystemType", 12 ).toUInt( );
     QByteArray byDeviceID = pTxtCodec->fromUnicode( strDeviceID );
 
-    stream << ( quint8 ) '$' << ( quint8 ) 1 << ( quint8 ) 12 << nDeviceType;
+    stream << ( quint8 ) '$' << ( quint8 ) 1 << ( quint8 ) nSystemType << nDeviceType;
     byBuffer.write( byDeviceID );
     stream << ( quint8 ) 2 << ( quint8 ) 1 << ( qint16 ) byContent.count( ) <<( quint8 ) nItems;
     byBuffer.write( byContent );

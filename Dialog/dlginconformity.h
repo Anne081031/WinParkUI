@@ -17,7 +17,8 @@ public:
     explicit CDlgInconformity( QWidget *parent = 0);
     ~CDlgInconformity();
 
-    void GetInfomation( bool bEnter, QString& strPlate, QString& strCardID, char cCan );
+    bool GetInfomation( bool bEnter, QString& strPlate, QString& strCardID, char cCan );
+    void DefaultClicked( );
 
 protected:
     void resizeEvent(QResizeEvent * event );

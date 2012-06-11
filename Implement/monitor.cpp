@@ -1136,7 +1136,7 @@ int CMonitor::GetInsideCard( QStringList &lstRows )
 
 void CMonitor::StartSpaceTimer( )
 {
-    static QTimer timer( this );
+    static QTimer timer;
     connect( &timer,SIGNAL( timeout( ) ), this, SLOT( SpaceInfo( ) ) );
 
     //timer.start( 5 * 60 * 1000 );
@@ -1563,6 +1563,7 @@ void CMonitor::ClearPlate( int nPlateChannel )
 {
     QString strPlate = "        ";
     CCommonFunction::DisplayPlateChar( *this, nPlateChannel, strPlate );
+    strPlates[ nPlateChannel ].clear( );
 }
 
 void CMonitor::onLinkActivated(QString link)
@@ -1712,7 +1713,7 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
         }
         qDebug( ) << strSql << endl;
 
-        //CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData, CCommonFunction::GetHistoryDb( ) );
+        //   CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData, CCommonFunction::GetHistoryDb( ) );
 
         CLogicInterface logInterf;
         CMySqlDatabase& mySql = logInterf.GetMysqlDb( );
@@ -1725,7 +1726,6 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
         }
 
         logInterf.ExecuteSql( strSql, lstData );
-        mySql.DbDisconnect( );
 
         if ( 0 == lstData.count( ) ) { // InOut Record empty
             QStringList lstLog;
@@ -1737,7 +1737,9 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
             CPmsLog::GetInstance( )->WriteLog( lstLog );
         }
 
+        dlg.SetDbInterf( &logInterf );
         dlg.InitDlg( lstData, strWhere, strCardNo, nType, bEnter );
+        mySql.DbDisconnect( );
         dlg.exec( );
       } catch ( ... ) {
           ;

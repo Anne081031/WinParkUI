@@ -287,7 +287,12 @@ void CCommonFunction::DisplayPlateChar( QWidget& wg, int nChannel, QString& strC
 
         if ( NULL != pLabel ) {
             //pLabel->setText( strLink.arg( ( nIndex > nCount - 1 ) ? " " : QString( strContent[ nIndex ] ) ) );
-            pLabel->setText( ( nIndex > nCount - 1 ) ? " " : QString( strContent[ nIndex ] ) );
+            //pLabel->clear( );
+            if ( nIndex < nCount ) {
+                QString strChar = QString( strContent[ nIndex ] );
+                pLabel->setText( strChar );
+            }
+            //pLabel->setText( ( nIndex > nCount - 1 ) ? " " : QString( strContent[ nIndex ] ) );
             //if ( pLabel->updatesEnabled( ) ) {
             //    pLabel->update();
             //}

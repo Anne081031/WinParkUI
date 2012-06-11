@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlginconformity.ui'
 **
-** Created: Thu May 31 17:17:23 2012
+** Created: Sat Jun 9 15:20:54 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -89,6 +89,7 @@ public:
         btn1->setFont(font);
         btn1->setStyleSheet(QString::fromUtf8("background-image: url(none);\n"
 "color: rgb(255, 0, 0);"));
+        btn1->setAutoDefault(false);
         layoutWidget = new QWidget(groupBox);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(10, 20, 151, 141));
@@ -283,6 +284,7 @@ public:
         btn2->setFont(font);
         btn2->setStyleSheet(QString::fromUtf8("background-image: url(none);\n"
 "color: rgb(255, 0, 0);"));
+        btn2->setDefault(true);
         lblTitle = new QLabel(CDlgInconformity);
         lblTitle->setObjectName(QString::fromUtf8("lblTitle"));
         lblTitle->setGeometry(QRect(130, 0, 191, 31));
@@ -299,6 +301,7 @@ public:
         btn3->setGeometry(QRect(160, 290, 111, 41));
         btn3->setFont(font);
         btn3->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
+        btn3->setAutoDefault(false);
 
         retranslateUi(CDlgInconformity);
 

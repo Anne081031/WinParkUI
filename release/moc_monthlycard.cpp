@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'monthlycard.h'
 **
-** Created: Thu May 31 17:23:04 2012
+** Created: Fri Jun 8 16:52:29 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CMonthlyCard[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      21,   14, // methods
+      22,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -45,13 +45,14 @@ static const uint qt_meta_data_CMonthlyCard[] = {
      251,   13,   13,   13, 0x08,
      261,   13,   13,   13, 0x08,
      277,   13,   13,   13, 0x08,
-     301,  291,   13,   13, 0x08,
-     322,   13,   13,   13, 0x08,
-     373,   13,   13,   13, 0x08,
-     403,   13,   13,   13, 0x08,
-     429,   13,   13,   13, 0x08,
-     463,  458,   13,   13, 0x08,
-     484,   13,   13,   13, 0x08,
+     291,   13,   13,   13, 0x08,
+     319,  309,   13,   13, 0x08,
+     340,   13,   13,   13, 0x08,
+     391,   13,   13,   13, 0x08,
+     421,   13,   13,   13, 0x08,
+     447,   13,   13,   13, 0x08,
+     481,  476,   13,   13, 0x08,
+     502,   13,   13,   13, 0x08,
 
        0        // eod
 };
@@ -64,7 +65,8 @@ static const char qt_meta_stringdata_CMonthlyCard[] = {
     "AddRecord()\0AddBulkRecord()\0ModifyRecord()\0"
     "DeleteRecord()\0Recharge()\0Serach()\0"
     "ChangeCard()\0Refresh()\0PrintCardInfo()\0"
-    "Download2CC()\0strCardID\0PositionRow(QString)\0"
+    "Download2CC()\0CardLossProcess()\0"
+    "strCardID\0PositionRow(QString)\0"
     "on_tableMonthly_customContextMenuRequested(QPoint)\0"
     "on_btnMonthRecharge_clicked()\0"
     "on_btnMonthSave_clicked()\0"
@@ -115,16 +117,17 @@ int CMonthlyCard::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 11: Refresh(); break;
         case 12: PrintCardInfo(); break;
         case 13: Download2CC(); break;
-        case 14: PositionRow((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 15: on_tableMonthly_customContextMenuRequested((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
-        case 16: on_btnMonthRecharge_clicked(); break;
-        case 17: on_btnMonthSave_clicked(); break;
-        case 18: on_btnEntranceSave_clicked(); break;
-        case 19: textChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 20: on_btnSaveRight_clicked(); break;
+        case 14: CardLossProcess(); break;
+        case 15: PositionRow((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 16: on_tableMonthly_customContextMenuRequested((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
+        case 17: on_btnMonthRecharge_clicked(); break;
+        case 18: on_btnMonthSave_clicked(); break;
+        case 19: on_btnEntranceSave_clicked(); break;
+        case 20: textChanged((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 21: on_btnSaveRight_clicked(); break;
         default: ;
         }
-        _id -= 21;
+        _id -= 22;
     }
     return _id;
 }

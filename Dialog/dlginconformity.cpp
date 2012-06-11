@@ -54,8 +54,10 @@ void CDlgInconformity::FillCntrl( QStringList &lstRows, bool bCard )
     }
 }
 
-void CDlgInconformity::GetInfomation( bool bEnter, QString &strPlate, QString &strCardID, char cCan )
+bool CDlgInconformity::GetInfomation( bool bEnter, QString &strPlate, QString &strCardID, char cCan )
 {
+    bool bNoRecord = false;
+
     ui->lblTitle->setText( ui->lblTitle->statusTip( ).arg( bEnter ? "Èë" : "³ö" ) );
     cCanAddr = cCan;
     // select cardno from monthcard where cardno in ( select cardindex from carinfo where carcp = strplate )
@@ -89,12 +91,17 @@ void CDlgInconformity::GetInfomation( bool bEnter, QString &strPlate, QString &s
                                                      strTable[ nIndex ], bPlate ? strPlate : strCardID );
             }
 
-            if ( 0 < CLogicInterface::GetInterface( )->ExecuteSql( strTmp, lstRows ) ) {
+           if ( 0 < CLogicInterface::GetInterface( )->ExecuteSql( strTmp, lstRows ) ) {
                 FillCntrl( lstRows, bPlate );
                 break;
-            }
+           } else if ( bPlate ) { // No Record
+                ui->edtInfo14->setText( strPlate );
+                bNoRecord = true;
+           }
         }
     }
+
+    return bNoRecord;
 }
 
 void CDlgInconformity::on_btn3_clicked()
@@ -112,7 +119,12 @@ void CDlgInconformity::on_btn1_clicked()
 
 void CDlgInconformity::on_btn2_clicked()
 {
-    emit Pass( ui->edtInfo00->text( ), cCanAddr, ui->edtInfo04->text( ) );
+    emit Pass( ui->edtInfo00->text( ), cCanAddr, ui->edtInfo14->text( ) );
     close( );
     setResult( CDlgInconformity::Rejected );
+}
+
+void CDlgInconformity::DefaultClicked( )
+{
+    on_btn2_clicked( );
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'timecard.h'
 **
-** Created: Thu May 31 17:22:30 2012
+** Created: Fri Jun 8 16:51:59 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CTimeCard[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      16,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -44,8 +44,9 @@ static const uint qt_meta_data_CTimeCard[] = {
      269,   10,   10,   10, 0x08,
      279,   10,   10,   10, 0x08,
      295,   10,   10,   10, 0x08,
-     319,  309,   10,   10, 0x08,
-     340,   10,   10,   10, 0x08,
+     309,   10,   10,   10, 0x08,
+     337,  327,   10,   10, 0x08,
+     358,   10,   10,   10, 0x08,
 
        0        // eod
 };
@@ -58,7 +59,8 @@ static const char qt_meta_stringdata_CTimeCard[] = {
     "on_tableTime_customContextMenuRequested(QPoint)\0"
     "AddRecord()\0AddBulkRecord()\0ModifyRecord()\0"
     "DeleteRecord()\0Serach()\0Refresh()\0"
-    "PrintCardInfo()\0Download2CC()\0strCardID\0"
+    "PrintCardInfo()\0Download2CC()\0"
+    "CardLossProcess()\0strCardID\0"
     "PositionRow(QString)\0on_pushButton_8_clicked()\0"
 };
 
@@ -104,11 +106,12 @@ int CTimeCard::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 10: Refresh(); break;
         case 11: PrintCardInfo(); break;
         case 12: Download2CC(); break;
-        case 13: PositionRow((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 14: on_pushButton_8_clicked(); break;
+        case 13: CardLossProcess(); break;
+        case 14: PositionRow((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 15: on_pushButton_8_clicked(); break;
         default: ;
         }
-        _id -= 15;
+        _id -= 16;
     }
     return _id;
 }

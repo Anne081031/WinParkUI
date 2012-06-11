@@ -149,7 +149,7 @@ private:
     bool PictureContrast( QStringList& lstRows, int& nAmount, QByteArray& byData, QString& strCardno );
     bool CheckCardRight( QString& strCardID, bool bEnter, QByteArray& byData, ParkCardType& cardKind );
     bool PlateCardComfirm( QString& strCardNumber, QByteArray& byData, QString& strPlate, ParkCardType& cardKind );
-    bool PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumber, QString& strPlate );
+    bool PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumber, QString& strPlate, ParkCardType& cardKind );
 
     void SendMultiCmd( QList< QByteArray* > lstCmd, char cCan );
     inline short GetCmdDataSize( QByteArray& byCmd );
