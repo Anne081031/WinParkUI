@@ -58,6 +58,7 @@ private:
     QRadioButton& SetCarType( QString& strType );
     void SetCurrentRadioBox( QRadioButton* pRbx );
     void AnalogClicked( QRadioButton* pBtn );
+    void ClearPlate( );
 
 private slots:
     void on_btnPass_clicked();

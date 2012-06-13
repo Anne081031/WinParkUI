@@ -199,6 +199,11 @@ void CAccess2Records::showEvent(QShowEvent *)
     //FillTable( );
 }
 
+void CAccess2Records::hideEvent( QHideEvent* )
+{
+    pParent->SetCardControl( NULL );
+}
+
 void CAccess2Records::CalculatePos( )
 {
     move( 23, 55 );

@@ -23,6 +23,7 @@ protected:
     void  closeEvent ( QCloseEvent * event );
     void resizeEvent( QResizeEvent * );
     void showEvent(QShowEvent *);
+    void hideEvent(  QHideEvent* );
     void CalculatePos( );
     void ControlDataGrid( );
 

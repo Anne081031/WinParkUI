@@ -697,7 +697,7 @@ void CProcessData::MakeCardCmd(QString &strCardNo, QByteArray &byData, char cCan
     byData.append( char( 0x55 ) );
 }
 
-void CProcessData::RecognizePlate( QString &strPlate, int nChannel )
+void CProcessData::RecognizePlate( QString strPlate, int nChannel )
 {
     bool bEnter = ( 0 == nChannel % 2 );
     bPlateRecognize[ bEnter ] = true;
@@ -804,7 +804,7 @@ void CProcessData::GetChannelInfo( QString &strCardNo )
     }
 }
 
-bool CProcessData::PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumber, QString& strPlate /*识别到的*/, ParkCardType& cardKind)
+bool CProcessData::PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumber, QString strPlate /*识别到的*/, ParkCardType& cardKind)
 {
     QByteArray vData;
     bool bEnter = ( 0 != byData[ 5 ] % 2 );
@@ -826,7 +826,7 @@ bool CProcessData::PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumb
     return bRet;
 }
 
-bool CProcessData::PlateCardComfirm( QString &strCardNumber, QByteArray& byData, QString& strPlate, ParkCardType& cardKind )
+bool CProcessData::PlateCardComfirm( QString &strCardNumber, QByteArray& byData, QString strPlate, ParkCardType& cardKind )
 {
     bool bEnter = ( 0 != byData[ 5 ] % 2 );
     bool bRet = ( cardKind != CardTime );
@@ -1013,131 +1013,146 @@ void CProcessData::PlateCardComfirmPass( QString strCardNo, char cCan, QString s
 void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString strCurPlate )
 {
     quint8 byte4 = byData[ 4 ];
-    quint8 byte5 = byData[ 5 ]; // 1 ( +2 ) Enetr Park / 2 ( +2 ) Leave Park / 80 Register Card
-    //quint8 byte6 = byData[ 6 ]; //LSB BE LE
-    //quint8 byte7 = byData[ 7 ];
-    //quint8 byte8 = byData[ 8 ];
+        quint8 byte5 = byData[ 5 ]; // 1 ( +2 ) Enetr Park / 2 ( +2 ) Leave Park / 80 Register Card
+        //quint8 byte6 = byData[ 6 ]; //LSB BE LE
+        //quint8 byte7 = byData[ 7 ];
+        //quint8 byte8 = byData[ 8 ];
 
-    quint32 nCardNumber = GetCardNoByCom( byData );
-    QString strCardNumber = QString::number( nCardNumber );
-    GetNewCardInfo( strCardNumber );
-    GetChannelInfo( strCardNumber );
+        quint32 nCardNumber = GetCardNoByCom( byData );
+        QString strCardNumber = QString::number( nCardNumber );
+        GetNewCardInfo( strCardNumber );
+        GetChannelInfo( strCardNumber );
 
-    //if ( bPlate && MustCard( bEnter, strCardNumber ) && ( cardType != CardTime ) ) {
-    //    return;
-    //}
+        //if ( bPlate && MustCard( bEnter, strCardNumber ) && ( cardType != CardTime ) ) {
+        //    return;
+        //}
 
-    if ( !bPlate && 0x80 == byte5 && pMainWindow->SetCardNumber( strCardNumber ) ) { // Register Card
-        //qDebug( ) << "Time " << QDateTime::currentDateTime( ).toMSecsSinceEpoch( ) << endl;
-        //pMainWindow->SetCardNumber( strCardNumber );
-        return;
-    }
-
-    bool bEnter;
-    if ( !bPlate && 0x80 == byte5 ) { // CC replaces the card reader
-        char cCan;
-        if ( !GetCCCardCanAddr( strCardNumber, cCan, bEnter ) ) {
+        if ( !bPlate && 0x80 == byte5 && pMainWindow->SetCardNumber( strCardNumber ) ) { // Register Card
+            //qDebug( ) << "Time " << QDateTime::currentDateTime( ).toMSecsSinceEpoch( ) << endl;
+            //pMainWindow->SetCardNumber( strCardNumber );
+            const QString strText = "卡注册" + strCardNumber;
+            pMainWindow->SetAlertMsg( strText );
             return;
         }
-        byData[ 5 ] = cCan;
-        //byte5 = cCan;
-    }
 
-    bEnter = CCommonFunction::ContainAddress( char ( byData[ 5 ] ), true );
-    if ( strCurPlate.isEmpty( ) ) {
-        //QString strPlate = "";
-        //GetPlate( strCardNumber, strPlate );
-        //strCurPlate = strPlate;
+        bool bEnter;
+        if ( !bPlate && 0x80 == byte5 ) { // CC replaces the card reader
+            char cCan;
+            if ( !GetCCCardCanAddr( strCardNumber, cCan, bEnter ) ) {
+                const QString strText = QString( "中心Can%1" ).arg( QString( cCan ));
+                pMainWindow->SetAlertMsg( strText );
+                return;
+            }
+            byData[ 5 ] = cCan;
+            //byte5 = cCan;
+        }
 
-        //if ( !strCurrentPlate[ bEnter ].isEmpty( ) &&
-        //     ( strCurPlate.isEmpty( ) || "未知" == strCurPlate ) ) {
-        //    strCurPlate = strCurrentPlate[ bEnter ];
-       // }
+        bEnter = CCommonFunction::ContainAddress( char ( byData[ 5 ] ), true );
+        if ( strCurPlate.isEmpty( ) ) {
+            //QString strPlate = "";
+            //GetPlate( strCardNumber, strPlate );
+            //strCurPlate = strPlate;
 
-        strCurPlate = strCurrentPlate[ bEnter ];//识别到的车牌
-    }
+            //if ( !strCurrentPlate[ bEnter ].isEmpty( ) &&
+            //     ( strCurPlate.isEmpty( ) || "未知" == strCurPlate ) ) {
+            //    strCurPlate = strCurrentPlate[ bEnter ];
+           // }
 
-    strCurrentPlate[ bEnter ].clear( );
+            strCurPlate = strCurrentPlate[ bEnter ];//识别到的车牌
+        }
 
-    if ( !bPlate && 0x80 != byte5 && 0x00 == byte4 ) {//!bPlateRecognize[ bEnter ]
-        QString strEnter = "UserRequest/NoCarCardValidedEntrance";
-        QString strLeave = "UserRequest/NoCarCardValidedExit";
-        bool bValided = pSettings->value( bEnter ? strEnter : strLeave, true ).toBool( );
-        if ( false == bValided ) {
+        strCurrentPlate[ bEnter ].clear( );
+
+        if ( !bPlate && ( 0x80 != byte5 ) && ( 0x00 == byte4 ) ) {//!bPlateRecognize[ bEnter ]
+            QString strEnter = "UserRequest/NoCarCardValidedEntrance";
+            QString strLeave = "UserRequest/NoCarCardValidedExit";
+            bool bValided = pSettings->value( bEnter ? strEnter : strLeave, true ).toBool( );
+            if ( false == bValided ) {
+                QString strText = "无车刷卡";
+                pMainWindow->SetAlertMsg( strText );
+                return;
+            }
+        }
+
+        int nChannel = GetChannelByCan( ( char ) byData[ 5 ] );
+        CaptureImage( strCardNumber, nChannel, CommonDataType::CaptureJPG );
+
+        qDebug( ) << " Card No. : " << strCardNumber << endl;
+        // Get Card Info From Database
+
+        QByteArray vData;
+        QStringList lstRows;
+        ParkCardType cardKind = CardNone;
+        GetCardType2( strCardNumber, lstRows, cardKind );
+
+        //if ( !bPlate && ExcludeRemoteCardDuplication( nCardNumber, bEnter ) ) { // Remote card interval
+        //    return;
+        //}
+
+        if ( CardNone == cardKind ) {
+            PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCardInvalid, CPortCmd::AudioCardInvalid );
+            QString strText = "未知卡";
+            pMainWindow->SetAlertMsg( strText );
             return;
         }
-    }
 
-    int nChannel = GetChannelByCan( ( char ) byData[ 5 ] );
-    CaptureImage( strCardNumber, nChannel, CommonDataType::CaptureJPG );
+        int nStateIndex = 4;
+        if ( CardSave == cardKind ) {
+            nStateIndex = 2;
+        }
 
-    qDebug( ) << " Card No. : " << strCardNumber << endl;
-    // Get Card Info From Database
+        if ( lstRows.count( ) - 1 < nStateIndex ) {
+            QString strText = "状态索引";
+            pMainWindow->SetAlertMsg( strText );
+            return;
+        }
 
-    QByteArray vData;
-    QStringList lstRows;
-    ParkCardType cardKind = CardNone;
-    GetCardType2( strCardNumber, lstRows, cardKind );
+        QString strState = lstRows[ nStateIndex ];
+        if ( 0 == strState.compare( QString( "挂失" ) ) ) {
+            PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCardLoss, CPortCmd::AudioCardLoss );
+            QString strText = "挂失卡";
+            pMainWindow->SetAlertMsg( strText );
+            return;
+        }
 
-    //if ( !bPlate && ExcludeRemoteCardDuplication( nCardNumber, bEnter ) ) { // Remote card interval
-    //    return;
-    //}
+        /////////////////////
+        //if ( ( ( !bEnter ) & bCardConfirm ) &&
+        //if ( MustCard( bEnter, strCardNumber ) &&
+        //    ( cardType != CardTime ) &&
+        //     !ExitConfirm( strCardNumber, byData ) ) { // Exit must read card.
+        //    return;
+        //}
 
-    if ( CardNone == cardKind ) {
-        PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCardInvalid, CPortCmd::AudioCardInvalid );
-        QString strText = "未知卡";
+        if ( !bPlate && !PlateCardComfirm( strCardNumber, byData, strCurPlate, cardKind ) ) {
+            //bPlateRecognize[ bEnter ] = false;
+            QString strText = "不符拒放";
+            pMainWindow->SetAlertMsg( strText );
+            return;
+        }
+
+        if ( !bPlate ) {
+            bPlateRecognize[ bEnter ] = false;
+        }
+
+        if ( !CheckCardRight( strCardNumber, bEnter, byData, cardKind ) ) { // Check
+            QString strText = "无权限";
+            pMainWindow->SetAlertMsg( strText );
+            return;
+        }
+        /////////////////////
+
+        if ( pConfirm[ bEnter ]->isVisible( ) ) {
+            pConfirm[ bEnter ]->close( );
+        }
+
+        const QString strText = "P:" + strCardNumber;
         pMainWindow->SetAlertMsg( strText );
-        return;
-    }
 
-    int nStateIndex = 4;
-    if ( CardSave == cardKind ) {
-        nStateIndex = 2;
-    }
-
-    if ( lstRows.count( ) - 1 < nStateIndex ) {
-        return;
-    }
-
-    QString strState = lstRows[ nStateIndex ];
-    if ( 0 == strState.compare( QString( "挂失" ) ) ) {
-        PlayAudioDisplayInfo( byData, vData, CPortCmd::LedCardLoss, CPortCmd::AudioCardLoss );
-        QString strText = "挂失卡";
-        pMainWindow->SetAlertMsg( strText );
-        return;
-    }
-
-    /////////////////////
-    //if ( ( ( !bEnter ) & bCardConfirm ) &&
-    //if ( MustCard( bEnter, strCardNumber ) &&
-    //    ( cardType != CardTime ) &&
-    //     !ExitConfirm( strCardNumber, byData ) ) { // Exit must read card.
-    //    return;
-    //}
-
-    if ( !bPlate && !PlateCardComfirm( strCardNumber, byData, strCurPlate, cardKind ) ) {
-        //bPlateRecognize[ bEnter ] = false;
-        return;
-    }
-
-    if ( !bPlate ) {
-        bPlateRecognize[ bEnter ] = false;
-    }
-
-    if ( !CheckCardRight( strCardNumber, bEnter, byData, cardKind ) ) { // Check
-        return;
-    }
-    /////////////////////
-
-    if ( pConfirm[ bEnter ]->isVisible( ) ) {
-        pConfirm[ bEnter ]->close( );
-    }
-
-    bool bRet = AssertCard( byData, vData, lstRows, strCurPlate,cardKind );
-    bRet = vData.contains( 0x32 );
-    if ( false == bRet ) {
-        return;
-    }
+        bool bRet = AssertCard( byData, vData, lstRows, strCurPlate,cardKind );
+        bRet = vData.contains( 0x32 );
+        if ( false == bRet ) {
+            return;
+        }
 }
 
 bool CProcessData::ExcludeRemoteCardDuplication( quint32 nCardID, ParkCardType& cardKind )
@@ -1222,7 +1237,7 @@ bool CProcessData::CheckCardRight( QString& strCardID, bool bEnter, QByteArray& 
     return bRet;
 }
 
-bool CProcessData::AssertCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString& strPlate, ParkCardType& cardKind )
+bool CProcessData::AssertCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString strPlate, ParkCardType& cardKind )
 {
     bool bRet = false;
     //bool bEnter = ( 0 != byData[ 5 ] % 2 );
@@ -1375,7 +1390,7 @@ bool CProcessData::GetMonthDeadline( QDateTime &dtEndTime, QString &strCardNo )
     return bRet;
 }
 
-bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate, ParkCardType& cardKind )
+bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString strPlate, ParkCardType& cardKind )
 {
     // Select cardno, cardkind, starttime, endtime, cardstate, cardselfno, cardcomment, cardcreator
     // 该卡已挂失
@@ -1721,7 +1736,7 @@ int CProcessData::CalculateFee( QDateTime &dtStart, QDateTime &dtEnd, QString& s
     return nFee;
 }
 
-bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate, ParkCardType& cardKind )
+bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString strPlate, ParkCardType& cardKind )
 {
     // Select cardno, cardkind, cardstate, cardfee, cardfeebz, cardselfno, cardcomment, cardcreator
     // 该卡已挂失
@@ -1999,7 +2014,7 @@ void CProcessData::GetChannelName( bool bEnter, char cCan, QString& strChannel )
 }
 
 void CProcessData::BroadcastRecord( QString& strCardNumber, QDateTime& dtCurrent, int nCardTypeID,
-                                    QString& strPlate, QString& strCardType, QString& strChannel, char cCan )
+                                    QString strPlate, QString& strCardType, QString& strChannel, char cCan )
 {
     QStringList lstData;
     QString strTime;
@@ -2051,7 +2066,7 @@ bool CProcessData::MonthCardWorkMode( )
     return bRet;
 }
 
-void CProcessData::WriteInOutRecord( QByteArray& byData )
+void CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
 {
     if ( !IfSenseOpenGate( ) ) {
         return;
@@ -2065,6 +2080,7 @@ void CProcessData::WriteInOutRecord( QByteArray& byData )
     char cCan = byData[ nIndex ];
     bool bEnter = ( 0 != (  cCan % 2 ) );
     QString strPlate = strCurrentPlate[ bEnter ];
+    strCurrentPlate[ bEnter ].clear( );
     char cLevel = GetCanLevel( cCan );
     int nChannel = GetChannelByCan( cCan );
 
@@ -2133,7 +2149,7 @@ void CProcessData::GetCan2Channel( QString &strWhere )
 }
 
 void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QString& strTable,
-                                     QString& strCardType, QString& strPlate, char cCan, ParkCardType& cardKind, int nAmount )
+                                     QString& strCardType, QString strPlate, char cCan, ParkCardType& cardKind, int nAmount )
 {
     if ( bEnter ) {
         cardCan.insert( strCardNumber, cCan );
@@ -2336,7 +2352,7 @@ int CProcessData::GetChannelByCan( char cCan )
     return nChannel;
 }
 
-void CProcessData::DeleteCapturedFile( QString &strCardNo, int nChannel, bool bEnter, QDateTime& dtCurrent, QString& strPlate )
+void CProcessData::DeleteCapturedFile( QString &strCardNo, int nChannel, bool bEnter, QDateTime& dtCurrent, QString strPlate )
 {
     QString strPath = "";
     GetCaptureFile( strPath, strCardNo, nChannel, CommonDataType::CaptureJPG );
@@ -2414,7 +2430,7 @@ void CProcessData::ControlVehicleImage( QString &strCardNo, bool bSave2Db, int n
     }
 }
 
-bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString& strPlate, ParkCardType& cardKind )
+bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStringList &lstRows, QString strPlate, ParkCardType& cardKind )
 {
     // Select cardno, cardkind, cardfeebz, cardselfno, cardstate
     // 该卡已挂失

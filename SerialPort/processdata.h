@@ -46,7 +46,7 @@ public:
     void CheckCenterContronller( bool bEnter, QDateTime& dtDateTime );
 
     void TimeCardPass( int nAmount, int nHour, int nMin, QByteArray& byData );
-    void RecognizePlate( QString& strPlate, int nChannel );
+    void RecognizePlate( QString strPlate, int nChannel );
 
     void ParkspaceFull( bool bFull, QString& strInfo, char cCan );
     void CaptureManualGateImage( char cCan, QString& strWhere );
@@ -101,13 +101,13 @@ private:
     //void GetCardType2( QString& strCardNo, QStringList& lstRows, bool bEnter );
     void GetCardType1( QString& strCardNo, QStringList& lstRows, ParkCardType& cardKind );
     void GetCardType2( QString& strCardNo, QStringList& lstRows, ParkCardType& cardKind );
-    bool AssertCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString& strPlate, ParkCardType& cardKind );
-    bool ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString& strPlate, ParkCardType& cardKind );
-    bool ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString& strPlate, ParkCardType& cardKind );
-    bool ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString& strPlate, ParkCardType& cardKind );
+    bool AssertCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString strPlate, ParkCardType& cardKind );
+    bool ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString strPlate, ParkCardType& cardKind );
+    bool ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString strPlate, ParkCardType& cardKind );
+    bool ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStringList& lstRows, QString strPlate, ParkCardType& cardKind );
     void ComposeDigitalAudio( QByteArray& vData, QString& strDigital );
     void WriteInOutRecord( bool bEnter, QString& strCardNumber, QString& strTable,
-                           QString& strCardType, QString& strPlate, char cCan, ParkCardType& cardKind, int nAmount = 0 );
+                           QString& strCardType, QString strPlate, char cCan, ParkCardType& cardKind, int nAmount = 0 );
     void WriteInOutRecord( QByteArray& byData );
     inline void GetChannelName( bool bEnter, char cCan, QString& strChannel );
     void GetHourMin( int nMins, int& nHour, int& nMin );
@@ -135,7 +135,7 @@ private:
 
     void GetChannelInfo( QString& strCardNo );
     void GetPlate( QString& strCardNo, QString& strPlate );
-    void DeleteCapturedFile( QString& strCardNo, int nChannel, bool bEnter, QDateTime& dtCurrent, QString& strPlate );
+    void DeleteCapturedFile( QString& strCardNo, int nChannel, bool bEnter, QDateTime& dtCurrent, QString strPlate );
     void DownloadTime( char cCan, QDate& date, QTime& time );
     void DownloadWelcome( char cCan );
 
@@ -148,8 +148,8 @@ private:
     inline bool MustCard( bool bEnter, QString& strCardID );
     bool PictureContrast( QStringList& lstRows, int& nAmount, QByteArray& byData, QString& strCardno );
     bool CheckCardRight( QString& strCardID, bool bEnter, QByteArray& byData, ParkCardType& cardKind );
-    bool PlateCardComfirm( QString& strCardNumber, QByteArray& byData, QString& strPlate, ParkCardType& cardKind );
-    bool PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumber, QString& strPlate, ParkCardType& cardKind );
+    bool PlateCardComfirm( QString& strCardNumber, QByteArray& byData, QString strPlate, ParkCardType& cardKind );
+    bool PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumber, QString strPlate, ParkCardType& cardKind );
 
     void SendMultiCmd( QList< QByteArray* > lstCmd, char cCan );
     inline short GetCmdDataSize( QByteArray& byCmd );
@@ -165,7 +165,7 @@ private:
     void SpaceChange( bool bEnter, char cCan );
     void GetCan2Channel( QString& strWhere );
     void BroadcastRecord( QString& strCardNumber, QDateTime& dtCurrent, int nCardTypeID,
-                                        QString& strPlate, QString& strCardType, QString& strChannel, char cCan );
+                                        QString strPlate, QString& strCardType, QString& strChannel, char cCan );
 
     bool ExcludeRemoteCardDuplication( quint32 nCardID, ParkCardType& cardKind );
     void ClearListContent( bool bEnter );

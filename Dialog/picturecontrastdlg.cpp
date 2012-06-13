@@ -178,6 +178,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
     QString strPlates[ 2 ];
 
     if ( bAuto ) {
+        ClearPlate( );
         ui->edtCardID->setText( lstRows[  0 ] );
         QString strCardID = lstRows[  0 ];
         ui->edtCardType->setText( lstRows[ 1 ] );
@@ -344,6 +345,21 @@ void CPictureContrastDlg::closeEvent(QCloseEvent *e)
 {
     if ( e->spontaneous( ) ) {
         e->ignore( );
+    }
+}
+
+void CPictureContrastDlg::ClearPlate( )
+{
+    QString strName = "lblLicence%1%2";
+    QLabel* pLabel = NULL;
+    for ( int nChannel = 1; nChannel <= 2; nChannel++ ) {
+        for ( int nIndex = 1; nIndex <= 8; nIndex++ ) {
+            pLabel = findChild< QLabel* >( strName.arg( nChannel ).arg( nIndex ) );
+
+            if ( NULL != pLabel ) {
+                pLabel->setText( "" );
+            }
+        }
     }
 }
 

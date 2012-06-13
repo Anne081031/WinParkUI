@@ -766,7 +766,7 @@ bool CMonitor::PlateFilter( int nChannel, TH_PlateIDResult*& pResult )
 
 void CMonitor::PlateFilter2( int nChannel )
 {
-    bool bConfidence = ( recogResult[ nChannel ] [ 0 ].nConfidence > structPlates[ nChannel ].nConfidence );
+    bool bConfidence = ( recogResult[ nChannel ] [ 0 ].nConfidence >= structPlates[ nChannel ].nConfidence );
     if ( !bConfidence ) { // Lower Confidence
         return;
     }
