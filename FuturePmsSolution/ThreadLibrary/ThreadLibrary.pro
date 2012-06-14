@@ -5,10 +5,18 @@ TEMPLATE = lib
 
 DEFINES += THREADLIBRARY_LIBRARY
 
-SOURCES += qthreadgenerator.cpp
+SOURCES += qthreadgenerator.cpp \
+    qloggerthread.cpp \
+    qlistenerthread.cpp \
+    qtcppeersocketthread.cpp \
+    qudpreceiversocketthread.cpp
 
 HEADERS += ThreadLibrary_global.h \
-    qthreadgenerator.h
+    qthreadgenerator.h \
+    qloggerthread.h \
+    qlistenerthread.h \
+    qtcppeersocketthread.h \
+    qudpreceiversocketthread.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
