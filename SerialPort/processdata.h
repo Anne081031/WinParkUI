@@ -170,7 +170,7 @@ private:
     bool ExcludeRemoteCardDuplication( quint32 nCardID, ParkCardType& cardKind );
     void ClearListContent( bool bEnter );
 
-    inline bool MonthCardWorkMode( );
+    inline bool MonthCardWorkMode( QString& strCardNo  );
     //void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard );
     //void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, CommonDataType::BlobType blob, QByteArray &byData );
     inline bool GetDirectDb( );

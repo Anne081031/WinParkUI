@@ -51,6 +51,7 @@ namespace CommonDataType {
         CardType cardType; // Monthly, Value, Time
         QString cardStatus;
         int nInside;
+        bool bMIMO;
 
         struct __MustCard {
             bool bEnterMustCard;

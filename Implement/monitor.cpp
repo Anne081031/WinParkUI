@@ -1187,6 +1187,9 @@ void CMonitor::SpaceInfo(  ) //зюЭтЮЇ
         if ( 0 < lstData.count( ) ) {
             nUsed = lstData[ 0 ].toInt( );
             nFree = nTotalParkSpace - nUsed;
+            if ( nFree < 0 ) {
+                nFree = 0;
+            }
 
             LoadDigital( 2, nFree, 'r' );
             LoadDigital( 3, nUsed, 'g' );

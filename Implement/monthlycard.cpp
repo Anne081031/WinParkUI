@@ -80,7 +80,7 @@ void CMonthlyCard::GetDataFromDb( )
     QString strText;
     QString strFalse = "0";
     for ( int nIndex = 0; nIndex < nRows; nIndex++ ) {
-        for ( int nCol = 1; nCol < 3; nCol++ ) {
+        for ( int nCol = 1; nCol <= 3; nCol++ ) {
             pItem = ui->tableMonthly->item( nIndex, nCol );
             strText = pItem->text( );
             pItem->setText( "" );

@@ -7,4 +7,6 @@ SUBDIRS += \
     PlatformCentralDataReceiver \
     MyNetwork \
     MyDatabase \
-    Document
+    Document \
+    CommonLibrary \
+    ThreadLibrary

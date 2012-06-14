@@ -75,6 +75,11 @@
     </column>
     <column>
      <property name="text">
+      <string>允许多进多出</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
       <string>卡类型</string>
      </property>
     </column>

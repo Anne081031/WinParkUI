@@ -224,31 +224,38 @@
     <string/>
    </property>
   </widget>
-  <widget class="QCheckBox" name="chkEnter">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>152</y>
-     <width>111</width>
-     <height>16</height>
+     <y>150</y>
+     <width>391</width>
+     <height>18</height>
     </rect>
    </property>
-   <property name="text">
-    <string>入场必须刷卡</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="chkLeave">
-   <property name="geometry">
-    <rect>
-     <x>190</x>
-     <y>152</y>
-     <width>101</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>出场必须刷卡</string>
-   </property>
+   <layout class="QHBoxLayout" name="horizontalLayout_7">
+    <item>
+     <widget class="QCheckBox" name="chkEnter">
+      <property name="text">
+       <string>入场必须刷卡</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="chkLeave">
+      <property name="text">
+       <string>出场必须刷卡</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QCheckBox" name="chkMIMO">
+      <property name="text">
+       <string>出场必须刷卡</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
  </widget>
  <resources/>

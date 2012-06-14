@@ -43,7 +43,7 @@ END$$
 
 
 
-
+alter table parkadmin.monthcard add column ( MIMO INT( 10 ) default 0 );
 alter table parkadmin.Stoprd add column Transerfed tinyint( 1 ) default 0;
 alter table parkadmin.Feerd add column Transerfed tinyint( 1 ) default 0;
 alter table parkadmin.Feerate1 add column Section tinyint( 1 ) default 0;

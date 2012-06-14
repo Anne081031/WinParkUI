@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'monthlycarddialog.ui'
 **
-** Created: Thu May 31 17:17:22 2012
+** Created: Thu Jun 14 11:07:07 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -62,8 +62,11 @@ public:
     QLabel *label_6;
     QComboBox *cbxCardStatus;
     QLabel *lblStart;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_7;
     QCheckBox *chkEnter;
     QCheckBox *chkLeave;
+    QCheckBox *chkMIMO;
 
     void setupUi(QDialog *CMonthlyCardDialog)
     {
@@ -202,12 +205,27 @@ public:
         lblStart = new QLabel(CMonthlyCardDialog);
         lblStart->setObjectName(QString::fromUtf8("lblStart"));
         lblStart->setGeometry(QRect(350, 280, 101, 16));
-        chkEnter = new QCheckBox(CMonthlyCardDialog);
+        widget = new QWidget(CMonthlyCardDialog);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(40, 150, 391, 18));
+        horizontalLayout_7 = new QHBoxLayout(widget);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
+        chkEnter = new QCheckBox(widget);
         chkEnter->setObjectName(QString::fromUtf8("chkEnter"));
-        chkEnter->setGeometry(QRect(40, 152, 111, 16));
-        chkLeave = new QCheckBox(CMonthlyCardDialog);
+
+        horizontalLayout_7->addWidget(chkEnter);
+
+        chkLeave = new QCheckBox(widget);
         chkLeave->setObjectName(QString::fromUtf8("chkLeave"));
-        chkLeave->setGeometry(QRect(190, 152, 101, 16));
+
+        horizontalLayout_7->addWidget(chkLeave);
+
+        chkMIMO = new QCheckBox(widget);
+        chkMIMO->setObjectName(QString::fromUtf8("chkMIMO"));
+
+        horizontalLayout_7->addWidget(chkMIMO);
+
 
         retranslateUi(CMonthlyCardDialog);
 
@@ -240,6 +258,7 @@ public:
         lblStart->setText(QString());
         chkEnter->setText(QApplication::translate("CMonthlyCardDialog", "\345\205\245\345\234\272\345\277\205\351\241\273\345\210\267\345\215\241", 0, QApplication::UnicodeUTF8));
         chkLeave->setText(QApplication::translate("CMonthlyCardDialog", "\345\207\272\345\234\272\345\277\205\351\241\273\345\210\267\345\215\241", 0, QApplication::UnicodeUTF8));
+        chkMIMO->setText(QApplication::translate("CMonthlyCardDialog", "\345\207\272\345\234\272\345\277\205\351\241\273\345\210\267\345\215\241", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

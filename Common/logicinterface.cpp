@@ -671,8 +671,8 @@ int CLogicInterface::OperateCardInfo(QStringList &lstRows, CommonDataType::CardT
     case CommonDataType::SelectData :
         switch ( carType ) {
         case CommonDataType::MonthlyCard :
-            strSql = "Select cardno, EnterMustCard, LeaveMustCard, cardkind, starttime, endtime,cardstate, cardselfno, cardcomment, cardcreator From monthcard ";
-            nCols = 10;
+            strSql = "Select cardno, EnterMustCard, LeaveMustCard, MIMO, cardkind, starttime, endtime,cardstate, cardselfno, cardcomment, cardcreator From monthcard ";
+            nCols = 11;
             break;
 
         case CommonDataType::ValueCard :
@@ -699,8 +699,8 @@ int CLogicInterface::OperateCardInfo(QStringList &lstRows, CommonDataType::CardT
         switch ( carType ) {
         case CommonDataType::MonthlyCard :
             strSql = "Update IGNORE monthcard set cardno = '%1', cardkind = '%2', starttime = '%3', endtime = '%4',cardstate = '%5',";
-            strSql += "cardselfno = '%6', cardcomment = '%7', cardcreator = '%8', EnterMustCard = %9, LeaveMustCard = %10  ";
-            nCols = 10;
+            strSql += "cardselfno = '%6', cardcomment = '%7', cardcreator = '%8', EnterMustCard = %9, LeaveMustCard = %10, MIMO = %11  ";
+            nCols = 11;
             break;
 
         case CommonDataType::ValueCard :
@@ -746,8 +746,8 @@ int CLogicInterface::OperateCardInfo(QStringList &lstRows, CommonDataType::CardT
         switch ( carType ) {
         case CommonDataType::MonthlyCard :
             strSql = "Insert IGNORE Into monthcard ( cardno, cardkind, starttime, endtime,cardstate, cardselfno, cardcomment, cardcreator, EnterMustCard, LeaveMustCard ) ";
-            strSql += "Values ( '%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8', %9, %10 )";
-            nCols = 10;
+            strSql += "Values ( '%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8', %9, %10, %11 )";
+            nCols = 11;
             break;
 
         case CommonDataType::ValueCard :
@@ -1335,7 +1335,7 @@ void CLogicInterface::GetEntityInfo( CommonDataType::QEntityHash& entInfo, QStri
 
     QString tmpSql;
     QString strTableName;
-    QString strParams[ 3 ] = { "a.starttime, a.endtime, b.carcp, b.carmodel", "cardfee, cardfeebz, b.carcp, b.carmodel", "cardfeebz" };
+    QString strParams[ 3 ] = { "a.starttime, a.endtime, a.MIMO, b.carcp, b.carmodel", "cardfee, cardfeebz, b.carcp, b.carmodel", "cardfeebz" };
 
     int nRows = 0;
     int nField = 0;
@@ -1349,6 +1349,11 @@ void CLogicInterface::GetEntityInfo( CommonDataType::QEntityHash& entInfo, QStri
 
         switch ( nIndex ) {
         case CommonDataType::MonthlyCard :
+            tmpSql += ", Carinfo b Where a.cardno = b.cardindex ";
+            tmpSql += strWhere;
+            nCols = 10;
+            break;
+
         case CommonDataType::ValueCard :
             tmpSql += ", Carinfo b Where a.cardno = b.cardindex ";
             tmpSql += strWhere;
@@ -1378,6 +1383,7 @@ void CLogicInterface::GetEntityInfo( CommonDataType::QEntityHash& entInfo, QStri
                 entInfo.insert( strKey, pInfo );
             }
 
+            pInfo->bMIMO = false;
             pInfo->strCardNumber = strKey;
             pInfo->cardType = ( CommonDataType::CardType ) nIndex;
             pInfo->cardStatus = lstRows[ nField++ ];
@@ -1389,6 +1395,7 @@ void CLogicInterface::GetEntityInfo( CommonDataType::QEntityHash& entInfo, QStri
             case CommonDataType::MonthlyCard :
                 pInfo->MonthDateTime.dtStart = CCommonFunction::String2DateTime( lstRows[ nField++ ] );
                 pInfo->MonthDateTime.dtEnd = CCommonFunction::String2DateTime( lstRows[ nField++ ] );
+                pInfo->bMIMO =  ( strTrue == lstRows[ nField++ ] );
                 break;
 
             case CommonDataType::ValueCard :

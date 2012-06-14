@@ -61,7 +61,8 @@ void CMonthlyCardDialog::SaveValue( )
             << ui->edtComment->toPlainText( )
             << ui->edtRecorder->text( )
             << ( ui->chkEnter->isChecked( ) ? strTrue : strFalse )
-            << ( ui->chkLeave->isChecked( ) ? strTrue : strFalse );
+            << ( ui->chkLeave->isChecked( ) ? strTrue : strFalse )
+            << ( ui->chkMIMO->isChecked( ) ? strTrue : strFalse );
     QString strWhere = "";
 
     if ( !m_bNew ) {
@@ -97,6 +98,11 @@ void CMonthlyCardDialog::FillTable( bool bNew )
         pItem->setCheckState( !ui->chkLeave->isChecked( ) ? Qt::Unchecked : Qt::Checked );
         pItem->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
 
+        pItem = new QTableWidgetItem( );
+        pMonTable->setItem( nRow, nField++, pItem );
+        pItem->setCheckState( !ui->chkMIMO->isChecked( ) ? Qt::Unchecked : Qt::Checked );
+        pItem->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
+
         pItem = new QTableWidgetItem( ui->cbxCardType->currentText( ) );
         pMonTable->setItem( nRow, nField++, pItem );
 
@@ -128,6 +134,9 @@ void CMonthlyCardDialog::FillTable( bool bNew )
 
         pItem = pMonTable->item( nRow, nField++ );
         pItem->setCheckState( ui->chkLeave->isChecked( ) ? Qt::Checked : Qt::Unchecked );
+
+        pItem = pMonTable->item( nRow, nField++ );
+        pItem->setCheckState( ui->chkMIMO->isChecked( ) ? Qt::Checked : Qt::Unchecked );
 
         pItem = pMonTable->item( nRow, nField++ );
         pItem->setText( ui->cbxCardType->currentText( ) );
@@ -176,6 +185,9 @@ void CMonthlyCardDialog::InitDlg( )
 
         pItem = pTable->item( nRow, nField++ );
         ui->chkLeave->setChecked( pItem->checkState( ) == Qt::Checked );
+
+        pItem = pTable->item( nRow, nField++ );
+        ui->chkMIMO->setChecked( pItem->checkState( ) == Qt::Checked );
 
         pItem = pTable->item( nRow, nField++ );
         int nIndex = CCommonFunction::FindComboBoxItem( ui->cbxCardType, pItem->text( ) );

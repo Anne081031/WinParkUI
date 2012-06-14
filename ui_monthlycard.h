@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'monthlycard.ui'
 **
-** Created: Thu May 31 17:17:21 2012
+** Created: Thu Jun 14 11:07:07 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -124,8 +124,8 @@ public:
         widget->setGeometry(QRect(40, 60, 1301, 731));
         widget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableMonthly = new QTableWidget(widget);
-        if (tableMonthly->columnCount() < 10)
-            tableMonthly->setColumnCount(10);
+        if (tableMonthly->columnCount() < 11)
+            tableMonthly->setColumnCount(11);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         tableMonthly->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
@@ -146,6 +146,8 @@ public:
         tableMonthly->setHorizontalHeaderItem(8, __qtablewidgetitem8);
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
         tableMonthly->setHorizontalHeaderItem(9, __qtablewidgetitem9);
+        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
+        tableMonthly->setHorizontalHeaderItem(10, __qtablewidgetitem10);
         tableMonthly->setObjectName(QString::fromUtf8("tableMonthly"));
         tableMonthly->setGeometry(QRect(0, 0, 1301, 221));
         tableMonthly->setContextMenuPolicy(Qt::CustomContextMenu);
@@ -377,16 +379,16 @@ public:
         tableRecharge = new QTableWidget(tab_2);
         if (tableRecharge->columnCount() < 5)
             tableRecharge->setColumnCount(5);
-        QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
-        tableRecharge->setHorizontalHeaderItem(0, __qtablewidgetitem10);
         QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
-        tableRecharge->setHorizontalHeaderItem(1, __qtablewidgetitem11);
+        tableRecharge->setHorizontalHeaderItem(0, __qtablewidgetitem11);
         QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
-        tableRecharge->setHorizontalHeaderItem(2, __qtablewidgetitem12);
+        tableRecharge->setHorizontalHeaderItem(1, __qtablewidgetitem12);
         QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
-        tableRecharge->setHorizontalHeaderItem(3, __qtablewidgetitem13);
+        tableRecharge->setHorizontalHeaderItem(2, __qtablewidgetitem13);
         QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
-        tableRecharge->setHorizontalHeaderItem(4, __qtablewidgetitem14);
+        tableRecharge->setHorizontalHeaderItem(3, __qtablewidgetitem14);
+        QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
+        tableRecharge->setHorizontalHeaderItem(4, __qtablewidgetitem15);
         tableRecharge->setObjectName(QString::fromUtf8("tableRecharge"));
         tableRecharge->setGeometry(QRect(10, 10, 1281, 401));
         tabWidget->addTab(tab_2, QString());
@@ -395,14 +397,14 @@ public:
         tableAccess = new QTableWidget(tab_3);
         if (tableAccess->columnCount() < 4)
             tableAccess->setColumnCount(4);
-        QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
-        tableAccess->setHorizontalHeaderItem(0, __qtablewidgetitem15);
         QTableWidgetItem *__qtablewidgetitem16 = new QTableWidgetItem();
-        tableAccess->setHorizontalHeaderItem(1, __qtablewidgetitem16);
+        tableAccess->setHorizontalHeaderItem(0, __qtablewidgetitem16);
         QTableWidgetItem *__qtablewidgetitem17 = new QTableWidgetItem();
-        tableAccess->setHorizontalHeaderItem(2, __qtablewidgetitem17);
+        tableAccess->setHorizontalHeaderItem(1, __qtablewidgetitem17);
         QTableWidgetItem *__qtablewidgetitem18 = new QTableWidgetItem();
-        tableAccess->setHorizontalHeaderItem(3, __qtablewidgetitem18);
+        tableAccess->setHorizontalHeaderItem(2, __qtablewidgetitem18);
+        QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
+        tableAccess->setHorizontalHeaderItem(3, __qtablewidgetitem19);
         tableAccess->setObjectName(QString::fromUtf8("tableAccess"));
         tableAccess->setGeometry(QRect(10, 10, 841, 411));
         tableAccess->setMaximumSize(QSize(961, 431));
@@ -460,14 +462,14 @@ public:
         tableEntranceRight = new QTableWidget(tab_4);
         if (tableEntranceRight->columnCount() < 4)
             tableEntranceRight->setColumnCount(4);
-        QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(0, __qtablewidgetitem19);
         QTableWidgetItem *__qtablewidgetitem20 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(1, __qtablewidgetitem20);
+        tableEntranceRight->setHorizontalHeaderItem(0, __qtablewidgetitem20);
         QTableWidgetItem *__qtablewidgetitem21 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(2, __qtablewidgetitem21);
+        tableEntranceRight->setHorizontalHeaderItem(1, __qtablewidgetitem21);
         QTableWidgetItem *__qtablewidgetitem22 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(3, __qtablewidgetitem22);
+        tableEntranceRight->setHorizontalHeaderItem(2, __qtablewidgetitem22);
+        QTableWidgetItem *__qtablewidgetitem23 = new QTableWidgetItem();
+        tableEntranceRight->setHorizontalHeaderItem(3, __qtablewidgetitem23);
         tableEntranceRight->setObjectName(QString::fromUtf8("tableEntranceRight"));
         tableEntranceRight->setGeometry(QRect(10, 10, 1281, 371));
         tableEntranceRight->setMaximumSize(QSize(1391, 401));
@@ -513,19 +515,21 @@ public:
         QTableWidgetItem *___qtablewidgetitem2 = tableMonthly->horizontalHeaderItem(2);
         ___qtablewidgetitem2->setText(QApplication::translate("CMonthlyCard", "\345\207\272\345\234\272\345\277\205\351\241\273\345\210\267\345\215\241", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem3 = tableMonthly->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QApplication::translate("CMonthlyCard", "\345\215\241\347\261\273\345\236\213", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem3->setText(QApplication::translate("CMonthlyCard", "\345\205\201\350\256\270\345\244\232\350\277\233\345\244\232\345\207\272", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem4 = tableMonthly->horizontalHeaderItem(4);
-        ___qtablewidgetitem4->setText(QApplication::translate("CMonthlyCard", "\346\234\211\346\225\210\346\234\237\345\274\200\345\247\213\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem4->setText(QApplication::translate("CMonthlyCard", "\345\215\241\347\261\273\345\236\213", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem5 = tableMonthly->horizontalHeaderItem(5);
-        ___qtablewidgetitem5->setText(QApplication::translate("CMonthlyCard", "\346\234\211\346\225\210\346\234\237\347\273\223\346\235\237\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem5->setText(QApplication::translate("CMonthlyCard", "\346\234\211\346\225\210\346\234\237\345\274\200\345\247\213\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem6 = tableMonthly->horizontalHeaderItem(6);
-        ___qtablewidgetitem6->setText(QApplication::translate("CMonthlyCard", "\345\215\241\347\211\207\344\275\277\347\224\250\347\212\266\346\200\201", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem6->setText(QApplication::translate("CMonthlyCard", "\346\234\211\346\225\210\346\234\237\347\273\223\346\235\237\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem7 = tableMonthly->horizontalHeaderItem(7);
-        ___qtablewidgetitem7->setText(QApplication::translate("CMonthlyCard", "\345\215\241\347\211\207\350\207\252\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem7->setText(QApplication::translate("CMonthlyCard", "\345\215\241\347\211\207\344\275\277\347\224\250\347\212\266\346\200\201", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem8 = tableMonthly->horizontalHeaderItem(8);
-        ___qtablewidgetitem8->setText(QApplication::translate("CMonthlyCard", "\345\244\207\346\263\250", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem8->setText(QApplication::translate("CMonthlyCard", "\345\215\241\347\211\207\350\207\252\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem9 = tableMonthly->horizontalHeaderItem(9);
-        ___qtablewidgetitem9->setText(QApplication::translate("CMonthlyCard", "\347\231\273\350\256\260\350\200\205", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem9->setText(QApplication::translate("CMonthlyCard", "\345\244\207\346\263\250", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem10 = tableMonthly->horizontalHeaderItem(10);
+        ___qtablewidgetitem10->setText(QApplication::translate("CMonthlyCard", "\347\231\273\350\256\260\350\200\205", 0, QApplication::UnicodeUTF8));
         gbOwner->setTitle(QApplication::translate("CMonthlyCard", "\350\265\204\346\226\231", 0, QApplication::UnicodeUTF8));
         label_10->setText(QApplication::translate("CMonthlyCard", "\345\215\225\344\275\215\357\274\232", 0, QApplication::UnicodeUTF8));
         label_12->setText(QApplication::translate("CMonthlyCard", "\345\234\260\345\235\200\357\274\232", 0, QApplication::UnicodeUTF8));
@@ -559,25 +563,25 @@ public:
         btnMonthRecharge->setText(QApplication::translate("CMonthlyCard", "\346\234\210\347\247\237\345\215\241\347\273\255\350\264\271", 0, QApplication::UnicodeUTF8));
         btnMonthSave->setText(QApplication::translate("CMonthlyCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("CMonthlyCard", "\344\270\232\344\270\273\344\277\241\346\201\257", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem10 = tableRecharge->horizontalHeaderItem(0);
-        ___qtablewidgetitem10->setText(QApplication::translate("CMonthlyCard", "\346\224\266\350\264\271\351\207\221\351\242\235", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem11 = tableRecharge->horizontalHeaderItem(1);
-        ___qtablewidgetitem11->setText(QApplication::translate("CMonthlyCard", "\347\273\255\350\264\271\346\227\266\351\225\277(\345\244\251)", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem12 = tableRecharge->horizontalHeaderItem(2);
-        ___qtablewidgetitem12->setText(QApplication::translate("CMonthlyCard", "\346\224\266\350\264\271\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem13 = tableRecharge->horizontalHeaderItem(3);
-        ___qtablewidgetitem13->setText(QApplication::translate("CMonthlyCard", "\350\264\271\347\224\250\347\247\215\347\261\273", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem14 = tableRecharge->horizontalHeaderItem(4);
-        ___qtablewidgetitem14->setText(QApplication::translate("CMonthlyCard", "\346\224\266\350\264\271\344\272\272\345\221\230", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem11 = tableRecharge->horizontalHeaderItem(0);
+        ___qtablewidgetitem11->setText(QApplication::translate("CMonthlyCard", "\346\224\266\350\264\271\351\207\221\351\242\235", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem12 = tableRecharge->horizontalHeaderItem(1);
+        ___qtablewidgetitem12->setText(QApplication::translate("CMonthlyCard", "\347\273\255\350\264\271\346\227\266\351\225\277(\345\244\251)", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem13 = tableRecharge->horizontalHeaderItem(2);
+        ___qtablewidgetitem13->setText(QApplication::translate("CMonthlyCard", "\346\224\266\350\264\271\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem14 = tableRecharge->horizontalHeaderItem(3);
+        ___qtablewidgetitem14->setText(QApplication::translate("CMonthlyCard", "\350\264\271\347\224\250\347\247\215\347\261\273", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem15 = tableRecharge->horizontalHeaderItem(4);
+        ___qtablewidgetitem15->setText(QApplication::translate("CMonthlyCard", "\346\224\266\350\264\271\344\272\272\345\221\230", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("CMonthlyCard", "\347\273\255\350\264\271\347\272\252\345\275\225", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem15 = tableAccess->horizontalHeaderItem(0);
-        ___qtablewidgetitem15->setText(QApplication::translate("CMonthlyCard", "\350\277\233\345\205\245\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem16 = tableAccess->horizontalHeaderItem(1);
-        ___qtablewidgetitem16->setText(QApplication::translate("CMonthlyCard", "\350\277\233\345\205\245\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem17 = tableAccess->horizontalHeaderItem(2);
-        ___qtablewidgetitem17->setText(QApplication::translate("CMonthlyCard", "\347\246\273\345\274\200\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem18 = tableAccess->horizontalHeaderItem(3);
-        ___qtablewidgetitem18->setText(QApplication::translate("CMonthlyCard", "\347\246\273\345\274\200\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem16 = tableAccess->horizontalHeaderItem(0);
+        ___qtablewidgetitem16->setText(QApplication::translate("CMonthlyCard", "\350\277\233\345\205\245\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem17 = tableAccess->horizontalHeaderItem(1);
+        ___qtablewidgetitem17->setText(QApplication::translate("CMonthlyCard", "\350\277\233\345\205\245\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem18 = tableAccess->horizontalHeaderItem(2);
+        ___qtablewidgetitem18->setText(QApplication::translate("CMonthlyCard", "\347\246\273\345\274\200\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem19 = tableAccess->horizontalHeaderItem(3);
+        ___qtablewidgetitem19->setText(QApplication::translate("CMonthlyCard", "\347\246\273\345\274\200\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
         groupBox_6->setTitle(QApplication::translate("CMonthlyCard", "\345\233\276\345\203\2172", 0, QApplication::UnicodeUTF8));
         lblImg2->setText(QString());
         groupBox_8->setTitle(QApplication::translate("CMonthlyCard", "\345\233\276\345\203\2174", 0, QApplication::UnicodeUTF8));
@@ -588,14 +592,14 @@ public:
         lblImg1->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("CMonthlyCard", "\346\234\200\350\277\221\350\277\233\345\207\272\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
         btnEntranceSave->setText(QApplication::translate("CMonthlyCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem19 = tableEntranceRight->horizontalHeaderItem(0);
-        ___qtablewidgetitem19->setText(QApplication::translate("CMonthlyCard", "\351\200\232\351\201\223\345\220\215\347\247\260", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem20 = tableEntranceRight->horizontalHeaderItem(1);
-        ___qtablewidgetitem20->setText(QApplication::translate("CMonthlyCard", "\350\265\267\345\247\213\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem21 = tableEntranceRight->horizontalHeaderItem(2);
-        ___qtablewidgetitem21->setText(QApplication::translate("CMonthlyCard", "\347\273\223\346\235\237\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem22 = tableEntranceRight->horizontalHeaderItem(3);
-        ___qtablewidgetitem22->setText(QApplication::translate("CMonthlyCard", "ID", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem20 = tableEntranceRight->horizontalHeaderItem(0);
+        ___qtablewidgetitem20->setText(QApplication::translate("CMonthlyCard", "\351\200\232\351\201\223\345\220\215\347\247\260", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem21 = tableEntranceRight->horizontalHeaderItem(1);
+        ___qtablewidgetitem21->setText(QApplication::translate("CMonthlyCard", "\350\265\267\345\247\213\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem22 = tableEntranceRight->horizontalHeaderItem(2);
+        ___qtablewidgetitem22->setText(QApplication::translate("CMonthlyCard", "\347\273\223\346\235\237\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem23 = tableEntranceRight->horizontalHeaderItem(3);
+        ___qtablewidgetitem23->setText(QApplication::translate("CMonthlyCard", "ID", 0, QApplication::UnicodeUTF8));
         btnSaveRight->setText(QApplication::translate("CMonthlyCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("CMonthlyCard", "\345\207\272\345\205\245\346\235\203\351\231\220", 0, QApplication::UnicodeUTF8));
         btnMinimalize->setText(QApplication::translate("CMonthlyCard", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));

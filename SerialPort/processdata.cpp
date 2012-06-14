@@ -1431,7 +1431,7 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
 
     QString strTable;
     CCommonFunction::GetTableName( CommonDataType::MonthlyCard, strTable );
-    if ( !MonthCardWorkMode( ) && !CarInsideOutside( bEnter, lstRows[ 0 ], strTable, byData, vData, byte5, cardKind ) ) {
+    if ( !MonthCardWorkMode( lstRows[ 0 ] ) && !CarInsideOutside( bEnter, lstRows[ 0 ], strTable, byData, vData, byte5, cardKind ) ) {
         return bRet;
     }
     // Open Gate
@@ -2058,10 +2058,17 @@ void CProcessData::SpaceChange( bool bEnter, char cCan )
     ParkspaceFull( bFull, strInfo, cCan );
 }
 
-bool CProcessData::MonthCardWorkMode( )
+bool CProcessData::MonthCardWorkMode( QString& strCardNo )
 {
     QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
     bool bRet = pSet->value( "CommonSet/MonthlyWorkMode", false ).toBool( );
+
+    if ( !bRet ) {
+        CommonDataType::PEntityInfo pInfo = CCommonFunction::GetCardEntity( ).value( strCardNo );
+        if ( NULL != pInfo ) {
+            bRet = pInfo->bMIMO;
+        }
+    }
 
     return bRet;
 }
@@ -2165,7 +2172,7 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     CCommonFunction::DateTime2String( dtCurrent, strDateTime );
 
     bool bMonthCard = ( CardMonthly == cardKind );
-    bool bMonthMultipleCard = bMonthCard && MonthCardWorkMode( );
+    bool bMonthMultipleCard = bMonthCard && MonthCardWorkMode( strCardNumber );
     QString strMonthMultipleCardNo = "%1(%2)";
     if ( bMonthMultipleCard ) {
         strMonthMultipleCardNo = strMonthMultipleCardNo.arg( strCardNumber, QString::number( dtCurrent.toMSecsSinceEpoch( ) ) );
