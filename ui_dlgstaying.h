@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgstaying.ui'
 **
-** Created: Fri Jun 1 17:23:55 2012
+** Created: Fri Jun 15 09:29:32 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -108,7 +108,7 @@ public:
 #ifndef QT_NO_TOOLTIP
         tableWidgetMonth->setToolTip(QApplication::translate("CDlgStaying", "\345\215\225\345\207\273\343\200\220\345\215\241\345\217\267\343\200\221\345\215\225\345\205\203\346\240\274\357\274\214\346\237\245\347\234\213\345\257\271\345\272\224\350\275\246\350\276\206\345\233\276\347\211\207\343\200\202", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
-        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("CDlgStaying", "\346\234\210\344\270\273\345\215\241\350\275\246\350\276\206", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("CDlgStaying", "\346\234\210\347\247\237\345\215\241\350\275\246\350\276\206", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem7 = tableWidgetTime->horizontalHeaderItem(0);
         ___qtablewidgetitem7->setText(QApplication::translate("CDlgStaying", "\345\215\241\345\217\267", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem8 = tableWidgetTime->horizontalHeaderItem(1);

@@ -2025,7 +2025,12 @@ void CProcessData::BroadcastRecord( QString& strCardNumber, QDateTime& dtCurrent
     CCommonFunction::Date2String( date, strDate );
     QString strCan = QString::number( cCan );
     bool bEnter = ( 0 != ( cCan % 2 ) );
-    QString strDbIP = pSettings->value( "Database/Host", "127.0.0.1" ).toString( );
+
+    QString strLoop = "127.0.0.1";
+    QString strDbIP = pSettings->value( "Database/Host",  strLoop ).toString( );
+    if ( CCommonFunction::GetHostIP( ) == strDbIP ) {
+        strDbIP = strLoop;
+    }
 
     lstData << strPlate << strTime << strCardType << strChannel <<
             strCardNumber << ( bEnter ? "1" : "0" )

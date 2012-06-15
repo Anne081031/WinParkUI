@@ -146,7 +146,8 @@ void CMonitor::DisplayDbError( QString strMsg )
 
 void CMonitor::HideAlert( )
 {
-    ui->lblAlert->setVisible( false );
+    bool bHide = !pSystem->value( "CommonCfg/HideAlert", true ).toBool( );
+    ui->lblAlert->setVisible( bHide );
 }
 
 void CMonitor::SetAlertMsg( const QString &strText )

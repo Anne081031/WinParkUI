@@ -27,7 +27,7 @@
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>月主卡车辆</string>
+     <string>月租卡车辆</string>
     </attribute>
     <widget class="QTableWidget" name="tableWidgetMonth">
      <property name="geometry">

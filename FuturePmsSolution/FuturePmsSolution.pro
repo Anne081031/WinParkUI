@@ -9,4 +9,5 @@ SUBDIRS += \
     MyDatabase \
     Document \
     CommonLibrary \
-    ThreadLibrary
+    ThreadLibrary \
+    CommonWidgetLibrary

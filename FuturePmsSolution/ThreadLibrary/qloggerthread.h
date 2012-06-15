@@ -1,9 +1,9 @@
 #ifndef QLOGGERTHREAD_H
 #define QLOGGERTHREAD_H
 
-#include <QThread>
+#include "qmybasethread.h"
 
-class QLoggerThread : public QThread
+class QLoggerThread : public QMyBaseThread
 {
     Q_OBJECT
 public:

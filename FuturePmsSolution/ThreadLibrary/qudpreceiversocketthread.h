@@ -1,9 +1,9 @@
 #ifndef QUDPRECEIVERSOCKETTHREAD_H
 #define QUDPRECEIVERSOCKETTHREAD_H
 
-#include <QThread>
+#include "qmybasethread.h"
 
-class QUdpReceiverSocketThread : public QThread
+class QUdpReceiverSocketThread : public QMyBaseThread
 {
     Q_OBJECT
 public:

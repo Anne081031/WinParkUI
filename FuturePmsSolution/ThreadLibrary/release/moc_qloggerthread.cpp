@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qloggerthread.h'
 **
-** Created: Thu Jun 14 17:19:43 2012
+** Created: Fri Jun 15 17:39:52 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -50,7 +50,7 @@ const QMetaObjectExtraData QLoggerThread::staticMetaObjectExtraData = {
 };
 
 const QMetaObject QLoggerThread::staticMetaObject = {
-    { &QThread::staticMetaObject, qt_meta_stringdata_QLoggerThread,
+    { &QMyBaseThread::staticMetaObject, qt_meta_stringdata_QLoggerThread,
       qt_meta_data_QLoggerThread, &staticMetaObjectExtraData }
 };
 
@@ -68,12 +68,12 @@ void *QLoggerThread::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_QLoggerThread))
         return static_cast<void*>(const_cast< QLoggerThread*>(this));
-    return QThread::qt_metacast(_clname);
+    return QMyBaseThread::qt_metacast(_clname);
 }
 
 int QLoggerThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QThread::qt_metacall(_c, _id, _a);
+    _id = QMyBaseThread::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     return _id;

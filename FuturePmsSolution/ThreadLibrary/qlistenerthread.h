@@ -1,9 +1,9 @@
 #ifndef QLISTENERTHREAD_H
 #define QLISTENERTHREAD_H
 
-#include <QThread>
+#include "qmybasethread.h"
 
-class QListenerThread : public QThread
+class QListenerThread : public QMyBaseThread
 {
     Q_OBJECT
 public:

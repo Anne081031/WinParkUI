@@ -224,7 +224,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>40</x>
@@ -251,7 +251,7 @@
     <item>
      <widget class="QCheckBox" name="chkMIMO">
       <property name="text">
-       <string>出场必须刷卡</string>
+       <string>允许多进多出</string>
       </property>
      </widget>
     </item>

@@ -536,7 +536,7 @@ void MainWindow::ControlDatabase(bool bOpen)
         CCommonFunction::ConnectMySql( lstParams );
 
         QString localLoop = "127.0.0.1";
-        QString strHost = pSettings->value( "CommonCfg/Host", localLoop ).toString( );
+        QString strHost = CCommonFunction::GetHostIP( );
         if ( lstParams[ 0 ] == strHost ) {
             lstParams[ 0 ] = localLoop;
         }

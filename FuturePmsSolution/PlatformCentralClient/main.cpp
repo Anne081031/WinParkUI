@@ -1,9 +1,9 @@
-#include <QtGui/QApplication>
+#include "../CommonLibrary/qmyapplication.h"
 #include "mainwindow.h"
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QMyApplication a(argc, argv);
     MainWindow w;
     w.show();
 

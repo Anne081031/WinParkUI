@@ -1,6 +1,7 @@
 #include "qloggerthread.h"
 
 QLoggerThread::QLoggerThread(QObject *parent) :
-    QThread(parent)
+    QMyBaseThread(parent)
 {
+    InitializeThread( );
 }

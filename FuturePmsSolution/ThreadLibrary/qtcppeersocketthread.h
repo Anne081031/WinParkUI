@@ -1,9 +1,9 @@
 #ifndef QTCPPEERSOCKETTHREAD_H
 #define QTCPPEERSOCKETTHREAD_H
 
-#include <QThread>
+#include "qmybasethread.h"
 
-class QTcpPeerSocketThread : public QThread
+class QTcpPeerSocketThread : public QMyBaseThread
 {
     Q_OBJECT
 public:

@@ -9,14 +9,20 @@ SOURCES += qthreadgenerator.cpp \
     qloggerthread.cpp \
     qlistenerthread.cpp \
     qtcppeersocketthread.cpp \
-    qudpreceiversocketthread.cpp
+    qudpreceiversocketthread.cpp \
+    qtcpclientsocketthread.cpp \
+    qdatabasethread.cpp \
+    qmybasethread.cpp
 
 HEADERS += ThreadLibrary_global.h \
     qthreadgenerator.h \
     qloggerthread.h \
     qlistenerthread.h \
     qtcppeersocketthread.h \
-    qudpreceiversocketthread.h
+    qudpreceiversocketthread.h \
+    qtcpclientsocketthread.h \
+    qdatabasethread.h \
+    qmybasethread.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

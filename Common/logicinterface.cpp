@@ -745,7 +745,7 @@ int CLogicInterface::OperateCardInfo(QStringList &lstRows, CommonDataType::CardT
     case CommonDataType::InsertData :
         switch ( carType ) {
         case CommonDataType::MonthlyCard :
-            strSql = "Insert IGNORE Into monthcard ( cardno, cardkind, starttime, endtime,cardstate, cardselfno, cardcomment, cardcreator, EnterMustCard, LeaveMustCard ) ";
+            strSql = "Insert IGNORE Into monthcard ( cardno, cardkind, starttime, endtime,cardstate, cardselfno, cardcomment, cardcreator, EnterMustCard, LeaveMustCard, MIMO ) ";
             strSql += "Values ( '%1', '%2', '%3', '%4', '%5', '%6', '%7', '%8', %9, %10, %11 )";
             nCols = 11;
             break;
