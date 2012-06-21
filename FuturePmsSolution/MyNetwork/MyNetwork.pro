@@ -8,15 +8,37 @@ QT       += network
 
 QT       -= gui
 
-TARGET = QMyNetwork
+MYTARGET = $$quote( MyNetwork%1 )
+MYDESTDIR = $$quote( ../LibExeFiles/%1 )
+
+Debug {
+    TARGET = $$sprintf( $$MYTARGET, "Debug" )
+    DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
+}
+
+Release {
+    TARGET = $$sprintf( $$MYTARGET, "" )
+    DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
+}
+
 TEMPLATE = lib
 
 DEFINES += QMYNETWORK_LIBRARY
 
-SOURCES += qmynetwork.cpp
+SOURCES += qmynetwork.cpp \
+    qudpclient.cpp \
+    qmytcpserver.cpp \
+    qnetcommfunction.cpp \
+    qtcppeerclient.cpp \
+    qtcpclient.cpp
 
 HEADERS += qmynetwork.h\
-        QMyNetwork_global.h
+        QMyNetwork_global.h \
+    qudpclient.h \
+    qmytcpserver.h \
+    qnetcommfunction.h \
+    qtcppeerclient.h \
+    qtcpclient.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

@@ -40,6 +40,7 @@
 ## MY_DEFINES = $$DEFINES MY_DEFINES = $${DEFINES}
 
 QT       += core gui ## system variables
+DEFINES += _WIN32_WINNT=0x0501
 
 MYTARGET = $$quote( CommonLibrary%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
@@ -70,7 +71,9 @@ SOURCES += qcommonfunction.cpp \
 HEADERS += qcommonfunction.h\
         QCommonFunction_global.h \
     CommonMacro.h \
-    qmyapplication.h
+    qmyapplication.h \
+    CommonEnum.h \
+    CommonDataStruct.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

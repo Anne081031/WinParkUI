@@ -8,7 +8,7 @@
 DEFINES += StartupDebug
 
 CONFIG += MyTest
-QT       += core gui
+QT       += core gui network
 
 MYTARGET = $$quote( PlatformCentralDataReceiver%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
@@ -18,12 +18,19 @@ Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ThreadLibrary", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonWidgetLibrary", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyNetwork", "Debug" )
 
     ##Debug
     contains( DEFINES, StartupDebug ) {
         DESTDIR = "./Debug"
         TARGET = $$sprintf( $$MYTARGET, "" )
         system( copy ..\\LibExeFiles\\Debug\\CommonLibraryDebug.dll .\\Debug )
+        system( copy ..\\LibExeFiles\\Debug\\ThreadLibraryDebug.dll .\\Debug )
+        system( copy ..\\LibExeFiles\\Debug\\ManipulateFileDebug.dll .\\Debug )
+        system( copy ..\\LibExeFiles\\Debug\\CommonWidgetLibraryDebug.dll .\\Debug )
+        system( copy ..\\LibExeFiles\\Debug\\MyNetworkDebug.dll .\\Debug )
     }
 }
 
@@ -31,6 +38,9 @@ Release {
     TARGET = $$sprintf( $$MYTARGET, "" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ThreadLibrary", "" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonWidgetLibrary", "" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyNetwork", "" )
 }
 
 TEMPLATE = app

@@ -1,0 +1,14 @@
+INPUT(
+./debug\qmynetwork.o
+./debug\qudpclient.o
+./debug\qmytcpserver.o
+./debug\qnetcommfunction.o
+./debug\qtcppeerclient.o
+./debug\qtcpclient.o
+./debug\moc_qmynetwork.o
+./debug\moc_qudpclient.o
+./debug\moc_qmytcpserver.o
+./debug\moc_qnetcommfunction.o
+./debug\moc_qtcppeerclient.o
+./debug\moc_qtcpclient.o
+);

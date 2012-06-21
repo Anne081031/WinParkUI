@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'commonwidgetlibrary.h'
 **
-** Created: Fri Jun 15 17:39:58 2012
+** Created: Thu Jun 21 17:15:41 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@
 #endif
 
 QT_BEGIN_MOC_NAMESPACE
-static const uint qt_meta_data_CommonWidgetLibrary[] = {
+static const uint qt_meta_data_QCommonWidgetLibrary[] = {
 
  // content:
        6,       // revision
@@ -33,11 +33,11 @@ static const uint qt_meta_data_CommonWidgetLibrary[] = {
        0        // eod
 };
 
-static const char qt_meta_stringdata_CommonWidgetLibrary[] = {
-    "CommonWidgetLibrary\0"
+static const char qt_meta_stringdata_QCommonWidgetLibrary[] = {
+    "QCommonWidgetLibrary\0"
 };
 
-void CommonWidgetLibrary::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void QCommonWidgetLibrary::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     Q_UNUSED(_o);
     Q_UNUSED(_id);
@@ -45,33 +45,33 @@ void CommonWidgetLibrary::qt_static_metacall(QObject *_o, QMetaObject::Call _c, 
     Q_UNUSED(_a);
 }
 
-const QMetaObjectExtraData CommonWidgetLibrary::staticMetaObjectExtraData = {
+const QMetaObjectExtraData QCommonWidgetLibrary::staticMetaObjectExtraData = {
     0,  qt_static_metacall 
 };
 
-const QMetaObject CommonWidgetLibrary::staticMetaObject = {
-    { &QObject::staticMetaObject, qt_meta_stringdata_CommonWidgetLibrary,
-      qt_meta_data_CommonWidgetLibrary, &staticMetaObjectExtraData }
+const QMetaObject QCommonWidgetLibrary::staticMetaObject = {
+    { &QObject::staticMetaObject, qt_meta_stringdata_QCommonWidgetLibrary,
+      qt_meta_data_QCommonWidgetLibrary, &staticMetaObjectExtraData }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
-const QMetaObject &CommonWidgetLibrary::getStaticMetaObject() { return staticMetaObject; }
+const QMetaObject &QCommonWidgetLibrary::getStaticMetaObject() { return staticMetaObject; }
 #endif //Q_NO_DATA_RELOCATION
 
-const QMetaObject *CommonWidgetLibrary::metaObject() const
+const QMetaObject *QCommonWidgetLibrary::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
 }
 
-void *CommonWidgetLibrary::qt_metacast(const char *_clname)
+void *QCommonWidgetLibrary::qt_metacast(const char *_clname)
 {
     if (!_clname) return 0;
-    if (!strcmp(_clname, qt_meta_stringdata_CommonWidgetLibrary))
-        return static_cast<void*>(const_cast< CommonWidgetLibrary*>(this));
+    if (!strcmp(_clname, qt_meta_stringdata_QCommonWidgetLibrary))
+        return static_cast<void*>(const_cast< QCommonWidgetLibrary*>(this));
     return QObject::qt_metacast(_clname);
 }
 
-int CommonWidgetLibrary::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int QCommonWidgetLibrary::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)

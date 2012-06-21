@@ -1,7 +1,15 @@
 #ifndef QMYBASETHREAD_H
 #define QMYBASETHREAD_H
 
+#include <Qt/QtGui>
 #include <QThread>
+#include <QDebug>
+#include "../CommonLibrary/qcommonfunction.h"
+#include "../CommonLibrary/CommonMacro.h"
+#include "../CommonLibrary/CommonEnum.h"
+#include "../ManipulateIniFile/qmanipulateinifile.h"
+#include "../CommonLibrary/CommonDataStruct.h"
+#include "../MyNetwork/qmynetwork.h"
 
 // run( )
 // The starting point for the thread.
@@ -14,14 +22,24 @@ class QMyBaseThread : public QThread
     Q_OBJECT
 public:
     explicit QMyBaseThread(QObject *parent = 0);
+    ~QMyBaseThread( );
+    void InitializeThread( );
 
 protected:
-    void InitializeThread( );
+    virtual void InitializeSubThread( ) = 0;
+    void LaunchThreadExit( );
+
+protected:
+    QManipulateIniFile      manipulateFile;
+    QCommonFunction     commonFunction;
+    QMyNetwork                network;
     
 signals:
-    
+    void NotifyMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+
 protected slots:
     void ExitThread( );
+    void HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type );
 };
 
 #endif // QMYBASETHREAD_H

@@ -4,17 +4,38 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       += gui
 
-TARGET = CommonWidgetLibrary
+MYTARGET = $$quote( CommonWidgetLibrary%1 )
+MYDESTDIR = $$quote( ../LibExeFiles/%1 )
+MYDESTLIB = $$quote( %1/lib%2%3.a )
+
+Debug {
+    TARGET = $$sprintf( $$MYTARGET, "Debug" )
+    DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ManipulateFile", "Debug" )
+}
+
+Release {
+    TARGET = $$sprintf( $$MYTARGET, "" )
+    DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ManipulateFile", "" )
+}
+
 TEMPLATE = lib
 
 DEFINES += COMMONWIDGETLIBRARY_LIBRARY
 
-SOURCES += commonwidgetlibrary.cpp
+SOURCES += commonwidgetlibrary.cpp \
+    Dialog/qdlglogbrowser.cpp \
+    MyWidget/qmysplitter.cpp
 
 HEADERS += commonwidgetlibrary.h\
-        CommonWidgetLibrary_global.h
+        CommonWidgetLibrary_global.h \
+    Dialog/qdlglogbrowser.h \
+    MyWidget/qmysplitter.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN
@@ -34,3 +55,6 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+FORMS += \
+    Dialog/qdlglogbrowser.ui

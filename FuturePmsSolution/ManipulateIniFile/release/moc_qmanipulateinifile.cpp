@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmanipulateinifile.h'
 **
-** Created: Fri Jun 15 17:39:38 2012
+** Created: Thu Jun 21 17:15:49 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -25,34 +25,44 @@ static const uint qt_meta_data_QManipulateIniFile[] = {
        0,    0, // classinfo
        0,    0, // methods
        0,    0, // properties
-       2,   14, // enums/sets
+       3,   14, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
  // enums: name, flags, count, data
-      19, 0x1,    3,   22,
-      34, 0x1,    5,   28,
+      19, 0x1,    3,   26,
+      34, 0x1,    7,   32,
+      53, 0x1,    5,   46,
 
  // enum data: key, value
-      53, uint(QManipulateIniFile::PlatformServer),
-      68, uint(QManipulateIniFile::PlatformClient),
-      83, uint(QManipulateIniFile::PlatformDataReceiver),
-     104, uint(QManipulateIniFile::DatabaseHost),
-     117, uint(QManipulateIniFile::DatabasePort),
-     130, uint(QManipulateIniFile::DatabaseUser),
-     143, uint(QManipulateIniFile::DatabasePwd),
-     155, uint(QManipulateIniFile::ThreadPool),
+      61, uint(QManipulateIniFile::IniDatabase),
+      73, uint(QManipulateIniFile::IniNetwork),
+      84, uint(QManipulateIniFile::IniThreadPool),
+      98, uint(QManipulateIniFile::DatabaseHost),
+     111, uint(QManipulateIniFile::DatabasePort),
+     124, uint(QManipulateIniFile::DatabaseUser),
+     137, uint(QManipulateIniFile::DatabasePwd),
+     149, uint(QManipulateIniFile::NetworkTcpServerPort),
+     170, uint(QManipulateIniFile::NetworkTcpMaxConnection),
+     194, uint(QManipulateIniFile::ThreadPool),
+     205, uint(QManipulateIniFile::LogDatabase),
+     217, uint(QManipulateIniFile::LogNetwork),
+     228, uint(QManipulateIniFile::LogThread),
+     238, uint(QManipulateIniFile::LogOther),
+     247, uint(QManipulateIniFile::LogItems),
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QManipulateIniFile[] = {
-    "QManipulateIniFile\0CfgFileSection\0"
-    "CfgFileSectionItem\0PlatformServer\0"
-    "PlatformClient\0PlatformDataReceiver\0"
-    "DatabaseHost\0DatabasePort\0DatabaseUser\0"
-    "DatabasePwd\0ThreadPool\0"
+    "QManipulateIniFile\0IniFileSection\0"
+    "IniFileSectionItem\0LogType\0IniDatabase\0"
+    "IniNetwork\0IniThreadPool\0DatabaseHost\0"
+    "DatabasePort\0DatabaseUser\0DatabasePwd\0"
+    "NetworkTcpServerPort\0NetworkTcpMaxConnection\0"
+    "ThreadPool\0LogDatabase\0LogNetwork\0"
+    "LogThread\0LogOther\0LogItems\0"
 };
 
 void QManipulateIniFile::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)

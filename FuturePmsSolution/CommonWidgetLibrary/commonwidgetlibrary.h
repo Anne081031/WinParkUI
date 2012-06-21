@@ -2,14 +2,17 @@
 #define COMMONWIDGETLIBRARY_H
 
 #include "CommonWidgetLibrary_global.h"
+#include "Dialog/qdlglogbrowser.h"
 
-class COMMONWIDGETLIBRARYSHARED_EXPORT CommonWidgetLibrary : public QObject
+class COMMONWIDGETLIBRARYSHARED_EXPORT QCommonWidgetLibrary : public QObject
 {
     Q_OBJECT
 
 public:
-    CommonWidgetLibrary();
-    virtual ~CommonWidgetLibrary( );
+    QCommonWidgetLibrary();
+    virtual ~QCommonWidgetLibrary( );
+
+    void BrowseLog(  );
 
 signals:
 

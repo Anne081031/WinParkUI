@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmydatabase.h'
 **
-** Created: Fri Jun 15 17:39:44 2012
+** Created: Mon Jun 18 10:11:55 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

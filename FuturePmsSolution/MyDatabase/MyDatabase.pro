@@ -8,7 +8,19 @@ QT       += sql
 
 QT       -= gui
 
-TARGET = MyDatabase
+MYTARGET = $$quote( MyDatabase%1 )
+MYDESTDIR = $$quote( ../LibExeFiles/%1 )
+
+Debug {
+    TARGET = $$sprintf( $$MYTARGET, "Debug" )
+    DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
+}
+
+Release {
+    TARGET = $$sprintf( $$MYTARGET, "" )
+    DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
+}
+
 TEMPLATE = lib
 
 DEFINES += MYDATABASE_LIBRARY

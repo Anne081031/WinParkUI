@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qcommonfunction.h'
 **
-** Created: Fri Jun 15 17:39:24 2012
+** Created: Thu Jun 21 17:15:33 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,16 +34,16 @@ static const uint qt_meta_data_QCommonFunction[] = {
       16, 0x1,    3,   18,
 
  // enum data: key, value
-      25, uint(QCommonFunction::Images),
-      32, uint(QCommonFunction::Config),
-      39, uint(QCommonFunction::Logs),
+      25, uint(QCommonFunction::PathImages),
+      36, uint(QCommonFunction::PathConfigs),
+      48, uint(QCommonFunction::PathLogs),
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QCommonFunction[] = {
-    "QCommonFunction\0PathType\0Images\0Config\0"
-    "Logs\0"
+    "QCommonFunction\0PathType\0PathImages\0"
+    "PathConfigs\0PathLogs\0"
 };
 
 void QCommonFunction::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)

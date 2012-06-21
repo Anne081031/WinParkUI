@@ -1,0 +1,6 @@
+[LogNetwork]
+Count=4
+1=errorString( )
+2="void QMyTcpServer::Initialize(quint16, int)The address is not available"
+3="void QMyTcpServer::Initialize(quint16, int): The address is not available"
+4="void QMyTcpServer::Initialize(quint16, int): errorString( )"

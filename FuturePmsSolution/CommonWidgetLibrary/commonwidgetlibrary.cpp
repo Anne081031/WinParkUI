@@ -1,11 +1,17 @@
 #include "commonwidgetlibrary.h"
 
 
-CommonWidgetLibrary::CommonWidgetLibrary()
+QCommonWidgetLibrary::QCommonWidgetLibrary()
 {
 }
 
-CommonWidgetLibrary::~CommonWidgetLibrary( )
+QCommonWidgetLibrary::~QCommonWidgetLibrary( )
 {
 
+}
+
+void QCommonWidgetLibrary::BrowseLog( )
+{
+    static QDlgLogBrowser dlg;
+    dlg.BrowseLog( );
 }

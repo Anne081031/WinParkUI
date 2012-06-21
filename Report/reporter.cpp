@@ -128,6 +128,12 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
     QDate dEnd = dtEnd.date( );
     QString strStart;
     QString strEnd;
+
+    QTime time;
+    time.setHMS( 23, 59, 59 );
+    QDateTime dtTimeEnd = dtEnd;
+    dtEnd.setTime( time );
+
     CCommonFunction::DateTime2String( dtStart, strStart );
     CCommonFunction::DateTime2String( dtEnd, strEnd );
 
@@ -139,31 +145,43 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
 
     switch ( rType ) {
     case CommonDataType::ReportYearly :
-        strSql = "select c.f1, c.f2, c.f4, d.f4, e.f4,f.f4,g.f4,h.f4 from ( select year( intime ) f1, month( intime ) f2, count( cardno ) f4 from stoprd a where  ( '";
+        strSql = "select f1,f2,sum( f3 ),sum(f4), sum(f5), sum(f6), sum(f7), sum(f8) from ( select year( intime ) f1, month( intime ) f2, count( cardno ) as f3, null as f4, null as f5, null as f6, null as f7, null as f8 from stoprd a where  ( '";
         strSql += yBegin;
         strSql += "' <= a.intime and a.intime < '";
         strSql += yEnd;
         strSql += "' ) and a.cardkind = '";
         strSql += strMonthCard;
-        strSql += "' group by year( a.intime ), month( a.intime ) ) c left join ( select year( feetime ) f1, month( feetime ) f2, sum( feenumb ) f4 from feerd where feekind like '";
+        strSql += "' group by year( a.intime ), month( a.intime ) union all select year( feetime ) f1, month( feetime ) f2, null as f3, sum( feenumb ) f4, null as f5, null as f6, null as f7, null as f8  from feerd where ('";
+        strSql += yBegin;
+        strSql += "' <= feetime and feetime < '";
+        strSql += yEnd;
+        strSql += "') and feekind like '";
         strSql += strMonthCard;
-        strSql += "%' group by year( feetime ), month( feetime ) ) d on c.f1 = d.f1 and c.f2 = d.f2 left join ( select year( intime ) f1, month( intime ) f2, count( cardno ) f4 from stoprd a where  ( '";
+        strSql += "%' group by year( feetime ), month( feetime ) union all select year( intime ) f1, month( intime ) f2, count( cardno ) f3, null as f4, null as f5, null as f6, null as f7, null as f8 from stoprd a where  ( '";
         strSql += yBegin;
         strSql += "' <= a.intime and a.intime < '";
         strSql += yEnd,
         strSql += "' ) and a.cardkind = '";
         strSql += strTimeCard;
-        strSql += "' group by year( a.intime ), month( a.intime ) ) e on c.f1 = e.f1 and c.f2 = e.f2 left join ( select year( feetime ) f1, month( feetime ) f2, sum( feenumb ) f4 from feerd where feekind like '";
+        strSql += "' group by year( a.intime ), month( a.intime ) union all select year( feetime ) f1, month( feetime ) f2, null as f3, sum( feenumb ) f4, null as f5, null as f6, null as f7, null as f8 from feerd where ('";
+        strSql += yBegin;
+        strSql += "' <= feetime and feetime < '";
+        strSql += yEnd;
+        strSql += "') and feekind like '";
         strSql += strTimeCard;
-        strSql += "%' group by year( feetime ), month( feetime ) ) f on c.f1 = f.f1 and c.f2 = f.f2 left join ( select year( intime ) f1, month( intime ) f2, count( cardno ) f4 from stoprd a where  ( '";
+        strSql += "%' group by year( feetime ), month( feetime ) union all select year( intime ) f1, month( intime ) f2, count( cardno ) f3, null as f4, null as f5, null as f6, null as f7, null as f8 from stoprd a where  ( '";
         strSql += yBegin;
         strSql += "' <= a.intime and a.intime < '";
         strSql += yEnd,
         strSql += "' ) and a.cardkind = '";
         strSql += strValueCard;
-        strSql += "' group by year( a.intime ), month( a.intime ) ) g on c.f1 = g.f1 and c.f2 = g.f2 left join ( select year( feetime ) f1, month( feetime ) f2, sum( feenumb ) f4 from feerd where feekind like '";
+        strSql += "' group by year( a.intime ), month( a.intime ) union all select year( feetime ) f1, month( feetime ) f2, null as f3, sum( feenumb ) f4, null as f5, null as f6, null as f7, null as f8 from feerd where ('";
+        strSql += yBegin;
+        strSql += "' <= feetime and feetime < '";
+        strSql += yEnd;
+        strSql += "') and feekind like '";
         strSql += strValue;
-        strSql += "%' group by year( feetime ), month( feetime ) ) h on c.f1 = h.f1 and c.f2 = h.f2";
+        strSql += "%' group by year( feetime ), month( feetime ), day( feetime ) ) x group by f1, f2";
         break;
 
     case CommonDataType::ReportMonthly :
@@ -176,13 +194,17 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         strSql += "' ) and a.cardkind = '";
         strSql += strMonthCard;
         strSql += "' group by year( a.intime ), month( a.intime ), day( intime ) ";
-        strSql += "union all ";
+        strSql += "union all ";///////////
         strSql += "select year( feetime ) f1, month( feetime ) f2, day( feetime ) f3, null as f4, sum( feenumb ) f5, null as f6, null as f7, null as f8, null as f9 ";
         strSql += "from feerd ";
-        strSql += "where feekind like '";
+        strSql += "where  ( '";
+        strSql += mBegin;
+        strSql += "' <= feetime and feetime < '";
+        strSql += mEnd;
+        strSql += "') and feekind like '";
         strSql += strMonthCard;
         strSql += "%'  group by year( feetime ), month( feetime ), day( feetime ) ";
-        strSql += "union all ";
+        strSql += "union all ";//////////
         strSql += "select year( intime ) f1, month( intime ) f2, day( intime ) f3, null as f4, null as f5, count( cardno ) f6, null as f7, null as f8, null as f9 ";
         strSql += "from stoprd a ";
         strSql += "where  ( '";
@@ -195,10 +217,14 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         strSql += "union all ";
         strSql += "select year( feetime ) f1, month( feetime ) f2, day( feetime ) f3, null as f4, null as f5, null as f6, sum( feenumb ) f7,null as f8, null as f9 ";
         strSql += "from feerd ";
-        strSql += "where feekind like '";
+        strSql += "where  ( '";
+        strSql += mBegin;
+        strSql += "' <= feetime and feetime < '";
+        strSql += mEnd;
+        strSql += "') and feekind like '";
         strSql += strTimeCard;
         strSql += "%' group by year( feetime ), month( feetime ), day( feetime ) ";
-        strSql += "union all ";
+        strSql += "union all ";//////////
         strSql += "select year( intime ) f1, month( intime ) f2, day( intime ) f3, null as f4, null as f5, null as f6, null as f7, count( cardno ) f8, null as f9 ";
         strSql += "from stoprd a ";
         strSql += "where  ( '";
@@ -211,7 +237,11 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         strSql += "union all ";
         strSql += "select year( feetime ) f1, month( feetime ) f2, day( feetime ) f3, null as f4, null as f5, null as f6, null as f7, null as f8, sum( feenumb ) f9 ";
         strSql += "from feerd ";
-        strSql += "where feekind like '";
+        strSql += "where  ( '";
+        strSql += mBegin;
+        strSql += "' <= feetime and feetime < '";
+        strSql += mEnd;
+        strSql += "') and feekind like '";
         strSql += strValueCard;
         strSql += "%' group by year( feetime ), month( feetime ), day( feetime ) ) x group by f1, f2, f3";
         break;
@@ -229,7 +259,11 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         strSql += "union all ";
         strSql += "select year( feetime ) f1, month( feetime ) f2, day( feetime ) f3, null as f4, sum( feenumb ) f5, null as f6, null as f7, null as f8, null as f9 ";
         strSql += "from feerd ";
-        strSql += "where feekind like '";
+        strSql += "where  ( '";
+        strSql += strStart;
+        strSql += "' <= feetime and feetime < '";
+        strSql += strEnd;
+        strSql += "') and feekind like '";
         strSql += strMonthCard;
         strSql += "%'  group by year( feetime ), month( feetime ), day( feetime ) ";
         strSql += "union all ";
@@ -245,7 +279,11 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         strSql += "union all ";
         strSql += "select year( feetime ) f1, month( feetime ) f2, day( feetime ) f3, null as f4, null as f5, null as f6, sum( feenumb ) f7,null as f8, null as f9 ";
         strSql += "from feerd ";
-        strSql += "where feekind like '";
+        strSql += "where  ( '";
+        strSql += strStart;
+        strSql += "' <= feetime and feetime < '";
+        strSql += strEnd;
+        strSql += "') and feekind like '";
         strSql += strTimeCard;
         strSql += "%' group by year( feetime ), month( feetime ), day( feetime ) ";
         strSql += "union all ";
@@ -261,7 +299,11 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         strSql += "union all ";
         strSql += "select year( feetime ) f1, month( feetime ) f2, day( feetime ) f3, null as f4, null as f5, null as f6, null as f7, null as f8, sum( feenumb ) f9 ";
         strSql += "from feerd ";
-        strSql += "where feekind like '";
+        strSql += "where  ( '";
+        strSql += strStart;
+        strSql += "' <= feetime and feetime < '";
+        strSql += strEnd;
+        strSql += "') and feekind like '";
         strSql += strValueCard;
         strSql += "%' group by year( feetime ), month( feetime ), day( feetime ) ) x group by f1, f2, f3";
         break;
@@ -308,6 +350,7 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         break;
 
     case CommonDataType::ReportTimeCardDetail :
+        CCommonFunction::DateTime2String( dtTimeEnd, strEnd );
         strSql = "select date( feetime ) ftime, feeoperator, feekind, feezkyy, sum( feenum ), ";
         strSql += "sum( feefactnum ), sum( feenum - feefactnum ) from stoprd ";
         strSql += "where feenum >= feefactnum and cardkind = '";
@@ -435,6 +478,7 @@ void CReporter::BuildHtmlDoc( QDateTime& dtStart, QDateTime& dtEnd, CommonDataTy
     CCommonFunction::DateTime2String( dtStart, strStart );
     CCommonFunction::DateTime2String( dtEnd, strEnd );
     QString strSql;// = QString( "call GenerateReport( '%1', '%2', %3 )" ).arg( strStart, strEnd, strType );
+    QDateTime dtTimeEnd = dtEnd;
     GetSQL( strSql, rType, dtStart, dtEnd );
     CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData );
 
@@ -443,6 +487,7 @@ void CReporter::BuildHtmlDoc( QDateTime& dtStart, QDateTime& dtEnd, CommonDataTy
 
     QDate dStart = dtStart.date( );
     QDate dEnd = dtEnd.date( );
+
     CCommonFunction::Date2String( dStart, strStart );
     CCommonFunction::Date2String( dEnd, strEnd );
 
@@ -452,7 +497,7 @@ void CReporter::BuildHtmlDoc( QDateTime& dtStart, QDateTime& dtEnd, CommonDataTy
     GetHtml( rType, strTitle, strFooter, strTableBody, lstData );
 
     QString strTitleDate;
-    GetTitle( rType, dtStart, dtEnd, strTitleDate );
+    GetTitle( rType, dtStart, dtTimeEnd, strTitleDate );
 
 
     QString strHtml = QString( "<HTML>\
@@ -509,7 +554,6 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
     case CommonDataType::ReportDaily :
     case CommonDataType::ReportPerson :
     case CommonDataType::ReportChannel :
-    case CommonDataType::ReportTimeCardDetail :
     case CommonDataType::ReportProvince :
     case CommonDataType::ReportInProvince :
         if ( strStart == strEnd ) {
@@ -517,6 +561,17 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
         } else {
             strTitle = strStart + "日 至 " + strEnd + "日";
         }
+        break;
+
+    case CommonDataType::ReportTimeCardDetail :
+    {
+        QString strStart;
+        CCommonFunction::DateTime2String( dtStart, strStart );
+        QString strEnd;
+        CCommonFunction::DateTime2String( dtEnd, strEnd );
+
+         strTitle = strStart + " 至 " + strEnd;
+    }
         break;
     }
 }

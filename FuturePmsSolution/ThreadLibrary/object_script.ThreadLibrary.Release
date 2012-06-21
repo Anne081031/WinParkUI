@@ -7,6 +7,11 @@ INPUT(
 ./release\qtcpclientsocketthread.o
 ./release\qdatabasethread.o
 ./release\qmybasethread.o
+./release\qloggerevent.o
+./release\qmythreadevent.o
+./release\qlistenerthreadevent.o
+./release\qtcppeerthreadevent.o
+./release\qtcpclientthreadevent.o
 ./release\moc_qthreadgenerator.o
 ./release\moc_qloggerthread.o
 ./release\moc_qlistenerthread.o

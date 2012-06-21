@@ -56,6 +56,7 @@ public:
     static void PlateFilter2( int nChannel );
     void SetAlertMsg( const QString& strText );
     void HideAlert( );
+    void ControlGateButton( );
     //static void PrcCapSourceStream1( long lnCardID, long pBuf, long lnWidth, long lnHeight, long lnBiCount );
 
     static bool bStartRecognization[ VIDEO_USEDWAY ];

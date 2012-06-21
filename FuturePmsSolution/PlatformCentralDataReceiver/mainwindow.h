@@ -2,6 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "../ThreadLibrary/qthreadgenerator.h"
+#include "../CommonLibrary/qcommonfunction.h"
+#include "../CommonWidgetLibrary/commonwidgetlibrary.h"
 
 namespace Ui {
 class MainWindow;

@@ -70,8 +70,8 @@ void CPrintDaylyReport::on_btnGenerate_clicked()
 {
     QDateTime dtStart = ui->dReportStartDate->dateTime( );
     QDateTime dtEnd = ui->dReportEndDate->dateTime( );
-    QTime time = ui->dReportEndDate->maximumTime( );
-    dtEnd.setTime( time );
+    //QTime time = ui->dReportEndDate->maximumTime( );
+    //dtEnd.setTime( time );
     reporter.BuildHtmlDoc( dtStart, dtEnd, ( CommonDataType::ReportType ) nReportType, *ui->wvReport );
 }
 

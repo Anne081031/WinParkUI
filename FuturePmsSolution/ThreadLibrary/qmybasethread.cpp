@@ -5,14 +5,28 @@ QMyBaseThread::QMyBaseThread(QObject *parent) :
 {
 }
 
+QMyBaseThread::~QMyBaseThread( )
+{
+    OutputMsg( currentThread( )->metaObject( )->className( ) );
+}
+
 void QMyBaseThread::ExitThread( )
 {
-    delete this;
+    deleteLater( );
 }
 
 void QMyBaseThread::InitializeThread( )
 {
-    //  myObject->moveToThread(QApplication::instance()->thread());
-    moveToThread( this );
     connect( this, SIGNAL( finished( ) ), this, SLOT( ExitThread( ) ) );
+}
+
+void QMyBaseThread::LaunchThreadExit( )
+{
+    moveToThread( qApp->thread( ) );
+    exit( );
+}
+
+void QMyBaseThread::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )
+{
+    emit NotifyMessage( strMsg, type );
 }

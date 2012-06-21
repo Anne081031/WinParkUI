@@ -94,6 +94,16 @@ void CMonitor::GetCanParkIndexNum( )
     }
 }
 
+void CMonitor::ControlGateButton( )
+{
+    bool bRet = pSystem->value( "CommonCfg/HotKeyGate", false ).toBool( );
+
+    ui->btnEnterGateOpen->setEnabled( bRet ) ;
+    ui->btnEnterGateClose->setEnabled( bRet ) ;
+    ui->btnLeaveGateOpen->setEnabled( bRet ) ;
+    ui->btnLeaveGateClose->setEnabled( bRet ) ;
+}
+
 CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
     ui(new Ui::CMonitor)
@@ -137,6 +147,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     pDlgAlert->setStatusTip( strImagePath + "NewIcon/CommonMiddleBG-normal.jpg" );
 
     connect( &CLogicInterface::GetInterface( )->GetMysqlDb( ), SIGNAL( NotifyError( QString ) ), this, SLOT( DisplayDbError( QString ) ) );
+    ControlGateButton( );
 }
 
 void CMonitor::DisplayDbError( QString strMsg )
@@ -366,6 +377,10 @@ void CMonitor::FillDataGrid( QStringList &lstData )
             pItem->setFlags( Qt::ItemIsEnabled | Qt::ItemIsEnabled );
 
             ui->tabRecord->setItem( 0, nCol, pItem );
+
+            if ( ( nCol == nCols - 2 ) && CCommonFunction::GetHostIP( ) == strText ) {
+               pItem->setText( "127.0.0.1" );
+            }
         }
     }
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qthreadgenerator.h'
 **
-** Created: Fri Jun 15 17:39:52 2012
+** Created: Thu Jun 21 17:16:41 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,37 @@ static const uint qt_meta_data_QThreadGenerator[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      30,   18,   17,   17, 0x08,
+      99,   82,   17,   17, 0x08,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_QThreadGenerator[] = {
-    "QThreadGenerator\0"
+    "QThreadGenerator\0\0strMsg,type\0"
+    "HandleMessage(QString,QManipulateIniFile::LogTypes)\0"
+    "socketDescriptor\0HandleAccept(int)\0"
 };
 
 void QThreadGenerator::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        QThreadGenerator *_t = static_cast<QThreadGenerator *>(_o);
+        switch (_id) {
+        case 0: _t->HandleMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
+        case 1: _t->HandleAccept((*reinterpret_cast< int(*)>(_a[1]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObjectExtraData QThreadGenerator::staticMetaObjectExtraData = {
@@ -76,6 +87,11 @@ int QThreadGenerator::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QObject::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 2)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 2;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE
