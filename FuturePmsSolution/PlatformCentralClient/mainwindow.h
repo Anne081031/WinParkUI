@@ -19,7 +19,15 @@ public:
     ~MainWindow();
 
 private:
-    QThread *pTcpClientThread;
+    void CreateTcpClientThread( );
+
+private:
+    QTcpClientSocketThread *pTcpClientThreadServerX;
+    QTcpClientSocketThread *pTcpClientThreadServerY;
+
+private slots:
+    void HandleGetWholeTcpStreamDataServerX( void* pByteArray );
+    void HandleGetWholeTcpStreamDataServerY( void* pByteArray );
     
 private slots:
     void on_pushButton_clicked();

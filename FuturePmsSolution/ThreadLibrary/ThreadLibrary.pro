@@ -10,6 +10,7 @@ Debug {
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ManipulateFile", "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyNetwork", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyDatabase", "Debug" )
 }
 
 Release {
@@ -18,6 +19,7 @@ Release {
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ManipulateFile", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyNetwork", "" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyDatabase", "" )
 }
 
 TEMPLATE = lib
@@ -36,7 +38,9 @@ SOURCES += qthreadgenerator.cpp \
     Event/qmythreadevent.cpp \
     Event/qlistenerthreadevent.cpp \
     Event/qtcppeerthreadevent.cpp \
-    Event/qtcpclientthreadevent.cpp
+    Event/qtcpclientthreadevent.cpp \
+    Event/qdatabasethreadevent.cpp \
+    qthreadpooltask.cpp
 
 HEADERS += ThreadLibrary_global.h \
     qthreadgenerator.h \
@@ -52,7 +56,9 @@ HEADERS += ThreadLibrary_global.h \
     Event/qmythreadevent.h \
     Event/qlistenerthreadevent.h \
     Event/qtcppeerthreadevent.h \
-    Event/qtcpclientthreadevent.h
+    Event/qtcpclientthreadevent.h \
+    Event/qdatabasethreadevent.h \
+    qthreadpooltask.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

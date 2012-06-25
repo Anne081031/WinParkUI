@@ -11,12 +11,44 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    pTcpClientThread = g_pGenerator->GenerateTcpClientThread( );
+    CreateTcpClientThread( );
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::CreateTcpClientThread( )
+{
+    pTcpClientThreadServerX = g_pGenerator->GenerateTcpClientThread( );
+    connect( pTcpClientThreadServerX, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamDataServerX( void* ) ) );
+
+    // IP : Port Distinguish
+    //pTcpClientThreadServerY = g_pGenerator->GenerateTcpClientThread( );
+    //connect( pTcpClientThreadServerY, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamDataServerY( void* ) ) );
+}
+
+void MainWindow::HandleGetWholeTcpStreamDataServerX( void *pByteArray )
+{
+    if ( NULL == pByteArray ) {
+        return;
+    }
+
+    QByteArray* pByteData = ( QByteArray* ) pByteArray;
+
+    delete pByteData;
+}
+
+void MainWindow::HandleGetWholeTcpStreamDataServerY( void *pByteArray )
+{
+    if ( NULL == pByteArray ) {
+        return;
+    }
+
+    QByteArray* pByteData = ( QByteArray* ) pByteArray;
+
+    delete pByteData;
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -59,10 +91,10 @@ void MainWindow::on_pushButton_4_clicked()
     hash.insertMulti( MyEnums::NetworkParamPort, "50000" );
 
     pEventParams->enqueue( hash );
-    g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientConnect, pEventParams, pTcpClientThread );
+    g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientConnect, pEventParams, pTcpClientThreadServerX );
 }
 
 void MainWindow::on_pushButton_5_clicked()
 {
-   g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientDisconnect, NULL, pTcpClientThread );
+   g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientDisconnect, NULL, pTcpClientThreadServerX );
 }

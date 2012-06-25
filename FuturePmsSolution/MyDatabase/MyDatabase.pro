@@ -26,11 +26,13 @@ TEMPLATE = lib
 DEFINES += MYDATABASE_LIBRARY
 
 SOURCES += qmydatabase.cpp \
-    qsqlserver.cpp
+    qsqlserver.cpp \
+    qdatabasegenerator.cpp
 
 HEADERS += qmydatabase.h\
         MyDatabase_global.h \
-    qsqlserver.h
+    qsqlserver.h \
+    qdatabasegenerator.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

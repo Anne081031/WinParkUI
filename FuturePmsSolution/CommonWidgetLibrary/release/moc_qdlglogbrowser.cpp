@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qdlglogbrowser.h'
 **
-** Created: Thu Jun 21 17:15:43 2012
+** Created: Thu Jun 21 21:46:17 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

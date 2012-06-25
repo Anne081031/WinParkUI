@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qtcppeerclient.h'
 **
-** Created: Thu Jun 21 11:57:07 2012
+** Created: Sat Jun 23 18:27:19 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,28 +23,29 @@ static const uint qt_meta_data_QTcpPeerClient[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      28,   16,   15,   15, 0x05,
+      16,   15,   15,   15, 0x05,
+      43,   32,   15,   15, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      80,   15,   15,   15, 0x08,
-     101,   15,   15,   15, 0x08,
-     131,  119,   15,   15, 0x08,
-     173,   15,   15,   15, 0x08,
+      72,   15,   15,   15, 0x08,
+      93,   15,   15,   15, 0x08,
+     123,  111,   15,   15, 0x08,
+     165,   15,   15,   15, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QTcpPeerClient[] = {
-    "QTcpPeerClient\0\0strMsg,type\0"
-    "NotifyMessage(QString,QManipulateIniFile::LogTypes)\0"
+    "QTcpPeerClient\0\0EnqueueThread()\0"
+    "pByteArray\0GetWholeTcpStreamData(void*)\0"
     "HandleDisconnected()\0HandleConnected()\0"
     "socketError\0HandleError(QAbstractSocket::SocketError)\0"
     "IncomingData()\0"
@@ -56,11 +57,12 @@ void QTcpPeerClient::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         Q_ASSERT(staticMetaObject.cast(_o));
         QTcpPeerClient *_t = static_cast<QTcpPeerClient *>(_o);
         switch (_id) {
-        case 0: _t->NotifyMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
-        case 1: _t->HandleDisconnected(); break;
-        case 2: _t->HandleConnected(); break;
-        case 3: _t->HandleError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
-        case 4: _t->IncomingData(); break;
+        case 0: _t->EnqueueThread(); break;
+        case 1: _t->GetWholeTcpStreamData((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        case 2: _t->HandleDisconnected(); break;
+        case 3: _t->HandleConnected(); break;
+        case 4: _t->HandleError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
+        case 5: _t->IncomingData(); break;
         default: ;
         }
     }
@@ -71,7 +73,7 @@ const QMetaObjectExtraData QTcpPeerClient::staticMetaObjectExtraData = {
 };
 
 const QMetaObject QTcpPeerClient::staticMetaObject = {
-    { &QTcpSocket::staticMetaObject, qt_meta_stringdata_QTcpPeerClient,
+    { &QMyTcpSocket::staticMetaObject, qt_meta_stringdata_QTcpPeerClient,
       qt_meta_data_QTcpPeerClient, &staticMetaObjectExtraData }
 };
 
@@ -89,26 +91,32 @@ void *QTcpPeerClient::qt_metacast(const char *_clname)
     if (!_clname) return 0;
     if (!strcmp(_clname, qt_meta_stringdata_QTcpPeerClient))
         return static_cast<void*>(const_cast< QTcpPeerClient*>(this));
-    return QTcpSocket::qt_metacast(_clname);
+    return QMyTcpSocket::qt_metacast(_clname);
 }
 
 int QTcpPeerClient::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
-    _id = QTcpSocket::qt_metacall(_c, _id, _a);
+    _id = QMyTcpSocket::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }
 
 // SIGNAL 0
-void QTcpPeerClient::NotifyMessage(QString _t1, QManipulateIniFile::LogTypes _t2)
+void QTcpPeerClient::EnqueueThread()
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
-    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+    QMetaObject::activate(this, &staticMetaObject, 0, 0);
+}
+
+// SIGNAL 1
+void QTcpPeerClient::GetWholeTcpStreamData(void * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

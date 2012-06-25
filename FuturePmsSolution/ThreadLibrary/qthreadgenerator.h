@@ -11,7 +11,7 @@ class THREADLIBRARYSHARED_EXPORT QThreadGenerator : public QObject
 public:
     static QThreadGenerator* GetSingleton( );
 
-    QThread* GenerateTcpClientThread( );
+    QTcpClientSocketThread* GenerateTcpClientThread( );
 
     // Free qQueueEventParams in Event destructor
     void SendEvent( MyEnums::ThreadType thread, MyEnums::EventType event,

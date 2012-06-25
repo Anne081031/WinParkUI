@@ -2,12 +2,21 @@
 #include "qnetcommfunction.h"
 
 QTcpPeerClient::QTcpPeerClient( QTextCodec* pCodec, QObject *parent ) :
-    QTcpSocket(parent), pTextCodec( pCodec )
+    QMyTcpSocket(parent)
 {
+    pTextCodec = pCodec;
     connect( this, SIGNAL(readyRead( ) ), this, SLOT( IncomingData( ) ) );
     connect( this, SIGNAL(disconnected( ) ), this, SLOT( HandleDisconnected( ) ) );
     connect( this, SIGNAL(connected( ) ), this, SLOT( HandleConnected( ) ) );
     connect( this, SIGNAL(error( QAbstractSocket::SocketError ) ), this, SLOT( HandleError( QAbstractSocket::SocketError ) ) );
+}
+
+QTcpPeerClient::~QTcpPeerClient( )
+{
+    if ( NULL != pByteArray ) {
+        delete pByteArray;
+        pByteArray = NULL;
+    }
 }
 
 void QTcpPeerClient::GetKeyMsg( QString &strKey, QString &strMsg, bool bConnected )
@@ -25,6 +34,9 @@ void QTcpPeerClient::HandleDisconnected( )
 {
     GenerateLogText( false );
     close( );
+
+    // Peer thread to enqueue;
+    emit EnqueueThread( );
 }
 
 void QTcpPeerClient::GenerateLogText( bool bConnected )
@@ -55,4 +67,11 @@ void QTcpPeerClient::HandleError( QAbstractSocket::SocketError socketError )
 void QTcpPeerClient::IncomingData( )
 {
     OutputMsg( "Receive data" );
+    bool bRet = GetTcpStreamData( );
+
+    if ( bRet ) {
+        emit GetWholeTcpStreamData( pByteArray );
+        pByteArray = NULL;
+    }
 }
+

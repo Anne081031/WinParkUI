@@ -66,14 +66,16 @@ TEMPLATE = lib
 DEFINES += QCOMMONFUNCTION_LIBRARY
 
 SOURCES += qcommonfunction.cpp \
-    qmyapplication.cpp
+    qmyapplication.cpp \
+    qmanipulatemessage.cpp
 
 HEADERS += qcommonfunction.h\
         QCommonFunction_global.h \
     CommonMacro.h \
     qmyapplication.h \
     CommonEnum.h \
-    CommonDataStruct.h
+    CommonDataStruct.h \
+    qmanipulatemessage.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

@@ -13,6 +13,16 @@ QMyNetwork::~QMyNetwork( )
     }
 }
 
+void QMyNetwork::HandleGetWholeTcpStreamData( void *pByteArray )
+{
+    emit GetWholeTcpStreamData( pByteArray );
+}
+
+void QMyNetwork::HandleThreadEnqueue( )
+{
+    emit EnqueueThread( );
+}
+
 void QMyNetwork::StartupTcpServer( quint16 nPort, int nMaxConnections )
 {
     if ( NULL == pTcpServer ) {
@@ -27,6 +37,7 @@ QTcpPeerClient* QMyNetwork::GenerateTcpPeerSocket( QTextCodec* pCodec )
 {
     QTcpPeerClient* pPeerSocket = new QTcpPeerClient( pCodec );
     connect( pPeerSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pPeerSocket, SIGNAL( EnqueueThread( ) ), this, SLOT( HandleThreadEnqueue( ) ) );
 
     return pPeerSocket;
 }

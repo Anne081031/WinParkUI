@@ -10,15 +10,18 @@ QT       -= gui
 
 MYTARGET = $$quote( MyNetwork%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
+MYDESTLIB = $$quote( %1/lib%2%3.a )
 
 Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "Debug" )
 }
 
 Release {
     TARGET = $$sprintf( $$MYTARGET, "" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "" )
 }
 
 TEMPLATE = lib
@@ -30,7 +33,8 @@ SOURCES += qmynetwork.cpp \
     qmytcpserver.cpp \
     qnetcommfunction.cpp \
     qtcppeerclient.cpp \
-    qtcpclient.cpp
+    qtcpclient.cpp \
+    qmytcpsocket.cpp
 
 HEADERS += qmynetwork.h\
         QMyNetwork_global.h \
@@ -38,7 +42,8 @@ HEADERS += qmynetwork.h\
     qmytcpserver.h \
     qnetcommfunction.h \
     qtcppeerclient.h \
-    qtcpclient.h
+    qtcpclient.h \
+    qmytcpsocket.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

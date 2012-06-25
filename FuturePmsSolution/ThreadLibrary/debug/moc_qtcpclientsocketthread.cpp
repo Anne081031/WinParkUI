@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qtcpclientsocketthread.h'
 **
-** Created: Thu Jun 21 16:22:48 2012
+** Created: Sat Jun 23 16:55:01 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,39 @@ static const uint qt_meta_data_QTcpClientSocketThread[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      35,   24,   23,   23, 0x05,
+
+ // slots: signature, parameters, type, tag, flags
+      64,   24,   23,   23, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QTcpClientSocketThread[] = {
-    "QTcpClientSocketThread\0"
+    "QTcpClientSocketThread\0\0pByteArray\0"
+    "GetWholeTcpStreamData(void*)\0"
+    "HandleGetWholeTcpStreamData(void*)\0"
 };
 
 void QTcpClientSocketThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        QTcpClientSocketThread *_t = static_cast<QTcpClientSocketThread *>(_o);
+        switch (_id) {
+        case 0: _t->GetWholeTcpStreamData((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        case 1: _t->HandleGetWholeTcpStreamData((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObjectExtraData QTcpClientSocketThread::staticMetaObjectExtraData = {
@@ -76,6 +89,18 @@ int QTcpClientSocketThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a
     _id = QMyBaseThread::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 2)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 2;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void QTcpClientSocketThread::GetWholeTcpStreamData(void * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

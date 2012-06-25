@@ -38,6 +38,12 @@ void QTcpClientSocketThread::InitializeSubThread( )
     }
 
     connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( &network, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamData( void* ) ) );
+}
+
+void QTcpClientSocketThread::HandleGetWholeTcpStreamData( void *pByteArray )
+{
+    emit GetWholeTcpStreamData( pByteArray );
 }
 
 void QTcpClientSocketThread::ProcessSendDataEvent( MyDataStructs::PQQueueEventParams pEventParams )

@@ -12,6 +12,8 @@ INPUT(
 ./release\qlistenerthreadevent.o
 ./release\qtcppeerthreadevent.o
 ./release\qtcpclientthreadevent.o
+./release\qdatabasethreadevent.o
+./release\qthreadpooltask.o
 ./release\moc_qthreadgenerator.o
 ./release\moc_qloggerthread.o
 ./release\moc_qlistenerthread.o

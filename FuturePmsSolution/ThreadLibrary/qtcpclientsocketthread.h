@@ -27,10 +27,12 @@ private:
     QTcpClient* pClientSocket;
 
 signals:
+    void GetWholeTcpStreamData( void* pByteArray );
 
 public slots:
 
 private slots:
+    void HandleGetWholeTcpStreamData( void* pByteArray );
     
 };
 

@@ -9,3 +9,10 @@ QSqlServer::~QSqlServer( )
 {
 
 }
+
+QSqlServer* QSqlServer::GetInstance( )
+{
+    QSqlServer* pInstance = new QSqlServer( );
+
+    return pInstance;
+}

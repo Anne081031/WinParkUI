@@ -5,6 +5,9 @@
 #include "Event/qtcppeerthreadevent.h"
 #include <QTcpSocket>
 
+#include "qdatabasethread.h"
+#include "Event/qdatabasethreadevent.h"
+
 class QTcpPeerSocketThread : public QMyBaseThread
 {
     Q_OBJECT
@@ -20,16 +23,21 @@ protected:
     virtual void customEvent( QEvent* event );
 
 private:
+    void ProcessDatabaseData( QByteArray* pByteArray );
+    void ProcessOtherData( QByteArray* pByteArray );
     void ProcessCreateSockeEvent( MyDataStructs::PQQueueEventParams pEventParams );
 
 private:
     QTcpSocket* pPeerSocket;
+    QDatabaseThread* pDatabaseThread;
 
 signals:
 
 public slots:
 
 private slots:
+    void HandleThreadEnqueue( );
+    void HandleGetWholeTcpStreamData( void* pByteArray );
     
 };
 

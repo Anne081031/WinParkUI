@@ -1,25 +1,24 @@
 #ifndef QTCPPEERCLIENT_H
 #define QTCPPEERCLIENT_H
 
-#include <QTcpSocket>
-#include "../ManipulateIniFile/qmanipulateinifile.h"
-#include "../CommonLibrary/CommonMacro.h"
+#include "qmytcpsocket.h"
 
-class QTcpPeerClient : public QTcpSocket
+class QTcpPeerClient : public QMyTcpSocket
 {
     Q_OBJECT
 public:
     explicit QTcpPeerClient( QTextCodec* pCodec, QObject *parent = 0);
+    ~QTcpPeerClient( );
     
 private:
     void GetKeyMsg( QString &strKey, QString &strMsg, bool bConnected );
     void GenerateLogText( bool bConnected );
 
 private:
-    QTextCodec* pTextCodec;
 
 signals:
-    void NotifyMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void EnqueueThread( );
+    void GetWholeTcpStreamData( void* pByteArray );
     
 public slots:
     

@@ -5,6 +5,8 @@ QThreadGenerator* QThreadGenerator::pThreadGenerator = NULL;
 QListenerThread* QThreadGenerator::pListenerThread = NULL;
 QLoggerThread* QThreadGenerator::pLogThread = NULL;
 
+QQueue< QTcpPeerSocketThread* > g_pPeerThreadQueue;
+
 QThreadGenerator::QThreadGenerator(QObject *parent) :
     QObject(parent)
 {
@@ -27,7 +29,7 @@ QThreadGenerator* QThreadGenerator::GetSingleton( )
     return pThreadGenerator;
 }
 
-QThread* QThreadGenerator::GenerateTcpClientThread( )
+QTcpClientSocketThread* QThreadGenerator::GenerateTcpClientThread( )
 {
     QTcpClientSocketThread* pThreadInstance = QTcpClientSocketThread::GetInstance( );
     pThreadInstance->moveToThread( pThreadInstance );
@@ -122,8 +124,12 @@ void QThreadGenerator::PostTcpPeerEvent( MyEnums::EventType event, MyDataStructs
 
 void QThreadGenerator::HandleAccept( int socketDescriptor )
 {
-    QTcpPeerSocketThread* pReceiver = QTcpPeerSocketThread::GetInstance( );
-    pReceiver->moveToThread( pReceiver );
+    bool bThreadNoRunning = g_pPeerThreadQueue.isEmpty( );
+    QTcpPeerSocketThread* pReceiver = bThreadNoRunning ? QTcpPeerSocketThread::GetInstance( ) : g_pPeerThreadQueue.dequeue( );
+
+    if ( bThreadNoRunning ) {
+        pReceiver->moveToThread( pReceiver );
+    }
 
     MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
     MyDataStructs::QEventMultiHash hash;

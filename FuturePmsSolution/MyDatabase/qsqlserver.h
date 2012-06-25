@@ -7,8 +7,11 @@ class QSqlServer : public QMyDatabase
 {
     Q_OBJECT
 public:
-    explicit QSqlServer(QObject *parent = 0);
     virtual ~QSqlServer( );
+    static QSqlServer* GetInstance( );
+
+protected:
+    explicit QSqlServer(QObject *parent = 0);
     
 signals:
     

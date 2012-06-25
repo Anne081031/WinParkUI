@@ -33,12 +33,16 @@ private:
 signals:
     void NotifyMessage( QString strMsg, QManipulateIniFile::LogTypes type );
     void Accept( int socketDescriptor );
+    void EnqueueThread( );
+    void GetWholeTcpStreamData( void* pByteArray );
 
 public slots:
 
 private slots:
     void HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type );
     void HandleAccept( int socketDescriptor );
+    void HandleThreadEnqueue( );
+    void HandleGetWholeTcpStreamData( void* pByteArray );
 
 };
 

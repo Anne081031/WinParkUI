@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmynetwork.h'
 **
-** Created: Thu Jun 21 12:08:05 2012
+** Created: Sat Jun 23 18:27:17 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,20 +23,24 @@ static const uint qt_meta_data_QMyNetwork[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       8,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       4,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       24,   12,   11,   11, 0x05,
       93,   76,   11,   11, 0x05,
+     105,   11,   11,   11, 0x05,
+     132,  121,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     105,   12,   11,   11, 0x08,
-     157,   76,   11,   11, 0x08,
+     161,   12,   11,   11, 0x08,
+     213,   76,   11,   11, 0x08,
+     231,   11,   11,   11, 0x08,
+     253,  121,   11,   11, 0x08,
 
        0        // eod
 };
@@ -45,8 +49,11 @@ static const char qt_meta_stringdata_QMyNetwork[] = {
     "QMyNetwork\0\0strMsg,type\0"
     "NotifyMessage(QString,QManipulateIniFile::LogTypes)\0"
     "socketDescriptor\0Accept(int)\0"
+    "EnqueueThread()\0pByteArray\0"
+    "GetWholeTcpStreamData(void*)\0"
     "HandleMessage(QString,QManipulateIniFile::LogTypes)\0"
-    "HandleAccept(int)\0"
+    "HandleAccept(int)\0HandleThreadEnqueue()\0"
+    "HandleGetWholeTcpStreamData(void*)\0"
 };
 
 void QMyNetwork::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -57,8 +64,12 @@ void QMyNetwork::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         switch (_id) {
         case 0: _t->NotifyMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         case 1: _t->Accept((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 2: _t->HandleMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
-        case 3: _t->HandleAccept((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->EnqueueThread(); break;
+        case 3: _t->GetWholeTcpStreamData((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        case 4: _t->HandleMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
+        case 5: _t->HandleAccept((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 6: _t->HandleThreadEnqueue(); break;
+        case 7: _t->HandleGetWholeTcpStreamData((*reinterpret_cast< void*(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -96,9 +107,9 @@ int QMyNetwork::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 8)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 8;
     }
     return _id;
 }
@@ -115,5 +126,18 @@ void QMyNetwork::Accept(int _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void QMyNetwork::EnqueueThread()
+{
+    QMetaObject::activate(this, &staticMetaObject, 2, 0);
+}
+
+// SIGNAL 3
+void QMyNetwork::GetWholeTcpStreamData(void * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 3, _a);
 }
 QT_END_MOC_NAMESPACE

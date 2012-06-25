@@ -2,8 +2,9 @@
 #include "qnetcommfunction.h"
 
 QTcpClient::QTcpClient( QTextCodec* pCodec, QObject *parent) :
-    QTcpSocket(parent), pTextCodec( pCodec )
+    QMyTcpSocket(parent)
 {
+    pTextCodec = pCodec;
     connect( this, SIGNAL(readyRead( ) ), this, SLOT( IncomingData( ) ) );
     connect( this, SIGNAL(disconnected( ) ), this, SLOT( HandleDisconnected( ) ) );
     connect( this, SIGNAL(connected( ) ), this, SLOT( HandleConnected( ) ) );
@@ -50,6 +51,12 @@ void QTcpClient::HandleError( QAbstractSocket::SocketError socketError )
 void QTcpClient::IncomingData( )
 {
     OutputMsg( "Receive data" );
+    bool bRet = GetTcpStreamData( );
+
+    if ( bRet ) {
+        emit GetWholeTcpStreamData( pByteArray );
+        pByteArray = NULL;
+    }
 }
 
 bool QTcpClient::Connect2Server( const QHostAddress &hostAddr, quint16 nPort )

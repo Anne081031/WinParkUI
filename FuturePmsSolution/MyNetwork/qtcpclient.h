@@ -1,12 +1,9 @@
 #ifndef QTCPCLIENT_H
 #define QTCPCLIENT_H
 
-#include <QTcpSocket>
-#include <QHostAddress>
-#include "../ManipulateIniFile/qmanipulateinifile.h"
-#include "../CommonLibrary/CommonMacro.h"
+#include "qmytcpsocket.h"
 
-class QTcpClient : public QTcpSocket
+class QTcpClient : public QMyTcpSocket
 {
     Q_OBJECT
 public:
@@ -21,12 +18,13 @@ public:
     QByteArray ReceiveData(  );
 
 private:
-    QTextCodec* pTextCodec;
+
+private:
     QHostAddress serverAddress;
     quint16 nServerPort;
     
 signals:
-    void NotifyMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void GetWholeTcpStreamData( void* pByteArray );
 
 protected:
     void timerEvent( QTimerEvent * event );
