@@ -12,6 +12,7 @@ public:
     static QThreadGenerator* GetSingleton( );
 
     QTcpClientSocketThread* GenerateTcpClientThread( );
+    QListenerThread* GenerateTcpListenerThread( );
 
     // Free qQueueEventParams in Event destructor
     void SendEvent( MyEnums::ThreadType thread, MyEnums::EventType event,
@@ -23,14 +24,13 @@ protected:
     explicit QThreadGenerator(QObject *parent = 0);
 
 private:
-    void PostLoggerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams );
-    void PostListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams );
+    void PostLoggerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
+    void PostListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  );
     void PostTcpPeerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
     void PostTcpClientEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
 
 private:
     static QThreadGenerator* pThreadGenerator;
-    static QListenerThread* pListenerThread;
     static QLoggerThread* pLogThread;
     
 signals:

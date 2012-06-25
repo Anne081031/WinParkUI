@@ -48,9 +48,18 @@ void QTcpClientSocketThread::HandleGetWholeTcpStreamData( void *pByteArray )
 
 void QTcpClientSocketThread::ProcessSendDataEvent( MyDataStructs::PQQueueEventParams pEventParams )
 {
-    if ( NULL == pEventParams ) {
+    if ( NULL == pEventParams || pEventParams->isEmpty( ) ) {
         return;
     }
+
+    MyDataStructs::QEventMultiHash& hash = pEventParams->head( );
+    QVariant varData = hash.value( MyEnums::NetworkParamData );
+    quint32 nBytePointer = varData.toUInt( );
+
+    QByteArray* pByteData = ( QByteArray* ) nBytePointer;
+    network.TcpSendData( pClientSocket, *pByteData );
+
+    delete pByteData;
 }
 
 void QTcpClientSocketThread::ProcessConnectEvent( MyDataStructs::PQQueueEventParams pEventParams )

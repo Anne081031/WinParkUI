@@ -16,9 +16,9 @@ namespace MyEnums {
         LogWrite,
         LogEventEnd,
         ////////////////////////////////////////
-        LinstenerEventBegin,
-        ListenerStartup,
-        LinstenerEventEnd,
+        TcpLinstenerEventBegin,
+        TcpListenerStartup,
+        TcpLinstenerEventEnd,
         ////////////////////////////////////////
         TcpPeerEventStart,
         TcpPeerCreateSocket,
@@ -46,7 +46,10 @@ namespace MyEnums {
     enum EventParamType {
         ///////////// Network
         NetworkParamIP,
-        NetworkParamPort
+        NetworkParamPort, // TCP UDP Shared
+        NetworkParamListenerPort,
+        NetworkParamListenerMaxConnections,
+        NetworkParamData
     };
 
     ///////////////// Network data stream or datagram

@@ -8,7 +8,7 @@ class QListenerThread : public QMyBaseThread
 {
     Q_OBJECT
 public:
-    static QListenerThread* GetSingleton( );
+    static QListenerThread* GetInstance( );
 
 protected:
     explicit QListenerThread(QObject *parent = 0);
@@ -18,7 +18,7 @@ protected:
     virtual void customEvent( QEvent* event );
 
 private:
-    static QListenerThread* pThreadInstance;
+    void ProcessListenerStartupEvent( MyDataStructs::PQQueueEventParams pEventParams );
 
 signals:
     void Accept( int socketDescriptor );

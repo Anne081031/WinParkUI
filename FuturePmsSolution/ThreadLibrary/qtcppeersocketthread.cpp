@@ -83,14 +83,24 @@ void QTcpPeerSocketThread::ProcessCreateSockeEvent( MyDataStructs::PQQueueEventP
 {
     bool bRet = false;
     QString strMsg;
+    QDateTime dt = QDateTime::currentDateTime( );
+    QString strDateTime = commonFunction.GetDateTimeString( dt );
+    QManipulateIniFile::LogType log;
 
     foreach ( const MyDataStructs::QEventMultiHash& hash, *pEventParams ) {
         foreach ( const QVariant& var, hash.values( ) ) {
              bRet = pPeerSocket->setSocketDescriptor( var.toInt( ) );
              if ( !bRet ) {
-                 strMsg = " Create peer socket to fail";
-                emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogThread );
+                 log = QManipulateIniFile::LogThread;
+                 strMsg = QString( " %1 Create peer socket to fail" ).arg( strDateTime );
+             } else {
+                 log = QManipulateIniFile::LogNetwork;
+                 QString strKey = QString( "%1:%2" ).arg( pPeerSocket->peerAddress( ).toString( ),
+                                                          QString::number( pPeerSocket->peerPort( ) ) );
+                 strMsg = QString ( "%1 %2 %3" ).arg( strDateTime, strKey, "Connected to Server." );
              }
+
+             emit NotifyMessage( LogText( strMsg ), log);
         }
     }
 }

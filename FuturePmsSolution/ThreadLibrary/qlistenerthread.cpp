@@ -1,20 +1,15 @@
 #include "qlistenerthread.h"
 
-QListenerThread* QListenerThread::pThreadInstance = NULL;
-
 QListenerThread::QListenerThread(QObject *parent) :
     QMyBaseThread(parent)
 {
 }
 
-QListenerThread* QListenerThread::GetSingleton( )
+QListenerThread* QListenerThread::GetInstance( )
 {
-    if ( NULL == pThreadInstance ) {
-        pThreadInstance = new QListenerThread( );
-        pThreadInstance->InitializeThread( );
-        pThreadInstance->moveToThread( pThreadInstance );
-        pThreadInstance->start( );
-    }
+    QListenerThread* pThreadInstance = new QListenerThread( );
+    pThreadInstance->InitializeThread( );
+    pThreadInstance->start( );
 
     return pThreadInstance;
 }
@@ -27,15 +22,6 @@ void QListenerThread::run( )
 
 void QListenerThread::InitializeSubThread( )
 {
-    QVariant varPort;
-    QVariant varMaxConnection;
-    bool bWrite = false;
-
-    manipulateFile.IniFileValue( QManipulateIniFile::IniNetwork, QManipulateIniFile::NetworkTcpServerPort, bWrite, varPort );
-    manipulateFile.IniFileValue( QManipulateIniFile::IniNetwork, QManipulateIniFile::NetworkTcpMaxConnection, bWrite, varMaxConnection );
-
-    network.StartupTcpServer( ( quint16 ) varPort.toUInt( ), varMaxConnection.toInt( ) );
-
     connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
     connect( &network, SIGNAL( Accept( int ) ), this, SLOT( HandleAccept( int ) ) );
 }
@@ -45,13 +31,28 @@ void QListenerThread::HandleAccept( int socketDescriptor ) // IOC IPC
     emit Accept( socketDescriptor );
 }
 
+void QListenerThread::ProcessListenerStartupEvent( MyDataStructs::PQQueueEventParams pEventParams )
+{
+    if ( NULL == pEventParams || pEventParams->isEmpty( ) ) {
+        return;
+    }
+
+    MyDataStructs::QEventMultiHash& hash = pEventParams->head( );
+
+    QVariant varPort = hash.value( MyEnums::NetworkParamListenerPort );
+    QVariant varMaxConnection = hash.value( MyEnums::NetworkParamListenerMaxConnections );
+    network.StartupTcpServer( ( quint16 ) varPort.toUInt( ), varMaxConnection.toInt( ) );
+}
+
 void QListenerThread::customEvent( QEvent *event )
 {
     QListenerThreadEvent* pEvent = ( QListenerThreadEvent* ) event;
     MyEnums::EventType type = ( MyEnums::EventType ) pEvent->type( );
+    MyDataStructs::PQQueueEventParams pEventParams = pEvent->GetEventParams( );
 
-   if ( MyEnums::ThreadExit == type ) {
-        pThreadInstance = NULL;
+    if ( MyEnums::TcpListenerStartup == type ) {
+        ProcessListenerStartupEvent( pEventParams );
+    } else if ( MyEnums::ThreadExit == type ) {
         LaunchThreadExit( );
     }
 }

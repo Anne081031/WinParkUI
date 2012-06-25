@@ -1,0 +1,11 @@
+[LogThread]
+Count=2
+1="void QTcpPeerSocketThread::ProcessCreateSockeEvent(QQueue<QMultiHash<int, QVariant> >*): 2012-06-25 14:47:47 127.0.0.1:4502 Connected to Server."
+2="void QTcpPeerSocketThread::ProcessCreateSockeEvent(QQueue<QMultiHash<int, QVariant> >*): 2012-06-25 14:47:47 127.0.0.1:4501 Connected to Server."
+
+[LogNetwork]
+Count=4
+1=void QTcpPeerClient::HandleError(QAbstractSocket::SocketError): QAbstractSocket::RemoteHostClosedError\nThe remote host closed the connection\n
+2=void QMyTcpSocket::GenerateLogText(bool): 2012-06-25 14:50:28 Local 127.0.0.1:50000 Peer 127.0.0.1:50000  Disconnected
+3=void QTcpPeerClient::HandleError(QAbstractSocket::SocketError): QAbstractSocket::RemoteHostClosedError\nThe remote host closed the connection\n
+4=void QMyTcpSocket::GenerateLogText(bool): 2012-06-25 14:50:28 Local 127.0.0.1:50001 Peer 127.0.0.1:50001  Disconnected

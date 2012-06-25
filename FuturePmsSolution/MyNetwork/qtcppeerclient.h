@@ -11,8 +11,6 @@ public:
     ~QTcpPeerClient( );
     
 private:
-    void GetKeyMsg( QString &strKey, QString &strMsg, bool bConnected );
-    void GenerateLogText( bool bConnected );
 
 private:
 

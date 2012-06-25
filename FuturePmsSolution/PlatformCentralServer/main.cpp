@@ -1,15 +1,20 @@
 #include "../CommonLibrary/qmyapplication.h"
 #include "mainwindow.h"
 
-QCommonFunction g_commonFunction;
-QCommonWidgetLibrary g_widgetLibrary;
+QCommonFunction* g_pCommonFunction;
+QCommonWidgetLibrary* g_pWidgetLibrary;
+QManipulateIniFile* g_pManipulateIniFile;
 
 int main(int argc, char *argv[])
 {
     QMyApplication a(argc, argv);
 
-    g_commonFunction.SetDateTimeFormat( );
-    g_commonFunction.InstallTextCodec( );
+    g_pCommonFunction = new QCommonFunction( );
+    g_pWidgetLibrary = new QCommonWidgetLibrary( );
+    g_pManipulateIniFile = new QManipulateIniFile( );
+
+    g_pCommonFunction->SetDateTimeFormat( );
+    g_pCommonFunction->InstallTextCodec( );
 
     MainWindow w;
     w.show();

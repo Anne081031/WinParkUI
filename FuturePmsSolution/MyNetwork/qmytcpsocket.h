@@ -6,6 +6,7 @@
 #include "../ManipulateIniFile/qmanipulateinifile.h"
 #include "../CommonLibrary/CommonMacro.h"
 #include "../CommonLibrary/qmanipulatemessage.h"
+#include "../CommonLibrary/qcommonfunction.h"
 
 class QMyTcpSocket : public QTcpSocket
 {
@@ -15,6 +16,8 @@ public:
 
 protected:
     bool GetTcpStreamData( );
+    void GetKeyMsg( QString &strKey, QString &strMsg, bool bConnected );
+    void GenerateLogText( bool bConnected );
 
 private:
     void SetMaxDataSize( quint64 nSize );
@@ -26,6 +29,7 @@ private:
 protected:
     QTextCodec* pTextCodec;
     QManipulateMessage processMsg;
+    QCommonFunction commonFunction;
     QByteArray* pByteArray;
 
 private:

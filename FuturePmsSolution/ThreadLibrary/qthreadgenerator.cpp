@@ -2,7 +2,6 @@
 #include <QMetaType>
 
 QThreadGenerator* QThreadGenerator::pThreadGenerator = NULL;
-QListenerThread* QThreadGenerator::pListenerThread = NULL;
 QLoggerThread* QThreadGenerator::pLogThread = NULL;
 
 QQueue< QTcpPeerSocketThread* > g_pPeerThreadQueue;
@@ -13,26 +12,34 @@ QThreadGenerator::QThreadGenerator(QObject *parent) :
     qRegisterMetaType< QManipulateIniFile::LogTypes >( "QManipulateIniFile::LogTypes" );
 
     pLogThread = QLoggerThread::GetSingleton( );
-    pListenerThread = QListenerThread::GetSingleton( );
 }
 
 QThreadGenerator* QThreadGenerator::GetSingleton( )
 {
     if ( NULL == pThreadGenerator ) {
         pThreadGenerator = new QThreadGenerator( );
-        connect( pListenerThread, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
-                        pThreadGenerator, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
-
-        connect( pListenerThread, SIGNAL( Accept( int ) ), pThreadGenerator, SLOT( HandleAccept( int ) ) );
     }
 
     return pThreadGenerator;
+}
+
+QListenerThread* QThreadGenerator::GenerateTcpListenerThread( )
+{
+    QListenerThread* pThreadInstance = QListenerThread::GetInstance( );
+    pThreadInstance->moveToThread( pThreadInstance );
+    connect( pThreadInstance, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
+                         this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pThreadInstance, SIGNAL( Accept( int ) ), this, SLOT( HandleAccept( int ) ) );
+
+    return pThreadInstance;
 }
 
 QTcpClientSocketThread* QThreadGenerator::GenerateTcpClientThread( )
 {
     QTcpClientSocketThread* pThreadInstance = QTcpClientSocketThread::GetInstance( );
     pThreadInstance->moveToThread( pThreadInstance );
+    connect( pThreadInstance, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
+                         this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
 
     return pThreadInstance;
 }
@@ -42,11 +49,11 @@ void QThreadGenerator::PostEvent( MyEnums::ThreadType thread, MyEnums::EventType
 {
     switch ( thread ) {
     case MyEnums::ThreadLogger :
-        PostLoggerEvent( event, pQueueEventParams );
+        PostLoggerEvent( event, pQueueEventParams, pLogThread );
         break;
 
     case MyEnums::ThreadListener :
-        PostListenerEvent( event, pQueueEventParams );
+        PostListenerEvent( event, pQueueEventParams, pReceiver );
         break;
 
     case MyEnums::ThreadTcpPeer :
@@ -75,7 +82,7 @@ void QThreadGenerator::PostTcpClientEvent( MyEnums::EventType event, MyDataStruc
     qApp->postEvent( pReceiver, pEvent );
 }
 
-void QThreadGenerator::PostLoggerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams )
+void QThreadGenerator::PostLoggerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver )
 {
     bool bLogEvent = ( ( MyEnums::LogEventBegin < event ) && ( MyEnums::LogEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
     if ( !bLogEvent ) {
@@ -85,12 +92,12 @@ void QThreadGenerator::PostLoggerEvent( MyEnums::EventType event, MyDataStructs:
     QLoggerEvent* pEvent = new QLoggerEvent( ( QEvent::Type ) event );
     pEvent->SetEventParams( pQueueEventParams );
 
-    qApp->postEvent( pLogThread, pEvent );
+    qApp->postEvent( pReceiver, pEvent );
 }
 
-void QThreadGenerator::PostListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams )
+void QThreadGenerator::PostListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  )
 {
-    bool bListenerEvent = ( ( MyEnums::LinstenerEventBegin < event ) && ( MyEnums::LinstenerEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
+    bool bListenerEvent = ( ( MyEnums::TcpLinstenerEventBegin < event ) && ( MyEnums::TcpLinstenerEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
     if ( !bListenerEvent ) {
         return;
     }
@@ -98,7 +105,7 @@ void QThreadGenerator::PostListenerEvent( MyEnums::EventType event, MyDataStruct
     QListenerThreadEvent* pEvent = new QListenerThreadEvent( ( QEvent::Type ) event );
     pEvent->SetEventParams( pQueueEventParams );
 
-    qApp->postEvent( pListenerThread, pEvent );
+    qApp->postEvent( pReceiver, pEvent );
 }
 
 void QThreadGenerator::SendEvent( MyEnums::ThreadType thread, MyEnums::EventType event,
@@ -126,6 +133,9 @@ void QThreadGenerator::HandleAccept( int socketDescriptor )
 {
     bool bThreadNoRunning = g_pPeerThreadQueue.isEmpty( );
     QTcpPeerSocketThread* pReceiver = bThreadNoRunning ? QTcpPeerSocketThread::GetInstance( ) : g_pPeerThreadQueue.dequeue( );
+
+    connect( pReceiver, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
+                         this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
 
     if ( bThreadNoRunning ) {
         pReceiver->moveToThread( pReceiver );

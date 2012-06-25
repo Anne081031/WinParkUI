@@ -23,20 +23,16 @@ void QTcpClient::timerEvent( QTimerEvent *event )
 
 void QTcpClient::HandleDisconnected( )
 {
-    QString strMsg = "Disconnect to server";
+    GenerateLogText( false );
 
     if ( QAbstractSocket::UnconnectedState == state( ) ) {
         connectToHost( serverAddress, nServerPort );
-        strMsg += ", Reconnect to server";
     }
-
-    emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogNetwork );
 }
 
 void QTcpClient::HandleConnected( )
 {
-    QString strMsg = "Connect to server successfully";
-    emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogNetwork );
+     GenerateLogText( true );
 }
 
 void QTcpClient::HandleError( QAbstractSocket::SocketError socketError )
@@ -51,6 +47,14 @@ void QTcpClient::HandleError( QAbstractSocket::SocketError socketError )
 void QTcpClient::IncomingData( )
 {
     OutputMsg( "Receive data" );
+    QByteArray byteData = readAll( );
+    if ( NULL == pByteArray ) {
+        pByteArray = new QByteArray( );
+        pByteArray->append( byteData );
+    }
+    emit GetWholeTcpStreamData( pByteArray );
+    pByteArray = NULL;
+    return;
     bool bRet = GetTcpStreamData( );
 
     if ( bRet ) {

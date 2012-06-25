@@ -46,6 +46,7 @@ QTcpClient* QMyNetwork::GenerateTcpClientSocket( QTextCodec *pCodec )
 {
     QTcpClient* pClientSocket = new QTcpClient( pCodec );
     connect( pClientSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pClientSocket, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamData( void* ) ) );
 
     return pClientSocket;
 }

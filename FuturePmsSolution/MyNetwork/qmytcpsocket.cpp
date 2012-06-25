@@ -23,6 +23,27 @@ void QMyTcpSocket::Clear( )
     nCurrentLen = 0;
 }
 
+void QMyTcpSocket::GetKeyMsg( QString &strKey, QString &strMsg, bool bConnected )
+{
+    strKey = QString( "Local %1:%2 Peer %3:%4" ).arg( localAddress( ).toString( ), QString::number( localPort( ) ), peerAddress( ).toString( ), QString::number( peerPort( ) ) );
+
+    QDateTime dt = QDateTime::currentDateTime( );
+    QString strDateTime = commonFunction.GetDateTimeString( dt );
+
+    strMsg = QString ( "%1 %2 %3" ).arg( strDateTime, strKey,
+            bConnected ? "Connected" : " Disconnected" );
+}
+
+void QMyTcpSocket::GenerateLogText( bool bConnected )
+{
+    QString strKey;
+    QString strMsg;
+
+    GetKeyMsg( strKey, strMsg, bConnected );
+
+    emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogNetwork );
+}
+
 bool QMyTcpSocket::GetTcpStreamData( )
 {
     bool bRet = false;
