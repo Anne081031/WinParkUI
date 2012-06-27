@@ -20,6 +20,7 @@ Debug {
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonWidgetLibrary", "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyNetwork", "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyDatabase", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "PlatformGlobal", "Debug" )
 
     ##Debug
     contains( DEFINES, StartupDebug ) {
@@ -32,6 +33,7 @@ Debug {
         system( copy ..\\LibExeFiles\\Debug\\MyNetworkDebug.dll .\\Debug )
         system( copy ..\\LibExeFiles\\Debug\\MyDatabaseDebug.dll .\\Debug )
         system( copy ..\\LibExeFiles\\Debug\\ManipulateFileDebug.dll .\\Debug )
+        system( copy ..\\LibExeFiles\\Debug\\PlatformGlobalDebug.dll .\\Debug )
     }
 }
 
@@ -44,6 +46,7 @@ Release {
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonWidgetLibrary", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyNetwork", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "MyDatabase", "" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "PlatformGlobal", "" )
 }
 
 TEMPLATE = app

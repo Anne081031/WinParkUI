@@ -14,6 +14,12 @@ class QMyTcpSocket : public QTcpSocket
 public:
     explicit QMyTcpSocket(QObject *parent = 0);
 
+    quint64 SendData( const char * data, qint64 maxSize );
+    quint64 SendData( const QByteArray & byteArray );
+    quint64 ReceiveData( char* data, qint64 maxSize );
+    QByteArray ReceiveData( qint64 maxSize );
+    QByteArray ReceiveData(  );
+
 protected:
     bool GetTcpStreamData( );
     void GetKeyMsg( QString &strKey, QString &strMsg, bool bConnected );

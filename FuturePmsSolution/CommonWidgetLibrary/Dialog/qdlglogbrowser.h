@@ -4,7 +4,7 @@
 #include <QDialog>
 #include "../MyWidget/qmysplitter.h"
 #include <QTreeWidgetItem>
-#include "../ManipulateIniFile/qmanipulateinifile.h"
+#include "../../ManipulateIniFile/qmanipulateinifile.h"
 
 namespace Ui {
 class QDlgLogBrowser;
@@ -18,12 +18,12 @@ public:
     explicit QDlgLogBrowser(QWidget *parent = 0);
     ~QDlgLogBrowser();
 
-    void BrowseLog( );
+    void BrowseLog( const QManipulateIniFile::LogFileNames file );
 
 private:
     void Initialize( );
     void BuildTree( );
-    void ReadLog( const QManipulateIniFile::LogTypes type, const QString& strDate );
+    void ReadLog( const QManipulateIniFile::LogFileNames file, const QManipulateIniFile::LogTypes type, const QString& strDate );
 
     void FreeItemWidget( );
     
@@ -32,6 +32,7 @@ private:
     QMySplitter splitter;
     QManipulateIniFile manipulateFile;
     QCommonFunction commonFunction;
+    QManipulateIniFile::LogFileNames logName;
 
 private slots:
     void on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int column);

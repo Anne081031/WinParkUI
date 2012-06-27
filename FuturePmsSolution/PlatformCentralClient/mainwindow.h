@@ -2,9 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "../ThreadLibrary/qthreadgenerator.h"
-#include "../CommonLibrary/qcommonfunction.h"
-#include "../CommonWidgetLibrary/commonwidgetlibrary.h"
+#include "../PlatformGlobal/qplatformglobal.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,15 +17,11 @@ public:
     ~MainWindow();
 
 private:
-    void CreateTcpClientThread( );
 
 private:
-    QTcpClientSocketThread *pTcpClientThreadServerX;
-    QTcpClientSocketThread *pTcpClientThreadServerY;
 
 private slots:
-    void HandleGetWholeTcpStreamDataServerX( void* pByteArray );
-    void HandleGetWholeTcpStreamDataServerY( void* pByteArray );
+    void HandleParseData( QString strServer, void* pByteArray );
     
 private slots:
     void on_pushButton_clicked();
@@ -41,6 +35,8 @@ private slots:
     void on_pushButton_5_clicked();
 
     void on_pushButton_6_clicked();
+
+    void on_pushButton_7_clicked();
 
 private:
     Ui::MainWindow *ui;

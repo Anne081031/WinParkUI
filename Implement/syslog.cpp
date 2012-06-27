@@ -21,6 +21,11 @@ CSysLog::CSysLog(QWidget* mainWnd, QWidget *parent) :
     hashScaleImage.insert( CommonDataType::BlobManualGate3, ui->lblImg2 );
     hashScaleImage.insert( CommonDataType::BlobManualGate4, ui->lblImg3 );
 
+    QDateTime currentDt = QDateTime::currentDateTime( );
+    ui->dtEnd->setDateTime( currentDt );
+    currentDt = currentDt.addDays( - 7 );
+    ui->dtStart->setDateTime( currentDt );
+
     ui->lblTitle->setText( windowTitle( ) );
     ControlDataGrid( );
     ui->tabWidget->setCurrentIndex( 1 );
@@ -115,13 +120,11 @@ void CSysLog::on_tabWidget_currentChanged(int index)
     QString strEnd;
     QString strStart;
 
-    QDate date = QDate::currentDate( );
-    CCommonFunction::Date2String( date, strEnd );
-    strEnd += " 23:59:59";
+    QDateTime dateTime = ui->dtStart->dateTime( );
+    CCommonFunction::DateTime2String( dateTime, strStart);
 
-    date = date.addDays( -7 );
-    CCommonFunction::Date2String( date, strStart );
-    strStart += " 00:00:00";
+    dateTime = ui->dtEnd->dateTime( );
+    CCommonFunction::DateTime2String( dateTime, strEnd );
 
     strWhere += " And infotime between '" + strStart + "' and '" + strEnd + "'";
 
@@ -173,4 +176,9 @@ void CSysLog::on_tableManualGate_cellClicked(int row, int column)
     for ( int nIndex = CommonDataType::BlobManualGate1; nIndex <= CommonDataType::BlobManualGate4; nIndex++ ) {
         GetImage( ( CommonDataType::BlobType ) nIndex, row );
     }
+}
+
+void CSysLog::on_btnQuery_clicked()
+{
+    on_tabWidget_currentChanged( ui->tabWidget->currentIndex( ) );
 }

@@ -11,11 +11,6 @@ public:
     ~QTcpClient( );
 
     bool Connect2Server( const QHostAddress &hostAddr, quint16 nPort );
-    quint64 SendData( const char * data, qint64 maxSize );
-    quint64 SendData( const QByteArray & byteArray );
-    quint64 ReceiveData( char* data, qint64 maxSize );
-    QByteArray ReceiveData( qint64 maxSize );
-    QByteArray ReceiveData(  );
 
 private:
 

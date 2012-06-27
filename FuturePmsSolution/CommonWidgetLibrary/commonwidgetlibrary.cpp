@@ -10,8 +10,8 @@ QCommonWidgetLibrary::~QCommonWidgetLibrary( )
 
 }
 
-void QCommonWidgetLibrary::BrowseLog( )
+void QCommonWidgetLibrary::BrowseLog( const QManipulateIniFile::LogFileNames file )
 {
     static QDlgLogBrowser dlg;
-    dlg.BrowseLog( );
+    dlg.BrowseLog( file );
 }

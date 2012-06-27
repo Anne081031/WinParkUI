@@ -1,10 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-extern QCommonFunction* g_pCommonFunction;
-extern QCommonWidgetLibrary* g_pWidgetLibrary;
-extern QManipulateIniFile* g_pManipulateIniFile;
-extern QThreadGenerator* g_pGenerator;
+extern QPlatformGlobal* g_pPlatformGlobal;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,7 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    CreateTcpClientThread( );
+    connect( g_pPlatformGlobal, SIGNAL( ParseData( QString, void* ) ),
+             this, SLOT( HandleParseData( QString, void* ) ) );
 }
 
 MainWindow::~MainWindow()
@@ -20,126 +18,61 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::CreateTcpClientThread( )
-{
-    pTcpClientThreadServerX = g_pGenerator->GenerateTcpClientThread( );
-    connect( pTcpClientThreadServerX, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamDataServerX( void* ) ) );
-
-    // IP : Port Distinguish
-    pTcpClientThreadServerY = g_pGenerator->GenerateTcpClientThread( );
-    connect( pTcpClientThreadServerY, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamDataServerY( void* ) ) );
-}
-
-void MainWindow::HandleGetWholeTcpStreamDataServerX( void *pByteArray )
-{
-    if ( NULL == pByteArray ) {
-        return;
-    }
-
-    QByteArray* pByteData = ( QByteArray* ) pByteArray;
-    QString strText( *pByteData );
-    OutputMsg( strText );
-
-    strText += "\n";
-    ui->textEdit->append( strText );
-
-    delete pByteData;
-}
-
-void MainWindow::HandleGetWholeTcpStreamDataServerY( void *pByteArray )
-{
-    if ( NULL == pByteArray ) {
-        return;
-    }
-
-    QByteArray* pByteData = ( QByteArray* ) pByteArray;
-    QString strText( *pByteData );
-    OutputMsg( strText );
-    strText += "\n";
-    ui->textEdit->append( strText );
-
-    delete pByteData;
-}
-
 void MainWindow::on_pushButton_clicked()
 {
-    MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
-    MyDataStructs::QEventMultiHash hash1;
+    MyDataStructs::QEventMultiHash hash;
+    QStringList lstTexts;
 
-    QString strText = "Hello2\nTest";
+    lstTexts <<"Hello1°¡" << "Hello2\nTest" << "Hello3";
+    g_pPlatformGlobal->GenerateLogHash( hash, lstTexts, QManipulateIniFile::LogDatabase );
 
-    hash1.insertMulti( QManipulateIniFile::LogDatabase, "Hello1°¡" );
-    hash1.insertMulti( QManipulateIniFile::LogDatabase, strText );
-    hash1.insertMulti( QManipulateIniFile::LogDatabase, "Hello3" );
+    lstTexts.clear( );
+    lstTexts <<"Hello11" << "Hello11" << "Hello33";
+     g_pPlatformGlobal->GenerateLogHash( hash, lstTexts, QManipulateIniFile::LogNetwork );
 
-    MyDataStructs::QEventMultiHash hash2;
-    hash2.insertMulti( QManipulateIniFile::LogNetwork, "Hello11" );
-    hash2.insertMulti( QManipulateIniFile::LogNetwork, "Hello22" );
-    hash2.insertMulti( QManipulateIniFile::LogNetwork, "Hello33" );
-
-    pEventParams->enqueue( hash1 );
-    pEventParams->enqueue( hash2 );
-    g_pGenerator->PostEvent( MyEnums::ThreadLogger, MyEnums::LogWrite, pEventParams );
+    g_pPlatformGlobal->StartupLogWrite( g_pPlatformGlobal->GetThreadGenerator( ).GenerateLogThread( ), hash );
 }
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
-    g_pGenerator->PostEvent( MyEnums::ThreadLogger, MyEnums::ThreadExit, pEventParams );
+    g_pPlatformGlobal->StartupThreadExit(
+                g_pPlatformGlobal->GetThreadGenerator( ).GenerateLogThread( ), MyEnums::ThreadLogger );
 }
 
 void MainWindow::on_pushButton_3_clicked()
 {
-    g_pWidgetLibrary->BrowseLog( );
+    g_pPlatformGlobal->BrowseLog( QManipulateIniFile::PlatformCentralLogClient );
 }
 
 void MainWindow::on_pushButton_4_clicked()
 {
-    MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
-    MyDataStructs::QEventMultiHash hash;
-    hash.insertMulti( MyEnums::NetworkParamIP, "192.168.1.20" );
-    hash.insertMulti( MyEnums::NetworkParamPort, "50000" );
-
-    pEventParams->enqueue( hash );
-    g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientConnect, pEventParams, pTcpClientThreadServerX );
-
-    hash.clear( );
-    hash.insertMulti( MyEnums::NetworkParamIP, "192.168.1.20" );//"127.0.0.1"
-    hash.insertMulti( MyEnums::NetworkParamPort, "50001" );
-
-    pEventParams = new MyDataStructs::QQueueEventParams;
-    pEventParams->enqueue( hash );
-    g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientConnect, pEventParams, pTcpClientThreadServerY );
+    g_pPlatformGlobal->TcpClientAllConnectOrDisconnect( true );
 }
 
 void MainWindow::on_pushButton_5_clicked()
 {
-   g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientDisconnect, NULL, pTcpClientThreadServerX );
-   g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientDisconnect, NULL, pTcpClientThreadServerY );
+   g_pPlatformGlobal->TcpClientAllConnectOrDisconnect( false );
 }
 
 void MainWindow::on_pushButton_6_clicked()
 {
-    MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
-    MyDataStructs::QEventMultiHash hash;
-
     QString strText = "Hello2\nTestÄãºÃÂð£¿";
-    QByteArray* pByteData = new QByteArray( );
-    QByteArray byteTmpData = g_pCommonFunction->GetTextCodec( )->fromUnicode( strText );
-    pByteData->append( byteTmpData );
-    quint32 nBytePointer = ( quint32 ) pByteData;
-    hash.insertMulti( MyEnums::NetworkParamData, nBytePointer );
-    pEventParams->enqueue( hash );
-    g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientSendData, pEventParams , pTcpClientThreadServerX );
+    QByteArray byteData = g_pPlatformGlobal->GetCommonFunctionObj().GetTextCodec( )->fromUnicode( strText );
 
+    g_pPlatformGlobal->TcpClientSendData2AllThreads( byteData );
+}
 
-    hash.clear( );
-    pByteData = new QByteArray( );
-    pEventParams = new MyDataStructs::QQueueEventParams;
+void MainWindow::on_pushButton_7_clicked()
+{
+    g_pPlatformGlobal->CreateTcpClientThread( QManipulateIniFile::PlatformCentralClient );
+}
 
-    pByteData->append( byteTmpData );
-    nBytePointer = ( quint32 ) pByteData;
-    hash.insertMulti( MyEnums::NetworkParamData, nBytePointer );
-    pEventParams->enqueue( hash );
-    g_pGenerator->PostEvent( MyEnums::ThreadTcpClient, MyEnums::TcpClientSendData, pEventParams , pTcpClientThreadServerY );
+void MainWindow::HandleParseData( QString strServer, void *pByteArray )
+{
+    QByteArray* pByteData = ( QByteArray* ) pByteArray;
+
+    strServer += " : " + QString ( *pByteData ) + "\n";
+    ui->textEdit->insertPlainText( strServer );
+
+    delete pByteData;
 }

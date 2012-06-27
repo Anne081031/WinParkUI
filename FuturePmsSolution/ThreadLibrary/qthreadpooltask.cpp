@@ -1,4 +1,5 @@
 #include "qthreadpooltask.h"
+#include "../ThreadLibrary/Event/qtcppeerthreadevent.h"
 
 QThreadPoolTask::QThreadPoolTask( QByteArray* pByteArray, QThread* pSender, QMyDatabase* pDatabase ) :
     pByteData( pByteArray ), pSenderThread( pSender ), pMyDatabase( pDatabase )
@@ -13,14 +14,45 @@ QThreadPoolTask* QThreadPoolTask::GetInstance( QByteArray* pByteArray, QThread* 
     return pTask;
 }
 
-void QThreadPoolTask::ProcessDatabaseTask( )
+void QThreadPoolTask::FreeByteArray( bool bFeedback )
 {
-
+    if ( NULL != pByteData && !bFeedback ) {
+        delete pByteData;
+        pByteData = NULL;
+    }
 }
 
-void QThreadPoolTask::ProcessOtherTask( )
+void QThreadPoolTask::PostThreadPoolFeedbackEvent( bool bFeedback )
 {
+    if ( !bFeedback ) {
+        return;
+    }
 
+    quint32 nBytePointer = ( quint32 ) pByteData;
+    MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
+    MyDataStructs::QEventMultiHash hash;
+    hash.insertMulti( MyEnums::NetworkParamData, nBytePointer );
+
+    pEventParams->enqueue( hash );
+
+    QTcpPeerThreadEvent* pEvent = new QTcpPeerThreadEvent( ( QEvent::Type ) MyEnums::TcpPeerThreadPoolFeedback );
+    pEvent->SetEventParams( pEventParams );
+
+    qApp->postEvent( pSenderThread, pEvent );
+}
+
+bool QThreadPoolTask::ProcessDatabaseTask( )
+{
+    bool bFeedback = false;
+
+    return bFeedback;
+}
+
+bool QThreadPoolTask::ProcessOtherTask( )
+{
+    bool bFeedback = false;
+
+    return bFeedback;
 }
 
 void QThreadPoolTask::run( )
@@ -29,12 +61,14 @@ void QThreadPoolTask::run( )
         return;
     }
 
+    bool bFeedback = false;
+
     if ( NULL == pMyDatabase ) {
-        ProcessOtherTask( );
+        bFeedback = ProcessOtherTask( );
     } else {
-        ProcessDatabaseTask( );
+        bFeedback = ProcessDatabaseTask( );
     }
 
-    delete pByteData;
-    pByteData = NULL;
+    PostThreadPoolFeedbackEvent( bFeedback );
+    FreeByteArray( bFeedback );
 }

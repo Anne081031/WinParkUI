@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'access2records.h'
 **
-** Created: Thu Jun 14 11:39:56 2012
+** Created: Wed Jun 27 13:40:40 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,23 +31,23 @@ static const uint qt_meta_data_CAccess2Records[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      22,   17,   16,   16, 0x08,
-      70,   16,   16,   16, 0x08,
-     116,  105,   16,   16, 0x08,
-     158,   16,   16,   16, 0x08,
-     194,  185,   16,   16, 0x08,
-     209,   16,   16,   16, 0x08,
-     231,   16,   16,   16, 0x08,
-     259,  254,   16,   16, 0x08,
+      28,   17,   16,   16, 0x08,
+      76,   16,   16,   16, 0x08,
+     111,   17,   16,   16, 0x08,
+     153,   16,   16,   16, 0x08,
+     189,  180,   16,   16, 0x08,
+     204,   16,   16,   16, 0x08,
+     226,   16,   16,   16, 0x08,
+     254,  249,   16,   16, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CAccess2Records[] = {
-    "CAccess2Records\0\0row,\0"
+    "CAccess2Records\0\0row,column\0"
     "on_tableAccessRecord_cellDoubleClicked(int,int)\0"
     "on_lblClose_linkActivated(QString)\0"
-    "row,column\0on_tableAccessRecord_cellClicked(int,int)\0"
+    "on_tableAccessRecord_cellClicked(int,int)\0"
     "on_btnMinimalize_clicked()\0bVisible\0"
     "HideCtrl(bool)\0on_btnQuery_clicked()\0"
     "on_btnSerach_clicked()\0arg1\0"

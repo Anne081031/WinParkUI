@@ -32,8 +32,22 @@ void QDatabaseThread::InitializeSubThread( )
 
 void QDatabaseThread::ProcessCrudEvent( MyDataStructs::PQQueueEventParams pEventParams )
 {
+    if ( NULL == pEventParams || pEventParams->isEmpty( ) ) {
+        return;
+    }
+
+    MyDataStructs::QEventMultiHash& hash = pEventParams->head( );
+
+    QVariant varData = hash.value( MyEnums::NetworkParamData );
+    quint32 nBytePointer = varData.toUInt( );
+    QByteArray* pByteData = ( QByteArray* ) nBytePointer;
+
+    varData = hash.value( MyEnums::NetworkParamSenderThread );
+    quint32 nThreadPointer = ( quint32 ) varData.toUInt( );
+    QThread* pSenderThread = ( QThread* ) nThreadPointer;
+
     QMyDatabase* pDatabase = pDatabaseGenerator->GeneratorDatabaseInstance( true );
-    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( NULL, NULL, pDatabase );
+    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteData, pSenderThread, pDatabase );
     dbThreadPool.start( pTask );
 }
 

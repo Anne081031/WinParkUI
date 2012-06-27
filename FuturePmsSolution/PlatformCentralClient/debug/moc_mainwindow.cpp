@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Mon Jun 25 15:06:26 2012
+** Created: Wed Jun 27 15:28:24 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,28 +31,28 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      23,   12,   11,   11, 0x08,
-      65,   12,   11,   11, 0x08,
-     107,   11,   11,   11, 0x08,
-     131,   11,   11,   11, 0x08,
-     157,   11,   11,   11, 0x08,
-     183,   11,   11,   11, 0x08,
-     209,   11,   11,   11, 0x08,
-     235,   11,   11,   11, 0x08,
+      33,   12,   11,   11, 0x08,
+      64,   11,   11,   11, 0x08,
+      88,   11,   11,   11, 0x08,
+     114,   11,   11,   11, 0x08,
+     140,   11,   11,   11, 0x08,
+     166,   11,   11,   11, 0x08,
+     192,   11,   11,   11, 0x08,
+     218,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0pByteArray\0"
-    "HandleGetWholeTcpStreamDataServerX(void*)\0"
-    "HandleGetWholeTcpStreamDataServerY(void*)\0"
+    "MainWindow\0\0strServer,pByteArray\0"
+    "HandleParseData(QString,void*)\0"
     "on_pushButton_clicked()\0"
     "on_pushButton_2_clicked()\0"
     "on_pushButton_3_clicked()\0"
     "on_pushButton_4_clicked()\0"
     "on_pushButton_5_clicked()\0"
     "on_pushButton_6_clicked()\0"
+    "on_pushButton_7_clicked()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -61,14 +61,14 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
-        case 0: _t->HandleGetWholeTcpStreamDataServerX((*reinterpret_cast< void*(*)>(_a[1]))); break;
-        case 1: _t->HandleGetWholeTcpStreamDataServerY((*reinterpret_cast< void*(*)>(_a[1]))); break;
-        case 2: _t->on_pushButton_clicked(); break;
-        case 3: _t->on_pushButton_2_clicked(); break;
-        case 4: _t->on_pushButton_3_clicked(); break;
-        case 5: _t->on_pushButton_4_clicked(); break;
-        case 6: _t->on_pushButton_5_clicked(); break;
-        case 7: _t->on_pushButton_6_clicked(); break;
+        case 0: _t->HandleParseData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
+        case 1: _t->on_pushButton_clicked(); break;
+        case 2: _t->on_pushButton_2_clicked(); break;
+        case 3: _t->on_pushButton_3_clicked(); break;
+        case 4: _t->on_pushButton_4_clicked(); break;
+        case 5: _t->on_pushButton_5_clicked(); break;
+        case 6: _t->on_pushButton_6_clicked(); break;
+        case 7: _t->on_pushButton_7_clicked(); break;
         default: ;
         }
     }

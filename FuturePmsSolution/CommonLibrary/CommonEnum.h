@@ -2,6 +2,25 @@
 #define COMMONENUM_H
 #include <QEvent>
 namespace MyEnums {
+    enum ApplicationType {
+        PlatformCentralClient,
+        PlatformCentralServer,
+        PlatformCentralDataReceiver
+    };
+
+    enum DatabaseType {
+        DbMySQL,
+        DbSQLServer,
+        DbSybase,
+        DbOracle,
+        DbDB2,
+        DbSQLlite,
+        DbBDB,
+        DbAccess,
+        DbPostgreSQL,
+        DbCount
+    };
+
     enum ThreadType {
         ThreadLogger,
         ThreadListener,
@@ -22,6 +41,7 @@ namespace MyEnums {
         ////////////////////////////////////////
         TcpPeerEventStart,
         TcpPeerCreateSocket,
+        TcpPeerThreadPoolFeedback,
         TcpPeerEventEnd,
         /////////////////////////////////////////
         TcpClientEventStart,
@@ -49,7 +69,8 @@ namespace MyEnums {
         NetworkParamPort, // TCP UDP Shared
         NetworkParamListenerPort,
         NetworkParamListenerMaxConnections,
-        NetworkParamData
+        NetworkParamData,
+        NetworkParamSenderThread
     };
 
     ///////////////// Network data stream or datagram

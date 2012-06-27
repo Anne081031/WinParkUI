@@ -6,6 +6,9 @@
 #include <QRunnable>
 #include <QThread>
 #include "../MyDatabase/qmydatabase.h"
+#include "../CommonLibrary/CommonEnum.h"
+#include "../CommonLibrary/CommonMacro.h"
+#include "../CommonLibrary/CommonDataStruct.h"
 
 class QThreadPoolTask : public QRunnable
 {
@@ -16,8 +19,10 @@ public:
     static QThreadPoolTask* GetInstance( QByteArray* pByteArray, QThread* pSender, QMyDatabase* pDatabase = NULL );
 
 private:
-    void ProcessDatabaseTask( );
-    void ProcessOtherTask( );
+    void PostThreadPoolFeedbackEvent( bool bFeedback );
+    bool ProcessDatabaseTask( );
+    bool ProcessOtherTask( );
+    inline void FreeByteArray( bool bFeedback );
 
 private:
     QByteArray* pByteData;

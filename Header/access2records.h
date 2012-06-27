@@ -29,7 +29,7 @@ protected:
 
 private:
     void FillTable( QString& strWhere );
-    void GetImage( CommonDataType::BlobType blob, int nRow );
+    void GetImage( CommonDataType::BlobType blob, int nRow, bool bEnter );
     void InitQuery( );
     void GetWhere( QString& strWhere );
     inline bool Search( QComboBox* pCB, int nRow, int nCol );
@@ -43,7 +43,7 @@ private:
     QComboBox* cbxQuery[ 9 ];
 
 private slots:
-    void on_tableAccessRecord_cellDoubleClicked(int row, int );
+    void on_tableAccessRecord_cellDoubleClicked(int row, int column );
     void on_lblClose_linkActivated(QString);
     void on_tableAccessRecord_cellClicked(int row, int column);
     void on_btnMinimalize_clicked();

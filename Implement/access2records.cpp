@@ -225,7 +225,7 @@ void CAccess2Records::on_btnMinimalize_clicked()
     pParent->ControlMonitor( true );
 }
 
-void CAccess2Records::GetImage( CommonDataType::BlobType blob, int nRow )
+void CAccess2Records::GetImage( CommonDataType::BlobType blob, int nRow, bool bEnter )
 {
 
     QSettings* pSystemSet = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
@@ -236,11 +236,23 @@ void CAccess2Records::GetImage( CommonDataType::BlobType blob, int nRow )
     if ( bSenseOpenGate ) {
         strWhere = QString( " Where cardno = '%1'" ).arg( ui->tableAccessRecord->item( nRow, 0 )->text( ) );
     } else {
-        strWhere = QString( " Where cardno = '%1' and inshebeiname = '%2' and intime = '%3'" ).arg(
-                                ui->tableAccessRecord->item( nRow, 0 )->text( ),
-                                ui->tableAccessRecord->item( nRow, 6 )->text( ),
-                                ui->tableAccessRecord->item( nRow, 7 )->text( ) );
+        QString strCardno = ui->tableAccessRecord->item( nRow, 0 )->text( );
+
+        if ( strCardno.contains( "(" ) ) {
+            strWhere = QString( " Where cardno = '%1' and %2shebeiname = '%3' and %4time = '%5'" ).arg(
+                                    strCardno,
+                                    bEnter ? "in" : "out",
+                                    ui->tableAccessRecord->item( nRow, bEnter ? 6 : 8 )->text( ),
+                                    bEnter ? "in" : "out",
+                                    ui->tableAccessRecord->item( nRow, bEnter ? 7 : 9 )->text( ) );
+        } else {
+            strWhere = QString( " Where cardno = '%1' and inshebeiname = '%2' and intime = '%3'" ).arg(
+                                    strCardno,
+                                    ui->tableAccessRecord->item( nRow, 6 )->text( ),
+                                    ui->tableAccessRecord->item( nRow, 7 )->text( ) );
+        }
     }
+
     QLabel* pLbl = lblScaleImage[ blob ];
 
     CCommonFunction::LoadFourImages( blob, strWhere, *pLbl, CCommonFunction::GetHistoryDb( ) );
@@ -249,7 +261,7 @@ void CAccess2Records::GetImage( CommonDataType::BlobType blob, int nRow )
 void CAccess2Records::on_tableAccessRecord_cellClicked(int row, int column)
 {
     for ( int nIndex = 0; nIndex < 8; nIndex++ ) {
-        GetImage( ( CommonDataType::BlobType ) nIndex, row );
+        GetImage( ( CommonDataType::BlobType ) nIndex, row, 4 > nIndex );
     }
 }
 
@@ -258,7 +270,7 @@ void CAccess2Records::on_lblClose_linkActivated(QString)
     close( );
 }
 
-void CAccess2Records::on_tableAccessRecord_cellDoubleClicked(int row, int )
+void CAccess2Records::on_tableAccessRecord_cellDoubleClicked(int row, int column )
 {
     QTableWidget* tab = ui->tableAccessRecord;
     QString strImagePath;

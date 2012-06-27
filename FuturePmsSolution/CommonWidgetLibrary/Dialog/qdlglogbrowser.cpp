@@ -30,12 +30,13 @@ void QDlgLogBrowser::BuildTree( )
 {
     QList< QTreeWidgetItem* > lstItems;
     QTreeWidgetItem* pItem = NULL;
-    QString strTexts[ ] = { "数据库日志", "网络日志", "线程", "其他日志"  };
+    QString strText;//[ ] = { "数据库日志", "网络日志", "线程", "其他日志"  };
     QDateEdit* pDateEdit = NULL;
 
     for ( int nIndex = 0; nIndex < QManipulateIniFile::LogItems; nIndex++ ) {
         pItem = new QTreeWidgetItem( );
-        pItem->setText( 0, strTexts[ nIndex ] );
+        manipulateFile.LogTypeName( ( QManipulateIniFile::LogTypes ) nIndex, strText );
+        pItem->setText( 0, strText );
         pItem->setData( 0, Qt::UserRole, nIndex );
         lstItems << pItem;
     }
@@ -66,14 +67,10 @@ void QDlgLogBrowser::FreeItemWidget( )
     }
 }
 
-void QDlgLogBrowser::ReadLog( const QManipulateIniFile::LogTypes type, const QString& strDate )
+void QDlgLogBrowser::ReadLog( const QManipulateIniFile::LogFileNames file, const QManipulateIniFile::LogTypes type, const QString& strDate )
 {
     QStringList lstLogs;
-    QString strPath;
-
-    commonFunction.GetPath( strPath, QCommonFunction::PathLogs );
-    strPath += strDate;
-    manipulateFile.ReadLogFile( type, strPath, lstLogs );
+    manipulateFile.ReadLogFile( file, strDate, type, lstLogs );
 
     FreeItemWidget( );
     ui->tableWidget->setRowCount( lstLogs.count( ) );
@@ -95,8 +92,9 @@ void QDlgLogBrowser::ReadLog( const QManipulateIniFile::LogTypes type, const QSt
     }
 }
 
-void QDlgLogBrowser::BrowseLog( )
+void QDlgLogBrowser::BrowseLog( const QManipulateIniFile::LogFileNames file )
 {
+    logName = file;
     ui->splitter->setWindowState( Qt::WindowMaximized );
     ui->splitter->show( );
 }
@@ -108,5 +106,5 @@ void QDlgLogBrowser::on_treeWidget_itemDoubleClicked(QTreeWidgetItem *item, int 
     QDateEdit* pDateEdit = qobject_cast< QDateEdit* >( pTreeWidget->itemWidget( item, 1 ) );
     QString strDate = pDateEdit->text( );
 
-    ReadLog( ( QManipulateIniFile::LogTypes ) nData, strDate );
+    ReadLog( logName, ( QManipulateIniFile::LogTypes ) nData, strDate );
 }

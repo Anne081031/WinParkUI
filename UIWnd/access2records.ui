@@ -44,7 +44,8 @@
      </rect>
     </property>
     <property name="toolTip">
-     <string>双击单元格查看库中库记录。</string>
+     <string>单击【卡号列】查看进出图片。
+双击单元格查看库中库记录。</string>
     </property>
     <property name="styleSheet">
      <string notr="true">background-image:url(none);</string>

@@ -94,3 +94,56 @@ quint64 QMyTcpSocket::GetCurrentDataSize( )
 {
     return nCurrentLen;
 }
+
+quint64 QMyTcpSocket::SendData( const char * data, qint64 maxSize )
+{
+    return write( data, maxSize );
+}
+
+quint64 QMyTcpSocket::SendData( const QByteArray & byteArray )
+{
+    quint64 nRet = 0;
+
+    int nPackageSize = 10 * 1024 * 1024;
+    int nTotalSize = byteArray.count( );
+    int nMode = nTotalSize / nPackageSize;
+    int nSurplus = nTotalSize % nPackageSize;
+    const char* pData = byteArray.data( );
+    const char* pPkgData = NULL;
+
+    if ( 0 == nMode ) { // < 10M
+        nRet += write( byteArray );
+    } else { // >= 10M
+        int nIndex = 0;
+        for ( nIndex = 0; nIndex < nMode; nIndex++ ) {
+            pPkgData = ( pData + nIndex * nPackageSize );
+            nRet += write( pPkgData, nPackageSize );
+        }
+
+        if ( 0 != nSurplus ) {
+            pPkgData = ( pData + nIndex * nPackageSize );
+            nRet += write( pPkgData, nSurplus );
+        }
+    }
+
+    if ( !flush( ) ) {
+        waitForBytesWritten( );
+    }
+
+    return nRet;
+}
+
+quint64 QMyTcpSocket::ReceiveData( char* data, qint64 maxSize )
+{
+    return read( data, maxSize );
+}
+
+QByteArray QMyTcpSocket::ReceiveData( qint64 maxSize )
+{
+    return read( maxSize );
+}
+
+QByteArray QMyTcpSocket::ReceiveData(  )
+{
+    return readAll( );
+}

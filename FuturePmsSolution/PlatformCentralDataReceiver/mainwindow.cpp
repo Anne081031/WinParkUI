@@ -1,8 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-extern QCommonFunction g_commonFunction;
-extern QCommonWidgetLibrary g_widgetLibrary;
+extern QPlatformGlobal* g_pPlatformGlobal;
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -14,4 +13,14 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    g_pPlatformGlobal->BrowseLog( QManipulateIniFile::PlatformCentralLogDataReceiver );
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    g_pPlatformGlobal->CreateTcpListenerhread( QManipulateIniFile::PlatformCentralDataReceiver );
 }

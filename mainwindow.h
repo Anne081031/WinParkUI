@@ -61,6 +61,7 @@ public:
     void SetBallotSense( bool bSense, int nChannel );
     void SendInOutImg( QString& strFile, bool bEnter, QDateTime& dtCurrent, QString& strPlate, QString& strCardNo );
     void SetAlertMsg( const QString& strText );
+    bool ShiftDlgISVisible( );
 
 private:
     void ModiyToobar( );

@@ -2,9 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "../ThreadLibrary/qthreadgenerator.h"
-#include "../CommonLibrary/qcommonfunction.h"
-#include "../CommonWidgetLibrary/commonwidgetlibrary.h"
+#include "../PlatformGlobal/qplatformglobal.h"
 
 namespace Ui {
 class MainWindow;
@@ -17,6 +15,15 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+private:
+
+private slots:
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+private:
     
 private:
     Ui::MainWindow *ui;

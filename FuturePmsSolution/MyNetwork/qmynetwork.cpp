@@ -66,27 +66,27 @@ bool QMyNetwork::TcpConnect2Server( QTcpClient* pTcpClient, const QHostAddress &
     return pTcpClient->Connect2Server( hostAddr, nPort );
 }
 
-quint64 QMyNetwork::TcpSendData( QTcpClient* pTcpClient,  const char * data, qint64 maxSize )
+quint64 QMyNetwork::TcpSendData( QMyTcpSocket* pTcpSocket,  const char * data, qint64 maxSize )
 {
-    return pTcpClient->SendData( data, maxSize );
+    return pTcpSocket->SendData( data, maxSize );
 }
 
-quint64 QMyNetwork::TcpSendData( QTcpClient* pTcpClient,  const QByteArray & byteArray )
+quint64 QMyNetwork::TcpSendData( QMyTcpSocket* pTcpSocket,  const QByteArray & byteArray )
 {
-    return pTcpClient->SendData( byteArray );
+    return pTcpSocket->SendData( byteArray );
 }
 
-quint64 QMyNetwork::TcpReceiveData( QTcpClient* pTcpClient,  char* data, qint64 maxSize )
+quint64 QMyNetwork::TcpReceiveData( QMyTcpSocket* pTcpSocket,  char* data, qint64 maxSize )
 {
-    return pTcpClient->ReceiveData( data, maxSize );
+    return pTcpSocket->ReceiveData( data, maxSize );
 }
 
-QByteArray QMyNetwork::QMyNetwork::TcpReceiveData( QTcpClient* pTcpClient,  qint64 maxSize )
+QByteArray QMyNetwork::QMyNetwork::TcpReceiveData( QMyTcpSocket* pTcpSocket,  qint64 maxSize )
 {
-    return pTcpClient->ReceiveData( maxSize );
+    return pTcpSocket->ReceiveData( maxSize );
 }
 
-QByteArray QMyNetwork::TcpReceiveData( QTcpClient* pTcpClient )
+QByteArray QMyNetwork::TcpReceiveData( QMyTcpSocket* pTcpSocket )
 {
-    return pTcpClient->ReceiveData( );
+    return pTcpSocket->ReceiveData( );
 }

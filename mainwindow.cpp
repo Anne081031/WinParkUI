@@ -65,6 +65,16 @@ CHeartbeatThread* g_pHeartbeatThread = NULL;
 CLocalCltCommunication* g_pLocalCltComm = NULL;
 CFtp* g_pFtp = NULL;
 
+bool MainWindow::ShiftDlgISVisible( )
+{
+    bool bRet = false;
+    if ( NULL != pDlgLogin ) {
+        bRet = pDlgLogin->isVisible( );
+    }
+
+    return bRet;
+}
+
 void MainWindow::SetDateTimeFormat( )
 {
     LCID localeID = ::GetSystemDefaultLCID( );

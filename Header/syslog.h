@@ -38,6 +38,7 @@ private slots:
     void on_btnMinimalize_clicked();
     void on_tabWidget_currentChanged(int index);
     void on_tableManualGate_cellClicked(int row, int column);
+    void on_btnQuery_clicked();
 };
 
 #endif // SYSLOG_H

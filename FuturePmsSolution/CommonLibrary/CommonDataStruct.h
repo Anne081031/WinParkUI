@@ -7,6 +7,8 @@
 namespace MyDataStructs {
     typedef QMultiHash< int, QVariant > QEventMultiHash, *PQEventMultiHash;
     typedef QQueue< QEventMultiHash > QQueueEventParams, *PQQueueEventParams;
+    typedef QList< QString > QMyStringList, *PQMyStringList;
+    typedef QMultiHash< QString, QThread* > QStringThread, *PQStringThread;
 
     typedef struct __sTableType {
         quint16 TabInOutRecord : 1;

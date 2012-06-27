@@ -21,11 +21,11 @@ public:
     QTcpClient* GenerateTcpClientSocket( QTextCodec* pCodec );
 
     bool TcpConnect2Server( QTcpClient* pTcpClient, const QHostAddress &hostAddr, quint16 nPort );
-    quint64 TcpSendData( QTcpClient* pTcpClient,  const char * data, qint64 maxSize );
-    quint64 TcpSendData( QTcpClient* pTcpClient,  const QByteArray & byteArray );
-    quint64 TcpReceiveData( QTcpClient* pTcpClient,  char* data, qint64 maxSize );
-    QByteArray TcpReceiveData( QTcpClient* pTcpClient,  qint64 maxSize );
-    QByteArray TcpReceiveData( QTcpClient* pTcpClient );
+    quint64 TcpSendData( QMyTcpSocket* pTcpSocket,  const char * data, qint64 maxSize );
+    quint64 TcpSendData( QMyTcpSocket* pTcpSocket,  const QByteArray & byteArray );
+    quint64 TcpReceiveData( QMyTcpSocket* pTcpSocket,  char* data, qint64 maxSize );
+    QByteArray TcpReceiveData( QMyTcpSocket* pTcpSocket,  qint64 maxSize );
+    QByteArray TcpReceiveData( QMyTcpSocket* pTcpSocket );
 
 private:
     QMyTcpServer* pTcpServer;

@@ -5,7 +5,6 @@ QLoggerThread* QLoggerThread::pThreadInstance = NULL;
 QLoggerThread::QLoggerThread(QObject *parent) :
     QMyBaseThread(parent)
 {
-
 }
 
 QLoggerThread* QLoggerThread::GetSingleton( )
@@ -28,13 +27,31 @@ void QLoggerThread::run( )
 
 void QLoggerThread::InitializeSubThread( )
 {
-    commonFunction.GetPath( strLogPath, QCommonFunction::PathLogs );
+    GetLogFileName( );
 }
 
 QString QLoggerThread::GetFileName( )
 {
     QDate date = QDate::currentDate( );
     return commonFunction.GetDateString( date );
+}
+
+void QLoggerThread::GetLogFileName( )
+{
+    QString strAppName = qApp->applicationName( );
+    QString strName;
+    QManipulateIniFile::LogFileNames logTmp;
+    logFileName = QManipulateIniFile::PlatformLogCount;
+
+    for ( int nIndex = 0; nIndex < QManipulateIniFile::PlatformLogCount; nIndex++ ) {
+        logTmp = ( QManipulateIniFile::LogFileNames ) nIndex;
+        manipulateFile.LogFileDirName(  logTmp, strName );
+
+        if ( strAppName == strName ) {
+            logFileName = logTmp;
+            break;
+        }
+    }
 }
 
 void QLoggerThread::ProcessWriteLogEvent( MyDataStructs::PQQueueEventParams pEventParams )
@@ -47,7 +64,7 @@ void QLoggerThread::ProcessWriteLogEvent( MyDataStructs::PQQueueEventParams pEve
             qDebug( ) << QLoggerThread::currentThread( )->metaObject( )->className( ) << ":" << var.toString( ) << endl;
             types = ( QManipulateIniFile::LogTypes ) hash.keys( ).at( 0 );
             strFile = strLogPath + GetFileName( );
-            manipulateFile.WriteLogFile( types, strFile, var );
+            manipulateFile.WriteLogFile( logFileName, types, var );
         }
      }
 }

@@ -67,7 +67,8 @@ DEFINES += QCOMMONFUNCTION_LIBRARY
 
 SOURCES += qcommonfunction.cpp \
     qmyapplication.cpp \
-    qmanipulatemessage.cpp
+    qmanipulatemessage.cpp \
+    qnetdataprocess.cpp
 
 HEADERS += qcommonfunction.h\
         QCommonFunction_global.h \
@@ -75,7 +76,8 @@ HEADERS += qcommonfunction.h\
     qmyapplication.h \
     CommonEnum.h \
     CommonDataStruct.h \
-    qmanipulatemessage.h
+    qmanipulatemessage.h \
+    qnetdataprocess.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

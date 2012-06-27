@@ -48,14 +48,36 @@ void QTcpPeerSocketThread::InitializeSubThread( )
     connect( &network, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamData( void* ) ) );
 }
 
+void QTcpPeerSocketThread::PostDatabaseEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread *pReceiver )
+{
+    bool bEvent = ( ( MyEnums::DatabaseEventStart < event ) && ( MyEnums::DatabaseEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
+        return;
+    }
+
+    QDatabaseThreadEvent* pEvent = new QDatabaseThreadEvent( ( QEvent::Type ) event );
+    pEvent->SetEventParams( pQueueEventParams );
+
+    qApp->postEvent( pReceiver, pEvent );
+}
+
 void QTcpPeerSocketThread::ProcessDatabaseData( QByteArray *pByteArray )
 {
+    //Post Event to Database thread
+    quint32 nBytePointer = ( quint32 ) pByteArray;
+    MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
+    MyDataStructs::QEventMultiHash hash;
+    hash.insertMulti( MyEnums::NetworkParamData, nBytePointer );
+    hash.insertMulti( MyEnums::NetworkParamSenderThread, ( quint32 ) this );
 
+    pEventParams->enqueue( hash );
+    PostDatabaseEvent( MyEnums::DatabaseCrud, pEventParams, pDatabaseThread );
 }
 
 void QTcpPeerSocketThread::ProcessOtherData( QByteArray *pByteArray )
 {
-
+    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteArray, this );
+    peerThreadPool.start( pTask );
 }
 
 void QTcpPeerSocketThread::HandleGetWholeTcpStreamData( void *pByteArray )
@@ -79,8 +101,28 @@ void QTcpPeerSocketThread::HandleThreadEnqueue( )
     }
 }
 
+void QTcpPeerSocketThread::ProcessThreadPoolFeedbackEvent( MyDataStructs::PQQueueEventParams pEventParams )
+{
+    if ( NULL == pEventParams || pEventParams->isEmpty( ) ) {
+        return;
+    }
+
+    MyDataStructs::QEventMultiHash& hash = pEventParams->head( );
+    QVariant varData = hash.value( MyEnums::NetworkParamData );
+    quint32 nBytePointer = varData.toUInt( );
+    QByteArray* pByteData = ( QByteArray* ) nBytePointer;
+
+    network.TcpSendData( pPeerSocket, * pByteData );
+
+    delete pByteData;
+}
+
 void QTcpPeerSocketThread::ProcessCreateSockeEvent( MyDataStructs::PQQueueEventParams pEventParams )
 {
+    if ( NULL == pEventParams || pEventParams->isEmpty( ) ) {
+        return;
+    }
+
     bool bRet = false;
     QString strMsg;
     QDateTime dt = QDateTime::currentDateTime( );
@@ -111,7 +153,9 @@ void QTcpPeerSocketThread::customEvent( QEvent *event )
     MyEnums::EventType type = ( MyEnums::EventType ) pEvent->type( );
     MyDataStructs::PQQueueEventParams pEventParams = pEvent->GetEventParams( );
 
-   if ( MyEnums::TcpPeerCreateSocket == type ) {
+    if ( MyEnums::TcpPeerThreadPoolFeedback == type ) {
+        ProcessThreadPoolFeedbackEvent( pEventParams );
+    } else if ( MyEnums::TcpPeerCreateSocket == type ) {
        ProcessCreateSockeEvent( pEventParams );
    } else if ( MyEnums::ThreadExit == type ) {
        LaunchThreadExit( );

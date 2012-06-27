@@ -12,7 +12,7 @@ public:
     QCommonWidgetLibrary();
     virtual ~QCommonWidgetLibrary( );
 
-    void BrowseLog(  );
+    void BrowseLog( const QManipulateIniFile::LogFileNames file  );
 
 signals:
 

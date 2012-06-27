@@ -2,7 +2,6 @@
 #include <QMetaType>
 
 QThreadGenerator* QThreadGenerator::pThreadGenerator = NULL;
-QLoggerThread* QThreadGenerator::pLogThread = NULL;
 
 QQueue< QTcpPeerSocketThread* > g_pPeerThreadQueue;
 
@@ -10,8 +9,11 @@ QThreadGenerator::QThreadGenerator(QObject *parent) :
     QObject(parent)
 {
     qRegisterMetaType< QManipulateIniFile::LogTypes >( "QManipulateIniFile::LogTypes" );
+}
 
-    pLogThread = QLoggerThread::GetSingleton( );
+QLoggerThread* QThreadGenerator::GenerateLogThread( )
+{
+    return QLoggerThread::GetSingleton( );
 }
 
 QThreadGenerator* QThreadGenerator::GetSingleton( )
@@ -49,7 +51,7 @@ void QThreadGenerator::PostEvent( MyEnums::ThreadType thread, MyEnums::EventType
 {
     switch ( thread ) {
     case MyEnums::ThreadLogger :
-        PostLoggerEvent( event, pQueueEventParams, pLogThread );
+        PostLoggerEvent( event, pQueueEventParams, pReceiver );
         break;
 
     case MyEnums::ThreadListener :
@@ -71,8 +73,8 @@ void QThreadGenerator::PostEvent( MyEnums::ThreadType thread, MyEnums::EventType
 
 void QThreadGenerator::PostTcpClientEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread *pReceiver )
 {
-    bool bLogEvent = ( ( MyEnums::TcpClientEventStart < event ) && ( MyEnums::TcpClientEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
-    if ( !bLogEvent ) {
+    bool bEvent = ( ( MyEnums::TcpClientEventStart < event ) && ( MyEnums::TcpClientEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
         return;
     }
 
@@ -84,8 +86,8 @@ void QThreadGenerator::PostTcpClientEvent( MyEnums::EventType event, MyDataStruc
 
 void QThreadGenerator::PostLoggerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver )
 {
-    bool bLogEvent = ( ( MyEnums::LogEventBegin < event ) && ( MyEnums::LogEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
-    if ( !bLogEvent ) {
+    bool bEvent = ( ( MyEnums::LogEventBegin < event ) && ( MyEnums::LogEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
         return;
     }
 
@@ -97,8 +99,8 @@ void QThreadGenerator::PostLoggerEvent( MyEnums::EventType event, MyDataStructs:
 
 void QThreadGenerator::PostListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  )
 {
-    bool bListenerEvent = ( ( MyEnums::TcpLinstenerEventBegin < event ) && ( MyEnums::TcpLinstenerEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
-    if ( !bListenerEvent ) {
+    bool bEvent = ( ( MyEnums::TcpLinstenerEventBegin < event ) && ( MyEnums::TcpLinstenerEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
         return;
     }
 
@@ -118,8 +120,8 @@ void QThreadGenerator::SendEvent( MyEnums::ThreadType thread, MyEnums::EventType
 
 void QThreadGenerator::PostTcpPeerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver )
 {
-    bool bListenerEvent = ( ( MyEnums::TcpPeerEventStart < event ) && ( MyEnums::TcpPeerEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
-    if ( !bListenerEvent ) {
+    bool bEvent = ( ( MyEnums::TcpPeerEventStart < event ) && ( MyEnums::TcpPeerEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
         return;
     }
 
@@ -157,5 +159,5 @@ void QThreadGenerator::HandleMessage( QString strMsg, QManipulateIniFile::LogTyp
 
     hash.insertMulti( type, strMsg );
     pEventParams->enqueue( hash );
-    PostEvent( MyEnums::ThreadLogger, MyEnums::LogWrite, pEventParams );
+    PostEvent( MyEnums::ThreadLogger, MyEnums::LogWrite, pEventParams, GenerateLogThread( ) );
 }

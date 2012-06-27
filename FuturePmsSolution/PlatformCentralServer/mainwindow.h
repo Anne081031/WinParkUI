@@ -2,9 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "../ThreadLibrary/qthreadgenerator.h"
-#include "../CommonLibrary/qcommonfunction.h"
-#include "../CommonWidgetLibrary/commonwidgetlibrary.h"
+#include "../PlatformGlobal/qplatformglobal.h"
 
 namespace Ui {
 class MainWindow;
@@ -19,11 +17,8 @@ public:
     ~MainWindow();
 
 private:
-    void CreateTcpListenerhread( );
 
 private:
-    QList< QListenerThread* > lstTcpListenerThread;
-    QThreadGenerator* pGenerator;
     
 private slots:
     void on_pushButton_clicked();

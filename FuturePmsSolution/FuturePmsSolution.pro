@@ -10,4 +10,5 @@ SUBDIRS += \
     Document \
     CommonLibrary \
     ThreadLibrary \
-    CommonWidgetLibrary
+    CommonWidgetLibrary \
+    PlatformGlobal

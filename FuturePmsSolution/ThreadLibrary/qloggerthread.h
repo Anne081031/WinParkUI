@@ -19,6 +19,7 @@ protected:
 
 private:
     void ProcessWriteLogEvent( MyDataStructs::PQQueueEventParams pEventParams );
+    void GetLogFileName( );
 
 private:
     inline QString GetFileName( );
@@ -27,6 +28,7 @@ private:
 private:
     static QLoggerThread* pThreadInstance;
     QString strLogPath;
+    QManipulateIniFile::LogFileNames logFileName;
     
 signals:
     

@@ -13,6 +13,7 @@ public:
 
     QTcpClientSocketThread* GenerateTcpClientThread( );
     QListenerThread* GenerateTcpListenerThread( );
+    QLoggerThread* GenerateLogThread( );
 
     // Free qQueueEventParams in Event destructor
     void SendEvent( MyEnums::ThreadType thread, MyEnums::EventType event,
@@ -31,7 +32,6 @@ private:
 
 private:
     static QThreadGenerator* pThreadGenerator;
-    static QLoggerThread* pLogThread;
     
 signals:
     

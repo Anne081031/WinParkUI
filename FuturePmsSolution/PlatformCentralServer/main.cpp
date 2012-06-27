@@ -1,20 +1,14 @@
 #include "../CommonLibrary/qmyapplication.h"
 #include "mainwindow.h"
 
-QCommonFunction* g_pCommonFunction;
-QCommonWidgetLibrary* g_pWidgetLibrary;
-QManipulateIniFile* g_pManipulateIniFile;
+QPlatformGlobal* g_pPlatformGlobal = NULL;
 
 int main(int argc, char *argv[])
 {
     QMyApplication a(argc, argv);
 
-    g_pCommonFunction = new QCommonFunction( );
-    g_pWidgetLibrary = new QCommonWidgetLibrary( );
-    g_pManipulateIniFile = new QManipulateIniFile( );
-
-    g_pCommonFunction->SetDateTimeFormat( );
-    g_pCommonFunction->InstallTextCodec( );
+    g_pPlatformGlobal = QPlatformGlobal::GetSingleton( );
+    g_pPlatformGlobal->InitializeApplication( MyEnums::PlatformCentralServer );
 
     MainWindow w;
     w.show();

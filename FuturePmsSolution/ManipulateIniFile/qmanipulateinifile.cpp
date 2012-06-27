@@ -4,30 +4,51 @@
 QManipulateIniFile::QManipulateIniFile( QObject* parent ) : QObject( parent )
 {
     pTextCodec = commonFunction.GetTextCodec( );
-    pSettingsLog = NULL;
-    pSettingsIni = NULL;
-
-    commonFunction.GetPath( strCfgFile, QCommonFunction::PathConfigs );
-
-    QString strName;
-    commonFunction.GetPathTypeName( QCommonFunction::PathConfigs, strName );
-    strCfgFile += strName + ".ini";
-
-    pSettingsIni = new QSettings( strCfgFile, QSettings::IniFormat );
-    pSettingsIni->setIniCodec( pTextCodec );
+    OperateSettingsInis( true );
+    OperateSettingsLogs( true );
 }
 
 QManipulateIniFile::~QManipulateIniFile( )
 {
-    if ( NULL != pSettingsIni ) {
-        delete pSettingsIni;
-        pSettingsIni = NULL;
-    }
+    OperateSettingsInis( false );
+    OperateSettingsLogs( false );
+}
 
-    if ( NULL != pSettingsLog ) {
-        delete pSettingsLog;
-        pSettingsLog = NULL;
+void QManipulateIniFile::OperateSettingsInis( bool bInitialize )
+{
+    for ( int nIndex = 0; nIndex < PlatformCount; nIndex++ ) {
+        if ( bInitialize ) {
+            pSettingsInis[ nIndex ]= NULL;
+        } else {
+            if ( NULL != pSettingsInis[ nIndex ] ) {
+                delete pSettingsInis[ nIndex ];
+                pSettingsInis[ nIndex ] = NULL;
+            }
+        }
     }
+}
+
+void QManipulateIniFile::OperateSettingsLogs( bool bInitialize )
+{
+    for ( int nIndex = 0; nIndex < PlatformLogCount; nIndex++ ) {
+        if ( bInitialize ) {
+            pSettingsLogs[ nIndex ]= NULL;
+        } else {
+            if ( NULL != pSettingsLogs[ nIndex ] ) {
+                delete pSettingsLogs[ nIndex ];
+                pSettingsLogs[ nIndex ] = NULL;
+            }
+        }
+    }
+}
+
+void QManipulateIniFile::GetCfgFullName( QString &strFullName, const IniFileNames enumType )
+{
+    commonFunction.GetPath( strFullName, QCommonFunction::PathConfigs );
+
+    QString strName;
+    CfgFileName( enumType, strName );
+    strFullName += strName + ".ini";
 }
 
 void QManipulateIniFile::GetSettings( QSettings*& pSettings, const QString &strFile )
@@ -51,8 +72,14 @@ void QManipulateIniFile::GetSettings( QSettings*& pSettings, const QString &strF
     }
 }
 
-void QManipulateIniFile::IniFileValue( const IniFileSections section, const IniFileSectionItems item, const bool bWrite, QVariant &varValue )
+void QManipulateIniFile::IniFileValue( const IniFileNames file, const IniFileSections section, const IniFileSectionItems item, const bool bWrite, QVariant &varValue )
 {
+    QString strFullName;
+    GetCfgFullName( strFullName, file );
+    GetSettings( pSettingsInis[ file ], strFullName );
+
+    QSettings* pSettingsIni = pSettingsInis[ file ];
+
     QString strSection;
     CfgFileSectionName( section, strSection );
 
@@ -68,9 +95,17 @@ void QManipulateIniFile::IniFileValue( const IniFileSections section, const IniF
     }
 }
 
-void QManipulateIniFile::WriteLogFile( const LogTypes types, const QString &strFile, const QVariant &var )
+void QManipulateIniFile::WriteLogFile( const LogFileNames file, const LogTypes types, const QVariant &var )
 {
-    GetSettings( pSettingsLog, strFile );
+    QString strFullName;
+    GetLogFullName( strFullName, file );
+
+    QDate date = QDate::currentDate( );
+    QString strDate = commonFunction.GetDateString( date );
+    strFullName += strDate;
+
+    GetSettings( pSettingsLogs[ file ], strFullName );
+    QSettings* pSettingsLog = pSettingsLogs[ file ];
 
     QString strName;
     LogTypeName( types, strName );
@@ -83,9 +118,14 @@ void QManipulateIniFile::WriteLogFile( const LogTypes types, const QString &strF
     pSettingsLog->setValue( strKey.arg( nCount ), var );
 }
 
-void QManipulateIniFile::ReadLogFile( const LogTypes types, const QString &strFile, QStringList &lstLogs )
+void QManipulateIniFile::ReadLogFile( const LogFileNames file, const QString& strDate, const LogTypes types, QStringList& lstLogs )
 {
-    GetSettings( pSettingsLog, strFile );
+    QString strFullName;
+    GetLogFullName( strFullName, file );
+    strFullName += strDate;
+
+    GetSettings( pSettingsLogs[ file ], strFullName );
+    QSettings* pSettingsLog = pSettingsLogs[ file ];
 
     QString strName;
     LogTypeName( types, strName );
@@ -105,20 +145,42 @@ void QManipulateIniFile::ReadLogFile( const LogTypes types, const QString &strFi
     }
 }
 
-void QManipulateIniFile::CfgFileSectionName( const IniFileSections enumType, QString& strName )
+void QManipulateIniFile::GetLogFullName( QString &strFullName, const LogFileNames enumType )
+{
+    commonFunction.GetPath( strFullName, QCommonFunction::PathLogs );
+
+    QString strName;
+    QString strSeperator = "/";
+    LogFileDirName( enumType, strName );
+    strFullName += strName + strSeperator;
+}
+
+void QManipulateIniFile::CfgFileName( const IniFileNames enumType, QString &strName )
 {
     QMetaEnum metaEnum = metaObject( )->enumerator( 0 );
     strName = metaEnum.key( enumType );
 }
 
-void QManipulateIniFile::CfgFileSectionItemName( const IniFileSectionItems enumType, QString& strName )
+void QManipulateIniFile::LogFileDirName( const LogFileNames enumType, QString &strName )
 {
     QMetaEnum metaEnum = metaObject( )->enumerator( 1 );
     strName = metaEnum.key( enumType );
 }
 
-void QManipulateIniFile::LogTypeName( const LogTypes enumType, QString& strName )
+void QManipulateIniFile::CfgFileSectionName( const IniFileSections enumType, QString& strName )
 {
     QMetaEnum metaEnum = metaObject( )->enumerator( 2 );
+    strName = metaEnum.key( enumType );
+}
+
+void QManipulateIniFile::CfgFileSectionItemName( const IniFileSectionItems enumType, QString& strName )
+{
+    QMetaEnum metaEnum = metaObject( )->enumerator( 3 );
+    strName = metaEnum.key( enumType );
+}
+
+void QManipulateIniFile::LogTypeName( const LogTypes enumType, QString& strName )
+{
+    QMetaEnum metaEnum = metaObject( )->enumerator( 4 );
     strName = metaEnum.key( enumType );
 }

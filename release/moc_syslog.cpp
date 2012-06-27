@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'syslog.h'
 **
-** Created: Thu Jun 14 13:32:27 2012
+** Created: Tue Jun 26 10:01:12 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CSysLog[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,6 +35,7 @@ static const uint qt_meta_data_CSysLog[] = {
       44,    8,    8,    8, 0x08,
       77,   71,    8,    8, 0x08,
      121,  110,    8,    8, 0x08,
+     161,    8,    8,    8, 0x08,
 
        0        // eod
 };
@@ -44,6 +45,7 @@ static const char qt_meta_stringdata_CSysLog[] = {
     "on_btnMinimalize_clicked()\0index\0"
     "on_tabWidget_currentChanged(int)\0"
     "row,column\0on_tableManualGate_cellClicked(int,int)\0"
+    "on_btnQuery_clicked()\0"
 };
 
 const QMetaObject CSysLog::staticMetaObject = {
@@ -79,9 +81,10 @@ int CSysLog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 1: on_btnMinimalize_clicked(); break;
         case 2: on_tabWidget_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 3: on_tableManualGate_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 4: on_btnQuery_clicked(); break;
         default: ;
         }
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

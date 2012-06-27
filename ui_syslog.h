@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'syslog.ui'
 **
-** Created: Thu May 31 17:17:20 2012
+** Created: Tue Jun 26 09:34:29 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,8 +14,10 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QDateTimeEdit>
 #include <QtGui/QFrame>
 #include <QtGui/QGroupBox>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
 #include <QtGui/QPushButton>
@@ -50,6 +52,13 @@ public:
     QLabel *lblImg2;
     QGroupBox *groupBox_7;
     QLabel *lblImg3;
+    QWidget *widget1;
+    QHBoxLayout *horizontalLayout;
+    QLabel *label;
+    QDateTimeEdit *dtStart;
+    QLabel *label_2;
+    QDateTimeEdit *dtEnd;
+    QPushButton *btnQuery;
     QPushButton *btnMinimalize;
     QLabel *lblTitle;
     QLabel *lblClose;
@@ -72,7 +81,7 @@ public:
         groupBox_2->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tabWidget = new QTabWidget(groupBox_2);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 20, 1261, 391));
+        tabWidget->setGeometry(QRect(10, 50, 1261, 361));
         tabWidget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
@@ -227,6 +236,39 @@ public:
         lblImg3->setFrameShadow(QFrame::Sunken);
         lblImg3->setLineWidth(2);
         lblImg3->setScaledContents(true);
+        widget1 = new QWidget(groupBox_2);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        widget1->setGeometry(QRect(11, 20, 497, 25));
+        horizontalLayout = new QHBoxLayout(widget1);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(widget1);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        horizontalLayout->addWidget(label);
+
+        dtStart = new QDateTimeEdit(widget1);
+        dtStart->setObjectName(QString::fromUtf8("dtStart"));
+        dtStart->setCalendarPopup(true);
+
+        horizontalLayout->addWidget(dtStart);
+
+        label_2 = new QLabel(widget1);
+        label_2->setObjectName(QString::fromUtf8("label_2"));
+
+        horizontalLayout->addWidget(label_2);
+
+        dtEnd = new QDateTimeEdit(widget1);
+        dtEnd->setObjectName(QString::fromUtf8("dtEnd"));
+        dtEnd->setCalendarPopup(true);
+
+        horizontalLayout->addWidget(dtEnd);
+
+        btnQuery = new QPushButton(widget1);
+        btnQuery->setObjectName(QString::fromUtf8("btnQuery"));
+
+        horizontalLayout->addWidget(btnQuery);
+
         btnMinimalize = new QPushButton(widget);
         btnMinimalize->setObjectName(QString::fromUtf8("btnMinimalize"));
         btnMinimalize->setGeometry(QRect(613, 710, 75, 23));
@@ -320,6 +362,11 @@ public:
         lblImg2->setText(QString());
         groupBox_7->setTitle(QApplication::translate("CSysLog", "\345\272\223\344\270\255\345\272\223\345\207\272\345\217\243", 0, QApplication::UnicodeUTF8));
         lblImg3->setText(QString());
+        label->setText(QApplication::translate("CSysLog", "\345\274\200\345\247\213\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        dtStart->setDisplayFormat(QApplication::translate("CSysLog", "yyyy-MM-dd HH:mm:ss", 0, QApplication::UnicodeUTF8));
+        label_2->setText(QApplication::translate("CSysLog", "\346\210\252\346\255\242\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        dtEnd->setDisplayFormat(QApplication::translate("CSysLog", "yyyy-MM-dd HH:mm:ss", 0, QApplication::UnicodeUTF8));
+        btnQuery->setText(QApplication::translate("CSysLog", "\346\237\245\350\257\242", 0, QApplication::UnicodeUTF8));
         btnMinimalize->setText(QApplication::translate("CSysLog", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));
         lblTitle->setText(QString());
         lblClose->setText(QString());

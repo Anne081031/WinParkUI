@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'handheldicprocess.h'
 **
-** Created: Thu Jun 14 13:32:58 2012
+** Created: Tue Jun 26 10:01:42 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

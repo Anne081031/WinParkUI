@@ -1012,7 +1012,7 @@ void CProcessData::PlateCardComfirmPass( QString strCardNo, char cCan, QString s
 
 void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString strCurPlate )
 {
-    quint8 byte4 = byData[ 4 ];
+        quint8 byte4 = byData[ 4 ];
         quint8 byte5 = byData[ 5 ]; // 1 ( +2 ) Enetr Park / 2 ( +2 ) Leave Park / 80 Register Card
         //quint8 byte6 = byData[ 6 ]; //LSB BE LE
         //quint8 byte7 = byData[ 7 ];
@@ -1074,16 +1074,23 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
             }
         }
 
+        QByteArray vData;
+        QStringList lstRows;
+        ParkCardType cardKind = CardNone;
+        GetCardType2( strCardNumber, lstRows, cardKind );
+
+        if ( !bEnter && !bPlate && CardTime == cardKind && pMainWindow->ShiftDlgISVisible( ) ) {
+            QString strText = "½»½Ó°à";
+            pMainWindow->SetAlertMsg( strText );
+            qDebug( ) << "Shift" << endl;
+            return;
+        }
+
         int nChannel = GetChannelByCan( ( char ) byData[ 5 ] );
         CaptureImage( strCardNumber, nChannel, CommonDataType::CaptureJPG );
 
         qDebug( ) << " Card No. : " << strCardNumber << endl;
         // Get Card Info From Database
-
-        QByteArray vData;
-        QStringList lstRows;
-        ParkCardType cardKind = CardNone;
-        GetCardType2( strCardNumber, lstRows, cardKind );
 
         //if ( !bPlate && ExcludeRemoteCardDuplication( nCardNumber, bEnter ) ) { // Remote card interval
         //    return;
@@ -3008,6 +3015,12 @@ void CProcessData::Dispenser( QByteArray &byData, QByteArray &vData )
 void CProcessData::BallotSense( QByteArray &byData, QByteArray &vData, bool bEnterBallot, bool bEneterPark )
 {
     int nChannel = GetChannelByCan( byData[ 5 ] );
+
+    if ( !bEnterBallot ) {
+        bool bEnter = ( 0 == nChannel % 2 );
+        bPlateRecognize[ bEnter ] = false;
+        strCurrentPlate[ bEnter ].clear( );
+    }
 
     if ( !bEnterBallot && !bPlateClear[ nChannel ][ 0 ] ) {
         return;

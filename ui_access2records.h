@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'access2records.ui'
 **
-** Created: Thu May 31 17:17:21 2012
+** Created: Wed Jun 27 13:38:41 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -437,7 +437,8 @@ public:
         QTableWidgetItem *___qtablewidgetitem12 = tableAccessRecord->horizontalHeaderItem(12);
         ___qtablewidgetitem12->setText(QApplication::translate("CAccess2Records", "\347\246\273\345\274\200\350\275\246\347\211\214", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
-        tableAccessRecord->setToolTip(QApplication::translate("CAccess2Records", "\345\217\214\345\207\273\345\215\225\345\205\203\346\240\274\346\237\245\347\234\213\345\272\223\344\270\255\345\272\223\350\256\260\345\275\225\343\200\202", 0, QApplication::UnicodeUTF8));
+        tableAccessRecord->setToolTip(QApplication::translate("CAccess2Records", "\345\215\225\345\207\273\343\200\220\345\215\241\345\217\267\345\210\227\343\200\221\346\237\245\347\234\213\350\277\233\345\207\272\345\233\276\347\211\207\343\200\202\n"
+"\345\217\214\345\207\273\345\215\225\345\205\203\346\240\274\346\237\245\347\234\213\345\272\223\344\270\255\345\272\223\350\256\260\345\275\225\343\200\202", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         gb0->setTitle(QApplication::translate("CAccess2Records", "\345\233\276\345\203\2171", 0, QApplication::UnicodeUTF8));
         lblImg0->setText(QString());
