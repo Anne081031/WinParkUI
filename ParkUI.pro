@@ -156,7 +156,8 @@ SOURCES += mainwindow.cpp \
     ThirdParty/scu.cpp \
     Timer/timerthread.cpp \
     Timer/timerproc.cpp \
-    Dialog/dlgcardloss.cpp
+    Dialog/dlgcardloss.cpp \
+    PlateDilivery/cplatediliverythread.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -287,7 +288,8 @@ HEADERS  += Header/valuecard.h \
     ThirdParty/scu.h \
     Timer/timerthread.h \
     Timer/timerproc.h \
-    Dialog/dlgcardloss.h
+    Dialog/dlgcardloss.h \
+    PlateDilivery/cplatediliverythread.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

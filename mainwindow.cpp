@@ -247,7 +247,7 @@ void MainWindow::Singleton( )
     CheckResolution( );
 }
 
-void MainWindow::RecognizePlate( QString strPlate, int nChannel )
+void MainWindow::RecognizePlate( QString strPlate, int nChannel, int nConfidence )
 {
     CProcessData* pProcessor = CProcessData::GetProcessor( pSerialPort, this );
 
@@ -255,7 +255,7 @@ void MainWindow::RecognizePlate( QString strPlate, int nChannel )
         return;
     }
 
-    pProcessor->RecognizePlate( strPlate, nChannel );
+    pProcessor->RecognizePlate( strPlate, nChannel, nConfidence );
 }
 
 void MainWindow::GetParkName( QString &strName, char cCan, int nIndex )

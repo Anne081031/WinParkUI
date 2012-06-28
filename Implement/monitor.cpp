@@ -132,7 +132,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     pVehicle = NULL;
     ControlDataGrid( *ui->tabRecord );
     bool bRet = connect( pParent, SIGNAL( OnUserChanged( QString&, QString& ) ), this, SLOT( ChangeUser( QString&, QString& ) ) );
-    bRet = connect( this, SIGNAL( OnRecognizePlate( QString, int )), pParent, SLOT( RecognizePlate( QString, int ) ) );
+    bRet = connect( this, SIGNAL( OnRecognizePlate( QString, int, int )), pParent, SLOT( RecognizePlate( QString, int, int ) ) );
     bRet = connect( this, SIGNAL( OnDirectionIndicator( int, bool ) ), this, SLOT( DirectionIndicator( int, bool ) ) );
 
     CCommonFunction::GetPath( strImagePath, CommonDataType::PathUIImage );
@@ -825,7 +825,7 @@ void CMonitor::DisplayPlate( int nChannel )
 
     CCommonFunction::DisplayPlateChar( *this, nChannel, strPlate );
     //Sleep( 500 );
-    emit OnRecognizePlate( strPlate, nChannel );
+    emit OnRecognizePlate( strPlate, nChannel, pResult->nConfidence );
 }
 
 CVehicleLicense* CMonitor::GetPlateRecognization( )

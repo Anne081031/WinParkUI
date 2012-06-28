@@ -10,6 +10,7 @@ QListenerThread* QListenerThread::GetInstance( )
     QListenerThread* pThreadInstance = new QListenerThread( );
     pThreadInstance->InitializeThread( );
     pThreadInstance->start( );
+    pThreadInstance->moveToThread( pThreadInstance );
 
     return pThreadInstance;
 }

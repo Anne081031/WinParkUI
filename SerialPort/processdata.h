@@ -46,7 +46,7 @@ public:
     void CheckCenterContronller( bool bEnter, QDateTime& dtDateTime );
 
     void TimeCardPass( int nAmount, int nHour, int nMin, QByteArray& byData );
-    void RecognizePlate( QString strPlate, int nChannel );
+    void RecognizePlate( QString strPlate, int nChannel, int nConfidence );
 
     void ParkspaceFull( bool bFull, QString& strInfo, char cCan );
     void CaptureManualGateImage( char cCan, QString& strWhere );
@@ -177,6 +177,8 @@ private:
     inline bool GetTimeCardBuffer( );
     void CreateBufferTable( );
 
+    void SendPlate( QString strPlate, int nChannel, int nConfidence );
+
 private:
     CWinSerialPort* pSerialPort;
     CPortCmd portCmd;
@@ -215,12 +217,15 @@ private:
     QHash< quint32, quint64 > hashCardTime;
     QList< QByteArray > audioList[ 2 ];
     QList< QByteArray > ledList[ 2 ];
+    bool bStartupPlateDilivery;
 
 signals:
     void OnResponseUserRequest( QByteArray& byData, int nMinor );
+    void PlateDelivery( QStringList lstData );
 
 private slots:
     void PlateCardComfirmPass( QString strCardNo, char cCan, QString strPlate );
+    void HandleWeighing( QStringList lstData );
 
     //CardExitInfo( byData, vData, false, nMin, nHour, nAmount ); // 2011 12 18
     //CCDisplayInfo( byData, vData, nMin, nHour, nAmount, bEnter ); // 2011 12 18

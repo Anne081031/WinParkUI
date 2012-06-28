@@ -180,7 +180,7 @@ private slots:
     void UpdateLableText(  );
     void SendStateHB( );
     void ReconnectDatabase( );
-    void RecognizePlate( QString strPlate, int nChannel );
+    void RecognizePlate( QString strPlate, int nChannel, int nConfidence );
     void SendTime( );
     void Expiration( QString strMsg, bool bExpiration, bool bRetry );
 

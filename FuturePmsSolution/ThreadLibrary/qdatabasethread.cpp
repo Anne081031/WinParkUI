@@ -12,8 +12,8 @@ QDatabaseThread* QDatabaseThread::GetSingleton( )
     if ( NULL == pThreadInstance ) {
         pThreadInstance = new QDatabaseThread( );
         pThreadInstance->InitializeThread( );
-        pThreadInstance->moveToThread( pThreadInstance );
         pThreadInstance->start( );
+        pThreadInstance->moveToThread( pThreadInstance );
     }
 
     return pThreadInstance;

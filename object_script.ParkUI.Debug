@@ -127,6 +127,7 @@ INPUT(
 ./debug\timerthread.o
 ./debug\timerproc.o
 ./debug\dlgcardloss.o
+./debug\cplatediliverythread.o
 ./debug\moc_valuecard.o
 ./debug\moc_tolldiscounttypeset.o
 ./debug\moc_timecard.o
@@ -238,4 +239,5 @@ INPUT(
 ./debug\moc_scu.o
 ./debug\moc_timerthread.o
 ./debug\moc_dlgcardloss.o
+./debug\moc_cplatediliverythread.o
 );

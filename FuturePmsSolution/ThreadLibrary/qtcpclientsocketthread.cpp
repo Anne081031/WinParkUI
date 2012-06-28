@@ -20,6 +20,7 @@ QTcpClientSocketThread* QTcpClientSocketThread::GetInstance( )
     QTcpClientSocketThread* pThreadInstance = new QTcpClientSocketThread( );
     pThreadInstance->InitializeThread( );
     pThreadInstance->start( );
+    pThreadInstance->moveToThread( pThreadInstance );
 
     return pThreadInstance;
 }

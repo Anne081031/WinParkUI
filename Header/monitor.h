@@ -180,7 +180,7 @@ private slots:
 
 public:
 signals:
-    void OnRecognizePlate( QString strPlate, int nChannel );
+    void OnRecognizePlate( QString strPlate, int nChannel, int nConfidence );
     void OnDirectionIndicator( int nChannel, bool bMoving );
 };
 

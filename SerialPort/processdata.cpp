@@ -8,6 +8,7 @@
 #include "Network/parkintranet.h"
 #include "PmsLog/pmslog.h"
 #include "writethread.h"
+#include "PlateDilivery/cplatediliverythread.h"
 
 #include <QtGui/QApplication>
 
@@ -20,14 +21,20 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
     QObject(parent)
 {
     g_serialThread.SetSerialPort( pWinPort );
-    g_serialThread.moveToThread( &g_serialThread );
     g_serialThread.start( );
+    g_serialThread.moveToThread( &g_serialThread );
 
     pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+    bStartupPlateDilivery = pSettings->value( "PlateDilivery/StartupDilivery", false ).toBool( );
+
+    if ( bStartupPlateDilivery ) {
+        connect( this, SIGNAL( PlateDelivery( QStringList ) ), CPlateDiliveryThread::GetSingleton( ), SLOT( HandlePlateDilivery( QStringList ) ) );
+        connect( CPlateDiliveryThread::GetSingleton( ), SIGNAL( WeighingRequest( QStringList ) ), this, SLOT( HandleWeighing( QStringList ) ) );
+    }
 
     if ( !GetDirectDb( ) ) {
-        g_dbThread.moveToThread( &g_dbThread );
         g_dbThread.start( );
+        g_dbThread.moveToThread( &g_dbThread );
     }
 
     CreateBufferTable( );
@@ -697,8 +704,39 @@ void CProcessData::MakeCardCmd(QString &strCardNo, QByteArray &byData, char cCan
     byData.append( char( 0x55 ) );
 }
 
-void CProcessData::RecognizePlate( QString strPlate, int nChannel )
+void CProcessData::HandleWeighing( QStringList lstData )
 {
+
+}
+
+void CProcessData::SendPlate( QString strPlate, int nChannel, int nConfidence )
+{
+    QStringList lstData;
+    QString strDateTime;
+    QDateTime dt = QDateTime::currentDateTime( );
+
+    CCommonFunction::DateTime2String( dt, strDateTime );
+    strDateTime.remove( "-" );
+    strDateTime.remove( " " );
+    strDateTime.remove( ":" );
+
+    QString strFileName = "";
+    CCommonFunction::GetPath( strFileName, CommonDataType::PathSnapshot );
+    strFileName += strPlate + "-" + QString::number( nChannel ) + "-" + strDateTime + ".jpg";
+    pMainWindow->CaptureImage( strFileName, nChannel, CommonDataType::CaptureJPG );
+
+    lstData << strPlate << strDateTime << QString::number( nConfidence ) << strFileName;
+
+    emit PlateDelivery( lstData );
+}
+
+void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfidence )
+{
+    if ( bStartupPlateDilivery ) {
+        SendPlate( strPlate, nChannel, nConfidence );
+        return;
+    }
+
     bool bEnter = ( 0 == nChannel % 2 );
     bPlateRecognize[ bEnter ] = true;
 

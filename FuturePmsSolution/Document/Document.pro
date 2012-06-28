@@ -29,7 +29,8 @@ OTHER_FILES += \
     ../LibExeFiles/Release/ManipulateFile.dll \
     ../LibExeFiles/Release/PlatformCentralServer.exe \
     ../LibExeFiles/Release/MyDatabase.dll \
-    ../LibExeFiles/Release/MyNetwork.dll
+    ../LibExeFiles/Release/MyNetwork.dll \
+    Eclipse.txt
 
 SOURCES += \
     main.cpp

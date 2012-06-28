@@ -28,7 +28,7 @@ QThreadGenerator* QThreadGenerator::GetSingleton( )
 QListenerThread* QThreadGenerator::GenerateTcpListenerThread( )
 {
     QListenerThread* pThreadInstance = QListenerThread::GetInstance( );
-    pThreadInstance->moveToThread( pThreadInstance );
+    //pThreadInstance->moveToThread( pThreadInstance );
     connect( pThreadInstance, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
                          this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
     connect( pThreadInstance, SIGNAL( Accept( int ) ), this, SLOT( HandleAccept( int ) ) );
@@ -39,7 +39,7 @@ QListenerThread* QThreadGenerator::GenerateTcpListenerThread( )
 QTcpClientSocketThread* QThreadGenerator::GenerateTcpClientThread( )
 {
     QTcpClientSocketThread* pThreadInstance = QTcpClientSocketThread::GetInstance( );
-    pThreadInstance->moveToThread( pThreadInstance );
+    //pThreadInstance->moveToThread( pThreadInstance );
     connect( pThreadInstance, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
                          this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
 
@@ -139,9 +139,9 @@ void QThreadGenerator::HandleAccept( int socketDescriptor )
     connect( pReceiver, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
                          this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
 
-    if ( bThreadNoRunning ) {
-        pReceiver->moveToThread( pReceiver );
-    }
+    //if ( bThreadNoRunning ) {
+    //    pReceiver->moveToThread( pReceiver );
+    //}
 
     MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
     MyDataStructs::QEventMultiHash hash;

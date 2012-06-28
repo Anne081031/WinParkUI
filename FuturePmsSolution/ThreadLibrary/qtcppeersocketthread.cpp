@@ -23,6 +23,7 @@ QTcpPeerSocketThread* QTcpPeerSocketThread::GetInstance( )
     QTcpPeerSocketThread* pThreadInstance = new QTcpPeerSocketThread( );
     pThreadInstance->InitializeThread( );
     pThreadInstance->start( );
+    pThreadInstance->moveToThread( pThreadInstance );
 
     return pThreadInstance;
 }
