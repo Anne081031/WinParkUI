@@ -3,6 +3,7 @@
 QMyBaseThread::QMyBaseThread(QObject *parent) :
     QThread(parent)
 {
+    //OutputMsg( QString( " Created" ) );
 }
 
 QMyBaseThread::~QMyBaseThread( )

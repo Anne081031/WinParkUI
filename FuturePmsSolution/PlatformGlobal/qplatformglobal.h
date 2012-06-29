@@ -28,14 +28,14 @@ public:
 
     void InitializeApplication( const MyEnums::ApplicationType type );
 
-    void CreateTcpClientThread( const QManipulateIniFile::IniFileName iniFile, const bool bConnect2Host = false );
+    void CreateTcpClientThread(  const QManipulateIniFile::IniFileName iniFile, const bool bConnect2Host = false );
     void TcpClientSendData( QThread* pReceiver, const QByteArray* pByteData );
     void TcpClientSendData2AllThreads( const QByteArray& byteData );
     void TcpClientDisconnect( QThread* pReceiver );
     void TcpClientConnect( QThread* pReceiver, const QString& strIP, const QString& strPort );
     void TcpClientAllConnectOrDisconnect( bool bConnect );
 
-    void CreateTcpListenerhread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener = true );
+    void CreateTcpListenerhread(  const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener = true );
     void TcpListenerStartup( QThread* pReceiver, const QString& strPort, const QString& strMaxConnection );
     void TcpListenerAllStartup(  );
 
@@ -47,6 +47,7 @@ private:
     void InitializePlatformClient( );
     void InitializePlatformServer( );
     void InitializePlatformDataReceiver( );
+    void GetNetworkParams(  const QManipulateIniFile::IniFileName iniFile, const QManipulateIniFile::IniFileSectionItems item, QVariant& var );
 
 private:
     static QPlatformGlobal* pPlatformGlobal;
@@ -62,12 +63,12 @@ private:
     MyDataStructs::QMyStringList listListenerPortMaxConnection;
 
 signals:
-    void ParseData( QString strServer, void* pByteArray );
+    void ParseData( QString strServer, QTcpSocket* pPeerSocket, void* pByteArray );
 
 public slots:
 
 private slots:
-    void HandleGetWholeTcpStreamDataFromServer( void* pByteArray );
+    void HandleGetWholeTcpStreamDataFromServer( QTcpSocket* pPeerSocket,void* pByteArray );
 };
 
 #endif // QPLATFORMGLOBAL_H

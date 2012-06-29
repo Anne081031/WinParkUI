@@ -3,12 +3,11 @@
 
 QThreadGenerator* QThreadGenerator::pThreadGenerator = NULL;
 
-QQueue< QTcpPeerSocketThread* > g_pPeerThreadQueue;
-
 QThreadGenerator::QThreadGenerator(QObject *parent) :
     QObject(parent)
 {
     qRegisterMetaType< QManipulateIniFile::LogTypes >( "QManipulateIniFile::LogTypes" );
+    OutputMsg( QString( " Created" ) );
 }
 
 QLoggerThread* QThreadGenerator::GenerateLogThread( )
@@ -133,8 +132,7 @@ void QThreadGenerator::PostTcpPeerEvent( MyEnums::EventType event, MyDataStructs
 
 void QThreadGenerator::HandleAccept( int socketDescriptor )
 {
-    bool bThreadNoRunning = g_pPeerThreadQueue.isEmpty( );
-    QTcpPeerSocketThread* pReceiver = bThreadNoRunning ? QTcpPeerSocketThread::GetInstance( ) : g_pPeerThreadQueue.dequeue( );
+    QTcpPeerSocketThread* pReceiver = QTcpPeerSocketThread::GetInstance( );
 
     connect( pReceiver, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
                          this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );

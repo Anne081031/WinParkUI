@@ -19,7 +19,7 @@ private:
     quint16 nServerPort;
     
 signals:
-    void GetWholeTcpStreamData( void* pByteArray );
+    void GetWholeTcpStreamData( QTcpSocket* pPeerSocket, void* pByteArray );
 
 protected:
     void timerEvent( QTimerEvent * event );

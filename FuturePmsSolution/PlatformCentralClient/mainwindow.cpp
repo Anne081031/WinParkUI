@@ -9,8 +9,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    connect( g_pPlatformGlobal, SIGNAL( ParseData( QString, void* ) ),
-             this, SLOT( HandleParseData( QString, void* ) ) );
+    connect( g_pPlatformGlobal, SIGNAL( ParseData( QString, QTcpSocket*, void* ) ),
+             this, SLOT( HandleParseData( QString, QTcpSocket*, void* ) ) );
 }
 
 MainWindow::~MainWindow()
@@ -67,7 +67,7 @@ void MainWindow::on_pushButton_7_clicked()
     g_pPlatformGlobal->CreateTcpClientThread( QManipulateIniFile::PlatformCentralClient );
 }
 
-void MainWindow::HandleParseData( QString strServer, void *pByteArray )
+void MainWindow::HandleParseData( QString strServer, QTcpSocket* pPeerSocket, void *pByteArray )
 {
     QByteArray* pByteData = ( QByteArray* ) pByteArray;
 

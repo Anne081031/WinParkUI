@@ -39,7 +39,7 @@
 ## Myown variable MY_VARIABLE = value
 ## MY_DEFINES = $$DEFINES MY_DEFINES = $${DEFINES}
 
-QT       += core gui ## system variables
+QT       += core gui network## system variables
 DEFINES += _WIN32_WINNT=0x0501
 
 MYTARGET = $$quote( CommonLibrary%1 )

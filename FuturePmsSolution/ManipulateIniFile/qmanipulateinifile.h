@@ -40,7 +40,7 @@ public:
     enum IniFileSection {
         IniDatabase,
         IniNetwork,
-        IniThreadPool
+        IniThread
     }; // Index 2
 
     Q_DECLARE_FLAGS( IniFileSections, IniFileSection )
@@ -56,6 +56,8 @@ public:
         NetworkTcpServerIP,
         NetworkTcpMaxConnection,
         /////////////////////////////////////////
+        ThreadPeerSocketCount, // Per peer thread manages X PeerSockets.
+        ThreadPeerStackSize, // 512K
         ThreadPool
     }; // Index 3
 
@@ -83,6 +85,9 @@ public:
     void CfgFileSectionItemName( const IniFileSectionItems enumType, QString& strName );
     void LogTypeName( const LogTypes enumType, QString& strName );
     void LogFileDirName( const LogFileNames enumType, QString& strName );
+
+    IniFileNames GetIniFileNameType( );
+    LogFileNames GetLogFileNameType( );
 
 private:
     void GetSettings( QSettings*& pSettings, const QString& strFile );

@@ -70,6 +70,7 @@ namespace MyEnums {
         NetworkParamListenerPort,
         NetworkParamListenerMaxConnections,
         NetworkParamData,
+        NetworkParamSocket,
         NetworkParamSenderThread
     };
 

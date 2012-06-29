@@ -15,8 +15,8 @@ private:
 private:
 
 signals:
-    void EnqueueThread( );
-    void GetWholeTcpStreamData( void* pByteArray );
+    void EnqueueThread( QTcpSocket* pPeerSocket );
+    void GetWholeTcpStreamData( QTcpSocket* pPeerSocket, void* pByteArray );
     
 public slots:
     

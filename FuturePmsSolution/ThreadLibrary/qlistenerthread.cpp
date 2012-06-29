@@ -3,6 +3,7 @@
 QListenerThread::QListenerThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    OutputMsg( QString( " Created" ) );
 }
 
 QListenerThread* QListenerThread::GetInstance( )

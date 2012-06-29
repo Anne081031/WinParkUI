@@ -21,7 +21,7 @@ private:
 private:
 
 private slots:
-    void HandleParseData( QString strServer, void* pByteArray );
+    void HandleParseData( QString strServer, QTcpSocket* pPeerSocket, void* pByteArray );
     
 private slots:
     void on_pushButton_clicked();

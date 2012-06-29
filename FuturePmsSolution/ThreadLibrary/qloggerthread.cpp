@@ -5,6 +5,7 @@ QLoggerThread* QLoggerThread::pThreadInstance = NULL;
 QLoggerThread::QLoggerThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    OutputMsg( QString( " Created" ) );
 }
 
 QLoggerThread* QLoggerThread::GetSingleton( )

@@ -13,14 +13,14 @@ QMyNetwork::~QMyNetwork( )
     }
 }
 
-void QMyNetwork::HandleGetWholeTcpStreamData( void *pByteArray )
+void QMyNetwork::HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket, void *pByteArray )
 {
-    emit GetWholeTcpStreamData( pByteArray );
+    emit GetWholeTcpStreamData( pPeerSocket, pByteArray );
 }
 
-void QMyNetwork::HandleThreadEnqueue( )
+void QMyNetwork::HandleThreadEnqueue( QTcpSocket* pPeerSocket )
 {
-    emit EnqueueThread( );
+    emit EnqueueThread( pPeerSocket );
 }
 
 void QMyNetwork::StartupTcpServer( quint16 nPort, int nMaxConnections )
@@ -37,7 +37,8 @@ QTcpPeerClient* QMyNetwork::GenerateTcpPeerSocket( QTextCodec* pCodec )
 {
     QTcpPeerClient* pPeerSocket = new QTcpPeerClient( pCodec );
     connect( pPeerSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
-    connect( pPeerSocket, SIGNAL( EnqueueThread( ) ), this, SLOT( HandleThreadEnqueue( ) ) );
+    connect( pPeerSocket, SIGNAL( EnqueueThread( QTcpSocket* ) ), this, SLOT( HandleThreadEnqueue( QTcpSocket*  ) ) );
+    connect( pPeerSocket, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ), this, SLOT( HandleGetWholeTcpStreamData( QTcpSocket*, void* ) ) );
 
     return pPeerSocket;
 }
@@ -46,7 +47,7 @@ QTcpClient* QMyNetwork::GenerateTcpClientSocket( QTextCodec *pCodec )
 {
     QTcpClient* pClientSocket = new QTcpClient( pCodec );
     connect( pClientSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
-    connect( pClientSocket, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamData( void* ) ) );
+    connect( pClientSocket, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ), this, SLOT( HandleGetWholeTcpStreamData( QTcpSocket*, void* ) ) );
 
     return pClientSocket;
 }

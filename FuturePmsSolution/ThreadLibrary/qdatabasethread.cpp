@@ -4,6 +4,7 @@ QDatabaseThread* QDatabaseThread::pThreadInstance = NULL;
 QDatabaseThread::QDatabaseThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    OutputMsg( QString( " Created" ) );
     pDatabaseGenerator = QDatabaseGenerator::GetSingleton( );
 }
 
@@ -46,8 +47,12 @@ void QDatabaseThread::ProcessCrudEvent( MyDataStructs::PQQueueEventParams pEvent
     quint32 nThreadPointer = ( quint32 ) varData.toUInt( );
     QThread* pSenderThread = ( QThread* ) nThreadPointer;
 
+    varData = hash.value( MyEnums::NetworkParamSocket );
+    quint32 nSocketPointer = ( quint32 ) varData.toUInt( );
+    QTcpSocket* pPeerSocket = ( QTcpSocket* ) nSocketPointer;
+
     QMyDatabase* pDatabase = pDatabaseGenerator->GeneratorDatabaseInstance( true );
-    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteData, pSenderThread, pDatabase );
+    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteData, pSenderThread, pPeerSocket, pDatabase );
     dbThreadPool.start( pTask );
 }
 

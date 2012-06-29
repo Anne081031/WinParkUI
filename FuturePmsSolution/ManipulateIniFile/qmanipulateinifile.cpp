@@ -1,5 +1,6 @@
 #include "qmanipulateinifile.h"
 #include <QMetaEnum>
+#include <QApplication>
 
 QManipulateIniFile::QManipulateIniFile( QObject* parent ) : QObject( parent )
 {
@@ -153,6 +154,53 @@ void QManipulateIniFile::GetLogFullName( QString &strFullName, const LogFileName
     QString strSeperator = "/";
     LogFileDirName( enumType, strName );
     strFullName += strName + strSeperator;
+}
+
+QManipulateIniFile::IniFileNames QManipulateIniFile::GetIniFileNameType(  )
+{
+    LogFileNames logType = GetLogFileNameType(  );
+    IniFileNames type;
+
+    switch ( logType ) {
+    case PlatformCentralLogClient :
+        type = PlatformCentralClient;
+        break;
+
+    case PlatformCentralLogServer :
+        type = PlatformCentralServer;
+        break;
+
+    case PlatformCentralLogDataReceiver :
+        type = PlatformCentralDataReceiver;
+        break;
+
+    case PlatformLogCount :
+        type = PlatformCount;
+        break;
+    }
+
+    return type;
+
+}
+
+QManipulateIniFile::LogFileNames QManipulateIniFile::GetLogFileNameType( )
+{
+    LogFileNames type;
+    QString strName;
+
+    QString strAppName = qApp->applicationName( );
+
+    for ( qint32 nIndex = 0; nIndex < PlatformLogCount; nIndex++ ) {
+        LogFileNames tmp = ( LogFileNames ) nIndex;
+        LogFileDirName( tmp, strName );
+
+        if ( strName == strAppName ) {
+            type = tmp;
+            break;
+        }
+    }
+
+    return type;
 }
 
 void QManipulateIniFile::CfgFileName( const IniFileNames enumType, QString &strName )

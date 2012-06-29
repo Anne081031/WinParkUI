@@ -3,4 +3,5 @@
 QUdpReceiverSocketThread::QUdpReceiverSocketThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    OutputMsg( QString( " Created" ) );
 }

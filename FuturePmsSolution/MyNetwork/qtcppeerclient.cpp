@@ -25,7 +25,7 @@ void QTcpPeerClient::HandleDisconnected( )
     close( );
 
     // Peer thread to enqueue;
-    emit EnqueueThread( );
+    emit EnqueueThread( this );
 }
 
 void QTcpPeerClient::HandleConnected( )
@@ -44,15 +44,19 @@ void QTcpPeerClient::HandleError( QAbstractSocket::SocketError socketError )
 void QTcpPeerClient::IncomingData( )
 {
     OutputMsg( "Receive data" );
-    QByteArray byteData = readAll( );
-    write( byteData );
-    QString strText( byteData );
-    OutputMsg( strText );
+
+    if ( NULL == pByteArray ) {
+        pByteArray = new QByteArray( );
+    }
+
+    *pByteArray = readAll( );
+    emit GetWholeTcpStreamData( this, pByteArray );
+    pByteArray = NULL;
     return;
     bool bRet = GetTcpStreamData( );
 
     if ( bRet ) {
-        emit GetWholeTcpStreamData( pByteArray );
+        emit GetWholeTcpStreamData( this, pByteArray );
         pByteArray = NULL;
     }
 }

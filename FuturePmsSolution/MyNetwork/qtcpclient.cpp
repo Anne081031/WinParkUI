@@ -52,13 +52,13 @@ void QTcpClient::IncomingData( )
         pByteArray = new QByteArray( );
         pByteArray->append( byteData );
     }
-    emit GetWholeTcpStreamData( pByteArray );
+    emit GetWholeTcpStreamData( this, pByteArray );
     pByteArray = NULL;
     return;
     bool bRet = GetTcpStreamData( );
 
     if ( bRet ) {
-        emit GetWholeTcpStreamData( pByteArray );
+        emit GetWholeTcpStreamData( this, pByteArray );
         pByteArray = NULL;
     }
 }

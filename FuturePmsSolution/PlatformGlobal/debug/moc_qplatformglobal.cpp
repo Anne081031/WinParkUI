@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qplatformglobal.h'
 **
-** Created: Wed Jun 27 15:27:09 2012
+** Created: Fri Jun 29 15:23:47 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,18 +31,19 @@ static const uint qt_meta_data_QPlatformGlobal[] = {
        1,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      38,   17,   16,   16, 0x05,
+      50,   17,   16,   16, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      74,   63,   16,   16, 0x08,
+     110,   87,   16,   16, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QPlatformGlobal[] = {
-    "QPlatformGlobal\0\0strServer,pByteArray\0"
-    "ParseData(QString,void*)\0pByteArray\0"
-    "HandleGetWholeTcpStreamDataFromServer(void*)\0"
+    "QPlatformGlobal\0\0strServer,pPeerSocket,pByteArray\0"
+    "ParseData(QString,QTcpSocket*,void*)\0"
+    "pPeerSocket,pByteArray\0"
+    "HandleGetWholeTcpStreamDataFromServer(QTcpSocket*,void*)\0"
 };
 
 void QPlatformGlobal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,8 +52,8 @@ void QPlatformGlobal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         Q_ASSERT(staticMetaObject.cast(_o));
         QPlatformGlobal *_t = static_cast<QPlatformGlobal *>(_o);
         switch (_id) {
-        case 0: _t->ParseData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
-        case 1: _t->HandleGetWholeTcpStreamDataFromServer((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        case 0: _t->ParseData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QTcpSocket*(*)>(_a[2])),(*reinterpret_cast< void*(*)>(_a[3]))); break;
+        case 1: _t->HandleGetWholeTcpStreamDataFromServer((*reinterpret_cast< QTcpSocket*(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -98,9 +99,9 @@ int QPlatformGlobal::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void QPlatformGlobal::ParseData(QString _t1, void * _t2)
+void QPlatformGlobal::ParseData(QString _t1, QTcpSocket * _t2, void * _t3)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

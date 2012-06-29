@@ -1,15 +1,17 @@
 #include "qthreadpooltask.h"
 #include "../ThreadLibrary/Event/qtcppeerthreadevent.h"
 
-QThreadPoolTask::QThreadPoolTask( QByteArray* pByteArray, QThread* pSender, QMyDatabase* pDatabase ) :
-    pByteData( pByteArray ), pSenderThread( pSender ), pMyDatabase( pDatabase )
+QThreadPoolTask::QThreadPoolTask( QByteArray* pByteArray, QThread* pSender,
+                                  QTcpSocket* pPeerSocket, QMyDatabase* pDatabase ) :
+    pByteData( pByteArray ), pSenderThread( pSender ), pFeedbackSocket( pPeerSocket ), pMyDatabase( pDatabase )
 {
     setAutoDelete( true );
+    OutputMsg( QString( " Created" ) );
 }
 
-QThreadPoolTask* QThreadPoolTask::GetInstance( QByteArray* pByteArray, QThread* pSender, QMyDatabase* pDatabase )
+QThreadPoolTask* QThreadPoolTask::GetInstance( QByteArray* pByteArray, QThread* pSender, QTcpSocket* pPeerSocket, QMyDatabase* pDatabase )
 {
-    QThreadPoolTask* pTask = new QThreadPoolTask( pByteArray, pSender );
+    QThreadPoolTask* pTask = new QThreadPoolTask( pByteArray, pSender, pPeerSocket, pDatabase );
 
     return pTask;
 }
@@ -29,8 +31,12 @@ void QThreadPoolTask::PostThreadPoolFeedbackEvent( bool bFeedback )
     }
 
     quint32 nBytePointer = ( quint32 ) pByteData;
+    quint32 nSocketPointer = ( quint32 ) pFeedbackSocket;
+
     MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
     MyDataStructs::QEventMultiHash hash;
+
+    hash.insertMulti( MyEnums::NetworkParamSocket, nSocketPointer );
     hash.insertMulti( MyEnums::NetworkParamData, nBytePointer );
 
     pEventParams->enqueue( hash );
@@ -43,14 +49,14 @@ void QThreadPoolTask::PostThreadPoolFeedbackEvent( bool bFeedback )
 
 bool QThreadPoolTask::ProcessDatabaseTask( )
 {
-    bool bFeedback = false;
+    bool bFeedback = true;
 
     return bFeedback;
 }
 
 bool QThreadPoolTask::ProcessOtherTask( )
 {
-    bool bFeedback = false;
+    bool bFeedback = true;
 
     return bFeedback;
 }

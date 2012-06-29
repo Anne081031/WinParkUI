@@ -3,6 +3,7 @@
 QTcpClientSocketThread::QTcpClientSocketThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    OutputMsg( QString( " Created" ) );
     pClientSocket = NULL;
 }
 
@@ -39,12 +40,12 @@ void QTcpClientSocketThread::InitializeSubThread( )
     }
 
     connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
-    connect( &network, SIGNAL( GetWholeTcpStreamData( void* ) ), this, SLOT( HandleGetWholeTcpStreamData( void* ) ) );
+    connect( &network, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ), this, SLOT( HandleGetWholeTcpStreamData( QTcpSocket*, void* ) ) );
 }
 
-void QTcpClientSocketThread::HandleGetWholeTcpStreamData( void *pByteArray )
+void QTcpClientSocketThread::HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket, void *pByteArray )
 {
-    emit GetWholeTcpStreamData( pByteArray );
+    emit GetWholeTcpStreamData( pPeerSocket, pByteArray );
 }
 
 void QTcpClientSocketThread::ProcessSendDataEvent( MyDataStructs::PQQueueEventParams pEventParams )

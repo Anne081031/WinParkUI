@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       -= gui
+QT       += gui
 
 MYTARGET = $$quote( ManipulateFile%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )

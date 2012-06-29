@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmanipulateinifile.h'
 **
-** Created: Wed Jun 27 11:00:40 2012
+** Created: Fri Jun 29 13:17:25 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,8 +34,8 @@ static const uint qt_meta_data_QManipulateIniFile[] = {
       19, 0x1,    4,   34,
       31, 0x1,    4,   42,
       43, 0x1,    3,   50,
-      58, 0x1,    8,   56,
-      77, 0x1,    6,   72,
+      58, 0x1,   10,   56,
+      77, 0x1,    6,   76,
 
  // enum data: key, value
       85, uint(QManipulateIniFile::PlatformCentralClient),
@@ -48,21 +48,23 @@ static const uint qt_meta_data_QManipulateIniFile[] = {
      252, uint(QManipulateIniFile::PlatformLogCount),
      269, uint(QManipulateIniFile::IniDatabase),
      281, uint(QManipulateIniFile::IniNetwork),
-     292, uint(QManipulateIniFile::IniThreadPool),
-     306, uint(QManipulateIniFile::DatabaseHost),
-     319, uint(QManipulateIniFile::DatabasePort),
-     332, uint(QManipulateIniFile::DatabaseUser),
-     345, uint(QManipulateIniFile::DatabasePwd),
-     357, uint(QManipulateIniFile::NetworkTcpServerPort),
-     378, uint(QManipulateIniFile::NetworkTcpServerIP),
-     397, uint(QManipulateIniFile::NetworkTcpMaxConnection),
-     421, uint(QManipulateIniFile::ThreadPool),
-     432, uint(QManipulateIniFile::LogDatabase),
-     444, uint(QManipulateIniFile::LogNetwork),
-     455, uint(QManipulateIniFile::LogThread),
-     465, uint(QManipulateIniFile::LogCfgParam),
-     477, uint(QManipulateIniFile::LogOther),
-     486, uint(QManipulateIniFile::LogItems),
+     292, uint(QManipulateIniFile::IniThread),
+     302, uint(QManipulateIniFile::DatabaseHost),
+     315, uint(QManipulateIniFile::DatabasePort),
+     328, uint(QManipulateIniFile::DatabaseUser),
+     341, uint(QManipulateIniFile::DatabasePwd),
+     353, uint(QManipulateIniFile::NetworkTcpServerPort),
+     374, uint(QManipulateIniFile::NetworkTcpServerIP),
+     393, uint(QManipulateIniFile::NetworkTcpMaxConnection),
+     417, uint(QManipulateIniFile::ThreadPeerSocketCount),
+     439, uint(QManipulateIniFile::ThreadPeerStackSize),
+     459, uint(QManipulateIniFile::ThreadPool),
+     470, uint(QManipulateIniFile::LogDatabase),
+     482, uint(QManipulateIniFile::LogNetwork),
+     493, uint(QManipulateIniFile::LogThread),
+     503, uint(QManipulateIniFile::LogCfgParam),
+     515, uint(QManipulateIniFile::LogOther),
+     524, uint(QManipulateIniFile::LogItems),
 
        0        // eod
 };
@@ -77,9 +79,10 @@ static const char qt_meta_stringdata_QManipulateIniFile[] = {
     "PlatformCentralLogServer\0"
     "PlatformCentralLogDataReceiver\0"
     "PlatformLogCount\0IniDatabase\0IniNetwork\0"
-    "IniThreadPool\0DatabaseHost\0DatabasePort\0"
+    "IniThread\0DatabaseHost\0DatabasePort\0"
     "DatabaseUser\0DatabasePwd\0NetworkTcpServerPort\0"
     "NetworkTcpServerIP\0NetworkTcpMaxConnection\0"
+    "ThreadPeerSocketCount\0ThreadPeerStackSize\0"
     "ThreadPool\0LogDatabase\0LogNetwork\0"
     "LogThread\0LogCfgParam\0LogOther\0LogItems\0"
 };

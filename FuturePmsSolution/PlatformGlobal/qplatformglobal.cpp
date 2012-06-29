@@ -163,7 +163,7 @@ void QPlatformGlobal::TcpClientAllConnectOrDisconnect( bool bConnect )
     }
 }
 
-void QPlatformGlobal::HandleGetWholeTcpStreamDataFromServer( void *pByteArray )
+void QPlatformGlobal::HandleGetWholeTcpStreamDataFromServer( QTcpSocket* pPeerSocket, void *pByteArray )
 {
     QTcpClientSocketThread* pSenderThread = ( QTcpClientSocketThread* ) sender( );
     QList< QString > lstKeys = hashTcpClientThread.keys( pSenderThread );
@@ -173,7 +173,7 @@ void QPlatformGlobal::HandleGetWholeTcpStreamDataFromServer( void *pByteArray )
     OutputMsg( QString( *pByteData ) );
 
     foreach ( const QString& strSerevr, lstKeys ) {
-        emit ParseData( strSerevr, pByteArray);
+        emit ParseData( strSerevr, pPeerSocket, pByteArray);
     }
 }
 
@@ -198,6 +198,11 @@ MyDataStructs::QStringThread& QPlatformGlobal::GetTcpListenerThreadHash( )
     return hashTcpListenerThread;
 }
 
+void QPlatformGlobal::GetNetworkParams(  const QManipulateIniFile::IniFileName iniFile, const QManipulateIniFile::IniFileSectionItems item, QVariant& var )
+{
+    manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniNetwork, item, false, var );
+}
+
 void QPlatformGlobal::CreateTcpClientThread( const QManipulateIniFile::IniFileName iniFile, const bool bConnect2Host )
 {
     // NetworkTcpServerIP=192.168.1.20@192.168.1.24
@@ -207,11 +212,10 @@ void QPlatformGlobal::CreateTcpClientThread( const QManipulateIniFile::IniFileNa
     QString strPorts;
     QVariant varIPs;
     QString strIPs;
-    bool bWrite = false;
     QString strSeperator = "@";
 
-    manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniNetwork, QManipulateIniFile::NetworkTcpServerIP, bWrite, varIPs );
-    manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniNetwork, QManipulateIniFile::NetworkTcpServerPort, bWrite, varPorts );
+    GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerIP, varIPs );
+    GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerPort, varPorts );
 
     strPorts = varPorts.toString( );
     QStringList lstPorts = strPorts.split( strSeperator );
@@ -243,8 +247,8 @@ void QPlatformGlobal::CreateTcpClientThread( const QManipulateIniFile::IniFileNa
         listServerIpPort.append( strTmpKey );
 
         QTcpClientSocketThread* pThreadInstance = pGenerator->GenerateTcpClientThread( );
-        connect( pThreadInstance, SIGNAL( GetWholeTcpStreamData( void* ) ),
-                 this, SLOT( HandleGetWholeTcpStreamDataFromServer( void* ) ) );
+        connect( pThreadInstance, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ),
+                 this, SLOT( HandleGetWholeTcpStreamDataFromServer( QTcpSocket*, void* ) ) );
         hashTcpClientThread.insertMulti( strTmpKey, pThreadInstance );
 
         if ( bConnect2Host ) {
@@ -290,10 +294,9 @@ void QPlatformGlobal::CreateTcpListenerhread( const QManipulateIniFile::IniFileN
     QString strPorts;
     QVariant varMaxConnections;
     QString strMaxConnections;
-    bool bWrite = false;
 
-    manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniNetwork, QManipulateIniFile::NetworkTcpServerPort, bWrite, varPorts );
-    manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniNetwork, QManipulateIniFile::NetworkTcpMaxConnection, bWrite, varMaxConnections );
+    GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerPort, varPorts );
+    GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpMaxConnection, varMaxConnections );
 
     QString strSeperator = "@";
 

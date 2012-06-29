@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qtcppeersocketthread.h'
 **
-** Created: Mon Jun 25 14:54:36 2012
+** Created: Fri Jun 29 16:35:11 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,15 +31,17 @@ static const uint qt_meta_data_QTcpPeerSocketThread[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      22,   21,   21,   21, 0x08,
-      55,   44,   21,   21, 0x08,
+      34,   22,   21,   21, 0x08,
+      90,   67,   21,   21, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QTcpPeerSocketThread[] = {
-    "QTcpPeerSocketThread\0\0HandleThreadEnqueue()\0"
-    "pByteArray\0HandleGetWholeTcpStreamData(void*)\0"
+    "QTcpPeerSocketThread\0\0pPeerSocket\0"
+    "HandleThreadEnqueue(QTcpSocket*)\0"
+    "pPeerSocket,pByteArray\0"
+    "HandleGetWholeTcpStreamData(QTcpSocket*,void*)\0"
 };
 
 void QTcpPeerSocketThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -48,8 +50,8 @@ void QTcpPeerSocketThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c,
         Q_ASSERT(staticMetaObject.cast(_o));
         QTcpPeerSocketThread *_t = static_cast<QTcpPeerSocketThread *>(_o);
         switch (_id) {
-        case 0: _t->HandleThreadEnqueue(); break;
-        case 1: _t->HandleGetWholeTcpStreamData((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        case 0: _t->HandleThreadEnqueue((*reinterpret_cast< QTcpSocket*(*)>(_a[1]))); break;
+        case 1: _t->HandleGetWholeTcpStreamData((*reinterpret_cast< QTcpSocket*(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
         default: ;
         }
     }

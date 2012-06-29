@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qtcpclientsocketthread.h'
 **
-** Created: Mon Jun 25 14:54:42 2012
+** Created: Fri Jun 29 16:35:18 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,18 +31,18 @@ static const uint qt_meta_data_QTcpClientSocketThread[] = {
        1,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      35,   24,   23,   23, 0x05,
+      47,   24,   23,   23, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      64,   24,   23,   23, 0x08,
+      88,   24,   23,   23, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QTcpClientSocketThread[] = {
-    "QTcpClientSocketThread\0\0pByteArray\0"
-    "GetWholeTcpStreamData(void*)\0"
-    "HandleGetWholeTcpStreamData(void*)\0"
+    "QTcpClientSocketThread\0\0pPeerSocket,pByteArray\0"
+    "GetWholeTcpStreamData(QTcpSocket*,void*)\0"
+    "HandleGetWholeTcpStreamData(QTcpSocket*,void*)\0"
 };
 
 void QTcpClientSocketThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,8 +51,8 @@ void QTcpClientSocketThread::qt_static_metacall(QObject *_o, QMetaObject::Call _
         Q_ASSERT(staticMetaObject.cast(_o));
         QTcpClientSocketThread *_t = static_cast<QTcpClientSocketThread *>(_o);
         switch (_id) {
-        case 0: _t->GetWholeTcpStreamData((*reinterpret_cast< void*(*)>(_a[1]))); break;
-        case 1: _t->HandleGetWholeTcpStreamData((*reinterpret_cast< void*(*)>(_a[1]))); break;
+        case 0: _t->GetWholeTcpStreamData((*reinterpret_cast< QTcpSocket*(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
+        case 1: _t->HandleGetWholeTcpStreamData((*reinterpret_cast< QTcpSocket*(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -98,9 +98,9 @@ int QTcpClientSocketThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a
 }
 
 // SIGNAL 0
-void QTcpClientSocketThread::GetWholeTcpStreamData(void * _t1)
+void QTcpClientSocketThread::GetWholeTcpStreamData(QTcpSocket * _t1, void * _t2)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

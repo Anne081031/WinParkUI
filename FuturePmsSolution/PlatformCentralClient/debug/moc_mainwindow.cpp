@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed Jun 27 15:28:24 2012
+** Created: Fri Jun 29 15:24:22 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,21 +31,21 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      33,   12,   11,   11, 0x08,
-      64,   11,   11,   11, 0x08,
+      45,   12,   11,   11, 0x08,
       88,   11,   11,   11, 0x08,
-     114,   11,   11,   11, 0x08,
-     140,   11,   11,   11, 0x08,
-     166,   11,   11,   11, 0x08,
-     192,   11,   11,   11, 0x08,
-     218,   11,   11,   11, 0x08,
+     112,   11,   11,   11, 0x08,
+     138,   11,   11,   11, 0x08,
+     164,   11,   11,   11, 0x08,
+     190,   11,   11,   11, 0x08,
+     216,   11,   11,   11, 0x08,
+     242,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0strServer,pByteArray\0"
-    "HandleParseData(QString,void*)\0"
+    "MainWindow\0\0strServer,pPeerSocket,pByteArray\0"
+    "HandleParseData(QString,QTcpSocket*,void*)\0"
     "on_pushButton_clicked()\0"
     "on_pushButton_2_clicked()\0"
     "on_pushButton_3_clicked()\0"
@@ -61,7 +61,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
-        case 0: _t->HandleParseData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
+        case 0: _t->HandleParseData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QTcpSocket*(*)>(_a[2])),(*reinterpret_cast< void*(*)>(_a[3]))); break;
         case 1: _t->on_pushButton_clicked(); break;
         case 2: _t->on_pushButton_2_clicked(); break;
         case 3: _t->on_pushButton_3_clicked(); break;
