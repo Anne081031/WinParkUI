@@ -4,6 +4,7 @@ QMyNetwork::QMyNetwork( QObject* parent ) : QObject( parent )
 {
     qRegisterMetaType< QAbstractSocket::SocketError >( "QAbstractSocket::SocketError" );
     pTcpServer = NULL;
+    setObjectName( "QMyNetwork" );
 }
 
 QMyNetwork::~QMyNetwork( )
@@ -15,11 +16,13 @@ QMyNetwork::~QMyNetwork( )
 
 void QMyNetwork::HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket, void *pByteArray )
 {
+    OutputMsg( "Sender:" + sender( )->objectName( ) + ":emit GetWholeTcpStreamData( ... )" );
     emit GetWholeTcpStreamData( pPeerSocket, pByteArray );
 }
 
 void QMyNetwork::HandleThreadEnqueue( QTcpSocket* pPeerSocket )
 {
+    OutputMsg( "Sender:" + sender( )->objectName( ) + ":emit EnqueueThread( ... )" );
     emit EnqueueThread( pPeerSocket );
 }
 
@@ -54,11 +57,13 @@ QTcpClient* QMyNetwork::GenerateTcpClientSocket( QTextCodec *pCodec )
 
 void QMyNetwork::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )
 {
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit NotifyMessage( %1, LogTypes=%2 ) " ).arg( strMsg, QString::number( type ) ) );
     emit NotifyMessage( strMsg, type );
 }
 
 void QMyNetwork::HandleAccept( int socketDescriptor )
 {
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit Accept( %1 )" ).arg( socketDescriptor ) );
     emit Accept( socketDescriptor );
 }
 

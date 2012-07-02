@@ -3,6 +3,7 @@
 QListenerThread::QListenerThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    setObjectName( "QListenerThread" );
     OutputMsg( QString( " Created" ) );
 }
 
@@ -30,6 +31,7 @@ void QListenerThread::InitializeSubThread( )
 
 void QListenerThread::HandleAccept( int socketDescriptor ) // IOC IPC
 {
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit Accept( %1 )" ).arg( socketDescriptor ) );
     emit Accept( socketDescriptor );
 }
 

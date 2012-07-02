@@ -9,6 +9,7 @@ namespace MyDataStructs {
     typedef QMultiHash< int, QVariant > QEventMultiHash, *PQEventMultiHash;
     typedef QQueue< QEventMultiHash > QQueueEventParams, *PQQueueEventParams;
     typedef QList< QString > QMyStringList, *PQMyStringList;
+    typedef QSet< QString > QMyStringSet, *PQMyStringSet;
     typedef QMultiHash< QString, QThread* > QStringThread, *PQStringThread;
     typedef QMultiHash< bool, QTcpSocket* > QSocketMultiHash; // true unused, false used
 

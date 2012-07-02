@@ -3,6 +3,7 @@
 QTcpClientSocketThread::QTcpClientSocketThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    setObjectName( "QTcpClientSocketThread" );
     OutputMsg( QString( " Created" ) );
     pClientSocket = NULL;
 }
@@ -36,7 +37,7 @@ void QTcpClientSocketThread::InitializeSubThread( )
 {
     if ( NULL == pClientSocket ) {
         pClientSocket = network.GenerateTcpClientSocket( commonFunction.GetTextCodec( ) );
-        qDebug( ) << pClientSocket->thread( )->metaObject( )->className( ) << endl;
+        OutputMsg( objectName( ) );
     }
 
     connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
@@ -45,6 +46,7 @@ void QTcpClientSocketThread::InitializeSubThread( )
 
 void QTcpClientSocketThread::HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket, void *pByteArray )
 {
+    OutputMsg( "Sender:" + sender( )->objectName( ) + "GetWholeTcpStreamData( ... )" );
     emit GetWholeTcpStreamData( pPeerSocket, pByteArray );
 }
 

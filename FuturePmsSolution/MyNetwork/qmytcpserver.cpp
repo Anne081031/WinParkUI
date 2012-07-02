@@ -4,6 +4,7 @@
 QMyTcpServer::QMyTcpServer( quint16 nPort, int nMaxConnections, QObject *parent ) :
     QTcpServer(parent), nServerPort( nPort ), nPendingMaxConnection( nMaxConnections )
 {    
+    setObjectName( "QMyTcpServer" );
 }
 
 QMyTcpServer::~QMyTcpServer( )
@@ -25,12 +26,13 @@ void QMyTcpServer::Initialize( quint16 nPort, int nMaxConnections )
 
     if ( !bRet) {
         QString strMsg = LogText( errorString( ) );
+        OutputMsg( QString( "emit NotifyMessage( %1, QManipulateIniFile::LogNetwork )" ).arg( strMsg ) );
         emit NotifyMessage( strMsg, QManipulateIniFile::LogNetwork );
     }
 }
 
 void QMyTcpServer::incomingConnection( int socketDescriptor )
 {
-    OutputMsg( "Receive data" );
+    OutputMsg( QString( "emit Accetp( %1 )" ).arg( socketDescriptor ) );
     emit Accept( socketDescriptor );
 }

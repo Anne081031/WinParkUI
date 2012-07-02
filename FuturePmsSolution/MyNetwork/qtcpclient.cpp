@@ -4,6 +4,7 @@
 QTcpClient::QTcpClient( QTextCodec* pCodec, QObject *parent) :
     QMyTcpSocket(parent)
 {
+    setObjectName( "QTcpClient" );
     pTextCodec = pCodec;
     connect( this, SIGNAL(readyRead( ) ), this, SLOT( IncomingData( ) ) );
     connect( this, SIGNAL(disconnected( ) ), this, SLOT( HandleDisconnected( ) ) );
@@ -24,10 +25,7 @@ void QTcpClient::timerEvent( QTimerEvent *event )
 void QTcpClient::HandleDisconnected( )
 {
     GenerateLogText( false );
-
-    if ( QAbstractSocket::UnconnectedState == state( ) ) {
-        connectToHost( serverAddress, nServerPort );
-    }
+    Connect2Host( );
 }
 
 void QTcpClient::HandleConnected( )
@@ -40,8 +38,9 @@ void QTcpClient::HandleError( QAbstractSocket::SocketError socketError )
     QString strMsg;
     QNetCommFunction::GetErrorMsg( strMsg, socketError, this );
 
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( "emit NotifyMessage( %1, QManipulateIniFile::LogNetwork )" ).arg( LogText( strMsg ) ) );
     emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogNetwork );
-    HandleDisconnected( );
+    Connect2Host( );
 }
 
 void QTcpClient::IncomingData( )
@@ -63,12 +62,19 @@ void QTcpClient::IncomingData( )
     }
 }
 
+void QTcpClient::Connect2Host( )
+{
+    if ( QAbstractSocket::UnconnectedState == state( ) ) {
+        connectToHost( serverAddress, nServerPort );
+    }
+}
+
 bool QTcpClient::Connect2Server( const QHostAddress &hostAddr, quint16 nPort )
 {
     serverAddress = hostAddr;
     nServerPort = nPort;
+    Connect2Host( );
 
-    connectToHost( serverAddress, nServerPort );
     return true;
 }
 

@@ -3,6 +3,7 @@
 QNetCommFunction::QNetCommFunction(QObject *parent) :
     QObject(parent)
 {
+    setObjectName( "QNetCommFunction" );
 }
 
 void QNetCommFunction::GetErrorMsg( QString& strMsg, QNetworkReply::NetworkError code, QIODevice* pDevice )

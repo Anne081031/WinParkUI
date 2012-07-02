@@ -5,6 +5,7 @@ QMyTcpSocket::QMyTcpSocket(QObject *parent) :
 {
     pByteArray = NULL;
     Clear( );
+    setObjectName( "QMyTcpSocket" );
 }
 
 void QMyTcpSocket::SetMaxDataSize( quint64 nSize )
@@ -40,6 +41,8 @@ void QMyTcpSocket::GenerateLogText( bool bConnected )
     QString strMsg;
 
     GetKeyMsg( strKey, strMsg, bConnected );
+
+    OutputMsg( QString( "emit NotifyMessage( %1, QManipulateIniFile::LogNetwork )" ).arg( LogText( strMsg ) ) );
 
     emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogNetwork );
 }

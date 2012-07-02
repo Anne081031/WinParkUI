@@ -7,6 +7,7 @@ class QLoggerEvent : public QMyThreadEvent
 {
 public:
     explicit QLoggerEvent( Type type );
+    ~QLoggerEvent( );
 
 };
 

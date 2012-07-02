@@ -117,7 +117,9 @@ void QPlatformGlobal::TcpClientSendData2AllThreads( const QByteArray& byteData )
     MyDataStructs::QMyStringList& lstIpPort = GetServerIpPortList( );
     MyDataStructs::QStringThread& thread = GetTcpClientThreadHash( );
 
-    foreach ( const QString& strIpPort, lstIpPort ) {
+    MyDataStructs::QMyStringSet set = lstIpPort.toSet( );
+
+    foreach ( const QString& strIpPort, set ) {
         foreach ( QThread* pReceiver, thread.values( strIpPort ) ) {
             QByteArray* pByteData = new QByteArray( byteData );
             TcpClientSendData( pReceiver, pByteData );
@@ -152,12 +154,13 @@ void QPlatformGlobal::TcpClientAllConnectOrDisconnect( bool bConnect )
     MyDataStructs::QStringThread& thread = GetTcpClientThreadHash( );
 
     QStringList lstIpPort;
+    MyDataStructs::QMyStringSet set = list.toSet( );
 
-    foreach (const QString& strIpPort,  list ) {
+    foreach (const QString& strIpPort,  set ) {
         lstIpPort = strIpPort.split( ":" );
 
         foreach ( QThread* pReceiver, thread.values( strIpPort ) ) {
-            bConnect ? TcpClientConnect( pReceiver, lstIpPort.at( 0 ), lstIpPort.at( 1) ) :
+            bConnect ? TcpClientConnect( pReceiver, lstIpPort.at( 0 ), lstIpPort.at( 1 ) ) :
                                 TcpClientDisconnect( pReceiver );
         }
     }
@@ -166,13 +169,16 @@ void QPlatformGlobal::TcpClientAllConnectOrDisconnect( bool bConnect )
 void QPlatformGlobal::HandleGetWholeTcpStreamDataFromServer( QTcpSocket* pPeerSocket, void *pByteArray )
 {
     QTcpClientSocketThread* pSenderThread = ( QTcpClientSocketThread* ) sender( );
-    QList< QString > lstKeys = hashTcpClientThread.keys( pSenderThread );
+    MyDataStructs::QMyStringList lstKeys = hashTcpClientThread.keys( pSenderThread );
     OutputMsg( QStringList( lstKeys ).join( "@" ) );
 
     QByteArray* pByteData = ( QByteArray* ) pByteArray;
     OutputMsg( QString( *pByteData ) );
 
-    foreach ( const QString& strSerevr, lstKeys ) {
+    MyDataStructs::QMyStringSet set = lstKeys.toSet( );
+
+    OutputMsg( sender( )->objectName( ) );
+    foreach ( const QString& strSerevr, set ) {
         emit ParseData( strSerevr, pPeerSocket, pByteArray);
     }
 }

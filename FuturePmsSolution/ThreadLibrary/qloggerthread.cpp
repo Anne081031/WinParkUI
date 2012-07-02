@@ -5,6 +5,7 @@ QLoggerThread* QLoggerThread::pThreadInstance = NULL;
 QLoggerThread::QLoggerThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    setObjectName( "QLoggerThread" );
     OutputMsg( QString( " Created" ) );
 }
 
@@ -62,7 +63,7 @@ void QLoggerThread::ProcessWriteLogEvent( MyDataStructs::PQQueueEventParams pEve
 
     foreach ( const MyDataStructs::QEventMultiHash& hash, *pEventParams ) {
         foreach ( const QVariant& var, hash.values( ) ) {
-            qDebug( ) << QLoggerThread::currentThread( )->metaObject( )->className( ) << ":" << var.toString( ) << endl;
+            OutputMsg( objectName( ) + ":" + var.toString( ) );
             types = ( QManipulateIniFile::LogTypes ) hash.keys( ).at( 0 );
             strFile = strLogPath + GetFileName( );
             manipulateFile.WriteLogFile( logFileName, types, var );

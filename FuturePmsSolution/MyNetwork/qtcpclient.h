@@ -13,6 +13,7 @@ public:
     bool Connect2Server( const QHostAddress &hostAddr, quint16 nPort );
 
 private:
+    void Connect2Host( );
 
 private:
     QHostAddress serverAddress;

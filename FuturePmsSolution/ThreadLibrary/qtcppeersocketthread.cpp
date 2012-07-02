@@ -6,7 +6,7 @@ QTcpPeerSocketThread::QTcpPeerSocketThread(QObject *parent) :
     QMyBaseThread(parent)
 {
     pDatabaseThread = NULL;
-
+    setObjectName( "QTcpPeerSocketThread" );
     quint32 nStackSize = GetIniValue( QManipulateIniFile::ThreadPeerStackSize );
     setStackSize( nStackSize );
 
@@ -26,7 +26,14 @@ void QTcpPeerSocketThread::DestroyPeerSocket( )
     }
 }
 
-QTcpPeerSocketThread* QTcpPeerSocketThread::GetInstance( )
+bool QTcpPeerSocketThread::SignalConnected( )
+{
+    int nSignal = receivers( SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ) );
+
+    return ( 0 < nSignal );
+}
+
+QTcpPeerSocketThread* QTcpPeerSocketThread::GetInstance( bool& bSignalConnected )
 {
     bool bEmpty = peerThreadQueue.isEmpty( );
     QTcpPeerSocketThread* pThreadInstance = bEmpty ? new QTcpPeerSocketThread( ) : peerThreadQueue.dequeue( );
@@ -36,6 +43,8 @@ QTcpPeerSocketThread* QTcpPeerSocketThread::GetInstance( )
         pThreadInstance->start( );
         pThreadInstance->moveToThread( pThreadInstance );
     }
+
+    bSignalConnected = pThreadInstance->SignalConnected( );
 
     return pThreadInstance;
 }
@@ -223,7 +232,8 @@ void QTcpPeerSocketThread::ProcessCreateSockeEvent( MyDataStructs::PQQueueEventP
                  }
             }
 
-             emit NotifyMessage( LogText( strMsg ), log);
+            OutputMsg( QString( "emit NotifyMessage( %1, LogType= %2 )" ).arg( LogText( strMsg ) , QString::number( log ) ) );
+            emit NotifyMessage( LogText( strMsg ), log );
         }
     }
 }

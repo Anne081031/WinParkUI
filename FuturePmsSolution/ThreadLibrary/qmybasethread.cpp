@@ -3,7 +3,7 @@
 QMyBaseThread::QMyBaseThread(QObject *parent) :
     QThread(parent)
 {
-    //OutputMsg( QString( " Created" ) );
+    setObjectName( "QMyBaseThread" );
 }
 
 QMyBaseThread::~QMyBaseThread( )
@@ -29,5 +29,6 @@ void QMyBaseThread::LaunchThreadExit( )
 
 void QMyBaseThread::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )
 {
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit NotifyMessage( %1, LogTypes=%2 )" ).arg( strMsg, QString::number( type ) ) );
     emit NotifyMessage( strMsg, type );
 }

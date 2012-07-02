@@ -42,27 +42,27 @@ QTextCodec* QCommonFunction::GetTextCodec( ) const
     }
 
     QList<QByteArray> lstCodec = pCodec->availableCodecs( );
-    QString strText;
+    QString strMsg;
     bool bFound = false;
 
     for ( int nIndex = 0; nIndex < lstCodec.count( ); nIndex++ ) {
         QByteArray byData = lstCodec[ nIndex ];
-        strText = QString( byData );
-        qDebug( ) << strText << endl;
+        strMsg = QString( byData );
+        OutputMsg( strMsg );
 
-        if ( 0 == strText.toUpper().compare( "GB18030" ) ||
-             0 == strText.toUpper().compare( "GBK" ) ||
-             0 == strText.toUpper().compare( "GB2312" ) ) {
+        if ( 0 == strMsg.toUpper().compare( "GB18030" ) ||
+             0 == strMsg.toUpper().compare( "GBK" ) ||
+             0 == strMsg.toUpper().compare( "GB2312" ) ) {
             bFound = true;
             break;
         }
     }
 
     if ( !bFound ) {
-        strText = QString( "System" );
+        strMsg = QString( "System" );
     }
 
-    pCodec = QTextCodec::codecForName( strText.toAscii( ) );
+    pCodec = QTextCodec::codecForName( strMsg.toAscii( ) );
 
     return pCodec;
 }

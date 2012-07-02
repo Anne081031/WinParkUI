@@ -4,6 +4,7 @@ QDatabaseThread* QDatabaseThread::pThreadInstance = NULL;
 QDatabaseThread::QDatabaseThread(QObject *parent) :
     QMyBaseThread(parent)
 {
+    setObjectName( "QDatabaseThread" );
     OutputMsg( QString( " Created" ) );
     pDatabaseGenerator = QDatabaseGenerator::GetSingleton( );
 }

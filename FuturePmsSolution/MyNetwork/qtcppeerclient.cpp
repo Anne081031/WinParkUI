@@ -4,6 +4,7 @@
 QTcpPeerClient::QTcpPeerClient( QTextCodec* pCodec, QObject *parent ) :
     QMyTcpSocket(parent)
 {
+    setObjectName( "QTcpPeerClient" );
     pTextCodec = pCodec;
     connect( this, SIGNAL(readyRead( ) ), this, SLOT( IncomingData( ) ) );
     connect( this, SIGNAL(disconnected( ) ), this, SLOT( HandleDisconnected( ) ) );
@@ -24,6 +25,7 @@ void QTcpPeerClient::HandleDisconnected( )
     GenerateLogText( false );
     close( );
 
+    OutputMsg( "Sender:" + sender( )->objectName( ) + "emit EnqueueThread( ... )");
     // Peer thread to enqueue;
     emit EnqueueThread( this );
 }
@@ -38,6 +40,7 @@ void QTcpPeerClient::HandleError( QAbstractSocket::SocketError socketError )
     QString strMsg;
     QNetCommFunction::GetErrorMsg( strMsg, socketError, this );
 
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit NotifyMessage( %1, QManipulateIniFile::LogNetwork )" ).arg( LogText( strMsg ) ) );
     emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogNetwork );
 }
 
@@ -60,4 +63,3 @@ void QTcpPeerClient::IncomingData( )
         pByteArray = NULL;
     }
 }
-

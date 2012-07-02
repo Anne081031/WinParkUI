@@ -13,8 +13,10 @@ class QTcpPeerSocketThread : public QMyBaseThread
 {
     Q_OBJECT
 public:
-    static QTcpPeerSocketThread* GetInstance( );
+    static QTcpPeerSocketThread* GetInstance( bool& bSignalConnected );
     ~QTcpPeerSocketThread( );
+
+    bool SignalConnected( );
 
 protected:
     explicit QTcpPeerSocketThread(QObject *parent = 0);

@@ -6,6 +6,7 @@ QThreadGenerator* QThreadGenerator::pThreadGenerator = NULL;
 QThreadGenerator::QThreadGenerator(QObject *parent) :
     QObject(parent)
 {
+    setObjectName( "QThreadGenerator" );
     qRegisterMetaType< QManipulateIniFile::LogTypes >( "QManipulateIniFile::LogTypes" );
     OutputMsg( QString( " Created" ) );
 }
@@ -132,14 +133,14 @@ void QThreadGenerator::PostTcpPeerEvent( MyEnums::EventType event, MyDataStructs
 
 void QThreadGenerator::HandleAccept( int socketDescriptor )
 {
-    QTcpPeerSocketThread* pReceiver = QTcpPeerSocketThread::GetInstance( );
+    OutputMsg( sender( )->objectName( ) );
+    bool bSignalConnected = false;
+    QTcpPeerSocketThread* pReceiver = QTcpPeerSocketThread::GetInstance( bSignalConnected );
 
-    connect( pReceiver, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
-                         this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
-
-    //if ( bThreadNoRunning ) {
-    //    pReceiver->moveToThread( pReceiver );
-    //}
+    if ( !bSignalConnected ) { // Not connect
+        connect( pReceiver, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
+                             this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    }
 
     MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
     MyDataStructs::QEventMultiHash hash;
@@ -152,6 +153,7 @@ void QThreadGenerator::HandleAccept( int socketDescriptor )
 
 void QThreadGenerator::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )
 {
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":( %1, LogTypes=%2 )" ).arg( strMsg, QString::number( type ) ) );
     MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
     MyDataStructs::QEventMultiHash hash;
 

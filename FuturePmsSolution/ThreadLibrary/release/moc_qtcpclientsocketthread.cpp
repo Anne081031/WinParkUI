@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qtcpclientsocketthread.h'
 **
-** Created: Fri Jun 29 16:35:18 2012
+** Created: Mon Jul 2 16:42:54 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
