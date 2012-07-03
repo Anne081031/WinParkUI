@@ -1,17 +1,23 @@
 #include "qthreadpooltask.h"
 #include "../ThreadLibrary/Event/qtcppeerthreadevent.h"
+#include "../ThreadLibrary/Event/qudpreceiverthreadevent.h"
 
 QThreadPoolTask::QThreadPoolTask( QByteArray* pByteArray, QThread* pSender,
-                                  QTcpSocket* pPeerSocket, QMyDatabase* pDatabase ) :
-    pByteData( pByteArray ), pSenderThread( pSender ), pFeedbackSocket( pPeerSocket ), pMyDatabase( pDatabase )
+                                  QAbstractSocket* pPeerSocket, QMyDatabase* pDatabase,
+                                  const bool bTcpTaskItem,
+                                  const QString& strSenderIP, const quint16 nSenderPort ) :
+    pByteData( pByteArray ), pSenderThread( pSender ),
+    pFeedbackSocket( pPeerSocket ), pMyDatabase( pDatabase ), bTcpTask( bTcpTaskItem ),
+    strTargetIP( strSenderIP ), nTargetPort( nSenderPort )
 {
     setAutoDelete( true );
     OutputMsg( QString( " Created" ) );
 }
 
-QThreadPoolTask* QThreadPoolTask::GetInstance( QByteArray* pByteArray, QThread* pSender, QTcpSocket* pPeerSocket, QMyDatabase* pDatabase )
+QThreadPoolTask* QThreadPoolTask::GetInstance( QByteArray* pByteArray, QThread* pSender, QAbstractSocket* pPeerSocket,
+                                               QMyDatabase* pDatabase, const bool bTcpTaskItem, const QString& strSenderIP, const quint16 nSenderPort )
 {
-    QThreadPoolTask* pTask = new QThreadPoolTask( pByteArray, pSender, pPeerSocket, pDatabase );
+    QThreadPoolTask* pTask = new QThreadPoolTask( pByteArray, pSender, pPeerSocket, pDatabase, bTcpTaskItem, strSenderIP, nSenderPort );
 
     return pTask;
 }
@@ -39,9 +45,22 @@ void QThreadPoolTask::PostThreadPoolFeedbackEvent( bool bFeedback )
     hash.insertMulti( MyEnums::NetworkParamSocket, nSocketPointer );
     hash.insertMulti( MyEnums::NetworkParamData, nBytePointer );
 
+    if ( !bTcpTask ) { // Udp Task
+        hash.insertMulti( MyEnums::NetworkParamUdpSenderIP, strTargetIP );
+        hash.insertMulti( MyEnums::NetworkParamUdpSenderPort, nTargetPort );
+    }
+
     pEventParams->enqueue( hash );
 
-    QTcpPeerThreadEvent* pEvent = new QTcpPeerThreadEvent( ( QEvent::Type ) MyEnums::TcpPeerThreadPoolFeedback );
+    QEvent::Type type =  ( QEvent::Type ) ( bTcpTask ? MyEnums::TcpPeerThreadPoolFeedback : MyEnums::UdpServerThreadPoolFeedback );
+    QMyThreadEvent* pEvent = NULL;
+
+    if ( bTcpTask ) {
+        pEvent = new QTcpPeerThreadEvent( type );
+    } else {
+        pEvent = new QUdpReceiverThreadEvent( type );
+    }
+
     pEvent->SetEventParams( pEventParams );
 
     qApp->postEvent( pSenderThread, pEvent );

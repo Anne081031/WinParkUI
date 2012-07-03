@@ -4,12 +4,10 @@
 QTcpPeerClient::QTcpPeerClient( QTextCodec* pCodec, QObject *parent ) :
     QMyTcpSocket(parent)
 {
-    setObjectName( "QTcpPeerClient" );
     pTextCodec = pCodec;
-    connect( this, SIGNAL(readyRead( ) ), this, SLOT( IncomingData( ) ) );
-    connect( this, SIGNAL(disconnected( ) ), this, SLOT( HandleDisconnected( ) ) );
-    connect( this, SIGNAL(connected( ) ), this, SLOT( HandleConnected( ) ) );
-    connect( this, SIGNAL(error( QAbstractSocket::SocketError ) ), this, SLOT( HandleError( QAbstractSocket::SocketError ) ) );
+    setObjectName( "QTcpPeerClient" );
+    connect( this, SIGNAL( readyRead( ) ), this, SLOT( IncomingData( ) ) );
+    connect( this, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( HandleError( QAbstractSocket::SocketError ) ) );
 }
 
 QTcpPeerClient::~QTcpPeerClient( )

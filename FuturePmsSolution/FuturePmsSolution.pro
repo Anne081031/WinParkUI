@@ -11,4 +11,5 @@ SUBDIRS += \
     CommonLibrary \
     ThreadLibrary \
     CommonWidgetLibrary \
-    PlatformGlobal
+    PlatformGlobal \
+    PlatformConfig

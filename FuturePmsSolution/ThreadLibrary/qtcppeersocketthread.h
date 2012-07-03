@@ -4,7 +4,6 @@
 #include "qmybasethread.h"
 #include "Event/qtcppeerthreadevent.h"
 #include "../MyNetwork/qtcppeerclient.h"
-//#include <QThreadPool>
 
 #include "qdatabasethread.h"
 #include "Event/qdatabasethreadevent.h"
@@ -36,12 +35,11 @@ private:
     void ProcessDatabaseData( QTcpSocket* pPeerSocket, QByteArray* pByteArray );
     void ProcessOtherData( QTcpSocket* pPeerSocket, QByteArray* pByteArray );
 
-    void ProcessCreateSockeEvent( MyDataStructs::PQQueueEventParams pEventParams );
+    void ProcessCreateSocketEvent( MyDataStructs::PQQueueEventParams pEventParams );
     void ProcessThreadPoolFeedbackEvent( MyDataStructs::PQQueueEventParams pEventParams );
     void PostDatabaseEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
 
 private:
-    //QTcpPeerClient* pPeerSocket;
     QDatabaseThread* pDatabaseThread;
     QThreadPool peerThreadPool;
     MyDataStructs::QSocketMultiHash socketHash;

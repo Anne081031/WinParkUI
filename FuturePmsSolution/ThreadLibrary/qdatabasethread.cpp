@@ -9,16 +9,22 @@ QDatabaseThread::QDatabaseThread(QObject *parent) :
     pDatabaseGenerator = QDatabaseGenerator::GetSingleton( );
 }
 
-QDatabaseThread* QDatabaseThread::GetSingleton( )
+QDatabaseThread* QDatabaseThread::GetSingleton( const bool bTcpThread )
 {
     if ( NULL == pThreadInstance ) {
         pThreadInstance = new QDatabaseThread( );
         pThreadInstance->InitializeThread( );
+        pThreadInstance->SetTaskType( bTcpThread );
         pThreadInstance->start( );
         pThreadInstance->moveToThread( pThreadInstance );
     }
 
     return pThreadInstance;
+}
+
+void QDatabaseThread::SetTaskType( bool bTcpaskItem )
+{
+    bTcpTask = bTcpaskItem;
 }
 
 void QDatabaseThread::run( )
@@ -50,10 +56,17 @@ void QDatabaseThread::ProcessCrudEvent( MyDataStructs::PQQueueEventParams pEvent
 
     varData = hash.value( MyEnums::NetworkParamSocket );
     quint32 nSocketPointer = ( quint32 ) varData.toUInt( );
-    QTcpSocket* pPeerSocket = ( QTcpSocket* ) nSocketPointer;
+    QAbstractSocket* pPeerSocket = ( QAbstractSocket* ) nSocketPointer;
+
+    varData = hash.value( MyEnums::NetworkParamUdpSenderIP );
+    QString strSenderIP = varData.toString( );
+
+    varData = hash.value( MyEnums::NetworkParamUdpSenderPort );
+    quint16 nSenderPort = ( quint16 ) varData.toUInt( );
 
     QMyDatabase* pDatabase = pDatabaseGenerator->GeneratorDatabaseInstance( true );
-    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteData, pSenderThread, pPeerSocket, pDatabase );
+    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteData, pSenderThread, pPeerSocket,
+                                                           pDatabase, bTcpTask, strSenderIP, nSenderPort );
     dbThreadPool.start( pTask );
 }
 

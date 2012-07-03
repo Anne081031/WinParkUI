@@ -88,7 +88,7 @@ void QTcpPeerSocketThread::InitializeSubThread( )
     CreatePeerSocket( nThreadPeerSocketCount );
 
     if ( NULL == pDatabaseThread ) {
-        pDatabaseThread = QDatabaseThread::GetSingleton( );
+        pDatabaseThread = QDatabaseThread::GetSingleton( true );
     }
 
     connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
@@ -202,7 +202,7 @@ void QTcpPeerSocketThread::ProcessThreadPoolFeedbackEvent( MyDataStructs::PQQueu
     delete pByteData;
 }
 
-void QTcpPeerSocketThread::ProcessCreateSockeEvent( MyDataStructs::PQQueueEventParams pEventParams )
+void QTcpPeerSocketThread::ProcessCreateSocketEvent( MyDataStructs::PQQueueEventParams pEventParams )
 {
     if ( NULL == pEventParams || pEventParams->isEmpty( ) ) {
         return;
@@ -247,7 +247,7 @@ void QTcpPeerSocketThread::customEvent( QEvent *event )
     if ( MyEnums::TcpPeerThreadPoolFeedback == type ) {
         ProcessThreadPoolFeedbackEvent( pEventParams );
     } else if ( MyEnums::TcpPeerCreateSocket == type ) {
-       ProcessCreateSockeEvent( pEventParams );
+       ProcessCreateSocketEvent( pEventParams );
    } else if ( MyEnums::ThreadExit == type ) {
        LaunchThreadExit( );
     }

@@ -50,6 +50,20 @@ namespace MyEnums {
         TcpClientSendData,
         TcpClientEventEnd,
         //////////////////////////////////////////
+        UdpServerEventStart,
+        UdpServerThreadPoolFeedback,
+        UdpServerStartupListening,
+        UdpServerJoinMulticast,
+        UdpServerLeaveMulticast,
+        UdpServerBroadcastDatagram,
+        UdpServerSendDatagram,
+        UdpServerEventEnd,
+        //////////////////////////////////////////
+        UdpClientEventStart,
+        UdpClientBroadcastDatagram,
+        UdpClientSendDatagram,
+        UdpClientEventEnd,
+        //////////////////////////////////////////
         DatabaseEventStart,
         DatabaseCrud, // CRUD Operation / SP
         DatabaseEventEnd,
@@ -71,6 +85,8 @@ namespace MyEnums {
         NetworkParamListenerMaxConnections,
         NetworkParamData,
         NetworkParamSocket,
+        NetworkParamUdpSenderIP,
+        NetworkParamUdpSenderPort,
         NetworkParamSenderThread
     };
 

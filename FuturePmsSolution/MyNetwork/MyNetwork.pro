@@ -34,7 +34,9 @@ SOURCES += qmynetwork.cpp \
     qnetcommfunction.cpp \
     qtcppeerclient.cpp \
     qtcpclient.cpp \
-    qmytcpsocket.cpp
+    qmytcpsocket.cpp \
+    qmyudpsocket.cpp \
+    qudpserver.cpp
 
 HEADERS += qmynetwork.h\
         QMyNetwork_global.h \
@@ -43,7 +45,9 @@ HEADERS += qmynetwork.h\
     qnetcommfunction.h \
     qtcppeerclient.h \
     qtcpclient.h \
-    qmytcpsocket.h
+    qmytcpsocket.h \
+    qmyudpsocket.h \
+    qudpserver.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

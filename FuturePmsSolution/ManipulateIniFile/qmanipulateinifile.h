@@ -47,15 +47,21 @@ public:
     Q_FLAGS( IniFileSection )
 
     enum IniFileSectionItem {
+        /////////////////////////////////////// Database
         DatabaseHost,
         DatabasePort,
         DatabaseUser,
         DatabasePwd,
-        //////////////////////////////////////////
+        ////////////////////////////////////////// Network
+        NetworkTcpMaxConnection,
         NetworkTcpServerPort,
         NetworkTcpServerIP,
-        NetworkTcpMaxConnection,
-        /////////////////////////////////////////
+        NetworkUdpServerPort,
+        NetworkUdpServerIP,
+        NetworkUdpBroadcastPort,
+        NetworkMulticastPort,
+        NetworkMulticastIP,
+        ///////////////////////////////////////// Thread
         ThreadPeerSocketCount, // Per peer thread manages X PeerSockets.
         ThreadPeerStackSize, // 512K
         ThreadPool

@@ -6,6 +6,8 @@
 #include "qmytcpserver.h"
 #include "qtcpclient.h"
 #include "qtcppeerclient.h"
+#include "qudpclient.h"
+#include "qudpserver.h"
 
 #include "../ManipulateIniFile/qmanipulateinifile.h"
 
@@ -15,6 +17,10 @@ class QMYNETWORKSHARED_EXPORT QMyNetwork :public QObject
 public:
     explicit QMyNetwork( QObject* parent = 0 );
     virtual ~QMyNetwork( );
+
+    //
+    // TCP
+    //
 
     void StartupTcpServer( quint16 nPort, int nMaxConnections );
     QTcpPeerClient* GenerateTcpPeerSocket( QTextCodec* pCodec );
@@ -27,6 +33,18 @@ public:
     QByteArray TcpReceiveData( QMyTcpSocket* pTcpSocket,  qint64 maxSize );
     QByteArray TcpReceiveData( QMyTcpSocket* pTcpSocket );
 
+    //
+    // UDP
+    //
+
+    QUdpClient* GenerateUdpClientSocket( QTextCodec* pCodec );
+    QUdpServer* GenerateUdpServerSocket( QTextCodec* pCodec );
+
+    quint64 UdpBroadcastDatagram( QMyUdpSocket* pUdpSocket, const QByteArray& byteData, const quint16 targetPort );
+    bool StartupUdpListening( QMyUdpSocket* pUdpSocket, const quint16 nPort );
+    bool UdpOperateMulticast( QMyUdpSocket* pUdpSocket, const QHostAddress& groupAddress, const bool bJoined );
+    quint64 UdpSendDatagram( QMyUdpSocket* pUdpSocket, const QByteArray& byteData, const QHostAddress& targetAddress, const quint16 targetPort );
+
 private:
     QMyTcpServer* pTcpServer;
 
@@ -35,6 +53,7 @@ signals:
     void Accept( int socketDescriptor );
     void EnqueueThread( QTcpSocket* pPeerSocket );
     void GetWholeTcpStreamData( QTcpSocket* pPeerSocket, void* pByteArray );
+    void GetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort );
 
 public slots:
 
@@ -43,7 +62,7 @@ private slots:
     void HandleAccept( int socketDescriptor );
     void HandleThreadEnqueue( QTcpSocket* pPeerSocket );
     void HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket, void* pByteArray );
-
+    void HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort );
 };
 
 #endif // QMYNETWORK_H

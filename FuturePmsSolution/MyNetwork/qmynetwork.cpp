@@ -20,6 +20,12 @@ void QMyNetwork::HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket, void *pBy
     emit GetWholeTcpStreamData( pPeerSocket, pByteArray );
 }
 
+void QMyNetwork::HandleGetWholeUdpDatagram( void *pByteArray, QString strSenderIP, quint16 nSenderPort )
+{
+    OutputMsg( "Sender:" + sender( )->objectName( ) + ":emit GetWholeUdpDatagram( ... )" );
+    emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort );
+}
+
 void QMyNetwork::HandleThreadEnqueue( QTcpSocket* pPeerSocket )
 {
     OutputMsg( "Sender:" + sender( )->objectName( ) + ":emit EnqueueThread( ... )" );
@@ -53,6 +59,28 @@ QTcpClient* QMyNetwork::GenerateTcpClientSocket( QTextCodec *pCodec )
     connect( pClientSocket, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ), this, SLOT( HandleGetWholeTcpStreamData( QTcpSocket*, void* ) ) );
 
     return pClientSocket;
+}
+
+QUdpClient* QMyNetwork::GenerateUdpClientSocket( QTextCodec* pCodec )
+{
+    QUdpClient* pClientSocket = new QUdpClient( pCodec );
+    connect( pClientSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
+             this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pClientSocket, SIGNAL( GetWholeUdpDatagram( void*, QString, quint16 ) ),
+             this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
+
+    return pClientSocket;
+}
+
+QUdpServer* QMyNetwork::GenerateUdpServerSocket( QTextCodec* pCodec )
+{
+    QUdpServer* pServerSocket = new QUdpServer( pCodec );
+    connect( pServerSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
+             this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pServerSocket, SIGNAL( GetWholeUdpDatagram( void*, QString, quint16 ) ),
+             this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
+
+    return pServerSocket;
 }
 
 void QMyNetwork::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )
@@ -95,4 +123,24 @@ QByteArray QMyNetwork::QMyNetwork::TcpReceiveData( QMyTcpSocket* pTcpSocket,  qi
 QByteArray QMyNetwork::TcpReceiveData( QMyTcpSocket* pTcpSocket )
 {
     return pTcpSocket->ReceiveData( );
+}
+
+quint64 QMyNetwork::UdpBroadcastDatagram( QMyUdpSocket* pUdpSocket, const QByteArray& byteData, const quint16 targetPort )
+{
+    return pUdpSocket->BroadcastDatagram( byteData, targetPort );
+}
+
+bool QMyNetwork::StartupUdpListening( QMyUdpSocket* pUdpSocket, const quint16 nPort )
+{
+    return pUdpSocket->StartupUdpListening( nPort );
+}
+
+bool QMyNetwork::UdpOperateMulticast( QMyUdpSocket* pUdpSocket, const QHostAddress& groupAddress, const bool bJoined )
+{
+    return pUdpSocket->OperateMulticast( groupAddress, bJoined );
+}
+
+quint64 QMyNetwork::UdpSendDatagram( QMyUdpSocket* pUdpSocket, const QByteArray& byteData, const QHostAddress& targetAddress, const quint16 targetPort )
+{
+    return pUdpSocket->SendDatagram( byteData, targetAddress, targetPort );
 }

@@ -11,7 +11,8 @@ class QDatabaseThread : public QMyBaseThread
 {
     Q_OBJECT
 public:
-    static QDatabaseThread* GetSingleton( );
+    static QDatabaseThread* GetSingleton( const bool bTcpThread );
+    void SetTaskType( bool bTcpaskItem );
 
 protected:
     explicit QDatabaseThread(QObject *parent = 0);
@@ -29,6 +30,7 @@ private:
     static QDatabaseThread* pThreadInstance;
     QThreadPool dbThreadPool;
     QDatabaseGenerator* pDatabaseGenerator;
+    bool bTcpTask;
 
 signals:
 
