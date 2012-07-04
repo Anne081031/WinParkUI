@@ -13,6 +13,7 @@ class QDatabaseThread : public QMyBaseThread
 public:
     static QDatabaseThread* GetSingleton( const bool bTcpThread );
     void SetTaskType( bool bTcpaskItem );
+    ~QDatabaseThread( );
 
 protected:
     explicit QDatabaseThread(QObject *parent = 0);

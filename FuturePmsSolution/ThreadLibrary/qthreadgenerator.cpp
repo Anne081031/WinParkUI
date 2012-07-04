@@ -9,6 +9,23 @@ QThreadGenerator::QThreadGenerator(QObject *parent) :
     setObjectName( "QThreadGenerator" );
     qRegisterMetaType< QManipulateIniFile::LogTypes >( "QManipulateIniFile::LogTypes" );
     OutputMsg( QString( " Created" ) );
+    nThreadReleaseTimerID = 0;
+}
+
+void QThreadGenerator::timerEvent( QTimerEvent *event )
+{
+    if ( event->timerId( ) == nThreadReleaseTimerID ) {
+        QTcpPeerSocketThread::ReleaseThread( );
+    }
+}
+
+void QThreadGenerator::ControlTimer( const bool bStart, const int nInterval )
+{
+    if ( bStart ) {
+        nThreadReleaseTimerID = startTimer( nInterval );
+    } else {
+        killTimer( nThreadReleaseTimerID );
+    }
 }
 
 QLoggerThread* QThreadGenerator::GenerateLogThread( )
@@ -140,6 +157,8 @@ void QThreadGenerator::HandleAccept( int socketDescriptor )
     if ( !bSignalConnected ) { // Not connect
         connect( pReceiver, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
                              this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+        connect( pReceiver, SIGNAL( ReleaseMyself( QTcpPeerSocketThread* ) ),
+                 this, SLOT( HandlePeerThreadReleaseMyself( QTcpPeerSocketThread* ) ) );
     }
 
     MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
@@ -149,6 +168,11 @@ void QThreadGenerator::HandleAccept( int socketDescriptor )
     pEventParams->enqueue( hash );
 
     PostTcpPeerEvent( MyEnums::TcpPeerCreateSocket, pEventParams, pReceiver);
+}
+
+void QThreadGenerator::HandlePeerThreadReleaseMyself( QTcpPeerSocketThread *pThread )
+{
+    PostEvent( MyEnums::ThreadTcpPeer, MyEnums::ThreadExit, NULL, pThread );
 }
 
 void QThreadGenerator::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )

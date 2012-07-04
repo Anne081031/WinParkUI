@@ -8,11 +8,15 @@
 #include "qdatabasethread.h"
 #include "Event/qdatabasethreadevent.h"
 
+#include <QMutex>
+
 class QTcpPeerSocketThread : public QMyBaseThread
 {
     Q_OBJECT
 public:
     static QTcpPeerSocketThread* GetInstance( bool& bSignalConnected );
+    static void ReleaseThread( );
+    bool MayRelease( );
     ~QTcpPeerSocketThread( );
 
     bool SignalConnected( );
@@ -27,7 +31,7 @@ protected:
 private:
     inline void GetThreadPeerSocketCount( );
     QTcpPeerClient* CreatePeerSocket( char nMaxSocket );
-    void DestroyPeerSocket( );
+    void DestroyPeerSocket( MyDataStructs::QSocketMultiHash& hash );
     quint32 GetIniValue( const QManipulateIniFile::IniFileSectionItems item );
     void ManagePeerSocketHash( QTcpSocket*& pPeerSocket, bool bInserted );
     void ThreadEnqueue( );
@@ -42,11 +46,14 @@ private:
 private:
     QDatabaseThread* pDatabaseThread;
     QThreadPool peerThreadPool;
-    MyDataStructs::QSocketMultiHash socketHash;
+    MyDataStructs::QSocketMultiHash socketUsedHash;
+    MyDataStructs::QSocketMultiHash socketUnusedHash;
     quint8 nThreadPeerSocketCount;
     static QQueue< QTcpPeerSocketThread* > peerThreadQueue;
+    static QMutex queueMutex;
 
 signals:
+    void ReleaseMyself(QTcpPeerSocketThread* pThread );
 
 public slots:
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qudpreceiversocketthread.h'
 **
-** Created: Mon Jul 2 16:42:51 2012
+** Created: Wed Jul 4 15:53:49 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,26 +23,35 @@ static const uint qt_meta_data_QUdpReceiverSocketThread[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      61,   26,   25,   25, 0x08,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_QUdpReceiverSocketThread[] = {
-    "QUdpReceiverSocketThread\0"
+    "QUdpReceiverSocketThread\0\0"
+    "pByteArray,strSenderIP,nSenderPort\0"
+    "HandleGetWholeUdpDatagram(void*,QString,quint16)\0"
 };
 
 void QUdpReceiverSocketThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
-    Q_UNUSED(_o);
-    Q_UNUSED(_id);
-    Q_UNUSED(_c);
-    Q_UNUSED(_a);
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        QUdpReceiverSocketThread *_t = static_cast<QUdpReceiverSocketThread *>(_o);
+        switch (_id) {
+        case 0: _t->HandleGetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        default: ;
+        }
+    }
 }
 
 const QMetaObjectExtraData QUdpReceiverSocketThread::staticMetaObjectExtraData = {
@@ -76,6 +85,11 @@ int QUdpReceiverSocketThread::qt_metacall(QMetaObject::Call _c, int _id, void **
     _id = QMyBaseThread::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 1)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 1;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE

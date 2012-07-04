@@ -6,6 +6,7 @@ QTcpPeerClient::QTcpPeerClient( QTextCodec* pCodec, QObject *parent ) :
 {
     pTextCodec = pCodec;
     setObjectName( "QTcpPeerClient" );
+    connect( this, SIGNAL( disconnected( ) ), this, SLOT( HandleDisconnected( ) ) );
     connect( this, SIGNAL( readyRead( ) ), this, SLOT( IncomingData( ) ) );
     connect( this, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( HandleError( QAbstractSocket::SocketError ) ) );
 }

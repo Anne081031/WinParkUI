@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmanipulateinifile.h'
 **
-** Created: Tue Jul 3 15:29:40 2012
+** Created: Wed Jul 4 15:03:13 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,8 +34,8 @@ static const uint qt_meta_data_QManipulateIniFile[] = {
       19, 0x1,    4,   34,
       31, 0x1,    4,   42,
       43, 0x1,    3,   50,
-      58, 0x1,   15,   56,
-      77, 0x1,    6,   86,
+      58, 0x1,   16,   56,
+      77, 0x1,    6,   88,
 
  // enum data: key, value
       85, uint(QManipulateIniFile::PlatformCentralClient),
@@ -63,13 +63,14 @@ static const uint qt_meta_data_QManipulateIniFile[] = {
      502, uint(QManipulateIniFile::NetworkMulticastIP),
      521, uint(QManipulateIniFile::ThreadPeerSocketCount),
      543, uint(QManipulateIniFile::ThreadPeerStackSize),
-     563, uint(QManipulateIniFile::ThreadPool),
-     574, uint(QManipulateIniFile::LogDatabase),
-     586, uint(QManipulateIniFile::LogNetwork),
-     597, uint(QManipulateIniFile::LogThread),
-     607, uint(QManipulateIniFile::LogCfgParam),
-     619, uint(QManipulateIniFile::LogOther),
-     628, uint(QManipulateIniFile::LogItems),
+     563, uint(QManipulateIniFile::ThreadPeerReleaseInterval),
+     589, uint(QManipulateIniFile::ThreadPool),
+     600, uint(QManipulateIniFile::LogDatabase),
+     612, uint(QManipulateIniFile::LogNetwork),
+     623, uint(QManipulateIniFile::LogThread),
+     633, uint(QManipulateIniFile::LogCfgParam),
+     645, uint(QManipulateIniFile::LogOther),
+     654, uint(QManipulateIniFile::LogItems),
 
        0        // eod
 };
@@ -91,8 +92,9 @@ static const char qt_meta_stringdata_QManipulateIniFile[] = {
     "NetworkUdpServerIP\0NetworkUdpBroadcastPort\0"
     "NetworkMulticastPort\0NetworkMulticastIP\0"
     "ThreadPeerSocketCount\0ThreadPeerStackSize\0"
-    "ThreadPool\0LogDatabase\0LogNetwork\0"
-    "LogThread\0LogCfgParam\0LogOther\0LogItems\0"
+    "ThreadPeerReleaseInterval\0ThreadPool\0"
+    "LogDatabase\0LogNetwork\0LogThread\0"
+    "LogCfgParam\0LogOther\0LogItems\0"
 };
 
 void QManipulateIniFile::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)

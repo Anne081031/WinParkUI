@@ -1,6 +1,7 @@
 #include "qtcppeersocketthread.h"
 
 QQueue< QTcpPeerSocketThread* > QTcpPeerSocketThread::peerThreadQueue;
+QMutex QTcpPeerSocketThread::queueMutex;
 
 QTcpPeerSocketThread::QTcpPeerSocketThread(QObject *parent) :
     QMyBaseThread(parent)
@@ -15,12 +16,14 @@ QTcpPeerSocketThread::QTcpPeerSocketThread(QObject *parent) :
 
 QTcpPeerSocketThread::~QTcpPeerSocketThread( )
 {
-    DestroyPeerSocket( );
+    DestroyPeerSocket( socketUsedHash );
+    DestroyPeerSocket( socketUnusedHash );
+    OutputMsg( "" );
 }
 
-void QTcpPeerSocketThread::DestroyPeerSocket( )
+void QTcpPeerSocketThread::DestroyPeerSocket( MyDataStructs::QSocketMultiHash& hash )
 {
-    foreach ( QTcpSocket* pSocket, socketHash.values() ) {
+    foreach ( QTcpSocket* pSocket, hash.values() ) {
         pSocket->close( );
         delete pSocket;
     }
@@ -33,12 +36,51 @@ bool QTcpPeerSocketThread::SignalConnected( )
     return ( 0 < nSignal );
 }
 
+void QTcpPeerSocketThread::ReleaseThread( )
+{
+    queueMutex.lock( );
+
+    bool bEmpty = peerThreadQueue.isEmpty( );
+
+    if ( !bEmpty ) {
+        QList< QTcpPeerSocketThread* > lstThreads = peerThreadQueue.toSet( ).toList( );
+        foreach ( QTcpPeerSocketThread* pThread, lstThreads ) {
+            if ( pThread->MayRelease( ) ) {
+                peerThreadQueue.removeOne( pThread );
+                emit pThread->ReleaseMyself( pThread );
+            }
+        }
+    }
+
+    queueMutex.unlock( );
+}
+
+bool QTcpPeerSocketThread::MayRelease( )
+{
+    qint32 nCount = socketUsedHash.values( ).count( );
+
+    return ( 0 == nCount );
+}
+
 QTcpPeerSocketThread* QTcpPeerSocketThread::GetInstance( bool& bSignalConnected )
 {
-    bool bEmpty = peerThreadQueue.isEmpty( );
-    QTcpPeerSocketThread* pThreadInstance = bEmpty ? new QTcpPeerSocketThread( ) : peerThreadQueue.dequeue( );
+    bool bEmpty = true;
+    QTcpPeerSocketThread* pThreadInstance = NULL;
+
+    queueMutex.lock( );
+
+    bEmpty = peerThreadQueue.isEmpty( );
+    if ( !bEmpty ) {
+        pThreadInstance = peerThreadQueue.dequeue( );
+        OutputMsg( "peerThreadQueue.dequeue( )" );
+    }
+
+    queueMutex.unlock( );
 
     if ( bEmpty ) {
+        pThreadInstance = new QTcpPeerSocketThread( );
+        static int nIndex = 0;
+        OutputMsg( QString( "new QTcpPeerSocketThread( Index:%1 )" ).arg( ++nIndex ) );
         pThreadInstance->InitializeThread( );
         pThreadInstance->start( );
         pThreadInstance->moveToThread( pThreadInstance );
@@ -76,7 +118,7 @@ QTcpPeerClient* QTcpPeerSocketThread::CreatePeerSocket( char nMaxSocket )
 
     for ( char cCount = 0; cCount < nMaxSocket; cCount++ ) {
         pPeerSocket = network.GenerateTcpPeerSocket( commonFunction.GetTextCodec( ) );
-        socketHash.insertMulti( true, pPeerSocket );
+        socketUnusedHash.insertMulti( true, pPeerSocket );
     }
 
     return pPeerSocket;
@@ -148,32 +190,52 @@ void QTcpPeerSocketThread::HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket,
 
 void QTcpPeerSocketThread::ThreadEnqueue( )
 {
-    if ( 0 == socketHash.values( true ).count( ) ) { // Unused
+    queueMutex.lock( );
+
+    if ( 0 == socketUnusedHash.values( true ).count( ) ) { // Unused
         if ( peerThreadQueue.contains( this ) ) {
             peerThreadQueue.removeOne( this );
+            OutputMsg( "peerThreadQueue.removeOne( )" );
         }
     } else if ( !peerThreadQueue.contains( this )  ) {
         peerThreadQueue.enqueue( this );
+        OutputMsg( "peerThreadQueue.enqueue( )" );
     }
 
-    OutputMsg( QString( "peerThreadQueue.count( ) = %1" ).arg( QString::number( peerThreadQueue.count( ) ) ) );
+    OutputMsg( QString( "Unused:%1 Used:%2 Queue:%3" ).arg(
+                   QString::number( socketUnusedHash.values( true ).count( ) ),
+                   QString::number( socketUsedHash.values( false  ).count( ) ),
+                   QString::number( peerThreadQueue.count( ) ) ) );
+
+    queueMutex.unlock( );
 }
 
 void QTcpPeerSocketThread::ManagePeerSocketHash( QTcpSocket*& pPeerSocket, bool bInserted )
 {
+    //queueMutex.lock( );
+
     if ( !bInserted ) {
-        QList < QTcpSocket* > lstSocket =  socketHash.values( true );
+        QList < QTcpSocket* > lstSocket =  socketUnusedHash.values( true );
         if ( 0 == lstSocket.count( ) ) {
             pPeerSocket = CreatePeerSocket( char( 1 ) );
+            OutputMsg( "CreatePeerSocket" );
         } else{
             pPeerSocket = lstSocket.at( 0 );
+            OutputMsg( "lstSocket.at( 0 )" );
         }
     }
 
-    socketHash.remove( !bInserted, pPeerSocket ); // Used
-    socketHash.insertMulti( bInserted, pPeerSocket ); // Unused
+    if ( bInserted ) {
+        socketUnusedHash.insertMulti( true, pPeerSocket );
+        socketUsedHash.remove( false, pPeerSocket );
+    } else {
+        socketUnusedHash.remove( true, pPeerSocket );
+        socketUsedHash.insertMulti( false, pPeerSocket );
+    }
 
     ThreadEnqueue( );
+
+    //queueMutex.unlock( );
 }
 
 void QTcpPeerSocketThread::HandleThreadEnqueue( QTcpSocket* pPeerSocket  )

@@ -9,6 +9,11 @@ QDatabaseThread::QDatabaseThread(QObject *parent) :
     pDatabaseGenerator = QDatabaseGenerator::GetSingleton( );
 }
 
+QDatabaseThread::~QDatabaseThread( )
+{
+    OutputMsg( "" );
+}
+
 QDatabaseThread* QDatabaseThread::GetSingleton( const bool bTcpThread )
 {
     if ( NULL == pThreadInstance ) {

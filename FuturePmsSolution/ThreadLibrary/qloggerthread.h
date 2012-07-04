@@ -9,6 +9,7 @@ class QLoggerThread : public QMyBaseThread
     Q_OBJECT
 public:
     static QLoggerThread* GetSingleton( );
+    ~QLoggerThread( );
 
 protected:
     explicit QLoggerThread(QObject *parent = 0);

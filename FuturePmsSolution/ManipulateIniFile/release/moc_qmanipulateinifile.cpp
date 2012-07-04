@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmanipulateinifile.h'
 **
-** Created: Fri Jun 29 16:33:42 2012
+** Created: Wed Jul 4 15:52:57 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,8 +34,8 @@ static const uint qt_meta_data_QManipulateIniFile[] = {
       19, 0x1,    4,   34,
       31, 0x1,    4,   42,
       43, 0x1,    3,   50,
-      58, 0x1,   10,   56,
-      77, 0x1,    6,   76,
+      58, 0x1,   16,   56,
+      77, 0x1,    6,   88,
 
  // enum data: key, value
       85, uint(QManipulateIniFile::PlatformCentralClient),
@@ -53,18 +53,24 @@ static const uint qt_meta_data_QManipulateIniFile[] = {
      315, uint(QManipulateIniFile::DatabasePort),
      328, uint(QManipulateIniFile::DatabaseUser),
      341, uint(QManipulateIniFile::DatabasePwd),
-     353, uint(QManipulateIniFile::NetworkTcpServerPort),
-     374, uint(QManipulateIniFile::NetworkTcpServerIP),
-     393, uint(QManipulateIniFile::NetworkTcpMaxConnection),
-     417, uint(QManipulateIniFile::ThreadPeerSocketCount),
-     439, uint(QManipulateIniFile::ThreadPeerStackSize),
-     459, uint(QManipulateIniFile::ThreadPool),
-     470, uint(QManipulateIniFile::LogDatabase),
-     482, uint(QManipulateIniFile::LogNetwork),
-     493, uint(QManipulateIniFile::LogThread),
-     503, uint(QManipulateIniFile::LogCfgParam),
-     515, uint(QManipulateIniFile::LogOther),
-     524, uint(QManipulateIniFile::LogItems),
+     353, uint(QManipulateIniFile::NetworkTcpMaxConnection),
+     377, uint(QManipulateIniFile::NetworkTcpServerPort),
+     398, uint(QManipulateIniFile::NetworkTcpServerIP),
+     417, uint(QManipulateIniFile::NetworkUdpServerPort),
+     438, uint(QManipulateIniFile::NetworkUdpServerIP),
+     457, uint(QManipulateIniFile::NetworkUdpBroadcastPort),
+     481, uint(QManipulateIniFile::NetworkMulticastPort),
+     502, uint(QManipulateIniFile::NetworkMulticastIP),
+     521, uint(QManipulateIniFile::ThreadPeerSocketCount),
+     543, uint(QManipulateIniFile::ThreadPeerStackSize),
+     563, uint(QManipulateIniFile::ThreadPeerReleaseInterval),
+     589, uint(QManipulateIniFile::ThreadPool),
+     600, uint(QManipulateIniFile::LogDatabase),
+     612, uint(QManipulateIniFile::LogNetwork),
+     623, uint(QManipulateIniFile::LogThread),
+     633, uint(QManipulateIniFile::LogCfgParam),
+     645, uint(QManipulateIniFile::LogOther),
+     654, uint(QManipulateIniFile::LogItems),
 
        0        // eod
 };
@@ -80,11 +86,15 @@ static const char qt_meta_stringdata_QManipulateIniFile[] = {
     "PlatformCentralLogDataReceiver\0"
     "PlatformLogCount\0IniDatabase\0IniNetwork\0"
     "IniThread\0DatabaseHost\0DatabasePort\0"
-    "DatabaseUser\0DatabasePwd\0NetworkTcpServerPort\0"
-    "NetworkTcpServerIP\0NetworkTcpMaxConnection\0"
+    "DatabaseUser\0DatabasePwd\0"
+    "NetworkTcpMaxConnection\0NetworkTcpServerPort\0"
+    "NetworkTcpServerIP\0NetworkUdpServerPort\0"
+    "NetworkUdpServerIP\0NetworkUdpBroadcastPort\0"
+    "NetworkMulticastPort\0NetworkMulticastIP\0"
     "ThreadPeerSocketCount\0ThreadPeerStackSize\0"
-    "ThreadPool\0LogDatabase\0LogNetwork\0"
-    "LogThread\0LogCfgParam\0LogOther\0LogItems\0"
+    "ThreadPeerReleaseInterval\0ThreadPool\0"
+    "LogDatabase\0LogNetwork\0LogThread\0"
+    "LogCfgParam\0LogOther\0LogItems\0"
 };
 
 void QManipulateIniFile::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)

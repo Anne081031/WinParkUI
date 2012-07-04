@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qthreadgenerator.h'
 **
-** Created: Mon Jul 2 16:42:38 2012
+** Created: Wed Jul 4 15:53:36 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_QThreadGenerator[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,6 +33,7 @@ static const uint qt_meta_data_QThreadGenerator[] = {
  // slots: signature, parameters, type, tag, flags
       30,   18,   17,   17, 0x08,
       99,   82,   17,   17, 0x08,
+     125,  117,   17,   17, 0x08,
 
        0        // eod
 };
@@ -41,6 +42,7 @@ static const char qt_meta_stringdata_QThreadGenerator[] = {
     "QThreadGenerator\0\0strMsg,type\0"
     "HandleMessage(QString,QManipulateIniFile::LogTypes)\0"
     "socketDescriptor\0HandleAccept(int)\0"
+    "pThread\0HandlePeerThreadReleaseMyself(QTcpPeerSocketThread*)\0"
 };
 
 void QThreadGenerator::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -51,6 +53,7 @@ void QThreadGenerator::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         switch (_id) {
         case 0: _t->HandleMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         case 1: _t->HandleAccept((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: _t->HandlePeerThreadReleaseMyself((*reinterpret_cast< QTcpPeerSocketThread*(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -88,9 +91,9 @@ int QThreadGenerator::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

@@ -209,6 +209,19 @@ void QPlatformGlobal::GetNetworkParams(  const QManipulateIniFile::IniFileName i
     manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniNetwork, item, false, var );
 }
 
+void QPlatformGlobal::ControlTimer( const QManipulateIniFile::IniFileName iniFile, const bool bStart )
+{
+    int nInterval = 0;
+
+    if ( bStart ) {
+        QVariant var;
+        manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniThread, QManipulateIniFile::ThreadPeerReleaseInterval, false, var );
+        nInterval = var.toInt( ) * 60 * 1000;
+    }
+
+    pGenerator->ControlTimer( bStart, nInterval );
+}
+
 void QPlatformGlobal::CreateTcpClientThread( const QManipulateIniFile::IniFileName iniFile, const bool bConnect2Host )
 {
     // NetworkTcpServerIP=192.168.1.20@192.168.1.24

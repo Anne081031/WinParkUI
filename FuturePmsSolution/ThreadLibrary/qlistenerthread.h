@@ -9,6 +9,7 @@ class QListenerThread : public QMyBaseThread
     Q_OBJECT
 public:
     static QListenerThread* GetInstance( );
+    ~QListenerThread( );
 
 protected:
     explicit QListenerThread(QObject *parent = 0);

@@ -10,6 +10,9 @@ class PLATFORMGLOBALSHARED_EXPORT QPlatformGlobal : public QObject {
     Q_OBJECT
 public:
     static QPlatformGlobal* GetSingleton( );
+
+    void ControlTimer( const QManipulateIniFile::IniFileName iniFile, const bool bStart );
+
     QCommonFunction& GetCommonFunctionObj( );
     QCommonWidgetLibrary& GetWidgetLibraryObj( );
     QManipulateIniFile& GetManipulateFileObj( );

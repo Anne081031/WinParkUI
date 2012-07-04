@@ -9,6 +9,11 @@ QLoggerThread::QLoggerThread(QObject *parent) :
     OutputMsg( QString( " Created" ) );
 }
 
+QLoggerThread::~QLoggerThread( )
+{
+    OutputMsg( "" );
+}
+
 QLoggerThread* QLoggerThread::GetSingleton( )
 {
     if ( NULL == pThreadInstance ) {

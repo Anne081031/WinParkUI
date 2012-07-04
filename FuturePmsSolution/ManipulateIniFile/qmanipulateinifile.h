@@ -64,6 +64,7 @@ public:
         ///////////////////////////////////////// Thread
         ThreadPeerSocketCount, // Per peer thread manages X PeerSockets.
         ThreadPeerStackSize, // 512K
+        ThreadPeerReleaseInterval,
         ThreadPool
     }; // Index 3
 

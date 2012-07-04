@@ -7,6 +7,11 @@ QListenerThread::QListenerThread(QObject *parent) :
     OutputMsg( QString( " Created" ) );
 }
 
+QListenerThread::~QListenerThread( )
+{
+    OutputMsg( "" );
+}
+
 QListenerThread* QListenerThread::GetInstance( )
 {
     QListenerThread* pThreadInstance = new QListenerThread( );

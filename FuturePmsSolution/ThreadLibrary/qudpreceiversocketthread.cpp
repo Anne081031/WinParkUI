@@ -17,6 +17,8 @@ QUdpReceiverSocketThread::~QUdpReceiverSocketThread( )
         delete pUdpServerSocket;
         pUdpServerSocket = NULL;
     }
+
+    OutputMsg( "" );
 }
 
 QUdpReceiverSocketThread* QUdpReceiverSocketThread::GetInstance(  bool bServer  )
@@ -60,6 +62,7 @@ void QUdpReceiverSocketThread::InitializeSubThread( )
 
     if ( NULL == pUdpServerSocket ) {
         pUdpServerSocket = network.GenerateUdpServerSocket( commonFunction.GetTextCodec( ) );
+        OutputMsg( objectName( ) );
     }
 
     connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );

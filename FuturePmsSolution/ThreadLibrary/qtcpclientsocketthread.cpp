@@ -15,6 +15,8 @@ QTcpClientSocketThread::~QTcpClientSocketThread( )
         delete pClientSocket;
         pClientSocket = NULL;
     }
+
+    OutputMsg( "" );
 }
 
 QTcpClientSocketThread* QTcpClientSocketThread::GetInstance( )
