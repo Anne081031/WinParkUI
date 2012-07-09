@@ -21,7 +21,7 @@ private:
     
 signals:
     void Accept( int socketDescriptor );
-    void NotifyMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void NotifyMessage( void* pstrMsg, QManipulateIniFile::LogTypes type );
 
 private:
     quint16 nServerPort;

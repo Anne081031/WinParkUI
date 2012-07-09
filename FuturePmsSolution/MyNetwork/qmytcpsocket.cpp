@@ -38,13 +38,14 @@ void QMyTcpSocket::GetKeyMsg( QString &strKey, QString &strMsg, bool bConnected 
 void QMyTcpSocket::GenerateLogText( bool bConnected )
 {
     QString strKey;
-    QString strMsg;
+    QString* pstrMsg = new QString( );
 
-    GetKeyMsg( strKey, strMsg, bConnected );
+    GetKeyMsg( strKey, *pstrMsg, bConnected );
 
-    OutputMsg( QString( "emit NotifyMessage( %1, QManipulateIniFile::LogNetwork )" ).arg( LogText( strMsg ) ) );
+    *pstrMsg = LogText( *pstrMsg );
+    OutputMsg( QString( "emit NotifyMessage( %1, QManipulateIniFile::LogNetwork )" ).arg( *pstrMsg ) );
 
-    emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogNetwork );
+    emit NotifyMessage( pstrMsg, QManipulateIniFile::LogNetwork );
 }
 
 bool QMyTcpSocket::GetTcpStreamData( )

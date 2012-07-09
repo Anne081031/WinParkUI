@@ -8,9 +8,11 @@ int main(int argc, char *argv[])
     QMyApplication a(argc, argv);
 
     g_pPlatformGlobal = QPlatformGlobal::GetSingleton( );
+    g_pPlatformGlobal->ParseMainArgs( MyEnums::PlatformCentralDataReceiver, argc, argv );
     g_pPlatformGlobal->InitializeApplication( MyEnums::PlatformCentralDataReceiver );
 
     MainWindow w;
+    w.DisplayMainArgs( g_pPlatformGlobal->GetListenerPortMaxConnectionList( ) );
     w.show();
     
     return a.exec();

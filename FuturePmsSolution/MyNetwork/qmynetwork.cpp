@@ -36,7 +36,7 @@ void QMyNetwork::StartupTcpServer( quint16 nPort, int nMaxConnections )
 {
     if ( NULL == pTcpServer ) {
         pTcpServer = new QMyTcpServer( nPort, nMaxConnections );
-        connect( pTcpServer, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+        connect( pTcpServer, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
         connect( pTcpServer, SIGNAL( Accept( int ) ), this, SLOT( HandleAccept( int ) ) );
         pTcpServer->Initialize( );
     }
@@ -45,7 +45,7 @@ void QMyNetwork::StartupTcpServer( quint16 nPort, int nMaxConnections )
 QTcpPeerClient* QMyNetwork::GenerateTcpPeerSocket( QTextCodec* pCodec )
 {
     QTcpPeerClient* pPeerSocket = new QTcpPeerClient( pCodec );
-    connect( pPeerSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pPeerSocket, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( pPeerSocket, SIGNAL( EnqueueThread( QTcpSocket* ) ), this, SLOT( HandleThreadEnqueue( QTcpSocket*  ) ) );
     connect( pPeerSocket, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ), this, SLOT( HandleGetWholeTcpStreamData( QTcpSocket*, void* ) ) );
 
@@ -55,7 +55,7 @@ QTcpPeerClient* QMyNetwork::GenerateTcpPeerSocket( QTextCodec* pCodec )
 QTcpClient* QMyNetwork::GenerateTcpClientSocket( QTextCodec *pCodec )
 {
     QTcpClient* pClientSocket = new QTcpClient( pCodec );
-    connect( pClientSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pClientSocket, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( pClientSocket, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ), this, SLOT( HandleGetWholeTcpStreamData( QTcpSocket*, void* ) ) );
 
     return pClientSocket;
@@ -64,8 +64,8 @@ QTcpClient* QMyNetwork::GenerateTcpClientSocket( QTextCodec *pCodec )
 QUdpClient* QMyNetwork::GenerateUdpClientSocket( QTextCodec* pCodec )
 {
     QUdpClient* pClientSocket = new QUdpClient( pCodec );
-    connect( pClientSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
-             this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pClientSocket, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ),
+             this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( pClientSocket, SIGNAL( GetWholeUdpDatagram( void*, QString, quint16 ) ),
              this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
 
@@ -75,18 +75,18 @@ QUdpClient* QMyNetwork::GenerateUdpClientSocket( QTextCodec* pCodec )
 QUdpServer* QMyNetwork::GenerateUdpServerSocket( QTextCodec* pCodec )
 {
     QUdpServer* pServerSocket = new QUdpServer( pCodec );
-    connect( pServerSocket, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
-             this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pServerSocket, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ),
+             this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( pServerSocket, SIGNAL( GetWholeUdpDatagram( void*, QString, quint16 ) ),
              this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
 
     return pServerSocket;
 }
 
-void QMyNetwork::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )
+void QMyNetwork::HandleMessage( void* pstrMsg, QManipulateIniFile::LogTypes type )
 {
-    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit NotifyMessage( %1, LogTypes=%2 ) " ).arg( strMsg, QString::number( type ) ) );
-    emit NotifyMessage( strMsg, type );
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit NotifyMessage( %1, LogTypes=%2 ) " ).arg( *( QString* ) pstrMsg, QString::number( type ) ) );
+    emit NotifyMessage( pstrMsg, type );
 }
 
 void QMyNetwork::HandleAccept( int socketDescriptor )

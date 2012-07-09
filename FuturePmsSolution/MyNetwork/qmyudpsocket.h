@@ -36,7 +36,7 @@ protected:
 private:
 
 signals:
-    void NotifyMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void NotifyMessage( void* pstrMsg, QManipulateIniFile::LogTypes type );
 
 public slots:
     

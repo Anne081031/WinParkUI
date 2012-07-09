@@ -49,7 +49,7 @@ private:
     QMyTcpServer* pTcpServer;
 
 signals:
-    void NotifyMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void NotifyMessage( void* pstrMsg, QManipulateIniFile::LogTypes type );
     void Accept( int socketDescriptor );
     void EnqueueThread( QTcpSocket* pPeerSocket );
     void GetWholeTcpStreamData( QTcpSocket* pPeerSocket, void* pByteArray );
@@ -58,7 +58,7 @@ signals:
 public slots:
 
 private slots:
-    void HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void HandleMessage( void* pstrMsg, QManipulateIniFile::LogTypes type );
     void HandleAccept( int socketDescriptor );
     void HandleThreadEnqueue( QTcpSocket* pPeerSocket );
     void HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket, void* pByteArray );

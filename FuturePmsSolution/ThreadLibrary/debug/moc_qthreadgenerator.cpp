@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qthreadgenerator.h'
 **
-** Created: Wed Jul 4 15:40:29 2012
+** Created: Mon Jul 9 11:13:39 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,16 +31,16 @@ static const uint qt_meta_data_QThreadGenerator[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      30,   18,   17,   17, 0x08,
-      99,   82,   17,   17, 0x08,
-     125,  117,   17,   17, 0x08,
+      31,   18,   17,   17, 0x08,
+      98,   81,   17,   17, 0x08,
+     124,  116,   17,   17, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QThreadGenerator[] = {
-    "QThreadGenerator\0\0strMsg,type\0"
-    "HandleMessage(QString,QManipulateIniFile::LogTypes)\0"
+    "QThreadGenerator\0\0pstrMsg,type\0"
+    "HandleMessage(void*,QManipulateIniFile::LogTypes)\0"
     "socketDescriptor\0HandleAccept(int)\0"
     "pThread\0HandlePeerThreadReleaseMyself(QTcpPeerSocketThread*)\0"
 };
@@ -51,7 +51,7 @@ void QThreadGenerator::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         Q_ASSERT(staticMetaObject.cast(_o));
         QThreadGenerator *_t = static_cast<QThreadGenerator *>(_o);
         switch (_id) {
-        case 0: _t->HandleMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
+        case 0: _t->HandleMessage((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         case 1: _t->HandleAccept((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->HandlePeerThreadReleaseMyself((*reinterpret_cast< QTcpPeerSocketThread*(*)>(_a[1]))); break;
         default: ;

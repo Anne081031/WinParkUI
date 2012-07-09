@@ -8,10 +8,12 @@ int main(int argc, char *argv[])
     QMyApplication a(argc, argv);
 
     g_pPlatformGlobal = QPlatformGlobal::GetSingleton( );
+    g_pPlatformGlobal->ParseMainArgs( MyEnums::PlatformCentralServer, argc, argv );
     g_pPlatformGlobal->InitializeApplication( MyEnums::PlatformCentralServer );
     g_pPlatformGlobal->ControlTimer( QManipulateIniFile::PlatformCentralServer, true );
 
     MainWindow w;
+    w.DisplayMainArgs( g_pPlatformGlobal->GetListenerPortMaxConnectionList( ) );
     w.show();
     
     return a.exec();

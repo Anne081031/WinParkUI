@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qplatformglobal.h'
 **
-** Created: Wed Jul 4 15:52:48 2012
+** Created: Mon Jul 9 12:09:47 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

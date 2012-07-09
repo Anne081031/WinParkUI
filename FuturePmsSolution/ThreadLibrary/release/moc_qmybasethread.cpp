@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmybasethread.h'
 **
-** Created: Wed Jul 4 15:53:59 2012
+** Created: Mon Jul 9 11:28:15 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,20 +31,20 @@ static const uint qt_meta_data_QMyBaseThread[] = {
        1,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      27,   15,   14,   14, 0x05,
+      28,   15,   14,   14, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      79,   14,   14,   14, 0x09,
-      92,   15,   14,   14, 0x09,
+      78,   14,   14,   14, 0x09,
+      91,   15,   14,   14, 0x09,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QMyBaseThread[] = {
-    "QMyBaseThread\0\0strMsg,type\0"
-    "NotifyMessage(QString,QManipulateIniFile::LogTypes)\0"
+    "QMyBaseThread\0\0pstrMsg,type\0"
+    "NotifyMessage(void*,QManipulateIniFile::LogTypes)\0"
     "ExitThread()\0"
-    "HandleMessage(QString,QManipulateIniFile::LogTypes)\0"
+    "HandleMessage(void*,QManipulateIniFile::LogTypes)\0"
 };
 
 void QMyBaseThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -53,9 +53,9 @@ void QMyBaseThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _i
         Q_ASSERT(staticMetaObject.cast(_o));
         QMyBaseThread *_t = static_cast<QMyBaseThread *>(_o);
         switch (_id) {
-        case 0: _t->NotifyMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
+        case 0: _t->NotifyMessage((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         case 1: _t->ExitThread(); break;
-        case 2: _t->HandleMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
+        case 2: _t->HandleMessage((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -101,7 +101,7 @@ int QMyBaseThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void QMyBaseThread::NotifyMessage(QString _t1, QManipulateIniFile::LogTypes _t2)
+void QMyBaseThread::NotifyMessage(void * _t1, QManipulateIniFile::LogTypes _t2)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

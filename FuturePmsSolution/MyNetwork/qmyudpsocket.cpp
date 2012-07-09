@@ -18,15 +18,17 @@ void QMyUdpSocket::GetUdpDatagram( QHostAddress& senderAddr, quint16& senderPort
         return;
     }
 
-    QByteArray byteDatagram;
+    QByteArray* pByteDatagram = new QByteArray( );
 
     while ( hasPendingDatagrams( ) ) {
-        byteDatagram.clear( );
-        byteDatagram.resize( pendingDatagramSize( ) );
+        pByteDatagram->clear( );
+        pByteDatagram->resize( pendingDatagramSize( ) );
 
-        readDatagram( byteDatagram.data( ), byteDatagram.size( ), &senderAddr, &senderPort );
-        pByteArray->append( byteDatagram );
+        readDatagram( pByteDatagram->data( ), pByteDatagram->size( ), &senderAddr, &senderPort );
+        pByteArray->append( *pByteDatagram );
     }
+
+    delete pByteDatagram;
 }
 
 quint64 QMyUdpSocket::BroadcastDatagram( const QByteArray &byteData, const quint16 targetPort )

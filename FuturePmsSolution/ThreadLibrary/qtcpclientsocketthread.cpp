@@ -42,7 +42,7 @@ void QTcpClientSocketThread::InitializeSubThread( )
         OutputMsg( objectName( ) );
     }
 
-    connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( &network, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ), this, SLOT( HandleGetWholeTcpStreamData( QTcpSocket*, void* ) ) );
 }
 
@@ -85,8 +85,9 @@ void QTcpClientSocketThread::ProcessConnectEvent( MyDataStructs::PQQueueEventPar
 
     bool bRet = network.TcpConnect2Server( pClientSocket, addr, nPort );
     if ( !bRet ) {
-        QString strMsg = QString( "Connect [ %1 : %2 ] to fail" ).arg( strIP, QString::number( nPort ) );
-        emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogThread );
+        QString* pstrMsg = new QString( QString( "Connect [ %1 : %2 ] to fail" ).arg( strIP, QString::number( nPort ) ) );
+        *pstrMsg = LogText( *pstrMsg ) ;
+        emit NotifyMessage( pstrMsg, QManipulateIniFile::LogThread );
     }
 }
 

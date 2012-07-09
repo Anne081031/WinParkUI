@@ -35,11 +35,11 @@ protected:
     QMyNetwork                network;
     
 signals:
-    void NotifyMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void NotifyMessage( void* pstrMsg, QManipulateIniFile::LogTypes type );
 
 protected slots:
     void ExitThread( );
-    void HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void HandleMessage( void* pstrMsg, QManipulateIniFile::LogTypes type );
 };
 
 #endif // QMYBASETHREAD_H

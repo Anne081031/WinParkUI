@@ -30,7 +30,7 @@ void QListenerThread::run( )
 
 void QListenerThread::InitializeSubThread( )
 {
-    connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( &network, SIGNAL( Accept( int ) ), this, SLOT( HandleAccept( int ) ) );
 }
 

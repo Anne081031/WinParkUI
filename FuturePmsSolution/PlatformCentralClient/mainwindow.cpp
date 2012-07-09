@@ -18,6 +18,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::DisplayMainArgs( MyDataStructs::QMyStringList &lstParam )
+{
+    QStringList lstStr( lstParam );
+    ui->listWidget->insertItems( 0, lstStr );
+}
+
 void MainWindow::on_pushButton_clicked()
 {
     MyDataStructs::QEventMultiHash hash;

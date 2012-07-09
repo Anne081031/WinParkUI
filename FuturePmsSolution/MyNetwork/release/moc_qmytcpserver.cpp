@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmytcpserver.h'
 **
-** Created: Wed Jul 4 15:04:05 2012
+** Created: Mon Jul 9 11:27:12 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -32,15 +32,15 @@ static const uint qt_meta_data_QMyTcpServer[] = {
 
  // signals: signature, parameters, type, tag, flags
       31,   14,   13,   13, 0x05,
-      55,   43,   13,   13, 0x05,
+      56,   43,   13,   13, 0x05,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QMyTcpServer[] = {
     "QMyTcpServer\0\0socketDescriptor\0"
-    "Accept(int)\0strMsg,type\0"
-    "NotifyMessage(QString,QManipulateIniFile::LogTypes)\0"
+    "Accept(int)\0pstrMsg,type\0"
+    "NotifyMessage(void*,QManipulateIniFile::LogTypes)\0"
 };
 
 void QMyTcpServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -50,7 +50,7 @@ void QMyTcpServer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         QMyTcpServer *_t = static_cast<QMyTcpServer *>(_o);
         switch (_id) {
         case 0: _t->Accept((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: _t->NotifyMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
+        case 1: _t->NotifyMessage((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -103,7 +103,7 @@ void QMyTcpServer::Accept(int _t1)
 }
 
 // SIGNAL 1
-void QMyTcpServer::NotifyMessage(QString _t1, QManipulateIniFile::LogTypes _t2)
+void QMyTcpServer::NotifyMessage(void * _t1, QManipulateIniFile::LogTypes _t2)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);

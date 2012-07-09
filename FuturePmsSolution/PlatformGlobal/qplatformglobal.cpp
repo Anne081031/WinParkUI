@@ -4,6 +4,9 @@ QPlatformGlobal* QPlatformGlobal::pPlatformGlobal = NULL;
 
 QPlatformGlobal::QPlatformGlobal( )
 {
+    strColonSeperator = ":";
+    strAtSeperator = "@";
+
     pGenerator = QThreadGenerator::GetSingleton( );
 }
 
@@ -34,6 +37,87 @@ QManipulateIniFile& QPlatformGlobal::GetManipulateFileObj( )
 QThreadGenerator& QPlatformGlobal::GetThreadGenerator( )
 {
     return *pGenerator;
+}
+
+void QPlatformGlobal::ParseMainArgs( const MyEnums::ApplicationType type, const int nArgc, char **ppArgv )
+{
+    //
+    // nIndex = 0 Application Execute Path
+    //
+
+    switch ( type ) {
+    case MyEnums::PlatformCentralClient :
+        ParsePlatformClientArgs( nArgc, ppArgv );
+        break;
+
+    case MyEnums::PlatformCentralServer :
+        ParsePlatformServerArgs( nArgc, ppArgv );
+        break;
+
+    case MyEnums::PlatformCentralDataReceiver :
+        ParsePlatformDataReceiverArgs( nArgc, ppArgv );
+        break;
+    }
+}
+
+void QPlatformGlobal::ParsePlatformClientArgs( const int nArgc, char **ppArgv )
+{
+    //
+    // NetworkTcpServerIP=192.168.1.24@192.168.1.24@192.168.1.24@192.168.1.24
+    // NetworkTcpServerPort=50000@50001@50000@50001
+    // Exe 192.168.1.24@192.168.1.24@192.168.1.24@192.168.1.24 50000@50001@50000@50001
+    //
+
+    if ( 3 != nArgc ) {
+        return;
+    }
+
+    listTcpServerIpPort.clear( );
+
+    QVariant varIPs = ppArgv[ 1 ];
+    QVariant varPorts = ppArgv[ 2 ];
+
+    ParseNetworkParams( varIPs, varPorts, listTcpServerIpPort );
+}
+
+void QPlatformGlobal::ParsePlatformServerArgs( const int nArgc, char **ppArgv )
+{
+    //
+    // NetworkTcpServerPort=50000@50001
+    // NetworkTcpMaxConnection=100@50
+    // Exe 50000@50001 100@50
+    //
+
+    if ( 3 != nArgc ) {
+        return;
+    }
+
+    listTcpListenerPortMaxConnection.clear( );
+
+    QVariant varPorts = ppArgv[ 1 ];
+    QVariant varMaxConenctions = ppArgv[ 2 ];
+
+    ParseNetworkParams( varPorts, varMaxConenctions, listTcpListenerPortMaxConnection);
+}
+
+void QPlatformGlobal::ParsePlatformDataReceiverArgs( const int nArgc, char **ppArgv )
+{
+    //
+    // NetworkTcpServerPort=50000@50001
+    // NetworkTcpMaxConnection=100@50
+    // Exe 50000@50001 100@50
+    //
+
+    if ( 3 != nArgc ) {
+        return;
+    }
+
+    listTcpListenerPortMaxConnection.clear( );
+
+    QVariant varPorts = ppArgv[ 1 ];
+    QVariant varMaxConenctions = ppArgv[ 2 ];
+
+    ParseNetworkParams( varPorts, varMaxConenctions, listTcpListenerPortMaxConnection);
 }
 
 void QPlatformGlobal::InitializeApplication( const MyEnums::ApplicationType type )
@@ -114,7 +198,7 @@ void QPlatformGlobal::TcpClientDisconnect( QThread* pReceiver )
 
 void QPlatformGlobal::TcpClientSendData2AllThreads( const QByteArray& byteData )
 {
-    MyDataStructs::QMyStringList& lstIpPort = GetServerIpPortList( );
+    MyDataStructs::QMyStringList& lstIpPort = GetTcpServerIpPortList( );
     MyDataStructs::QStringThread& thread = GetTcpClientThreadHash( );
 
     MyDataStructs::QMyStringSet set = lstIpPort.toSet( );
@@ -150,14 +234,14 @@ void QPlatformGlobal::GenerateLogHash( MyDataStructs::QEventMultiHash &hash, con
 
 void QPlatformGlobal::TcpClientAllConnectOrDisconnect( bool bConnect )
 {
-    MyDataStructs::QMyStringList& list = GetServerIpPortList( );
+    MyDataStructs::QMyStringList& list = GetTcpServerIpPortList( );
     MyDataStructs::QStringThread& thread = GetTcpClientThreadHash( );
 
     QStringList lstIpPort;
     MyDataStructs::QMyStringSet set = list.toSet( );
 
     foreach (const QString& strIpPort,  set ) {
-        lstIpPort = strIpPort.split( ":" );
+        lstIpPort = strIpPort.split( strColonSeperator );
 
         foreach ( QThread* pReceiver, thread.values( strIpPort ) ) {
             bConnect ? TcpClientConnect( pReceiver, lstIpPort.at( 0 ), lstIpPort.at( 1 ) ) :
@@ -170,7 +254,7 @@ void QPlatformGlobal::HandleGetWholeTcpStreamDataFromServer( QTcpSocket* pPeerSo
 {
     QTcpClientSocketThread* pSenderThread = ( QTcpClientSocketThread* ) sender( );
     MyDataStructs::QMyStringList lstKeys = hashTcpClientThread.keys( pSenderThread );
-    OutputMsg( QStringList( lstKeys ).join( "@" ) );
+    OutputMsg( QStringList( lstKeys ).join( strAtSeperator ) );
 
     QByteArray* pByteData = ( QByteArray* ) pByteArray;
     OutputMsg( QString( *pByteData ) );
@@ -183,10 +267,10 @@ void QPlatformGlobal::HandleGetWholeTcpStreamDataFromServer( QTcpSocket* pPeerSo
     }
 }
 
-MyDataStructs::QMyStringList& QPlatformGlobal::GetServerIpPortList( )
+MyDataStructs::QMyStringList& QPlatformGlobal::GetTcpServerIpPortList( )
 {
     // IP:Port
-    return listServerIpPort;
+    return listTcpServerIpPort;
 }
 
 MyDataStructs::QStringThread& QPlatformGlobal::GetTcpClientThreadHash( )
@@ -194,9 +278,9 @@ MyDataStructs::QStringThread& QPlatformGlobal::GetTcpClientThreadHash( )
     return hashTcpClientThread;
 }
 
-MyDataStructs::QMyStringList& QPlatformGlobal::GetListenerPortMaxConnectionList( )
+MyDataStructs::QMyStringList& QPlatformGlobal::GetTcpListenerPortMaxConnectionList( )
 {
-    return listListenerPortMaxConnection;
+    return listTcpListenerPortMaxConnection;
 }
 
 MyDataStructs::QStringThread& QPlatformGlobal::GetTcpListenerThreadHash( )
@@ -227,48 +311,25 @@ void QPlatformGlobal::CreateTcpClientThread( const QManipulateIniFile::IniFileNa
     // NetworkTcpServerIP=192.168.1.20@192.168.1.24
     // NetworkTcpServerPort=50000@50001
 
-    QVariant varPorts;
-    QString strPorts;
-    QVariant varIPs;
-    QString strIPs;
-    QString strSeperator = "@";
+    if ( listTcpServerIpPort.isEmpty( ) ) {
+        QVariant varIPs;
+        QVariant varPorts;
 
-    GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerIP, varIPs );
-    GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerPort, varPorts );
-
-    strPorts = varPorts.toString( );
-    QStringList lstPorts = strPorts.split( strSeperator );
-    int nPorts = lstPorts.count( );
-
-    strIPs = varIPs.toString( );
-    QStringList lstIPs = strIPs.split( strSeperator );
-    int nIPs = lstIPs.count( );
-
-    if ( 0 == nPorts * nIPs || nPorts != nIPs ) {
-        QStringList lstTexts;
-        lstTexts << Q_FUNC_INFO;
-        lstTexts << "Parammeter Error";
-        lstTexts << strIPs << strPorts;
-        MyDataStructs::QEventMultiHash hash;
-        GenerateLogHash( hash, lstTexts, QManipulateIniFile::LogCfgParam );
-        StartupLogWrite( pGenerator->GenerateLogThread( ), hash );
-        return;
+        GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerIP, varIPs );
+        GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerPort, varPorts );
+        ParseNetworkParams( varIPs, varPorts, listTcpServerIpPort );
     }
 
-    QString strKey = "%1:%2";
-    QString strTmpKey;
+    foreach( const QString& strParam, listTcpServerIpPort ) {
+        QStringList lstParam = strParam.split( strColonSeperator );
 
-    for ( int nIndex = 0; nIndex < nPorts; nIndex++ ) {
-        const QString& strIP = lstIPs.at( nIndex );
-        const QString& strPort = lstPorts.at( nIndex );
-
-        strTmpKey = strKey.arg( strIP, strPort );
-        listServerIpPort.append( strTmpKey );
+        const QString& strIP = lstParam.at( 0 );
+        const QString& strPort = lstParam.at( 1 );
 
         QTcpClientSocketThread* pThreadInstance = pGenerator->GenerateTcpClientThread( );
         connect( pThreadInstance, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ),
                  this, SLOT( HandleGetWholeTcpStreamDataFromServer( QTcpSocket*, void* ) ) );
-        hashTcpClientThread.insertMulti( strTmpKey, pThreadInstance );
+        hashTcpClientThread.insertMulti( strParam, pThreadInstance );
 
         if ( bConnect2Host ) {
             TcpClientConnect( pThreadInstance, strIP, strPort );
@@ -290,13 +351,13 @@ void QPlatformGlobal::TcpListenerStartup( QThread *pReceiver, const QString& str
 
 void QPlatformGlobal::TcpListenerAllStartup( )
 {
-    MyDataStructs::QMyStringList& list = GetListenerPortMaxConnectionList( );
+    MyDataStructs::QMyStringList& list = GetTcpListenerPortMaxConnectionList( );
     MyDataStructs::QStringThread& thread = GetTcpListenerThreadHash( );
 
     QStringList lstPortConnection;
 
     foreach (const QString& strPortConn,  list ) {
-        lstPortConnection = strPortConn.split( ":" );
+        lstPortConnection = strPortConn.split( strColonSeperator );
 
         foreach ( QThread* pReceiver, thread.values( strPortConn ) ) {
             TcpListenerStartup( pReceiver, lstPortConnection.at( 0 ), lstPortConnection.at( 1) );
@@ -304,34 +365,72 @@ void QPlatformGlobal::TcpListenerAllStartup( )
     }
 }
 
-void QPlatformGlobal::CreateTcpListenerhread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener )
+void QPlatformGlobal::CreateUdpListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener )
+{
+
+}
+
+void QPlatformGlobal::UdpListenerStartup( QThread* pReceiver, const QString& strPort )
+{
+
+}
+
+void QPlatformGlobal::UdpListenerAllStartup(  )
+{
+
+}
+
+void QPlatformGlobal::CreateUdpBroadcastListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener )
+{
+
+}
+
+void QPlatformGlobal::UdpBroadcastListenerStartup( QThread* pReceiver, const QString& strPort )
+{
+
+}
+
+void QPlatformGlobal::UdpBroadcastListenerAllStartup(  )
+{
+
+}
+
+void QPlatformGlobal::CreateUdpMulticastListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener )
+{
+
+}
+
+void QPlatformGlobal::UdpMulticastListenerStartup( QThread* pReceiver, const QString& strPort )
+{
+
+}
+
+void QPlatformGlobal::UdpMulticastListenerAllStartup(  )
+{
+
+}
+
+void QPlatformGlobal::ParseNetworkParams( const QVariant& varParam1, const QVariant& varParam2, MyDataStructs::QMyStringList& lstParams  )
 {
     // NetworkTcpServerPort=50000@50001
     // NetworkTcpMaxConnection=100@50
 
-    QVariant varPorts;
-    QString strPorts;
-    QVariant varMaxConnections;
-    QString strMaxConnections;
+    QString strParam1;
+    QString strParam2;
 
-    GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerPort, varPorts );
-    GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpMaxConnection, varMaxConnections );
+    strParam1 = varParam1.toString( );
+    QStringList lstParam1 = strParam1.split( strAtSeperator );
+    int nParam1 = lstParam1.count( );
 
-    QString strSeperator = "@";
+    strParam2 = varParam2.toString( );
+    QStringList lstParam2 = strParam2.split( strAtSeperator );
+    int nParam2 = lstParam2.count( );
 
-    strPorts = varPorts.toString( );
-    QStringList lstPorts = strPorts.split( strSeperator );
-    int nPorts = lstPorts.count( );
-
-    strMaxConnections = varMaxConnections.toString( );
-    QStringList lstConnections = strMaxConnections.split( strSeperator );
-    int nConnections = lstConnections.count( );
-
-    if ( 0 == nPorts * nConnections || nPorts != nConnections ) {
+    if ( 0 == nParam1 * nParam2 || nParam1 != nParam2 ) {
         QStringList lstTexts;
         lstTexts << Q_FUNC_INFO;
         lstTexts << "Parammeter Error";
-        lstTexts << strPorts << strMaxConnections;
+        lstTexts << strParam1 << strParam2;
         MyDataStructs::QEventMultiHash hash;
         GenerateLogHash( hash, lstTexts, QManipulateIniFile::LogCfgParam );
         StartupLogWrite( pGenerator->GenerateLogThread( ), hash );
@@ -341,15 +440,40 @@ void QPlatformGlobal::CreateTcpListenerhread( const QManipulateIniFile::IniFileN
     QString strKey = "%1:%2";
     QString strTmpKey;
 
-    for ( int nIndex = 0; nIndex < nPorts; nIndex++ ) {
-        const QString& strMaxConn = lstConnections.at( nIndex );
-        const QString& strPort = lstPorts.at( nIndex );
+    for ( int nIndex = 0; nIndex < nParam1; nIndex++ ) {
+        const QString& str1 = lstParam1.at( nIndex );
+        const QString& str2 = lstParam2.at( nIndex );
 
-        strTmpKey = strKey.arg( strPort, strMaxConn );
-        listListenerPortMaxConnection.append( strTmpKey );
+        strTmpKey = strKey.arg( str1, str2 );
+        lstParams.append( strTmpKey );
+    }
+}
+
+void QPlatformGlobal::CreateTcpListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener )
+{
+    // NetworkTcpServerPort=50000@50001
+    // NetworkTcpMaxConnection=100@50
+
+    if ( listTcpListenerPortMaxConnection.isEmpty( ) ) {
+        QVariant varPorts;
+        QVariant varMaxConnections;
+
+        GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpServerPort, varPorts );
+        GetNetworkParams( iniFile, QManipulateIniFile::NetworkTcpMaxConnection, varMaxConnections );
+        ParseNetworkParams( varPorts, varMaxConnections, listTcpListenerPortMaxConnection );
+    }
+
+    foreach ( const QString& strParam, listTcpListenerPortMaxConnection ) {
+        if ( hashTcpListenerThread.keys( ).contains( strParam ) ) {
+            continue;
+        }
+
+        QStringList lstParam = strParam.split( strColonSeperator );
+        const QString& strPort = lstParam.at( 0 );
+        const QString& strMaxConn = lstParam.at( 1 );
 
         QListenerThread* pThreadInstance = pGenerator->GenerateTcpListenerThread( );
-        hashTcpListenerThread.insertMulti( strTmpKey, pThreadInstance );
+        hashTcpListenerThread.insertMulti( strParam, pThreadInstance );
 
         if ( bStartupListener ) {
             TcpListenerStartup( pThreadInstance, strPort, strMaxConn );

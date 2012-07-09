@@ -16,6 +16,8 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    void DisplayMainArgs( MyDataStructs::QMyStringList& lstParam );
+
 private:
 
 private:

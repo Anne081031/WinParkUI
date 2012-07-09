@@ -31,7 +31,7 @@ void QTcpPeerSocketThread::DestroyPeerSocket( MyDataStructs::QSocketMultiHash& h
 
 bool QTcpPeerSocketThread::SignalConnected( )
 {
-    int nSignal = receivers( SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    int nSignal = receivers( SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ) );
 
     return ( 0 < nSignal );
 }
@@ -133,7 +133,7 @@ void QTcpPeerSocketThread::InitializeSubThread( )
         pDatabaseThread = QDatabaseThread::GetSingleton( true );
     }
 
-    connect( &network, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( &network, SIGNAL( EnqueueThread( QTcpSocket*  ) ), this, SLOT( HandleThreadEnqueue( QTcpSocket*  ) ) );
     connect( &network, SIGNAL( GetWholeTcpStreamData( QTcpSocket*, void* ) ), this, SLOT( HandleGetWholeTcpStreamData( QTcpSocket*, void* ) ) );
 }
@@ -295,7 +295,9 @@ void QTcpPeerSocketThread::ProcessCreateSocketEvent( MyDataStructs::PQQueueEvent
             }
 
             OutputMsg( QString( "emit NotifyMessage( %1, LogType= %2 )" ).arg( LogText( strMsg ) , QString::number( log ) ) );
-            emit NotifyMessage( LogText( strMsg ), log );
+
+            QString* pstrMsg = new QString(  LogText( strMsg ) );
+            emit NotifyMessage( pstrMsg, log );
         }
     }
 }

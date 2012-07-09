@@ -20,11 +20,13 @@ QUdpServer::~QUdpServer( )
 
 void QUdpServer::HandleError( QAbstractSocket::SocketError socketError )
 {
-    QString strMsg;
-    QNetCommFunction::GetErrorMsg( strMsg, socketError, this );
+    QString* pstrMsg = new QString( );
+    QNetCommFunction::GetErrorMsg( *pstrMsg, socketError, this );
 
-    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( "emit NotifyMessage( %1, QManipulateIniFile::LogNetwork )" ).arg( LogText( strMsg ) ) );
-    emit NotifyMessage( LogText( strMsg ), QManipulateIniFile::LogNetwork );
+    *pstrMsg = LogText( *pstrMsg );
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( "emit NotifyMessage( %1, QManipulateIniFile::LogNetwork )" ).arg( *pstrMsg ) );
+
+    emit NotifyMessage( pstrMsg, QManipulateIniFile::LogNetwork );
 }
 
 void QUdpServer::IncomingData( )

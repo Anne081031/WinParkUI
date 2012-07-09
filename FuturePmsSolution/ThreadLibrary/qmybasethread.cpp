@@ -27,8 +27,8 @@ void QMyBaseThread::LaunchThreadExit( )
     exit( );
 }
 
-void QMyBaseThread::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )
+void QMyBaseThread::HandleMessage( void* pstrMsg, QManipulateIniFile::LogTypes type )
 {
-    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit NotifyMessage( %1, LogTypes=%2 )" ).arg( strMsg, QString::number( type ) ) );
-    emit NotifyMessage( strMsg, type );
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit NotifyMessage( %1, LogTypes=%2 )" ).arg( *( QString* ) pstrMsg, QString::number( type ) ) );
+    emit NotifyMessage( pstrMsg, type );
 }

@@ -30,7 +30,8 @@ OTHER_FILES += \
     ../LibExeFiles/Release/PlatformCentralServer.exe \
     ../LibExeFiles/Release/MyDatabase.dll \
     ../LibExeFiles/Release/MyNetwork.dll \
-    Eclipse.txt
+    Eclipse.txt \
+    Multicast.txt
 
 SOURCES += \
     main.cpp

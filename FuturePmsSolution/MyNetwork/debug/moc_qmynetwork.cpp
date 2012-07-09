@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmynetwork.h'
 **
-** Created: Wed Jul 4 15:15:37 2012
+** Created: Mon Jul 9 11:22:27 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,32 +31,32 @@ static const uint qt_meta_data_QMyNetwork[] = {
        5,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      24,   12,   11,   11, 0x05,
-      93,   76,   11,   11, 0x05,
-     117,  105,   11,   11, 0x05,
-     167,  144,   11,   11, 0x05,
-     243,  208,   11,   11, 0x05,
+      25,   12,   11,   11, 0x05,
+      92,   75,   11,   11, 0x05,
+     116,  104,   11,   11, 0x05,
+     166,  143,   11,   11, 0x05,
+     242,  207,   11,   11, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     286,   12,   11,   11, 0x08,
-     338,   76,   11,   11, 0x08,
-     356,  105,   11,   11, 0x08,
-     389,  144,   11,   11, 0x08,
-     436,  208,   11,   11, 0x08,
+     285,   12,   11,   11, 0x08,
+     335,   75,   11,   11, 0x08,
+     353,  104,   11,   11, 0x08,
+     386,  143,   11,   11, 0x08,
+     433,  207,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QMyNetwork[] = {
-    "QMyNetwork\0\0strMsg,type\0"
-    "NotifyMessage(QString,QManipulateIniFile::LogTypes)\0"
+    "QMyNetwork\0\0pstrMsg,type\0"
+    "NotifyMessage(void*,QManipulateIniFile::LogTypes)\0"
     "socketDescriptor\0Accept(int)\0pPeerSocket\0"
     "EnqueueThread(QTcpSocket*)\0"
     "pPeerSocket,pByteArray\0"
     "GetWholeTcpStreamData(QTcpSocket*,void*)\0"
     "pByteArray,strSenderIP,nSenderPort\0"
     "GetWholeUdpDatagram(void*,QString,quint16)\0"
-    "HandleMessage(QString,QManipulateIniFile::LogTypes)\0"
+    "HandleMessage(void*,QManipulateIniFile::LogTypes)\0"
     "HandleAccept(int)\0HandleThreadEnqueue(QTcpSocket*)\0"
     "HandleGetWholeTcpStreamData(QTcpSocket*,void*)\0"
     "HandleGetWholeUdpDatagram(void*,QString,quint16)\0"
@@ -68,12 +68,12 @@ void QMyNetwork::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         Q_ASSERT(staticMetaObject.cast(_o));
         QMyNetwork *_t = static_cast<QMyNetwork *>(_o);
         switch (_id) {
-        case 0: _t->NotifyMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
+        case 0: _t->NotifyMessage((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         case 1: _t->Accept((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 2: _t->EnqueueThread((*reinterpret_cast< QTcpSocket*(*)>(_a[1]))); break;
         case 3: _t->GetWholeTcpStreamData((*reinterpret_cast< QTcpSocket*(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
         case 4: _t->GetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
-        case 5: _t->HandleMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
+        case 5: _t->HandleMessage((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         case 6: _t->HandleAccept((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 7: _t->HandleThreadEnqueue((*reinterpret_cast< QTcpSocket*(*)>(_a[1]))); break;
         case 8: _t->HandleGetWholeTcpStreamData((*reinterpret_cast< QTcpSocket*(*)>(_a[1])),(*reinterpret_cast< void*(*)>(_a[2]))); break;
@@ -123,7 +123,7 @@ int QMyNetwork::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void QMyNetwork::NotifyMessage(QString _t1, QManipulateIniFile::LogTypes _t2)
+void QMyNetwork::NotifyMessage(void * _t1, QManipulateIniFile::LogTypes _t2)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);

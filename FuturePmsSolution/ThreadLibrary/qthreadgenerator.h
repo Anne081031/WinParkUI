@@ -42,7 +42,7 @@ signals:
 public slots:
 
 private slots:
-    void HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type );
+    void HandleMessage( void* pstrMsg, QManipulateIniFile::LogTypes type );
     void HandleAccept( int socketDescriptor );
     void HandlePeerThreadReleaseMyself( QTcpPeerSocketThread* pThread );
     

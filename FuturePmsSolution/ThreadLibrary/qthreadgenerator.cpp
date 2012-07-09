@@ -45,9 +45,8 @@ QThreadGenerator* QThreadGenerator::GetSingleton( )
 QListenerThread* QThreadGenerator::GenerateTcpListenerThread( )
 {
     QListenerThread* pThreadInstance = QListenerThread::GetInstance( );
-    //pThreadInstance->moveToThread( pThreadInstance );
-    connect( pThreadInstance, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
-                         this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pThreadInstance, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ),
+                         this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( pThreadInstance, SIGNAL( Accept( int ) ), this, SLOT( HandleAccept( int ) ) );
 
     return pThreadInstance;
@@ -56,9 +55,8 @@ QListenerThread* QThreadGenerator::GenerateTcpListenerThread( )
 QTcpClientSocketThread* QThreadGenerator::GenerateTcpClientThread( )
 {
     QTcpClientSocketThread* pThreadInstance = QTcpClientSocketThread::GetInstance( );
-    //pThreadInstance->moveToThread( pThreadInstance );
-    connect( pThreadInstance, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
-                         this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+    connect( pThreadInstance, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ),
+                         this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
 
     return pThreadInstance;
 }
@@ -155,8 +153,8 @@ void QThreadGenerator::HandleAccept( int socketDescriptor )
     QTcpPeerSocketThread* pReceiver = QTcpPeerSocketThread::GetInstance( bSignalConnected );
 
     if ( !bSignalConnected ) { // Not connect
-        connect( pReceiver, SIGNAL( NotifyMessage( QString, QManipulateIniFile::LogTypes ) ),
-                             this, SLOT( HandleMessage( QString, QManipulateIniFile::LogTypes ) ) );
+        connect( pReceiver, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ),
+                             this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
         connect( pReceiver, SIGNAL( ReleaseMyself( QTcpPeerSocketThread* ) ),
                  this, SLOT( HandlePeerThreadReleaseMyself( QTcpPeerSocketThread* ) ) );
     }
@@ -175,13 +173,16 @@ void QThreadGenerator::HandlePeerThreadReleaseMyself( QTcpPeerSocketThread *pThr
     PostEvent( MyEnums::ThreadTcpPeer, MyEnums::ThreadExit, NULL, pThread );
 }
 
-void QThreadGenerator::HandleMessage( QString strMsg, QManipulateIniFile::LogTypes type )
+void QThreadGenerator::HandleMessage( void* pstrMsg, QManipulateIniFile::LogTypes type )
 {
-    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":( %1, LogTypes=%2 )" ).arg( strMsg, QString::number( type ) ) );
+    QString* pMsg = ( QString* ) pstrMsg;
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":( %1, LogTypes=%2 )" ).arg( *pMsg, QString::number( type ) ) );
     MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
     MyDataStructs::QEventMultiHash hash;
 
-    hash.insertMulti( type, strMsg );
+    hash.insertMulti( type, *pMsg );
     pEventParams->enqueue( hash );
     PostEvent( MyEnums::ThreadLogger, MyEnums::LogWrite, pEventParams, GenerateLogThread( ) );
+
+    delete pMsg;
 }
