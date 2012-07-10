@@ -19,17 +19,35 @@ public:
     QManipulateIniFile& GetManipulateFileObj( );
     QThreadGenerator& GetThreadGenerator( );
 
-    MyDataStructs::QMyStringList& GetTcpServerIpPortList( );
+    //
+    // Client
+    //
+    MyDataStructs::QMyStringList& GetTcpClientIpPortList( );
     MyDataStructs::QStringThread& GetTcpClientThreadHash( );
 
+    MyDataStructs::QMyStringList& GetUdpClientIpPortList( );
+    MyDataStructs::QStringThread& GetUdpClientThreadHash( );
+
+    MyDataStructs::QMyStringList& GetUdpBroadcastClientPortList( );
+    MyDataStructs::QStringThread& GetUdpBroadcastClientThreadHash( );
+
+    MyDataStructs::QMyStringList& GetUdpMulticastClientIpPortList( );
+    MyDataStructs::QStringThread& GetUdpMulticastClientThreadHash( );
+
+    //
+    // Server end
+    //
     MyDataStructs::QMyStringList& GetTcpListenerPortMaxConnectionList( );
     MyDataStructs::QStringThread& GetTcpListenerThreadHash( );
 
-    MyDataStructs::QMyStringList& GetUdpServerIpPortList( );
-    MyDataStructs::QStringThread& GetUdpClientThreadHash( );
-
-    MyDataStructs::QMyStringList& GetUdpListenerPortMaxConnectionList( );
+    MyDataStructs::QMyStringList& GetUdpListenerPortList( );
     MyDataStructs::QStringThread& GetUdpListenerThreadHash( );
+
+    MyDataStructs::QMyStringList& GetUdpBroadcastListenerPortList( );
+    MyDataStructs::QStringThread& GetUdpBroadcastListenerThreadHash( );
+
+    MyDataStructs::QMyStringList& GetUdpMulticastListenerIpPortList( );
+    MyDataStructs::QStringThread& GetUdpMulticastListenerThreadHash( );
 
     void BrowseLog( const QManipulateIniFile::LogFileNames type );
     void StartupThreadExit( QThread* pReceiver, const MyEnums::ThreadType type );
@@ -49,15 +67,15 @@ public:
     void TcpListenerStartup( QThread* pReceiver, const QString& strPort, const QString& strMaxConnection );
     void TcpListenerAllStartup(  );
 
-    void CreateUdpListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener = true );
+    void CreateUdpListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bServer, const bool bStartupListener = true );
     void UdpListenerStartup( QThread* pReceiver, const QString& strPort );
     void UdpListenerAllStartup(  );
 
-    void CreateUdpBroadcastListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener = true );
+    void CreateUdpBroadcastListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bServer, const bool bStartupListener = true );
     void UdpBroadcastListenerStartup( QThread* pReceiver, const QString& strPort );
     void UdpBroadcastListenerAllStartup(  );
 
-    void CreateUdpMulticastListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener = true );
+    void CreateUdpMulticastListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bServer, const bool bStartupListener = true );
     void UdpMulticastListenerStartup( QThread* pReceiver, const QString& strPort );
     void UdpMulticastListenerAllStartup(  );
 
@@ -72,11 +90,29 @@ private:
     void InitializePlatformServer( );
     void InitializePlatformDataReceiver( );
 
-    void ParsePlatformClientArgs( const int nArgc, char **ppArgv );
-    void ParsePlatformServerArgs( const int nArgc, char **ppArgv );
-    void ParsePlatformDataReceiverArgs( const int nArgc, char **ppArgv );
+    void ParseTcpArgs( const MyEnums::ApplicationType type, const QStringList& lstParams );
+    void ParseUdpArgs( const MyEnums::ApplicationType type, const QStringList& lstParams );
+    void ParseBroadcastArgs( const MyEnums::ApplicationType type, const QStringList& lstParams );
+    void ParseMulticastArgs( const MyEnums::ApplicationType type, const QStringList& lstParams );
 
-    void ParseNetworkParams( const QVariant& varParam1, const QVariant& varParam2, MyDataStructs::QMyStringList& lstParams );
+    void ParsePlatformClientArgs( MyDataStructs::QMyStringList& lstTarget, const QStringList& lstParams );
+    void ParsePlatformServerArgs( MyDataStructs::QMyStringList& lstTarget, const QStringList& lstParams );
+    void ParsePlatformDataReceiverArgs( MyDataStructs::QMyStringList& lstTarget, const QStringList& lstParams );
+
+    void Convert2StringList( const int nArgc, char **ppArgv, QStringList& lstParams );
+
+    void ParseNetworkParams( QVariant& varParam1, QVariant& varParam2, MyDataStructs::QMyStringList& lstParams );
+    void ParseNetworkParams( QVariant& varParam1, MyDataStructs::QMyStringList& lstParams );
+
+    void CreateUdpListenerThread( MyDataStructs::QMyStringList& listParams,
+                                  MyDataStructs::QStringThread& hashThread,
+                                  const QManipulateIniFile::IniFileName iniFile,
+                                  const QManipulateIniFile::IniFileSectionItems item,
+                                  const bool bServer, const bool bStartupListener,
+                                  const MyEnums::UdpDatagramType dgType,
+                                  const bool bMulticast = false );
+    void UdpListenerAllStartup( MyDataStructs::QMyStringList& listParams,
+                                MyDataStructs::QStringThread& hashThread );
 
 private:
     static QPlatformGlobal* pPlatformGlobal;
@@ -88,25 +124,47 @@ private:
     QString strColonSeperator;
     QString strAtSeperator;
 
+    //
+    // Client
+    //
     MyDataStructs::QStringThread hashTcpClientThread;
-    MyDataStructs::QMyStringList listTcpServerIpPort;
+    MyDataStructs::QMyStringList listTcpClientIpPort;
 
+    MyDataStructs::QStringThread hashUdpClientThread;
+    MyDataStructs::QMyStringList listUdpClientIpPort;
+
+    MyDataStructs::QStringThread hashUdpBroadcastClientThread;
+    MyDataStructs::QMyStringList listUdpBroadcastClientPort;
+
+    MyDataStructs::QStringThread hashUdpMulticastClientThread;
+    MyDataStructs::QMyStringList listUdpMulticastClientIpPort;
+
+
+    //
+    // Server end
+    //
     MyDataStructs::QStringThread hashTcpListenerThread;
     MyDataStructs::QMyStringList listTcpListenerPortMaxConnection;
 
-    MyDataStructs::QStringThread hashUdpClientThread;
-    MyDataStructs::QMyStringList listUdpServerIpPort;
-
     MyDataStructs::QStringThread hashUdpListenerThread;
-    MyDataStructs::QMyStringList listUdpListenerPortMaxConnection;
+    MyDataStructs::QMyStringList listUdpListenerPort;
+
+    MyDataStructs::QStringThread hashUdpBroadcastListenerThread;
+    MyDataStructs::QMyStringList listUdpBroadcastListenerPort;
+
+    MyDataStructs::QStringThread hashUdpMulticastListenerThread;
+    MyDataStructs::QMyStringList listUdpMulticastListenerIpPort;
 
 signals:
-    void ParseData( QString strServer, QTcpSocket* pPeerSocket, void* pByteArray );
+    // Z socket of Y thread of X Server
+    void ParseTcpData( QString strServer, QThread* pSenderThread, QTcpSocket* pPeerSocket, void* pByteArray );
+    void ParseUdpData( QString strSenderIP, quint16 nSenderPort, QThread* pSenderThread, void* pByteArray, MyEnums::UdpDatagramType dgType );
 
 public slots:
 
 private slots:
     void HandleGetWholeTcpStreamDataFromServer( QTcpSocket* pPeerSocket,void* pByteArray );
+    void HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort, MyEnums::UdpDatagramType dgType );
 };
 
 #endif // QPLATFORMGLOBAL_H

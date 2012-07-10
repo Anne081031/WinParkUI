@@ -22,7 +22,7 @@ private:
 private:
 
 private slots:
-    void HandleParseData( QString strServer, QTcpSocket* pPeerSocket, void* pByteArray );
+    void HandleParseTcpData( QString strServer, QThread* pSenderThread, QTcpSocket* pPeerSocket, void* pByteArray );
     
 private slots:
     void on_pushButton_clicked();

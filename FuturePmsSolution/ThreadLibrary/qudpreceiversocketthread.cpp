@@ -1,14 +1,16 @@
 #include "qudpreceiversocketthread.h"
 
-QUdpReceiverSocketThread::QUdpReceiverSocketThread(QObject *parent) :
+QUdpReceiverSocketThread::QUdpReceiverSocketThread( const MyEnums::UdpDatagramType dgType, QObject *parent) :
     QMyBaseThread(parent)
 {
+    udpDatagramType = dgType;
     setObjectName( "QUdpReceiverSocketThread" );
     OutputMsg( QString( " Created" ) );
     quint32 nStackSize = GetIniValue( QManipulateIniFile::ThreadPeerStackSize );
     setStackSize( nStackSize );
     bServerEnd = true;
     pUdpServerSocket = NULL;
+    qRegisterMetaType< MyEnums::UdpDatagramType >( "MyEnums::UdpDatagramType" );
 }
 
 QUdpReceiverSocketThread::~QUdpReceiverSocketThread( )
@@ -21,9 +23,9 @@ QUdpReceiverSocketThread::~QUdpReceiverSocketThread( )
     OutputMsg( "" );
 }
 
-QUdpReceiverSocketThread* QUdpReceiverSocketThread::GetInstance(  bool bServer  )
+QUdpReceiverSocketThread* QUdpReceiverSocketThread::GetInstance(  bool bServer, const MyEnums::UdpDatagramType dgType  )
 {
-    QUdpReceiverSocketThread* pThreadInstance = new QUdpReceiverSocketThread( );
+    QUdpReceiverSocketThread* pThreadInstance = new QUdpReceiverSocketThread( dgType );
     pThreadInstance->InitializeThread( );
     pThreadInstance->SetServerFlag( bServer );
     pThreadInstance->start( );
@@ -107,18 +109,24 @@ void QUdpReceiverSocketThread::ProcessOtherData( QByteArray *pByteArray, const Q
     peerThreadPool.start( pTask );
 }
 
-void QUdpReceiverSocketThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort )
+void QUdpReceiverSocketThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP,
+                                                          quint16 nSenderPort, MyEnums::UdpDatagramType dgType )
 {
     if ( NULL == pByteArray ) {
         return;
     }
 
     QByteArray* pByteData = ( QByteArray* ) pByteArray;
-    //if ( Database ) {
-        ProcessDatabaseData( pByteData, strSenderIP, nSenderPort );
-    //} else if ( ... ) {
-        //ProcessOtherData(  pByteData, strSenderIP, nSenderPort );
-    //}
+
+    if ( bServerEnd ) {
+        //if ( Database ) {
+            ProcessDatabaseData( pByteData, strSenderIP, nSenderPort );
+        //} else if ( ... ) {
+            //ProcessOtherData(  pByteData, strSenderIP, nSenderPort );
+        //}
+    } else {
+        emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, dgType );
+    }
 }
 
 void QUdpReceiverSocketThread::ProcessThreadPoolFeedbackEvent( MyDataStructs::PQQueueEventParams pEventParams )

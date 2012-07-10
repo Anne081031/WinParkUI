@@ -23,7 +23,8 @@ namespace MyEnums {
 
     enum ThreadType {
         ThreadLogger,
-        ThreadListener,
+        ThreadTcpListener,
+        ThreadUdpListener,
         ThreadTcpPeer,
         ThreadTcpClient,
         ThreadDatabase
@@ -75,6 +76,12 @@ namespace MyEnums {
         Network,
         Other,
         LogItems
+    };
+
+    enum UdpDatagramType {
+        UdpUnicast,
+        UdpBroadcast,
+        UdpMulticast
     };
 
     enum EventParamType {

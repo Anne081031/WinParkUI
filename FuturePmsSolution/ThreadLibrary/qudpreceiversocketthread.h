@@ -12,13 +12,13 @@ class QUdpReceiverSocketThread : public QMyBaseThread
 {
     Q_OBJECT
 public:
-    static QUdpReceiverSocketThread* GetInstance( bool bServer );
+    static QUdpReceiverSocketThread* GetInstance( bool bServer, const MyEnums::UdpDatagramType dgType );
     ~QUdpReceiverSocketThread( );
 
     void SetServerFlag( bool bServer );
 
 protected:
-    explicit QUdpReceiverSocketThread(QObject *parent = 0);
+    explicit QUdpReceiverSocketThread( const MyEnums::UdpDatagramType dgType, QObject *parent = 0);
 
     void run( );
     void InitializeSubThread( );
@@ -38,17 +38,19 @@ private:
     void PostDatabaseEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
 
 private:
+    MyEnums::UdpDatagramType udpDatagramType;
     QDatabaseThread* pDatabaseThread;
     QThreadPool peerThreadPool;
     bool bServerEnd;
     QUdpServer* pUdpServerSocket;
 
 signals:
+    void GetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort, MyEnums::UdpDatagramType dgType );
 
 public slots:
 
 private slots:
-    void HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort );
+    void HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort, MyEnums::UdpDatagramType dgType );
 
 };
 

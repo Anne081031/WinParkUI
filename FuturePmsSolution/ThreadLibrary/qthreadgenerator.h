@@ -12,7 +12,10 @@ public:
     static QThreadGenerator* GetSingleton( );
 
     QTcpClientSocketThread* GenerateTcpClientThread( );
+
     QListenerThread* GenerateTcpListenerThread( );
+    QUdpReceiverSocketThread* GenerateUdpListenerThread( const bool bServer, const MyEnums::UdpDatagramType dgType );
+
     QLoggerThread* GenerateLogThread( );
 
     void ControlTimer( const bool bStart, const int nInterval = 0 );
@@ -29,9 +32,11 @@ protected:
 
 private:
     void PostLoggerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
-    void PostListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  );
+    void PostTcpListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  );
     void PostTcpPeerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
     void PostTcpClientEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
+
+    void PostUdpListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  );
 
 private:
     static QThreadGenerator* pThreadGenerator;
@@ -45,7 +50,6 @@ private slots:
     void HandleMessage( void* pstrMsg, QManipulateIniFile::LogTypes type );
     void HandleAccept( int socketDescriptor );
     void HandlePeerThreadReleaseMyself( QTcpPeerSocketThread* pThread );
-    
 };
 
 #endif // QTHREADGENERATOR_H

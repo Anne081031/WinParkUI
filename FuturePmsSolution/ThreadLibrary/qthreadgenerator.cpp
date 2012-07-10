@@ -52,6 +52,15 @@ QListenerThread* QThreadGenerator::GenerateTcpListenerThread( )
     return pThreadInstance;
 }
 
+QUdpReceiverSocketThread* QThreadGenerator::GenerateUdpListenerThread( const bool bServer, const MyEnums::UdpDatagramType dgType )
+{
+    QUdpReceiverSocketThread* pThreadInstance = QUdpReceiverSocketThread::GetInstance( bServer, dgType );
+    connect( pThreadInstance, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ),
+                         this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
+
+    return pThreadInstance;
+}
+
 QTcpClientSocketThread* QThreadGenerator::GenerateTcpClientThread( )
 {
     QTcpClientSocketThread* pThreadInstance = QTcpClientSocketThread::GetInstance( );
@@ -69,8 +78,8 @@ void QThreadGenerator::PostEvent( MyEnums::ThreadType thread, MyEnums::EventType
         PostLoggerEvent( event, pQueueEventParams, pReceiver );
         break;
 
-    case MyEnums::ThreadListener :
-        PostListenerEvent( event, pQueueEventParams, pReceiver );
+    case MyEnums::ThreadTcpListener :
+        PostTcpListenerEvent( event, pQueueEventParams, pReceiver );
         break;
 
     case MyEnums::ThreadTcpPeer :
@@ -79,6 +88,10 @@ void QThreadGenerator::PostEvent( MyEnums::ThreadType thread, MyEnums::EventType
 
     case MyEnums::ThreadTcpClient :
         PostTcpClientEvent( event, pQueueEventParams, pReceiver );
+        break;
+
+    case MyEnums::ThreadUdpListener :
+        PostUdpListenerEvent( event, pQueueEventParams, pReceiver );
         break;
 
     case MyEnums::ThreadDatabase :
@@ -112,7 +125,7 @@ void QThreadGenerator::PostLoggerEvent( MyEnums::EventType event, MyDataStructs:
     qApp->postEvent( pReceiver, pEvent );
 }
 
-void QThreadGenerator::PostListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  )
+void QThreadGenerator::PostTcpListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  )
 {
     bool bEvent = ( ( MyEnums::TcpLinstenerEventBegin < event ) && ( MyEnums::TcpLinstenerEventEnd > event ) ) || ( MyEnums::ThreadExit == event );
     if ( !bEvent ) {
@@ -120,6 +133,19 @@ void QThreadGenerator::PostListenerEvent( MyEnums::EventType event, MyDataStruct
     }
 
     QListenerThreadEvent* pEvent = new QListenerThreadEvent( ( QEvent::Type ) event );
+    pEvent->SetEventParams( pQueueEventParams );
+
+    qApp->postEvent( pReceiver, pEvent );
+}
+
+void QThreadGenerator::PostUdpListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver  )
+{
+    bool bEvent = ( ( MyEnums::UdpServerEventStart < event ) && ( MyEnums::UdpServerEventEnd> event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
+        return;
+    }
+
+    QUdpReceiverThreadEvent* pEvent = new QUdpReceiverThreadEvent( ( QEvent::Type ) event );
     pEvent->SetEventParams( pQueueEventParams );
 
     qApp->postEvent( pReceiver, pEvent );
