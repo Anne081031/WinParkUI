@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Tue Jun 26 10:01:40 2012
+** Created: Wed Jul 18 16:02:35 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -79,11 +79,11 @@ static const uint qt_meta_data_MainWindow[] = {
     1360,   11,   11,   11, 0x08,
     1378,   11,   11,   11, 0x08,
     1392,   11,   11,   11, 0x08,
-    1430, 1412,   11,   11, 0x08,
-    1458,   11,   11,   11, 0x08,
-    1495, 1469,   11,   11, 0x08,
-    1525,   11,   11,   11, 0x08,
-    1551,   11,   11,   11, 0x08,
+    1442, 1412,   11,   11, 0x08,
+    1474,   11,   11,   11, 0x08,
+    1511, 1485,   11,   11, 0x08,
+    1541,   11,   11,   11, 0x08,
+    1567,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -133,9 +133,9 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "nType,lstData\0"
     "ProcessMonitorMsg(CommonDataType::DatagramType,QStringList&)\0"
     "UpdateLableText()\0SendStateHB()\0"
-    "ReconnectDatabase()\0strPlate,nChannel\0"
-    "RecognizePlate(QString,int)\0SendTime()\0"
-    "strMsg,bExpiration,bRetry\0"
+    "ReconnectDatabase()\0strPlate,nChannel,nConfidence\0"
+    "RecognizePlate(QString,int,int)\0"
+    "SendTime()\0strMsg,bExpiration,bRetry\0"
     "Expiration(QString,bool,bool)\0"
     "on_actLicense_triggered()\0"
     "on_actStay_triggered()\0"
@@ -216,7 +216,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 43: UpdateLableText(); break;
         case 44: SendStateHB(); break;
         case 45: ReconnectDatabase(); break;
-        case 46: RecognizePlate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 46: RecognizePlate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 47: SendTime(); break;
         case 48: Expiration((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
         case 49: on_actLicense_triggered(); break;

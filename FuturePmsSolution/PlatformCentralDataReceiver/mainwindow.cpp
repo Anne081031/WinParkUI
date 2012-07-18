@@ -28,5 +28,20 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
-    g_pPlatformGlobal->CreateTcpListenerhread( QManipulateIniFile::PlatformCentralDataReceiver );
+    g_pPlatformGlobal->CreateTcpListenerThread( QManipulateIniFile::PlatformCentralDataReceiver );
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    g_pPlatformGlobal->CreateUdpListenerThread( QManipulateIniFile::PlatformCentralServer, true );
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    g_pPlatformGlobal->CreateUdpBroadcastListenerThread( QManipulateIniFile::PlatformCentralServer, true );
+}
+
+void MainWindow::on_pushButton_5_clicked()
+{
+    g_pPlatformGlobal->CreateUdpMulticastListenerThread( QManipulateIniFile::PlatformCentralServer, true );
 }

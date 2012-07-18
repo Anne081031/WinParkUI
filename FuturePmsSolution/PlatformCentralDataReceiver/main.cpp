@@ -12,7 +12,10 @@ int main(int argc, char *argv[])
     g_pPlatformGlobal->InitializeApplication( MyEnums::PlatformCentralDataReceiver );
 
     MainWindow w;
-    w.DisplayMainArgs( g_pPlatformGlobal->GetListenerPortMaxConnectionList( ) );
+    w.DisplayMainArgs( g_pPlatformGlobal->GetTcpListenerPortMaxConnectionList( ) );
+    w.DisplayMainArgs( g_pPlatformGlobal->GetUdpListenerPortList( ) );
+    w.DisplayMainArgs( g_pPlatformGlobal->GetUdpBroadcastListenerPortList( ) );
+    w.DisplayMainArgs( g_pPlatformGlobal->GetUdpMulticastListenerIpPortList( ) );
     w.show();
     
     return a.exec();

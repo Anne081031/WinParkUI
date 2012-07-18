@@ -12,6 +12,7 @@ public:
     static QThreadGenerator* GetSingleton( );
 
     QTcpClientSocketThread* GenerateTcpClientThread( );
+    QUdpSenderThread* GenerateUdpClientThread( );
 
     QListenerThread* GenerateTcpListenerThread( );
     QUdpReceiverSocketThread* GenerateUdpListenerThread( const bool bServer, const MyEnums::UdpDatagramType dgType );

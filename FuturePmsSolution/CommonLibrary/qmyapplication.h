@@ -12,6 +12,8 @@ public:
     QMyApplication( int & argc, char ** argv, bool GUIenabled );
     QMyApplication( int & argc, char ** argv, Type type );
     virtual ~QMyApplication( );
+
+     bool	winEventFilter ( MSG * msg, long * result );
     
 signals:
     

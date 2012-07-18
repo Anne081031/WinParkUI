@@ -18,3 +18,8 @@ QMyApplication::~QMyApplication( )
 {
 
 }
+
+bool QMyApplication::winEventFilter( MSG *msg, long *result )
+{
+    return QCoreApplication::winEventFilter( msg, result );
+}

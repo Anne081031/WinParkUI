@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qudpreceiversocketthread.h'
 **
-** Created: Tue Jul 10 17:27:29 2012
+** Created: Wed Jul 18 17:01:06 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,7 +34,7 @@ static const uint qt_meta_data_QUdpReceiverSocketThread[] = {
       68,   26,   25,   25, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     136,   26,   25,   25, 0x08,
+     171,  136,   25,   25, 0x08,
 
        0        // eod
 };
@@ -43,8 +43,8 @@ static const char qt_meta_stringdata_QUdpReceiverSocketThread[] = {
     "QUdpReceiverSocketThread\0\0"
     "pByteArray,strSenderIP,nSenderPort,dgType\0"
     "GetWholeUdpDatagram(void*,QString,quint16,MyEnums::UdpDatagramType)\0"
-    "HandleGetWholeUdpDatagram(void*,QString,quint16,MyEnums::UdpDatagramTy"
-    "pe)\0"
+    "pByteArray,strSenderIP,nSenderPort\0"
+    "HandleGetWholeUdpDatagram(void*,QString,quint16)\0"
 };
 
 void QUdpReceiverSocketThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -54,7 +54,7 @@ void QUdpReceiverSocketThread::qt_static_metacall(QObject *_o, QMetaObject::Call
         QUdpReceiverSocketThread *_t = static_cast<QUdpReceiverSocketThread *>(_o);
         switch (_id) {
         case 0: _t->GetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3])),(*reinterpret_cast< MyEnums::UdpDatagramType(*)>(_a[4]))); break;
-        case 1: _t->HandleGetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3])),(*reinterpret_cast< MyEnums::UdpDatagramType(*)>(_a[4]))); break;
+        case 1: _t->HandleGetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
         default: ;
         }
     }

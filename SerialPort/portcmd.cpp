@@ -43,6 +43,8 @@ CPortCmd::CPortCmd(QObject *parent) :
 {
     pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     pCodec = CCommonFunction::GetTextCodec( );
+
+    nLedMsgCounter = pSettings->value( "CommonCfg/LedMsgCounter", 1 ).toInt( );
 }
 
 quint8 CPortCmd::CheckSum( QByteArray &byData )
@@ -79,7 +81,8 @@ void CPortCmd::GetLedInfo2( LedInfo infoType, QByteArray& vData, QString* pStrPa
     vData.append( ( char ) 0x1A );
     vData.append( ( char ) 0x1B );
     vData.append( pCodec->fromUnicode( strInfo ) );
-    vData.append( ( char ) 0x01);
+    //vData.append( ( char ) 0x01);
+    vData.append( ( char ) nLedMsgCounter );
     vData.append( ( char ) 0x1C);
     vData.append( ( char ) 0x1D );
 }
@@ -252,7 +255,8 @@ void CPortCmd::GetLedInfo( LedInfo infoType, QByteArray &vData )
     vData.append( ( char ) 0x1A );
     vData.append( ( char ) 0x1B );
     vData.append( pCodec->fromUnicode( strInfo ) );
-    vData.append( ( char ) 0x01 );
+    //vData.append( ( char ) 0x01 );
+    vData.append( ( char ) nLedMsgCounter );
     vData.append( ( char ) 0x1C );
     vData.append( ( char ) 0x1D );
 

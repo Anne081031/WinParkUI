@@ -109,8 +109,7 @@ void QUdpReceiverSocketThread::ProcessOtherData( QByteArray *pByteArray, const Q
     peerThreadPool.start( pTask );
 }
 
-void QUdpReceiverSocketThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP,
-                                                          quint16 nSenderPort, MyEnums::UdpDatagramType dgType )
+void QUdpReceiverSocketThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort )
 {
     if ( NULL == pByteArray ) {
         return;
@@ -125,7 +124,7 @@ void QUdpReceiverSocketThread::HandleGetWholeUdpDatagram( void* pByteArray, QStr
             //ProcessOtherData(  pByteData, strSenderIP, nSenderPort );
         //}
     } else {
-        emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, dgType );
+        emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, udpDatagramType );
     }
 }
 

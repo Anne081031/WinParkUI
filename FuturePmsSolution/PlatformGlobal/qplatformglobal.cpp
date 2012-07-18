@@ -92,6 +92,10 @@ void QPlatformGlobal::ParseMainArgs( const MyEnums::ApplicationType type, const 
         case 'M' : // Multicast
             ParseMulticastArgs( type, lstParam );
             break;
+
+        case 'D' : // Database
+            ParseDatabaseArgs( type, lstParam );
+            break;
         }
     }
 }
@@ -162,6 +166,11 @@ void QPlatformGlobal::ParseMulticastArgs( const MyEnums::ApplicationType type, c
         ParsePlatformDataReceiverArgs( listUdpMulticastListenerIpPort, lstParams );
         break;
     }
+}
+
+void QPlatformGlobal::ParseDatabaseArgs( const MyEnums::ApplicationType type, const QStringList &lstParams )
+{
+
 }
 
 void QPlatformGlobal::ParsePlatformClientArgs( MyDataStructs::QMyStringList& lstTarget, const QStringList& lstParams )
@@ -367,6 +376,61 @@ void QPlatformGlobal::TcpClientAllConnectOrDisconnect( bool bConnect )
     }
 }
 
+void QPlatformGlobal::CreateUdpClientThread( const QManipulateIniFile::IniFileName iniFile )
+{
+    QUdpSenderThread* pThreadInstance = pGenerator->GenerateUdpClientThread( );
+
+    CreateUdpClientThread( iniFile, listUdpClientIpPort, hashUdpClientThread, MyEnums::UdpUnicast, pThreadInstance );
+    CreateUdpClientThread( iniFile, listUdpBroadcastClientPort, hashUdpBroadcastClientThread, MyEnums::UdpBroadcast, pThreadInstance );
+    CreateUdpClientThread( iniFile, listUdpMulticastClientIpPort, hashUdpMulticastClientThread, MyEnums::UdpMulticast, pThreadInstance );
+}
+
+void QPlatformGlobal::CreateUdpClientThread( const QManipulateIniFile::IniFileName iniFile,
+                                             MyDataStructs::QMyStringList &listParams,
+                                             MyDataStructs::QStringThread &hashThread,
+                                             const MyEnums::UdpDatagramType dgType,
+                                             QUdpSenderThread* pThread )
+{
+    if ( listParams.isEmpty( ) ) {
+        QVariant varIPs;
+        QVariant varPorts;
+
+        if ( MyEnums::UdpBroadcast == dgType ) {
+            GetNetworkParams( iniFile, QManipulateIniFile::NetworkUdpBroadcastPort, varPorts );
+            ParseNetworkParams( varPorts, listParams );
+        } else {
+            QManipulateIniFile::IniFileSectionItems itemIP;
+            QManipulateIniFile::IniFileSectionItems itemPort;
+
+            if ( MyEnums::UdpMulticast == dgType ) {
+                itemIP = QManipulateIniFile::NetworkMulticastIP;
+                itemPort = QManipulateIniFile::NetworkMulticastPort;
+            } else {
+                itemIP = QManipulateIniFile::NetworkUdpServerIP;
+                itemPort = QManipulateIniFile::NetworkUdpServerPort;
+            }
+
+            GetNetworkParams( iniFile, itemIP, varIPs );
+            GetNetworkParams( iniFile, itemPort, varPorts );
+            ParseNetworkParams( varIPs, varPorts, listParams );
+        }
+    }
+
+    foreach( const QString& strParam, listParams ) {
+        hashThread.insertMulti( strParam, pThread );
+    }
+}
+
+void QPlatformGlobal::UdpClientSendData( QThread* pReceiver, const QByteArray* pByteData, MyEnums::UdpDatagramType dgType )
+{
+
+}
+
+void QPlatformGlobal::UdpClientSendData2AllThreads( const QByteArray& byteData, MyEnums::UdpDatagramType dgType )
+{
+
+}
+
 void QPlatformGlobal::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort, MyEnums::UdpDatagramType dgType )
 {
     QUdpReceiverSocketThread* pSenderThread = ( QUdpReceiverSocketThread* ) sender( );
@@ -554,12 +618,13 @@ void QPlatformGlobal::CreateUdpListenerThread( MyDataStructs::QMyStringList &lis
                                                const QManipulateIniFile::IniFileName iniFile,
                                                const QManipulateIniFile::IniFileSectionItems item,
                                                const bool bServer, const bool bStartupListener,
-                                               const MyEnums::UdpDatagramType dgType,
-                                               const bool bMulticast )
+                                               const MyEnums::UdpDatagramType dgType )
 {
+    bool bMulticast = MyEnums::UdpMulticast == dgType;
+
     if ( listParams.isEmpty( ) ) {
         QVariant varIPs;
-        QVariant varPorts;
+        QVariant varPorts;    
 
         if ( bMulticast ) {
             GetNetworkParams( iniFile, QManipulateIniFile::NetworkMulticastIP, varIPs );
@@ -644,7 +709,7 @@ void QPlatformGlobal::CreateUdpMulticastListenerThread( const QManipulateIniFile
 {
     CreateUdpListenerThread( listUdpMulticastListenerIpPort, hashUdpMulticastListenerThread, iniFile,
                              QManipulateIniFile::NetworkMulticastPort, bServer,
-                             bStartupListener, MyEnums::UdpMulticast, true );
+                             bStartupListener, MyEnums::UdpMulticast );
 }
 
 void QPlatformGlobal::UdpMulticastListenerStartup( QThread* pReceiver, const QString& strPort )

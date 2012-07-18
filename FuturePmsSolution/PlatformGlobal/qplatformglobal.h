@@ -63,6 +63,10 @@ public:
     void TcpClientConnect( QThread* pReceiver, const QString& strIP, const QString& strPort );
     void TcpClientAllConnectOrDisconnect( bool bConnect );
 
+    void CreateUdpClientThread( const QManipulateIniFile::IniFileName iniFile );
+    void UdpClientSendData( QThread* pReceiver, const QByteArray* pByteData, MyEnums::UdpDatagramType dgType );
+    void UdpClientSendData2AllThreads( const QByteArray& byteData, MyEnums::UdpDatagramType dgType );
+
     void CreateTcpListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener = true );
     void TcpListenerStartup( QThread* pReceiver, const QString& strPort, const QString& strMaxConnection );
     void TcpListenerAllStartup(  );
@@ -94,6 +98,7 @@ private:
     void ParseUdpArgs( const MyEnums::ApplicationType type, const QStringList& lstParams );
     void ParseBroadcastArgs( const MyEnums::ApplicationType type, const QStringList& lstParams );
     void ParseMulticastArgs( const MyEnums::ApplicationType type, const QStringList& lstParams );
+    void ParseDatabaseArgs( const MyEnums::ApplicationType type, const QStringList& lstParams );
 
     void ParsePlatformClientArgs( MyDataStructs::QMyStringList& lstTarget, const QStringList& lstParams );
     void ParsePlatformServerArgs( MyDataStructs::QMyStringList& lstTarget, const QStringList& lstParams );
@@ -104,13 +109,18 @@ private:
     void ParseNetworkParams( QVariant& varParam1, QVariant& varParam2, MyDataStructs::QMyStringList& lstParams );
     void ParseNetworkParams( QVariant& varParam1, MyDataStructs::QMyStringList& lstParams );
 
+    void CreateUdpClientThread( const QManipulateIniFile::IniFileName iniFile,
+                                MyDataStructs::QMyStringList& listParams,
+                                MyDataStructs::QStringThread& hashThread,
+                                const MyEnums::UdpDatagramType dgType,
+                                QUdpSenderThread* pThread );
+
     void CreateUdpListenerThread( MyDataStructs::QMyStringList& listParams,
                                   MyDataStructs::QStringThread& hashThread,
                                   const QManipulateIniFile::IniFileName iniFile,
                                   const QManipulateIniFile::IniFileSectionItems item,
                                   const bool bServer, const bool bStartupListener,
-                                  const MyEnums::UdpDatagramType dgType,
-                                  const bool bMulticast = false );
+                                  const MyEnums::UdpDatagramType dgType );
     void UdpListenerAllStartup( MyDataStructs::QMyStringList& listParams,
                                 MyDataStructs::QStringThread& hashThread );
 

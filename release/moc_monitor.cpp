@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'monitor.h'
 **
-** Created: Tue Jun 26 10:02:01 2012
+** Created: Wed Jul 18 16:02:57 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,47 +31,47 @@ static const uint qt_meta_data_CMonitor[] = {
        2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      28,   10,    9,    9, 0x05,
-      75,   58,    9,    9, 0x05,
+      40,   10,    9,    9, 0x05,
+      91,   74,    9,    9, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     117,  106,    9,    9, 0x08,
-     157,    9,    9,    9, 0x08,
-     180,    9,    9,    9, 0x08,
-     204,    9,    9,    9, 0x08,
-     230,  225,    9,    9, 0x08,
-     255,    9,    9,    9, 0x08,
-     287,    9,    9,    9, 0x08,
-     311,    9,    9,    9, 0x08,
-     342,    9,    9,    9, 0x08,
-     371,    9,    9,    9, 0x08,
-     400,    9,    9,    9, 0x08,
-     429,    9,    9,    9, 0x08,
-     460,    9,    9,    9, 0x08,
-     473,    9,    9,    9, 0x08,
-     485,    9,    9,    9, 0x08,
-     498,    9,    9,    9, 0x08,
-     524,  510,    9,    9, 0x08,
-     554,    9,    9,    9, 0x08,
-     567,    9,    9,    9, 0x08,
-     596,  581,    9,    9, 0x08,
-     620,   58,    9,    9, 0x08,
-     649,    9,    9,    9, 0x08,
-     669,    9,    9,    9, 0x08,
-     705,  681,    9,    9, 0x08,
-     742,  733,    9,    9, 0x08,
-     786,  768,    9,    9, 0x08,
-     836,  820,    9,    9, 0x08,
-     869,  855,    9,    9, 0x08,
-     892,  885,    9,    9, 0x08,
-     916,    9,    9,    9, 0x08,
+     133,  122,    9,    9, 0x08,
+     173,    9,    9,    9, 0x08,
+     196,    9,    9,    9, 0x08,
+     220,    9,    9,    9, 0x08,
+     246,  241,    9,    9, 0x08,
+     271,    9,    9,    9, 0x08,
+     303,    9,    9,    9, 0x08,
+     327,    9,    9,    9, 0x08,
+     358,    9,    9,    9, 0x08,
+     387,    9,    9,    9, 0x08,
+     416,    9,    9,    9, 0x08,
+     445,    9,    9,    9, 0x08,
+     476,    9,    9,    9, 0x08,
+     489,    9,    9,    9, 0x08,
+     501,    9,    9,    9, 0x08,
+     514,    9,    9,    9, 0x08,
+     540,  526,    9,    9, 0x08,
+     570,    9,    9,    9, 0x08,
+     583,    9,    9,    9, 0x08,
+     612,  597,    9,    9, 0x08,
+     636,   74,    9,    9, 0x08,
+     665,    9,    9,    9, 0x08,
+     685,    9,    9,    9, 0x08,
+     721,  697,    9,    9, 0x08,
+     758,  749,    9,    9, 0x08,
+     802,  784,    9,    9, 0x08,
+     852,  836,    9,    9, 0x08,
+     885,  871,    9,    9, 0x08,
+     908,  901,    9,    9, 0x08,
+     932,    9,    9,    9, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CMonitor[] = {
-    "CMonitor\0\0strPlate,nChannel\0"
-    "OnRecognizePlate(QString,int)\0"
+    "CMonitor\0\0strPlate,nChannel,nConfidence\0"
+    "OnRecognizePlate(QString,int,int)\0"
     "nChannel,bMoving\0OnDirectionIndicator(int,bool)\0"
     "row,column\0on_tabRecord_cellDoubleClicked(int,int)\0"
     "onBtnVerifyInClicked()\0onBtnVerifyOutClicked()\0"
@@ -129,7 +129,7 @@ int CMonitor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: OnRecognizePlate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 0: OnRecognizePlate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
         case 1: OnDirectionIndicator((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 2: on_tabRecord_cellDoubleClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 3: onBtnVerifyInClicked(); break;
@@ -169,9 +169,9 @@ int CMonitor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CMonitor::OnRecognizePlate(QString _t1, int _t2)
+void CMonitor::OnRecognizePlate(QString _t1, int _t2, int _t3)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 

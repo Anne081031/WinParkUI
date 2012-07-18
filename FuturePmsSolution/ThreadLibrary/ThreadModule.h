@@ -7,5 +7,6 @@
 #include "qtcpclientsocketthread.h"
 #include "qtcppeersocketthread.h"
 #include "qudpreceiversocketthread.h"
+#include "qudpsenderthread.h"
 
 #endif // THREADMODULE_H

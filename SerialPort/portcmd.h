@@ -143,6 +143,7 @@ private:
 private:
        QSettings* pSettings;
        QTextCodec* pCodec;
+       int nLedMsgCounter;
 
 signals:
 

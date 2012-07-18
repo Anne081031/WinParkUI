@@ -70,6 +70,15 @@ QTcpClientSocketThread* QThreadGenerator::GenerateTcpClientThread( )
     return pThreadInstance;
 }
 
+QUdpSenderThread* QThreadGenerator::GenerateUdpClientThread( )
+{
+    QUdpSenderThread* pThreadInstance = QUdpSenderThread::GetInstance( );
+    connect( pThreadInstance, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ),
+                         this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
+
+    return pThreadInstance;
+}
+
 void QThreadGenerator::PostEvent( MyEnums::ThreadType thread, MyEnums::EventType event,
                                   MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver )
 {

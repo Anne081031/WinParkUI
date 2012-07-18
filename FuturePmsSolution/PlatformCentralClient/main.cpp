@@ -12,7 +12,10 @@ int main(int argc, char *argv[])
     g_pPlatformGlobal->InitializeApplication( MyEnums::PlatformCentralClient );
 
     MainWindow w;
-    w.DisplayMainArgs( g_pPlatformGlobal->GetServerIpPortList( ) );
+    w.DisplayMainArgs( g_pPlatformGlobal->GetTcpClientIpPortList( ) );
+    w.DisplayMainArgs( g_pPlatformGlobal->GetUdpClientIpPortList( ) );
+    w.DisplayMainArgs( g_pPlatformGlobal->GetUdpBroadcastClientPortList( ) );
+    w.DisplayMainArgs( g_pPlatformGlobal->GetUdpMulticastClientIpPortList( ) );
     w.show();
 
     return a.exec();

@@ -80,7 +80,7 @@ void MainWindow::HandleParseTcpData( QString strServer, QThread* pSenderThread, 
     strServer += " : " + QString ( *pByteData ) + "\n";
     ui->textEdit->insertPlainText( strServer );
 
-    g_pPlatformGlobal->TcpClientSendData( );
+    //g_pPlatformGlobal->TcpClientSendData( );
 
     delete pByteData;
 }

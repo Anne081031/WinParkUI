@@ -33,7 +33,15 @@ QString CMonitor::strPlates[ VIDEO_USEDWAY ] = { "" };
 
 void CMonitor::keyPressEvent( QKeyEvent *event )
 {
-    qDebug( ) << Q_FUNC_INFO << endl;
+
+    if ( Qt::AltModifier == event->modifiers( ) ) {
+        int key = event->key( );
+        qDebug( ) << Q_FUNC_INFO << QString::number( key ) << endl;
+        //if ( QMessageBox::Ok == CCommonFunction::MsgBox( NULL, "提示", "确定要推出系统吗？", QMessageBox::Question ) ) {
+         //   exit( 0 );
+        //}
+    }
+
     QString str1 = "你好";
     QString str2 = "吗？";
 
