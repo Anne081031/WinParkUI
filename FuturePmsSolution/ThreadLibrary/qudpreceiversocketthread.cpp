@@ -153,6 +153,7 @@ void QUdpReceiverSocketThread::ProcessThreadPoolFeedbackEvent( MyDataStructs::PQ
     quint16 nSenderPort = ( quint16 ) varData.toUInt( );
 
     network.UdpSendDatagram( pPeerSocket, *pByteData, hostAddr, nSenderPort ); // Feedback data to client endpoint
+    msleep( 100 );
 
     delete pByteData;
 }

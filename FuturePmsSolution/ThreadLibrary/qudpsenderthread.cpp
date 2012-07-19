@@ -53,13 +53,23 @@ void QUdpSenderThread::InitializeSubThread( )
     connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( &network, SIGNAL( GetWholeUdpDatagram( void*, QString,quint16 ) ), this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
 
+    //
+    // Feedback data thread;
+    //
     if ( NULL == pFeedbackThread ) {
         pFeedbackThread = QUdpFeedbackThread::GetInstance( this );
+        connect( pFeedbackThread, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ),
+                 this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     }
 
     SetFeedbackThreadSocketDescriptor( );
     pFeedbackThread->start( );
     pFeedbackThread->moveToThread( pFeedbackThread );
+}
+
+void QUdpSenderThread::HandleMessage( void *pstrMsg, QManipulateIniFile::LogTypes type )
+{
+    emit NotifyMessage( pstrMsg, type );
 }
 
 void QUdpSenderThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort )
@@ -116,7 +126,7 @@ void QUdpSenderThread::SetFeedbackThreadSocketDescriptor( )
     network.UdpSendDatagram( pUdpClientSocket, byData, hostAddress, ( quint16 ) 12345 );
 
     int nSocket = pUdpClientSocket->socketDescriptor( );
-    pFeedbackThread->SendSetSocketDescriptorSignal( nSocket );
+    pFeedbackThread->HandleSetSocketDescriptor( nSocket );
 }
 
 void QUdpSenderThread::ProcessSendDatagramEvent( MyDataStructs::PQQueueEventParams pEventParams )
@@ -138,6 +148,7 @@ void QUdpSenderThread::ProcessSendDatagramEvent( MyDataStructs::PQQueueEventPara
     QHostAddress hostAddress( strIP );
 
     network.UdpSendDatagram( pUdpClientSocket, *pByteArray, hostAddress, nPort );
+    msleep( 100 );
 
     delete pByteArray;
 }

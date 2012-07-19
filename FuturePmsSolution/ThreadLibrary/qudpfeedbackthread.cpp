@@ -33,9 +33,6 @@ void QUdpFeedbackThread::HandleSetSocketDescriptor( int nSocket )
 {
     if ( pUdpClientSocket->socketDescriptor( ) != nSocket ) {
         pUdpClientSocket->setSocketDescriptor( nSocket );
-        //bool bRet =
-        //quint16 nPort = pUdpClientSocket->localPort( );
-        //bRet = pUdpClientSocket->bind( QHostAddress::Any, nPort, QUdpSocket::ShareAddress );
     }
 }
 
@@ -48,10 +45,6 @@ void QUdpFeedbackThread::HandleSendFeedbackData( void *pByteArray, QString sende
 
 void QUdpFeedbackThread::run( )
 {
-    //InitializeSubThread( );
-
-    //exec( );
-
     while ( true ) {
         if ( -1 != pUdpClientSocket->socketDescriptor( ) &&
              pUdpClientSocket->hasPendingDatagrams( ) ) {

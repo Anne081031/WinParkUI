@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qudpfeedbackthread.h'
 **
-** Created: Thu Jul 19 15:52:59 2012
+** Created: Thu Jul 19 16:56:46 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -35,7 +35,7 @@ static const uint qt_meta_data_QUdpFeedbackThread[] = {
       84,   53,   19,   19, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     124,   20,   19,   19, 0x08,
+     124,   20,   19,   19, 0x0a,
      155,   53,   19,   19, 0x08,
 
        0        // eod

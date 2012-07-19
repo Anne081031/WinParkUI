@@ -37,9 +37,9 @@ signals:
     void SendFeedbackData( void* pByteArray, QString senderIP, quint16 senderPort );
 
 public slots:
+    void HandleSetSocketDescriptor( int nSocket );
 
 private slots:
-    void HandleSetSocketDescriptor( int nSocket );
     void HandleSendFeedbackData( void* pByteArray, QString senderIP, quint16 senderPort );
 
 };
