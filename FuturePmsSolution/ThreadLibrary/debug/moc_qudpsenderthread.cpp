@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qudpsenderthread.h'
 **
-** Created: Wed Jul 18 16:56:59 2012
+** Created: Thu Jul 19 14:14:36 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,17 +31,19 @@ static const uint qt_meta_data_QUdpSenderThread[] = {
        1,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      53,   18,   17,   17, 0x05,
+      60,   18,   17,   17, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      96,   18,   17,   17, 0x08,
+     163,  128,   17,   17, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QUdpSenderThread[] = {
-    "QUdpSenderThread\0\0pByteArray,strSenderIP,nSenderPort\0"
-    "GetWholeUdpDatagram(void*,QString,quint16)\0"
+    "QUdpSenderThread\0\0"
+    "pByteArray,strSenderIP,nSenderPort,dgType\0"
+    "GetWholeUdpDatagram(void*,QString,quint16,MyEnums::UdpDatagramType)\0"
+    "pByteArray,strSenderIP,nSenderPort\0"
     "HandleGetWholeUdpDatagram(void*,QString,quint16)\0"
 };
 
@@ -51,7 +53,7 @@ void QUdpSenderThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         Q_ASSERT(staticMetaObject.cast(_o));
         QUdpSenderThread *_t = static_cast<QUdpSenderThread *>(_o);
         switch (_id) {
-        case 0: _t->GetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        case 0: _t->GetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3])),(*reinterpret_cast< MyEnums::UdpDatagramType(*)>(_a[4]))); break;
         case 1: _t->HandleGetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
         default: ;
         }
@@ -98,9 +100,9 @@ int QUdpSenderThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void QUdpSenderThread::GetWholeUdpDatagram(void * _t1, QString _t2, quint16 _t3)
+void QUdpSenderThread::GetWholeUdpDatagram(void * _t1, QString _t2, quint16 _t3, MyEnums::UdpDatagramType _t4)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

@@ -27,6 +27,7 @@ namespace MyEnums {
         ThreadUdpListener,
         ThreadTcpPeer,
         ThreadTcpClient,
+        ThreadUdpClient,
         ThreadDatabase
     };
 
@@ -63,6 +64,7 @@ namespace MyEnums {
         UdpClientEventStart,
         UdpClientBroadcastDatagram,
         UdpClientSendDatagram,
+        UdpClientReceiveDatagram,
         UdpClientEventEnd,
         //////////////////////////////////////////
         DatabaseEventStart,

@@ -376,9 +376,12 @@ void QPlatformGlobal::TcpClientAllConnectOrDisconnect( bool bConnect )
     }
 }
 
-void QPlatformGlobal::CreateUdpClientThread( const QManipulateIniFile::IniFileName iniFile )
+void QPlatformGlobal::CreateUdpClientThread( const QManipulateIniFile::IniFileName iniFile, const bool bMultiThread )
 {
-    QUdpSenderThread* pThreadInstance = pGenerator->GenerateUdpClientThread( );
+    QUdpSenderThread* pThreadInstance = bMultiThread ? NULL : pGenerator->GenerateUdpClientThread( );
+    if ( !bMultiThread ) {
+        ConnectUdpClientSignalSlot( pThreadInstance );
+    }
 
     CreateUdpClientThread( iniFile, listUdpClientIpPort, hashUdpClientThread, MyEnums::UdpUnicast, pThreadInstance );
     CreateUdpClientThread( iniFile, listUdpBroadcastClientPort, hashUdpBroadcastClientThread, MyEnums::UdpBroadcast, pThreadInstance );
@@ -391,6 +394,8 @@ void QPlatformGlobal::CreateUdpClientThread( const QManipulateIniFile::IniFileNa
                                              const MyEnums::UdpDatagramType dgType,
                                              QUdpSenderThread* pThread )
 {
+    bool bMultiThread = ( NULL == pThread );
+
     if ( listParams.isEmpty( ) ) {
         QVariant varIPs;
         QVariant varPorts;
@@ -417,18 +422,88 @@ void QPlatformGlobal::CreateUdpClientThread( const QManipulateIniFile::IniFileNa
     }
 
     foreach( const QString& strParam, listParams ) {
+        if ( bMultiThread ) {
+            pThread = pGenerator->GenerateUdpClientThread( );
+            ConnectUdpClientSignalSlot( pThread );
+        }
+
         hashThread.insertMulti( strParam, pThread );
     }
 }
 
-void QPlatformGlobal::UdpClientSendData( QThread* pReceiver, const QByteArray* pByteData, MyEnums::UdpDatagramType dgType )
+void QPlatformGlobal::ConnectUdpClientSignalSlot( QThread *pReceiver )
 {
-
+    connect( pReceiver, SIGNAL( GetWholeUdpDatagram( void*, QString, quint16, MyEnums::UdpDatagramType ) ),
+             this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16, MyEnums::UdpDatagramType ) ) );
 }
 
-void QPlatformGlobal::UdpClientSendData2AllThreads( const QByteArray& byteData, MyEnums::UdpDatagramType dgType )
+void QPlatformGlobal::GetUdpListHashParam( const MyEnums::UdpDatagramType dgType,
+                                           MyDataStructs::QMyStringList *&pListParam,
+                                           MyDataStructs::QStringThread *&pHashThread )
 {
+    switch ( dgType ) {
+    case MyEnums::UdpUnicast :
+        pListParam = &GetUdpClientIpPortList( );
+        pHashThread = &GetUdpClientThreadHash( );
+        break;
 
+    case MyEnums::UdpBroadcast :
+        pListParam = &GetUdpBroadcastClientPortList( );
+        pHashThread = &GetUdpBroadcastClientThreadHash( );
+        break;
+
+    case MyEnums::UdpMulticast :
+        pListParam = &GetUdpMulticastClientIpPortList( );
+        pHashThread = &GetUdpMulticastClientThreadHash( );
+        break;
+    }
+}
+
+void QPlatformGlobal::UdpClientSendData( QThread* pReceiver, const QByteArray* pByteData, const QString& strIpPort, const MyEnums::UdpDatagramType dgType )
+{
+    if ( NULL == pByteData ) {
+        return;
+    }
+
+    bool bBroadcast = ( MyEnums::UdpBroadcast == dgType );
+
+    MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
+    MyDataStructs::QEventMultiHash hash;
+    MyEnums::EventType evtType = MyEnums::UdpClientSendDatagram;
+
+    if ( bBroadcast ) {
+        evtType = MyEnums::UdpClientBroadcastDatagram;
+        hash.insertMulti( MyEnums::NetworkParamPort, strIpPort );
+    } else {
+        QStringList lstParams = strIpPort.split( strColonSeperator );
+        const QString& strIP = lstParams.at( 0 );
+        const QString& strPort = lstParams.at( 1 );
+
+        hash.insertMulti( MyEnums::NetworkParamIP, strIP );
+        hash.insertMulti( MyEnums::NetworkParamPort, strPort );
+    }
+
+    quint32 nBytePointer = ( quint32 ) pByteData;
+    hash.insertMulti( MyEnums::NetworkParamData, nBytePointer );
+    pEventParams->enqueue( hash );
+    pGenerator->PostEvent( MyEnums::ThreadUdpClient, evtType, pEventParams , pReceiver );
+}
+
+void QPlatformGlobal::UdpClientSendData2AllThreads( const QByteArray& byteData, const MyEnums::UdpDatagramType dgType )
+{
+    MyDataStructs::QMyStringList* pListParam = NULL;
+    MyDataStructs::QStringThread* pHashThread = NULL;
+
+    GetUdpListHashParam( dgType, pListParam, pHashThread );
+
+    MyDataStructs::QMyStringSet set = pListParam->toSet( );
+
+    foreach ( const QString& strIpPort, set ) {
+        foreach ( QThread* pReceiver, pHashThread->values( strIpPort ) ) {
+            QByteArray* pByteData = new QByteArray( byteData );
+            UdpClientSendData( pReceiver, pByteData, strIpPort, dgType );
+        }
+    }
 }
 
 void QPlatformGlobal::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort, MyEnums::UdpDatagramType dgType )

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Jul 9 14:11:24 2012
+** Created: Thu Jul 19 11:06:01 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,6 +39,9 @@ public:
     QPushButton *pushButton_7;
     QListWidget *listWidget;
     QTextEdit *textEdit;
+    QPushButton *pushButton_8;
+    QPushButton *pushButton_9;
+    QPushButton *pushButton_10;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -73,10 +76,19 @@ public:
         pushButton_7->setGeometry(QRect(150, 80, 75, 23));
         listWidget = new QListWidget(centralWidget);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(110, 320, 311, 192));
+        listWidget->setGeometry(QRect(40, 391, 491, 121));
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(70, 120, 431, 151));
+        textEdit->setGeometry(QRect(40, 230, 491, 151));
+        pushButton_8 = new QPushButton(centralWidget);
+        pushButton_8->setObjectName(QString::fromUtf8("pushButton_8"));
+        pushButton_8->setGeometry(QRect(60, 120, 75, 23));
+        pushButton_9 = new QPushButton(centralWidget);
+        pushButton_9->setObjectName(QString::fromUtf8("pushButton_9"));
+        pushButton_9->setGeometry(QRect(150, 120, 91, 23));
+        pushButton_10 = new QPushButton(centralWidget);
+        pushButton_10->setObjectName(QString::fromUtf8("pushButton_10"));
+        pushButton_10->setGeometry(QRect(260, 120, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -104,6 +116,9 @@ public:
         pushButton_5->setText(QApplication::translate("MainWindow", "\346\226\255\345\274\200", 0, QApplication::UnicodeUTF8));
         pushButton_6->setText(QApplication::translate("MainWindow", "\345\217\221\351\200\201\346\225\260\346\215\256", 0, QApplication::UnicodeUTF8));
         pushButton_7->setText(QApplication::translate("MainWindow", "\345\273\272\347\272\277\347\250\213", 0, QApplication::UnicodeUTF8));
+        pushButton_8->setText(QApplication::translate("MainWindow", "UDP Thread", 0, QApplication::UnicodeUTF8));
+        pushButton_9->setText(QApplication::translate("MainWindow", "UDP Listener", 0, QApplication::UnicodeUTF8));
+        pushButton_10->setText(QApplication::translate("MainWindow", "Send Data", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

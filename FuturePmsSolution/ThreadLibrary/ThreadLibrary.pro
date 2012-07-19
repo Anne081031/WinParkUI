@@ -43,7 +43,8 @@ SOURCES += qthreadgenerator.cpp \
     qthreadpooltask.cpp \
     Event/qudpreceiverthreadevent.cpp \
     Event/qudpsenderthreadevent.cpp \
-    qudpsenderthread.cpp
+    qudpsenderthread.cpp \
+    qudpfeedbackthread.cpp
 
 HEADERS += ThreadLibrary_global.h \
     qthreadgenerator.h \
@@ -64,7 +65,8 @@ HEADERS += ThreadLibrary_global.h \
     qthreadpooltask.h \
     Event/qudpreceiverthreadevent.h \
     Event/qudpsenderthreadevent.h \
-    qudpsenderthread.h
+    qudpsenderthread.h \
+    qudpfeedbackthread.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

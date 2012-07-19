@@ -11,6 +11,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect( g_pPlatformGlobal, SIGNAL( ParseTcpData( QString, QThread*, QTcpSocket*, void* ) ),
              this, SLOT( HandleParseTcpData( QString, QThread*, QTcpSocket*, void* ) ) );
+
+    connect( g_pPlatformGlobal, SIGNAL( ParseUdpData( QString, quint16, QThread*, void*, MyEnums::UdpDatagramType ) ),
+             this, SLOT( HandleParseUdpData( QString, quint16, QThread*, void*, MyEnums::UdpDatagramType ) ) );
 }
 
 MainWindow::~MainWindow()
@@ -83,4 +86,49 @@ void MainWindow::HandleParseTcpData( QString strServer, QThread* pSenderThread, 
     //g_pPlatformGlobal->TcpClientSendData( );
 
     delete pByteData;
+}
+
+void MainWindow::HandleParseUdpData( QString strSenderIP, quint16 nSenderPort, QThread *pSenderThread, void *pByteArray, MyEnums::UdpDatagramType dgType )
+{
+    QByteArray* pByteData = ( QByteArray* ) pByteArray;
+    QString strType;
+
+    switch ( dgType ) {
+    case MyEnums::UdpUnicast :
+        strType = "UdpUnicast";
+        break;
+
+    case MyEnums::UdpBroadcast :
+        strType = "UdpBroadcast";
+        break;
+
+    case MyEnums::UdpMulticast :
+        strType = "UdpMulticast";
+        break;
+    }
+
+    strSenderIP += ":" + QString::number( nSenderPort ) + " " + strType + " --> " + QString ( *pByteData ) + "\n";
+    ui->textEdit->insertPlainText( strSenderIP );
+
+    //g_pPlatformGlobal->TcpClientSendData( );
+
+    delete pByteData;
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    g_pPlatformGlobal->CreateUdpClientThread( QManipulateIniFile::PlatformCentralClient );
+}
+
+void MainWindow::on_pushButton_9_clicked()
+{
+    g_pPlatformGlobal->CreateUdpListenerThread( QManipulateIniFile::PlatformCentralClient, false );
+}
+
+void MainWindow::on_pushButton_10_clicked()
+{
+    QString strText = "UDP Hello2\nTestÄãºÃÂð£¿";
+    QByteArray byteData = g_pPlatformGlobal->GetCommonFunctionObj().GetTextCodec( )->fromUnicode( strText );
+
+    g_pPlatformGlobal->UdpClientSendData2AllThreads( byteData, MyEnums::UdpUnicast );
 }

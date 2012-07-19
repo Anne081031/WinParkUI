@@ -5,6 +5,10 @@ QUdpSenderThread::QUdpSenderThread(QObject *parent) :
 {
     setObjectName( "QUdpSenderThread" );
     OutputMsg( QString( " Created" ) );
+
+    qRegisterMetaType< MyEnums::UdpDatagramType >( "MyEnums::UdpDatagramType" );
+
+    pFeedbackThread = NULL;
     pUdpClientSocket = NULL;
 }
 
@@ -13,6 +17,11 @@ QUdpSenderThread::~QUdpSenderThread( )
     if ( NULL != pUdpClientSocket ) {
         delete pUdpClientSocket;
         pUdpClientSocket = NULL;
+    }
+
+    if ( NULL != pFeedbackThread ) {
+        delete pFeedbackThread;
+        pFeedbackThread = NULL;
     }
 
     OutputMsg( "" );
@@ -43,12 +52,20 @@ void QUdpSenderThread::InitializeSubThread( )
 
     connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
     connect( &network, SIGNAL( GetWholeUdpDatagram( void*, QString,quint16 ) ), this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
+
+    if ( NULL == pFeedbackThread ) {
+        pFeedbackThread = QUdpFeedbackThread::GetInstance( this );
+    }
+
+    SetFeedbackThreadSocketDescriptor( );
+    pFeedbackThread->start( );
+    pFeedbackThread->moveToThread( pFeedbackThread );
 }
 
 void QUdpSenderThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort )
 {
     OutputMsg( "Sender:" + sender( )->objectName( ) + "GetWholeUdpDatagram( ... )" );
-    emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort );
+    emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, MyEnums::UdpUnicast );
 }
 
 void QUdpSenderThread::ProcessBroadcastDatagramEvent( MyDataStructs::PQQueueEventParams pEventParams )
@@ -68,6 +85,38 @@ void QUdpSenderThread::ProcessBroadcastDatagramEvent( MyDataStructs::PQQueueEven
     network.UdpBroadcastDatagram( pUdpClientSocket, *pByteArray, nPort );
 
     delete pByteArray;
+}
+
+void QUdpSenderThread::ProcessReceiveDatagramEvent( MyDataStructs::PQQueueEventParams pEventParams )
+{
+    if ( NULL == pEventParams || pEventParams->isEmpty( ) ) {
+        return;
+    }
+
+    MyDataStructs::QEventMultiHash& hash = pEventParams->head( );
+    QVariant varData = hash.value( MyEnums::NetworkParamPort );
+    quint16 nSenderPort = ( quint16 ) varData.toUInt( );
+
+    varData = hash.value( MyEnums::NetworkParamIP);
+    QString strSenderIP = varData.toString( );
+
+    varData = hash.value( MyEnums::NetworkParamData );
+    quint32 nBytePointer = varData.toUInt( );
+    QByteArray* pByteArray = ( QByteArray* ) nBytePointer;
+
+    OutputMsg( "emit GetWholeUdpDatagram( ... )" );
+    emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, MyEnums::UdpUnicast );
+}
+
+void QUdpSenderThread::SetFeedbackThreadSocketDescriptor( )
+{
+    QHostAddress hostAddress( "127.0.0.1" );
+    QByteArray byData( "GetDescriptor" );
+
+    network.UdpSendDatagram( pUdpClientSocket, byData, hostAddress, ( quint16 ) 12345 );
+
+    int nSocket = pUdpClientSocket->socketDescriptor( );
+    pFeedbackThread->SendSetSocketDescriptorSignal( nSocket );
 }
 
 void QUdpSenderThread::ProcessSendDatagramEvent( MyDataStructs::PQQueueEventParams pEventParams )
@@ -103,7 +152,10 @@ void QUdpSenderThread::customEvent( QEvent *event )
         ProcessBroadcastDatagramEvent( pEventParams );
     } else if ( MyEnums::UdpClientSendDatagram == type ) {
         ProcessSendDatagramEvent( pEventParams );
+    } else if ( MyEnums::UdpClientReceiveDatagram == type ) {
+        ProcessReceiveDatagramEvent( pEventParams );
     } else if ( MyEnums::ThreadExit == type ) {
+       pFeedbackThread->terminate( );
        LaunchThreadExit( );
     }
 }

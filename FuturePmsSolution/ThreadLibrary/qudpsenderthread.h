@@ -4,6 +4,7 @@
 #include "qmybasethread.h"
 #include "Event/qudpsenderthreadevent.h"
 #include "../MyNetwork/qudpclient.h"
+#include "qudpfeedbackthread.h"
 
 class QUdpSenderThread : public QMyBaseThread
 {
@@ -22,12 +23,16 @@ protected:
 private:
     void ProcessBroadcastDatagramEvent( MyDataStructs::PQQueueEventParams pEventParams );
     void ProcessSendDatagramEvent( MyDataStructs::PQQueueEventParams pEventParams );
+    void ProcessReceiveDatagramEvent( MyDataStructs::PQQueueEventParams pEventParams );
+
+    void SetFeedbackThreadSocketDescriptor( );
 
 private:
     QUdpClient* pUdpClientSocket;
+    QUdpFeedbackThread* pFeedbackThread;
 
 signals:
-    void GetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort );
+    void GetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort, MyEnums::UdpDatagramType dgType );
 
 public slots:
 

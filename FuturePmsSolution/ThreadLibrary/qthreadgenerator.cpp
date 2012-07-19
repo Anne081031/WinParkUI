@@ -103,6 +103,10 @@ void QThreadGenerator::PostEvent( MyEnums::ThreadType thread, MyEnums::EventType
         PostUdpListenerEvent( event, pQueueEventParams, pReceiver );
         break;
 
+    case MyEnums::ThreadUdpClient :
+        PostUdpClientEvent( event, pQueueEventParams, pReceiver );
+        break;
+
     case MyEnums::ThreadDatabase :
         break;
     }
@@ -155,6 +159,19 @@ void QThreadGenerator::PostUdpListenerEvent( MyEnums::EventType event, MyDataStr
     }
 
     QUdpReceiverThreadEvent* pEvent = new QUdpReceiverThreadEvent( ( QEvent::Type ) event );
+    pEvent->SetEventParams( pQueueEventParams );
+
+    qApp->postEvent( pReceiver, pEvent );
+}
+
+void QThreadGenerator::PostUdpClientEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread *pReceiver )
+{
+    bool bEvent = ( ( MyEnums::UdpClientEventStart < event ) && ( MyEnums::UdpClientEventEnd> event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
+        return;
+    }
+
+    QUdpSenderThreadEvent* pEvent = new QUdpSenderThreadEvent( ( QEvent::Type ) event );
     pEvent->SetEventParams( pQueueEventParams );
 
     qApp->postEvent( pReceiver, pEvent );

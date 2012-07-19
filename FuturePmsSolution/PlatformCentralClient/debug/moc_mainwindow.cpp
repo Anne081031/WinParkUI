@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed Jul 18 17:02:00 2012
+** Created: Thu Jul 19 15:53:24 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,13 +32,17 @@ static const uint qt_meta_data_MainWindow[] = {
 
  // slots: signature, parameters, type, tag, flags
       59,   12,   11,   11, 0x08,
-     114,   11,   11,   11, 0x08,
-     138,   11,   11,   11, 0x08,
-     164,   11,   11,   11, 0x08,
-     190,   11,   11,   11, 0x08,
-     216,   11,   11,   11, 0x08,
-     242,   11,   11,   11, 0x08,
-     268,   11,   11,   11, 0x08,
+     170,  114,   11,   11, 0x08,
+     246,   11,   11,   11, 0x08,
+     270,   11,   11,   11, 0x08,
+     296,   11,   11,   11, 0x08,
+     322,   11,   11,   11, 0x08,
+     348,   11,   11,   11, 0x08,
+     374,   11,   11,   11, 0x08,
+     400,   11,   11,   11, 0x08,
+     426,   11,   11,   11, 0x08,
+     452,   11,   11,   11, 0x08,
+     478,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -46,6 +50,9 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0strServer,pSenderThread,pPeerSocket,pByteArray\0"
     "HandleParseTcpData(QString,QThread*,QTcpSocket*,void*)\0"
+    "strSenderIP,nSenderPort,pSenderThread,pByteArray,dgType\0"
+    "HandleParseUdpData(QString,quint16,QThread*,void*,MyEnums::UdpDatagram"
+    "Type)\0"
     "on_pushButton_clicked()\0"
     "on_pushButton_2_clicked()\0"
     "on_pushButton_3_clicked()\0"
@@ -53,6 +60,9 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_pushButton_5_clicked()\0"
     "on_pushButton_6_clicked()\0"
     "on_pushButton_7_clicked()\0"
+    "on_pushButton_8_clicked()\0"
+    "on_pushButton_9_clicked()\0"
+    "on_pushButton_10_clicked()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -62,13 +72,17 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         MainWindow *_t = static_cast<MainWindow *>(_o);
         switch (_id) {
         case 0: _t->HandleParseTcpData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QThread*(*)>(_a[2])),(*reinterpret_cast< QTcpSocket*(*)>(_a[3])),(*reinterpret_cast< void*(*)>(_a[4]))); break;
-        case 1: _t->on_pushButton_clicked(); break;
-        case 2: _t->on_pushButton_2_clicked(); break;
-        case 3: _t->on_pushButton_3_clicked(); break;
-        case 4: _t->on_pushButton_4_clicked(); break;
-        case 5: _t->on_pushButton_5_clicked(); break;
-        case 6: _t->on_pushButton_6_clicked(); break;
-        case 7: _t->on_pushButton_7_clicked(); break;
+        case 1: _t->HandleParseUdpData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< quint16(*)>(_a[2])),(*reinterpret_cast< QThread*(*)>(_a[3])),(*reinterpret_cast< void*(*)>(_a[4])),(*reinterpret_cast< MyEnums::UdpDatagramType(*)>(_a[5]))); break;
+        case 2: _t->on_pushButton_clicked(); break;
+        case 3: _t->on_pushButton_2_clicked(); break;
+        case 4: _t->on_pushButton_3_clicked(); break;
+        case 5: _t->on_pushButton_4_clicked(); break;
+        case 6: _t->on_pushButton_5_clicked(); break;
+        case 7: _t->on_pushButton_6_clicked(); break;
+        case 8: _t->on_pushButton_7_clicked(); break;
+        case 9: _t->on_pushButton_8_clicked(); break;
+        case 10: _t->on_pushButton_9_clicked(); break;
+        case 11: _t->on_pushButton_10_clicked(); break;
         default: ;
         }
     }
@@ -106,9 +120,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 8)
+        if (_id < 12)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 8;
+        _id -= 12;
     }
     return _id;
 }

@@ -17,6 +17,7 @@ INPUT(
 ./release\qudpreceiverthreadevent.o
 ./release\qudpsenderthreadevent.o
 ./release\qudpsenderthread.o
+./release\qudpfeedbackthread.o
 ./release\moc_qthreadgenerator.o
 ./release\moc_qloggerthread.o
 ./release\moc_qlistenerthread.o
@@ -26,4 +27,5 @@ INPUT(
 ./release\moc_qdatabasethread.o
 ./release\moc_qmybasethread.o
 ./release\moc_qudpsenderthread.o
+./release\moc_qudpfeedbackthread.o
 );

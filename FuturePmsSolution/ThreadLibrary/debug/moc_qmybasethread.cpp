@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmybasethread.h'
 **
-** Created: Wed Jul 18 16:56:56 2012
+** Created: Thu Jul 19 14:14:32 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

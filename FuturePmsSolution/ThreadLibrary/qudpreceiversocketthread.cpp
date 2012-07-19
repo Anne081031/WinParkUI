@@ -10,6 +10,7 @@ QUdpReceiverSocketThread::QUdpReceiverSocketThread( const MyEnums::UdpDatagramTy
     setStackSize( nStackSize );
     bServerEnd = true;
     pUdpServerSocket = NULL;
+    pDatabaseThread = NULL;
     qRegisterMetaType< MyEnums::UdpDatagramType >( "MyEnums::UdpDatagramType" );
 }
 

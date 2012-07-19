@@ -63,9 +63,9 @@ public:
     void TcpClientConnect( QThread* pReceiver, const QString& strIP, const QString& strPort );
     void TcpClientAllConnectOrDisconnect( bool bConnect );
 
-    void CreateUdpClientThread( const QManipulateIniFile::IniFileName iniFile );
-    void UdpClientSendData( QThread* pReceiver, const QByteArray* pByteData, MyEnums::UdpDatagramType dgType );
-    void UdpClientSendData2AllThreads( const QByteArray& byteData, MyEnums::UdpDatagramType dgType );
+    void CreateUdpClientThread( const QManipulateIniFile::IniFileName iniFile, const bool bMultiThread = false );
+    void UdpClientSendData( QThread* pReceiver, const QByteArray* pByteData, const QString& strIpPort, const MyEnums::UdpDatagramType dgType );
+    void UdpClientSendData2AllThreads( const QByteArray& byteData, const MyEnums::UdpDatagramType dgType );
 
     void CreateTcpListenerThread( const QManipulateIniFile::IniFileName iniFile, const bool bStartupListener = true );
     void TcpListenerStartup( QThread* pReceiver, const QString& strPort, const QString& strMaxConnection );
@@ -114,6 +114,12 @@ private:
                                 MyDataStructs::QStringThread& hashThread,
                                 const MyEnums::UdpDatagramType dgType,
                                 QUdpSenderThread* pThread );
+
+    inline void ConnectUdpClientSignalSlot( QThread* pReceiver );
+
+    void GetUdpListHashParam( const MyEnums::UdpDatagramType dgType,
+                              MyDataStructs::QMyStringList*& pListParam,
+                              MyDataStructs::QStringThread*& pHashThread );
 
     void CreateUdpListenerThread( MyDataStructs::QMyStringList& listParams,
                                   MyDataStructs::QStringThread& hashThread,
