@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qudpsenderthread.h'
 **
-** Created: Thu Jul 19 14:14:36 2012
+** Created: Fri Jul 20 11:15:59 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_QUdpSenderThread[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,6 +35,7 @@ static const uint qt_meta_data_QUdpSenderThread[] = {
 
  // slots: signature, parameters, type, tag, flags
      163,  128,   17,   17, 0x08,
+     225,  212,   17,   17, 0x08,
 
        0        // eod
 };
@@ -45,6 +46,8 @@ static const char qt_meta_stringdata_QUdpSenderThread[] = {
     "GetWholeUdpDatagram(void*,QString,quint16,MyEnums::UdpDatagramType)\0"
     "pByteArray,strSenderIP,nSenderPort\0"
     "HandleGetWholeUdpDatagram(void*,QString,quint16)\0"
+    "pstrMsg,type\0"
+    "HandleMessage(void*,QManipulateIniFile::LogTypes)\0"
 };
 
 void QUdpSenderThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -55,6 +58,7 @@ void QUdpSenderThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         switch (_id) {
         case 0: _t->GetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3])),(*reinterpret_cast< MyEnums::UdpDatagramType(*)>(_a[4]))); break;
         case 1: _t->HandleGetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        case 2: _t->HandleMessage((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QManipulateIniFile::LogTypes(*)>(_a[2]))); break;
         default: ;
         }
     }
@@ -92,9 +96,9 @@ int QUdpSenderThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 2)
+        if (_id < 3)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

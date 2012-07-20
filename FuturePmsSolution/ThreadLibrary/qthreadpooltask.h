@@ -24,6 +24,8 @@ public:
                                          const bool bTcpTaskItem = true,
                                          const QString& strSenderIP = QString( ), const quint16 nSenderPort = 0 );
 
+    void SetUdpDatagramType( const MyEnums::UdpDatagramType dgType );
+
 private:
     void PostThreadPoolFeedbackEvent( bool bFeedback );
     bool ProcessDatabaseTask( );
@@ -38,6 +40,7 @@ private:
     bool bTcpTask;
     QString strTargetIP;
     quint16 nTargetPort;
+    MyEnums::UdpDatagramType udpDatagramType;
 };
 
 #endif // QTHREADPOOLTASK_H

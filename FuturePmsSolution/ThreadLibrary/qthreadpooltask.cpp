@@ -22,6 +22,11 @@ QThreadPoolTask* QThreadPoolTask::GetInstance( QByteArray* pByteArray, QThread* 
     return pTask;
 }
 
+void QThreadPoolTask::SetUdpDatagramType( const MyEnums::UdpDatagramType dgType )
+{
+    udpDatagramType = dgType;
+}
+
 void QThreadPoolTask::FreeByteArray( bool bFeedback )
 {
     if ( NULL != pByteData && !bFeedback ) {
@@ -48,6 +53,7 @@ void QThreadPoolTask::PostThreadPoolFeedbackEvent( bool bFeedback )
     if ( !bTcpTask ) { // Udp Task
         hash.insertMulti( MyEnums::NetworkParamUdpSenderIP, strTargetIP );
         hash.insertMulti( MyEnums::NetworkParamUdpSenderPort, nTargetPort );
+        hash.insertMulti( MyEnums::NetworkParamUdpDatagramType, udpDatagramType );
     }
 
     pEventParams->enqueue( hash );

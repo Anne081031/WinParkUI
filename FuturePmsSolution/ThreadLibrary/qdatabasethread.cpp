@@ -6,6 +6,7 @@ QDatabaseThread::QDatabaseThread(QObject *parent) :
 {
     setObjectName( "QDatabaseThread" );
     OutputMsg( QString( " Created" ) );
+    bTcpTask = true;
     pDatabaseGenerator = QDatabaseGenerator::GetSingleton( );
 }
 
@@ -72,6 +73,11 @@ void QDatabaseThread::ProcessCrudEvent( MyDataStructs::PQQueueEventParams pEvent
     QMyDatabase* pDatabase = pDatabaseGenerator->GeneratorDatabaseInstance( true );
     QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteData, pSenderThread, pPeerSocket,
                                                            pDatabase, bTcpTask, strSenderIP, nSenderPort );
+
+    if ( !bTcpTask ) {
+        varData = hash.value( MyEnums::NetworkParamUdpDatagramType );
+        pTask->SetUdpDatagramType( ( MyEnums::UdpDatagramType ) varData.toInt( ) );
+    }
     dbThreadPool.start( pTask );
 }
 

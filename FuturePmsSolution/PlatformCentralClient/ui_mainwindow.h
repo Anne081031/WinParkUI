@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jul 19 11:06:01 2012
+** Created: Fri Jul 20 10:08:44 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -42,6 +42,8 @@ public:
     QPushButton *pushButton_8;
     QPushButton *pushButton_9;
     QPushButton *pushButton_10;
+    QPushButton *pushButton_11;
+    QPushButton *pushButton_12;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -89,6 +91,12 @@ public:
         pushButton_10 = new QPushButton(centralWidget);
         pushButton_10->setObjectName(QString::fromUtf8("pushButton_10"));
         pushButton_10->setGeometry(QRect(260, 120, 75, 23));
+        pushButton_11 = new QPushButton(centralWidget);
+        pushButton_11->setObjectName(QString::fromUtf8("pushButton_11"));
+        pushButton_11->setGeometry(QRect(340, 120, 81, 23));
+        pushButton_12 = new QPushButton(centralWidget);
+        pushButton_12->setObjectName(QString::fromUtf8("pushButton_12"));
+        pushButton_12->setGeometry(QRect(430, 120, 91, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -118,7 +126,9 @@ public:
         pushButton_7->setText(QApplication::translate("MainWindow", "\345\273\272\347\272\277\347\250\213", 0, QApplication::UnicodeUTF8));
         pushButton_8->setText(QApplication::translate("MainWindow", "UDP Thread", 0, QApplication::UnicodeUTF8));
         pushButton_9->setText(QApplication::translate("MainWindow", "UDP Listener", 0, QApplication::UnicodeUTF8));
-        pushButton_10->setText(QApplication::translate("MainWindow", "Send Data", 0, QApplication::UnicodeUTF8));
+        pushButton_10->setText(QApplication::translate("MainWindow", "Udp Unicast", 0, QApplication::UnicodeUTF8));
+        pushButton_11->setText(QApplication::translate("MainWindow", "UDP Broadcast", 0, QApplication::UnicodeUTF8));
+        pushButton_12->setText(QApplication::translate("MainWindow", "UDP Multicast", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

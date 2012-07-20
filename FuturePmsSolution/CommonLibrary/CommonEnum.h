@@ -96,6 +96,7 @@ namespace MyEnums {
         NetworkParamSocket,
         NetworkParamUdpSenderIP,
         NetworkParamUdpSenderPort,
+        NetworkParamUdpDatagramType,
         NetworkParamSenderThread
     };
 

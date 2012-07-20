@@ -93,6 +93,7 @@ void QUdpSenderThread::ProcessBroadcastDatagramEvent( MyDataStructs::PQQueueEven
     QByteArray* pByteArray = ( QByteArray* ) nBytePointer;
 
     network.UdpBroadcastDatagram( pUdpClientSocket, *pByteArray, nPort );
+    msleep( 100 );
 
     delete pByteArray;
 }
@@ -114,8 +115,12 @@ void QUdpSenderThread::ProcessReceiveDatagramEvent( MyDataStructs::PQQueueEventP
     quint32 nBytePointer = varData.toUInt( );
     QByteArray* pByteArray = ( QByteArray* ) nBytePointer;
 
+    int nDgType = *( ( qint32* ) pByteArray->data( ) );
+    pByteArray->remove( 0, sizeof ( qint32 ) );
+    MyEnums::UdpDatagramType dgType = ( MyEnums::UdpDatagramType ) nDgType;
+
     OutputMsg( "emit GetWholeUdpDatagram( ... )" );
-    emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, MyEnums::UdpUnicast );
+    emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, dgType );
 }
 
 void QUdpSenderThread::SetFeedbackThreadSocketDescriptor( )

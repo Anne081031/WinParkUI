@@ -99,6 +99,7 @@ void QUdpReceiverSocketThread::ProcessDatabaseData( QByteArray *pByteArray, cons
     hash.insertMulti( MyEnums::NetworkParamSocket, nSocketPointer );
     hash.insertMulti( MyEnums::NetworkParamUdpSenderIP, strSenderIP );
     hash.insertMulti( MyEnums::NetworkParamUdpSenderPort, nSenderPort );
+    hash.insertMulti( MyEnums::NetworkParamUdpDatagramType, udpDatagramType );
 
     pEventParams->enqueue( hash );
     PostDatabaseEvent( MyEnums::DatabaseCrud, pEventParams, pDatabaseThread );
@@ -107,6 +108,7 @@ void QUdpReceiverSocketThread::ProcessDatabaseData( QByteArray *pByteArray, cons
 void QUdpReceiverSocketThread::ProcessOtherData( QByteArray *pByteArray, const QString& strSenderIP, const quint16 nSenderPort )
 {
     QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteArray, this, pUdpServerSocket, NULL, false, strSenderIP, nSenderPort );
+    pTask->SetUdpDatagramType( udpDatagramType );
     peerThreadPool.start( pTask );
 }
 
@@ -151,6 +153,13 @@ void QUdpReceiverSocketThread::ProcessThreadPoolFeedbackEvent( MyDataStructs::PQ
 
     varData = hash.value( MyEnums::NetworkParamUdpSenderPort );
     quint16 nSenderPort = ( quint16 ) varData.toUInt( );
+
+    varData = hash.value( MyEnums::NetworkParamUdpDatagramType );
+    MyEnums::UdpDatagramType dgType = ( MyEnums::UdpDatagramType ) varData.toInt( );
+    const char* pDgType = ( const char* ) &dgType;
+    int nDataSize = sizeof ( MyEnums::UdpDatagramType );
+
+    pByteData->insert( 0, pDgType, nDataSize );
 
     network.UdpSendDatagram( pPeerSocket, *pByteData, hostAddr, nSenderPort ); // Feedback data to client endpoint
     msleep( 100 );

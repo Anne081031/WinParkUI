@@ -127,8 +127,24 @@ void MainWindow::on_pushButton_9_clicked()
 
 void MainWindow::on_pushButton_10_clicked()
 {
-    QString strText = "UDP Hello2\nTestÄãºÃÂð£¿";
+    QString strText = "UDP Unicast Hello2\nTestÄãºÃÂð£¿";
     QByteArray byteData = g_pPlatformGlobal->GetCommonFunctionObj().GetTextCodec( )->fromUnicode( strText );
 
     g_pPlatformGlobal->UdpClientSendData2AllThreads( byteData, MyEnums::UdpUnicast );
+}
+
+void MainWindow::on_pushButton_11_clicked()
+{
+    QString strText = "UDP Broadcast Hello2\nTestÄãºÃÂð£¿";
+    QByteArray byteData = g_pPlatformGlobal->GetCommonFunctionObj().GetTextCodec( )->fromUnicode( strText );
+
+    g_pPlatformGlobal->UdpClientSendData2AllThreads( byteData, MyEnums::UdpBroadcast  );
+}
+
+void MainWindow::on_pushButton_12_clicked()
+{
+    QString strText = "UDP Multicast Hello2\nTestÄãºÃÂð£¿";
+    QByteArray byteData = g_pPlatformGlobal->GetCommonFunctionObj().GetTextCodec( )->fromUnicode( strText );
+
+    g_pPlatformGlobal->UdpClientSendData2AllThreads( byteData, MyEnums::UdpMulticast );
 }
