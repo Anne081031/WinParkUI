@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Jul 20 10:08:44 2012
+** Created: Fri Jul 20 17:00:13 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -44,6 +44,10 @@ public:
     QPushButton *pushButton_10;
     QPushButton *pushButton_11;
     QPushButton *pushButton_12;
+    QPushButton *pushButton_13;
+    QPushButton *pushButton_14;
+    QPushButton *pushButton_15;
+    QPushButton *pushButton_16;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -52,7 +56,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(555, 557);
+        MainWindow->resize(996, 784);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         pushButton = new QPushButton(centralWidget);
@@ -78,10 +82,10 @@ public:
         pushButton_7->setGeometry(QRect(150, 80, 75, 23));
         listWidget = new QListWidget(centralWidget);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
-        listWidget->setGeometry(QRect(40, 391, 491, 121));
+        listWidget->setGeometry(QRect(60, 610, 491, 121));
         textEdit = new QTextEdit(centralWidget);
         textEdit->setObjectName(QString::fromUtf8("textEdit"));
-        textEdit->setGeometry(QRect(40, 230, 491, 151));
+        textEdit->setGeometry(QRect(60, 200, 811, 391));
         pushButton_8 = new QPushButton(centralWidget);
         pushButton_8->setObjectName(QString::fromUtf8("pushButton_8"));
         pushButton_8->setGeometry(QRect(60, 120, 75, 23));
@@ -90,17 +94,29 @@ public:
         pushButton_9->setGeometry(QRect(150, 120, 91, 23));
         pushButton_10 = new QPushButton(centralWidget);
         pushButton_10->setObjectName(QString::fromUtf8("pushButton_10"));
-        pushButton_10->setGeometry(QRect(260, 120, 75, 23));
+        pushButton_10->setGeometry(QRect(240, 160, 75, 23));
         pushButton_11 = new QPushButton(centralWidget);
         pushButton_11->setObjectName(QString::fromUtf8("pushButton_11"));
-        pushButton_11->setGeometry(QRect(340, 120, 81, 23));
+        pushButton_11->setGeometry(QRect(320, 160, 81, 23));
         pushButton_12 = new QPushButton(centralWidget);
         pushButton_12->setObjectName(QString::fromUtf8("pushButton_12"));
-        pushButton_12->setGeometry(QRect(430, 120, 91, 23));
+        pushButton_12->setGeometry(QRect(410, 160, 91, 23));
+        pushButton_13 = new QPushButton(centralWidget);
+        pushButton_13->setObjectName(QString::fromUtf8("pushButton_13"));
+        pushButton_13->setGeometry(QRect(60, 160, 75, 23));
+        pushButton_14 = new QPushButton(centralWidget);
+        pushButton_14->setObjectName(QString::fromUtf8("pushButton_14"));
+        pushButton_14->setGeometry(QRect(150, 160, 75, 23));
+        pushButton_15 = new QPushButton(centralWidget);
+        pushButton_15->setObjectName(QString::fromUtf8("pushButton_15"));
+        pushButton_15->setGeometry(QRect(250, 120, 121, 23));
+        pushButton_16 = new QPushButton(centralWidget);
+        pushButton_16->setObjectName(QString::fromUtf8("pushButton_16"));
+        pushButton_16->setGeometry(QRect(380, 120, 121, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 555, 19));
+        menuBar->setGeometry(QRect(0, 0, 996, 19));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QString::fromUtf8("mainToolBar"));
@@ -129,6 +145,10 @@ public:
         pushButton_10->setText(QApplication::translate("MainWindow", "Udp Unicast", 0, QApplication::UnicodeUTF8));
         pushButton_11->setText(QApplication::translate("MainWindow", "UDP Broadcast", 0, QApplication::UnicodeUTF8));
         pushButton_12->setText(QApplication::translate("MainWindow", "UDP Multicast", 0, QApplication::UnicodeUTF8));
+        pushButton_13->setText(QApplication::translate("MainWindow", "Join", 0, QApplication::UnicodeUTF8));
+        pushButton_14->setText(QApplication::translate("MainWindow", "Leave", 0, QApplication::UnicodeUTF8));
+        pushButton_15->setText(QApplication::translate("MainWindow", "Broadcast Listener", 0, QApplication::UnicodeUTF8));
+        pushButton_16->setText(QApplication::translate("MainWindow", "Multicast Listener", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

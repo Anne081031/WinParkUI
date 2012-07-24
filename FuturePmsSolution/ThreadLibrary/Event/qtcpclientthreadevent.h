@@ -3,10 +3,10 @@
 
 #include "QMyThreadEvent.h"
 
-class QTcpClientThreadEvent : public QMyThreadEvent
+class QTcpClientSocketThreadEvent : public QMyThreadEvent
 {
 public:
-    explicit QTcpClientThreadEvent( Type type );
+    explicit QTcpClientSocketThreadEvent( Type type );
 };
 
 #endif // QTCPCLIENTTHREADEVENT_H

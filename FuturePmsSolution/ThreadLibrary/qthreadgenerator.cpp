@@ -10,21 +10,31 @@ QThreadGenerator::QThreadGenerator(QObject *parent) :
     qRegisterMetaType< QManipulateIniFile::LogTypes >( "QManipulateIniFile::LogTypes" );
     OutputMsg( QString( " Created" ) );
     nThreadReleaseTimerID = 0;
+    nDatabaseReleaseTimerID = 0;
 }
 
 void QThreadGenerator::timerEvent( QTimerEvent *event )
 {
-    if ( event->timerId( ) == nThreadReleaseTimerID ) {
-        QTcpPeerSocketThread::ReleaseThread( );
+    qint32 nTimerID = event->timerId( );
+    //
+    // In Main Thread
+    //
+    if ( nTimerID == nThreadReleaseTimerID ) {
+        //QTcpPeerSocketThread::ReleaseThread( );
+        PostEvent( MyEnums::ThreadFreeTcpPeerSocketThread, MyEnums::TcpPeerSocketThreadFreeCheck, NULL, QFreeTcpPeerSocketThread::GetSingleton( ) );
+    } else if ( nTimerID == nDatabaseReleaseTimerID ) {
+        PostEvent( MyEnums::ThreadFreeDatabaseObjectThread, MyEnums::DatabaseObjectFreeCheck, NULL, QFreeDatabaseObjectThread::GetSingleton( ) );
     }
 }
 
-void QThreadGenerator::ControlTimer( const bool bStart, const int nInterval )
+void QThreadGenerator::ControlTimer( const bool bStart, const int nPeerThreadInterval, const int nDatabaseThreadInterval )
 {
     if ( bStart ) {
-        nThreadReleaseTimerID = startTimer( nInterval );
+        nThreadReleaseTimerID = startTimer( nPeerThreadInterval );
+        nDatabaseReleaseTimerID = startTimer( nDatabaseThreadInterval );
     } else {
         killTimer( nThreadReleaseTimerID );
+        killTimer( nDatabaseReleaseTimerID );
     }
 }
 
@@ -107,6 +117,14 @@ void QThreadGenerator::PostEvent( MyEnums::ThreadType thread, MyEnums::EventType
         PostUdpClientEvent( event, pQueueEventParams, pReceiver );
         break;
 
+    case MyEnums::ThreadFreeTcpPeerSocketThread :
+        PostFreeTcpPeerSocketThreadEvent( event, pQueueEventParams, pReceiver );
+        break;
+
+    case MyEnums::ThreadFreeDatabaseObjectThread :
+        PostFreeTcpPeerSocketThreadEvent( event, pQueueEventParams, pReceiver );
+        break;
+
     case MyEnums::ThreadDatabase :
         break;
     }
@@ -119,7 +137,7 @@ void QThreadGenerator::PostTcpClientEvent( MyEnums::EventType event, MyDataStruc
         return;
     }
 
-    QTcpClientThreadEvent* pEvent = new QTcpClientThreadEvent( ( QEvent::Type ) event );
+    QTcpClientSocketThreadEvent* pEvent = new QTcpClientSocketThreadEvent( ( QEvent::Type ) event );
     pEvent->SetEventParams( pQueueEventParams );
 
     qApp->postEvent( pReceiver, pEvent );
@@ -132,7 +150,7 @@ void QThreadGenerator::PostLoggerEvent( MyEnums::EventType event, MyDataStructs:
         return;
     }
 
-    QLoggerEvent* pEvent = new QLoggerEvent( ( QEvent::Type ) event );
+    QLoggerThreadEvent* pEvent = new QLoggerThreadEvent( ( QEvent::Type ) event );
     pEvent->SetEventParams( pQueueEventParams );
 
     qApp->postEvent( pReceiver, pEvent );
@@ -158,7 +176,33 @@ void QThreadGenerator::PostUdpListenerEvent( MyEnums::EventType event, MyDataStr
         return;
     }
 
-    QUdpReceiverThreadEvent* pEvent = new QUdpReceiverThreadEvent( ( QEvent::Type ) event );
+    QUdpReceiverSocketThreadEvent* pEvent = new QUdpReceiverSocketThreadEvent( ( QEvent::Type ) event );
+    pEvent->SetEventParams( pQueueEventParams );
+
+    qApp->postEvent( pReceiver, pEvent );
+}
+
+void QThreadGenerator::PostFreeTcpPeerSocketThreadEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver )
+{
+    bool bEvent = ( ( MyEnums::FreeTcpPeerSocketThreadEventStart < event ) && ( MyEnums::FreeTcpPeerSocketThreadEventEnd> event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
+        return;
+    }
+
+    QFreeTcpPeerSocketThreadEvent* pEvent = new QFreeTcpPeerSocketThreadEvent( ( QEvent::Type ) event );
+    pEvent->SetEventParams( pQueueEventParams );
+
+    qApp->postEvent( pReceiver, pEvent );
+}
+
+void QThreadGenerator::PostFreeDatabaseObjectThreadEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver )
+{
+    bool bEvent = ( ( MyEnums::DatabaseConnectionPoolEventStart < event ) && ( MyEnums::DatabaseConnectionPoolEventEnd> event ) ) || ( MyEnums::ThreadExit == event );
+    if ( !bEvent ) {
+        return;
+    }
+
+    QFreeDatabaseObjectThreadEvent* pEvent = new QFreeDatabaseObjectThreadEvent( ( QEvent::Type ) event );
     pEvent->SetEventParams( pQueueEventParams );
 
     qApp->postEvent( pReceiver, pEvent );
@@ -192,7 +236,7 @@ void QThreadGenerator::PostTcpPeerEvent( MyEnums::EventType event, MyDataStructs
         return;
     }
 
-    QTcpPeerThreadEvent* pEvent = new QTcpPeerThreadEvent( ( QEvent::Type ) event );
+    QTcpPeerSocketThreadEvent* pEvent = new QTcpPeerSocketThreadEvent( ( QEvent::Type ) event );
     pEvent->SetEventParams( pQueueEventParams );
 
     qApp->postEvent( pReceiver, pEvent );
@@ -217,7 +261,7 @@ void QThreadGenerator::HandleAccept( int socketDescriptor )
     hash.insertMulti( 1, socketDescriptor );
     pEventParams->enqueue( hash );
 
-    PostTcpPeerEvent( MyEnums::TcpPeerCreateSocket, pEventParams, pReceiver);
+    PostTcpPeerEvent( MyEnums::TcpPeerCreateSocket, pEventParams, pReceiver );
 }
 
 void QThreadGenerator::HandlePeerThreadReleaseMyself( QTcpPeerSocketThread *pThread )

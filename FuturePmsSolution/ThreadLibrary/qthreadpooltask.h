@@ -13,13 +13,13 @@
 class QThreadPoolTask : public QRunnable
 {
 public:
-    QThreadPoolTask( QByteArray* pByteArray, QThread* pSender,
+    QThreadPoolTask( QByteArray* pByteArray, QThread* pSenderSocket, QThread* pSenderDatabase,
                      QAbstractSocket* pPeerSocket, QMyDatabase* pDatabase = NULL,
                      const bool bTcpTaskItem = true,
                      const QString& strSenderIP = QString( ), const quint16 nSenderPort = 0 );
     void run( );
 
-    static QThreadPoolTask* GetInstance( QByteArray* pByteArray, QThread* pSender,
+    static QThreadPoolTask* GetInstance( QByteArray* pByteArray, QThread* pSenderSocket, QThread* pSenderDatabase,
                                          QAbstractSocket* pPeerSocket, QMyDatabase* pDatabase = NULL,
                                          const bool bTcpTaskItem = true,
                                          const QString& strSenderIP = QString( ), const quint16 nSenderPort = 0 );
@@ -28,13 +28,17 @@ public:
 
 private:
     void PostThreadPoolFeedbackEvent( bool bFeedback );
+    void Post2SocketThread( );
+    void Post2DatabaseThread( );
+
     bool ProcessDatabaseTask( );
     bool ProcessOtherTask( );
     inline void FreeByteArray( bool bFeedback );
 
 private:
     QByteArray* pByteData;
-    QThread* pSenderThread;
+    QThread* pSenderSocketThread;
+    QThread* pSenderDatabaseThread;
     QAbstractSocket* pFeedbackSocket;
     QMyDatabase* pMyDatabase;
     bool bTcpTask;

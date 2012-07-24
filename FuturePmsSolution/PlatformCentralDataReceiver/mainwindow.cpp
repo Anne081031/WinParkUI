@@ -45,3 +45,13 @@ void MainWindow::on_pushButton_5_clicked()
 {
     g_pPlatformGlobal->CreateUdpMulticastListenerThread( QManipulateIniFile::PlatformCentralServer, true );
 }
+
+void MainWindow::on_pushButton_6_clicked()
+{
+    g_pPlatformGlobal->UdpOperateAllMulticastGroups( true );
+}
+
+void MainWindow::on_pushButton_7_clicked()
+{
+    g_pPlatformGlobal->UdpOperateAllMulticastGroups( false );
+}

@@ -78,7 +78,7 @@ void QLoggerThread::ProcessWriteLogEvent( MyDataStructs::PQQueueEventParams pEve
 
 void QLoggerThread::customEvent( QEvent *event )
 {
-    QLoggerEvent* pEvent = ( QLoggerEvent* ) event;
+    QLoggerThreadEvent* pEvent = ( QLoggerThreadEvent* ) event;
     MyEnums::EventType type = ( MyEnums::EventType ) pEvent->type( );
     MyDataStructs::PQQueueEventParams pEventParams = pEvent->GetEventParams( );
 

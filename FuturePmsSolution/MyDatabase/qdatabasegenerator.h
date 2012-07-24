@@ -5,13 +5,15 @@
 #include "qsqlserver.h"
 #include "MyDatabase_global.h"
 
+#include "../CommonLibrary/CommonEnum.h"
+
 class MYDATABASESHARED_EXPORT QDatabaseGenerator : public QObject
 {
     Q_OBJECT
 public:
     static QDatabaseGenerator* GetSingleton( );
 
-    QMyDatabase* GeneratorDatabaseInstance( bool bSQLServer );
+    QMyDatabase* GeneratorDatabaseInstance( const MyEnums::DatabaseType dbType );
 
 protected:
     explicit QDatabaseGenerator(QObject *parent = 0);

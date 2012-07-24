@@ -3,10 +3,10 @@
 
 #include "qmythreadevent.h"
 
-class QUdpReceiverThreadEvent : public QMyThreadEvent
+class QUdpReceiverSocketThreadEvent : public QMyThreadEvent
 {
 public:
-    QUdpReceiverThreadEvent( Type type );
+    QUdpReceiverSocketThreadEvent( Type type );
 };
 
 #endif // QUDPRECEIVERTHREADEVENT_H

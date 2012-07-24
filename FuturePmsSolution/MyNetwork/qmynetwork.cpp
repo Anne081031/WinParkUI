@@ -22,6 +22,7 @@ void QMyNetwork::HandleGetWholeTcpStreamData( QTcpSocket* pPeerSocket, void *pBy
 
 void QMyNetwork::HandleGetWholeUdpDatagram( void *pByteArray, QString strSenderIP, quint16 nSenderPort )
 {
+    OutputMsg( strSenderIP + ":" + QString::number( nSenderPort ) );
     OutputMsg( "Sender:" + sender( )->objectName( ) + ":emit GetWholeUdpDatagram( ... )" );
     emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort );
 }

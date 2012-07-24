@@ -3,6 +3,9 @@
 QUdpFeedbackThread::QUdpFeedbackThread( QThread* pReceiver, QObject *parent ) :
     QMyBaseThread( parent )
 {
+    setObjectName( "QUdpFeedbackThread" );
+    OutputMsg( QString( " Created" ) );
+
     pByteArray = NULL;
     pReceiverThread = pReceiver;
     pUdpClientSocket = NULL;
@@ -46,10 +49,15 @@ void QUdpFeedbackThread::HandleSendFeedbackData( void *pByteArray, QString sende
 void QUdpFeedbackThread::run( )
 {
     while ( true ) {
-        if ( -1 != pUdpClientSocket->socketDescriptor( ) &&
-             pUdpClientSocket->hasPendingDatagrams( ) ) {
-            ReadFeedbackData( );
+        forever {
+            if (  !pUdpClientSocket->hasPendingDatagrams( ) ) {
+                usleep( 100 );
+            } else {
+                break;
+            }
         }
+
+        ReadFeedbackData( );
     }
 }
 
@@ -69,12 +77,13 @@ void QUdpFeedbackThread::ReadFeedbackData( )
         pByteArray->append( *pByteDatagram );
     }
 
-    QString strIP = senderAddr.toString( );
-    ProcessFeedbackData( pByteArray, strIP, senderPort );
-    //emit SendFeedbackData( pByteArray, strIP, senderPort  );
-    OutputMsg( QString( *pByteArray ) );
+    if ( 0 < pByteArray->length( ) ) {
+        QString strIP = senderAddr.toString( );
+        ProcessFeedbackData( pByteArray, strIP, senderPort );
+        //emit SendFeedbackData( pByteArray, strIP, senderPort  );
 
-    pByteArray = NULL;
+        pByteArray = NULL;
+    }
 
     delete pByteDatagram;
 }
@@ -87,7 +96,7 @@ void QUdpFeedbackThread::InitializeSubThread( )
     }
 
     connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
-    //connect( &network, SIGNAL( GetWholeUdpDatagram( void*, QString,quint16 ) ), this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
+    connect( &network, SIGNAL( GetWholeUdpDatagram( void*, QString,quint16 ) ), this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
 }
 
 QUdpFeedbackThread* QUdpFeedbackThread::GetInstance( QThread* pReceiver )
@@ -126,4 +135,11 @@ void QUdpFeedbackThread::PostUdpReceiveEvent( MyEnums::EventType event, MyDataSt
     pEvent->SetEventParams( pQueueEventParams );
 
     qApp->postEvent( pReceiver, pEvent );
+}
+
+void QUdpFeedbackThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort )
+{
+    OutputMsg( strSenderIP + ":" + QString::number( nSenderPort ) );
+    OutputMsg( "Sender:" + sender( )->objectName( ) + "GetWholeUdpDatagram( ... )" );
+    emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort );
 }

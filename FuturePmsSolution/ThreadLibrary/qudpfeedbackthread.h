@@ -13,6 +13,7 @@ public:
     ~QUdpFeedbackThread( );
 
     void SendSetSocketDescriptorSignal( int nSocket );
+    HANDLE GetFeedbackThreadHandle( );
 
 protected:
     explicit QUdpFeedbackThread( QThread* pReceiver, QObject *parent = 0 );
@@ -35,12 +36,14 @@ private:
 signals:
     void SetSocketDescriptor( int nSocket );
     void SendFeedbackData( void* pByteArray, QString senderIP, quint16 senderPort );
+    void GetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort );
 
 public slots:
     void HandleSetSocketDescriptor( int nSocket );
 
 private slots:
     void HandleSendFeedbackData( void* pByteArray, QString senderIP, quint16 senderPort );
+    void HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort );
 
 };
 

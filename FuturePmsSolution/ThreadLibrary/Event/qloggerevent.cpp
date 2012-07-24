@@ -1,11 +1,11 @@
 #include "qloggerevent.h"
 
-QLoggerEvent::QLoggerEvent( Type type ) : QMyThreadEvent( type )
+QLoggerThreadEvent::QLoggerThreadEvent( Type type ) : QMyThreadEvent( type )
 {
 
 }
 
-QLoggerEvent::~QLoggerEvent( )
+QLoggerThreadEvent::~QLoggerThreadEvent( )
 {
 
 }

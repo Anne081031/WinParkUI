@@ -44,8 +44,11 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_pushButton_2_clicked()
 {
+    //g_pPlatformGlobal->StartupThreadExit(
+    //            g_pPlatformGlobal->GetThreadGenerator( ).GenerateLogThread( ), MyEnums::ThreadLogger );
+
     g_pPlatformGlobal->StartupThreadExit(
-                g_pPlatformGlobal->GetThreadGenerator( ).GenerateLogThread( ), MyEnums::ThreadLogger );
+                g_pPlatformGlobal->GetUdpClientThreadHash( ).values( ).at( 0 ), MyEnums::ThreadUdpClient );
 }
 
 void MainWindow::on_pushButton_3_clicked()
@@ -117,7 +120,7 @@ void MainWindow::HandleParseUdpData( QString strSenderIP, quint16 nSenderPort, Q
 
 void MainWindow::on_pushButton_8_clicked()
 {
-    g_pPlatformGlobal->CreateUdpClientThread( QManipulateIniFile::PlatformCentralClient );
+    g_pPlatformGlobal->CreateUdpClientThread( QManipulateIniFile::PlatformCentralClient, true );
 }
 
 void MainWindow::on_pushButton_9_clicked()
@@ -147,4 +150,24 @@ void MainWindow::on_pushButton_12_clicked()
     QByteArray byteData = g_pPlatformGlobal->GetCommonFunctionObj().GetTextCodec( )->fromUnicode( strText );
 
     g_pPlatformGlobal->UdpClientSendData2AllThreads( byteData, MyEnums::UdpMulticast );
+}
+
+void MainWindow::on_pushButton_13_clicked()
+{
+    g_pPlatformGlobal->UdpOperateAllMulticastGroups( true );
+}
+
+void MainWindow::on_pushButton_14_clicked()
+{
+    g_pPlatformGlobal->UdpOperateAllMulticastGroups( false );
+}
+
+void MainWindow::on_pushButton_15_clicked()
+{
+    g_pPlatformGlobal->CreateUdpBroadcastListenerThread( QManipulateIniFile::PlatformCentralClient, false );
+}
+
+void MainWindow::on_pushButton_16_clicked()
+{
+    g_pPlatformGlobal->CreateUdpMulticastListenerThread( QManipulateIniFile::PlatformCentralClient, false );
 }

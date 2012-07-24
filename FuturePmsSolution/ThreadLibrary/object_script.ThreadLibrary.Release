@@ -18,6 +18,10 @@ INPUT(
 ./release\qudpsenderthreadevent.o
 ./release\qudpsenderthread.o
 ./release\qudpfeedbackthread.o
+./release\qfreetcppeersocketthread.o
+./release\qfreetcppeersocketthreadevent.o
+./release\qfreedatabaseobjectthread.o
+./release\qfreedatabaseobjectthreadevent.o
 ./release\moc_qthreadgenerator.o
 ./release\moc_qloggerthread.o
 ./release\moc_qlistenerthread.o
@@ -28,4 +32,6 @@ INPUT(
 ./release\moc_qmybasethread.o
 ./release\moc_qudpsenderthread.o
 ./release\moc_qudpfeedbackthread.o
+./release\moc_qfreetcppeersocketthread.o
+./release\moc_qfreedatabaseobjectthread.o
 );

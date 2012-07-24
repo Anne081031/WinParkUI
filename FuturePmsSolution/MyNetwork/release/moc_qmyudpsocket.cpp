@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmyudpsocket.h'
 **
-** Created: Thu Jul 19 11:28:36 2012
+** Created: Tue Jul 24 13:25:06 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

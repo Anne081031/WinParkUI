@@ -51,7 +51,6 @@ Release {
 
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
         mainwindow.cpp
 

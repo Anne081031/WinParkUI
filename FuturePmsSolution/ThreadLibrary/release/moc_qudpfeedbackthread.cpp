@@ -1,0 +1,134 @@
+/****************************************************************************
+** Meta object code from reading C++ file 'qudpfeedbackthread.h'
+**
+** Created: Tue Jul 24 13:26:27 2012
+**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
+**
+** WARNING! All changes made in this file will be lost!
+*****************************************************************************/
+
+#include "../qudpfeedbackthread.h"
+#if !defined(Q_MOC_OUTPUT_REVISION)
+#error "The header file 'qudpfeedbackthread.h' doesn't include <QObject>."
+#elif Q_MOC_OUTPUT_REVISION != 63
+#error "This file was generated using the moc from 4.8.1. It"
+#error "cannot be used with the include files from this version of Qt."
+#error "(The moc has changed too much.)"
+#endif
+
+QT_BEGIN_MOC_NAMESPACE
+static const uint qt_meta_data_QUdpFeedbackThread[] = {
+
+ // content:
+       6,       // revision
+       0,       // classname
+       0,    0, // classinfo
+       6,   14, // methods
+       0,    0, // properties
+       0,    0, // enums/sets
+       0,    0, // constructors
+       0,       // flags
+       3,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      28,   20,   19,   19, 0x05,
+      84,   53,   19,   19, 0x05,
+     159,  124,   19,   19, 0x05,
+
+ // slots: signature, parameters, type, tag, flags
+     202,   20,   19,   19, 0x0a,
+     233,   53,   19,   19, 0x08,
+     279,  124,   19,   19, 0x08,
+
+       0        // eod
+};
+
+static const char qt_meta_stringdata_QUdpFeedbackThread[] = {
+    "QUdpFeedbackThread\0\0nSocket\0"
+    "SetSocketDescriptor(int)\0"
+    "pByteArray,senderIP,senderPort\0"
+    "SendFeedbackData(void*,QString,quint16)\0"
+    "pByteArray,strSenderIP,nSenderPort\0"
+    "GetWholeUdpDatagram(void*,QString,quint16)\0"
+    "HandleSetSocketDescriptor(int)\0"
+    "HandleSendFeedbackData(void*,QString,quint16)\0"
+    "HandleGetWholeUdpDatagram(void*,QString,quint16)\0"
+};
+
+void QUdpFeedbackThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+{
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        Q_ASSERT(staticMetaObject.cast(_o));
+        QUdpFeedbackThread *_t = static_cast<QUdpFeedbackThread *>(_o);
+        switch (_id) {
+        case 0: _t->SetSocketDescriptor((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: _t->SendFeedbackData((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        case 2: _t->GetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        case 3: _t->HandleSetSocketDescriptor((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->HandleSendFeedbackData((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        case 5: _t->HandleGetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        default: ;
+        }
+    }
+}
+
+const QMetaObjectExtraData QUdpFeedbackThread::staticMetaObjectExtraData = {
+    0,  qt_static_metacall 
+};
+
+const QMetaObject QUdpFeedbackThread::staticMetaObject = {
+    { &QMyBaseThread::staticMetaObject, qt_meta_stringdata_QUdpFeedbackThread,
+      qt_meta_data_QUdpFeedbackThread, &staticMetaObjectExtraData }
+};
+
+#ifdef Q_NO_DATA_RELOCATION
+const QMetaObject &QUdpFeedbackThread::getStaticMetaObject() { return staticMetaObject; }
+#endif //Q_NO_DATA_RELOCATION
+
+const QMetaObject *QUdpFeedbackThread::metaObject() const
+{
+    return QObject::d_ptr->metaObject ? QObject::d_ptr->metaObject : &staticMetaObject;
+}
+
+void *QUdpFeedbackThread::qt_metacast(const char *_clname)
+{
+    if (!_clname) return 0;
+    if (!strcmp(_clname, qt_meta_stringdata_QUdpFeedbackThread))
+        return static_cast<void*>(const_cast< QUdpFeedbackThread*>(this));
+    return QMyBaseThread::qt_metacast(_clname);
+}
+
+int QUdpFeedbackThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+{
+    _id = QMyBaseThread::qt_metacall(_c, _id, _a);
+    if (_id < 0)
+        return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        if (_id < 6)
+            qt_static_metacall(this, _c, _id, _a);
+        _id -= 6;
+    }
+    return _id;
+}
+
+// SIGNAL 0
+void QUdpFeedbackThread::SetSocketDescriptor(int _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void QUdpFeedbackThread::SendFeedbackData(void * _t1, QString _t2, quint16 _t3)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void QUdpFeedbackThread::GetWholeUdpDatagram(void * _t1, QString _t2, quint16 _t3)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
+}
+QT_END_MOC_NAMESPACE

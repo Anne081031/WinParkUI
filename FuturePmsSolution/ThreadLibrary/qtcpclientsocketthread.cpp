@@ -99,7 +99,7 @@ void QTcpClientSocketThread::ProcessDisconnectEvent( MyDataStructs::PQQueueEvent
 
 void QTcpClientSocketThread::customEvent( QEvent *event )
 {
-    QTcpClientThreadEvent* pEvent = ( QTcpClientThreadEvent* ) event;
+    QTcpClientSocketThreadEvent* pEvent = ( QTcpClientSocketThreadEvent* ) event;
     MyEnums::EventType type = ( MyEnums::EventType ) pEvent->type( );
     MyDataStructs::PQQueueEventParams pEventParams = pEvent->GetEventParams( );
 

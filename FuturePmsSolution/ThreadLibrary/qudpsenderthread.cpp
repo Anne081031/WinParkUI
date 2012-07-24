@@ -50,8 +50,8 @@ void QUdpSenderThread::InitializeSubThread( )
         OutputMsg( objectName( ) );
     }
 
-    connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
-    connect( &network, SIGNAL( GetWholeUdpDatagram( void*, QString,quint16 ) ), this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
+    bool bRet = connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
+    bRet = connect( &network, SIGNAL( GetWholeUdpDatagram( void*, QString, quint16 ) ), this, SLOT( HandleGetWholeUdpDatagram( void*, QString, quint16 ) ) );
 
     //
     // Feedback data thread;
@@ -74,6 +74,7 @@ void QUdpSenderThread::HandleMessage( void *pstrMsg, QManipulateIniFile::LogType
 
 void QUdpSenderThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort )
 {
+    OutputMsg( strSenderIP + ":" + QString::number( nSenderPort ) );
     OutputMsg( "Sender:" + sender( )->objectName( ) + "GetWholeUdpDatagram( ... )" );
     emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, MyEnums::UdpUnicast );
 }
@@ -119,6 +120,7 @@ void QUdpSenderThread::ProcessReceiveDatagramEvent( MyDataStructs::PQQueueEventP
     pByteArray->remove( 0, sizeof ( qint32 ) );
     MyEnums::UdpDatagramType dgType = ( MyEnums::UdpDatagramType ) nDgType;
 
+    OutputMsg( strSenderIP + ":" + QString::number( nSenderPort ) );
     OutputMsg( "emit GetWholeUdpDatagram( ... )" );
     emit GetWholeUdpDatagram( pByteArray, strSenderIP, nSenderPort, dgType );
 }
@@ -171,7 +173,6 @@ void QUdpSenderThread::customEvent( QEvent *event )
     } else if ( MyEnums::UdpClientReceiveDatagram == type ) {
         ProcessReceiveDatagramEvent( pEventParams );
     } else if ( MyEnums::ThreadExit == type ) {
-       pFeedbackThread->terminate( );
-       LaunchThreadExit( );
+       //LaunchThreadExit( );
     }
 }

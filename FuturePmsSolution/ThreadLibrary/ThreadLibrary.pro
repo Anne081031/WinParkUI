@@ -1,5 +1,7 @@
 QT       += core gui network
 
+DEFINES += _WIN32_WINDOWS=0x0490
+
 MYTARGET = $$quote( ThreadLibrary%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
 MYDESTLIB = $$quote( %1/lib%2%3.a )
@@ -44,7 +46,11 @@ SOURCES += qthreadgenerator.cpp \
     Event/qudpreceiverthreadevent.cpp \
     Event/qudpsenderthreadevent.cpp \
     qudpsenderthread.cpp \
-    qudpfeedbackthread.cpp
+    qudpfeedbackthread.cpp \
+    qfreetcppeersocketthread.cpp \
+    Event/qfreetcppeersocketthreadevent.cpp \
+    qfreedatabaseobjectthread.cpp \
+    Event/qfreedatabaseobjectthreadevent.cpp
 
 HEADERS += ThreadLibrary_global.h \
     qthreadgenerator.h \
@@ -66,7 +72,11 @@ HEADERS += ThreadLibrary_global.h \
     Event/qudpreceiverthreadevent.h \
     Event/qudpsenderthreadevent.h \
     qudpsenderthread.h \
-    qudpfeedbackthread.h
+    qudpfeedbackthread.h \
+    qfreetcppeersocketthread.h \
+    Event/qfreetcppeersocketthreadevent.h \
+    qfreedatabaseobjectthread.h \
+    Event/qfreedatabaseobjectthreadevent.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

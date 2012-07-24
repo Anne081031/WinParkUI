@@ -83,6 +83,9 @@ public:
     void UdpMulticastListenerStartup( QThread* pReceiver, const QString& strPort );
     void UdpMulticastListenerAllStartup(  );
 
+    void UdpOperateMulticastGroup( const bool bJoin, const QString& strIpPort );
+    void UdpOperateAllMulticastGroups( const bool bJoin );
+
 protected:
     explicit QPlatformGlobal( );
 

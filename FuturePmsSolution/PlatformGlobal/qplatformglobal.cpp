@@ -621,15 +621,19 @@ void QPlatformGlobal::GetNetworkParams(  const QManipulateIniFile::IniFileName i
 
 void QPlatformGlobal::ControlTimer( const QManipulateIniFile::IniFileName iniFile, const bool bStart )
 {
-    int nInterval = 0;
+    int nPeerThreadInterval = 0;
+    int nDatabaseThreadInterval = 0;
 
     if ( bStart ) {
         QVariant var;
         manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniThread, QManipulateIniFile::ThreadPeerReleaseInterval, false, var );
-        nInterval = var.toInt( ) * 60 * 1000;
+        nPeerThreadInterval = var.toInt( ) * 60 * 1000;
+
+        manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniThread, QManipulateIniFile::DatabaseObjectReleaseInterval, false, var );
+        nDatabaseThreadInterval = var.toInt( ) * 60 * 1000;
     }
 
-    pGenerator->ControlTimer( bStart, nInterval );
+    pGenerator->ControlTimer( bStart, nPeerThreadInterval, nDatabaseThreadInterval );
 }
 
 void QPlatformGlobal::CreateTcpClientThread( const QManipulateIniFile::IniFileName iniFile, const bool bConnect2Host )
@@ -898,5 +902,36 @@ void QPlatformGlobal::CreateTcpListenerThread( const QManipulateIniFile::IniFile
         if ( bStartupListener ) {
             TcpListenerStartup( pThreadInstance, strPort, strMaxConn );
         }
+    }
+}
+
+void QPlatformGlobal::UdpOperateMulticastGroup( const bool bJoin, const QString& strIpPort )
+{
+    MyDataStructs::QStringThread& hashThreads = GetUdpMulticastListenerThreadHash( );
+    QStringList lstIpPort = strIpPort.split( strColonSeperator );
+
+    if ( 0 == lstIpPort.count( ) ) {
+        return;
+    }
+
+    const QString& strIP = lstIpPort.at( 0 );
+    QThread* pThread = hashThreads.value( strIpPort );
+
+    MyDataStructs::PQQueueEventParams pEventParams = new MyDataStructs::QQueueEventParams;
+    MyDataStructs::QEventMultiHash hash;
+    hash.insertMulti( MyEnums::NetworkParamIP, strIP );
+
+    pEventParams->enqueue( hash );
+    pGenerator->PostEvent( MyEnums::ThreadUdpListener,
+                           bJoin ? MyEnums::UdpServerJoinMulticast : MyEnums::UdpServerLeaveMulticast,
+                           pEventParams, pThread );
+}
+
+void QPlatformGlobal::UdpOperateAllMulticastGroups( const bool bJoin )
+{
+    MyDataStructs::QMyStringList& lstParams = GetUdpMulticastListenerIpPortList( );
+
+    foreach ( const QString& strParam, lstParams ) {
+        UdpOperateMulticastGroup( bJoin, strParam );
     }
 }

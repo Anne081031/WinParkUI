@@ -43,10 +43,10 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>60</y>
-      <width>311</width>
-      <height>192</height>
+      <x>20</x>
+      <y>91</y>
+      <width>451</width>
+      <height>161</height>
      </rect>
     </property>
    </widget>
@@ -87,6 +87,32 @@
     </property>
     <property name="text">
      <string>UDP启动侦听</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Join</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_7">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>60</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Leave</string>
     </property>
    </widget>
   </widget>

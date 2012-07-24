@@ -49,7 +49,7 @@ private:
     MyDataStructs::QSocketMultiHash socketUsedHash;
     MyDataStructs::QSocketMultiHash socketUnusedHash;
     quint8 nThreadPeerSocketCount;
-    static QQueue< QTcpPeerSocketThread* > peerThreadQueue;
+    static MyDataStructs::QPointerQueue peerThreadQueue;
     static QMutex queueMutex;
 
 signals:

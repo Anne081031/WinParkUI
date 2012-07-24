@@ -15,12 +15,38 @@ QDatabaseGenerator* QDatabaseGenerator::GetSingleton( )
     return pGenerator;
 }
 
-QMyDatabase* QDatabaseGenerator::GeneratorDatabaseInstance( bool bSQLServer )
+QMyDatabase* QDatabaseGenerator::GeneratorDatabaseInstance( const MyEnums::DatabaseType dbType  )
 {
     QMyDatabase* pDatabase = NULL;
 
-    if ( bSQLServer ) {
+    switch ( dbType ) {
+    case MyEnums::DbMySQL :
+        break;
+
+    case MyEnums::DbSQLServer :
         pDatabase = QSqlServer::GetInstance( );
+        break;
+
+    case MyEnums::DbSybase :
+        break;
+
+    case MyEnums::DbOracle :
+        break;
+
+    case MyEnums::DbDB2 :
+        break;
+
+    case MyEnums::DbSQLlite :
+        break;
+
+    case MyEnums::DbBDB :
+        break;
+
+    case MyEnums::DbAccess :
+        break;
+
+    case MyEnums::DbPostgreSQL :
+        break;
     }
 
     return pDatabase;

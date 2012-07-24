@@ -43,7 +43,13 @@ quint64 QMyUdpSocket::SendDatagram( const QByteArray &byteData, const QHostAddre
 
 bool QMyUdpSocket::StartupUdpListening( const quint16 nPort )
 {
-    return bind( QHostAddress::Any, nPort, ShareAddress );
+    bool bRet = ( state( ) != BoundState );
+
+    if ( bRet ) {
+        bRet = bind( QHostAddress::Any, nPort, ShareAddress );
+    }
+
+    return bRet;
 }
 
 bool QMyUdpSocket::OperateMulticast( const QHostAddress &groupAddress, const bool bJoined )

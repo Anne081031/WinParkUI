@@ -60,7 +60,7 @@ void QUdpReceiverSocketThread::InitializeSubThread( )
 {
 
     if ( bServerEnd && NULL == pDatabaseThread ) {
-        pDatabaseThread = QDatabaseThread::GetSingleton( false );
+        pDatabaseThread = QDatabaseThread::GetSingleton(  );
     }
 
     if ( NULL == pUdpServerSocket ) {
@@ -107,13 +107,14 @@ void QUdpReceiverSocketThread::ProcessDatabaseData( QByteArray *pByteArray, cons
 
 void QUdpReceiverSocketThread::ProcessOtherData( QByteArray *pByteArray, const QString& strSenderIP, const quint16 nSenderPort )
 {
-    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteArray, this, pUdpServerSocket, NULL, false, strSenderIP, nSenderPort );
+    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteArray, this, NULL, pUdpServerSocket, NULL, false, strSenderIP, nSenderPort );
     pTask->SetUdpDatagramType( udpDatagramType );
     peerThreadPool.start( pTask );
 }
 
 void QUdpReceiverSocketThread::HandleGetWholeUdpDatagram( void* pByteArray, QString strSenderIP, quint16 nSenderPort )
 {
+    OutputMsg( strSenderIP + ":" + QString::number( nSenderPort ) );
     if ( NULL == pByteArray ) {
         return;
     }
@@ -252,7 +253,7 @@ void QUdpReceiverSocketThread::ProcessSendDatagramEvent( MyDataStructs::PQQueueE
 
 void QUdpReceiverSocketThread::customEvent( QEvent *event )
 {
-    QUdpReceiverThreadEvent* pEvent = ( QUdpReceiverThreadEvent* ) event;
+    QUdpReceiverSocketThreadEvent* pEvent = ( QUdpReceiverSocketThreadEvent* ) event;
     MyEnums::EventType type = ( MyEnums::EventType ) pEvent->type( );
     MyDataStructs::PQQueueEventParams pEventParams = pEvent->GetEventParams( );
 

@@ -1,5 +1,5 @@
 #include "qtcpclientthreadevent.h"
 
-QTcpClientThreadEvent::QTcpClientThreadEvent( Type type  ) : QMyThreadEvent( type )
+QTcpClientSocketThreadEvent::QTcpClientSocketThreadEvent( Type type  ) : QMyThreadEvent( type )
 {
 }

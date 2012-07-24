@@ -1,6 +1,6 @@
 #include "qtcppeerthreadevent.h"
 
-QTcpPeerThreadEvent::QTcpPeerThreadEvent( Type type ) :
+QTcpPeerSocketThreadEvent::QTcpPeerSocketThreadEvent( Type type ) :
     QMyThreadEvent( type )
 {
 }

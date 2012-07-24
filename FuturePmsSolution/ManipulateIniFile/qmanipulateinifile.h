@@ -48,10 +48,16 @@ public:
 
     enum IniFileSectionItem {
         /////////////////////////////////////// Database
+        DatabaseType,
         DatabaseHost,
         DatabasePort,
         DatabaseUser,
         DatabasePwd,
+        DatabaseSchema,
+        DatabaseThreadpoolMaxThreads,
+        DatabaseThreadpoolThreadExpire,
+        DatabaseObjectLifeTime,
+        DatabaseObjectReleaseInterval,
         ////////////////////////////////////////// Network
         NetworkTcpMaxConnection,
         NetworkTcpServerPort,

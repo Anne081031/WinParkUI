@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmynetwork.h'
 **
-** Created: Fri Jul 20 11:08:00 2012
+** Created: Tue Jul 24 13:32:52 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

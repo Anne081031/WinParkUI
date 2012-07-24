@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qudpfeedbackthread.h'
 **
-** Created: Fri Jul 20 11:16:02 2012
+** Created: Tue Jul 24 13:20:57 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,20 +23,22 @@ static const uint qt_meta_data_QUdpFeedbackThread[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       2,       // signalCount
+       3,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       28,   20,   19,   19, 0x05,
       84,   53,   19,   19, 0x05,
+     159,  124,   19,   19, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     124,   20,   19,   19, 0x0a,
-     155,   53,   19,   19, 0x08,
+     202,   20,   19,   19, 0x0a,
+     233,   53,   19,   19, 0x08,
+     279,  124,   19,   19, 0x08,
 
        0        // eod
 };
@@ -46,8 +48,11 @@ static const char qt_meta_stringdata_QUdpFeedbackThread[] = {
     "SetSocketDescriptor(int)\0"
     "pByteArray,senderIP,senderPort\0"
     "SendFeedbackData(void*,QString,quint16)\0"
+    "pByteArray,strSenderIP,nSenderPort\0"
+    "GetWholeUdpDatagram(void*,QString,quint16)\0"
     "HandleSetSocketDescriptor(int)\0"
     "HandleSendFeedbackData(void*,QString,quint16)\0"
+    "HandleGetWholeUdpDatagram(void*,QString,quint16)\0"
 };
 
 void QUdpFeedbackThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -58,8 +63,10 @@ void QUdpFeedbackThread::qt_static_metacall(QObject *_o, QMetaObject::Call _c, i
         switch (_id) {
         case 0: _t->SetSocketDescriptor((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 1: _t->SendFeedbackData((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
-        case 2: _t->HandleSetSocketDescriptor((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 3: _t->HandleSendFeedbackData((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        case 2: _t->GetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        case 3: _t->HandleSetSocketDescriptor((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: _t->HandleSendFeedbackData((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
+        case 5: _t->HandleGetWholeUdpDatagram((*reinterpret_cast< void*(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2])),(*reinterpret_cast< quint16(*)>(_a[3]))); break;
         default: ;
         }
     }
@@ -97,9 +104,9 @@ int QUdpFeedbackThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 6;
     }
     return _id;
 }
@@ -116,5 +123,12 @@ void QUdpFeedbackThread::SendFeedbackData(void * _t1, QString _t2, quint16 _t3)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
+}
+
+// SIGNAL 2
+void QUdpFeedbackThread::GetWholeUdpDatagram(void * _t1, QString _t2, quint16 _t3)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_END_MOC_NAMESPACE

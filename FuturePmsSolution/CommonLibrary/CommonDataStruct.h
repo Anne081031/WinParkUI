@@ -6,12 +6,14 @@
 #include <QTcpSocket>
 
 namespace MyDataStructs {
-    typedef QMultiHash< int, QVariant > QEventMultiHash, *PQEventMultiHash;
+    typedef QMultiHash< int, QVariant > QEventMultiHash, *PQEventMultiHash, QParamMultiHash;
     typedef QQueue< QEventMultiHash > QQueueEventParams, *PQQueueEventParams;
     typedef QList< QString > QMyStringList, *PQMyStringList;
     typedef QSet< QString > QMyStringSet, *PQMyStringSet;
     typedef QMultiHash< QString, QThread* > QStringThread, *PQStringThread;
     typedef QMultiHash< bool, QTcpSocket* > QSocketMultiHash; // true unused, false used
+    typedef QQueue< void* > QPointerQueue, *PQPointerQueue;
+    typedef QList< void* > QPointerList, *PQPointerList;
 
     typedef struct __sTableType {
         quint16 TabInOutRecord : 1;

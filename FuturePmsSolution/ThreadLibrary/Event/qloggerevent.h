@@ -3,11 +3,11 @@
 
 #include "qmythreadevent.h"
 
-class QLoggerEvent : public QMyThreadEvent
+class QLoggerThreadEvent : public QMyThreadEvent
 {
 public:
-    explicit QLoggerEvent( Type type );
-    ~QLoggerEvent( );
+    explicit QLoggerThreadEvent( Type type );
+    ~QLoggerThreadEvent( );
 
 };
 

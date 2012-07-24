@@ -19,7 +19,7 @@ public:
 
     QLoggerThread* GenerateLogThread( );
 
-    void ControlTimer( const bool bStart, const int nInterval = 0 );
+    void ControlTimer( const bool bStart, const int nPeerThreadInterval, const int nDatabaseThreadInterval );
 
     // Free qQueueEventParams in Event destructor
     void SendEvent( MyEnums::ThreadType thread, MyEnums::EventType event,
@@ -41,9 +41,13 @@ private:
     void PostUdpListenerEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
     void PostUdpClientEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
 
+    void PostFreeTcpPeerSocketThreadEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
+    void PostFreeDatabaseObjectThreadEvent( MyEnums::EventType event, MyDataStructs::PQQueueEventParams pQueueEventParams, QThread* pReceiver );
+
 private:
     static QThreadGenerator* pThreadGenerator;
     int nThreadReleaseTimerID;
+    int nDatabaseReleaseTimerID;
     
 signals:
     

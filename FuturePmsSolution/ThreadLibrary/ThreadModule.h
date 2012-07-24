@@ -8,5 +8,7 @@
 #include "qtcppeersocketthread.h"
 #include "qudpreceiversocketthread.h"
 #include "qudpsenderthread.h"
+#include "qfreetcppeersocketthread.h"
+#include "qfreedatabaseobjectthread.h"
 
 #endif // THREADMODULE_H

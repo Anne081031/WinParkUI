@@ -31,7 +31,7 @@ void QUdpClient::HandleError( QAbstractSocket::SocketError socketError )
 
 void QUdpClient::IncomingData( )
 {
-    OutputMsg( "Receive data" );
+    //OutputMsg( "Receive data" );
 
     if ( NULL == pByteArray ) {
         pByteArray = new QByteArray( );
@@ -40,6 +40,8 @@ void QUdpClient::IncomingData( )
     QHostAddress senderAddr;
     quint16 senderPort;
     GetUdpDatagram( senderAddr, senderPort );
+
+    OutputMsg( senderAddr.toString( ) + ":" + QString::number( senderPort ) );
 
     emit GetWholeUdpDatagram( pByteArray, senderAddr.toString( ), senderPort );
 

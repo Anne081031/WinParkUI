@@ -1,6 +1,6 @@
 #include "qtcppeersocketthread.h"
 
-QQueue< QTcpPeerSocketThread* > QTcpPeerSocketThread::peerThreadQueue;
+MyDataStructs::QPointerQueue QTcpPeerSocketThread::peerThreadQueue;
 QMutex QTcpPeerSocketThread::queueMutex;
 
 QTcpPeerSocketThread::QTcpPeerSocketThread(QObject *parent) :
@@ -38,16 +38,24 @@ bool QTcpPeerSocketThread::SignalConnected( )
 
 void QTcpPeerSocketThread::ReleaseThread( )
 {
+    QTcpPeerSocketThread* pPeerThread = NULL;
+
     queueMutex.lock( );
 
     bool bEmpty = peerThreadQueue.isEmpty( );
 
     if ( !bEmpty ) {
-        QList< QTcpPeerSocketThread* > lstThreads = peerThreadQueue.toSet( ).toList( );
-        foreach ( QTcpPeerSocketThread* pThread, lstThreads ) {
-            if ( pThread->MayRelease( ) ) {
+        MyDataStructs::QPointerList lstThreads = peerThreadQueue.toSet( ).toList( );
+        foreach ( void* pThread, lstThreads ) {
+            pPeerThread = ( QTcpPeerSocketThread* ) pThread;
+
+            if ( pPeerThread->MayRelease( ) ) {
                 peerThreadQueue.removeOne( pThread );
-                emit pThread->ReleaseMyself( pThread );
+                //emit pThread->ReleaseMyself( pThread ); post->MainThread->PeerThread
+
+                QTcpPeerSocketThreadEvent* pEvent = new QTcpPeerSocketThreadEvent( ( QEvent::Type ) MyEnums::ThreadExit );
+                pEvent->SetEventParams( NULL );
+                qApp->postEvent( pPeerThread, pEvent );
             }
         }
     }
@@ -71,7 +79,7 @@ QTcpPeerSocketThread* QTcpPeerSocketThread::GetInstance( bool& bSignalConnected 
 
     bEmpty = peerThreadQueue.isEmpty( );
     if ( !bEmpty ) {
-        pThreadInstance = peerThreadQueue.dequeue( );
+        pThreadInstance = ( QTcpPeerSocketThread* ) peerThreadQueue.dequeue( );
         OutputMsg( "peerThreadQueue.dequeue( )" );
     }
 
@@ -130,7 +138,7 @@ void QTcpPeerSocketThread::InitializeSubThread( )
     CreatePeerSocket( nThreadPeerSocketCount );
 
     if ( NULL == pDatabaseThread ) {
-        pDatabaseThread = QDatabaseThread::GetSingleton( true );
+        pDatabaseThread = QDatabaseThread::GetSingleton(  );
     }
 
     connect( &network, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
@@ -170,7 +178,7 @@ void QTcpPeerSocketThread::ProcessDatabaseData( QTcpSocket* pPeerSocket, QByteAr
 
 void QTcpPeerSocketThread::ProcessOtherData( QTcpSocket* pPeerSocket, QByteArray *pByteArray )
 {
-    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteArray, this, pPeerSocket );
+    QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteArray, this, NULL, pPeerSocket );
     peerThreadPool.start( pTask );
 }
 
@@ -304,7 +312,7 @@ void QTcpPeerSocketThread::ProcessCreateSocketEvent( MyDataStructs::PQQueueEvent
 
 void QTcpPeerSocketThread::customEvent( QEvent *event )
 {
-    QTcpPeerThreadEvent* pEvent = ( QTcpPeerThreadEvent* ) event;
+    QTcpPeerSocketThreadEvent* pEvent = ( QTcpPeerSocketThreadEvent* ) event;
     MyEnums::EventType type = ( MyEnums::EventType ) pEvent->type( );
     MyDataStructs::PQQueueEventParams pEventParams = pEvent->GetEventParams( );
 

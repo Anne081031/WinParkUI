@@ -17,8 +17,7 @@ namespace MyEnums {
         DbSQLlite,
         DbBDB,
         DbAccess,
-        DbPostgreSQL,
-        DbCount
+        DbPostgreSQL
     };
 
     enum ThreadType {
@@ -28,7 +27,9 @@ namespace MyEnums {
         ThreadTcpPeer,
         ThreadTcpClient,
         ThreadUdpClient,
-        ThreadDatabase
+        ThreadDatabase,
+        ThreadFreeTcpPeerSocketThread,
+        ThreadFreeDatabaseObjectThread
     };
 
     enum EventType {
@@ -67,8 +68,17 @@ namespace MyEnums {
         UdpClientReceiveDatagram,
         UdpClientEventEnd,
         //////////////////////////////////////////
+        FreeTcpPeerSocketThreadEventStart,
+        TcpPeerSocketThreadFreeCheck,
+        FreeTcpPeerSocketThreadEventEnd,
+        //////////////////////////////////////////
+        DatabaseConnectionPoolEventStart,
+        DatabaseObjectFreeCheck,
+        DatabaseConnectionPoolEventEnd,
+        //////////////////////////////////////////
         DatabaseEventStart,
         DatabaseCrud, // CRUD Operation / SP
+        DatabaseObjectEnqueue,
         DatabaseEventEnd,
         ThreadExit
     };
@@ -97,7 +107,8 @@ namespace MyEnums {
         NetworkParamUdpSenderIP,
         NetworkParamUdpSenderPort,
         NetworkParamUdpDatagramType,
-        NetworkParamSenderThread
+        NetworkParamSenderThread,
+        NetworkParamDatabaseObject
     };
 
     ///////////////// Network data stream or datagram
