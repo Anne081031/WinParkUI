@@ -27,12 +27,14 @@ DEFINES += MYDATABASE_LIBRARY
 
 SOURCES += qmydatabase.cpp \
     qsqlserver.cpp \
-    qdatabasegenerator.cpp
+    qdatabasegenerator.cpp \
+    qmysql.cpp
 
 HEADERS += qmydatabase.h\
         MyDatabase_global.h \
     qsqlserver.h \
-    qdatabasegenerator.h
+    qdatabasegenerator.h \
+    qmysql.h
 
 symbian {
     MMP_RULES += EXPORTUNFROZEN

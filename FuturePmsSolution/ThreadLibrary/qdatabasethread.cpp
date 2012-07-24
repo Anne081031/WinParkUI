@@ -121,10 +121,12 @@ void QDatabaseThread::ProcessCrudEvent( MyDataStructs::PQQueueEventParams pEvent
         pDatabase = pDatabaseGenerator->GeneratorDatabaseInstance( dbType );
         if ( NULL == pDatabase ) {
             QString* strMsg = new QString( QString( "Database type error (%1)" ).arg( dbType ) );
-            emit NotifyMessage( strMsg, QManipulateIniFile::LogCfgParam );
+            HandleMessage( strMsg, QManipulateIniFile::LogCfgParam );
             return;
         }
     }
+
+    connect( pDatabase, SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
 
     MyDataStructs::QEventMultiHash& hash = pEventParams->head( );
 

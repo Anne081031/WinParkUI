@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "qsqlserver.h"
+#include "qmysql.h"
 #include "MyDatabase_global.h"
 
 #include "../CommonLibrary/CommonEnum.h"

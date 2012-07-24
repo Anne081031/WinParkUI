@@ -21,6 +21,7 @@ QMyDatabase* QDatabaseGenerator::GeneratorDatabaseInstance( const MyEnums::Datab
 
     switch ( dbType ) {
     case MyEnums::DbMySQL :
+        pDatabase = QMySQL::GetInstance( );
         break;
 
     case MyEnums::DbSQLServer :

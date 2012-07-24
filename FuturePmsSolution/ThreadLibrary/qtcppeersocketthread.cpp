@@ -305,7 +305,7 @@ void QTcpPeerSocketThread::ProcessCreateSocketEvent( MyDataStructs::PQQueueEvent
             OutputMsg( QString( "emit NotifyMessage( %1, LogType= %2 )" ).arg( LogText( strMsg ) , QString::number( log ) ) );
 
             QString* pstrMsg = new QString(  LogText( strMsg ) );
-            emit NotifyMessage( pstrMsg, log );
+            HandleMessage( pstrMsg, log );
         }
     }
 }

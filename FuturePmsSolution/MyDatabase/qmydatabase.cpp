@@ -38,3 +38,9 @@ bool QMyDatabase::MayRelease( )
 
     return bRelease;
 }
+
+void QMyDatabase::HandleMessage( void* pstrMsg, QManipulateIniFile::LogTypes type )
+{
+    OutputMsg( "Sender:" + sender( )->objectName( ) + QString( ":emit NotifyMessage( %1, LogTypes=%2 )" ).arg( *( QString* ) pstrMsg, QString::number( type ) ) );
+    emit NotifyMessage( pstrMsg, type );
+}

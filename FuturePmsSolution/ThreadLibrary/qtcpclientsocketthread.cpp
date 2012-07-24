@@ -87,7 +87,7 @@ void QTcpClientSocketThread::ProcessConnectEvent( MyDataStructs::PQQueueEventPar
     if ( !bRet ) {
         QString* pstrMsg = new QString( QString( "Connect [ %1 : %2 ] to fail" ).arg( strIP, QString::number( nPort ) ) );
         *pstrMsg = LogText( *pstrMsg ) ;
-        emit NotifyMessage( pstrMsg, QManipulateIniFile::LogThread );
+        HandleMessage( pstrMsg, QManipulateIniFile::LogThread );
     }
 }
 
