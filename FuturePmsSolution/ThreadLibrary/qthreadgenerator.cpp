@@ -11,6 +11,8 @@ QThreadGenerator::QThreadGenerator(QObject *parent) :
     OutputMsg( QString( " Created" ) );
     nThreadReleaseTimerID = 0;
     nDatabaseReleaseTimerID = 0;
+
+    connect( QDatabaseThread::GetSingleton( ), SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ), this, SLOT( HandleMessage( void*, QManipulateIniFile::LogTypes ) ) );
 }
 
 void QThreadGenerator::timerEvent( QTimerEvent *event )

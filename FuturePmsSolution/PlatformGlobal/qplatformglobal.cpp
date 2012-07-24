@@ -629,7 +629,7 @@ void QPlatformGlobal::ControlTimer( const QManipulateIniFile::IniFileName iniFil
         manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniThread, QManipulateIniFile::ThreadPeerReleaseInterval, false, var );
         nPeerThreadInterval = var.toInt( ) * 60 * 1000;
 
-        manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniThread, QManipulateIniFile::DatabaseObjectReleaseInterval, false, var );
+        manipulateFile.IniFileValue( iniFile, QManipulateIniFile::IniDatabase, QManipulateIniFile::DatabaseObjectReleaseInterval, false, var );
         nDatabaseThreadInterval = var.toInt( ) * 60 * 1000;
     }
 

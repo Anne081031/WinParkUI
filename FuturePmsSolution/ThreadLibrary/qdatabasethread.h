@@ -16,6 +16,7 @@ public:
     ~QDatabaseThread( );
 
     static void ReleaseDatabaseObject( );
+    bool SignalConnected( );
 
 protected:
     explicit QDatabaseThread(QObject *parent = 0);

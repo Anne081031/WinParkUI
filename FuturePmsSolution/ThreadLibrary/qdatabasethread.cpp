@@ -101,10 +101,29 @@ void QDatabaseThread::InitializeSubThread( )
     GetDatabaseConnectParam( );
 }
 
+bool QDatabaseThread::SignalConnected( )
+{
+    int nSignal = receivers( SIGNAL( NotifyMessage( void*, QManipulateIniFile::LogTypes ) ) );
+
+    return ( 0 < nSignal );
+}
+
 void QDatabaseThread::ProcessCrudEvent( MyDataStructs::PQQueueEventParams pEventParams )
 {
     if ( NULL == pEventParams || pEventParams->isEmpty( ) ) {
         return;
+    }
+
+    QMyDatabase* pDatabase = NULL;
+    QueueDatabaseObject( pDatabase, false );
+
+    if ( NULL == pDatabase ) {
+        pDatabase = pDatabaseGenerator->GeneratorDatabaseInstance( dbType );
+        if ( NULL == pDatabase ) {
+            QString* strMsg = new QString( QString( "Database type error (%1)" ).arg( dbType ) );
+            emit NotifyMessage( strMsg, QManipulateIniFile::LogCfgParam );
+            return;
+        }
     }
 
     MyDataStructs::QEventMultiHash& hash = pEventParams->head( );
@@ -129,14 +148,8 @@ void QDatabaseThread::ProcessCrudEvent( MyDataStructs::PQQueueEventParams pEvent
     varData = hash.value( MyEnums::NetworkParamUdpSenderPort );
     quint16 nSenderPort = ( quint16 ) varData.toUInt( );
 
-    QMyDatabase* pDatabase = NULL;
-    QueueDatabaseObject( pDatabase, false );
-
-    if ( NULL == pDatabase ) {
-        pDatabaseGenerator->GeneratorDatabaseInstance( dbType );
-        pDatabase->SetLifeTime( nDatabaseObjLifeTime );
-        pDatabase->SetDatabaseParams( hashDatabaseParams );
-    }
+    pDatabase->SetLifeTime( nDatabaseObjLifeTime );
+    pDatabase->SetDatabaseParams( hashDatabaseParams );
 
     QThreadPoolTask* pTask = QThreadPoolTask::GetInstance( pByteData, pSenderSocketThread,
                                                            this, pPeerSocket,
