@@ -231,6 +231,11 @@ void CValueCard::AddRecord( )
 
 void CValueCard::ModifyRecord( )
 {
+    qint32 nCurrentRow = ui->tableValue->currentRow( );
+    if ( 0 > nCurrentRow ) {
+        return;
+    }
+
     OpenDialog( false );
 }
 
@@ -348,7 +353,12 @@ void CValueCard::AddBulkRecord( )
 
 void CValueCard::CardLossProcess( )
 {
-    QString strID = ui->tableValue->item( ui->tableValue->currentRow( ), 0 )->text( );
+    qint32 nCurrentRow = ui->tableValue->currentRow( );
+    if ( 0 > nCurrentRow ) {
+        return;
+    }
+
+    QString strID = ui->tableValue->item( nCurrentRow, 0 )->text( );
     CDlgCardLoss dlg( strID, CommonDataType::ValueCard );
     dlg.exec( );
 }

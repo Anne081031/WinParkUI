@@ -221,6 +221,11 @@ void CMonthlyCard::AddRecord( )
 
 void CMonthlyCard::ModifyRecord( )
 {
+    qint32 nCurrentRow = ui->tableMonthly->currentRow( );
+    if ( 0 > nCurrentRow ) {
+        return;
+    }
+
     OpenDialog( false );
 }
 
@@ -358,7 +363,12 @@ void CMonthlyCard::AddBulkRecord( )
 
 void CMonthlyCard::CardLossProcess( )
 {
-    QString strID = ui->tableMonthly->item( ui->tableMonthly->currentRow( ), 0 )->text( );
+    qint32 nCurrentRow = ui->tableMonthly->currentRow( );
+    if ( 0 > nCurrentRow ) {
+        return;
+    }
+
+    QString strID = ui->tableMonthly->item( nCurrentRow, 0 )->text( );
     CDlgCardLoss dlg( strID, CommonDataType::MonthlyCard );
     dlg.exec( );
 }

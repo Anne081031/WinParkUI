@@ -99,6 +99,11 @@ void CTimeCard::AddRecord( )
 
 void CTimeCard::ModifyRecord( )
 {
+    qint32 nCurrentRow = ui->tableTime->currentRow( );
+    if ( 0 > nCurrentRow ) {
+        return;
+    }
+
     OpenDialog( false );
 }
 
@@ -183,7 +188,12 @@ void CTimeCard::AddBulkRecord( )
 
 void CTimeCard::CardLossProcess( )
 {
-    QString strID = ui->tableTime->item( ui->tableTime->currentRow( ), 0 )->text( );
+    qint32 nCurrentRow = ui->tableTime->currentRow( );
+    if ( 0 > nCurrentRow ) {
+        return;
+    }
+
+    QString strID = ui->tableTime->item( nCurrentRow, 0 )->text( );
     CDlgCardLoss dlg( strID, CommonDataType::TimeCard );
     dlg.exec( );
 }
