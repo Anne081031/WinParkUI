@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'processdata.h'
 **
-** Created: Wed Aug 15 11:54:46 2012
+** Created: Wed Aug 15 20:09:13 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -32,12 +32,12 @@ static const uint qt_meta_data_CProcessData[] = {
 
  // signals: signature, parameters, type, tag, flags
       28,   14,   13,   13, 0x05,
-      84,   67,   13,   13, 0x05,
+      93,   67,   13,   13, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     139,  115,   13,   13, 0x08,
-     190,  182,   13,   13, 0x08,
-     257,  218,   13,   13, 0x08,
+     156,  132,   13,   13, 0x08,
+     207,  199,   13,   13, 0x08,
+     274,  235,   13,   13, 0x08,
 
        0        // eod
 };
@@ -45,7 +45,8 @@ static const uint qt_meta_data_CProcessData[] = {
 static const char qt_meta_stringdata_CProcessData[] = {
     "CProcessData\0\0byData,nMinor\0"
     "OnResponseUserRequest(QByteArray&,int)\0"
-    "nChannel,lstData\0PlateDelivery(int,QStringList)\0"
+    "nChannel,lstData,strPlate\0"
+    "PlateDelivery(int,QStringList,QString)\0"
     "strCardNo,cCan,strPlate\0"
     "PlateCardComfirmPass(QString,char,QString)\0"
     "lstData\0HandleWeighing(QStringList)\0"
@@ -83,7 +84,7 @@ int CProcessData::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: OnResponseUserRequest((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 1: PlateDelivery((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2]))); break;
+        case 1: PlateDelivery((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 2: PlateCardComfirmPass((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< char(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 3: HandleWeighing((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
         case 4: SendTimeCardInfo((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< QByteArray(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< bool(*)>(_a[6]))); break;
@@ -102,9 +103,9 @@ void CProcessData::OnResponseUserRequest(QByteArray & _t1, int _t2)
 }
 
 // SIGNAL 1
-void CProcessData::PlateDelivery(int _t1, QStringList _t2)
+void CProcessData::PlateDelivery(int _t1, QStringList _t2, QString _t3)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

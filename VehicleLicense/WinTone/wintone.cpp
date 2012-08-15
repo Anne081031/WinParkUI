@@ -278,6 +278,7 @@ bool CWinTone::RecognizeVideo( quint8* pImgData, int nWidth, int nHeight,
     bRet = LPR_RGB888Ex( pImgData, nWidth, nHeight, pResult, nPlateNumber, &rect, ++nChannel );
     ASSERT_VEHICLE( "LPR_RGB888Ex" );
     bRet = PlateFilter( pResult, nPlateNumber, --nChannel );
+
     ASSERT_VEHICLE( "PlateFilter" );
     OUTPUT_STRING( "CWinTone::RecognizeVideo( )" );
 
@@ -335,6 +336,8 @@ bool CWinTone::PlateFilter( TH_PlateResult *pResult, int &nResult, int nChannel 
 
             strcpy( pResult[ 0 ].license, pResult[ nIndex ].license );
             pResult[ 0 ].nConfidence = pResult[ nIndex ].nConfidence;
+            //CCommonFunction::MsgBox( NULL, "Test", QString::number( pResult[ nIndex ].nConfidence ), QMessageBox::Information );
+            //CCommonFunction::MsgBox( NULL, "Test", QString::number( pResult[ 0 ].nConfidence ), QMessageBox::Information );
             pResult[ 0 ].nTime = pResult[ nIndex ].nTime;
             //qDebug( ) << "Plate Direction : " << pResult[ 0 ].nDirection;
             bRet = true;

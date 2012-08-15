@@ -35,7 +35,7 @@ bool MainWindow::Connect2Host( )
         return true;
     }
 
-    QHostAddress addr( "127.0.0.1" );
+    QHostAddress addr( "192.168.1.53" );//127.0.0.1
     tcpSocket.connectToHost( addr, quint16( 60000 ) );
 
     return QAbstractSocket::ConnectedState == tcpSocket.state( );
@@ -106,7 +106,7 @@ void MainWindow::ProcessBallotSenseResponse( QByteArray& byStream )
                         QString::number( nAddress ),
                         QString::number( nState ) );
 
-    ui->edtResponse->setText( strMsg );
+    AppendResponse( strMsg );
 }
 
 void MainWindow::ProcessActiveSendResponse( QByteArray& byStream )
@@ -125,7 +125,7 @@ void MainWindow::ProcessActiveSendResponse( QByteArray& byStream )
                         QString::number( nAddress ),
                         QString::number( nState ) );
 
-    ui->edtResponse->setText( strMsg );
+    AppendResponse( strMsg );
 }
 
 void MainWindow::ProcessGateSenseResponse( QByteArray& byStream )
@@ -144,7 +144,12 @@ void MainWindow::ProcessGateSenseResponse( QByteArray& byStream )
                         QString::number( nAddress ),
                         QString::number( nState ) );
 
-    ui->edtResponse->setText( strMsg );
+    AppendResponse( strMsg );
+}
+
+void MainWindow::AppendResponse( QString& strMsg )
+{
+    ui->edtResponse->append( strMsg + "\n" );
 }
 
 void MainWindow::ProcessInfraredResponse( QByteArray& byStream )
@@ -163,7 +168,7 @@ void MainWindow::ProcessInfraredResponse( QByteArray& byStream )
                         QString::number( nAddress ),
                         QString::number( nState ) );
 
-    ui->edtResponse->setText( strMsg );
+    AppendResponse( strMsg );
 }
 
 void MainWindow::ProcessPlateResponse( QByteArray& byStream )
@@ -198,7 +203,7 @@ void MainWindow::ProcessPlateResponse( QByteArray& byStream )
                         QString::number( nConfidence ),
                         strPlate );
 
-    ui->edtResponse->setText( strMsg );
+    AppendResponse( strMsg );
 
     nIndex += nPlateByteCount;
     QByteArray byPicture = byBody.mid( nIndex, nPictureByteCount );
@@ -250,6 +255,12 @@ void MainWindow::ProcessResponse( QByteArray &byStream )
 
 void MainWindow::DisplayPic( quint8 *pData, quint32 nLength )
 {
+    if ( 0 == nLength ) {
+        return;
+    }
+
+    qDebug( ) << " Picture size : " << nLength << endl ;
+
     QFile file( "plate.jpg" );
     if ( !file.open( QIODevice::ReadWrite | QIODevice::Truncate ) ) {
         return;

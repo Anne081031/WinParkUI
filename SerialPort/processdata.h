@@ -223,7 +223,7 @@ private:
 
 signals:
     void OnResponseUserRequest( QByteArray& byData, int nMinor );
-    void PlateDelivery( int nChannel, QStringList lstData );
+    void PlateDelivery( int nChannel, QStringList lstData, QString strPlate );
 
 private slots:
     void PlateCardComfirmPass( QString strCardNo, char cCan, QString strPlate );

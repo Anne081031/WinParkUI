@@ -98,7 +98,7 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
     ReadCanForRestart( true );
 
     if ( bStartupPlateDilivery ) {
-        connect( this, SIGNAL( PlateDelivery( int, QStringList ) ), CPlateDiliveryThread::GetSingleton( ), SLOT( HandlePlateDilivery( int, QStringList ) ) );
+        connect( this, SIGNAL( PlateDelivery( int, QStringList, QString ) ), CPlateDiliveryThread::GetSingleton( ), SLOT( HandlePlateDilivery( int, QStringList, QString ) ) );
         connect( CPlateDiliveryThread::GetSingleton( ), SIGNAL( WeighingRequest( QStringList ) ), this, SLOT( HandleWeighing( QStringList ) ) );
     }
 }
@@ -727,7 +727,7 @@ void CProcessData::SendPlate( QString strPlate, int nChannel, int nConfidence )
 
     lstData << strPlate << strDateTime << QString::number( nConfidence ) << strFileName;
 
-    emit PlateDelivery( nChannel, lstData );
+    emit PlateDelivery( nChannel, lstData, strPlate );
 }
 
 void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfidence )

@@ -3089,6 +3089,23 @@ color: rgb(255, 0, 0);</string>
     <number>10</number>
    </property>
   </widget>
+  <widget class="QLabel" name="lblConfidence">
+   <property name="geometry">
+    <rect>
+     <x>800</x>
+     <y>140</y>
+     <width>101</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image:url( );
+background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

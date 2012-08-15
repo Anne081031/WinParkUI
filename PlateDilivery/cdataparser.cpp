@@ -410,6 +410,12 @@ void CDataParser::ProcessBallotSenseRequest( QByteArray& byStream )
     WriteSerial( pSerialPort, cCmd, sizeof ( cCmd ) );
 }
 
+void CDataParser::TimerActiveSend( quint16 nAddress )
+{
+    char cCmd [ ] = { 0xAA, 0x03, 0x00, 0x51, 0x41, nAddress, 0x00, 0x55 };
+    WriteSerial( pSerialPort, cCmd, sizeof ( cCmd ) );
+}
+
 void CDataParser::ProcessActiveSendRequest( QByteArray& byStream )
 {
     //查询道闸控制器状态	AA	03 00	51 41	xx	无	xx	55

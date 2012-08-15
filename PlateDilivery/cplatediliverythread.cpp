@@ -26,11 +26,14 @@ CPlateDiliveryThread::CPlateDiliveryThread(QObject *parent) :
     strIP = pSettings->value( "PlateDilivery/ReceiverIP", "127.0.0.1" ).toString( );
     nPort = pSettings->value( "PlateDilivery/ReceiverPort", 60000 ).toUInt( );
     int nInterval = pSettings->value( "PlateDilivery/TimerDetector", 6000 ).toInt( );
+    bActiveSend = pSettings->value( "PlateDilivery/ActiveSend", false ).toBool( );
 
     nBytesAvailable = 0;
     nPakageSize= 0;
 
-    //startTimer( nInterval );
+    if ( bActiveSend ) {
+        startTimer( nInterval );
+    }
 }
 
 CPlateDiliveryThread::~CPlateDiliveryThread( )
@@ -75,15 +78,6 @@ void CPlateDiliveryThread::Reconnect( )
 
 bool CPlateDiliveryThread::Connect2Host( )
 {
-    return true;
-    QAbstractSocket::SocketState state = pTcpSocket->state( ) ;
-    if ( QAbstractSocket::ConnectedState == state ) {
-        return true;
-    }
-
-    QHostAddress addr( strIP );
-    pTcpSocket->connectToHost( addr, nPort );
-
     return QAbstractSocket::ConnectedState == pTcpSocket->state( );
 }
 
@@ -100,11 +94,16 @@ void CPlateDiliveryThread::HandleResponse( QByteArray byResponse )
     }
 
     pTcpSocket->write( byResponse );
+    pTcpSocket->flush( );
+    pTcpSocket->waitForBytesWritten( );
 }
 
 void CPlateDiliveryThread::timerEvent( QTimerEvent *event )
 {
     //Connect2Host( );
+    dataParser.TimerActiveSend( 1 );
+    //msleep( 10000 );
+    dataParser.TimerActiveSend( 2 );
 }
 
 void CPlateDiliveryThread::ParseRequestData( QByteArray &byRequest )
@@ -121,11 +120,11 @@ void CPlateDiliveryThread::ParseRequestData( QByteArray &byRequest )
         quint8 nAddress = byBody.at( 0 );
 
         if ( !hashPlate.contains( nAddress ) ) {
-            //return;
+            return;
         }
 
         QStringList lstData = hashPlate.value( nAddress );
-        lstData << "´¨A123456" << "20120814093002" << "80" << "D:\\WinParkUI\\debug\\MainBG.jpg";
+        //lstData << "´¨A123456" << "20120814093002" << "80" << "D:\\WinParkUI\\debug\\MainBG.jpg";
         SendPlate( nAddress, lstData );
     }
 }
@@ -226,10 +225,18 @@ void CPlateDiliveryThread::SendPlate( quint8 nAddress, QStringList &lstData )
 
     CreateSendData( nAddress, byteData, lstData );
     pTcpSocket->write( byteData );
+    pTcpSocket->flush( );
+    pTcpSocket->waitForBytesWritten( );
 }
 
-void CPlateDiliveryThread::HandlePlateDilivery( int nChannel, QStringList lstData )
+void CPlateDiliveryThread::HandlePlateDilivery( int nChannel, QStringList lstData, QString strPlate )
 {
+    if ( 2 < nChannel || 0 > nChannel || strPlates[ nChannel ] == strPlate ) {
+        return;
+    }
+
+    strPlates[ nChannel ] = strPlate;
+
     if ( hashPlate.contains( nChannel ) ) {
         QStringList lstTmp = hashPlate.value( nChannel );
         if ( 0 == lstTmp.length( ) ) {

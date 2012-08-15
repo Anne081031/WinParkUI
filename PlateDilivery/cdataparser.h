@@ -17,6 +17,8 @@ public:
     quint32 GetStreamLength( QByteArray& byStream );
     QByteArray GetBody( QByteArray& byStream );
 
+    void TimerActiveSend( quint16 nAddress );
+
 private:
     void ProcessBallotSenseRequest( QByteArray& byStream );
     void ProcessGateSenseRequest( QByteArray& byStream );

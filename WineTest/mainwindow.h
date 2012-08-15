@@ -46,6 +46,7 @@ private:
     void ProcessActiveSendResponse( QByteArray& byStream );
 
     bool Connect2Host( );
+    void AppendResponse( QString& strMsg );
 
 private slots:
     void HandleAccept( int socketDescriptor );

@@ -825,6 +825,8 @@ void CMonitor::DisplayPlate( int nChannel )
     int nWidth  = pResult->rcLocation.right - pResult->rcLocation.left;
     int nHeight  = pResult->rcLocation.bottom - pResult->rcLocation.top;
 
+    int nConfidence = pResult->nConfidence;
+    ui->lblConfidence->setText( QString::number( nConfidence ) );
     SetBallotSense( false, nChannel );
 
     QString strWindth = QString( "%1/%2" ).arg( QString::number( nWidth ),
@@ -833,7 +835,8 @@ void CMonitor::DisplayPlate( int nChannel )
 
     CCommonFunction::DisplayPlateChar( *this, nChannel, strPlate );
     //Sleep( 500 );
-    emit OnRecognizePlate( strPlate, nChannel, pResult->nConfidence );
+
+    emit OnRecognizePlate( strPlate, nChannel, nConfidence );
 }
 
 CVehicleLicense* CMonitor::GetPlateRecognization( )

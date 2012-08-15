@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'cplatediliverythread.h'
 **
-** Created: Wed Aug 15 17:05:18 2012
+** Created: Wed Aug 15 20:09:16 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -34,11 +34,11 @@ static const uint qt_meta_data_CPlateDiliveryThread[] = {
       30,   22,   21,   21, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      76,   59,   21,   21, 0x0a,
-     113,   21,   21,   21, 0x0a,
-     129,   21,   21,   21, 0x0a,
-     152,  141,   21,   21, 0x0a,
-     196,  179,   21,   21, 0x0a,
+      85,   59,   21,   21, 0x0a,
+     130,   21,   21,   21, 0x0a,
+     146,   21,   21,   21, 0x0a,
+     169,  158,   21,   21, 0x0a,
+     213,  196,   21,   21, 0x0a,
 
        0        // eod
 };
@@ -46,7 +46,8 @@ static const uint qt_meta_data_CPlateDiliveryThread[] = {
 static const char qt_meta_stringdata_CPlateDiliveryThread[] = {
     "CPlateDiliveryThread\0\0lstData\0"
     "WeighingRequest(QStringList)\0"
-    "nChannel,lstData\0HandlePlateDilivery(int,QStringList)\0"
+    "nChannel,lstData,strPlate\0"
+    "HandlePlateDilivery(int,QStringList,QString)\0"
     "IncommingData()\0Reconnect()\0byResponse\0"
     "HandleResponse(QByteArray)\0socketDescriptor\0"
     "HandleAccept(int)\0"
@@ -82,7 +83,7 @@ int CPlateDiliveryThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: WeighingRequest((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
-        case 1: HandlePlateDilivery((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2]))); break;
+        case 1: HandlePlateDilivery((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 2: IncommingData(); break;
         case 3: Reconnect(); break;
         case 4: HandleResponse((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;

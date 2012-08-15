@@ -46,15 +46,16 @@ private:
     quint64 nBytesAvailable;
     QByteArray byData;
     quint32 nPakageSize;
-
+    bool bActiveSend;
     CDataParser dataParser;
     QHash< int, QStringList > hashPlate;
+    QString strPlates[ 2 ];
     
 signals:
     void WeighingRequest( QStringList lstData );
     
 public slots:
-    void HandlePlateDilivery( int nChannel, QStringList lstData );
+    void HandlePlateDilivery( int nChannel, QStringList lstData, QString strPlate );
     void IncommingData( );
     void Reconnect( );
     void HandleResponse( QByteArray byResponse );
