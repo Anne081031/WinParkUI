@@ -1,6 +1,8 @@
 #include "PlateDilivery\cplatediliverythread.h"
 #include <QHostAddress>
 #include <QDebug>
+#include <windows.h>
+#include <QFile>
 
 CPlateDiliveryThread* CPlateDiliveryThread::pThreadInstance = NULL;
 
@@ -10,36 +12,79 @@ CPlateDiliveryThread::CPlateDiliveryThread(QObject *parent) :
 {
     pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     pTextCodec = CCommonFunction::GetTextCodec( );
-    connect( &tcpSocket, SIGNAL( readyRead( ) ), this, SLOT( IncommingData( ) ) );
+    pListener = NULL;
+
+    StartListener( );
+
+    pTcpSocket = new QTcpSocket( this );
+
+    connect( pTcpSocket, SIGNAL( readyRead( ) ), this, SLOT( IncommingData( ) ) );
+    //connect( pTcpSocket, SIGNAL( disconnected( ) ), this, SLOT( Reconnect( ) ) );
+    connect( &dataParser, SIGNAL( Response( QByteArray ) ),
+             this, SLOT( HandleResponse( QByteArray ) ) );
 
     strIP = pSettings->value( "PlateDilivery/ReceiverIP", "127.0.0.1" ).toString( );
     nPort = pSettings->value( "PlateDilivery/ReceiverPort", 60000 ).toUInt( );
-    int nInterval = pSettings->value( "PlateDilivery/TimerDetector", 600000 ).toInt( );
+    int nInterval = pSettings->value( "PlateDilivery/TimerDetector", 6000 ).toInt( );
 
-    strToken = "ScFuture";
+    nBytesAvailable = 0;
+    nPakageSize= 0;
 
-    startTimer( nInterval );
+    //startTimer( nInterval );
+}
+
+CPlateDiliveryThread::~CPlateDiliveryThread( )
+{
+    if ( NULL != pListener ) {
+        pListener->terminate( );
+    }
+
+    if ( NULL != pTcpSocket ) {
+        delete pTcpSocket;
+    }
+}
+
+void CPlateDiliveryThread::StartListener( )
+{
+    pListener = new QListener( );
+    pListener->moveToThread( pListener );
+    connect( pListener, SIGNAL( Accept( int ) ), this, SLOT( HandleAccept( int ) ) );
+    pListener->start( );
+}
+
+void CPlateDiliveryThread::HandleAccept( int socketDescriptor )
+{
+    pTcpSocket->setSocketDescriptor( socketDescriptor );
 }
 
 CPlateDiliveryThread* CPlateDiliveryThread::GetSingleton( )
 {
     if ( NULL == pThreadInstance ) {
         pThreadInstance = new CPlateDiliveryThread( );
-        pThreadInstance->start( );
         pThreadInstance->moveToThread( pThreadInstance );
+        pThreadInstance->start( );
     }
 
     return pThreadInstance;
 }
 
-void CPlateDiliveryThread::Connect2Host( )
+void CPlateDiliveryThread::Reconnect( )
 {
-    if ( QAbstractSocket::ConnectedState == tcpSocket.state( ) ) {
-        return;
+    Connect2Host( );
+}
+
+bool CPlateDiliveryThread::Connect2Host( )
+{
+    return true;
+    QAbstractSocket::SocketState state = pTcpSocket->state( ) ;
+    if ( QAbstractSocket::ConnectedState == state ) {
+        return true;
     }
 
     QHostAddress addr( strIP );
-    tcpSocket.connectToHost( addr, nPort );
+    pTcpSocket->connectToHost( addr, nPort );
+
+    return QAbstractSocket::ConnectedState == pTcpSocket->state( );
 }
 
 void CPlateDiliveryThread::run( )
@@ -48,14 +93,71 @@ void CPlateDiliveryThread::run( )
     exec( );
 }
 
+void CPlateDiliveryThread::HandleResponse( QByteArray byResponse )
+{
+    if ( !Connect2Host( ) ) {
+        return;
+    }
+
+    pTcpSocket->write( byResponse );
+}
+
 void CPlateDiliveryThread::timerEvent( QTimerEvent *event )
 {
-    Connect2Host( );
+    //Connect2Host( );
+}
+
+void CPlateDiliveryThread::ParseRequestData( QByteArray &byRequest )
+{
+    QByteArray byToken = dataParser.GetToken( byRequest );
+    if ( byToken != Protocol::byToken ) {
+        return;
+    }
+
+    dataParser.Parse( byRequest );
+
+    if ( Protocol::RequestQueryPlateData == dataParser.GetMessageType( byRequest ) ) {
+        QByteArray byBody = dataParser.GetBody( byRequest );
+        quint8 nAddress = byBody.at( 0 );
+
+        if ( !hashPlate.contains( nAddress ) ) {
+            //return;
+        }
+
+        QStringList lstData = hashPlate.value( nAddress );
+        lstData << "´¨A123456" << "20120814093002" << "80" << "D:\\WinParkUI\\debug\\MainBG.jpg";
+        SendPlate( nAddress, lstData );
+    }
 }
 
 void CPlateDiliveryThread::IncommingData( )
 {
-    QByteArray byteData = tcpSocket.readAll( );
+    qint64 nBytes = pTcpSocket->bytesAvailable( );
+    QByteArray byteData = pTcpSocket->read( nBytes );
+
+    if ( 0 == nBytesAvailable ) { // Start
+        if ( nBytes < Protocol::nHeadLength ) {
+            return;
+        }
+
+        nPakageSize = dataParser.GetStreamLength( byteData );
+    }
+
+
+    byData.append( byteData );
+
+    nBytesAvailable += nBytes;
+
+    if ( nPakageSize == nBytesAvailable ) { // End
+        ParseRequestData( byData );
+    }
+
+    if ( nPakageSize <= nBytesAvailable ) {
+        nBytesAvailable = 0;
+        nPakageSize = 0;
+        byData.clear( );
+    }
+
     qDebug( ) << Q_FUNC_INFO << byteData.length( );
 
     //QString strContent( byteData );
@@ -73,19 +175,17 @@ void CPlateDiliveryThread::CheckSum( QByteArray &byteData, char &nCheckSum )
     }
 }
 
-void CPlateDiliveryThread::CreateSendData( QByteArray &byteData, QStringList &lstData )
+void CPlateDiliveryThread::CreateSendData( quint8 nAddress, QByteArray &byteData, QStringList &lstData )
 {
     //  lstData << strPlate << strDateTime << QString::number( nConfidence ) << strFileName;
 
     byteData.clear( );
 
-    QByteArray byteToken = pTextCodec->fromUnicode(  strToken );
     QByteArray bytePlate = pTextCodec->fromUnicode(  lstData.at( 0 ) );
     QByteArray byteDateTime = pTextCodec->fromUnicode(  lstData.at( 1 ) );
     char nConfidence = ( char ) lstData.at( 2 ).toShort( );
     char nPlateLength = ( char ) bytePlate.length( );
     const QString& strFileName = lstData.at( 3 );
-    char nCheckSum = 0;
 
     QByteArray fileData;
     picFile.setFileName( strFileName );
@@ -94,37 +194,54 @@ void CPlateDiliveryThread::CreateSendData( QByteArray &byteData, QStringList &ls
         picFile.close( );
     }
 
-    picFile.remove(  );
+    //picFile.remove(  );
     quint32 nFileLength = fileData.length( );
 
-    quint32 nStreamLength = byteToken.length() + sizeof ( quint32 ) + byteDateTime.length( ) +
-            sizeof ( char ) + sizeof ( char ) + bytePlate.length( ) + sizeof ( char ) +
-            sizeof ( quint32 ) + nFileLength;
+    quint32 nStreamLength = Protocol::nHeadLength + sizeof ( quint8 ) +
+            Protocol::nDateTimeLength + sizeof ( quint8 ) * 2 +
+            sizeof ( quint32 ) + bytePlate.length( ) + nFileLength;
 
-    QByteArray byteStream( ( const char* ) &nStreamLength, sizeof ( quint32 ) );
-    byteStream.append( byteDateTime );
-    byteStream.append( nConfidence );
-    byteStream.append( nPlateLength );
-    byteStream.append( bytePlate );
+    nStreamLength = htonl( nStreamLength );
+    nFileLength = htonl( nFileLength );
 
-    CheckSum( byteStream, nCheckSum );
-
-    byteData.append( byteToken );
-    byteData.append( byteStream );
-    byteData.append( nCheckSum);
+    byteData.append( Protocol::byToken );
+    byteData.append( ( char ) Protocol::ResponsePlateData );
+    byteData.append( ( const char* ) &nStreamLength, sizeof ( quint32 ) );
+    byteData.append( nAddress );
+    byteData.append( byteDateTime );
+    byteData.append( nConfidence );
+    byteData.append( nPlateLength );
     byteData.append( ( const char* ) &nFileLength, sizeof ( quint32 ) );
+    byteData.append( bytePlate );
     byteData.append( fileData );
 }
 
-void CPlateDiliveryThread::HandlePlateDilivery( QStringList lstData )
+void CPlateDiliveryThread::SendPlate( quint8 nAddress, QStringList &lstData )
 {
-    if ( QAbstractSocket::ConnectedState != tcpSocket.state( ) || 4 != lstData.count( ) ) {
+    if ( 4 != lstData.count( ) || !Connect2Host( ) ) {
         return;
     }
 
     QByteArray byteData;
 
-    CreateSendData( byteData, lstData );
-    tcpSocket.write( byteData );
-    qDebug( ) << Q_FUNC_INFO << byteData.length( );
+    CreateSendData( nAddress, byteData, lstData );
+    pTcpSocket->write( byteData );
+}
+
+void CPlateDiliveryThread::HandlePlateDilivery( int nChannel, QStringList lstData )
+{
+    if ( hashPlate.contains( nChannel ) ) {
+        QStringList lstTmp = hashPlate.value( nChannel );
+        if ( 0 == lstTmp.length( ) ) {
+            return;
+        }
+
+        QString strFile = lstTmp.at( lstTmp.length( ) - 1 );
+        QFile::remove( strFile );
+        hashPlate.remove( nChannel );
+    }
+
+    hashPlate.insert( nChannel, lstData );
+    ///////////////////////////////////////////////////////////////////////////////////
+    SendPlate( nChannel, lstData );
 }

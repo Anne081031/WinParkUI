@@ -27,11 +27,6 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
     pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     bStartupPlateDilivery = pSettings->value( "PlateDilivery/StartupDilivery", false ).toBool( );
 
-    if ( bStartupPlateDilivery ) {
-        connect( this, SIGNAL( PlateDelivery( QStringList ) ), CPlateDiliveryThread::GetSingleton( ), SLOT( HandlePlateDilivery( QStringList ) ) );
-        connect( CPlateDiliveryThread::GetSingleton( ), SIGNAL( WeighingRequest( QStringList ) ), this, SLOT( HandleWeighing( QStringList ) ) );
-    }
-
     if ( !GetDirectDb( ) ) {
         g_dbThread.start( );
         g_dbThread.moveToThread( &g_dbThread );
@@ -101,6 +96,11 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
     connect( pConfirm[ 1 ], SIGNAL( Pass( QString, char, QString ) ), this, SLOT( PlateCardComfirmPass( QString, char, QString ) ) );
 
     ReadCanForRestart( true );
+
+    if ( bStartupPlateDilivery ) {
+        connect( this, SIGNAL( PlateDelivery( int, QStringList ) ), CPlateDiliveryThread::GetSingleton( ), SLOT( HandlePlateDilivery( int, QStringList ) ) );
+        connect( CPlateDiliveryThread::GetSingleton( ), SIGNAL( WeighingRequest( QStringList ) ), this, SLOT( HandleWeighing( QStringList ) ) );
+    }
 }
 
 void CProcessData::CreateBufferTable( )
@@ -727,7 +727,7 @@ void CProcessData::SendPlate( QString strPlate, int nChannel, int nConfidence )
 
     lstData << strPlate << strDateTime << QString::number( nConfidence ) << strFileName;
 
-    emit PlateDelivery( lstData );
+    emit PlateDelivery( nChannel, lstData );
 }
 
 void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfidence )

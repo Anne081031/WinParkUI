@@ -54,6 +54,8 @@ public:
     void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard );
     void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, CommonDataType::BlobType blob, QByteArray &byData );
 
+    bool WriteData( QByteArray& byData );
+
 private:
     explicit CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObject *parent = 0 );
     CProcessData( QObject *parent = 0 );
@@ -77,7 +79,7 @@ private:
     void CaptureSenseImage( QByteArray& byData, CommonDataType::CaptureImageType capType );
     void ClearSenseImage( QByteArray& byData );
     void LoadEntranceImg( QString& strCardNo, CommonDataType::CaptureImageType capType );
-    inline bool WriteData( QByteArray& byData );
+    //inline bool WriteData( QByteArray& byData );
     inline void PlayAudioDisplayInfo( QByteArray& byData, QByteArray& vData,
                                CPortCmd::LedInfo led, CPortCmd::AudioAddress audio );
     inline void PlayAudioDisplayInfo( QByteArray& byData, QByteArray& vDataLed, QByteArray& vDataAudio,
@@ -221,7 +223,7 @@ private:
 
 signals:
     void OnResponseUserRequest( QByteArray& byData, int nMinor );
-    void PlateDelivery( QStringList lstData );
+    void PlateDelivery( int nChannel, QStringList lstData );
 
 private slots:
     void PlateCardComfirmPass( QString strCardNo, char cCan, QString strPlate );

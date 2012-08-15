@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'rechargedialog.h'
 **
-** Created: Fri Jun 1 10:04:21 2012
+** Created: Wed Aug 15 11:54:17 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

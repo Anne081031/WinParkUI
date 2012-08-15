@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgserach.ui'
 **
-** Created: Thu May 31 17:17:23 2012
+** Created: Wed Aug 15 11:48:24 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

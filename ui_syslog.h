@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'syslog.ui'
 **
-** Created: Tue Jun 26 09:34:29 2012
+** Created: Wed Aug 15 11:48:22 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

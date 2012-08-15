@@ -581,11 +581,16 @@ void MainWindow::ControlDatabase(bool bOpen)
 void MainWindow::ControlSerial(bool bOpen)
 {
     if ( NULL == pSerialPort ) {
-        pSerialPort = new CWinSerialPort( this );
+        pSerialPort = new CWinSerialPort( "SerialPort", this );
     }
 
     CProcessData* pProcessor = CProcessData::GetProcessor( pSerialPort, this );
     if ( NULL == pProcessor ) {
+        return;
+    }
+
+    bool bStartupPlateDilivery = pSettings->value( "PlateDilivery/StartupDilivery", false ).toBool( );
+    if ( bStartupPlateDilivery ) {
         return;
     }
 

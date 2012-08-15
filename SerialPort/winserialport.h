@@ -9,7 +9,7 @@ class CWinSerialPort : public QObject
 {
     Q_OBJECT
 public:
-    explicit CWinSerialPort(QObject *parent = 0);
+    explicit CWinSerialPort( const char* pCOMSection, QObject *parent = 0);
     virtual ~CWinSerialPort();
 
     void ConfigPort( );
@@ -37,6 +37,7 @@ private:
      Win_QextSerialPort* pWinSerialPort;
      QObject *pParent;
      QSettings* pSettings;
+     QString strCOMSection;
 
  private slots:
 

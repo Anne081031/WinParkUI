@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'cplatediliverythread.h'
 **
-** Created: Thu Jun 28 14:36:39 2012
+** Created: Wed Aug 15 17:05:18 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CPlateDiliveryThread[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,8 +34,11 @@ static const uint qt_meta_data_CPlateDiliveryThread[] = {
       30,   22,   21,   21, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      59,   22,   21,   21, 0x0a,
-      92,   21,   21,   21, 0x0a,
+      76,   59,   21,   21, 0x0a,
+     113,   21,   21,   21, 0x0a,
+     129,   21,   21,   21, 0x0a,
+     152,  141,   21,   21, 0x0a,
+     196,  179,   21,   21, 0x0a,
 
        0        // eod
 };
@@ -43,8 +46,10 @@ static const uint qt_meta_data_CPlateDiliveryThread[] = {
 static const char qt_meta_stringdata_CPlateDiliveryThread[] = {
     "CPlateDiliveryThread\0\0lstData\0"
     "WeighingRequest(QStringList)\0"
-    "HandlePlateDilivery(QStringList)\0"
-    "IncommingData()\0"
+    "nChannel,lstData\0HandlePlateDilivery(int,QStringList)\0"
+    "IncommingData()\0Reconnect()\0byResponse\0"
+    "HandleResponse(QByteArray)\0socketDescriptor\0"
+    "HandleAccept(int)\0"
 };
 
 const QMetaObject CPlateDiliveryThread::staticMetaObject = {
@@ -77,11 +82,14 @@ int CPlateDiliveryThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: WeighingRequest((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
-        case 1: HandlePlateDilivery((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 1: HandlePlateDilivery((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2]))); break;
         case 2: IncommingData(); break;
+        case 3: Reconnect(); break;
+        case 4: HandleResponse((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
+        case 5: HandleAccept((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 3;
+        _id -= 6;
     }
     return _id;
 }

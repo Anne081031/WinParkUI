@@ -5,10 +5,11 @@
 #include <QTextCodec>
 #include "Common/commonfunction.h"
 
-CWinSerialPort::CWinSerialPort(QObject *parent) :
+CWinSerialPort::CWinSerialPort( const char* pCOMSection,QObject *parent) :
     QObject(parent)
 {
     pParent = parent;
+    strCOMSection = pCOMSection;
     pWinSerialPort = new  Win_QextSerialPort(  );
     pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
 }
@@ -26,7 +27,7 @@ CWinSerialPort::~CWinSerialPort( )
 
 void CWinSerialPort::SetPortName( )
 {
-    int nPort = pSettings->value( "SerialPort/name" ).toInt( ) + 1;
+    int nPort = pSettings->value( strCOMSection + "/name" ).toInt( ) + 1;
 
     QString strName= QString( "COM%1" ).arg( nPort );
     pWinSerialPort->setPortName( strName );
@@ -237,14 +238,14 @@ FlowType CWinSerialPort::GetFlow( int nIndex )
 void CWinSerialPort::GetCfg( QStringList &cfgStream, bool bRead )
 {
     if ( bRead ) {
-        cfgStream << pSettings->value( "SerialPort/name", QVariant( 0 ) ).toString( );;
-        cfgStream << pSettings->value( "SerialPort/baud", QVariant( 19 ) ).toString( );
-        cfgStream << pSettings->value( "SerialPort/data", QVariant( 3 ) ).toString( );
-        cfgStream << pSettings->value( "SerialPort/parity", QVariant( 0 ) ).toString( );
-        cfgStream << pSettings->value( "SerialPort/stop", QVariant( 0 ) ).toString( );
-        cfgStream << pSettings->value( "SerialPort/flow", QVariant( 0 ) ).toString( );
+        cfgStream << pSettings->value( strCOMSection + "/name", QVariant( 0 ) ).toString( );;
+        cfgStream << pSettings->value( strCOMSection + "/baud", QVariant( 19 ) ).toString( );
+        cfgStream << pSettings->value( strCOMSection + "/data", QVariant( 3 ) ).toString( );
+        cfgStream << pSettings->value( strCOMSection + "/parity", QVariant( 0 ) ).toString( );
+        cfgStream << pSettings->value( strCOMSection + "/stop", QVariant( 0 ) ).toString( );
+        cfgStream << pSettings->value( strCOMSection + "/flow", QVariant( 0 ) ).toString( );
     } else {
-        pSettings->beginGroup( "SerialPort" );
+        pSettings->beginGroup( strCOMSection );
         pSettings->setValue( "name", cfgStream[ 0 ] );
         pSettings->setValue( "baud", cfgStream[ 1 ] );
         pSettings->setValue( "data", cfgStream[ 2 ] );
@@ -279,7 +280,7 @@ bool CWinSerialPort::IsOpened(  )
 bool CWinSerialPort::OpenPort( )
 {
     bool bRet = pWinSerialPort->open( QIODevice::ReadWrite );
-    connect( pWinSerialPort, SIGNAL( readyRead( ) ), pParent, SLOT( DataMayRead( ) ) );
+    bRet = connect( pWinSerialPort, SIGNAL( readyRead( ) ), pParent, SLOT( DataMayRead( ) ) );
 
     return bRet;
 }

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'timerthread.h'
 **
-** Created: Tue Jun 5 14:57:58 2012
+** Created: Wed Aug 15 11:56:57 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

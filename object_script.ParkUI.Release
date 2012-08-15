@@ -128,6 +128,9 @@ INPUT(
 ./release\timerproc.o
 ./release\dlgcardloss.o
 ./release\cplatediliverythread.o
+./release\cdataparser.o
+./release\qlistener.o
+./release\qmytcpserver.o
 ./release\moc_valuecard.o
 ./release\moc_tolldiscounttypeset.o
 ./release\moc_timecard.o
@@ -240,4 +243,7 @@ INPUT(
 ./release\moc_timerthread.o
 ./release\moc_dlgcardloss.o
 ./release\moc_cplatediliverythread.o
+./release\moc_cdataparser.o
+./release\moc_qmytcpserver.o
+./release\moc_qlistener.o
 );

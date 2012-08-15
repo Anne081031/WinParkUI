@@ -7,6 +7,8 @@
 #include <QTcpSocket>
 #include <QFile>
 #include "Common/commonfunction.h"
+#include "cdataparser.h"
+#include "qlistener.h"
 
 class CPlateDiliveryThread : public QThread
 {
@@ -14,6 +16,7 @@ class CPlateDiliveryThread : public QThread
 public:
 
     static CPlateDiliveryThread* GetSingleton( );
+    ~CPlateDiliveryThread( );
 
 protected:
     explicit CPlateDiliveryThread(QObject *parent = 0);
@@ -22,26 +25,40 @@ protected:
     void timerEvent(  QTimerEvent * event );
 
 private:
-    void Connect2Host( );
-    void CreateSendData( QByteArray& byteData, QStringList& lstData );
+    bool Connect2Host( );
+    void CreateSendData( quint8 nAddress, QByteArray& byteData, QStringList& lstData );
     void CheckSum( QByteArray& byteData, char& nCheckSum );
+
+    void ParseRequestData( QByteArray& byRequest );
+
+    void SendPlate( quint8 nAddress, QStringList& lstData );
+    void StartListener( );
 
 private:
     static CPlateDiliveryThread* pThreadInstance;
-    QTcpSocket tcpSocket;
+    QTcpSocket* pTcpSocket;
+    QListener* pListener;
     QSettings* pSettings;
     QString strIP;
     quint16 nPort;
     QTextCodec* pTextCodec;
-    QString strToken;
     QFile picFile;
+    quint64 nBytesAvailable;
+    QByteArray byData;
+    quint32 nPakageSize;
+
+    CDataParser dataParser;
+    QHash< int, QStringList > hashPlate;
     
 signals:
     void WeighingRequest( QStringList lstData );
     
 public slots:
-    void HandlePlateDilivery( QStringList lstData );
+    void HandlePlateDilivery( int nChannel, QStringList lstData );
     void IncommingData( );
+    void Reconnect( );
+    void HandleResponse( QByteArray byResponse );
+    void HandleAccept( int socketDescriptor );
     
 };
 
