@@ -205,6 +205,7 @@ void CValueCardDialog::InitDlg( )
 
 void CValueCardDialog::on_btnSave_clicked()
 {
+    QString strCardNo = ClearZero( ui->edtNumber );
     if ( !CCommonFunction::IsDigital( ClearZero( ui->edtNumber ) )) {
         CCommonFunction::MsgBox( NULL, CCommonFunction::GetMsgTitle( QMessageBox::Information ),
                                  "请输入正确的卡号！", QMessageBox::Information );
@@ -214,13 +215,14 @@ void CValueCardDialog::on_btnSave_clicked()
     if ( m_bNew ) {
         QString strTable;
         CCommonFunction::GetTableName( CommonDataType::ValueCard, strTable );
-        QString strSql = QString( "Select cardno From %1 Where cardno = \
-                                  '%2'" ).arg( strTable, ui->edtNumber->text( ) );
+        //QString strSql = QString( "Select cardno From %1 Where cardno = \
+        //                          '%2'" ).arg( strTable, ui->edtNumber->text( ) );
         QStringList lstRow;
-        CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
+        //CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
+        CLogicInterface::GetInterface( )->ExistCardNumber( strCardNo, lstRow );
         if ( 0 < lstRow.count( ) ) {
             CCommonFunction::MsgBox( NULL, CCommonFunction::GetMsgTitle( QMessageBox::Information ),
-                                     "此卡号已存在！", QMessageBox::Information );
+                                     lstRow.at( 0 ), QMessageBox::Information );
             return;
         }
     }

@@ -465,11 +465,26 @@ void MainWindow::Login( bool bStart )
                                           pDlgLogin->geometry( ).top( ) + 10 );
     }
 
-    if ( QDialog::Rejected == pDlgLogin->exec( ) ) {
-        if ( bStart ) {
-            exit( 0 );
+    bool bStartupPlateDilivery = pSettings->value( "PlateDilivery/StartupDilivery", false ).toBool( );
+    if ( bStartupPlateDilivery ) {
+        if ( !pDlgLogin->AutoLogin( ) ) {
+            if ( QDialog::Rejected == pDlgLogin->exec( ) ) {
+                if ( bStart ) {
+                    exit( 0 );
+                } else {
+                    return;
+                }
+            }
         } else {
-            return;
+            pDlgLogin->hide( );
+        }
+    } else {
+        if ( QDialog::Rejected == pDlgLogin->exec( ) ) {
+            if ( bStart ) {
+                exit( 0 );
+            } else {
+                return;
+            }
         }
     }
 
@@ -1075,7 +1090,7 @@ void MainWindow::ForwardPassRecord( QStringList &lstData )
         return;
     }
 
-    int nCols = 11;
+    int nCols = 12; // 总列数 包含报文类型
     int nTotalCols = lstData.count( );
     if ( nCols > nTotalCols ) {
         return;

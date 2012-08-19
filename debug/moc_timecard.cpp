@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'timecard.h'
 **
-** Created: Wed Aug 15 11:53:00 2012
+** Created: Sun Aug 19 16:43:38 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

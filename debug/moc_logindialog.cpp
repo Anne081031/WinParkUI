@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'logindialog.h'
 **
-** Created: Wed Aug 15 11:53:58 2012
+** Created: Sun Aug 19 11:40:16 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -40,7 +40,7 @@ static const uint qt_meta_data_CLoginDialog[] = {
      118,   13,   13,   13, 0x08,
      144,   13,   13,   13, 0x08,
      167,   13,   13,   13, 0x08,
-     189,   13,   13,   13, 0x08,
+     190,   13,   13,   13, 0x08,
 
        0        // eod
 };
@@ -51,8 +51,8 @@ static const char qt_meta_stringdata_CLoginDialog[] = {
     "on_cbxUserName_currentIndexChanged(int)\0"
     "on_pushButton_clicked()\0"
     "on_btnConnectDb_clicked()\0"
-    "on_btnCancel_clicked()\0on_btnLogin_clicked()\0"
-    "on_btnImport_clicked()\0"
+    "on_btnCancel_clicked()\0on_btnImport_clicked()\0"
+    "on_btnLogin_clicked()\0"
 };
 
 const QMetaObject CLoginDialog::staticMetaObject = {
@@ -90,8 +90,8 @@ int CLoginDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 3: on_pushButton_clicked(); break;
         case 4: on_btnConnectDb_clicked(); break;
         case 5: on_btnCancel_clicked(); break;
-        case 6: on_btnLogin_clicked(); break;
-        case 7: on_btnImport_clicked(); break;
+        case 6: on_btnImport_clicked(); break;
+        case 7: on_btnLogin_clicked(); break;
         default: ;
         }
         _id -= 8;

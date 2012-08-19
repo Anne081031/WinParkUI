@@ -26,7 +26,7 @@ protected:
 
 private:
     void GetLiveNetworkInterfaceIP( );
-    void SyncIP( const char* pIP );
+    void SyncIP( QString& strIP );
     void SyncNetState( );
 
 private:

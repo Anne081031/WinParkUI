@@ -32,6 +32,8 @@ public:
     bool GetIsLicense( );
     void HideLicenseButton( bool bServer );
 
+    bool AutoLogin( );
+
 protected:
     void closeEvent ( QCloseEvent * event );
     void resizeEvent( QResizeEvent * event );
@@ -55,9 +57,8 @@ private slots:
     void on_pushButton_clicked();
     void on_btnConnectDb_clicked();
     void on_btnCancel_clicked();
-    void on_btnLogin_clicked();
-
     void on_btnImport_clicked();
+    void on_btnLogin_clicked();
 
 signals:
     void OnReconnect( );

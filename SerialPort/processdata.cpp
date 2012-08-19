@@ -1555,6 +1555,7 @@ bool CProcessData::PictureContrast( QStringList& lstRows, int& nAmount, QByteArr
     pFeeDlg->InitDlg( lstRows,  bmpEnter, bmpLeave, byData, GetTimeCardBuffer( ) );
 
     if ( CPictureContrastDlg::Accepted == pFeeDlg->exec( ) ) {
+        pFeeDlg->hide( );
         bRet = true;
         nAmount = pFeeDlg->GetDisAmount( );
     }

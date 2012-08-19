@@ -135,7 +135,7 @@ void CLoginDialog::ResponseButton( int nAccept )
 {
     close( );
     setResult( nAccept );
-    ::ClipCursor( NULL );
+    //::ClipCursor( NULL );
 }
 
 void CLoginDialog::InitDlg( QStringList &strUsers )
@@ -169,6 +169,23 @@ QString CLoginDialog::GetOperatorID( )
     return ui->cbxUserName->itemData( nIndex, Qt::StatusTipRole ).toString( );
 }
 
+bool CLoginDialog::AutoLogin( )
+{
+    bool bRet = false;
+
+    ui->edtUserPwd->setText( "aaa" );
+
+    for ( int nIndex = 0; nIndex < ui->cbxUserName->count( ); nIndex++ ) {
+        if ( ui->cbxUserName->itemText( nIndex ) == "停车场管理员" ) {
+            ui->cbxUserName->setCurrentIndex( nIndex );
+            bRet = true;
+            on_btnLogin_clicked( );
+        }
+    }
+
+    return bRet;
+}
+
 QString CLoginDialog::GetCurrentUserID( )
 {
     return strCurrentID;
@@ -180,7 +197,7 @@ void CLoginDialog::on_btnLogin_clicked()
     QString strTip = bPass ? "" : "用户名或密码不正确！";
 
     if ( bPass ) {
-       ::ClipCursor( NULL );
+       //::ClipCursor( NULL );
        strCurrentID = ui->cbxUserName->itemData( ui->cbxUserName->currentIndex( ),
                                                  Qt::WhatsThisRole ).toString( );
        ResponseButton( CLoginDialog::Accepted );
@@ -224,7 +241,7 @@ void CLoginDialog::on_pushButton_clicked()
 
     RECT rec;
     ::GetWindowRect( winId( ), &rec );
-    BOOL bRet = ::ClipCursor( &rec );
+    BOOL bRet;// = ::ClipCursor( &rec );
     bRet = false;
 }
 

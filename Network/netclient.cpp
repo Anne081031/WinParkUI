@@ -234,6 +234,8 @@ bool CNetClient::SocketSendData(ClientType client, QByteArray& byData )
     case ClientUDPClient:
         if ( NULL != udpClient ) {
             nRetSize = udpClient->SendData( byData );
+            udpClient->flush( );
+            udpClient->waitForBytesWritten( );
             //bRet = WaitForReply( udpClient );
             bRet = true;
         }
@@ -242,6 +244,8 @@ bool CNetClient::SocketSendData(ClientType client, QByteArray& byData )
     case ClientTCPClient:
         if ( NULL != tcpClient ) {
             nRetSize = tcpClient->SendData( byData );
+            tcpClient->flush( );
+            tcpClient->waitForBytesWritten( );
             bRet = WaitForReply( tcpClient );
         }
         break;

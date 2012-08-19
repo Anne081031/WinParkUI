@@ -6,7 +6,7 @@
 
 namespace Protocol {
 
-enum RequestType{
+enum RequestType {
     RequestReserved = 0,
     RequestQueryBallotSenseState,
     RequestQueryGateSenseState,

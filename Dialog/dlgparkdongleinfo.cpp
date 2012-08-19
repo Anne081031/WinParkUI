@@ -48,20 +48,24 @@ void CDlgParkDongleInfo::on_btnAdd_clicked()
     pProcess->GetAllHIDs( lstHids );
 
     foreach ( const QString& strHid, lstHids ) {
-        QList<QTableWidgetItem* > lstItems = ui->tableWidget->findItems( strHid, Qt::MatchContains );
+        //QList<QTableWidgetItem* > lstItems = ui->tableWidget->findItems( strHid, Qt::MatchContains );
 
-        if ( lstItems.count( ) > 0 ) {
-            int nRow = ui->tableWidget->row( lstItems.at( 0 ) );
-            QString strInfo = QString( "加密狗【%1】已被停车场【%2】使用了！" ).arg( strHid, ui->tableWidget->item( nRow, 1 )->text( ) );
-            CCommonFunction::MsgBox( NULL, "提示", strInfo, QMessageBox::Information );
-            continue;
-        }
+        //if ( lstItems.count( ) > 0 ) {
+        //    int nRow = ui->tableWidget->row( lstItems.at( 0 ) );
+        //    QString strInfo = QString( "加密狗【%1】已被停车场【%2】使用了！" ).arg( strHid, ui->tableWidget->item( nRow, 1 )->text( ) );
+        //    CCommonFunction::MsgBox( NULL, "提示", strInfo, QMessageBox::Information );
+        //    continue;
+        //}
 
         QTableWidgetItem* pItem = ui->tableWidget->item( nRow, 2 );
         QString strHids = pItem->text( );
         if ( strHids.isEmpty( ) ) {
             strHids = strHid;
         } else {
+            if ( strHids.contains( strHid ) ) {
+                continue;
+            }
+
             strHids += "," + strHid;
         }
         pItem->setText( strHids );

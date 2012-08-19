@@ -660,6 +660,35 @@ int CLogicInterface::OperateInOutRight( QStringList& lstRows, CommonDataType::Da
     return nRows;
 }
 
+void CLogicInterface::ExistCardNumber( QString &strCardNo, QStringList& strList )
+{
+    strList.clear( );
+    QStringList lstRows;
+    QString strSQL = "select cardno from %1 where cardno = '%2'";
+    QString strTmp = strSQL.arg( "monthcard", strCardNo );
+    ExecuteSql( strTmp, lstRows );
+
+    if ( 0 < lstRows.count( ) ) {
+        strList << strCardNo + "卡号已在月租卡表。\n";
+    }
+
+    strSQL = "select cardno from %1 where cardno = '%2'";
+    strTmp = strSQL.arg( "savecard", strCardNo );
+    ExecuteSql( strTmp, lstRows );
+
+    if ( 0 < lstRows.count( ) ) {
+        strList << strCardNo + "卡号已在储值卡表。\n";
+    }
+
+    strSQL = "select cardno from %1 where cardno = '%2'";
+    strTmp = strSQL.arg( "tmpcard", strCardNo );
+    ExecuteSql( strTmp, lstRows );
+
+    if ( 0 < lstRows.count( ) ) {
+        strList << strCardNo + "卡号已在计时卡表。\n";
+    }
+}
+
 int CLogicInterface::OperateCardInfo(QStringList &lstRows, CommonDataType::CardType carType, CommonDataType::DatabaseOperation dbOperation, QString& strWhere )
 {
     QString strSql = "";

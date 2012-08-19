@@ -36,7 +36,7 @@ public:
     static void ReleaseInterface( );
 
 public:
-
+    void ExistCardNumber( QString& strCardNo, QStringList& strList );
     int OperateOwnerInfo( QStringList& lstRows, CommonDataType::DatabaseOperation dbOperation, QString& strWhere );
     int OperateCarInfo( QStringList& lstRows, CommonDataType::DatabaseOperation dbOperation, QString& strWhere );
     int OperateChargeRecord( QStringList& lstRows, CommonDataType::DatabaseOperation dbOperation, QString& strWhere );

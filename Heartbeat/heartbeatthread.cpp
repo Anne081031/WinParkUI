@@ -63,6 +63,8 @@ void CHeartbeatThread::SyncNetState( )
 
 void CHeartbeatThread::GetLiveNetworkInterfaceIP( )
 {
+    SyncIP( strHostIP );
+    return;
     DWORD dwSize = 0;
     PMIB_IFROW pIfRow = NULL;
     PIP_ADAPTER_ADDRESSES pAddress = NULL;
@@ -146,21 +148,18 @@ void CHeartbeatThread::GetLiveNetworkInterfaceIP( )
     }
 
     inAddr = ( struct sockaddr_in* ) pUnicast->Address.lpSockaddr;
-    SyncIP( inet_ntoa( inAddr->sin_addr ) );
+    //SyncIP( inet_ntoa( inAddr->sin_addr ) );
 
     FREEMEMORY2:
     bRet = HeapFree( hHeap, 0, pAddress );
 }
 
-void CHeartbeatThread::SyncIP( const char* pIP )
+void CHeartbeatThread::SyncIP( QString& strIP )
 {
-    if ( NULL == pIP ) {
-        return;
-    }
 
     static QString strFormat = "%1,%2,%3" ;
 
-    QString strBody = strFormat.arg( strParkID, pIP, strClientServerPort );
+    QString strBody = strFormat.arg( strParkID, strIP, strClientServerPort );
     udpClient->SendHeartbeatData( strBody, NetTransport::HbClientIP );
 }
 

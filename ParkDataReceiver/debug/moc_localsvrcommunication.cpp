@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'localsvrcommunication.h'
 **
-** Created: Mon Dec 26 16:27:45 2011
+** Created: Sun Aug 19 09:52:35 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

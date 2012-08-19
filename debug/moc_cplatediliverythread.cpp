@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'cplatediliverythread.h'
 **
-** Created: Wed Aug 15 20:09:16 2012
+** Created: Sun Aug 19 16:46:36 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

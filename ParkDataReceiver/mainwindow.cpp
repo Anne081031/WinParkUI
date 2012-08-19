@@ -38,6 +38,9 @@ MainWindow::MainWindow(QWidget *parent) :
     Qt::WindowFlags flags = windowFlags( );
     flags &= ( ~Qt::WindowMinimizeButtonHint );
     setWindowFlags( flags );
+
+    //setWindowState( Qt::WindowMinimized );
+    //close( );
 }
 
 MainWindow::~MainWindow()

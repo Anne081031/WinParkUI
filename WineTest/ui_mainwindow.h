@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Aug 15 16:43:43 2012
+** Created: Thu Aug 16 17:19:59 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -59,6 +59,16 @@ public:
     QGroupBox *groupBox_2;
     QTextEdit *edtResponse;
     QLabel *lblPic;
+    QGroupBox *groupBox_3;
+    QPushButton *btnConnect;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout_6;
+    QLabel *label_6;
+    QLineEdit *edtIP;
+    QWidget *widget1;
+    QHBoxLayout *horizontalLayout_7;
+    QLabel *label_7;
+    QLineEdit *edtPort;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -181,6 +191,48 @@ public:
         lblPic->setFrameShape(QFrame::Panel);
         lblPic->setFrameShadow(QFrame::Sunken);
         lblPic->setScaledContents(true);
+        groupBox_3 = new QGroupBox(centralWidget);
+        groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
+        groupBox_3->setGeometry(QRect(30, 270, 231, 141));
+        btnConnect = new QPushButton(groupBox_3);
+        btnConnect->setObjectName(QString::fromUtf8("btnConnect"));
+        btnConnect->setGeometry(QRect(40, 100, 111, 23));
+        widget = new QWidget(groupBox_3);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(20, 30, 153, 22));
+        horizontalLayout_6 = new QHBoxLayout(widget);
+        horizontalLayout_6->setSpacing(6);
+        horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
+        horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
+        label_6 = new QLabel(widget);
+        label_6->setObjectName(QString::fromUtf8("label_6"));
+
+        horizontalLayout_6->addWidget(label_6);
+
+        edtIP = new QLineEdit(widget);
+        edtIP->setObjectName(QString::fromUtf8("edtIP"));
+
+        horizontalLayout_6->addWidget(edtIP);
+
+        widget1 = new QWidget(groupBox_3);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        widget1->setGeometry(QRect(20, 60, 165, 22));
+        horizontalLayout_7 = new QHBoxLayout(widget1);
+        horizontalLayout_7->setSpacing(6);
+        horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
+        horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
+        label_7 = new QLabel(widget1);
+        label_7->setObjectName(QString::fromUtf8("label_7"));
+
+        horizontalLayout_7->addWidget(label_7);
+
+        edtPort = new QLineEdit(widget1);
+        edtPort->setObjectName(QString::fromUtf8("edtPort"));
+
+        horizontalLayout_7->addWidget(edtPort);
+
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -232,6 +284,10 @@ public:
         );
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Response", 0, QApplication::UnicodeUTF8));
         lblPic->setText(QString());
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\346\234\215\345\212\241\345\231\250", 0, QApplication::UnicodeUTF8));
+        btnConnect->setText(QApplication::translate("MainWindow", "\351\223\276\346\216\245\350\275\246\347\211\214\346\234\215\345\212\241\345\231\250", 0, QApplication::UnicodeUTF8));
+        label_6->setText(QApplication::translate("MainWindow", "IP", 0, QApplication::UnicodeUTF8));
+        label_7->setText(QApplication::translate("MainWindow", "Port", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

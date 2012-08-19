@@ -4,9 +4,9 @@
 #include <QObject>
 #include <QtNetwork>
 #ifdef PARKDATARECEIVER_APP
-#include "../Common/commonfunction.h"
+#include "../Common/logicinterface.h"
 #else
-#include "Common/commonfunction.h"
+#include "Common/logicinterface.h"
 #endif
 #include "mainwindow.h"
 

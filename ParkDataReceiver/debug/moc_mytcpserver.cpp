@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mytcpserver.h'
 **
-** Created: Wed Apr 11 09:45:11 2012
+** Created: Sun Aug 19 18:37:11 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CMyTcpServer[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -36,7 +36,8 @@ static const uint qt_meta_data_CMyTcpServer[] = {
  // slots: signature, parameters, type, tag, flags
       37,   13,   13,   13, 0x0a,
       56,   13,   13,   13, 0x0a,
-      80,   68,   13,   13, 0x0a,
+      68,   13,   13,   13, 0x0a,
+      96,   84,   13,   13, 0x0a,
 
        0        // eod
 };
@@ -44,7 +45,8 @@ static const uint qt_meta_data_CMyTcpServer[] = {
 static const char qt_meta_stringdata_CMyTcpServer[] = {
     "CMyTcpServer\0\0NotifyMessage(QString)\0"
     "HandleDisconnect()\0GetStream()\0"
-    "socketError\0TcpError(QAbstractSocket::SocketError)\0"
+    "GetMgmtStream()\0socketError\0"
+    "TcpError(QAbstractSocket::SocketError)\0"
 };
 
 const QMetaObject CMyTcpServer::staticMetaObject = {
@@ -79,10 +81,11 @@ int CMyTcpServer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 0: NotifyMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: HandleDisconnect(); break;
         case 2: GetStream(); break;
-        case 3: TcpError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
+        case 3: GetMgmtStream(); break;
+        case 4: TcpError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

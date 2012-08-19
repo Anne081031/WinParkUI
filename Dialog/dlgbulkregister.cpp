@@ -382,10 +382,18 @@ void CDlgBulkRegister::SaveMonthData( QStringList &lstDuplication, QStringList& 
     QComboBox* pCB = NULL;
     QDateTimeEdit* pDT = NULL;
     QString strText = "";
+    QStringList lstExist;
 
     for ( int nRow = 0; nRow < nRows; nRow++ ) {
         lstSql.clear( );
         strText = ui->tabRecord->item( nRow, 0 )->text( );
+
+        CLogicInterface::GetInterface( )->ExistCardNumber(strText, lstExist );
+        if ( 0 < lstExist.count( ) ) {
+            lstDuplication << lstExist;
+            continue;
+        }
+
         QList< QTableWidgetItem* > lstItems = tabWidget->findItems( strText, Qt::MatchFixedString );
         if ( 0 < lstItems.count( ) ) {
             lstDuplication << strText;
@@ -445,10 +453,18 @@ void CDlgBulkRegister::SaveValueData( QStringList &lstDuplication, QStringList& 
     bool bChecked = false;
     QComboBox* pCB = NULL;
     QString strText = "";
+    QStringList lstExist;
 
     for ( int nRow = 0; nRow < nRows; nRow++ ) {
         lstSql.clear( );
         strText = ui->tabRecord->item( nRow, 0 )->text( );
+
+        CLogicInterface::GetInterface( )->ExistCardNumber(strText, lstExist );
+        if ( 0 < lstExist.count( ) ) {
+            lstDuplication << lstExist;
+            continue;
+        }
+
         QList< QTableWidgetItem* > lstItems = tabWidget->findItems( strText, Qt::MatchFixedString );
         if ( 0 < lstItems.count( ) ) {
             lstDuplication << strText;
@@ -498,10 +514,18 @@ void CDlgBulkRegister::SaveTimeData( QStringList &lstDuplication, QStringList& l
     QString strQuotation = "'";
     QComboBox* pCB = NULL;
     QString strText = "";
+    QStringList lstExist;
 
     for ( int nRow = 0; nRow < nRows; nRow++ ) {
         lstSql.clear( );
         strText = ui->tabRecord->item( nRow, 0 )->text( );
+
+        CLogicInterface::GetInterface( )->ExistCardNumber(strText, lstExist );
+        if ( 0 < lstExist.count( ) ) {
+            lstDuplication << lstExist;
+            continue;
+        }
+
         QList< QTableWidgetItem* > lstItems = tabWidget->findItems( strText, Qt::MatchFixedString );
         if ( 0 < lstItems.count( ) ) {
             lstDuplication << strText;

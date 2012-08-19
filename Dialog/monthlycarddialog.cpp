@@ -235,6 +235,7 @@ void CMonthlyCardDialog::InitDlg( )
 
 void CMonthlyCardDialog::on_btnSave_clicked( )
 {
+    QString strCardNo = ClearZero( ui->edtNumber );
     if ( !CCommonFunction::IsDigital( ClearZero( ui->edtNumber ) )) {
         CCommonFunction::MsgBox( NULL, CCommonFunction::GetMsgTitle( QMessageBox::Information ),
                                  "请输入正确的卡号！", QMessageBox::Information );
@@ -244,13 +245,14 @@ void CMonthlyCardDialog::on_btnSave_clicked( )
     if ( m_bNew ) {
         QString strTable;
         CCommonFunction::GetTableName( CommonDataType::MonthlyCard, strTable );
-        QString strSql = QString( "Select cardno From %1 Where cardno = \
-                                  '%2'" ).arg( strTable, ClearZero( ui->edtNumber ) );
+        //QString strSql = QString( "Select cardno From %1 Where cardno = \
+        //                          '%2'" ).arg( strTable, ClearZero( ui->edtNumber ) );
         QStringList lstRow;
-        CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
+        //CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
+        CLogicInterface::GetInterface( )->ExistCardNumber( strCardNo, lstRow );
         if ( 0 < lstRow.count( ) ) {
             CCommonFunction::MsgBox( NULL, CCommonFunction::GetMsgTitle( QMessageBox::Information ),
-                                     "此卡号已存在！", QMessageBox::Information );
+                                     lstRow.at( 0 ), QMessageBox::Information );
             return;
         }
     }

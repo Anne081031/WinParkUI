@@ -20,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect( &tcpSocket, SIGNAL( readyRead( ) ), this, SLOT( IncomingData( ) ) );
 
     if ( true ) {
-        Connect2Host( );
+        //Connect2Host( );
     } else {
         connect( &listener, SIGNAL( Accept( int ) ), this, SLOT( HandleAccept( int ) ) );
         listener.moveToThread( &listener );
@@ -35,8 +35,19 @@ bool MainWindow::Connect2Host( )
         return true;
     }
 
-    QHostAddress addr( "192.168.1.53" );//127.0.0.1
-    tcpSocket.connectToHost( addr, quint16( 60000 ) );
+    QString strIP = ui->edtIP->text( );
+    if ( strIP.isEmpty( ) ) {
+        strIP = "127.0.0.1";
+    }
+
+    QString strPort = ui->edtPort->text( );
+    if ( strPort.isEmpty( ) ) {
+        strPort = "60000";
+    }
+
+    QHostAddress addr( strIP );//127.0.0.1
+    quint16 nPort = strPort.toUShort( );
+    tcpSocket.connectToHost( addr, nPort );
 
     return QAbstractSocket::ConnectedState == tcpSocket.state( );
 }
@@ -444,4 +455,9 @@ void MainWindow::on_btnRequest_clicked()
         CreateActiveSendRequest( byData );
         break;
     }
+}
+
+void MainWindow::on_btnConnect_clicked()
+{
+    Connect2Host( );
 }

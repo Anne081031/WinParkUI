@@ -6,7 +6,7 @@
 #include "CommonData.h"
 #include "manipulatemessage.h"
 #include "../common/commonfunction.h"
-#include "Database/mysqldatabase.h"
+#include "../Database/mysqldatabase.h"
 
 class CNetProcessData : public QRunnable
 
