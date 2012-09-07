@@ -61,7 +61,7 @@ bool CWriteThread::WriteData( QByteArray &byData )
         }
 #endif
 
-       Sleep( 300 );
+       Sleep( 400 );
     }
 
     return bRet;

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'rightmgm.h'
 **
-** Created: Sun Aug 19 19:03:15 2012
+** Created: Fri Sep 7 15:35:27 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

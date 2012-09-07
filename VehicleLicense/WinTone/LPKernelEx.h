@@ -9,7 +9,7 @@
 #define LC_WHITE    3  //白色
 #define LC_BLACK    4  //黑色
 #define LC_GREEN    5  //绿色
-	
+
 //车牌类型
 #define LT_UNKNOWN  0   //未知车牌
 #define LT_BLUE     1   //蓝牌小汽车
@@ -31,11 +31,15 @@
 #define DIRECTION_UP	3  //上
 #define DIRECTION_DOWN	4  //下
 
-//图像格式
-#define ImageFormatRGB		0
-#define ImageFormatBGR		1
-#define ImageFormatYUV422	2
-#define ImageFormatYUV420	3
+//图像格式（TH_SetImageFormat函数的cImageFormat参数）
+#define ImageFormatRGB		0			//RGBRGBRGB...
+#define ImageFormatBGR		1			//BGRBGRBGR...
+#define ImageFormatYUV422	2			//YYYY...UU...VV..	(YV16)
+#define ImageFormatYUV420COMPASS 3		//YYYY...UV...		(NV12)
+#define ImageFormatYUV420	 4			//YYYY...U...V...	(YU12)
+#define ImageFormatUYVY	    5			//UYVYUYVYUYVY...	(UYVY)
+#define ImageFormatNV21		6			//YYYY...VU...		(NV21)
+#define ImageFormatYV12		7			//YYYY...V...U		(YV12)
 
 //车辆颜色
 #define LGRAY_DARK	0	//深
@@ -80,6 +84,44 @@ extern "C" {
 #endif
 
 /**************************************
+LPR_SetParameters设置识别参数
+参数：bMovingImage[in]            识别运动或静止图像
+      nPlatesNum[in]              最多识别的车牌个数
+	  bFlipVertical[in]           是否上下颠倒图像后识别
+	  nColorOrder[in]             是否图像格式
+	  bVertCompress[in]           是否垂直方向压缩一倍识别
+	  nImageplateThr[in]          车牌定位阈值
+	  nImageRecogThr[in]          车牌识别阈值
+	  nMinPlateWidth[in]          最小车牌宽度
+	  nMaxPlateWidth[in]          最大车牌宽度
+	  LocalProvince[in]           默认省份
+	  bDwordAligned[in]           是否四字节对齐
+	  bInputHalfHeightImage[in]   是否输入场图像
+	  bOutputSingleFrame[in]      是否只输出一个识别结果
+	  bYellow2[in]                是否识别双层黄牌
+	  bIndivi[in]                 是否识别个性化车牌
+	  bArmPol[in]                 是否识别军牌
+	  bArmy2[in]                  是否识别双层军牌
+	  bTractor[in]                是否识别农用车牌 
+	  bNight[in]                  是否是夜间模式	
+	  nChannel[in]                通道号
+***************************************/
+BOOL WINAPI LPR_SetParameters(BOOL bMovingImage,
+		int nPlatesNum,
+		BOOL bFlipVertical, 
+		int nColorOrder,
+		BOOL bVertCompress,
+		int nImageplateThr, int nImageRecogThr, 
+		int nMinPlateWidth, int nMaxPlateWidth, 
+		char *LocalProvince,
+		BOOL bDwordAligned,
+		BOOL bInputHalfHeightImage,    												   
+		BOOL bOutputSingleFrame,
+		BOOL bYellow2, BOOL bIndivi, BOOL bArmPol, BOOL bArmy2, BOOL bTractor, 
+		BOOL bNight, 	
+		int nChannel=1);
+
+/**************************************
 LPR_SetImageFormat设置图像格式。必须在调用LPR_InitEx之前设置
 参数：bMovingImage[in]            识别运动或静止图像
 	  bFlipVertical[in]           是否上下颠倒图像后识别
@@ -107,12 +149,25 @@ BOOL WINAPI LPR_SetImageFormat(BOOL bMovingImage,
 LPR_SetPlateType设置识别车牌类型。必须在调用LPR_InitEx之后设置
 参数：bYellow2[in]                是否识别双层黄牌
       bIndivi[in]                 是否识别个性化车牌
-      bArmPol[in]                 是否识别军牌
+      bArmPol[in]                 是否识别军警车牌
       bArmy2[in]                  是否识别双层军牌
       bTractor[in]                是否识别农用车牌 
+	  bOnlyDyellow[in]			  只是别双层黄牌
+	  bEmbassy[in]				  是否识别使馆车牌
+	  bDarmpolice[in]			  是否识别双层武警车牌
+	  bOnlyLocation[in]			  只定位车牌
 	  nChannel[in]                通道号
 ***************************************/
-BOOL WINAPI LPR_SetPlateType(BOOL bYellow2, BOOL bIndivi, BOOL bArmPol, BOOL bArmy2, BOOL bTractor, int nChannel=1);
+BOOL WINAPI LPR_SetPlateType(BOOL bYellow2, 
+							 BOOL bIndivi,
+							 BOOL bArmPol, 
+							 BOOL bArmy2,
+							 BOOL bTractor,
+							 BOOL bOnlyDyellow,
+							 BOOL bEmbassy,
+							 BOOL bDarmpolice,
+							 BOOL bOnlyLocation,
+							 int  nChannel=1);
 
 /**************************************
 LPR_SetSpecialParameters设置夜间模式、识别阈值、省份默认值、识别车牌个数。必须在调用LPR_InitEx之后设置
@@ -154,7 +209,7 @@ LPR_RGB888Ex识别连续视频流和内存图片
 ***************************************/
 BOOL WINAPI LPR_RGB888Ex(unsigned char *pImg, int nWidth, int  nHeight, TH_PlateResult* pResult, int &nRecogNum, TH_RECT *prcRange, int  nChannel=1);
 
-/**************************************
+/************************* *************
 LPR_GetImageBuf识别连续视频流时获取识别到车牌的帧内存
 参数：pImageBuf[in,out]   输入一个BYTE类型指针，不需要分配内存；输出图像的指针
       nWidth[out]         图像的宽度，以像素为单位

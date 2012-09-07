@@ -47,6 +47,7 @@ private:
     QByteArray byData;
     quint32 nPakageSize;
     bool bActiveSend;
+    bool bActivePlate;
     CDataParser dataParser;
     QHash< int, QStringList > hashPlate;
     QString strPlates[ 2 ];

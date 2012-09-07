@@ -229,7 +229,7 @@ bool CNetClient::SocketSendData(ClientType client, QByteArray& byData )
 {
     bool bRet = false;
     quint64 nRetSize = 0;
-
+try {
     switch ( client ) {
     case ClientUDPClient:
         if ( NULL != udpClient ) {
@@ -257,6 +257,10 @@ bool CNetClient::SocketSendData(ClientType client, QByteArray& byData )
     case ClientHTTPServer:
         bRet = true;
         break;
+    }
+    } catch ( ... ) {
+        int n = 0;
+        n++;
     }
 
     return bRet;

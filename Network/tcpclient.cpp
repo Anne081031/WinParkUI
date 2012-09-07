@@ -66,7 +66,14 @@ bool CTcpClient::Connect2Server( const QHostAddress &hostAddr, quint16 nPort )
     svrAddr = hostAddr;
     nSvrPort = nPort;
 
-    connectToHost( svrAddr, nSvrPort );
+    try {
+        connectToHost( svrAddr, nSvrPort );
+    } catch ( ... ) {
+        int n = 0;
+        n++;
+        return false;
+    }
+
     return true;
 }
 

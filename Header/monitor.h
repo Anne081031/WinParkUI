@@ -32,6 +32,8 @@ public:
     explicit CMonitor( QWidget* mainWnd, QWidget *parent = 0);
     ~CMonitor();
 
+    void PictureRegconize( QString& strFile, int nChannel );
+
     void ClearStatistics( );
     void ControlSelf( );
     void ControlChargeInfo( QStringList& strInfo );
@@ -119,6 +121,7 @@ private:
     CDlgAlert* pDlgAlert;
     bool bDisplayAlert;
     int nRefreshParkspaceTime;
+    bool bPlateVideo;
 
     Ui::CMonitor *ui;
     MainWindow* pParent;

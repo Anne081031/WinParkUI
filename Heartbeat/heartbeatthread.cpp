@@ -45,11 +45,15 @@ CHeartbeatThread& CHeartbeatThread::GetInstance( QObject *parent )
 void CHeartbeatThread::timerEvent( QTimerEvent * e )
 {
     int nTimerID = e->timerId( );
-
+try {
     if ( nTimerID   == nIPTimerID ) {
         GetLiveNetworkInterfaceIP( );
     } else if ( nTimerID == nNetStateTimerID ){
         SyncNetState( );
+    }
+    } catch ( ... ) {
+        int n = 0;
+        n++;
     }
 }
 

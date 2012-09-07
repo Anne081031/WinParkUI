@@ -2,6 +2,7 @@
 #define WINTONE_H
 #include "../vehiclelicense.h"
 //#include "LPKernelEx.h"
+#include "cyuv2bgr.h"
 
 #define MAX_WAY ( int ) ( 4 )
 
@@ -38,8 +39,16 @@ protected:
     void GetParameters( );
 
 private:
+    bool YUV2RGB( LPBYTE yuvBuf, UINT nWidth,
+                                 UINT nHeight, LPBYTE pRgbBuf,
+                                 unsigned long *len );
+
+    void RGB2BGR( LPBYTE pRgbBuf, unsigned long len );
+
+private:
     QStringList lstKeys;
     QStringList lstDefault;
+    CYUV2BGR yuv2BGR;
 
 };
 

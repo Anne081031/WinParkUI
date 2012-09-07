@@ -27,6 +27,7 @@ CPlateDiliveryThread::CPlateDiliveryThread(QObject *parent) :
     nPort = pSettings->value( "PlateDilivery/ReceiverPort", 60000 ).toUInt( );
     int nInterval = pSettings->value( "PlateDilivery/TimerDetector", 6000 ).toInt( );
     bActiveSend = pSettings->value( "PlateDilivery/ActiveSend", false ).toBool( );
+    bActivePlate = pSettings->value( "PlateDilivery/ActivePlate", true ).toBool( );
 
     nBytesAvailable = 0;
     nPakageSize= 0;
@@ -250,5 +251,7 @@ void CPlateDiliveryThread::HandlePlateDilivery( int nChannel, QStringList lstDat
 
     hashPlate.insert( nChannel, lstData );
     ///////////////////////////////////////////////////////////////////////////////////
-    SendPlate( nChannel, lstData );
+    if ( bActivePlate ) {
+        SendPlate( nChannel, lstData );
+    }
 }

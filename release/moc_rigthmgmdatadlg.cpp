@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'rigthmgmdatadlg.h'
 **
-** Created: Wed Aug 15 18:39:27 2012
+** Created: Fri Sep 7 15:36:18 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -277,6 +277,7 @@ QString CCommonFunction::GetFeeStd( QString &strFee )
 
 void CCommonFunction::DisplayPlateChar( QWidget& wg, int nChannel, QString& strContent )
 {
+    try {
     int nCount = strContent.count( ); //lblLicence11
     static const QString strName( "lblLicence%1%2" );
     QLabel* pLabel = NULL;
@@ -287,7 +288,7 @@ void CCommonFunction::DisplayPlateChar( QWidget& wg, int nChannel, QString& strC
 
         if ( NULL != pLabel ) {
             //pLabel->setText( strLink.arg( ( nIndex > nCount - 1 ) ? " " : QString( strContent[ nIndex ] ) ) );
-            pLabel->setText( "" );
+            //pLabel->setText( "" );
             if ( nIndex < nCount ) {
                 QString strChar = QString( strContent[ nIndex ] );
                 pLabel->setText( strChar );
@@ -297,6 +298,9 @@ void CCommonFunction::DisplayPlateChar( QWidget& wg, int nChannel, QString& strC
             //    pLabel->update();
             //}
         }
+    }
+    } catch ( ... ) {
+        qDebug( ) << "CCommonFunction::DisplayPlateChar Exception" << endl;
     }
 }
 

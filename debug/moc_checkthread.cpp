@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'checkthread.h'
 **
-** Created: Wed Aug 15 11:55:15 2012
+** Created: Fri Sep 7 15:27:19 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

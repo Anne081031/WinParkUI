@@ -6,6 +6,6 @@ LPR_InitEx@4
 LPR_RGB888Ex@28
 LPR_SetImageFormat@40
 LPR_SetParameters@80
-LPR_SetPlateType@24
+LPR_SetPlateType@40
 LPR_SetSpecialParameters@24
 LPR_UninitEx@4

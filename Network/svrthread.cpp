@@ -25,6 +25,8 @@ void CSvrThread::NotifyMessage( QString strMsg )
 
 bool CSvrThread::StartupUdpServer( bool bServerEnd )
 {
+    bool bRet = false;
+    try {
     CUdpDispatcher** pServer = &udpServer[ bServerEnd ];
     if ( NULL == *pServer ) {
         *pServer = new CUdpDispatcher( this );
@@ -33,13 +35,19 @@ bool CSvrThread::StartupUdpServer( bool bServerEnd )
 
     quint16 nPort = GetPort( bServerEnd, false );
     quint16 nThreadPool = GetThreadPoolCount( bServerEnd, false );
-    bool bRet = ( *pServer )->InitServer( nPort, nThreadPool );
+    bRet = ( *pServer )->InitServer( nPort, nThreadPool );
+    } catch ( ... ) {
+        int n = 0;
+        n++;
+    }
 
     return bRet;
 }
 
 bool CSvrThread::StartupTcpServer( bool bServerEnd )
 {
+    bool bRet = false;
+    try {
     CTcpDispatcher** pServer = &tcpServer[ bServerEnd ];
     if ( NULL == *pServer ) {
         *pServer = new CTcpDispatcher( this );
@@ -49,7 +57,11 @@ bool CSvrThread::StartupTcpServer( bool bServerEnd )
     quint16 nPort = GetPort( bServerEnd, true );
     int nMaxPendingConn = GetMaxPendingCount( bServerEnd );
     quint16 nThreadPool = GetThreadPoolCount( bServerEnd, true );
-    bool bRet = ( *pServer )->InitServer( nPort, nMaxPendingConn, nThreadPool );
+    bRet = ( *pServer )->InitServer( nPort, nMaxPendingConn, nThreadPool );
+    } catch ( ... ) {
+        int n = 0;
+        n++;
+    }
 
     return bRet;
 }
@@ -85,5 +97,10 @@ quint16 CSvrThread::GetThreadPoolCount( bool bServerEnd, bool bTcp )
 
 void CSvrThread::run( )
 {
+    try {
     exec( ); // Event loop to communicate with other thread
+    } catch ( ... ) {
+        int n = 0;
+        n++;
+    }
 }

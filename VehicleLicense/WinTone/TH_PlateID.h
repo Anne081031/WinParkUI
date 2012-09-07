@@ -73,7 +73,7 @@ extern "C" {
 //Í¼Ïñ¸ñÊ½
 #define ImageFormatRGB		0
 #define ImageFormatBGR		1
-#define ImageFormatYUV422	2
+#define ImageFormatYUV422	 2
 #define ImageFormatYUV420COMPASS 3
 
 #define PARAM_INDIVIDUAL_ON          0

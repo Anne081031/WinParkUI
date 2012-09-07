@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgqueryowner.h'
 **
-** Created: Wed Aug 15 11:55:06 2012
+** Created: Fri Sep 7 15:27:11 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
