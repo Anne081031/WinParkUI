@@ -300,6 +300,19 @@ bool CWinTone::RecognizedPlateType( QStringList& lstType )
     BOOL bArmy2    = ( 1 == mapParameters[ nChannel ].value( lstKeys[ 14 ] ).toInt( ) );
     BOOL bTractor  = ( 1 == mapParameters[ nChannel ].value( lstKeys[ 15 ] ).toInt( ) );
     bRet = LPR_SetPlateType(TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,++nChannel);
+
+    typedef BOOL ( WINAPI* OldFun ) ( BOOL, BOOL, BOOL, BOOL, BOOL, int );
+    if ( !bRet ) {
+        HMODULE hMod = LoadLibrary( L"LPKernelEx.dll" );
+
+        if  ( NULL !=hMod  ) {
+            OldFun fun = ( OldFun ) GetProcAddress( hMod, "LPR_SetPlateType" );
+            if ( NULL != fun ) {
+                bRet = fun( TRUE,FALSE,FALSE,FALSE,FALSE,++nChannel );
+                FreeLibrary( hMod );
+            }
+        }
+    }
     //bRet = LPR_SetPlateType( bYellow, bIndivi, bArmPol, bArmy2, bTractor,
     //                         FALSE, FALSE, FALSE, FALSE, ++nChannel );
     ASSERT_VEHICLE( "LPR_SetPlateType" );

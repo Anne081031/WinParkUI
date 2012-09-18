@@ -242,7 +242,7 @@ try {
         break;
 
     case ClientTCPClient:
-        if ( NULL != tcpClient ) {
+        if ( NULL != tcpClient && QAbstractSocket::ConnectedState == tcpClient->state( ) ) {
             nRetSize = tcpClient->SendData( byData );
             tcpClient->flush( );
             tcpClient->waitForBytesWritten( );

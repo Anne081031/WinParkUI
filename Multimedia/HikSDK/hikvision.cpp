@@ -3,21 +3,99 @@
 #include <QFile>
 #include <QDateTime>
 #include <QTextCodec>
+#include <windows.h>
+
+int StreamDirectReadCallback(ULONG channelNumber,void *DataBuf,DWORD Length,int FrameType,void *context)
+{
+    CHikVision* hkv = ( CHikVision* ) context;
+    hkv->WriteH264Data( channelNumber, DataBuf, Length, FrameType );
+
+    return 0;
+}
+
+void CHikVision::WriteH264Data( ULONG lChannel, void *DataBuf, DWORD Length, int FrameType )
+{
+    if ( 2 <= lChannel ) {
+        return;
+    }
+
+    if ( PktSysHeader == FrameType ) {
+        switch ( lChannel ) {
+        case 0 :
+            //byInHeader.clear( );
+            byInHeader.append( ( const char* ) DataBuf, Length );
+            break;
+
+        case 1 :
+            //byOutHeader.clear( );
+            byOutHeader.append( ( const char* ) DataBuf, Length );
+            break;
+        }
+    }
+
+    QFile& file = ( 0 == lChannel ) ? fInChannel : fOutChannel;
+
+    file.write( ( const char* ) DataBuf, Length );
+
+    if ( file.size( ) >= 100 * 1024 * 1024 ) {
+        CloseFile( );
+        OpenFile( true );
+    }
+}
+
+void CHikVision::OpenFile( bool bWriteHeader )
+{
+    if ( !bRecorder ) {
+        return;
+    }
+
+    QString strInFileName = QString( "In%1.264" ).arg( QDateTime::currentDateTime( ).toString( "yyyyMMddHHmmss" ) );
+    QString strOutFileName = QString( "Out%1.264" ).arg( QDateTime::currentDateTime( ).toString( "yyyyMMddHHmmss" ) );
+
+    fInChannel.setFileName( strInFileName );
+    fOutChannel.setFileName( strOutFileName );
+
+    bool bRet = fInChannel.open( QIODevice::WriteOnly | QIODevice::Truncate );
+    bRet = fOutChannel.open( QIODevice::WriteOnly | QIODevice::Truncate );
+
+    if ( bWriteHeader ) {
+        fInChannel.write( byInHeader );
+        fOutChannel.write( byOutHeader );
+    }
+}
+
+void CHikVision::CloseFile( )
+{
+    if ( !bRecorder ) {
+        return;
+    }
+
+    ULONG lEndCode = 0x00000002;
+
+    fInChannel.write( ( const char* ) &lEndCode, sizeof ( lEndCode ) );
+    fOutChannel.write( ( const char* ) &lEndCode, sizeof ( lEndCode ) );
+
+    fInChannel.close( );
+    fOutChannel.close( );
+}
 
 CHikVision::CHikVision()
 {
     GetParameters( );
+    OpenFile( );
 }
 
 CHikVision::~CHikVision( )
 {
-
+    CloseFile( );
 }
 
 int CHikVision::SystemStartup( HWND hOverlayWnd )
 {
     int nEncodeChannel = InitDSPs( );
     qDebug( ) << "Encode Channel Number :" << nEncodeChannel << endl;
+    int nRet = RegisterStreamDirectReadCallback( ( STREAM_DIRECT_READ_CALLBACK ) StreamDirectReadCallback,this );
+    nRet = 0;
 
     return nEncodeChannel;
 }
@@ -29,11 +107,24 @@ int CHikVision::SystemShutdown( )
 
 HANDLE CHikVision::OpenChannel( int nChannelNum )
 {
-    return ChannelOpen( nChannelNum );
+    // PlateCfg.ini
+    // [WintonePlate]
+    // Recorder=true
+    HANDLE hChannel = ChannelOpen( nChannelNum );
+    int nRet = 0;
+    if ( bRecorder && ( INVALID_HANDLE != hChannel ) ) {
+        nRet = StartVideoCapture( hChannel );
+    }
+
+    return hChannel;
 }
 
 int CHikVision::CloseChannel( HANDLE hChannel )
 {
+    if ( bRecorder ) {
+        StopVideoCapture( hChannel );
+    }
+
     return ChannelClose( hChannel );
 }
 
@@ -75,6 +166,8 @@ void CHikVision::GetParameters( )
         rDetectionRange[ nIndex ].top = pSettings->value( strKey.arg( QString::number( nIndex ), "PlateDetectionUp" ), 0 ).toInt( );
         rDetectionRange[ nIndex ].bottom = pSettings->value( strKey.arg( QString::number( nIndex ), "PlateDetectionDown" ), 575 ).toInt( );
     }
+
+    bRecorder = pSettings->value( "WintonePlate/Recorder", false ).toBool( );
 }
 
 int CHikVision::SetupDetection( HANDLE hChannel, HK_MOTION_CB pCBF, int nIndex, LPVOID pContext )

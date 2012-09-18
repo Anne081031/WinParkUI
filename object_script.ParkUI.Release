@@ -131,6 +131,7 @@ INPUT(
 ./release\cdataparser.o
 ./release\qlistener.o
 ./release\qmytcpserver.o
+./release\ping.o
 ./release\moc_valuecard.o
 ./release\moc_tolldiscounttypeset.o
 ./release\moc_timecard.o
@@ -246,4 +247,5 @@ INPUT(
 ./release\moc_cdataparser.o
 ./release\moc_qmytcpserver.o
 ./release\moc_qlistener.o
+./release\moc_ping.o
 );

@@ -403,6 +403,9 @@ void CDataParser::ProcessBallotSenseRequest( QByteArray& byStream )
     //查询票箱地感状态	AA	03 00	51 42	xx	无 	xx	55
 
     QByteArray byBody = GetBody( byStream );
+    if ( 1 > byBody.length( ) ) {
+        return;
+    }
     quint8 nAddress = byBody.at( 0 );
 
     char cCmd [ ] = { 0xAA, 0x03, 0x00, 0x51, 0x42, nAddress + 1, 0x00, 0x55 };
@@ -421,6 +424,9 @@ void CDataParser::ProcessActiveSendRequest( QByteArray& byStream )
     //查询道闸控制器状态	AA	03 00	51 41	xx	无	xx	55
 
     QByteArray byBody = GetBody( byStream );
+    if ( 1 > byBody.length( ) ) {
+        return;
+    }
     quint8 nAddress = byBody.at( 0 );
 
     char cCmd [ ] = { 0xAA, 0x03, 0x00, 0x51, 0x41, nAddress + 1, 0x00, 0x55 };
@@ -433,6 +439,9 @@ void CDataParser::ProcessGateSenseRequest( QByteArray& byStream )
     //查询道闸地感状态	AA	03 00	51 46	xx	无	xx	55
 
     QByteArray byBody = GetBody( byStream );
+    if ( 1 > byBody.length( ) ) {
+        return;
+    }
     quint8 nAddress = byBody.at( 0 );
 
     char cCmd [ ] = { 0xAA, 0x03, 0x00, 0x51, 0x46, nAddress + 1, 0x00, 0x55 };
@@ -445,6 +454,9 @@ void CDataParser::ProcessInfraredRequest( QByteArray& byStream )
     //查询取卡按钮状态	AA	03 00	51 43	xx	无	xx	55
 
     QByteArray byBody = GetBody( byStream );
+    if ( 1 > byBody.length( ) ) {
+        return;
+    }
     quint8 nAddress = byBody.at( 0 );
 
     char cCmd [ ] = { 0xAA, 0x03, 0x00, 0x51, 0x43, nAddress + 1, 0x00, 0x55 };
@@ -478,6 +490,9 @@ quint32 CDataParser::GetStreamLength( QByteArray& byStream )
 void CDataParser::ProcessLedRequest( QByteArray& byStream )
 {
     QByteArray byBody = GetBody( byStream );
+    if ( 1 > byBody.length( ) ) {
+        return;
+    }
     quint8 nAddress = ( quint8 ) byBody.at( 0 );
     QByteArray byData = byBody.right( byBody.length( ) - 1 );
     QString strContent( byData );
@@ -496,6 +511,9 @@ void CDataParser::ProcessLedRequest( QByteArray& byStream )
 void CDataParser::ProcessTrafficLightsRequest( QByteArray& byStream )
 {
     QByteArray byBody = GetBody( byStream );
+    if ( 2 > byBody.length( ) ) {
+        return;
+    }
     quint8 nAddress = ( quint8 ) byBody.at( 0 );
     quint8 nOperation = ( quint8 ) byBody.at( 1 );
     quint8 nTail;
@@ -556,6 +574,9 @@ void CDataParser::WriteSerial( CWinSerialPort *pSerial, char cCmd[ ], int nCmdLe
 void CDataParser::ProcessGateRequest( QByteArray& byStream )
 {
     QByteArray byBody = GetBody( byStream );
+    if ( 2 > byBody.length( ) ) {
+        return;
+    }
     quint8 nAddress = ( quint8 ) byBody.at( 0 );
     quint8 nOperation = ( quint8 ) byBody.at( 1 );
 
@@ -571,7 +592,30 @@ void CDataParser::ProcessGateRequest( QByteArray& byStream )
 void CDataParser::ProcessPlateRequest( QByteArray& byStream )
 {
     QByteArray byBody = GetBody( byStream );
+    if ( 1 > byBody.length( ) ) {
+        return;
+    }
     quint8 nAddress = byBody.at( 0 );
+}
+
+void CDataParser::ProcessVehicleUpDwonWeigh( QByteArray& byStream )
+{
+    QByteArray byBody = GetBody( byStream );
+    if ( 2 > byBody.length( ) ) {
+        return;
+    }
+    quint8 nAddress = ( quint8 ) byBody.at( 0 );
+    quint8 nSate = ( quint8 ) byBody.at( 1 ); // Up Down
+}
+
+void CDataParser::ProcessSavePlateRequest( QByteArray& byStream )
+{
+    QByteArray byBody = GetBody( byStream );
+    if ( 2 > byBody.length( ) ) {
+        return;
+    }
+    quint8 nAddress = ( quint8 ) byBody.at( 0 );
+    quint8 nOperation = ( quint8 ) byBody.at( 1 );
 }
 
 void CDataParser::CreateBallotSenseReponse( QByteArray& byResponse, quint8 nState, quint8 nAddress )
@@ -718,6 +762,14 @@ void CDataParser::Parse( QByteArray &byStream )
 
     case Protocol::RequestQueryPlateData :
         ProcessPlateRequest( byStream );
+        break;
+
+    case Protocol::RequestVehicleUpDwonWeigh :
+        ProcessVehicleUpDwonWeigh( byStream );
+        break;
+
+    case Protocol::RequestSavePlate :
+        ProcessSavePlateRequest( byStream );
         break;
 
     case Protocol::RequestActiveSend :

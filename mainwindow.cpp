@@ -1835,7 +1835,7 @@ void MainWindow::on_actSerialPort_triggered()
 
 void MainWindow::on_actPlateRecognizationSet_triggered()
 {
-    CRecognizeParamDlg dlg( this );
+    static CRecognizeParamDlg dlg( this );
     dlg.exec();
 }
 

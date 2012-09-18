@@ -5,6 +5,7 @@
 #include <QHostAddress>
 #include "netcommfunction.h"
 #include <QTextCodec>
+#include "ping.h"
 
 class CTcpClient : public QTcpSocket
 {
@@ -37,6 +38,7 @@ private:
     QByteArray* pData;
     quint64 nDataLen;
     quint64 nCurrentLen;
+    CPing ping;
     ////////////////////// Mgmt
 
 private:

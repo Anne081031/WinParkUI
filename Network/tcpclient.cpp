@@ -89,7 +89,9 @@ void CTcpClient::TcpError( QAbstractSocket::SocketError socketError )
 
 void CTcpClient::HandleDisconnect( )
 {
-    if ( QAbstractSocket::UnconnectedState == state( ) ) {
+    QString strIP = svrAddr.toString( );
+    if ( QAbstractSocket::UnconnectedState == state( ) &&
+         ping.IcmpPing( strIP ) ) {
         connectToHost( svrAddr, nSvrPort );
     }
 }

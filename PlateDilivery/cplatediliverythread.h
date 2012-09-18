@@ -6,9 +6,10 @@
 #include <QStringList>
 #include <QTcpSocket>
 #include <QFile>
-#include "Common/commonfunction.h"
+//#include "Common/commonfunction.h"
 #include "cdataparser.h"
 #include "qlistener.h"
+#include "Common/logicinterface.h"
 
 class CPlateDiliveryThread : public QThread
 {
@@ -33,6 +34,10 @@ private:
 
     void SendPlate( quint8 nAddress, QStringList& lstData );
     void StartListener( );
+    char GetConfidence( char nConfidence, const QString& strPlate );
+    void ConnectDb( );
+    void SavePlate( QString& strPlate );
+    void SavePlate( QByteArray& byStream );
 
 private:
     static CPlateDiliveryThread* pThreadInstance;
@@ -51,6 +56,8 @@ private:
     CDataParser dataParser;
     QHash< int, QStringList > hashPlate;
     QString strPlates[ 2 ];
+    CLogicInterface logicInterf;
+    QStringList lstConnParams;
     
 signals:
     void WeighingRequest( QStringList lstData );

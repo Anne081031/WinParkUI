@@ -160,7 +160,8 @@ SOURCES += mainwindow.cpp \
     PlateDilivery/cplatediliverythread.cpp \
     PlateDilivery/cdataparser.cpp \
     PlateDilivery/qlistener.cpp \
-    PlateDilivery/qmytcpserver.cpp
+    PlateDilivery/qmytcpserver.cpp \
+    Network/ping.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -296,7 +297,8 @@ HEADERS  += Header/valuecard.h \
     PlateDilivery/cdataparser.h \
     PlateDilivery/ProtocolStructure.h \
     PlateDilivery/qmytcpserver.h \
-    PlateDilivery/qlistener.h
+    PlateDilivery/qlistener.h \
+    Network/ping.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

@@ -7,6 +7,8 @@
 #include <QRect>
 #include "../multimedia.h"
 #include <QFrame>
+#include <QFile>
+
 class CHikVision : public CMultimedia
 {
     //Q_OBJECT
@@ -29,8 +31,22 @@ public:
     int MotionDetection( HANDLE hChannel, bool bStart );
     int SetupDetection( HANDLE hChannel, HK_MOTION_CB pCBF, int Index = 0, LPVOID pContext = NULL );
 
+    void WriteH264Data( ULONG lChannel,void *DataBuf,DWORD Length, int FrameType );
+    //static int CALLBACK StreamDirectReadCallback(ULONG channelNumber,void *DataBuf,DWORD Length,int FrameType,void *context);
+
 protected:
     void GetParameters( );
+
+private:
+    void OpenFile( bool bWriteHeader = false );
+    void CloseFile( );
+
+private:
+    bool bRecorder;
+    QFile fInChannel;
+    QFile fOutChannel;
+    QByteArray byInHeader;
+    QByteArray byOutHeader;
 };
 
 #endif // HIKVISION_H

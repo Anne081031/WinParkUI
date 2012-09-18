@@ -15,6 +15,8 @@ enum RequestType {
     RequestControlTrafficLights,
     RequestControlGate,
     RequestQueryPlateData,
+    RequestVehicleUpDwonWeigh,
+    RequestSavePlate,
     RequestActiveSend
 };
 

@@ -14,6 +14,12 @@ CPlateDiliveryThread::CPlateDiliveryThread(QObject *parent) :
     pTextCodec = CCommonFunction::GetTextCodec( );
     pListener = NULL;
 
+    CCommonFunction::ConnectMySql( lstConnParams );
+    CMySqlDatabase& db = logicInterf.GetMysqlDb( );
+    db.DbConnect( lstConnParams[ 0 ], lstConnParams[ 1 ],
+                  lstConnParams[ 2 ], lstConnParams[ 3 ],
+                  lstConnParams[ 4 ].toUInt( ) );
+
     StartListener( );
 
     pTcpSocket = new QTcpSocket( this );
@@ -127,6 +133,9 @@ void CPlateDiliveryThread::ParseRequestData( QByteArray &byRequest )
         QStringList lstData = hashPlate.value( nAddress );
         //lstData << "´¨A123456" << "20120814093002" << "80" << "D:\\WinParkUI\\debug\\MainBG.jpg";
         SendPlate( nAddress, lstData );
+    } else if ( Protocol::RequestSavePlate == dataParser.GetMessageType( byRequest ) ) {
+        QByteArray byBody = dataParser.GetBody( byRequest );
+        SavePlate( byBody );
     }
 }
 
@@ -175,15 +184,70 @@ void CPlateDiliveryThread::CheckSum( QByteArray &byteData, char &nCheckSum )
     }
 }
 
+void CPlateDiliveryThread::ConnectDb( )
+{
+    CMySqlDatabase& db = logicInterf.GetMysqlDb( );
+
+    if ( !db.PingMysql( ) ) {
+        //CCommonFunction::ConnectMySql( lstConnParams );
+        db.DbConnect( lstConnParams[ 0 ], lstConnParams[ 1 ],
+                      lstConnParams[ 2 ], lstConnParams[ 3 ],
+                      lstConnParams[ 4 ].toUInt( ) );
+    }
+}
+
+void CPlateDiliveryThread::SavePlate( QByteArray &byStream )
+{
+    if ( 1 > byStream.length( ) ) {
+        return;
+    }
+
+    QString strPlate( byStream.right( byStream.length( ) - 1 ) );
+    SavePlate( strPlate );
+}
+
+void CPlateDiliveryThread::SavePlate( QString &strPlate )
+{
+    ConnectDb( );
+    QString strSql = QString( "Insert IGNORE RawPlateTable Values( '%1' )" ).arg( strPlate );
+    logicInterf.ExecuteSql( strSql );
+}
+
+char CPlateDiliveryThread::GetConfidence( char nConfidence, const QString& strPlate )
+{
+    char nConfid = nConfidence;
+
+    ConnectDb( );
+    QString strSql = QString( "Select RawPlate From RawPlateTable Where RawPlate = '%1'" ).arg( strPlate );
+    QStringList lstRows;
+    logicInterf.ExecuteSql( strSql, lstRows );
+    if ( 0 < lstRows.count( ) ) {
+        nConfid = char ( 100 );
+        static QFile file( "c:\\Plate.txt" );
+        if ( file.exists( ) && !file.isOpen( ) ) {
+             file.open( QIODevice::Append );
+        }
+
+        QString strDateTime = QDateTime::currentDateTime( ).toString( "yyyyMMddHHmmss.zzz " );
+        QString tmp = strDateTime + strPlate + "\r\n";
+        QByteArray byPlate = CCommonFunction::GetTextCodec( )->fromUnicode( tmp );
+        file.write( byPlate );
+        file.flush( );
+    }
+
+    return nConfid;
+}
+
 void CPlateDiliveryThread::CreateSendData( quint8 nAddress, QByteArray &byteData, QStringList &lstData )
 {
     //  lstData << strPlate << strDateTime << QString::number( nConfidence ) << strFileName;
 
     byteData.clear( );
 
-    QByteArray bytePlate = pTextCodec->fromUnicode(  lstData.at( 0 ) );
-    QByteArray byteDateTime = pTextCodec->fromUnicode(  lstData.at( 1 ) );
-    char nConfidence = ( char ) lstData.at( 2 ).toShort( );
+    QByteArray bytePlate = pTextCodec->fromUnicode( lstData.at( 0 ) );
+    QByteArray byteDateTime = pTextCodec->fromUnicode( lstData.at( 1 ) );
+    char nConfidence = GetConfidence( ( char ) lstData.at( 2 ).toShort( ), lstData.at( 0 ) );
+
     char nPlateLength = ( char ) bytePlate.length( );
     const QString& strFileName = lstData.at( 3 );
 

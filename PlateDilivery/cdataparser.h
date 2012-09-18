@@ -27,6 +27,8 @@ private:
     void ProcessTrafficLightsRequest( QByteArray& byStream );
     void ProcessGateRequest( QByteArray& byStream );
     void ProcessPlateRequest( QByteArray& byStream );
+    void ProcessVehicleUpDwonWeigh( QByteArray& byStream );
+    void ProcessSavePlateRequest( QByteArray& byStream );
     void ProcessActiveSendRequest( QByteArray& byStream );
 
     void ProcessResponse( QByteArray& byStream );
