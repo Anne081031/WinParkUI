@@ -1967,7 +1967,8 @@ void CProcessData::CCDisplayInfo( QByteArray& byData, QByteArray& vData,
 
 void CProcessData::ControlChargeInfo(QString &strCardNumber, QDateTime dtLeave, QString strAmount, QString strRetention)
 {
-    QString strSql = QString( "Select Max( intime ) From stoprd Where cardno = '%1' " ).arg( strCardNumber );
+    QString strSql = QString( "Select Max( intime ) From %1 Where cardno = '%2' " ).arg(
+                GetTimeCardBuffer( ) ? "tmpcardintime" : "stoprd", strCardNumber );
 
     QStringList strInfo;
     CLogicInterface::GetInterface( )->ExecuteSql( strSql, strInfo );
@@ -2336,19 +2337,41 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
             //cardCan.insert( strCardNumber, cCan );
 
         } else {
+            if ( GetTimeCardBuffer( ) ) {
+                //strSql = QString( "Update IGNORE stoprd Set outshebeiname = '%1', outtime = '%2', carcpout = '%3', cardkind = '%4', feefactnum = %5, \
+                //                  feenum = %6, feetime = '%7', feeoperator = '%8', feekind = '%9', feezkyy = '%10' \
+               //                   where stoprdid in ( select stoprdid from CardStoprdID where \
+               //                   cardno = '%11' ) " );
+
+                strSql = QString( "Update IGNORE stoprd a, ( select stoprdid from CardStoprdID where \
+                                  cardno = '%1' ) b \
+                        Set outshebeiname = '%2', outtime = '%3', carcpout = '%4', \
+                        cardkind = '%5', feefactnum = %6, feenum = %7, \
+                        feetime = '%8', feeoperator = '%9', \
+                        feekind = '%10', feezkyy = '%11'  where a.stoprdid = b.stoprdid " );
+            } else {
             strSql = QString( "Update IGNORE stoprd Set outshebeiname = '%1', outtime = '%2', carcpout = '%3', cardkind = '%4', feefactnum = %5, \
                               feenum = %6, feetime = '%7', feeoperator = '%8', feekind = '%9', feezkyy = '%10' \
                               Where cardno = '%11' And intime in ( select * from ( Select Max( intime ) From stoprd Where cardno = '%12' ) tmp ) " );
+            }
         }
 
         if ( bEnter ) {
             strSql = strSql.arg( strChannel, strDateTime, strCardNumber, strPlate, strCardType );
         } else {
-            strSql = strSql.arg( strChannel, strDateTime, strPlate, strCardType, QString::number( nAmount ),
-                                              QString::number( nRealAmount ), strDateTime, pMainWindow->GetUserName( ) );
+            if ( GetTimeCardBuffer( ) ) {
+                strSql = strSql.arg( strCardNumber, strChannel, strDateTime, strPlate, strCardType, QString::number( nAmount ),
+                                                  QString::number( nRealAmount ), strDateTime, pMainWindow->GetUserName( ) );
+                strSql = strSql.arg( bMonthCard ? "" : pFeeDlg->GetFeeRateType( ),
+                                                  bMonthCard ? "无优惠" : pFeeDlg->GetDiscountType( ) );
+            } else {
+                strSql = strSql.arg( strChannel, strDateTime, strPlate, strCardType, QString::number( nAmount ),
+                                                  QString::number( nRealAmount ), strDateTime, pMainWindow->GetUserName( ) );
+
             strSql = strSql.arg( bMonthCard ? "" : pFeeDlg->GetFeeRateType( ),
                                               bMonthCard ? "无优惠" : pFeeDlg->GetDiscountType( ),
                                               strCardNumber, strCardNumber );
+            }
         }
     }
 
