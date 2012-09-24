@@ -346,7 +346,7 @@ bool CWinTone::RecognizedImageFormat( QStringList& lstFormat /* ImageFormat, Cha
 //ImageFormatBGR ImageFormatYUV420 ImageFormatYUV420COMPASS
     BOOL bInput  = ( 1 == mapParameters[ nChannel ].value( lstKeys[ 10 ] ).toInt( ) );
     BOOL bOutput = ( 1 == mapParameters[ nChannel ].value( lstKeys[ 8 ] ).toInt( ) );
-    bRet = LPR_SetImageFormat(FALSE,FALSE,ImageFormatYUV420COMPASS,FALSE,60,400,TRUE,FALSE,FALSE, ++nChannel );
+    bRet = LPR_SetImageFormat(FALSE,FALSE,nColor,FALSE,60,400,TRUE,FALSE,FALSE, ++nChannel );
     //bRet = LPR_SetImageFormat( bMoving, bFlip, nColor, bCompress, nMinWidth,
     //                           nMaxWidth, bAlign, bInput, bOutput, ++nChannel );
     //bRet = LPR_SetImageFormat(TRUE,TRUE,ImageFormatBGR,TRUE,80,400,TRUE,FALSE,TRUE,1);
@@ -371,7 +371,8 @@ bool CWinTone::RecognizedSpecialParameters( QStringList& lstParam )
     int nPlatesNum      = ( 1 == mapParameters[ nChannel ].value( lstKeys[ 3 ] ).toInt( ) );
     QString strProvince = mapParameters[ nChannel ].value( lstKeys[ 2 ] );
     LPSTR pProvince     = strProvince.toUtf8( ).data( );
-    bRet = LPR_SetSpecialParameters(FALSE,7,5,6,pProvince,++nChannel);
+    bRet = LPR_SetSpecialParameters(FALSE,7,5,6,pProvince,++nChannel); //video
+    //bRet = LPR_SetSpecialParameters(FALSE,5,2,6,pProvince,++nChannel); //Picture
     //bRet = LPR_SetSpecialParameters( bNight, nPlateThr, nRecogThr, nPlatesNum,
     //                                 pProvince, ++nChannel );
     ASSERT_VEHICLE( "LPR_SetSpecialParameters" );
@@ -385,10 +386,10 @@ bool CWinTone::RecognizeFile( QString& strFilePath, TH_PlateResult* pResult, int
     // BMP JPG TIF Format
     bool bRet = false;
     TH_RECT rect = { 0 };
-    rect.left = mapParameters[ nChannel ].value( lstKeys[ 17 ] ).toInt( );
-    rect.top = mapParameters[ nChannel ].value( lstKeys[ 19 ] ).toInt( );
-    rect.right = mapParameters[ nChannel ].value( lstKeys[ 18 ] ).toInt( );
-    rect.bottom = mapParameters[ nChannel ].value( lstKeys[ 20 ] ).toInt( );
+    //rect.left = mapParameters[ nChannel ].value( lstKeys[ 17 ] ).toInt( );
+    //rect.top = mapParameters[ nChannel ].value( lstKeys[ 19 ] ).toInt( );
+    //rect.right = mapParameters[ nChannel ].value( lstKeys[ 18 ] ).toInt( );
+    //rect.bottom = mapParameters[ nChannel ].value( lstKeys[ 20 ] ).toInt( );
 
     nPlateNumber =  0;
 

@@ -33,11 +33,15 @@ QString CMonitor::strPlates[ VIDEO_USEDWAY ] = { "" };
 
 void CMonitor::PictureRegconize( QString &strFile, int nChannel )
 {
+    if ( bPlateVideo ) {
+        return;
+    }
     int nPlateNumber = RECOG_RES;
+    //strFile = "d:/1.jpg";
     bool bRet = pVehicle->RecognizeFile( strFile, recogResult[ nChannel ], nPlateNumber, nChannel );
 
     if ( bRet ) { // Display Plate
-        pMainWnd->DisplayPlate( nChannel );
+        DisplayPlate( nChannel );
     }
 }
 
@@ -758,6 +762,10 @@ void CMonitor::SetBallotSense( bool bSense, int nChannel )
     bBallotSense[ nChannel ] = bSense;
     bool bPlateFilter = GetPlateSuccession( true, nChannel + 1 );
 
+    if ( !bPlateVideo ) {
+        bPlateFilter = false;
+    }
+
     if ( !bSense ) {
         ZeroMemory( &structPlates[ nChannel ], sizeof ( TH_PlateIDResult ) );
         ClearPlate( nChannel );
@@ -813,24 +821,29 @@ void CMonitor::PlateFilter2( int nChannel )
 void CMonitor::DisplayPlate( int nChannel )
 {
     try {
+        TH_PlateIDResult* pResult = &recogResult[ nChannel ][ 0 ];
     // Picture 关闭连续识别
-    bool bPlateFilter = GetPlateSuccession( true, nChannel + 1 );
-    TH_PlateIDResult* pResult = bPlateFilter ? NULL : &structPlates[ nChannel ];
-    if ( bPlateFilter && ( !PlateFilter( nChannel, pResult ) || ( NULL == pResult ) ) ) {
-        return;
-    }
+        if ( bPlateVideo ) {
+            bool bPlateFilter = GetPlateSuccession( true, nChannel + 1 );
+            pResult = bPlateFilter ? NULL : &structPlates[ nChannel ];
+            if ( bPlateFilter && ( !PlateFilter( nChannel, pResult ) || ( NULL == pResult ) ) ) {
+                return;
+            }
+        }
 
     QString strPlate( pResult->license );
     if ( strPlate.isEmpty( ) ) {
         return;
     }
 
-    bool bSuccession = GetPlateSuccession( false, nChannel + 1 );
-    if ( bSuccession ) {
-        if ( strPlates[ nChannel ] == strPlate ) {
-            return;
-        } else {
-            strPlates[ nChannel ] = strPlate;
+    if ( bPlateVideo ) {
+        bool bSuccession = GetPlateSuccession( false, nChannel + 1 );
+        if ( bSuccession ) {
+            if ( strPlates[ nChannel ] == strPlate ) {
+                return;
+            } else {
+                strPlates[ nChannel ] = strPlate;
+            }
         }
     }
     //ui->lblTmp->setText( strPlate );
@@ -927,7 +940,7 @@ void CMonitor::StartPlateRecog( )
         }
 
         lstParam.clear( );
-        lstParam << QString::number( bPlateVideo ? ImageFormatYUV422 : ImageFormatBGR ) << QString::number( nIndex ); // Format / Channel
+        lstParam << QString::number( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR ) << QString::number( nIndex ); // Format / Channel
         pVehicle->RecognizedImageFormat( lstParam );
         bool bRet = pVehicle->Initialize( nIndex );
         if (  false == bRet ) {
@@ -1619,6 +1632,7 @@ void CMonitor::PlateCheck( QString strChar, int nChannel, int nIndex )
 
 void CMonitor::ClearPlate( int nPlateChannel )
 {
+    //return;
     QString strPlate = "        ";
     CCommonFunction::DisplayPlateChar( *this, nPlateChannel, strPlate );
     strPlates[ nPlateChannel ].clear( );

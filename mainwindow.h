@@ -37,6 +37,7 @@ public:
     explicit MainWindow(QWidget *parent = 0, Qt::WindowFlags flags = 0 );//= Qt::FramelessWindowHint );
     ~MainWindow();
 
+    void PictureRegconize( QString &strFile, int nChannel );
     void ControlChild( QCloseEvent* event, QWidget* child );
     void ControlMonitor( bool bShow );
     CLogicInterface* GetLogicInterface( );

@@ -17,6 +17,18 @@ CDbWriteThread g_dbThread;
 
 CProcessData* CProcessData::pCmdProcessor = NULL;
 
+bool CProcessData::NetProbe( )
+{
+    QString strIP = pSettings->value( "Database/Host", "127.0.0.1" ).toString( );
+    bool bRet = ping.IcmpPing( strIP );
+
+    if ( !bRet ) {
+        CCommonFunction::MsgBox( NULL, "网络探测", QString( "网络不通。\r\n不能链接数据库【%1】。若是本机数据库，请把数据库IP配置为【127.0.0.1】。" ).arg( strIP ), QMessageBox::Critical );
+    }
+
+    return bRet;
+}
+
 CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObject *parent ) :
     QObject(parent)
 {
@@ -549,6 +561,8 @@ void CProcessData::CaptureSenseImage( QByteArray &byData, CommonDataType::Captur
     QString strCardNo = "Sense" + QString::number( QDateTime::currentMSecsSinceEpoch( ) );
     GetCaptureFile( strFileName, strCardNo, nChannel, capType );
     pMainWindow->CaptureImage( strFileName, nChannel, capType  );
+
+    pMainWindow->PictureRegconize( strFileName, nChannel );
 
     //imgQueue[ nChannel ].enqueue( strFileName );
     pSettings->sync( );
@@ -2337,7 +2351,7 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
             //cardCan.insert( strCardNumber, cCan );
 
         } else {
-            if ( GetTimeCardBuffer( ) ) {
+            if ( CardTime == cardKind && GetTimeCardBuffer( ) ) {
                 //strSql = QString( "Update IGNORE stoprd Set outshebeiname = '%1', outtime = '%2', carcpout = '%3', cardkind = '%4', feefactnum = %5, \
                 //                  feenum = %6, feetime = '%7', feeoperator = '%8', feekind = '%9', feezkyy = '%10' \
                //                   where stoprdid in ( select stoprdid from CardStoprdID where \
@@ -2359,7 +2373,7 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
         if ( bEnter ) {
             strSql = strSql.arg( strChannel, strDateTime, strCardNumber, strPlate, strCardType );
         } else {
-            if ( GetTimeCardBuffer( ) ) {
+            if ( CardTime == cardKind && GetTimeCardBuffer( ) ) {
                 strSql = strSql.arg( strCardNumber, strChannel, strDateTime, strPlate, strCardType, QString::number( nAmount ),
                                                   QString::number( nRealAmount ), strDateTime, pMainWindow->GetUserName( ) );
                 strSql = strSql.arg( bMonthCard ? "" : pFeeDlg->GetFeeRateType( ),

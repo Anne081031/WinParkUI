@@ -65,6 +65,12 @@ CHeartbeatThread* g_pHeartbeatThread = NULL;
 CLocalCltCommunication* g_pLocalCltComm = NULL;
 CFtp* g_pFtp = NULL;
 
+void MainWindow::PictureRegconize( QString &strFile, int nChannel )
+{
+    CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
+    pMonitor->PictureRegconize( strFile, nChannel );
+}
+
 bool MainWindow::ShiftDlgISVisible( )
 {
     bool bRet = false;

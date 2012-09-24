@@ -112,7 +112,12 @@ void CCommonFunction::ConnectMySql( QStringList& lstParams, bool bHistory, int n
                                                   QString( "HistoryServer%1" ).arg( nIndex ) : "Database" ) + "%1";
     lstParams.clear( );
 
-    lstParams<< pSettings->value( strItem.arg( "Host" ), QVariant( "127.0.0.1" ) ).toString( );
+    QString strIP = pSettings->value( strItem.arg( "Host" ), QVariant( "127.0.0.1" ) ).toString( );
+    if ( strIP == GetHostIP( ) ) {
+        strIP = "127.0.0.1";
+    }
+
+    lstParams<< strIP;
     lstParams<< pSettings->value( strItem.arg( "User" ), QVariant( "test" ) ).toString( );
     lstParams<< pSettings->value( strItem.arg( "Pwd" ), QVariant( "test" ) ).toString( );
     lstParams<< pSettings->value( strItem.arg( "Schema" ), QVariant( "pms" ) ).toString( );
@@ -277,6 +282,7 @@ QString CCommonFunction::GetFeeStd( QString &strFee )
 
 void CCommonFunction::DisplayPlateChar( QWidget& wg, int nChannel, QString& strContent )
 {
+    qDebug( ) << "CCommonFunction::DisplayPlateChar " << strContent << endl;
     try {
     int nCount = strContent.count( ); //lblLicence11
     static const QString strName( "lblLicence%1%2" );

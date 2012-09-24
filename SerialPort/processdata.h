@@ -12,6 +12,7 @@
 #include <QQueue>
 #include <QStack>
 #include "dbwritethread.h"
+#include "Network/ping.h"
 
 class CProcessData : public QObject
 {
@@ -57,6 +58,7 @@ public:
     bool WriteData( QByteArray& byData );
 
 private:
+    bool NetProbe( );
     explicit CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObject *parent = 0 );
     CProcessData( QObject *parent = 0 );
     ~CProcessData( );
@@ -182,6 +184,7 @@ private:
     void SendPlate( QString strPlate, int nChannel, int nConfidence );
 
 private:
+    CPing ping;
     CWinSerialPort* pSerialPort;
     CPortCmd portCmd;
     MainWindow* pMainWindow;
