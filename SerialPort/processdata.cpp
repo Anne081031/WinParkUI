@@ -562,7 +562,9 @@ void CProcessData::CaptureSenseImage( QByteArray &byData, CommonDataType::Captur
     GetCaptureFile( strFileName, strCardNo, nChannel, capType );
     pMainWindow->CaptureImage( strFileName, nChannel, capType  );
 
-    pMainWindow->PictureRegconize( strFileName, nChannel );
+    if ( bHavePlateRecog ) {
+        pMainWindow->PictureRegconize( strFileName, nChannel );
+    }
 
     //imgQueue[ nChannel ].enqueue( strFileName );
     pSettings->sync( );
