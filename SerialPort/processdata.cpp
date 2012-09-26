@@ -563,7 +563,17 @@ void CProcessData::CaptureSenseImage( QByteArray &byData, CommonDataType::Captur
     pMainWindow->CaptureImage( strFileName, nChannel, capType  );
 
     if ( bHavePlateRecog ) {
-        pMainWindow->PictureRegconize( strFileName, nChannel );
+        QString strTmp;
+        CCommonFunction::GetPath( strTmp, CommonDataType::PathSnapshot );
+        strTmp += "sense.jpg";
+
+        if ( QFile::copy( strFileName, strTmp ) ) {
+            pMainWindow->PictureRegconize( strTmp, nChannel );
+        }
+
+        if ( QFile::exists( strTmp ) ) {
+            QFile::remove( strTmp );
+        }
     }
 
     //imgQueue[ nChannel ].enqueue( strFileName );

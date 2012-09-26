@@ -38,6 +38,7 @@ void CMonitor::PictureRegconize( QString &strFile, int nChannel )
     }
     int nPlateNumber = RECOG_RES;
     //strFile = "d:/1.jpg";
+    ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) );
     bool bRet = pVehicle->RecognizeFile( strFile, recogResult[ nChannel ], nPlateNumber, nChannel );
 
     if ( bRet ) { // Display Plate
@@ -768,6 +769,7 @@ void CMonitor::SetBallotSense( bool bSense, int nChannel )
 
     if ( !bSense ) {
         ZeroMemory( &structPlates[ nChannel ], sizeof ( TH_PlateIDResult ) );
+        ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) );
         ClearPlate( nChannel );
     } else if ( !bPlateFilter ){ // PlateFilter2
         DisplayPlate( nChannel );
@@ -823,13 +825,17 @@ void CMonitor::DisplayPlate( int nChannel )
     try {
         TH_PlateIDResult* pResult = &recogResult[ nChannel ][ 0 ];
     // Picture 关闭连续识别
-        if ( bPlateVideo ) {
+        //if ( bPlateVideo ) {
             bool bPlateFilter = GetPlateSuccession( true, nChannel + 1 );
+            if ( !bPlateVideo ) {
+                bPlateFilter = false;
+                structPlates[ nChannel ] = recogResult[ nChannel ][ 0 ];
+            }
             pResult = bPlateFilter ? NULL : &structPlates[ nChannel ];
             if ( bPlateFilter && ( !PlateFilter( nChannel, pResult ) || ( NULL == pResult ) ) ) {
                 return;
             }
-        }
+        //}
 
     QString strPlate( pResult->license );
     if ( strPlate.isEmpty( ) ) {
@@ -903,6 +909,10 @@ CMonitor::~CMonitor()
 
 void CMonitor::CaptureImage( QString& strFile, int nChannel, CommonDataType::CaptureImageType capType )
 {
+    if ( QFile::exists( strFile ) ) {
+        QFile::remove( strFile );
+    }
+
     HANDLE hChan = hChannelHandle[ nChannel ];
     if ( NULL != pMultimedia && INVALID_HANDLE != hChan ) {
         if ( CommonDataType::CaptureBMP == capType ) {
