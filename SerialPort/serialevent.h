@@ -9,11 +9,13 @@ class CSerialEvent : public QEvent
 public:
     CSerialEvent( Type event );
 
-    void SetSerialData( const QByteArray& byData );
+    void SetSerialData( const QByteArray& byData, const int nIndex = 0 );
     QByteArray& GetSerialData( );
+    int GetSerialIndex( );
 
 private:
     QByteArray bySerialData;
+    int nSerialPortIndex;
 };
 
 #endif // SERIALEVENT_H

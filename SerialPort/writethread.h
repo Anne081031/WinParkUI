@@ -10,17 +10,17 @@ class CWriteThread : public QThread
     Q_OBJECT
 public:
     explicit CWriteThread(QObject *parent = 0);
-    void SetSerialPort( CWinSerialPort* pPort );
+    void SetSerialPort( CWinSerialPort* pPort, int nIndex = 0 );
 
 protected:
     void run( );
     void customEvent( QEvent * e );
 
 private:
-    bool WriteData( QByteArray &byData );
+    bool WriteData( CWinSerialPort* pWinPort, QByteArray &byData );
 
 private:
-    CWinSerialPort* pWinPort;
+    QHash< int, CWinSerialPort* > hashWinPort;
     
 signals:
     

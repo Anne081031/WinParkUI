@@ -1,5 +1,9 @@
 #include "cdataparser.h"
 #include "../SerialPort/processdata.h"
+#include "../SerialPort/writethread.h"
+#include <QApplication>
+
+extern CWriteThread g_serialThread;
 
 CDataParser::CDataParser(QObject *parent) :
     QObject(parent)
@@ -9,6 +13,9 @@ CDataParser::CDataParser(QObject *parent) :
 
     ControlSerialPort( pSerialPort, true );
     ControlSerialPort( pWineSerialPort, true );
+
+    g_serialThread.SetSerialPort( pSerialPort );
+    g_serialThread.SetSerialPort( pWineSerialPort, 1 );
 }
 
 void CDataParser::DataMayRead()
@@ -555,6 +562,13 @@ void CDataParser::WriteSerial( CWinSerialPort *pSerial, char cCmd[ ], int nCmdLe
 
     QByteArray byCmd;
     byCmd.append( cCmd, nCmdLen );
+
+    CSerialEvent* pEvent = new CSerialEvent( QEvent::User );
+    bool bWineSerial = ( pSerial == pWineSerialPort );
+    pEvent->SetSerialData( byCmd,  bWineSerial ? 1 : 0 );
+    QApplication::postEvent( &g_serialThread, pEvent );
+
+    return;
 
     int nCount = byCmd.count( );
     Win_QextSerialPort& rawSerial = pSerial->GetRawSerialPort( );

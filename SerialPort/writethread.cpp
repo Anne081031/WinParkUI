@@ -6,9 +6,10 @@ CWriteThread::CWriteThread(QObject *parent) :
 {
 }
 
-void CWriteThread::SetSerialPort( CWinSerialPort *pPort )
+void CWriteThread::SetSerialPort( CWinSerialPort *pPort, int nIndex )
 {
-    pWinPort = pPort;
+    //pWinPort = pPort;
+    hashWinPort.insert( nIndex, pPort );
 }
 
 void CWriteThread::run( )
@@ -20,20 +21,24 @@ void CWriteThread::customEvent( QEvent *e )
 {
     // OLTP OLAP / ACID
     // Parameters analyse
-    if ( NULL == e || NULL == pWinPort ) {
+    if ( NULL == e ) {
         return;
     }
 
     CSerialEvent* pEvent = ( CSerialEvent* ) e;
+    CWinSerialPort* pWinPort = hashWinPort.value( pEvent->GetSerialIndex( ) );
+    if ( NULL == pWinPort ) {
+        return;
+    }
 
     switch ( pEvent->type( ) ) {
     case QEvent::User :
-        WriteData( pEvent->GetSerialData( ) );
+        WriteData( pWinPort, pEvent->GetSerialData( ) );
         break;
     }
 }
 
-bool CWriteThread::WriteData( QByteArray &byData )
+bool CWriteThread::WriteData( CWinSerialPort* pWinPort, QByteArray &byData )
 {
     bool bRet = false;
     if ( NULL == pWinPort  ) {
