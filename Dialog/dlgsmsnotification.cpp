@@ -3,6 +3,7 @@
 #include "SerialPort/processdata.h"
 #include "Common/commonfunction.h"
 #include "SMS/sms.h"
+#include "Dialog/dlgsmsphone.h"
 
 CDlgSMSNotification::CDlgSMSNotification(QWidget *parent) :
     QDialog(parent),
@@ -31,8 +32,18 @@ void CDlgSMSNotification::on_btnSave_clicked()
 
     QStringList lstData;
     lstData << "18982073890" << "13308058766";
-    CSms::GetSingleton( ).SendMsg( lstData, strText );
+
+    CDlgSmsPhone dlg;
+    dlg.exec( );
+    dlg.GetPhoneList( lstData );
+
+    if ( 0 == lstData.size( ) ) {
+        return;
+    }
+
+    CSms::GetSingleton( ).SendMsg( lstData, strText ); // Thread
     return;
+
     lstData << strText;
     CProcessData* pProcessor = CProcessData::GetProcessor( );
     if ( NULL == pProcessor ) {

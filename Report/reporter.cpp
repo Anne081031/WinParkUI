@@ -452,6 +452,19 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
                                    "' and cardkind = '计时卡' and substring( carcp, 1, 1 ) = '川' \
                                    group by substring( carcp, 2, 1 ), feekind with rollup";
         break;
+
+    case CommonDataType::ReportMonth :
+        strSql = "select a.cardno, a.cardselfno , \
+            case a.EnterMustCard when 0 then '否' when 1 then '是' end as EnterMustCard,  \
+            case a.LeaveMustCard when 0 then '否' when 1 then '是' end as LeaveMustCard, \
+            case a.MIMO when 0 then '否' when 1 then '是' end as MIMO, \
+            case a.Inside when 0 then '否' when 1 then '是' end as Inside, \
+            a.cardstate, a.starttime, a.endtime, b.carcp, c.username, c.userphone, \
+            IF ( a.starttime > a.endtime, '是', '否' ) as Expire \
+            from monthcard as a, carinfo as b, userinfo as c \
+            where a.cardno = b.cardindex and a.cardno = c.cardindex \
+            order by Expire";
+        break;
     }
 
 #ifdef QT_NO_DBUS
@@ -556,6 +569,7 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
     case CommonDataType::ReportChannel :
     case CommonDataType::ReportProvince :
     case CommonDataType::ReportInProvince :
+    case CommonDataType::ReportMonth :
         if ( strStart == strEnd ) {
             strTitle = strStart + "日";
         } else {
@@ -669,6 +683,22 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
        strFooter = "";
        nCols = 3;
        break;
+  case CommonDataType::ReportMonth :
+       strTitle = "<tr><th>卡号</th><th>自编号</th>\
+                       <th>进刷卡</th>\
+                       <th>出刷卡</th> \
+                       <th>多进多出</th>\
+                       <th>已入场</th>\
+                       <th>卡状态</th>\
+                       <th>开始时间</th>\
+                       <th>截止时间</th>\
+                       <th>车牌</th>\
+                       <th>业主</th>\
+                       <th>联系电话</th>\
+                       <th>过期</th></tr>";
+       strFooter = "";
+       nCols = 13;
+       break;
    }
 
    int nRows = lstData.count( ) / nCols;
@@ -744,6 +774,20 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
            if ( nRow + 1 == nRows ) {
                lstTmp[ 0 ] = "全部总计";
            }
+       } else if ( CommonDataType::ReportMonth == rType ) {
+           lstTmp << lstData[ nField ]
+                   << lstData[ nField + 1 ]
+                   << lstData[ nField + 2 ]
+                   << lstData[ nField + 3 ]
+                   << lstData[ nField + 4 ]
+                   << lstData[ nField + 5 ]
+                   << lstData[ nField + 6 ]
+                   << lstData[ nField + 7 ]
+                   << lstData[ nField + 8 ]
+                   << lstData[ nField + 9 ]
+                   << lstData[ nField + 10 ]
+                   << lstData[ nField + 11 ]
+                   << lstData[ nField + 12 ];
        }
 
        GetRowHtml( strRow, lstTmp );
@@ -765,6 +809,7 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
    case CommonDataType::ReportTimeCardDetail :
    case CommonDataType::ReportInProvince :
    case CommonDataType::ReportProvince :
+   case CommonDataType::ReportMonth  :
        break;
    }
 }

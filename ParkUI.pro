@@ -161,7 +161,8 @@ SOURCES += mainwindow.cpp \
     PlateDilivery/cdataparser.cpp \
     PlateDilivery/qlistener.cpp \
     PlateDilivery/qmytcpserver.cpp \
-    Network/ping.cpp
+    Network/ping.cpp \
+    Dialog/dlgsmsphone.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -298,7 +299,8 @@ HEADERS  += Header/valuecard.h \
     PlateDilivery/ProtocolStructure.h \
     PlateDilivery/qmytcpserver.h \
     PlateDilivery/qlistener.h \
-    Network/ping.h
+    Network/ping.h \
+    Dialog/dlgsmsphone.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \
@@ -363,7 +365,8 @@ FORMS    += UIWnd/valuecard.ui \
     Dialog/dlgparkdongleinfo.ui \
     Dialog/dlgreadcardid.ui \
     Dialog/dlgstaying.ui \
-    Dialog/dlgcardloss.ui
+    Dialog/dlgcardloss.ui \
+    Dialog/dlgsmsphone.ui
 
 OTHER_FILES += \
     Doc/LedProtocol.doc \

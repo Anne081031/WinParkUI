@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgsmsnotification.h'
 **
-** Created: Fri Sep 7 15:27:06 2012
+** Created: Mon Oct 8 12:09:21 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

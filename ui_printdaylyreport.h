@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'printdaylyreport.ui'
 **
-** Created: Fri Sep 7 15:20:05 2012
+** Created: Mon Oct 8 12:02:25 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,6 +39,7 @@ public:
     QRadioButton *rdChx5;
     QRadioButton *rdChx7;
     QRadioButton *rdChx8;
+    QRadioButton *rdChx9;
     QLabel *label_2;
     QLabel *label;
     QLabel *lblClose;
@@ -97,12 +98,16 @@ public:
         rdChx5->setChecked(false);
         rdChx7 = new QRadioButton(gbType);
         rdChx7->setObjectName(QString::fromUtf8("rdChx7"));
-        rdChx7->setGeometry(QRect(17, 40, 111, 20));
+        rdChx7->setGeometry(QRect(17, 40, 71, 20));
         rdChx7->setChecked(false);
         rdChx8 = new QRadioButton(gbType);
         rdChx8->setObjectName(QString::fromUtf8("rdChx8"));
-        rdChx8->setGeometry(QRect(160, 40, 111, 20));
+        rdChx8->setGeometry(QRect(90, 40, 71, 20));
         rdChx8->setChecked(false);
+        rdChx9 = new QRadioButton(gbType);
+        rdChx9->setObjectName(QString::fromUtf8("rdChx9"));
+        rdChx9->setGeometry(QRect(160, 40, 71, 20));
+        rdChx9->setChecked(false);
         label_2 = new QLabel(CPrintDaylyReport);
         label_2->setObjectName(QString::fromUtf8("label_2"));
         label_2->setGeometry(QRect(253, 630, 16, 16));
@@ -155,6 +160,7 @@ public:
         rdChx5->setText(QApplication::translate("CPrintDaylyReport", "\350\256\241\346\227\266\345\215\241\346\224\266\350\264\271\346\230\216\347\273\206", 0, QApplication::UnicodeUTF8));
         rdChx7->setText(QApplication::translate("CPrintDaylyReport", "\346\214\211\347\234\201\347\273\237\350\256\241", 0, QApplication::UnicodeUTF8));
         rdChx8->setText(QApplication::translate("CPrintDaylyReport", "\347\234\201\345\206\205\347\273\237\350\256\241", 0, QApplication::UnicodeUTF8));
+        rdChx9->setText(QApplication::translate("CPrintDaylyReport", "\346\234\210\347\247\237\345\215\241", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("CPrintDaylyReport", "\350\207\263", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("CPrintDaylyReport", "\346\237\245\350\257\242\350\214\203\345\233\264\357\274\232", 0, QApplication::UnicodeUTF8));
         lblClose->setText(QString());

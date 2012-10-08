@@ -23,3 +23,5 @@ Codeplex
 www.codeplex.org
 
 MySQL help 'xxxxxx' command
+
+PHP ZendServer ZendStudio ZF Symfony/Doctrine( ORM ) PECL

@@ -132,6 +132,7 @@ INPUT(
 ./debug/qlistener.o
 ./debug/qmytcpserver.o
 ./debug/ping.o
+./debug/dlgsmsphone.o
 ./debug/moc_valuecard.o
 ./debug/moc_tolldiscounttypeset.o
 ./debug/moc_timecard.o
@@ -248,4 +249,5 @@ INPUT(
 ./debug/moc_qmytcpserver.o
 ./debug/moc_qlistener.o
 ./debug/moc_ping.o
+./debug/moc_dlgsmsphone.o
 );

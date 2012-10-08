@@ -1,0 +1,17 @@
+PowerDesigner WinER Rose
+
+1¡¢Database
+Table( Field Type )
+Index / BTree RTree Hash
+Partition
+Lock
+
+SQL / Where union join
+
+Configuration Parameters
+
+Data Houseware / ETL( Extract Transformation Load ) OLTP OLTA
+
+
+2¡¢Hardware
+ CPU Harddisk Memory

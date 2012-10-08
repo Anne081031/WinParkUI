@@ -170,7 +170,7 @@ color: rgb(170, 0, 0);</string>
      <rect>
       <x>17</x>
       <y>40</y>
-      <width>111</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
@@ -184,14 +184,30 @@ color: rgb(170, 0, 0);</string>
    <widget class="QRadioButton" name="rdChx8">
     <property name="geometry">
      <rect>
-      <x>160</x>
+      <x>90</x>
       <y>40</y>
-      <width>111</width>
+      <width>71</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
      <string>省内统计</string>
+    </property>
+    <property name="checked">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QRadioButton" name="rdChx9">
+    <property name="geometry">
+     <rect>
+      <x>160</x>
+      <y>40</y>
+      <width>71</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>月租卡</string>
     </property>
     <property name="checked">
      <bool>false</bool>
