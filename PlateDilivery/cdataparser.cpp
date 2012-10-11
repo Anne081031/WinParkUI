@@ -658,8 +658,17 @@ void CDataParser::CreateInfraredReponse( QByteArray& byResponse, quint8 nState, 
 
     nTcpStreamLength = htonl( nTcpStreamLength );
     byResponse.append( ( const char* ) &nTcpStreamLength, sizeof ( quint32 ) );
-    byResponse.append( nAddress );
+    byResponse.append( nAddress ); // 1 / 2
     byResponse.append( nState );
+
+    if ( nState ) {
+        CaptureImage( nAddress - 1 );
+    }
+}
+
+void CDataParser::CaptureImage( quint8 nChannel )
+{
+    emit Capture( nChannel );
 }
 
 void CDataParser::CreatePlateReponse( QByteArray& byResponse, quint8 nState, quint8 nAddress )

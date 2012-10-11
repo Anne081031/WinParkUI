@@ -28,12 +28,14 @@ CPlateDiliveryThread::CPlateDiliveryThread(QObject *parent) :
     //connect( pTcpSocket, SIGNAL( disconnected( ) ), this, SLOT( Reconnect( ) ) );
     connect( &dataParser, SIGNAL( Response( QByteArray ) ),
              this, SLOT( HandleResponse( QByteArray ) ) );
+    connect( &dataParser, SIGNAL( Capture( quint8 ) ), this, SLOT( HandleCapture( quint8 ) ) );
 
     strIP = pSettings->value( "PlateDilivery/ReceiverIP", "127.0.0.1" ).toString( );
     nPort = pSettings->value( "PlateDilivery/ReceiverPort", 60000 ).toUInt( );
     int nInterval = pSettings->value( "PlateDilivery/TimerDetector", 6000 ).toInt( );
     bActiveSend = pSettings->value( "PlateDilivery/ActiveSend", false ).toBool( );
     bActivePlate = pSettings->value( "PlateDilivery/ActivePlate", true ).toBool( );
+    bPlateVideo = pSettings->value( "CommonCfg/PlateVideo", true ).toBool( );
 
     nBytesAvailable = 0;
     nPakageSize= 0;
@@ -292,6 +294,15 @@ void CPlateDiliveryThread::SendPlate( quint8 nAddress, QStringList &lstData )
     pTcpSocket->write( byteData );
     pTcpSocket->flush( );
     pTcpSocket->waitForBytesWritten( );
+}
+
+void CPlateDiliveryThread::HandleCapture( quint8 nChannel )
+{
+    if ( bPlateVideo ) {
+        return;
+    }
+
+    emit Capture( nChannel );
 }
 
 void CPlateDiliveryThread::HandlePlateDilivery( int nChannel, QStringList lstData, QString strPlate )

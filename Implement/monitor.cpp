@@ -38,7 +38,7 @@ void CMonitor::PictureRegconize( QString &strFile, int nChannel )
     }
     int nPlateNumber = RECOG_RES;
     //strFile = "d:/1.jpg";
-    ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) );
+    ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) * RECOG_RES );
     bool bRet = pVehicle->RecognizeFile( strFile, recogResult[ nChannel ], nPlateNumber, nChannel );
 
     if ( bRet ) { // Display Plate
@@ -729,11 +729,20 @@ void CMonitor::DirectionIndicator( int nChannel, bool bMoving )
 
 void CMonitor::ImageStreamCallback( UINT nChannel, PVOID pContent )
 {
+     static int nConter = 25;
+     QString strInfo;
+     QTime time;
+     if ( nConter == 25 ) {
+         time = QTime::currentTime( );
+         strInfo = time.toString( "Begin hh:mm:ss.zzz" ) + "\r\n";
+     }
+     /////////////////
     bool bMoving = bStartRecognization[ nChannel ];
     CMonitor* pMainWnd = ( CMonitor* ) pContent;
     emit pMainWnd->OnDirectionIndicator( nChannel, bMoving );
 
     if ( false == bMoving ) {
+        strInfo += "No Moving\r\n";
         return;
     }
 
@@ -749,6 +758,7 @@ void CMonitor::ImageStreamCallback( UINT nChannel, PVOID pContent )
     quint8* pData = new quint8[ VIDEO_BUF ];
     memcpy( pData, imgData[ nChannel ], VIDEO_BUF );//imgData[ nChannel ]
     bool bRet = pVehicle->RecognizeVideo( pData, 704, 576, recogResult[ nChannel ], nResult, nChannel );
+    strInfo += "RecognizeVideo\r\n";
 
     //qDebug( ) << "Time2 " << QDateTime::currentDateTime( ).toMSecsSinceEpoch( ) << endl;
     if ( bRet ) { // Display Plate
@@ -756,7 +766,31 @@ void CMonitor::ImageStreamCallback( UINT nChannel, PVOID pContent )
         bPlateFilter ? pMainWnd->DisplayPlate( nChannel ) : pMainWnd->PlateFilter2( nChannel );
     }
     //qDebug( ) << "Time3 " << QDateTime::currentDateTime( ).toMSecsSinceEpoch( ) << endl;
+    ///////
+    if ( 0 == ( --nConter ) ) {
+        time = QTime::currentTime( );
+        strInfo += time.toString( "End hh:mm:ss.zzz" ) + "\r\n";
+        nConter = 25;
+    }
+
+    pMainWnd->WriteFrameInfo( strInfo );
 }
+
+void CMonitor::WriteFrameInfo( QString &strInfo )
+{
+    return;
+    static QFile file;
+
+    if ( !file.isOpen( ) ) {
+        file.setFileName( "c:/FrameCallback.txt" );
+        file.open( QIODevice::WriteOnly | QIODevice::Append );
+    }
+
+    QByteArray byData = strInfo.toAscii( );
+    file.write( byData );
+    file.flush( );
+}
+
 
 void CMonitor::SetBallotSense( bool bSense, int nChannel )
 {
@@ -769,7 +803,7 @@ void CMonitor::SetBallotSense( bool bSense, int nChannel )
 
     if ( !bSense ) {
         ZeroMemory( &structPlates[ nChannel ], sizeof ( TH_PlateIDResult ) );
-        ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) );
+        ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) * RECOG_RES );
         ClearPlate( nChannel );
     } else if ( !bPlateFilter ){ // PlateFilter2
         DisplayPlate( nChannel );

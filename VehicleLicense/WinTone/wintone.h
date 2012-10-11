@@ -34,6 +34,7 @@ private:
     void SetKeyName( QStringList& lstKey );
     void SetDefault( QStringList& lstData );
     int CalculateDirection( TH_RECT& recDirect, int& nChannel );
+    void RecordFrame( bool bSuccess, TH_PlateResult* pResult );
 
 protected:
     void GetParameters( );
@@ -49,6 +50,8 @@ private:
     QStringList lstKeys;
     QStringList lstDefault;
     CYUV2BGR yuv2BGR;
+    bool bRecordFrame;
+    int nFrameRate;
 
 };
 

@@ -2,11 +2,12 @@ https://crocodoc.com
 Crocodoc converts Microsoft Office and PDF documents to HTML5 so your users can view them right in your web app.
 
 WebRTC XMPP WebEx/Wink
+www.webplatform.org
 
 about protocol
 chrome://about
 
-Wireshark / sniffer 协议抓包
+Wireshark / sniffer 协议抓包 libpcap / Unix Winpcap / Windows libupnp
 
 Open Source WebSite
 
@@ -25,3 +26,8 @@ www.codeplex.org
 MySQL help 'xxxxxx' command
 
 PHP ZendServer ZendStudio ZF Symfony/Doctrine( ORM ) PECL
+
+C51 ( Keil ) Microcontroller / Dog
+TI CCStudio / DSP
+VxWorks Tornado
+单片机(冯诺.伊曼)(将整个计算机系统集成到一块芯片中) SCM(Single Chip Microcomputer / Intel ) MCU( Micro Controller Unit / Philips ) SoC( System On Chip ) ---------- DSP(哈弗) 电路原理图/PCB图(Protel EDA) 器件选择 继电器(自动开关)

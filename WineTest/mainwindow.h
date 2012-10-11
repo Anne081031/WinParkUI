@@ -48,6 +48,8 @@ private:
     bool Connect2Host( );
     void AppendResponse( QString& strMsg );
 
+    void SendData( QByteArray& byData );
+
 private slots:
     void HandleAccept( int socketDescriptor );
     void IncomingData( );
@@ -55,6 +57,8 @@ private slots:
     void on_btnRequest_clicked();
 
     void on_btnConnect_clicked();
+
+    void on_btnContinue_clicked();
 
 private:
     Ui::MainWindow *ui;

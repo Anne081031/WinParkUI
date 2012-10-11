@@ -1,4 +1,5 @@
 #include "wintone.h"
+#include <QFile>
 
 #define ASSERT_VEHICLE( FunName ) qDebug( ) << FunName << " " << ( bRet ? "Success" : "Failed" ) << endl
 #define OUTPUT_STRING( strInfo ) qDebug( ) << strInfo << endl;
@@ -237,6 +238,10 @@ void CWinTone::SetKeyName(QStringList &lstKey)
 
 void CWinTone::GetParameters( )
 {
+    // [WintonePlate]
+    // RecordFrame=true
+    bRecordFrame = pSettings->value( "WintonePlate/RecordFrame", false ).toBool( );
+    nFrameRate = pSettings->value( "WintonePlate/FrameRate", 25 ).toInt( );
     QString strSect = QString( "WintonePlate/WintonePlate%1/%2" );
     QString strWay[ ] = { "CameraDirection/OneWay", "CameraDirection/TwoWay",
                           "CameraDirection/ThreeWay", "CameraDirection/FourWay" };
@@ -431,6 +436,9 @@ bool CWinTone::RecognizeVideo( quint8* pImgData, int nWidth, int nHeight,
     try {
         //bRet = false;
         bRet = LPR_RGB888Ex( pImgData, nWidth, nHeight, pResult, nPlateNumber, &rect, ++nChannel );
+        if ( bRecordFrame ) {
+            RecordFrame( bRet, pResult );
+        }
     } catch ( ...  ) {
         qDebug( ) << "Test";
     }
@@ -447,6 +455,41 @@ bool CWinTone::RecognizeVideo( quint8* pImgData, int nWidth, int nHeight,
     OUTPUT_STRING( "CWinTone::RecognizeVideo( )" );
 
     return bRet;
+}
+
+void CWinTone::RecordFrame( bool bSuccess, TH_PlateResult *pResult )
+{
+    static int nConter = nFrameRate;
+    static QFile file;
+
+    QTime time;
+    QString strText = "";
+
+    if ( !file.isOpen( ) ) {
+        file.setFileName( "c:/FrameRate.txt" );
+        file.open( QIODevice::WriteOnly | QIODevice::Append );
+    }
+
+    if ( nConter == nFrameRate ) {
+        time = QTime::currentTime( );
+        strText = time.toString( "Begin hh:mm:ss.zzz" ) + "\r\n";
+    }
+
+    strText += QString( "FrameCount %1\r\n" ).arg( nConter );
+
+    if ( bSuccess ) {
+        strText += QString( "Plate %1\r\n" ).arg( QString( pResult->license ) );
+    }
+
+    if ( 0 == ( --nConter ) ) {
+        time = QTime::currentTime( );
+        strText += time.toString( "End hh:mm:ss.zzz" ) + "\r\n";
+        nConter = nFrameRate;
+    }
+
+    QByteArray byData = strText.toAscii( );
+    file.write( byData );
+    file.flush( );
 }
 
 int CWinTone::CalculateDirection( TH_RECT& recDirect, int& nChannel )

@@ -110,8 +110,10 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
     ReadCanForRestart( true );
 
     if ( bStartupPlateDilivery ) {
-        connect( this, SIGNAL( PlateDelivery( int, QStringList, QString ) ), CPlateDiliveryThread::GetSingleton( ), SLOT( HandlePlateDilivery( int, QStringList, QString ) ) );
-        connect( CPlateDiliveryThread::GetSingleton( ), SIGNAL( WeighingRequest( QStringList ) ), this, SLOT( HandleWeighing( QStringList ) ) );
+        CPlateDiliveryThread* pDilivery = CPlateDiliveryThread::GetSingleton( );
+        connect( this, SIGNAL( PlateDelivery( int, QStringList, QString ) ), pDilivery, SLOT( HandlePlateDilivery( int, QStringList, QString ) ) );
+        connect( pDilivery, SIGNAL( WeighingRequest( QStringList ) ), this, SLOT( HandleWeighing( QStringList ) ) );
+        connect( pDilivery, SIGNAL( Capture( quint8 ) ), this, SLOT( HandleCapture( quint8 ) ) );
     }
 }
 
@@ -733,6 +735,28 @@ void CProcessData::MakeCardCmd(QString &strCardNo, QByteArray &byData, char cCan
 void CProcessData::HandleWeighing( QStringList lstData )
 {
 
+}
+
+void CProcessData::HandleCapture( quint8 nChannel )
+{
+    QString strFileName = "";
+    QString strCardNo = "Sense" + QString::number( QDateTime::currentMSecsSinceEpoch( ) );
+    GetCaptureFile( strFileName, strCardNo, nChannel, CommonDataType::CaptureJPG );
+    pMainWindow->CaptureImage( strFileName, nChannel, CommonDataType::CaptureJPG  );
+
+    if ( true ) {
+        QString strTmp;
+        CCommonFunction::GetPath( strTmp, CommonDataType::PathSnapshot );
+        strTmp += "sense.jpg";
+
+        if ( QFile::copy( strFileName, strTmp ) ) {
+            pMainWindow->PictureRegconize( strTmp, nChannel );
+        }
+
+        if ( QFile::exists( strTmp ) ) {
+            QFile::remove( strTmp );
+        }
+    }
 }
 
 void CProcessData::SendPlate( QString strPlate, int nChannel, int nConfidence )

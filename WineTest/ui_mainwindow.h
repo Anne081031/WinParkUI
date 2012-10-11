@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Aug 16 17:19:59 2012
+** Created: Thu Oct 11 09:35:48 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -56,16 +56,17 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QLabel *label_4;
     QComboBox *cbxGate;
+    QPushButton *btnContinue;
     QGroupBox *groupBox_2;
     QTextEdit *edtResponse;
     QLabel *lblPic;
     QGroupBox *groupBox_3;
     QPushButton *btnConnect;
-    QWidget *widget;
+    QWidget *layoutWidget5;
     QHBoxLayout *horizontalLayout_6;
     QLabel *label_6;
     QLineEdit *edtIP;
-    QWidget *widget1;
+    QWidget *layoutWidget6;
     QHBoxLayout *horizontalLayout_7;
     QLabel *label_7;
     QLineEdit *edtPort;
@@ -178,6 +179,9 @@ public:
 
         horizontalLayout_4->addWidget(cbxGate);
 
+        btnContinue = new QPushButton(groupBox);
+        btnContinue->setObjectName(QString::fromUtf8("btnContinue"));
+        btnContinue->setGeometry(QRect(140, 200, 75, 23));
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
         groupBox_2->setGeometry(QRect(320, 10, 301, 241));
@@ -197,38 +201,38 @@ public:
         btnConnect = new QPushButton(groupBox_3);
         btnConnect->setObjectName(QString::fromUtf8("btnConnect"));
         btnConnect->setGeometry(QRect(40, 100, 111, 23));
-        widget = new QWidget(groupBox_3);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(20, 30, 153, 22));
-        horizontalLayout_6 = new QHBoxLayout(widget);
+        layoutWidget5 = new QWidget(groupBox_3);
+        layoutWidget5->setObjectName(QString::fromUtf8("layoutWidget5"));
+        layoutWidget5->setGeometry(QRect(20, 30, 153, 22));
+        horizontalLayout_6 = new QHBoxLayout(layoutWidget5);
         horizontalLayout_6->setSpacing(6);
         horizontalLayout_6->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_6->setObjectName(QString::fromUtf8("horizontalLayout_6"));
         horizontalLayout_6->setContentsMargins(0, 0, 0, 0);
-        label_6 = new QLabel(widget);
+        label_6 = new QLabel(layoutWidget5);
         label_6->setObjectName(QString::fromUtf8("label_6"));
 
         horizontalLayout_6->addWidget(label_6);
 
-        edtIP = new QLineEdit(widget);
+        edtIP = new QLineEdit(layoutWidget5);
         edtIP->setObjectName(QString::fromUtf8("edtIP"));
 
         horizontalLayout_6->addWidget(edtIP);
 
-        widget1 = new QWidget(groupBox_3);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(20, 60, 165, 22));
-        horizontalLayout_7 = new QHBoxLayout(widget1);
+        layoutWidget6 = new QWidget(groupBox_3);
+        layoutWidget6->setObjectName(QString::fromUtf8("layoutWidget6"));
+        layoutWidget6->setGeometry(QRect(20, 60, 165, 22));
+        horizontalLayout_7 = new QHBoxLayout(layoutWidget6);
         horizontalLayout_7->setSpacing(6);
         horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
-        label_7 = new QLabel(widget1);
+        label_7 = new QLabel(layoutWidget6);
         label_7->setObjectName(QString::fromUtf8("label_7"));
 
         horizontalLayout_7->addWidget(label_7);
 
-        edtPort = new QLineEdit(widget1);
+        edtPort = new QLineEdit(layoutWidget6);
         edtPort->setObjectName(QString::fromUtf8("edtPort"));
 
         horizontalLayout_7->addWidget(edtPort);
@@ -282,6 +286,7 @@ public:
          << QApplication::translate("MainWindow", "\345\274\200\351\227\270", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("MainWindow", "\345\205\263\351\227\270", 0, QApplication::UnicodeUTF8)
         );
+        btnContinue->setText(QApplication::translate("MainWindow", "\350\277\236\347\273\255\345\274\200\345\205\263\351\227\270", 0, QApplication::UnicodeUTF8));
         groupBox_2->setTitle(QApplication::translate("MainWindow", "Response", 0, QApplication::UnicodeUTF8));
         lblPic->setText(QString());
         groupBox_3->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\346\234\215\345\212\241\345\231\250", 0, QApplication::UnicodeUTF8));

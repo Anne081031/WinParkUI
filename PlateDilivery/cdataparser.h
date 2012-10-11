@@ -50,12 +50,15 @@ private:
     void ParseSerialData( QByteArray& byData );
     void WriteSerial( CWinSerialPort* pSerial, char cCmd[ ], int nCmdLen );
 
+    void CaptureImage( quint8 nChannel );
+
 private:
      CWinSerialPort* pSerialPort;
      CWinSerialPort* pWineSerialPort;
     
 signals:
      void Response( QByteArray byResponse );
+     void Capture( quint8 nChannel );
     
 public slots:
      void DataMayRead( );

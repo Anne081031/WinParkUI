@@ -18,7 +18,7 @@
 #define ENCODECHANNEL ( int ) ( 4 )
 #define VIDEO_USEDWAY ( int ) ( 4 )
 #define VIDEO_BUF     ( int ) ( 1024 * 1024 * 2 )
-#define RECOG_RES     ( int ) ( 1 )
+#define RECOG_RES     ( int ) ( 6 )
 
 namespace Ui {
     class CMonitor;
@@ -59,6 +59,7 @@ public:
     void SetAlertMsg( const QString& strText );
     void HideAlert( );
     void ControlGateButton( );
+    void WriteFrameInfo( QString& strInfo );
     //static void PrcCapSourceStream1( long lnCardID, long pBuf, long lnWidth, long lnHeight, long lnBiCount );
 
     static bool bStartRecognization[ VIDEO_USEDWAY ];

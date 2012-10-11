@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'processdata.h'
 **
-** Created: Mon Oct 8 12:09:12 2012
+** Created: Thu Oct 11 11:48:22 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CProcessData[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -37,7 +37,8 @@ static const uint qt_meta_data_CProcessData[] = {
  // slots: signature, parameters, type, tag, flags
      156,  132,   13,   13, 0x08,
      207,  199,   13,   13, 0x08,
-     274,  235,   13,   13, 0x08,
+     244,  235,   13,   13, 0x08,
+     305,  266,   13,   13, 0x08,
 
        0        // eod
 };
@@ -50,6 +51,7 @@ static const char qt_meta_stringdata_CProcessData[] = {
     "strCardNo,cCan,strPlate\0"
     "PlateCardComfirmPass(QString,char,QString)\0"
     "lstData\0HandleWeighing(QStringList)\0"
+    "nChannel\0HandleCapture(quint8)\0"
     "byData,vData,nMin,nHour,nAmount,bEnter\0"
     "SendTimeCardInfo(QByteArray&,QByteArray&,int,int,int,bool)\0"
 };
@@ -87,10 +89,11 @@ int CProcessData::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 1: PlateDelivery((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 2: PlateCardComfirmPass((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< char(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
         case 3: HandleWeighing((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
-        case 4: SendTimeCardInfo((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< QByteArray(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< bool(*)>(_a[6]))); break;
+        case 4: HandleCapture((*reinterpret_cast< quint8(*)>(_a[1]))); break;
+        case 5: SendTimeCardInfo((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< QByteArray(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< bool(*)>(_a[6]))); break;
         default: ;
         }
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

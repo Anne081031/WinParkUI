@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Sun Aug 19 19:22:33 2012
+** Created: Thu Oct 11 09:51:24 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,6 +35,7 @@ static const uint qt_meta_data_MainWindow[] = {
       47,   11,   11,   11, 0x08,
       62,   11,   11,   11, 0x08,
       86,   11,   11,   11, 0x08,
+     110,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -43,6 +44,7 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0socketDescriptor\0"
     "HandleAccept(int)\0IncomingData()\0"
     "on_btnRequest_clicked()\0on_btnConnect_clicked()\0"
+    "on_btnContinue_clicked()\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -55,6 +57,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 1: _t->IncomingData(); break;
         case 2: _t->on_btnRequest_clicked(); break;
         case 3: _t->on_btnConnect_clicked(); break;
+        case 4: _t->on_btnContinue_clicked(); break;
         default: ;
         }
     }
@@ -92,9 +95,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

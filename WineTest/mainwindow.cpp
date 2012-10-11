@@ -320,7 +320,7 @@ void MainWindow::CreateBallotSenseRequest( QByteArray& byData )
     byData.append( ( const char* ) &nTcpStreamLength, sizeof ( quint32 ) );
     char nAddress = ( char ) ui->edtAddress->text( ).toShort( );
     byData.append( nAddress );
-    tcpSocket.write( byData );
+    SendData( byData );
 }
 
 void MainWindow::CreateActiveSendRequest( QByteArray& byData )
@@ -330,7 +330,7 @@ void MainWindow::CreateActiveSendRequest( QByteArray& byData )
     byData.append( ( const char* ) &nTcpStreamLength, sizeof ( quint32 ) );
     char nAddress = ( char ) ui->edtAddress->text( ).toShort( );
     byData.append( nAddress );
-    tcpSocket.write( byData );
+    SendData( byData );
 }
 
 void MainWindow::CreateGateSenseRequest( QByteArray& byData )
@@ -340,7 +340,7 @@ void MainWindow::CreateGateSenseRequest( QByteArray& byData )
     byData.append( ( const char* ) &nTcpStreamLength, sizeof ( quint32 ) );
     char nAddress = ( char ) ui->edtAddress->text( ).toShort( );
     byData.append( nAddress );
-    tcpSocket.write( byData );
+    SendData( byData );
 }
 
 void MainWindow::CreateInfraredRequest( QByteArray& byData )
@@ -350,7 +350,7 @@ void MainWindow::CreateInfraredRequest( QByteArray& byData )
     byData.append( ( const char* ) &nTcpStreamLength, sizeof ( quint32 ) );
     char nAddress = ( char ) ui->edtAddress->text( ).toShort( );
     byData.append( nAddress );
-    tcpSocket.write( byData );
+    SendData( byData );
 }
 
 void MainWindow::CreateLedRequest( QByteArray& byData )
@@ -369,7 +369,7 @@ void MainWindow::CreateLedRequest( QByteArray& byData )
     byData.append( nAddress );
     byData.append( byContent );
 
-    tcpSocket.write( byData );
+    SendData( byData );
 }
 
 void MainWindow::CreateTrafficLightsRequest( QByteArray& byData )
@@ -383,7 +383,7 @@ void MainWindow::CreateTrafficLightsRequest( QByteArray& byData )
     char nOperation = ( char ) ui->cbxTraffic->currentIndex( );
     byData.append( nOperation );
 
-    tcpSocket.write( byData );
+    SendData( byData );
 }
 
 void MainWindow::CreateGateRequest( QByteArray& byData )
@@ -397,7 +397,7 @@ void MainWindow::CreateGateRequest( QByteArray& byData )
     char nOperation = ( char ) ui->cbxGate->currentIndex( );
     byData.append( nOperation );
 
-    tcpSocket.write( byData );
+    SendData( byData );
 }
 
 void MainWindow::CreatePlateRequest( QByteArray& byData )
@@ -407,7 +407,7 @@ void MainWindow::CreatePlateRequest( QByteArray& byData )
     byData.append( ( const char* ) &nTcpStreamLength, sizeof ( quint32 ) );
     char nAddress = ( char ) ui->edtAddress->text( ).toShort( );
     byData.append( nAddress );
-    tcpSocket.write( byData );
+    SendData( byData );
 }
 
 void MainWindow::on_btnRequest_clicked()
@@ -460,4 +460,33 @@ void MainWindow::on_btnRequest_clicked()
 void MainWindow::on_btnConnect_clicked()
 {
     Connect2Host( );
+}
+
+void MainWindow::on_btnContinue_clicked()
+{
+    for ( char c = 0; c < 2; c++ ) {
+        QByteArray byData;
+        byData.append( Protocol::byToken );
+
+        char nMessageType = 6;
+        byData.append( nMessageType );
+
+        quint32 nTcpStreamLength = Protocol::nHeadLength + sizeof ( quint8 ) * 2;
+        nTcpStreamLength = htonl( nTcpStreamLength );
+        byData.append( ( const char* ) &nTcpStreamLength, sizeof ( quint32 ) );
+        char nAddress = ( char ) c;
+        byData.append( nAddress );
+
+        char nOperation = ( char ) c;
+        byData.append( nOperation );
+
+        SendData( byData );
+    }
+}
+
+void MainWindow::SendData( QByteArray &byData )
+{
+    tcpSocket.write( byData );
+    tcpSocket.flush( );
+    tcpSocket.waitForBytesWritten( );
 }

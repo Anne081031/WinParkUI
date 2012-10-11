@@ -231,6 +231,7 @@ signals:
 private slots:
     void PlateCardComfirmPass( QString strCardNo, char cCan, QString strPlate );
     void HandleWeighing( QStringList lstData );
+    void HandleCapture( quint8 nChannel );
 
     //CardExitInfo( byData, vData, false, nMin, nHour, nAmount ); // 2011 12 18
     //CCDisplayInfo( byData, vData, nMin, nHour, nAmount, bEnter ); // 2011 12 18

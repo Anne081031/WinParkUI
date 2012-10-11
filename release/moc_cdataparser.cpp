@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'cdataparser.h'
 **
-** Created: Mon Sep 17 14:54:54 2012
+** Created: Thu Oct 11 14:52:39 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,25 +23,26 @@ static const uint qt_meta_data_CDataParser[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
       24,   13,   12,   12, 0x05,
+      54,   45,   12,   12, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      45,   12,   12,   12, 0x0a,
+      70,   12,   12,   12, 0x0a,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CDataParser[] = {
     "CDataParser\0\0byResponse\0Response(QByteArray)\0"
-    "DataMayRead()\0"
+    "nChannel\0Capture(quint8)\0DataMayRead()\0"
 };
 
 const QMetaObject CDataParser::staticMetaObject = {
@@ -74,10 +75,11 @@ int CDataParser::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: Response((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
-        case 1: DataMayRead(); break;
+        case 1: Capture((*reinterpret_cast< quint8(*)>(_a[1]))); break;
+        case 2: DataMayRead(); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }
@@ -87,5 +89,12 @@ void CDataParser::Response(QByteArray _t1)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
+}
+
+// SIGNAL 1
+void CDataParser::Capture(quint8 _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

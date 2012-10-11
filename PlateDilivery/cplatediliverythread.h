@@ -53,6 +53,7 @@ private:
     quint32 nPakageSize;
     bool bActiveSend;
     bool bActivePlate;
+    bool bPlateVideo;
     CDataParser dataParser;
     QHash< int, QStringList > hashPlate;
     QString strPlates[ 2 ];
@@ -61,6 +62,7 @@ private:
     
 signals:
     void WeighingRequest( QStringList lstData );
+    void Capture( quint8 nChannel );
     
 public slots:
     void HandlePlateDilivery( int nChannel, QStringList lstData, QString strPlate );
@@ -68,6 +70,7 @@ public slots:
     void Reconnect( );
     void HandleResponse( QByteArray byResponse );
     void HandleAccept( int socketDescriptor );
+    void HandleCapture( quint8 nChannel );
     
 };
 
