@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmytcpserver.h'
 **
-** Created: Mon Aug 13 17:30:18 2012
+** Created: Tue Oct 23 12:17:49 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

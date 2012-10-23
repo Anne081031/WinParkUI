@@ -6,6 +6,7 @@
 #include <QTcpSocket>
 #include "../PlateDilivery/ProtocolStructure.h"
 #include <QTextCodec>
+#include "qprocessresponsethread.h"
 
 namespace Ui {
 class MainWindow;
@@ -26,6 +27,7 @@ private:
     QByteArray GetBody( QByteArray& byStream );
 
     void ParseResponseData( QByteArray& byData );
+    bool ParseMultipleResponseData( QByteArray &byResponse );
     QString GetByteDataString( void* pData, quint8 nLength );
     void DisplayPic( quint8* pData, quint32 nLength );
 
@@ -50,6 +52,8 @@ private:
 
     void SendData( QByteArray& byData );
 
+    void SendTcpStream( QByteArray& byData );
+
 private slots:
     void HandleAccept( int socketDescriptor );
     void IncomingData( );
@@ -60,6 +64,9 @@ private slots:
 
     void on_btnContinue_clicked();
 
+    void HandleResponse( QString strMsg );
+    void HandlePlateImg( QString strFile );
+
 private:
     Ui::MainWindow *ui;
 
@@ -69,6 +76,7 @@ private:
     QByteArray byData;
     quint32 nPakageSize;
     QTextCodec* pCodec;
+    QProcessResponseThread* pResposeThread;
 };
 
 #endif // MAINWINDOW_H

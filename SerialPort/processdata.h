@@ -228,6 +228,9 @@ signals:
     void OnResponseUserRequest( QByteArray& byData, int nMinor );
     void PlateDelivery( int nChannel, QStringList lstData, QString strPlate );
 
+public slots:
+    void HandleSendFileCount( quint32 nCount );
+
 private slots:
     void PlateCardComfirmPass( QString strCardNo, char cCan, QString strPlate );
     void HandleWeighing( QStringList lstData );

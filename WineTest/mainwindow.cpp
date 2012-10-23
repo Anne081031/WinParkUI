@@ -3,6 +3,7 @@
 #include <QFile>
 #include <QPixmap>
 #include <windows.h>
+#include "qresponseevent.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -26,6 +27,22 @@ MainWindow::MainWindow(QWidget *parent) :
         listener.moveToThread( &listener );
         listener.start( );
     }
+
+    pResposeThread = QProcessResponseThread::GetSingleton( );
+
+    connect( pResposeThread, SIGNAL( PlateImg( QString ) ), this, SLOT( HandlePlateImg( QString ) ) );
+    connect( pResposeThread, SIGNAL( Response( QString ) ), this, SLOT( HandleResponse( QString ) ) );
+}
+
+void MainWindow::HandlePlateImg( QString strFile )
+{
+    QPixmap pixmap( strFile );
+    ui->lblPic->setPixmap( pixmap );
+}
+
+void MainWindow::HandleResponse( QString strMsg )
+{
+    ui->edtResponse->append( strMsg );
 }
 
 bool MainWindow::Connect2Host( )
@@ -219,7 +236,13 @@ void MainWindow::ProcessPlateResponse( QByteArray& byStream )
     nIndex += nPlateByteCount;
     QByteArray byPicture = byBody.mid( nIndex, nPictureByteCount );
     QFile file;
-    file.setFileName( "tmp.jpg" );
+    QString strSingle = QString( "snapshot\\A%1D%2C%3P%4.jpg" ).arg( QString::number( nAddress ),
+                                                                     strDateTime,
+                                                                     QString::number( nConfidence ),
+                                                                     strPlate );
+    QString strFile = strSingle;//ui->chk->isChecked( ) ? strSingle : "tmp.jpg";
+
+    file.setFileName( strFile );
     bool bRet = file.open( QIODevice::ReadWrite | QIODevice::Truncate );
     if ( !bRet ) {
         return;
@@ -228,7 +251,7 @@ void MainWindow::ProcessPlateResponse( QByteArray& byStream )
     file.write( byPicture );
     file.close( );
 
-    QPixmap pixmap( "tmp.jpg" );
+    QPixmap pixmap( strFile );
     ui->lblPic->setPixmap( pixmap );
 }
 
@@ -284,8 +307,91 @@ void MainWindow::DisplayPic( quint8 *pData, quint32 nLength )
     ui->lblPic->setPixmap( pixmap );
 }
 
+bool MainWindow::ParseMultipleResponseData( QByteArray &byResponse )
+{
+    bool bRet = false;
+    qint32 nIndex = byResponse.indexOf( Protocol::byToken );
+
+    if ( -1 == nIndex ) {
+        byResponse.clear( );
+        return bRet; // No Head
+    }
+
+    if ( 0 < nIndex) { // Remove
+        byResponse.remove( 0, nIndex );
+    }
+
+    qint32 nLen = Protocol::nTokenLength;
+    if ( nLen == byResponse.length( ) ) {
+        return bRet;
+    }
+
+    nLen += sizeof ( quint8 ); // MessageType
+    nLen += sizeof ( quint32 ); // TcpStreamLength
+
+    if ( nLen >= byResponse.length( ) ) {
+        return bRet;
+    }
+
+    quint32 nTotal = GetStreamLength( byResponse );
+    if ( nTotal > byResponse.length( ) ) {
+        return bRet;
+    }
+
+    switch ( GetMessageType( byResponse ) ) {
+    case Protocol::ResponseBallotSenseState :
+        //nLen += 2;
+        break;
+
+    case Protocol::ResponseGateSenseState :
+        //nLen += 2;
+        break;
+
+    case Protocol::ResponseInfraredState :
+        //nLen += 2;
+        break;
+
+    case Protocol::ResponsePlateData :
+        //nLen += 2;
+        break;
+
+    case Protocol::ResponseActiveSend :
+        //nLen += 2;
+        break;
+    }
+
+    ParseResponseData( byResponse );
+
+    byResponse.remove( 0, nTotal ); // Remove one Request
+
+    bRet = ( 0 < byResponse.length( ) );
+    return bRet;
+}
+
+void MainWindow::SendTcpStream( QByteArray &byData )
+{
+    QResponseEvent* pEvent = new QResponseEvent( QEvent::User );
+    pEvent->SetReponseData( byData );
+
+    QApplication::postEvent( pResposeThread, pEvent );
+}
+
 void MainWindow::IncomingData( )
 {
+    QByteArray byResponse = tcpSocket.readAll( );
+    SendTcpStream( byResponse );
+    return;
+
+    bool bRet = false;
+    byData.append( tcpSocket.readAll( ) );
+
+    do {
+        bRet = ParseMultipleResponseData( byData );
+    } while ( bRet );
+
+    return;
+
+    /////////////////////////////
     qint64 nBytes = tcpSocket.bytesAvailable( );
     QByteArray byteData = tcpSocket.read( nBytes );
 

@@ -334,7 +334,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="edtIP"/>
+       <widget class="QLineEdit" name="edtIP">
+        <property name="text">
+         <string>127.0.0.1</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>
@@ -356,7 +360,11 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="edtPort"/>
+       <widget class="QLineEdit" name="edtPort">
+        <property name="text">
+         <string>60000</string>
+        </property>
+       </widget>
       </item>
      </layout>
     </widget>

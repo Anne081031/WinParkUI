@@ -305,8 +305,10 @@ bool CWinTone::RecognizedPlateType( QStringList& lstType )
     BOOL bArmy2    = ( 1 == mapParameters[ nChannel ].value( lstKeys[ 14 ] ).toInt( ) );
     BOOL bTractor  = ( 1 == mapParameters[ nChannel ].value( lstKeys[ 15 ] ).toInt( ) );
     bRet = LPR_SetPlateType(TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,++nChannel);
+    //bRet = LPR_SetPlateType(TRUE,FALSE,FALSE,FALSE,FALSE,++nChannel);
 
     typedef BOOL ( WINAPI* OldFun ) ( BOOL, BOOL, BOOL, BOOL, BOOL, int );
+    //typedef BOOL ( WINAPI* OldFun ) ( BOOL, BOOL, BOOL, BOOL, BOOL, BOOL, BOOL, BOOL, BOOL, int );
     if ( !bRet ) {
         HMODULE hMod = LoadLibrary( L"LPKernelEx.dll" );
 
@@ -314,6 +316,7 @@ bool CWinTone::RecognizedPlateType( QStringList& lstType )
             OldFun fun = ( OldFun ) GetProcAddress( hMod, "LPR_SetPlateType" );
             if ( NULL != fun ) {
                 bRet = fun( TRUE,FALSE,FALSE,FALSE,FALSE,++nChannel );
+                //bRet = fun( TRUE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,FALSE,++nChannel );
                 FreeLibrary( hMod );
             }
         }
@@ -561,7 +564,7 @@ bool CWinTone::PlateFilter( TH_PlateResult *pResult, int &nResult, int nChannel 
 bool CWinTone::GetPlateImgData( quint8*& pImgData, int& nWidth, int& nHeight,
                                 int& nSize, int nChannel )
 {
-    bool bRet = LPR_GetImageBuf( pImgData, nWidth, nHeight, nSize, ++nChannel );
+    bool bRet = TRUE;//LPR_GetImageBuf( pImgData, nWidth, nHeight, nSize, ++nChannel );
     OUTPUT_STRING( "CWinTone::GetPlateImgData( )" );
 
     return bRet;

@@ -136,6 +136,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     ui->pushButton->setVisible( false );
     ui->spinBox->setVisible( false );
     ui->label_3->setVisible( false );
+    ui->lblFileCount->setVisible( false );
     pMainWnd = this;
     GetCanParkIndexNum( );
     nRefreshParkspaceTime = 1000 * 60;
@@ -172,6 +173,13 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
 
     connect( &CLogicInterface::GetInterface( )->GetMysqlDb( ), SIGNAL( NotifyError( QString ) ), this, SLOT( DisplayDbError( QString ) ) );
     ControlGateButton( );
+}
+
+void CMonitor::SetFileCount( quint32 nCount )
+{
+    ui->lblFileCount->setVisible( true );
+    QString strText = QString::number( nCount );
+    ui->lblFileCount->setText( strText );
 }
 
 void CMonitor::DisplayDbError( QString strMsg )

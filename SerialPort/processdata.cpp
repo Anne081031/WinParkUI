@@ -114,7 +114,13 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
         connect( this, SIGNAL( PlateDelivery( int, QStringList, QString ) ), pDilivery, SLOT( HandlePlateDilivery( int, QStringList, QString ) ) );
         connect( pDilivery, SIGNAL( WeighingRequest( QStringList ) ), this, SLOT( HandleWeighing( QStringList ) ) );
         connect( pDilivery, SIGNAL( Capture( quint8 ) ), this, SLOT( HandleCapture( quint8 ) ) );
+        connect( pDilivery, SIGNAL( SendFileCount( quint32 ) ), this, SLOT( HandleSendFileCount( quint32 ) ) );
     }
+}
+
+void CProcessData::HandleSendFileCount( quint32 nCount )
+{
+    pMainWindow->SetFileCount( nCount );
 }
 
 void CProcessData::CreateBufferTable( )
@@ -762,18 +768,21 @@ void CProcessData::HandleCapture( quint8 nChannel )
 void CProcessData::SendPlate( QString strPlate, int nChannel, int nConfidence )
 {
     QStringList lstData;
-    QString strDateTime;
     QDateTime dt = QDateTime::currentDateTime( );
 
-    CCommonFunction::DateTime2String( dt, strDateTime );
-    strDateTime.remove( "-" );
-    strDateTime.remove( " " );
-    strDateTime.remove( ":" );
+    QString strDateTime = dt.toString( "yyyyMMddhhmmss" );
+    QString strName = dt.toString( "yyyyMMddhhmmsszzz" );
 
     QString strFileName = "";
     CCommonFunction::GetPath( strFileName, CommonDataType::PathSnapshot );
-    strFileName += strPlate + "-" + QString::number( nChannel ) + "-" + strDateTime + ".jpg";
+    strFileName += strPlate + "-" + QString::number( nChannel ) + "-" + strName + ".jpg";
     pMainWindow->CaptureImage( strFileName, nChannel, CommonDataType::CaptureJPG );
+
+    if ( !QFile::exists( strFileName ) ) {
+        int n = 0;
+        n = 1;
+        return;
+    }
 
     lstData << strPlate << strDateTime << QString::number( nConfidence ) << strFileName;
 

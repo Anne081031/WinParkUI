@@ -13,10 +13,14 @@ LIBS += "../lib/libws2_32.a"
 SOURCES += main.cpp\
         mainwindow.cpp \
     qlistener.cpp \
-    qmytcpserver.cpp
+    qmytcpserver.cpp \
+    qprocessresponsethread.cpp \
+    qresponseevent.cpp
 
 HEADERS  += mainwindow.h \
     qlistener.h \
-    qmytcpserver.h
+    qmytcpserver.h \
+    qprocessresponsethread.h \
+    qresponseevent.h
 
 FORMS    += mainwindow.ui

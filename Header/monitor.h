@@ -32,6 +32,7 @@ public:
     explicit CMonitor( QWidget* mainWnd, QWidget *parent = 0);
     ~CMonitor();
 
+    void SetFileCount( quint32 nCount );
     void PictureRegconize( QString& strFile, int nChannel );
 
     void ClearStatistics( );

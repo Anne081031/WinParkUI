@@ -1,3 +1,8 @@
+XAMPP http://www.apachefriends.org
+http://tomcat.apache.org/
+http://www.apache.org/
+http://www.apachelounge.com/
+
 Managed I/O Completion Ports (IOCP)  / Sonic.Net library
 
 Javascript / Dart CoffeeScript TypeScript

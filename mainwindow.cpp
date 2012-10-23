@@ -65,6 +65,12 @@ CHeartbeatThread* g_pHeartbeatThread = NULL;
 CLocalCltCommunication* g_pLocalCltComm = NULL;
 CFtp* g_pFtp = NULL;
 
+void MainWindow::SetFileCount( quint32 nCount )
+{
+    CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
+    pMonitor->SetFileCount( nCount );
+}
+
 void MainWindow::PictureRegconize( QString &strFile, int nChannel )
 {
     CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );

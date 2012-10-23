@@ -3089,6 +3089,23 @@ color: rgb(255, 0, 0);</string>
     <number>10</number>
    </property>
   </widget>
+  <widget class="QLabel" name="lblFileCount">
+   <property name="geometry">
+    <rect>
+     <x>1290</x>
+     <y>130</y>
+     <width>91</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image:url( );
+color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

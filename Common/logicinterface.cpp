@@ -891,6 +891,22 @@ void CLogicInterface::GetAllTariff2File( )
     int nField = 0;
     int nTypes = pSettings->value( "CarType/Count").toInt( );
 
+    QString strValues[ ] = { "大型车", "中型车", "小型车", "摩托车",
+                             "免费车辆", "自定义1", "自定义2", "自定义3" };
+    for ( int nIndex = 0; nIndex < 8; nIndex++ ) {
+        pSettings->setValue( QString( "CarType/Count%1" ).arg( nIndex ),
+                             strValues[ nIndex ] );
+    }
+
+    if ( 0 == nTypes ) {
+        pSettings->setValue( "CarType/Count", 8 );
+        nTypes = 8;
+        //CCommonFunction::MsgBox( NULL, "提示", "费配置文件【TariffCfg.ini】内容丢失。", QMessageBox::Information );
+        //return;
+    }
+
+    pSettings->sync( );
+
     for ( int nRow = 0; nRow < nRows; nRow++ ) {
         nField = nRow * nCols ;
 

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'processdata.h'
 **
-** Created: Thu Oct 11 14:52:35 2012
+** Created: Tue Oct 23 14:35:54 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CProcessData[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -35,10 +35,11 @@ static const uint qt_meta_data_CProcessData[] = {
       93,   67,   13,   13, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     156,  132,   13,   13, 0x08,
-     207,  199,   13,   13, 0x08,
-     244,  235,   13,   13, 0x08,
-     305,  266,   13,   13, 0x08,
+     139,  132,   13,   13, 0x0a,
+     192,  168,   13,   13, 0x08,
+     243,  235,   13,   13, 0x08,
+     280,  271,   13,   13, 0x08,
+     341,  302,   13,   13, 0x08,
 
        0        // eod
 };
@@ -48,6 +49,7 @@ static const char qt_meta_stringdata_CProcessData[] = {
     "OnResponseUserRequest(QByteArray&,int)\0"
     "nChannel,lstData,strPlate\0"
     "PlateDelivery(int,QStringList,QString)\0"
+    "nCount\0HandleSendFileCount(quint32)\0"
     "strCardNo,cCan,strPlate\0"
     "PlateCardComfirmPass(QString,char,QString)\0"
     "lstData\0HandleWeighing(QStringList)\0"
@@ -87,13 +89,14 @@ int CProcessData::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: OnResponseUserRequest((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 1: PlateDelivery((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QStringList(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
-        case 2: PlateCardComfirmPass((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< char(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
-        case 3: HandleWeighing((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
-        case 4: HandleCapture((*reinterpret_cast< quint8(*)>(_a[1]))); break;
-        case 5: SendTimeCardInfo((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< QByteArray(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< bool(*)>(_a[6]))); break;
+        case 2: HandleSendFileCount((*reinterpret_cast< quint32(*)>(_a[1]))); break;
+        case 3: PlateCardComfirmPass((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< char(*)>(_a[2])),(*reinterpret_cast< QString(*)>(_a[3]))); break;
+        case 4: HandleWeighing((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 5: HandleCapture((*reinterpret_cast< quint8(*)>(_a[1]))); break;
+        case 6: SendTimeCardInfo((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< QByteArray(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< int(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< bool(*)>(_a[6]))); break;
         default: ;
         }
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'monitor.ui'
 **
-** Created: Fri Sep 7 16:51:04 2012
+** Created: Tue Oct 23 13:58:30 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -130,6 +130,7 @@ public:
     QPushButton *pushButton;
     QLabel *label_3;
     QSpinBox *spinBox;
+    QLabel *lblFileCount;
 
     void setupUi(QFrame *CMonitor)
     {
@@ -1095,6 +1096,11 @@ public:
         spinBox->setMinimum(10);
         spinBox->setMaximum(10000);
         spinBox->setValue(10);
+        lblFileCount = new QLabel(CMonitor);
+        lblFileCount->setObjectName(QString::fromUtf8("lblFileCount"));
+        lblFileCount->setGeometry(QRect(1290, 130, 91, 16));
+        lblFileCount->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
+"color: rgb(255, 0, 0);"));
 
         retranslateUi(CMonitor);
 
@@ -1227,6 +1233,7 @@ public:
         lblNumber5->setText(QApplication::translate("CMonitor", "\345\275\223\347\217\255\345\205\215\350\264\2710\345\205\203", 0, QApplication::UnicodeUTF8));
         pushButton->setText(QApplication::translate("CMonitor", "\346\217\222\345\205\245\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("CMonitor", "\344\270\207\346\235\241", 0, QApplication::UnicodeUTF8));
+        lblFileCount->setText(QString());
     } // retranslateUi
 
 };

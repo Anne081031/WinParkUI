@@ -115,6 +115,81 @@ void CPlateDiliveryThread::timerEvent( QTimerEvent *event )
     dataParser.TimerActiveSend( 2 );
 }
 
+bool CPlateDiliveryThread::ParseMultipleRequestData( QByteArray &byRequest )
+{
+    bool bRet = false;
+    qint32 nIndex = byRequest.indexOf( Protocol::byToken );
+
+    if ( -1 == nIndex ) {
+        byRequest.clear( );
+        return bRet; // No Head
+    }
+
+    if ( 0 < nIndex) { // Remove
+        byRequest.remove( 0, nIndex );
+    }
+
+    qint32 nLen = Protocol::nTokenLength;
+    if ( nLen == byRequest.length( ) ) {
+        return bRet;
+    }
+
+    nLen += sizeof ( quint8 ); // MessageType
+    nLen += sizeof ( quint32 ); // TcpStreamLength
+
+    if ( nLen >= byRequest.length( ) ) {
+        return bRet;
+    }
+
+    quint32 nTotal = dataParser.GetStreamLength( byRequest );
+    if ( nTotal > byRequest.length( ) ) {
+        return bRet;
+    }
+
+    switch ( dataParser.GetMessageType( byRequest ) ) {
+    case Protocol::RequestQueryBallotSenseState :
+        //nLen += 2;
+        break;
+
+    case Protocol::RequestQueryGateSenseState :
+        //nLen += 2;
+        break;
+
+    case Protocol::RequestQueryInfraredState :
+        //nLen += 2;
+        break;
+
+    case Protocol::RequestControlLED :
+        //nLen += 2;
+        break;
+
+    case Protocol::RequestControlTrafficLights :
+        //nLen += 2;
+        break;
+
+    case Protocol::RequestQueryPlateData :
+        //nLen += 2;
+        break;
+
+    case Protocol::RequestVehicleUpDwonWeigh :
+        break;
+
+    case Protocol::RequestSavePlate :
+        break;
+
+    case Protocol::RequestActiveSend :
+        //nLen += 2;
+        break;
+    }
+
+    ParseRequestData( byRequest );
+
+    byRequest.remove( 0, nTotal ); // Remove one Request
+
+    bRet = ( 0 < byRequest.length( ) );
+    return bRet;
+}
+
 void CPlateDiliveryThread::ParseRequestData( QByteArray &byRequest )
 {
     QByteArray byToken = dataParser.GetToken( byRequest );
@@ -129,6 +204,7 @@ void CPlateDiliveryThread::ParseRequestData( QByteArray &byRequest )
         quint8 nAddress = byBody.at( 0 );
 
         if ( !hashPlate.contains( nAddress ) ) {
+            qDebug( ) << "CPlateDiliveryThread::SendPlate !hashPlate.contains( nAddress ) " <<  endl;
             return;
         }
 
@@ -143,6 +219,16 @@ void CPlateDiliveryThread::ParseRequestData( QByteArray &byRequest )
 
 void CPlateDiliveryThread::IncommingData( )
 {
+    bool bRet = false;
+    byData.append( pTcpSocket->readAll( ) );
+
+    do {
+        bRet = ParseMultipleRequestData( byData );
+    } while ( bRet );
+
+    return;
+
+    //////////////
     qint64 nBytes = pTcpSocket->bytesAvailable( );
     QByteArray byteData = pTcpSocket->read( nBytes );
 
@@ -240,9 +326,10 @@ char CPlateDiliveryThread::GetConfidence( char nConfidence, const QString& strPl
     return nConfid;
 }
 
-void CPlateDiliveryThread::CreateSendData( quint8 nAddress, QByteArray &byteData, QStringList &lstData )
+bool CPlateDiliveryThread::CreateSendData( quint8 nAddress, QByteArray &byteData, QStringList &lstData )
 {
     //  lstData << strPlate << strDateTime << QString::number( nConfidence ) << strFileName;
+    bool bRet = true;
 
     byteData.clear( );
 
@@ -258,10 +345,20 @@ void CPlateDiliveryThread::CreateSendData( quint8 nAddress, QByteArray &byteData
     if ( picFile.open( QIODevice::ReadOnly ) ) {
         fileData = picFile.readAll( );
         picFile.close( );
+        //picFile.remove( );
+    } else {
+        qDebug( ) << "picFile.open( ) error " << picFile.error( ) << endl;
     }
 
     //picFile.remove(  );
     quint32 nFileLength = fileData.length( );
+
+    qDebug( ) << "CPlateDiliveryThread::SendPlate Len " << nFileLength <<  endl;
+
+    if ( 0 == nFileLength ) {
+        qDebug( ) << "CPlateDiliveryThread::SendPlate Len " << nFileLength <<  endl;
+        return false;
+    }
 
     quint32 nStreamLength = Protocol::nHeadLength + sizeof ( quint8 ) +
             Protocol::nDateTimeLength + sizeof ( quint8 ) * 2 +
@@ -280,20 +377,33 @@ void CPlateDiliveryThread::CreateSendData( quint8 nAddress, QByteArray &byteData
     byteData.append( ( const char* ) &nFileLength, sizeof ( quint32 ) );
     byteData.append( bytePlate );
     byteData.append( fileData );
+
+    return bRet;
 }
 
 void CPlateDiliveryThread::SendPlate( quint8 nAddress, QStringList &lstData )
 {
     if ( 4 != lstData.count( ) || !Connect2Host( ) ) {
+        qDebug( ) << "CPlateDiliveryThread::SendPlate return" << endl;
         return;
     }
 
     QByteArray byteData;
 
-    CreateSendData( nAddress, byteData, lstData );
-    pTcpSocket->write( byteData );
+    if ( !CreateSendData( nAddress, byteData, lstData ) ) {
+        return;
+    }
+    qint64 nRet = pTcpSocket->write( byteData );
+    static quint32 nSend = 0;
+    qDebug( ) << "CPlateDiliveryThread::SendPlate pTcpSocket->write Len " << nRet
+              << " Counter " << ( ++nSend ) <<  endl;
+    if ( 0 == nRet ) {
+        qDebug( ) << "CPlateDiliveryThread::SendPlate pTcpSocket->write Len " << nRet <<  endl;
+    }
     pTcpSocket->flush( );
     pTcpSocket->waitForBytesWritten( );
+
+    emit SendFileCount( nSend );
 }
 
 void CPlateDiliveryThread::HandleCapture( quint8 nChannel )

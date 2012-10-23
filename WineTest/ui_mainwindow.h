@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Oct 11 09:35:48 2012
+** Created: Tue Oct 23 13:21:12 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -292,7 +292,9 @@ public:
         groupBox_3->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\346\234\215\345\212\241\345\231\250", 0, QApplication::UnicodeUTF8));
         btnConnect->setText(QApplication::translate("MainWindow", "\351\223\276\346\216\245\350\275\246\347\211\214\346\234\215\345\212\241\345\231\250", 0, QApplication::UnicodeUTF8));
         label_6->setText(QApplication::translate("MainWindow", "IP", 0, QApplication::UnicodeUTF8));
+        edtIP->setText(QApplication::translate("MainWindow", "127.0.0.1", 0, QApplication::UnicodeUTF8));
         label_7->setText(QApplication::translate("MainWindow", "Port", 0, QApplication::UnicodeUTF8));
+        edtPort->setText(QApplication::translate("MainWindow", "60000", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

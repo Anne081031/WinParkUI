@@ -27,10 +27,11 @@ protected:
 
 private:
     bool Connect2Host( );
-    void CreateSendData( quint8 nAddress, QByteArray& byteData, QStringList& lstData );
+    bool CreateSendData( quint8 nAddress, QByteArray& byteData, QStringList& lstData );
     void CheckSum( QByteArray& byteData, char& nCheckSum );
 
     void ParseRequestData( QByteArray& byRequest );
+    bool ParseMultipleRequestData( QByteArray& byRequest );
 
     void SendPlate( quint8 nAddress, QStringList& lstData );
     void StartListener( );
@@ -63,6 +64,7 @@ private:
 signals:
     void WeighingRequest( QStringList lstData );
     void Capture( quint8 nChannel );
+    void SendFileCount( quint32 nCount );
     
 public slots:
     void HandlePlateDilivery( int nChannel, QStringList lstData, QString strPlate );

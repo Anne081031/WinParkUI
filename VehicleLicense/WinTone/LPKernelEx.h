@@ -163,10 +163,10 @@ BOOL WINAPI LPR_SetPlateType(BOOL bYellow2,
 							 BOOL bArmPol, 
 							 BOOL bArmy2,
 							 BOOL bTractor,
-							 BOOL bOnlyDyellow,
-							 BOOL bEmbassy,
-							 BOOL bDarmpolice,
-							 BOOL bOnlyLocation,
+                             BOOL bOnlyDyellow,
+                             BOOL bEmbassy,
+                             BOOL bDarmpolice,
+                             BOOL bOnlyLocation,
 							 int  nChannel=1);
 
 /**************************************
