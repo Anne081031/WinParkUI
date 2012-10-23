@@ -38,7 +38,11 @@ void QProcessResponseThread::customEvent( QEvent *e )
 
     if ( pEvent->type( )  == QEvent::User ) {
         byResponseData.append( pEvent->GetReponseData( ) );
-        ParseMultipleResponseData( byResponseData );
+        bool bRet = false;
+
+        do {
+            bRet = ParseMultipleResponseData( byResponseData );
+        } while ( bRet );
     }
 }
 
