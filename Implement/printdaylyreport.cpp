@@ -1,6 +1,7 @@
 #include "Header/printdaylyreport.h"
 #include "ui_printdaylyreport.h"
 #include "Common/commonfunction.h"
+#include "Dialog/cdlgquerywhere.h"
 
 CPrintDaylyReport::CPrintDaylyReport(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
@@ -13,8 +14,9 @@ CPrintDaylyReport::CPrintDaylyReport(QWidget* mainWnd, QWidget *parent) :
     ui->lblTitle->setText( windowTitle( ) );
     nReportType = 0;
     QString strName = "rdChx%1";
+    QChar cFill = '0';
     for ( int nIndex = 1; nIndex <= ui->gbType->children().size( ); nIndex++ ) {
-        QString strTmp = strName.arg( nIndex );
+        QString strTmp = strName.arg( nIndex, 2, 10, cFill );
         QRadioButton* pRd = ui->gbType->findChild< QRadioButton* >( strTmp );
         if ( NULL != pRd ) {
             connect( pRd, SIGNAL( clicked( ) ), this, SLOT( OnRdChkClicked( ) ) );
@@ -46,7 +48,7 @@ void CPrintDaylyReport::SetDateTimeFormat( QString &strFormat )
 void CPrintDaylyReport::OnRdChkClicked( )
 {
     QRadioButton* pBtn = qobject_cast< QRadioButton* >( sender( ) );
-    nReportType = pBtn->objectName( ).right( 1 ).toInt( ) - 1; // 1 - 9
+    nReportType = pBtn->objectName( ).right( 2 ).toInt( ) - 1; // 1 - 9
 
     bool bMonth = CommonDataType::ReportMonth == nReportType;
     ui->dReportEndDate->setEnabled( !bMonth );
@@ -65,6 +67,14 @@ void CPrintDaylyReport::OnRdChkClicked( )
         SetDateTime( dtStart, dtEnd );
     } else {
         SetDateTimeFormat( strFormat );
+    }
+
+    if ( CommonDataType::ReportMonthInOut == nReportType ) {
+        QStringList lstWhere;
+        CDlgQueryWhere dlg;
+        dlg.exec( );
+        dlg.GetWhere( lstWhere );
+        reporter.SetWhere( lstWhere );
     }
 }
 

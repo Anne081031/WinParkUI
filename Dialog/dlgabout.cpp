@@ -7,7 +7,7 @@ CDlgAbout::CDlgAbout(QWidget *parent) :
     ui(new Ui::CDlgAbout)
 {
     ui->setupUi(this);
-    CCommonFunction::SetWindowIcon( this );
+    CCommonFunction::ControlSysMenu( *this );
 }
 
 CDlgAbout::~CDlgAbout()

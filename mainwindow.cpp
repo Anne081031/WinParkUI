@@ -631,6 +631,13 @@ void MainWindow::ControlSerial(bool bOpen)
     }
 }
 
+void MainWindow::ClearAllFiles( )
+{
+    QString strSnapshot;
+    CCommonFunction::GetPath( strSnapshot, CommonDataType::PathSnapshot );
+    CCommonFunction::ClearAllFiles( strSnapshot );
+}
+
 void MainWindow::HideCtrl( bool bVisible )
 {
     ui->mainTB->setVisible( bVisible );
@@ -657,9 +664,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     pSerialPort = NULL;
     netServer = NULL;
 
-    QString strSnapshot;
-    CCommonFunction::GetPath( strSnapshot, CommonDataType::PathSnapshot );
-    CCommonFunction::ClearAllFiles( strSnapshot );
+    ClearAllFiles( );
 
     CCommonFunction::ShowSplashMessage( "获取参数开始。" );
     CCommonFunction::GetPath( strIconPath, CommonDataType::PathUIImage );
@@ -1341,6 +1346,8 @@ void MainWindow::ControlChild( QCloseEvent *event, QWidget* child )
 
 MainWindow::~MainWindow()
 {
+    ClearAllFiles( );
+
     if ( NULL != netServer && netServer->isRunning( ) ) {
         netServer->terminate( );
     }

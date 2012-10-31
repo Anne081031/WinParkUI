@@ -66,6 +66,7 @@ public:
     bool ShiftDlgISVisible( );
 
 private:
+    void ClearAllFiles( );
     void ModiyToobar( );
     void CreateChildren( );
     void ControlDatabase( bool bOpen );

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'serialportdialog.ui'
 **
-** Created: Fri Sep 7 15:20:06 2012
+** Created: Tue Oct 30 11:46:31 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -235,8 +235,8 @@ public:
         cbxParity->clear();
         cbxParity->insertItems(0, QStringList()
          << QApplication::translate("CSerialPortDialog", "\346\227\240", 0, QApplication::UnicodeUTF8)
-         << QApplication::translate("CSerialPortDialog", "\345\201\266", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("CSerialPortDialog", "\345\245\207", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("CSerialPortDialog", "\345\201\266", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("CSerialPortDialog", "\346\240\207\345\277\227", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("CSerialPortDialog", "\347\251\272\346\240\274", 0, QApplication::UnicodeUTF8)
         );

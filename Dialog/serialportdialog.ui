@@ -296,12 +296,12 @@
         </item>
         <item>
          <property name="text">
-          <string>偶</string>
+          <string>奇</string>
          </property>
         </item>
         <item>
          <property name="text">
-          <string>奇</string>
+          <string>偶</string>
          </property>
         </item>
         <item>

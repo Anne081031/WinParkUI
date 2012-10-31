@@ -12,6 +12,11 @@ CReporter::CReporter(QObject *parent) :
 {
 }
 
+void CReporter::SetWhere( QStringList &lstWhere )
+{
+    lstWheres = lstWhere;
+}
+
 void CReporter::Print( CommonDataType::ReportType rType, QWebView& wvReport )
 {
     if ( !GetAdboeExePath( strAdobeExe ) ) {
@@ -465,9 +470,26 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
             where a.cardno = b.cardindex and a.cardno = c.cardindex \
             order by Expire";
         break;
+
+   case CommonDataType::ReportMonthInOut :
+        if (  2 != lstWheres.length( ) ) {
+            CCommonFunction::MsgBox( NULL, "提示", "请选择查询条件。", QMessageBox::Information );
+            return;
+        }
+
+        const QString& strWhere1 = lstWheres.at( 0 );
+        const QString& strWhere2 = lstWheres.at( 1 );
+         strSql = QString( "select m.cardno, m.cardselfno, m.carcp, m.username, m.userphone, s.counter from  \
+                 ( select a.cardno, a.cardselfno, b.carcp, c.username, c.userphone from  \
+                 monthcard as a, carinfo as b, userinfo as c \
+                 where a.cardno = b.cardindex and a.cardno = c.cardindex  \
+                 %1) m, ( select cardno, count( cardno ) as counter from stoprd where \
+                 %2 intime >= '%3' and outtime <= '%4' group by cardno  \
+                 order by cardno ) s  where m.cardno = s.cardno" ).arg( strWhere1, strWhere2, strStart, strEnd );
+        break;
     }
 
-#ifdef QT_NO_DBUS
+#ifdef QT_NO_DEBUG
     QFile file( "d:/sql.txt" );
     if ( !file.exists( ) || !file.open( QIODevice::WriteOnly ) ) {
         return;
@@ -493,6 +515,11 @@ void CReporter::BuildHtmlDoc( QDateTime& dtStart, QDateTime& dtEnd, CommonDataTy
     QString strSql;// = QString( "call GenerateReport( '%1', '%2', %3 )" ).arg( strStart, strEnd, strType );
     QDateTime dtTimeEnd = dtEnd;
     GetSQL( strSql, rType, dtStart, dtEnd );
+
+    if ( strSql.isEmpty( ) ) {
+        return;
+    }
+
     CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData );
 
     //strSql= "Select @f1,@f2,@f3,@f4,@f5,@f6,@f7,@f8";
@@ -570,6 +597,7 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
     case CommonDataType::ReportProvince :
     case CommonDataType::ReportInProvince :
     case CommonDataType::ReportMonth :
+    case CommonDataType::ReportMonthInOut :
         if ( strStart == strEnd ) {
             strTitle = strStart + "日";
         } else {
@@ -699,6 +727,16 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
        strFooter = "";
        nCols = 13;
        break;
+
+   case CommonDataType::ReportMonthInOut :
+        strTitle = "<tr><th>卡号</th><th>自编号</th>\
+                        <th>车牌</th>\
+                        <th>业主</th>\
+                        <th>联系电话</th>\
+                        <th>进出次数</th></tr>";
+        strFooter = "";
+        nCols = 6;
+        break;
    }
 
    int nRows = lstData.count( ) / nCols;
@@ -788,6 +826,13 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
                    << lstData[ nField + 10 ]
                    << lstData[ nField + 11 ]
                    << lstData[ nField + 12 ];
+       } else if ( CommonDataType::ReportMonthInOut == rType ) {
+           lstTmp << lstData[ nField ]
+                   << lstData[ nField + 1 ]
+                   << lstData[ nField + 2 ]
+                   << lstData[ nField + 3 ]
+                   << lstData[ nField + 4 ]
+                   << lstData[ nField + 5 ];
        }
 
        GetRowHtml( strRow, lstTmp );
@@ -810,6 +855,7 @@ void CReporter::GetHtml( CommonDataType::ReportType rType, QString& strTitle, QS
    case CommonDataType::ReportInProvince :
    case CommonDataType::ReportProvince :
    case CommonDataType::ReportMonth  :
+   case CommonDataType::ReportMonthInOut :
        break;
    }
 }

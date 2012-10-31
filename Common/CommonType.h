@@ -15,7 +15,8 @@ namespace CommonDataType {
         ReportChannel,
         ReportProvince,
         ReportInProvince,
-        ReportMonth
+        ReportMonth,
+        ReportMonthInOut
     } ReportType;
 
     typedef enum __UserRequest {

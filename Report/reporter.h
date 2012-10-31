@@ -17,6 +17,7 @@ public:
 public:
     void Print( CommonDataType::ReportType rType, QWebView& wvReport );
     void BuildHtmlDoc( QDateTime& dtStart, QDateTime& dtEnd, CommonDataType::ReportType rType, QWebView& wvReport );
+    void SetWhere( QStringList& lstWhere );
 
 private:
     void GetHtml( CommonDataType::ReportType rType, QString& strTitle, QString& strFooter, QString& strTableBody, QStringList& lstData );
@@ -33,6 +34,7 @@ private:
     QPrinter printer;
     //QProcess prococess;
     QString strAdobeExe;
+    QStringList lstWheres;
 
 signals:
 
