@@ -14,6 +14,7 @@ class QDlgConfig : public QDialog
 public:
     explicit QDlgConfig(QWidget *parent = 0);
     ~QDlgConfig();
+    char GetComName( );
 
 private:
     void ReadConfig( );
@@ -26,6 +27,7 @@ private slots:
 
 private:
     Ui::QDlgConfig *ui;
+    char cCom;
 };
 
 #endif // QDLGCONFIG_H

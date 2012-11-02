@@ -151,15 +151,20 @@ void QControllerCommon::GetBufferConfig( qint32& nInBuffer, qint32& nOutBuffer )
     nOutBuffer = settings.value( "Buffer/OutSize", 8192 ).toInt( );
 }
 
-void QControllerCommon::SaveSystemConfig( LedControll::SSysConfig &sConfig )
+void QControllerCommon::SaveSystemConfig( LedControll::SSysConfig &sConfig, const QString &strFile )
 {
-    QSettings &settings = GetConfigSettings( );
+    QSettings settings( strFile, QSettings::IniFormat );
+    settings.setIniCodec( GetTextCodec( ) );
+    SaveSystemConfig( sConfig, settings );
+}
 
+void QControllerCommon::SaveSystemConfig( LedControll::SSysConfig &sConfig, QSettings &settings )
+{
     settings.setValue( "System/RunMode", sConfig.nRunMode );
-    settings.setValue( "System/SysncMode", sConfig.nSyncMode );
+    settings.setValue( "System/SyncMode", sConfig.nSyncMode );
     settings.setValue( "System/BaseRadiance", sConfig.nBaseRadiance );
     settings.setValue( "System/ActivatedSwitch", sConfig.nActivatedSwitch );
-    settings.setValue( "System/FrequencyTime", sConfig.nFlashTime );
+    settings.setValue( "System/FrequencyTime", sConfig.nFrequencyTime );
     settings.setValue( "System/FrequencyRadiance", sConfig.nFrequencyRadiance );
     settings.setValue( "System/FlashTime", sConfig.nFlashTime );
     settings.setValue( "System/FlashRadiance", sConfig.nFlashRadiance );
@@ -169,10 +174,21 @@ void QControllerCommon::SaveSystemConfig( LedControll::SSysConfig &sConfig )
     settings.setValue( "System/Location", strLocation );
 }
 
-void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig )
+void QControllerCommon::SaveSystemConfig( LedControll::SSysConfig &sConfig )
 {
     QSettings &settings = GetConfigSettings( );
+    SaveSystemConfig( sConfig, settings );
+}
 
+void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig, const QString &strFile )
+{
+    QSettings settings( strFile, QSettings::IniFormat );
+    settings.setIniCodec( GetTextCodec( ) );
+    GetSystemConfig( sConfig, settings );
+}
+
+void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig, QSettings &settings )
+{
     sConfig.nRunMode = settings.value( "System/RunMode", 1 ).toUInt( );
     sConfig.nSyncMode = settings.value( "System/SyncMode", 1 ).toUInt( );
     sConfig.nBaseRadiance = settings.value( "System/BaseRadiance", 0 ).toUInt( );
@@ -193,6 +209,12 @@ void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig )
     wcscpy( sConfig.cLocation, pData );
 }
 
+void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig )
+{
+    QSettings &settings = GetConfigSettings( );
+    GetSystemConfig( sConfig, settings );
+}
+
 void QControllerCommon::ControlSysMenu( QWidget &wg )
 {
     Qt::WindowFlags flags = wg.windowFlags( );
@@ -207,4 +229,53 @@ void QControllerCommon::ControlSysMenu( QWidget &wg )
     if ( NULL != hSysMenu ) {
         EnableMenuItem( hSysMenu, SC_CLOSE, MF_BYCOMMAND | MF_GRAYED ); // Close
     }
+}
+
+int QControllerCommon::MsgBox( QWidget* pParent, QString strTitle, QString strText, QMessageBox::Icon nType )
+{
+    int nRet = 0;
+    QMessageBox msg( nType, strTitle, strText );
+    msg.setAutoFillBackground( false );
+    msg.setAttribute( Qt::WA_StyleSheet );
+    msg.setAttribute( Qt::WA_SetStyle );
+    msg.setParent( pParent );
+    QPushButton* pOk = NULL;
+    QPushButton* pCancel = NULL;
+
+    switch ( nType ) {
+    case QMessageBox::Question :
+        //nRet = msg.question( pParent, strTitle, strText, QMessageBox::Ok | QMessageBox::Cancel );
+        pOk = msg.addButton( "确定", QMessageBox::AcceptRole );
+        pCancel = msg.addButton( "取消", QMessageBox::RejectRole );
+        break;
+
+    case QMessageBox::Information :
+        //nRet = msg.information( pParent, strTitle, strText, QMessageBox::Ok );
+        pOk = msg.addButton( "确定", QMessageBox::AcceptRole );
+        break;
+
+    case QMessageBox::Warning :
+        //nRet = msg.warning( pParent, strTitle, strText, QMessageBox::Ok );
+        pOk = msg.addButton( "确定", QMessageBox::AcceptRole );
+        break;
+
+    case QMessageBox::Critical :
+        //nRet = msg.critical( pParent, strTitle, strText, QMessageBox::Ok );
+        pOk = msg.addButton( "确定", QMessageBox::AcceptRole );
+        break;
+
+    case QMessageBox::NoIcon :
+        break;
+
+    }
+
+    nRet = msg.exec( );
+    QAbstractButton* pClicked = msg.clickedButton( );
+    if (  pClicked == ( QAbstractButton* )pOk ) {
+        nRet = QMessageBox::Ok;
+    } else if ( pClicked == ( QAbstractButton* ) pCancel ){
+        nRet = QMessageBox::Cancel;
+    }
+
+    return nRet;
 }

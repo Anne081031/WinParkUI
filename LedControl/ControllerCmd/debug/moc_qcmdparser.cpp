@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qcmdparser.h'
 **
-** Created: Mon Oct 29 16:50:40 2012
+** Created: Fri Nov 2 11:50:08 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

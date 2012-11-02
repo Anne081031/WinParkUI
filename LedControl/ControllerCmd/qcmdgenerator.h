@@ -9,8 +9,10 @@ class QCmdGenerator : public QObject
     Q_OBJECT
 public:
     explicit QCmdGenerator(QObject *parent = 0);
+    virtual ~QCmdGenerator( );
 
-    void GetCmdBody( QByteArray& body, LedControll::ECommand eCmd, qint32 nParam = 0 );
+    void GetOldCmdBody( QByteArray& body, const LedControll::ECommand eCmd, qint32 nParam = 0 );
+    void GetNewCmdBody( QByteArray &body, const LedControll::ECommand eCmd, qint32 nParam, const bool bQuery );
 
 private:
     inline void GetFlashStateAlwaysRadianceChane( QByteArray& body );
@@ -23,6 +25,12 @@ private:
     inline void GetFlashFrenquencyGearWorkTimeSet( const qint32 nTime, QByteArray& body );
     inline void GetFlashFrenquencyLightSensitiveIfWork( const qint32 nWork, QByteArray& body );
     inline void GetSyncModeCmd( const qint8 nMode, QByteArray& body );
+
+    inline void GetNewCmdAddr( QByteArray& body );
+    inline void GetCheckSum4NewCmd( QByteArray& body );
+    inline void GetControlCode4NewCmd( QByteArray &body, const bool bQuery );
+    inline void GetData4NewCmd( QByteArray &body, const LedControll::ECommand eCmd, qint32 nParam, const bool bQuery );
+
     
 signals:
     

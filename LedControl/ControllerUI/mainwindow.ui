@@ -6,9 +6,21 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>532</width>
+    <width>551</width>
     <height>453</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>551</width>
+    <height>453</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>551</width>
+    <height>453</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>智能补光灯系统-串口:COM</string>
@@ -195,7 +207,7 @@ background-color: rgb(72, 72, 72);</string>
      <property name="title">
       <string/>
      </property>
-     <widget class="QLabel" name="label_4">
+     <widget class="QLabel" name="lblFreq">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -211,7 +223,7 @@ background-color: rgb(72, 72, 72);</string>
        <string>平闪模式</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -224,28 +236,28 @@ background-color: rgb(72, 72, 72);</string>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout">
          <item>
-          <widget class="QRadioButton" name="radioButton">
+          <widget class="QRadioButton" name="rb05">
            <property name="text">
             <string>补光灯强度-高</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="radioButton_2">
+          <widget class="QRadioButton" name="rb06">
            <property name="text">
             <string>补光灯强度-较高</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="radioButton_3">
+          <widget class="QRadioButton" name="rb07">
            <property name="text">
             <string>补光灯强度-中</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="radioButton_4">
+          <widget class="QRadioButton" name="rb08">
            <property name="text">
             <string>补光灯强度-低</string>
            </property>
@@ -266,7 +278,7 @@ background-color: rgb(72, 72, 72);</string>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox">
+          <widget class="QSpinBox" name="spFreqTime">
            <property name="maximum">
             <number>32</number>
            </property>
@@ -287,7 +299,7 @@ background-color: rgb(72, 72, 72);</string>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_2">
+          <widget class="QSpinBox" name="spFreqLight">
            <property name="maximum">
             <number>32</number>
            </property>
@@ -301,7 +313,7 @@ background-color: rgb(72, 72, 72);</string>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="geometry">
       <rect>
-       <x>310</x>
+       <x>330</x>
        <y>10</y>
        <width>211</width>
        <height>231</height>
@@ -313,7 +325,7 @@ background-color: rgb(72, 72, 72);</string>
      <property name="title">
       <string/>
      </property>
-     <widget class="QLabel" name="label_5">
+     <widget class="QLabel" name="lblFlash">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -329,7 +341,7 @@ background-color: rgb(72, 72, 72);</string>
        <string>闪光灯模式</string>
       </property>
      </widget>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="chkBaseLight">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -342,7 +354,7 @@ background-color: rgb(72, 72, 72);</string>
        <string>基础亮度</string>
       </property>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>30</x>
@@ -355,28 +367,31 @@ background-color: rgb(72, 72, 72);</string>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item>
-          <widget class="QRadioButton" name="radioButton_11">
+          <widget class="QRadioButton" name="rb01">
            <property name="text">
             <string>闪光灯强度-高</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="radioButton_12">
+          <widget class="QRadioButton" name="rb02">
            <property name="text">
             <string>闪光灯强度-较高</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="radioButton_10">
+          <widget class="QRadioButton" name="rb03">
            <property name="text">
             <string>闪光灯强度-中</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QRadioButton" name="radioButton_9">
+          <widget class="QRadioButton" name="rb04">
            <property name="text">
             <string>闪光灯强度-低</string>
            </property>
@@ -397,7 +412,7 @@ background-color: rgb(72, 72, 72);</string>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_3">
+          <widget class="QSpinBox" name="spFlashTime">
            <property name="maximum">
             <number>100</number>
            </property>
@@ -418,7 +433,7 @@ background-color: rgb(72, 72, 72);</string>
           </widget>
          </item>
          <item>
-          <widget class="QSpinBox" name="spinBox_4">
+          <widget class="QSpinBox" name="spFlashLight">
            <property name="maximum">
             <number>100</number>
            </property>
@@ -434,7 +449,7 @@ background-color: rgb(72, 72, 72);</string>
       <rect>
        <x>10</x>
        <y>260</y>
-       <width>511</width>
+       <width>531</width>
        <height>61</height>
       </rect>
      </property>
@@ -444,7 +459,7 @@ background-color: rgb(72, 72, 72);</string>
      <property name="title">
       <string/>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -465,21 +480,21 @@ background-color: rgb(72, 72, 72);</string>
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="radioButton_13">
+        <widget class="QRadioButton" name="rbSync01">
          <property name="text">
           <string>下降沿触发</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="radioButton_14">
+        <widget class="QRadioButton" name="rbSync02">
          <property name="text">
           <string>上升沿触发</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QRadioButton" name="radioButton_15">
+        <widget class="QRadioButton" name="rbSync03">
          <property name="text">
           <string>跟随模式</string>
          </property>
@@ -487,7 +502,7 @@ background-color: rgb(72, 72, 72);</string>
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -498,7 +513,7 @@ background-color: rgb(72, 72, 72);</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_7">
        <item>
-        <widget class="QCheckBox" name="checkBox_2">
+        <widget class="QCheckBox" name="chkLightSensitive">
          <property name="text">
           <string>光敏禁用</string>
          </property>
@@ -517,7 +532,7 @@ background-color: rgb(72, 72, 72);</string>
           </widget>
          </item>
          <item>
-          <widget class="QLineEdit" name="lineEdit">
+          <widget class="QLineEdit" name="edtLocation">
            <property name="styleSheet">
             <string notr="true">background-color: rgb(56, 56, 56);
 color: rgb(255, 255, 255);</string>
@@ -531,6 +546,41 @@ color: rgb(255, 255, 255);</string>
        </item>
       </layout>
      </widget>
+    </widget>
+    <widget class="QCheckBox" name="chkDevType">
+     <property name="geometry">
+      <rect>
+       <x>224</x>
+       <y>20</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>是否新设备</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="chkQuery">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>224</x>
+       <y>40</y>
+       <width>91</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <property name="text">
+      <string>是否查询状态</string>
+     </property>
     </widget>
    </widget>
   </widget>

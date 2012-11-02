@@ -6,6 +6,7 @@
 #include <QSettings>
 #include <QWidget>
 #include <QTextCodec>
+#include <QMessageBox>
 
 class CONTROLLERCOMMONSHARED_EXPORT QControllerCommon {
 public:
@@ -21,11 +22,17 @@ public:
     static void SaveBufferConfig( const qint32 nInBuffer, const qint32 nOutBuffe );
     static void GetBufferConfig( qint32& nInBuffer, qint32& nOutBuffe );
     static void SaveSystemConfig( LedControll::SSysConfig& sConfig );
+    static void SaveSystemConfig( LedControll::SSysConfig& sConfig, const QString& strFile );
     static void GetSystemConfig( LedControll::SSysConfig& sConfig );
+    static void GetSystemConfig( LedControll::SSysConfig& sConfig, const QString& strFile );
     static void ControlSysMenu( QWidget &wg );
+    static int MsgBox( QWidget* pParent, QString strTitle, QString strText, QMessageBox::Icon nType );
 
 private:
     static QSettings& GetConfigSettings(  );
+
+    static void SaveSystemConfig( LedControll::SSysConfig &sConfig, QSettings& settings );
+    static void GetSystemConfig( LedControll::SSysConfig &sConfig, QSettings& settings );
 
 protected:
     QControllerCommon();

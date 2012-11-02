@@ -8,6 +8,7 @@ class QCmdParser : public QObject
     Q_OBJECT
 public:
     explicit QCmdParser(QObject *parent = 0);
+    virtual ~QCmdParser( );
     
 signals:
     

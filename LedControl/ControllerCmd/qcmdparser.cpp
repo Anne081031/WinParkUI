@@ -8,3 +8,8 @@ QCmdParser::QCmdParser(QObject *parent) :
     QObject(parent)
 {
 }
+
+QCmdParser::~QCmdParser( )
+{
+
+}

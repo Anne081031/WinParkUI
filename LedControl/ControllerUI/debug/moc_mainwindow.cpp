@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed Oct 31 16:57:35 2012
+** Created: Fri Nov 2 15:46:41 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,6 +34,13 @@ static const uint qt_meta_data_MainWindow[] = {
       12,   11,   11,   11, 0x08,
       32,   11,   11,   11, 0x08,
       56,   11,   11,   11, 0x08,
+      80,   11,   11,   11, 0x08,
+     106,   11,   11,   11, 0x08,
+     125,   11,   11,   11, 0x08,
+     151,  144,   11,   11, 0x08,
+     182,  174,   11,   11, 0x08,
+     210,  174,   11,   11, 0x08,
+     245,  174,   11,   11, 0x08,
 
        0        // eod
 };
@@ -41,6 +48,12 @@ static const uint qt_meta_data_MainWindow[] = {
 static const char qt_meta_stringdata_MainWindow[] = {
     "MainWindow\0\0on_btnSet_clicked()\0"
     "on_btnSaveSet_clicked()\0on_tbnReadSet_clicked()\0"
+    "on_btnTestFlash_clicked()\0OnRbModeXClicked()\0"
+    "OnRbSyncXClicked()\0nValue\0"
+    "OnSpXValueChanged(int)\0checked\0"
+    "on_chkDevType_clicked(bool)\0"
+    "on_chkLightSensitive_clicked(bool)\0"
+    "on_chkBaseLight_clicked(bool)\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -52,10 +65,16 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 0: _t->on_btnSet_clicked(); break;
         case 1: _t->on_btnSaveSet_clicked(); break;
         case 2: _t->on_tbnReadSet_clicked(); break;
+        case 3: _t->on_btnTestFlash_clicked(); break;
+        case 4: _t->OnRbModeXClicked(); break;
+        case 5: _t->OnRbSyncXClicked(); break;
+        case 6: _t->OnSpXValueChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 7: _t->on_chkDevType_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 8: _t->on_chkLightSensitive_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 9: _t->on_chkBaseLight_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObjectExtraData MainWindow::staticMetaObjectExtraData = {
@@ -90,9 +109,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 3)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 3;
+        _id -= 10;
     }
     return _id;
 }

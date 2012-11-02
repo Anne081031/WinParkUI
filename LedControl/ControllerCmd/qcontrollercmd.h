@@ -6,19 +6,21 @@
 #include "qcmdparser.h"
 #include "../ControllerCommon/CommonHead.h"
 
-class CONTROLLERCMDSHARED_EXPORT QControllerCmd {
+class CONTROLLERCMDSHARED_EXPORT QControllerCmd : public QObject {
+    Q_OBJECT
+
 public:
     QControllerCmd();
+    virtual ~QControllerCmd( );
 
-    void GetCmd( const LedControll::ECommand eCmd, QByteArray& oldData, QByteArray& newData, qint32 nParam );
-
-private:
     void GetOldCmd( const LedControll::ECommand eCmd, QByteArray& oldData, qint32 nParam );
-    void GetNewCmd( const LedControll::ECommand eCmd, QByteArray& newData, qint32 nParam );
+    void GetNewCmd( const LedControll::ECommand eCmd, QByteArray& newData, qint32 nParam, const bool bQuery );
 
 private:
-    QCmdGenerator cmdGenrator;
-    QCmdParser cmdParser;
+
+private:
+    QCmdGenerator* cmdGenrator;
+    QCmdParser* cmdParser;
 };
 
 #endif // QCONTROLLERCMD_H

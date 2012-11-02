@@ -9,6 +9,11 @@ QCmdGenerator::QCmdGenerator(QObject *parent) :
 {
 }
 
+QCmdGenerator::~QCmdGenerator( )
+{
+
+}
+
 void QCmdGenerator::GetFlashStateAlwaysRadianceChane( QByteArray &body )
 {
 
@@ -16,8 +21,7 @@ void QCmdGenerator::GetFlashStateAlwaysRadianceChane( QByteArray &body )
 
 void QCmdGenerator::GetFlashFrenquencyIntensityTune( const qint16 nTune, QByteArray &body )
 {
-    qint16 nValue = ( nTune / 32.0f ) * 1023;
-    char* pValue = ( char* ) &nValue;
+    char* pValue = ( char* ) &nTune;
 
     char cCmd[ ] = { 0x02, 0x03, 0xd8,  pValue[ 1 ], pValue[ 0 ] };
     body.append( cCmd, sizeof ( cCmd ) );
@@ -27,7 +31,7 @@ void QCmdGenerator::GetFlashFrenquencyGearClose( const qint32 nClose, QByteArray
 {
     char* pValue = ( char* ) &nClose;
 
-    char cCmd[ ] = { 0x04, pValue[ 3 ], pValue[ 2 ],  pValue[ 1 ], pValue[ 0 ] };
+    char cCmd[ ] = { 0x04, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
@@ -35,7 +39,7 @@ void QCmdGenerator::GetFlashGearAlwaysRadianceClose( const qint32 nClose, QByteA
 {
     char* pValue = ( char* ) &nClose;
 
-    char cCmd[ ] = { 0x05, pValue[ 3 ], pValue[ 2 ],  pValue[ 1 ], pValue[ 0 ] };
+    char cCmd[ ] = { 0x05, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
@@ -43,7 +47,7 @@ void QCmdGenerator::GetFlashGearAlwaysRadianceOpen( const qint32 nOpen, QByteArr
 {
     char* pValue = ( char* ) &nOpen;
 
-    char cCmd[ ] = { 0x06, pValue[ 3 ], pValue[ 2 ],  pValue[ 1 ], pValue[ 0 ] };
+    char cCmd[ ] = { 0x06, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
@@ -51,7 +55,7 @@ void QCmdGenerator::GetFlashFrenquencyGearWorkTimeSet( const qint32 nTime, QByte
 {
     char* pValue = ( char* ) &nTime;
 
-    char cCmd[ ] = { 0x07, pValue[ 3 ], pValue[ 2 ],  pValue[ 1 ], pValue[ 0 ] };
+    char cCmd[ ] = { 0x07, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
@@ -59,7 +63,7 @@ void QCmdGenerator::GetFlashFrenquencyLightSensitiveIfWork( const qint32 nWork, 
 {
     char* pValue = ( char* ) &nWork;
 
-    char cCmd[ ] = { 0x07, pValue[ 3 ], pValue[ 2 ],  pValue[ 1 ], pValue[ 0 ] };
+    char cCmd[ ] = { 0x07, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
@@ -81,7 +85,7 @@ void QCmdGenerator::GetFrenquencyGearSet( const qint8 nGear, QByteArray &body )
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
-void QCmdGenerator::GetCmdBody( QByteArray &body, LedControll::ECommand eCmd, qint32 nParam )
+void QCmdGenerator::GetOldCmdBody( QByteArray &body, LedControll::ECommand eCmd, qint32 nParam )
 {
     switch ( eCmd ) {
     case LedControll::CmdFlashStateAlwaysRadianceChane : // 0x01
@@ -132,4 +136,60 @@ void QCmdGenerator::GetCmdBody( QByteArray &body, LedControll::ECommand eCmd, qi
         GetSyncModeCmd( ( char ) 0x03, body );
         break;
     }
+}
+
+void QCmdGenerator::GetNewCmdAddr( QByteArray &body )
+{
+    const char cAddrValue = ( char ) 0xAA;
+    char cAddress[ ] = { cAddrValue, cAddrValue, cAddrValue, cAddrValue, cAddrValue };
+
+    body.append( cAddress );
+}
+
+void QCmdGenerator::GetControlCode4NewCmd( QByteArray &body, const bool bQuery )
+{
+    // D7......D0
+    // 00010001B Query / Read from Led
+    // 00010100B Not Query / Write to Led
+    char cCtrlCode = 0;
+
+    if ( bQuery ) {
+        cCtrlCode = ( char ) 17; // 0x11
+    } else {
+        cCtrlCode = ( char  ) 20; // 0x14
+    }
+
+    body.append( cCtrlCode );
+}
+
+void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::ECommand eCmd, qint32 nParam, const bool bQuery )
+{
+    // BCD
+    // 十进制为96的码制，用压缩BCD码为1001 0110
+
+    char cDataLen = 0;
+
+    body.append( cDataLen );
+}
+
+void QCmdGenerator::GetCheckSum4NewCmd( QByteArray &body )
+{
+    char cCheckSum = ( char ) 0;
+
+    foreach ( char c, body ) {
+        cCheckSum += ( c % 256 );
+    }
+
+    body.append( cCheckSum );
+}
+
+void QCmdGenerator::GetNewCmdBody( QByteArray &body, const LedControll::ECommand eCmd, qint32 nParam, const bool bQuery )
+{
+    const char cFrameStart = ( char ) 0x68;
+
+    GetNewCmdAddr( body ); // Address
+    body.append( cFrameStart ); // Frame Start
+    GetControlCode4NewCmd( body, bQuery ); // Control code
+    GetData4NewCmd( body, eCmd, nParam, bQuery ); // Data length / Data
+    GetCheckSum4NewCmd( body ); // CheckSum
 }

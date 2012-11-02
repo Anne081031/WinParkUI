@@ -13,12 +13,14 @@ Debug {
     DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "Controller", "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ControllerCommon", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ControllerCmd", "Debug" )
 }
 
 Release {
     DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "Controller", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ControllerCommon", "Release" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ControllerCmd", "Release" )
 }
 
 TARGET = ControllerUI

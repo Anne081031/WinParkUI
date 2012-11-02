@@ -32,6 +32,7 @@ void QDlgConfig::ReadConfig( )
     QControllerCommon::GetSPConfig( sConfig );
 
     ui->cbPort->setCurrentIndex( sConfig.nComName );
+    cCom = sConfig.nComName;
     ui->cbParity->setCurrentIndex( sConfig.nParity );
     ui->cbBaudRate->setCurrentIndex( sConfig.nBaudRate );
     ui->cbDataBit->setCurrentIndex( sConfig.nDataBit );
@@ -53,11 +54,17 @@ void QDlgConfig::ReadConfig( )
     ui->sbOutBuffer->setValue( nOut );
 }
 
+char QDlgConfig::GetComName( )
+{
+    return ++cCom;
+}
+
 void QDlgConfig::WriteConfig( )
 {
     LedControll::SComConfig sConfig;
 
     sConfig.nComName = ui->cbPort->currentIndex( );
+    cCom = sConfig.nComName;
     sConfig.nParity = ui->cbParity->currentIndex( );
     sConfig.nBaudRate = ui->cbBaudRate->currentIndex( );
     sConfig.nDataBit = ui->cbDataBit->currentIndex( );
