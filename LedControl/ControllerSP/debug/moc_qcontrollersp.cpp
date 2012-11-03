@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qcontrollersp.h'
 **
-** Created: Wed Oct 31 16:57:21 2012
+** Created: Sat Nov 3 16:09:06 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -11,12 +11,11 @@ class CONTROLLERSPSHARED_EXPORT QControllerSP : public QObject {
 
 public:
     QControllerSP( QObject* parent = 0 );
+    virtual ~QControllerSP( );
 
     bool IsOpened( );
     bool OpenPort( );
     void ClosePort( );
-    void ConfigPort( const LedControll::SComConfig& sConfig );
-
     qint64 WriteData( QByteArray& data, const bool bThread = false );
 
 private:
@@ -25,9 +24,10 @@ private:
     StopBitsType GetStopBit( quint8 nIndex );
     ParityType GetParity( quint8 nIndex );
     FlowType GetFlow( quint8 nIndex );
+    void ConfigPort( const LedControll::SComConfig& sConfig );
 
 private:
-    Win_QextSerialPort winPort;
+    Win_QextSerialPort* winPort;
 
 signals:
     void Data( QByteArray data );

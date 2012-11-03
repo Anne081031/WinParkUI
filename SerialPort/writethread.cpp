@@ -66,7 +66,7 @@ bool CWriteThread::WriteData( CWinSerialPort* pWinPort, QByteArray &byData )
         }
 #endif
 
-       Sleep( 400 );
+       Sleep( 300 );
     }
 
     return bRet;

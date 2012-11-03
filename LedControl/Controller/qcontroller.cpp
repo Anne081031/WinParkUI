@@ -27,9 +27,6 @@ bool QController::ConrollSP( const bool bOpen )
     bool bRet = true;
 
     if ( bOpen ) {
-        LedControll::SComConfig sConfig;
-        QControllerCommon::GetSPConfig( sConfig );
-        pController->ConfigPort( sConfig );
         bRet = pController->OpenPort( );
 
         QThreadSP::GetSingleton( ).SetController( pController );

@@ -15,9 +15,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     InitializeSlot( );
     DlgConfig( );
-    InitializeUI( );
     QControllerCommon::InitApp( );
     controller.ConrollSP( true );
+    InitializeUI( );
 }
 
 void MainWindow::InitializeUI( )
@@ -107,6 +107,8 @@ void MainWindow::SendCmd( const bool bNewDevice, const LedControll::ECommand eCm
     } else {
         controllerCmd.GetOldCmd( eCmd, byData, nParam );
     }
+
+    controller.WriteData( byData, true );
 }
 
 qint32 MainWindow::GetRbIndex( QObject *pSender )
@@ -339,7 +341,8 @@ void MainWindow::on_tbnReadSet_clicked()
 
 void MainWindow::on_btnTestFlash_clicked()
 {
-
+    // AA 55 0A 03 D8 01 FF FF FF Open
+    // AA 55 0A 03 D8 03 FF FF FF Close
 }
 
 void MainWindow::on_chkDevType_clicked(bool checked)
@@ -350,10 +353,12 @@ void MainWindow::on_chkDevType_clicked(bool checked)
 
 void MainWindow::on_chkLightSensitive_clicked(bool checked)
 {
-
+    qint32 nParam = checked ? 0x00000001 : 0x00000002;
+    SendCmd( ui->chkDevType->isChecked( ), LedControll::CmdFlashFrenquencyLightSensitiveIfWork, nParam );
 }
 
 void MainWindow::on_chkBaseLight_clicked(bool checked)
 {
-
+    qint32 nParam = checked ? 0x00000001 : 0x00000000;
+    SendCmd( ui->chkDevType->isChecked( ), LedControll::CmdFlashGearAlwaysRadianceClose, nParam );
 }

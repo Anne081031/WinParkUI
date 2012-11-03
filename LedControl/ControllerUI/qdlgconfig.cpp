@@ -56,7 +56,7 @@ void QDlgConfig::ReadConfig( )
 
 char QDlgConfig::GetComName( )
 {
-    return ++cCom;
+    return 1 + cCom;
 }
 
 void QDlgConfig::WriteConfig( )

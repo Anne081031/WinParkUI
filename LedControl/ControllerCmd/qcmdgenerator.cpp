@@ -143,7 +143,7 @@ void QCmdGenerator::GetNewCmdAddr( QByteArray &body )
     const char cAddrValue = ( char ) 0xAA;
     char cAddress[ ] = { cAddrValue, cAddrValue, cAddrValue, cAddrValue, cAddrValue };
 
-    body.append( cAddress );
+    body.append( cAddress, sizeof ( cAddress ) );
 }
 
 void QCmdGenerator::GetControlCode4NewCmd( QByteArray &body, const bool bQuery )
@@ -167,9 +167,49 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
     // BCD
     // 十进制为96的码制，用压缩BCD码为1001 0110
 
-    char cDataLen = 0;
+    char cDataLen = 4;
+    qint32 nDI = 0x04000300;
+    QByteArray byData;
+
+    switch ( eCmd ) {
+    case LedControll::CmdFlashStateAlwaysRadianceChane : // Cmd 0x01
+        break;
+
+    case LedControll::CmdFlashFrenquencyIntensityTune : // 0x02
+        break;
+
+    case LedControll::CmdFlashGearSet : // 0x03
+    case LedControll::CmdFrenquencyGearSet :
+        break;
+
+    case LedControll::CmdFlashFrenquencyGearClose : // 0x04
+        break;
+
+    case LedControll::CmdFlashGearAlwaysRadianceClose : // 0x05
+
+        break;
+
+    case LedControll::CmdFlashGearAlwaysRadianceOpen : // 0x06
+        break;
+
+    case LedControll::CmdFlashFrenquencyGearWorkTimeSet : // 0x07
+        break;
+
+    case LedControll::CmdFlashFrenquencyLightSensitiveIfWork : // 0x08
+        break;
+
+    case LedControll::CmdSyncModeDownTrigger : // 0x09
+    case LedControll::CmdSyncModeUpTrigger :
+    case LedControll::CmdSyncModeFollowTrigger :
+        nDI |= 0x00000003;
+        cDataLen += 1;
+        byData.append( ( char ) nParam );
+        break;
+    }
 
     body.append( cDataLen );
+    body.append( ( char * ) &nDI, 4 );
+    body.append( byData );
 }
 
 void QCmdGenerator::GetCheckSum4NewCmd( QByteArray &body )
