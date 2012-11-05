@@ -265,8 +265,9 @@ void CMonthlyCard::Recharge( )
 
     int nRow = ui->tableMonthly->currentRow( );
     QDateTime dtEnd = QDateTime::currentDateTime( );
+    QString strDateTime;
     if ( -1 != nRow ) {
-        QString strDateTime = ui->tableMonthly->item( nRow, 5 )->text( );
+        strDateTime = ui->tableMonthly->item( nRow, 6 )->text( );
         dtEnd = CCommonFunction::String2DateTime( strDateTime );
     }
 
@@ -280,18 +281,23 @@ void CMonthlyCard::Recharge( )
                 << ui->lblCardNo->text( );
 
         QString strWhere = "";
+        QDateTime dt = QDateTime::currentDateTime( );
+        CCommonFunction::DateTime2String( dt, strDateTime );
+        const QString& strDt = lstRows.at( 2 );
+        lstRows[ 2 ] = strDateTime;
         CLogicInterface::GetInterface( )->OperateChargeRecord( lstRows,
                                                                CommonDataType::InsertData, strWhere );
+        lstRows[ 2 ] = strDt;
 
         int nRow = ui->tableMonthly->currentRow( );
         if ( -1 != nRow ) {
-            QString strDate = ui->tableMonthly->item( nRow, 5 )->text( );
+            QString strDate = ui->tableMonthly->item( nRow, 6 )->text( );
             QDateTime dtEnd1 = CCommonFunction::String2DateTime( strDate );
             QDateTime dtEnd2 = dlg.GetEndDateTime( );
 
             if ( dtEnd2 > dtEnd1 ) {
                  CCommonFunction::DateTime2String( dtEnd2, strDate );
-                ui->tableMonthly->item( nRow, 5 )->setText( strDate );
+                ui->tableMonthly->item( nRow, 6 )->setText( strDate );
                 QString strSql = QString( "Update IGNORE monthcard set endtime = '%1' Where cardno = '%2'" ).arg( strDate, strCardno );
 
                 CLogicInterface::GetInterface( )->ExecuteSql( strSql );

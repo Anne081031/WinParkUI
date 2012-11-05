@@ -19,10 +19,15 @@ public:
     ~MainWindow();
 
 private:
+    void GetQueryCmd( QByteArray& byData );
     void SendCmd( const bool bNewDevice, const LedControll::ECommand eCmd, qint32 nParam );
     qint32 GetRbIndex( QObject* pSender );
     char GetSelectedRbIndex( QHash< char, QRadioButton* >& hash );
     void SwitchModeUI( const bool bFreqMode );
+    void ChangMode( qint32 nMode );
+    inline void SetOldMaxSize( );
+    inline void SetNewMaxSize( );
+    inline void SetSize( qint32 nWidth, qint32 nHeight );
 
 private slots:
     void on_btnSet_clicked();
@@ -45,6 +50,10 @@ private slots:
 
     void on_chkBaseLight_clicked(bool checked);
 
+    void on_cbMode_currentIndexChanged(int index);
+
+    void on_btnQuery_clicked();
+
 private:
     void DlgConfig( );
     void InitializeSlot( );
@@ -60,6 +69,8 @@ private:
     QControllerCmd controllerCmd;
     bool bFlash;
     qint32 nModeIndex;
+    QString strState;
+    QByteArray byQueryCmd;
 };
 
 #endif // MAINWINDOW_H

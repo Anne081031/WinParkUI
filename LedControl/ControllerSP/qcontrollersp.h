@@ -24,7 +24,8 @@ private:
     StopBitsType GetStopBit( quint8 nIndex );
     ParityType GetParity( quint8 nIndex );
     FlowType GetFlow( quint8 nIndex );
-    void ConfigPort( const LedControll::SComConfig& sConfig );
+    void ConfigPortBeforeOpen( const LedControll::SComConfig& sConfig );
+    void ConfigPortAfterOpen( const LedControll::SComConfig& sConfig );
 
 private:
     Win_QextSerialPort* winPort;

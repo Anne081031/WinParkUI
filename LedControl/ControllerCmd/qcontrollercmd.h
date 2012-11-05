@@ -14,7 +14,7 @@ public:
     virtual ~QControllerCmd( );
 
     void GetOldCmd( const LedControll::ECommand eCmd, QByteArray& oldData, qint32 nParam );
-    void GetNewCmd( const LedControll::ECommand eCmd, QByteArray& newData, qint32 nParam, const bool bQuery );
+    void GetNewCmd( const LedControll::ECommand eCmd, QByteArray& newData, qint32 nParam, const bool bQuery, const bool bFlash );
 
 private:
 

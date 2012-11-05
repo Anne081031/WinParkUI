@@ -17,7 +17,8 @@ protected:
     void customEvent( QEvent *e );
 
 private:
-    void ParseData( QByteArray& data );
+    bool ParseData( QByteArray& data );
+    void ProcessError( const char cErrorCode, const bool bWrite  );
 
 private:
     static QThreadSPParser* pSingleton;

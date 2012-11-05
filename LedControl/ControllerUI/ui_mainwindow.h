@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Nov 2 16:38:06 2012
+** Created: Sun Nov 4 17:24:46 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -15,6 +15,7 @@
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
 #include <QtGui/QCheckBox>
+#include <QtGui/QComboBox>
 #include <QtGui/QFrame>
 #include <QtGui/QGroupBox>
 #include <QtGui/QHBoxLayout>
@@ -22,6 +23,7 @@
 #include <QtGui/QLabel>
 #include <QtGui/QLineEdit>
 #include <QtGui/QMainWindow>
+#include <QtGui/QPlainTextEdit>
 #include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
 #include <QtGui/QSpinBox>
@@ -89,14 +91,16 @@ public:
     QLineEdit *edtLocation;
     QCheckBox *chkDevType;
     QCheckBox *chkQuery;
+    QComboBox *cbMode;
+    QPushButton *btnQuery;
+    QPlainTextEdit *edtState;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(551, 453);
+        MainWindow->resize(551, 643);
         MainWindow->setMinimumSize(QSize(551, 453));
-        MainWindow->setMaximumSize(QSize(551, 453));
         MainWindow->setStyleSheet(QString::fromUtf8("background-color: rgb(167, 167, 167);"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
@@ -145,7 +149,7 @@ public:
         lblMode->setAlignment(Qt::AlignCenter);
         frame = new QFrame(centralWidget);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(0, 120, 741, 361));
+        frame->setGeometry(QRect(0, 120, 741, 338));
         frame->setStyleSheet(QString::fromUtf8("background-color: rgb(118, 118, 118);"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
@@ -381,8 +385,22 @@ public:
         chkQuery = new QCheckBox(frame);
         chkQuery->setObjectName(QString::fromUtf8("chkQuery"));
         chkQuery->setEnabled(false);
-        chkQuery->setGeometry(QRect(224, 40, 91, 20));
+        chkQuery->setGeometry(QRect(225, 130, 91, 20));
         chkQuery->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        cbMode = new QComboBox(frame);
+        cbMode->setObjectName(QString::fromUtf8("cbMode"));
+        cbMode->setEnabled(false);
+        cbMode->setGeometry(QRect(225, 42, 91, 22));
+        cbMode->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+        btnQuery = new QPushButton(frame);
+        btnQuery->setObjectName(QString::fromUtf8("btnQuery"));
+        btnQuery->setEnabled(false);
+        btnQuery->setGeometry(QRect(224, 80, 91, 23));
+        edtState = new QPlainTextEdit(centralWidget);
+        edtState->setObjectName(QString::fromUtf8("edtState"));
+        edtState->setGeometry(QRect(10, 459, 531, 181));
+        edtState->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        edtState->setReadOnly(true);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -402,7 +420,7 @@ public:
         label_3->setText(QApplication::translate("MainWindow", "LED\346\231\272\350\203\275\350\241\245\345\205\211\347\201\257", 0, QApplication::UnicodeUTF8));
         lblMode->setText(QString());
         groupBox->setTitle(QString());
-        lblFreq->setText(QApplication::translate("MainWindow", "\345\271\263\351\227\252\346\250\241\345\274\217", 0, QApplication::UnicodeUTF8));
+        lblFreq->setText(QApplication::translate("MainWindow", "\351\242\221\351\227\252\346\250\241\345\274\217", 0, QApplication::UnicodeUTF8));
         rb05->setText(QApplication::translate("MainWindow", "\350\241\245\345\205\211\347\201\257\345\274\272\345\272\246-\351\253\230", 0, QApplication::UnicodeUTF8));
         rb06->setText(QApplication::translate("MainWindow", "\350\241\245\345\205\211\347\201\257\345\274\272\345\272\246-\350\276\203\351\253\230", 0, QApplication::UnicodeUTF8));
         rb07->setText(QApplication::translate("MainWindow", "\350\241\245\345\205\211\347\201\257\345\274\272\345\272\246-\344\270\255", 0, QApplication::UnicodeUTF8));
@@ -428,6 +446,25 @@ public:
         edtLocation->setText(QString());
         chkDevType->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\346\226\260\350\256\276\345\244\207", 0, QApplication::UnicodeUTF8));
         chkQuery->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\346\237\245\350\257\242\347\212\266\346\200\201", 0, QApplication::UnicodeUTF8));
+        cbMode->clear();
+        cbMode->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "\351\242\221\351\227\252\346\250\241\345\274\217", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "\351\227\252\345\205\211\346\250\241\345\274\217", 0, QApplication::UnicodeUTF8)
+        );
+        btnQuery->setText(QApplication::translate("MainWindow", "\346\237\245\350\257\242\347\212\266\346\200\201", 0, QApplication::UnicodeUTF8));
+        edtState->setPlainText(QApplication::translate("MainWindow", "\347\205\247\345\272\246(\345\205\211\346\225\217\347\224\265\351\230\273) %1\n"
+"\346\270\251\345\272\246 %2\n"
+"\347\201\257\345\267\245\344\275\234\347\212\266\346\200\201 %3\n"
+"\350\247\246\345\217\221\346\226\271\345\274\217 %4\n"
+"\351\242\221\351\227\252\346\227\266\351\227\264\357\274\210\347\231\276\345\210\206\346\257\224\346\230\276\347\244\272\357\274\211\351\242\221\351\227\252\346\227\266\351\227\264 %5\n"
+"\351\227\252\345\205\211\346\227\266\351\227\264\357\274\210\347\231\276\345\210\206\346\257\224\346\230\276\347\244\272\357\274\211\351\227\252\345\205\211\346\227\266\351\227\264 %6\n"
+"\351\242\221\351\227\252\344\272\256\345\272\246\357\274\210\347\231\276\345\210\206\346\257\224\346\230\276\347\244\272\357\274\211\351\242\221\351\227\252\344\272\256\345\272\246 %7\n"
+"\351\227\252\345\205\211\344\272\256\345\272\246\357\274\210\347\231\276\345\210\206\346\257\224\346\230\276\347\244\272\357\274\211\351\227\252\345\205\211\344\272\256\345\272\246 &8\n"
+"\351\242\221\351\227\252\351\242\221"
+                        "\347\216\207 %9\n"
+"LED\347\201\257\345\267\245\344\275\234\347\224\265\345\216\213 %10\n"
+"\345\244\226\351\203\250\350\247\246\345\217\221\344\277\241\345\217\267\347\212\266\346\200\201 %11\n"
+"", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

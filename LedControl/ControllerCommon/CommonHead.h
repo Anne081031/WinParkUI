@@ -46,7 +46,9 @@ const unsigned int  nLOCATION_SIZE = 128;
         CmdFlashFrenquencyLightSensitiveIfWork, // 0x08
         CmdSyncModeDownTrigger, // 0x09
         CmdSyncModeUpTrigger,
-        CmdSyncModeFollowTrigger
+        CmdSyncModeFollowTrigger,
+        CmdTestFlashOpen,    // 0x0A
+        CmdTestFlashClose
     } ECommand;
 }
 

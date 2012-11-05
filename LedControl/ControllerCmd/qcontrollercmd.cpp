@@ -34,14 +34,16 @@ void QControllerCmd::GetOldCmd( const LedControll::ECommand eCmd, QByteArray& ol
 
 
 
-void QControllerCmd::GetNewCmd( const LedControll::ECommand eCmd, QByteArray& newData, qint32 nParam, const bool bQuery )
+void QControllerCmd::GetNewCmd( const LedControll::ECommand eCmd, QByteArray& newData, qint32 nParam, const bool bQuery, const bool bFlash )
 {
     const char cFrameStart = ( char ) 0x68;
     const char cFrameEnd = ( char ) 0x16;
+    char cHead[ ] = { 0xFE, 0xFE, 0xFE, 0xFE };
 
     newData.clear( );
 
+    newData.append( cHead, sizeof ( newData ) );
     newData.append( cFrameStart ); // Frame Start
-    cmdGenrator->GetNewCmdBody( newData, eCmd, nParam, bQuery );
+    cmdGenrator->GetNewCmdBody( newData, eCmd, nParam, bQuery, bFlash );
     newData.append( cFrameEnd ); // Frame End
 }

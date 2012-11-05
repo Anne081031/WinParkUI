@@ -24,6 +24,16 @@ QControllerSP::~QControllerSP( )
 
 void QControllerSP::ReceiveData( )
 {
+    // 4 115200 DalaLen
+    // 8 2400
+    // 6 9600
+    Sleep( 12 ); // Baud DataLen Relation
+
+    qint64 nRet = winPort->bytesAvailable( );
+    if ( 0 == nRet ) {
+        return;
+    }
+
     QByteArray byData = winPort->readAll( );
     emit Data( byData );
 }
@@ -222,20 +232,22 @@ FlowType QControllerSP::GetFlow( quint8 nIndex )
 
 
 
-void QControllerSP::ConfigPort( const LedControll::SComConfig& sConfig )
+void QControllerSP::ConfigPortBeforeOpen( const LedControll::SComConfig& sConfig )
 {
     winPort->setQueryMode( Win_QextSerialPort::EventDriven );
+    winPort->setTimeout( 500 );
 
     QString strName= QString( "COM%1" ).arg( sConfig.nComName + 1 );
     winPort->setPortName( strName );
+}
 
+void QControllerSP::ConfigPortAfterOpen( const LedControll::SComConfig &sConfig )
+{
     winPort->setBaudRate( GetBaud( sConfig.nBaudRate ) );
     winPort->setDataBits( GetDataBit( sConfig.nDataBit ) );
     winPort->setParity( GetParity( sConfig.nParity ) );
     winPort->setStopBits( GetStopBit( sConfig.nStopBit ) );
     winPort->setFlowControl( GetFlow( sConfig.nFlowCtrl ) );
-
-    winPort->setTimeout( 500 );
 }
 
 bool QControllerSP::IsOpened(  )
@@ -253,9 +265,10 @@ bool QControllerSP::OpenPort( )
 
     LedControll::SComConfig sConfig;
     QControllerCommon::GetSPConfig( sConfig );
-    ConfigPort( sConfig );
-
+    ConfigPortBeforeOpen( sConfig );
     bRet = winPort->open( QIODevice::ReadWrite );
+    ConfigPortAfterOpen( sConfig );
+
     return bRet;
 }
 
@@ -293,7 +306,7 @@ qint64 QControllerSP::WriteData( QByteArray& data, const bool bThread )
             winPort->flush( );
 
     #ifndef QT_NO_DEBUG
-            QString strData( data.toHex( ) );
+            QString strData( data.toHex( ).toUpper( ) );
             qDebug( ) << "Write Serial Port Cmd : " << strData << endl;
     #endif
 

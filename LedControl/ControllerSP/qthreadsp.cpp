@@ -1,6 +1,7 @@
 #include "qthreadsp.h"
 #include "QApplication"
 #include "../ControllerCommon/qctrlevent.h"
+#include <QDebug>
 
 QThreadSP* QThreadSP::pSingleton = NULL;
 
@@ -37,11 +38,13 @@ QThreadSP& QThreadSP::GetSingleton( )
 void QThreadSP::HandleData( QByteArray data )
 {
     SendData( data );
+
+    qDebug( ) << "Read Serial Port : " << data.toHex( ).toUpper( ) << endl;
 }
 
 void QThreadSP::SendData( QByteArray &data )
 {
-    if ( NULL != pDataReceiver ) {
+    if ( NULL == pDataReceiver ) {
         return;
     }
 

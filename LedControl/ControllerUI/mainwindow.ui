@@ -7,16 +7,10 @@
     <x>0</x>
     <y>0</y>
     <width>551</width>
-    <height>453</height>
+    <height>643</height>
    </rect>
   </property>
   <property name="minimumSize">
-   <size>
-    <width>551</width>
-    <height>453</height>
-   </size>
-  </property>
-  <property name="maximumSize">
    <size>
     <width>551</width>
     <height>453</height>
@@ -180,7 +174,7 @@ background-color: rgb(72, 72, 72);</string>
       <x>0</x>
       <y>120</y>
       <width>741</width>
-      <height>361</height>
+      <height>338</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -220,7 +214,7 @@ background-color: rgb(72, 72, 72);</string>
        <string notr="true">color: rgb(255, 255, 255);</string>
       </property>
       <property name="text">
-       <string>平闪模式</string>
+       <string>频闪模式</string>
       </property>
      </widget>
      <widget class="QWidget" name="layoutWidget">
@@ -569,8 +563,8 @@ color: rgb(255, 255, 255);</string>
      </property>
      <property name="geometry">
       <rect>
-       <x>224</x>
-       <y>40</y>
+       <x>225</x>
+       <y>130</y>
        <width>91</width>
        <height>20</height>
       </rect>
@@ -582,6 +576,78 @@ color: rgb(255, 255, 255);</string>
       <string>是否查询状态</string>
      </property>
     </widget>
+    <widget class="QComboBox" name="cbMode">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>225</x>
+       <y>42</y>
+       <width>91</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>频闪模式</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>闪光模式</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QPushButton" name="btnQuery">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="geometry">
+      <rect>
+       <x>224</x>
+       <y>80</y>
+       <width>91</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>查询状态</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QPlainTextEdit" name="edtState">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>459</y>
+      <width>531</width>
+      <height>181</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
+    </property>
+    <property name="plainText">
+     <string>照度(光敏电阻) %1
+温度 %2
+灯工作状态 %3
+触发方式 %4
+频闪时间（百分比显示）频闪时间 %5
+闪光时间（百分比显示）闪光时间 %6
+频闪亮度（百分比显示）频闪亮度 %7
+闪光亮度（百分比显示）闪光亮度 &amp;8
+频闪频率 %9
+LED灯工作电压 %10
+外部触发信号状态 %11
+</string>
+    </property>
    </widget>
   </widget>
  </widget>
