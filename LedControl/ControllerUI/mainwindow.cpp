@@ -123,6 +123,12 @@ void MainWindow::GetQueryCmd( QByteArray &byData )
     controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyLightSensitiveIfWork, data, nParam, bQuery, bMode );
     byData.append( data );
 
+    controllerCmd.GetNewCmd( LedControll::CmdLedTemperature, data, nParam, bQuery, bMode );
+    byData.append( data );
+
+    controllerCmd.GetNewCmd( LedControll::CmdFlashGearSet, data, nParam, bQuery, bMode );
+    byData.append( data );
+
     controllerCmd.GetNewCmd( LedControll::CmdSyncModeDownTrigger, data, nParam, bQuery, bMode );
     byData.append( data );
 

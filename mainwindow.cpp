@@ -446,11 +446,11 @@ void MainWindow::Permission( )
     bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
     ui->actPrintDaylyReport->setEnabled( bEnabled );
 
-    bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
-    ui->actPrintMonthlyReport->setEnabled( bEnabled );
+    bEnabled |= ( 0 != lstRows[ nField++ ].compare( strFalse ) );
+    ui->actPrintDaylyReport->setEnabled( bEnabled );
 
-    bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
-    ui->actPrintYearlyReport->setEnabled( bEnabled );
+    bEnabled |= ( 0 != lstRows[ nField++ ].compare( strFalse ) );
+    ui->actPrintDaylyReport->setEnabled( bEnabled );
 
     bEnabled = ( 0 != lstRows[ 4 ].compare( strFalse ) );
     ui->mainTB->actions( )[ 2 ]->setEnabled( bEnabled );

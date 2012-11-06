@@ -48,7 +48,11 @@ const unsigned int  nLOCATION_SIZE = 128;
         CmdSyncModeUpTrigger,
         CmdSyncModeFollowTrigger,
         CmdTestFlashOpen,    // 0x0A
-        CmdTestFlashClose
+        CmdTestFlashClose,
+        CmdLedTemperature, // New Device
+        CmdLedFrequency,
+        CmdLedWorkVoltage,
+        CmdLedExternalTriggerSignalState
     } ECommand;
 }
 
