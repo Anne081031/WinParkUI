@@ -30,6 +30,16 @@ void MainWindow::InitializeUI( )
     LedControll::SSysConfig sConfig;
     QControllerCommon::GetSystemConfig( sConfig );
     InitializeUI( sConfig );
+
+    connect( &controller, SIGNAL( Cmd( QByteArray, bool ) ), this, SLOT( HandleCmd( QByteArray, bool ) ) );
+}
+
+void MainWindow::HandleCmd( QByteArray data, bool bSend )
+{
+    QString strText( data.toHex( ).toUpper( ) );
+    strText += "\n";
+    bSend ? ui->edtSendCmd->appendPlainText( strText ) :
+            ui->edtReceiveCmd->appendPlainText( strText );
 }
 
 void MainWindow::InitializeUI( const QString &strFile )
@@ -161,6 +171,8 @@ void MainWindow::ChangMode( qint32 nMode )
 
     if ( bNewDevice ) {
         nMode = ( bFlash ? 0x00000001 : 0x00000000 );
+    } else {
+        nMode |= 0xFF03D800;
     }
 
     SendCmd( bNewDevice, bFlash ? LedControll::CmdFlashGearSet : LedControll::CmdFrenquencyGearSet, nMode );
@@ -208,7 +220,15 @@ void MainWindow::OnRbSyncXClicked( )
         break;
     }
 
-    SendCmd( ui->chkDevType->isChecked( ), eCmd, nIndex );
+    bool bNewDevice = ui->chkDevType->isChecked( );
+
+    if ( bNewDevice ) {
+        ;
+    } else {
+        nIndex |= 0xFF03D800;
+    }
+
+    SendCmd( bNewDevice, eCmd, nIndex );
 }
 
 void MainWindow::OnSpXValueChanged( int nValue )
@@ -238,6 +258,7 @@ void MainWindow::OnSpXValueChanged( int nValue )
             iTrack *= 8;
             iTrack <<= 8;
             iTrack |= 0xffff0000;
+            nValue = iTrack;
         }
 
         if ( bFlash ) {
@@ -283,6 +304,11 @@ void MainWindow::OnSpXValueChanged( int nValue )
         if ( !bFlash ) {
             SendCmd( bNewDevice, eCmd, nValue );
         }
+    }
+
+    if ( !bNewDevice ) {
+
+        ChangMode( nModeIndex );
     }
 }
 
@@ -403,7 +429,7 @@ void MainWindow::on_btnTestFlash_clicked()
     // AA 55 0A 03 D8 03 FF FF FF Close
     static bool bOpen = false;
 
-    qint32 nParam = bOpen ? 0x00000001 : 0x00000003;
+    qint32 nParam = bOpen ? 0x00000003 : 0x00000001;
     SendCmd( ui->chkDevType->isChecked( ),
              bOpen ? LedControll::CmdTestFlashOpen : LedControll::CmdTestFlashClose, nParam );
     bOpen = !bOpen;
@@ -416,6 +442,9 @@ void MainWindow::on_btnTestFlash_clicked()
 
 void MainWindow::on_chkDevType_clicked(bool checked)
 {
+    ui->spFreqTime->setMaximum( checked ? 100 : 32 );
+    ui->spFreqLight->setMaximum( checked ? 100 : 32 );
+
     ui->chkQuery->setChecked( false );
     ui->chkQuery->setEnabled( checked );
     ui->cbMode->setEnabled( checked );
@@ -429,12 +458,12 @@ void MainWindow::on_chkDevType_clicked(bool checked)
     qint32 nIndex = ui->cbMode->currentIndex( );
     on_cbMode_currentIndexChanged( nIndex );
 
-    SetOldMaxSize( );
+    checked ? SetNewMaxSize( ) : SetOldMaxSize( );
 }
 
 void MainWindow::SetOldMaxSize( )
 {
-    SetSize( 551, 453 );
+    SetSize( 551, 415 );
 }
 
 void MainWindow::SetSize( qint32 nWidth, qint32 nHeight )
@@ -456,7 +485,7 @@ void MainWindow::on_chkLightSensitive_clicked(bool checked)
     if ( bNewDevice ) {
         nParam = checked ? 0x00000000 : 0x00000001;
     } else {
-        nParam = checked ? 0x00000002 : 0x00000001;
+        nParam = checked ? 0xFF03D801 : 0xFF03D802;
     }
 
     SendCmd( bNewDevice, LedControll::CmdFlashFrenquencyLightSensitiveIfWork, nParam );
@@ -464,7 +493,7 @@ void MainWindow::on_chkLightSensitive_clicked(bool checked)
 
 void MainWindow::on_chkBaseLight_clicked(bool checked)
 {
-    qint32 nParam = checked ? 0x00000001 : 0x00000000;
+    qint32 nParam = checked ? 0xFF03D801 : 0xFF03D800;
     SendCmd( ui->chkDevType->isChecked( ), LedControll::CmdFlashGearAlwaysRadianceClose, nParam );
 }
 
@@ -476,9 +505,5 @@ void MainWindow::on_cbMode_currentIndexChanged(int index)
 
 void MainWindow::on_btnQuery_clicked()
 {
-    SetNewMaxSize( );
-
-    byQueryCmd.append( byQueryCmd );
-    byQueryCmd.append( byQueryCmd );
     controller.WriteData( byQueryCmd, true );
 }

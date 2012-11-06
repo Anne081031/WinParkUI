@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun Nov 4 17:24:46 2012
+** Created: Tue Nov 6 14:03:55 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -27,6 +27,7 @@
 #include <QtGui/QPushButton>
 #include <QtGui/QRadioButton>
 #include <QtGui/QSpinBox>
+#include <QtGui/QTabWidget>
 #include <QtGui/QVBoxLayout>
 #include <QtGui/QWidget>
 
@@ -93,14 +94,20 @@ public:
     QCheckBox *chkQuery;
     QComboBox *cbMode;
     QPushButton *btnQuery;
+    QTabWidget *tabWidget;
+    QWidget *tab;
     QPlainTextEdit *edtState;
+    QWidget *tab_2;
+    QPlainTextEdit *edtSendCmd;
+    QWidget *tab_3;
+    QPlainTextEdit *edtReceiveCmd;
 
     void setupUi(QMainWindow *MainWindow)
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(551, 643);
-        MainWindow->setMinimumSize(QSize(551, 453));
+        MainWindow->resize(551, 415);
+        MainWindow->setMinimumSize(QSize(551, 415));
         MainWindow->setStyleSheet(QString::fromUtf8("background-color: rgb(167, 167, 167);"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
@@ -149,13 +156,13 @@ public:
         lblMode->setAlignment(Qt::AlignCenter);
         frame = new QFrame(centralWidget);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(0, 120, 741, 338));
+        frame->setGeometry(QRect(0, 104, 741, 311));
         frame->setStyleSheet(QString::fromUtf8("background-color: rgb(118, 118, 118);"));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
         groupBox = new QGroupBox(frame);
         groupBox->setObjectName(QString::fromUtf8("groupBox"));
-        groupBox->setGeometry(QRect(10, 10, 211, 231));
+        groupBox->setGeometry(QRect(10, 10, 211, 221));
         groupBox->setStyleSheet(QString::fromUtf8("background-color: rgb(90, 90, 90);"));
         lblFreq = new QLabel(groupBox);
         lblFreq->setObjectName(QString::fromUtf8("lblFreq"));
@@ -233,7 +240,7 @@ public:
 
         groupBox_2 = new QGroupBox(frame);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(330, 10, 211, 231));
+        groupBox_2->setGeometry(QRect(330, 10, 211, 221));
         groupBox_2->setStyleSheet(QString::fromUtf8("background-color: rgb(90, 90, 90);"));
         lblFlash = new QLabel(groupBox_2);
         lblFlash->setObjectName(QString::fromUtf8("lblFlash"));
@@ -241,7 +248,7 @@ public:
         lblFlash->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         chkBaseLight = new QCheckBox(groupBox_2);
         chkBaseLight->setObjectName(QString::fromUtf8("chkBaseLight"));
-        chkBaseLight->setGeometry(QRect(40, 200, 71, 16));
+        chkBaseLight->setGeometry(QRect(40, 190, 71, 16));
         layoutWidget1 = new QWidget(groupBox_2);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
         layoutWidget1->setGeometry(QRect(30, 40, 117, 142));
@@ -315,7 +322,7 @@ public:
 
         groupBox_3 = new QGroupBox(frame);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(10, 260, 531, 61));
+        groupBox_3->setGeometry(QRect(10, 240, 531, 61));
         groupBox_3->setStyleSheet(QString::fromUtf8("background-color: rgb(90, 90, 90);"));
         layoutWidget2 = new QWidget(groupBox_3);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
@@ -396,14 +403,39 @@ public:
         btnQuery->setObjectName(QString::fromUtf8("btnQuery"));
         btnQuery->setEnabled(false);
         btnQuery->setGeometry(QRect(224, 80, 91, 23));
-        edtState = new QPlainTextEdit(centralWidget);
+        tabWidget = new QTabWidget(centralWidget);
+        tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
+        tabWidget->setGeometry(QRect(9, 420, 531, 211));
+        tab = new QWidget();
+        tab->setObjectName(QString::fromUtf8("tab"));
+        edtState = new QPlainTextEdit(tab);
         edtState->setObjectName(QString::fromUtf8("edtState"));
-        edtState->setGeometry(QRect(10, 459, 531, 181));
+        edtState->setGeometry(QRect(0, 0, 531, 181));
         edtState->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         edtState->setReadOnly(true);
+        tabWidget->addTab(tab, QString());
+        tab_2 = new QWidget();
+        tab_2->setObjectName(QString::fromUtf8("tab_2"));
+        edtSendCmd = new QPlainTextEdit(tab_2);
+        edtSendCmd->setObjectName(QString::fromUtf8("edtSendCmd"));
+        edtSendCmd->setGeometry(QRect(0, 0, 531, 181));
+        edtSendCmd->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        edtSendCmd->setReadOnly(false);
+        tabWidget->addTab(tab_2, QString());
+        tab_3 = new QWidget();
+        tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        edtReceiveCmd = new QPlainTextEdit(tab_3);
+        edtReceiveCmd->setObjectName(QString::fromUtf8("edtReceiveCmd"));
+        edtReceiveCmd->setGeometry(QRect(0, 0, 531, 181));
+        edtReceiveCmd->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
+        edtReceiveCmd->setReadOnly(false);
+        tabWidget->addTab(tab_3, QString());
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
+
+        tabWidget->setCurrentIndex(2);
+
 
         QMetaObject::connectSlotsByName(MainWindow);
     } // setupUi
@@ -465,6 +497,11 @@ public:
 "LED\347\201\257\345\267\245\344\275\234\347\224\265\345\216\213 %10\n"
 "\345\244\226\351\203\250\350\247\246\345\217\221\344\277\241\345\217\267\347\212\266\346\200\201 %11\n"
 "", 0, QApplication::UnicodeUTF8));
+        tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("MainWindow", "\346\237\245\350\257\242\347\232\204\347\212\266\346\200\201", 0, QApplication::UnicodeUTF8));
+        edtSendCmd->setPlainText(QString());
+        tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("MainWindow", "\345\217\221\351\200\201\347\232\204\345\221\275\344\273\244", 0, QApplication::UnicodeUTF8));
+        edtReceiveCmd->setPlainText(QString());
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("MainWindow", "\346\216\245\346\224\266\347\232\204\345\221\275\344\273\244", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

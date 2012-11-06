@@ -17,14 +17,14 @@ public:
 private:
     inline void GetFlashStateAlwaysRadianceChane( QByteArray& body );
     inline void GetFlashFrenquencyIntensityTune( const qint16 nTune, QByteArray& body );
-    inline void GetFlashGearSet( const qint8 nGear, QByteArray& body );
-    inline void GetFrenquencyGearSet( const qint8 nGear, QByteArray& body );
+    inline void GetFlashGearSet( const qint32 nGear, QByteArray& body );
+    inline void GetFrenquencyGearSet( const qint32 nGear, QByteArray& body );
     inline void GetFlashFrenquencyGearClose( const qint32 nClose, QByteArray& body );
     inline void GetFlashGearAlwaysRadianceClose( const qint32 nClose, QByteArray& body );
     inline void GetFlashGearAlwaysRadianceOpen( const qint32 nOpen, QByteArray& body );
     inline void GetFlashFrenquencyGearWorkTimeSet( const qint32 nTime, QByteArray& body );
     inline void GetFlashFrenquencyLightSensitiveIfWork( const qint32 nWork, QByteArray& body );
-    inline void GetSyncModeCmd( const qint8 nMode, QByteArray& body );
+    inline void GetSyncModeCmd( const qint32 nMode, QByteArray& body );
     inline void GetTestFlashCmd( const qint8 nTest, QByteArray& body );
 
     inline void GetNewCmdAddr( QByteArray& body );

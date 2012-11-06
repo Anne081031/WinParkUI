@@ -7,6 +7,9 @@
 QController::QController( QObject* parent ) : QObject( parent )
 {
     pController = new QControllerSP( );
+    connect( pController, SIGNAL( Cmd( QByteArray, bool ) ), this, SLOT( HandleCmd( QByteArray, bool ) ) );
+    connect( &QThreadSPParser::GetSingleton( ), SIGNAL( Cmd( QByteArray, bool ) ),
+             this, SLOT( HandleCmd( QByteArray,bool ) ) );
 }
 
 QController::~QController( )
@@ -15,6 +18,11 @@ QController::~QController( )
         delete pController;
         pController = NULL;
     }
+}
+
+void QController::HandleCmd( QByteArray data, bool bSend )
+{
+    emit Cmd( data, bSend );
 }
 
 qint64 QController::WriteData( QByteArray &data, const bool bThread )

@@ -33,10 +33,9 @@ void QThreadSPParser::run( )
     exec( );
 }
 
-bool QThreadSPParser::ParseData( QByteArray &data )
+bool QThreadSPParser::ParseData( )
 {
     bool bRet = false;
-    byData.append( data );
     //
     // GetFrame ( YiBin )
     //
@@ -57,7 +56,7 @@ bool QThreadSPParser::ParseData( QByteArray &data )
         return bRet;
     }
 
-    qint32 nIndex = data.indexOf( byHead );
+    qint32 nIndex = byData.indexOf( byHead );
     if ( -1 == nIndex ) {
         byData.clear( );
         return bRet;
@@ -66,20 +65,44 @@ bool QThreadSPParser::ParseData( QByteArray &data )
     }
 
     nTotal = byData.length( );
-    quint8 cCtrlCode = data.at( nHead );
+    if ( nLen >= nTotal ) {
+        return bRet;
+    }
+
+    quint8 cCtrlCode = byData.at( nHead );
+
+    qint32 nDataLen = 0;
+    QByteArray byDataDomain;
 
     switch ( cCtrlCode ) {
     case 0x91 : // Query 无后续数据帧
-        break;
-
     case 0xB1 : // Query 有后续数据帧
+        nDataLen = byData[ nLen - 1 ];
+        nLen += nDataLen + 2;
+        if ( nLen > nTotal ) {
+            return bRet;
+        }
+
+        if ( cEndFrame == byData[ nLen - 1 ] ) {
+            byDataDomain = byData.mid( nHead + 2, nDataLen );
+            ProcessData( 0xB1 == cCtrlCode, byDataDomain );
+        }
         break;
 
     case 0x94 : // Write 成功
+        nLen += 2;
+        if ( nLen > nTotal ) {
+            return bRet;
+        }
+
+        if ( cEndFrame == byData[ nLen - 1 ] ) {
+            ProcessSuccess( );
+        }
+        break;
 
     case 0xD1 : // Query 错误信息
     case 0xD4 : // Write
-        nLen += 4;
+        nLen += 3;
         if ( nLen > nTotal ) {
             return bRet;
         }
@@ -87,19 +110,33 @@ bool QThreadSPParser::ParseData( QByteArray &data )
         if ( cEndFrame == byData[ nLen - 1 ] ) {
             ProcessError( byData.at( nLen - 3 ), 0xD4 == cCtrlCode );
         }
-
-        byData.remove( 0, nLen );
-        nTotal = byData.length( );
-        bRet = ( nLen <= nTotal );
         break;
     }
+
+    if ( cEndFrame == byData[ nLen - 1 ] ) {
+        emit Cmd( byData.mid( 0, nLen ), false );
+    }
+
+    byData.remove( 0, nLen );
+    nTotal = byData.length( );
+    bRet = ( nLen <= nTotal );
 
     return bRet;
 }
 
+void QThreadSPParser::ProcessData( const bool bSubsequence, QByteArray& data )
+{
+    qDebug( ) << QString( data.toHex( ).toUpper( ) );
+}
+
+void QThreadSPParser::ProcessSuccess( )
+{
+    qDebug( ) << "Success" << endl;
+}
+
 void QThreadSPParser::ProcessError( const char cErrorCode, const bool bWrite )
 {
-    qDebug( ) << ( bWrite ? "Write Error " : "Query Error " ) << cErrorCode << endl;
+    qDebug( ) << ( bWrite ? "Write Error " : "Query Error " ) << QString::number( cErrorCode ) << endl;
 }
 
 void QThreadSPParser::customEvent( QEvent *e )
@@ -108,8 +145,10 @@ void QThreadSPParser::customEvent( QEvent *e )
     bool bRet = false;
 
     if ( QCtrlEvent::SPParse == ( QCtrlEvent::CtrlEvent ) pEvent->type( ) ) {
+        byData.append( pEvent->GetData( ) );
+
         do {
-            bRet = ParseData( pEvent->GetData( ) );
+            bRet = ParseData( );
         } while ( bRet );
     }
 }

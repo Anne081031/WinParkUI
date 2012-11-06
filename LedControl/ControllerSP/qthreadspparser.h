@@ -17,14 +17,17 @@ protected:
     void customEvent( QEvent *e );
 
 private:
-    bool ParseData( QByteArray& data );
+    bool ParseData( );
     void ProcessError( const char cErrorCode, const bool bWrite  );
+    void ProcessSuccess( );
+    void ProcessData( const bool bSubsequence, QByteArray& data );
 
 private:
     static QThreadSPParser* pSingleton;
     QByteArray byData;
     
 signals:
+    void Cmd( QByteArray data, bool bSend );
     
 public slots:
     

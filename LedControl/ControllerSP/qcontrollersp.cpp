@@ -27,7 +27,7 @@ void QControllerSP::ReceiveData( )
     // 4 115200 DalaLen
     // 8 2400
     // 6 9600
-    Sleep( 12 ); // Baud DataLen Relation
+    Sleep( 14 ); // Baud DataLen Relation
 
     qint64 nRet = winPort->bytesAvailable( );
     if ( 0 == nRet ) {
@@ -308,7 +308,11 @@ qint64 QControllerSP::WriteData( QByteArray& data, const bool bThread )
     #ifndef QT_NO_DEBUG
             QString strData( data.toHex( ).toUpper( ) );
             qDebug( ) << "Write Serial Port Cmd : " << strData << endl;
+    #else
+            //emit Cmd( data );
     #endif
+
+            emit Cmd( data, true );
 
             break;
         } else {

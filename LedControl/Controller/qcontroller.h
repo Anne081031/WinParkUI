@@ -18,6 +18,12 @@ public:
 
 private:
     QControllerSP* pController;
+
+signals:
+    void Cmd( QByteArray data, bool bSend );
+
+private slots:
+    void HandleCmd( QByteArray data, bool bSend );
 };
 
 #endif // QCONTROLLER_H

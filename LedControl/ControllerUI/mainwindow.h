@@ -54,6 +54,8 @@ private slots:
 
     void on_btnQuery_clicked();
 
+    void HandleCmd( QByteArray data, bool bSend );
+
 private:
     void DlgConfig( );
     void InitializeSlot( );

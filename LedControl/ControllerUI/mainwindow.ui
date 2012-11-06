@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>551</width>
-    <height>643</height>
+    <height>415</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>551</width>
-    <height>453</height>
+    <height>415</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -172,9 +172,9 @@ background-color: rgb(72, 72, 72);</string>
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>120</y>
+      <y>104</y>
       <width>741</width>
-      <height>338</height>
+      <height>311</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -192,7 +192,7 @@ background-color: rgb(72, 72, 72);</string>
        <x>10</x>
        <y>10</y>
        <width>211</width>
-       <height>231</height>
+       <height>221</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -310,7 +310,7 @@ background-color: rgb(72, 72, 72);</string>
        <x>330</x>
        <y>10</y>
        <width>211</width>
-       <height>231</height>
+       <height>221</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -339,7 +339,7 @@ background-color: rgb(72, 72, 72);</string>
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>200</y>
+        <y>190</y>
         <width>71</width>
         <height>16</height>
        </rect>
@@ -442,7 +442,7 @@ background-color: rgb(72, 72, 72);</string>
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>260</y>
+       <y>240</y>
        <width>531</width>
        <height>61</height>
       </rect>
@@ -619,23 +619,39 @@ color: rgb(255, 255, 255);</string>
      </property>
     </widget>
    </widget>
-   <widget class="QPlainTextEdit" name="edtState">
+   <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>459</y>
+      <x>9</x>
+      <y>420</y>
       <width>531</width>
-      <height>181</height>
+      <height>211</height>
      </rect>
     </property>
-    <property name="styleSheet">
-     <string notr="true">background-color: rgb(255, 255, 255);</string>
+    <property name="currentIndex">
+     <number>2</number>
     </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-    <property name="plainText">
-     <string>照度(光敏电阻) %1
+    <widget class="QWidget" name="tab">
+     <attribute name="title">
+      <string>查询的状态</string>
+     </attribute>
+     <widget class="QPlainTextEdit" name="edtState">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>531</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="readOnly">
+       <bool>true</bool>
+      </property>
+      <property name="plainText">
+       <string>照度(光敏电阻) %1
 温度 %2
 灯工作状态 %3
 触发方式 %4
@@ -647,7 +663,57 @@ color: rgb(255, 255, 255);</string>
 LED灯工作电压 %10
 外部触发信号状态 %11
 </string>
-    </property>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_2">
+     <attribute name="title">
+      <string>发送的命令</string>
+     </attribute>
+     <widget class="QPlainTextEdit" name="edtSendCmd">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>531</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
+      </property>
+      <property name="plainText">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="tab_3">
+     <attribute name="title">
+      <string>接收的命令</string>
+     </attribute>
+     <widget class="QPlainTextEdit" name="edtReceiveCmd">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>531</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(255, 255, 255);</string>
+      </property>
+      <property name="readOnly">
+       <bool>false</bool>
+      </property>
+      <property name="plainText">
+       <string/>
+      </property>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>

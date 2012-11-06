@@ -22,7 +22,6 @@ void QCmdGenerator::GetFlashStateAlwaysRadianceChane( QByteArray &body )
 void QCmdGenerator::GetFlashFrenquencyIntensityTune( const qint16 nTune, QByteArray &body )
 {
     char* pValue = ( char* ) &nTune;
-
     char cCmd[ ] = { 0x02, 0x03, 0xd8,  pValue[ 1 ], pValue[ 0 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
@@ -30,7 +29,6 @@ void QCmdGenerator::GetFlashFrenquencyIntensityTune( const qint16 nTune, QByteAr
 void QCmdGenerator::GetFlashFrenquencyGearClose( const qint32 nClose, QByteArray &body )
 {
     char* pValue = ( char* ) &nClose;
-
     char cCmd[ ] = { 0x04, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
@@ -38,7 +36,6 @@ void QCmdGenerator::GetFlashFrenquencyGearClose( const qint32 nClose, QByteArray
 void QCmdGenerator::GetFlashGearAlwaysRadianceClose( const qint32 nClose, QByteArray &body )
 {
     char* pValue = ( char* ) &nClose;
-
     char cCmd[ ] = { 0x05, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
@@ -46,7 +43,6 @@ void QCmdGenerator::GetFlashGearAlwaysRadianceClose( const qint32 nClose, QByteA
 void QCmdGenerator::GetFlashGearAlwaysRadianceOpen( const qint32 nOpen, QByteArray &body )
 {
     char* pValue = ( char* ) &nOpen;
-
     char cCmd[ ] = { 0x06, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
@@ -54,7 +50,6 @@ void QCmdGenerator::GetFlashGearAlwaysRadianceOpen( const qint32 nOpen, QByteArr
 void QCmdGenerator::GetFlashFrenquencyGearWorkTimeSet( const qint32 nTime, QByteArray &body )
 {
     char* pValue = ( char* ) &nTime;
-
     char cCmd[ ] = { 0x07, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
@@ -62,14 +57,14 @@ void QCmdGenerator::GetFlashFrenquencyGearWorkTimeSet( const qint32 nTime, QByte
 void QCmdGenerator::GetFlashFrenquencyLightSensitiveIfWork( const qint32 nWork, QByteArray &body )
 {
     char* pValue = ( char* ) &nWork;
-
     char cCmd[ ] = { 0x08, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
-void QCmdGenerator::GetSyncModeCmd( const qint8 nMode, QByteArray &body )
+void QCmdGenerator::GetSyncModeCmd( const qint32 nMode, QByteArray &body )
 {
-    char cCmd[ ] = { 0x09, nMode, 0x00, 0x00, 0x00 };
+    char* pValue = ( char* ) &nMode;
+    char cCmd[ ] = { 0x09, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
@@ -82,15 +77,17 @@ void QCmdGenerator::GetTestFlashCmd( const qint8 nTest, QByteArray &body )
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
-void QCmdGenerator::GetFlashGearSet( const qint8 nGear, QByteArray &body )
+void QCmdGenerator::GetFlashGearSet( const qint32 nGear, QByteArray &body )
 {
-    char cCmd[ ] = { 0x03, nGear, 0x00, 0x00, 0x00 };
+    char* pValue = ( char* ) &nGear;
+    char cCmd[ ] = { 0x03, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
-void QCmdGenerator::GetFrenquencyGearSet( const qint8 nGear, QByteArray &body )
+void QCmdGenerator::GetFrenquencyGearSet( const qint32 nGear, QByteArray &body )
 {
-    char cCmd[ ] = { 0x03, nGear, 0x00, 0x00, 0x00 };
+    char* pValue = ( char* ) &nGear;
+    char cCmd[ ] = { 0x03, pValue[ 0 ], pValue[ 1 ],  pValue[ 2 ], pValue[ 3 ] };
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
@@ -136,7 +133,7 @@ void QCmdGenerator::GetOldCmdBody( QByteArray &body, LedControll::ECommand eCmd,
     case LedControll::CmdSyncModeDownTrigger : // 0x09
     case LedControll::CmdSyncModeUpTrigger :
     case LedControll::CmdSyncModeFollowTrigger :
-        GetSyncModeCmd( ( char ) nParam, body );
+        GetSyncModeCmd( nParam, body );
         break;
 
     case LedControll::CmdTestFlashOpen :
@@ -150,7 +147,6 @@ void QCmdGenerator::GetNewCmdAddr( QByteArray &body )
 {
     const char cAddrValue = ( char ) 0xAA;
     char cAddress[ ] = { cAddrValue, cAddrValue, cAddrValue, cAddrValue, cAddrValue, cAddrValue };
-
     body.append( cAddress, sizeof ( cAddress ) );
 }
 
@@ -251,6 +247,8 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
     for ( int nIndex = 0; nIndex < byDataDomain.length( ); nIndex++ ) {
         byDataDomain[ nIndex ] = byDataDomain.at( nIndex ) + 0x33;
     }
+
+    body.append( byDataDomain );
 }
 
 void QCmdGenerator::GetCheckSum4NewCmd( QByteArray &body )

@@ -32,6 +32,7 @@ private:
 
 signals:
     void Data( QByteArray data );
+    void Cmd( QByteArray data, bool bSend );
 
 public slots:
 

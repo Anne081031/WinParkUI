@@ -42,8 +42,10 @@ void QControllerCmd::GetNewCmd( const LedControll::ECommand eCmd, QByteArray& ne
 
     newData.clear( );
 
-    newData.append( cHead, sizeof ( newData ) );
+    //newData.append( cHead, sizeof ( newData ) );
     newData.append( cFrameStart ); // Frame Start
     cmdGenrator->GetNewCmdBody( newData, eCmd, nParam, bQuery, bFlash );
     newData.append( cFrameEnd ); // Frame End
+
+    newData.insert( 0,cHead, sizeof ( newData ) );
 }
