@@ -120,6 +120,12 @@ void MainWindow::GetQueryCmd( QByteArray &byData )
     bool bMode = true; // true Flash
     qint32 nParam = 0;
 
+    //LedControll::CmdFlashFrenquencyGearWorkTimeSet
+    //LedControll::CmdFlashFrenquencyGearWorkTimeSet bFlash true
+    //LedControll::CmdFlashFrenquencyIntensityTune
+    //LedControll::CmdFlashFrenquencyIntensityTune bFlash true
+
+
     controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyLightSensitiveIfWork, data, nParam, bQuery, bMode );
     byData.append( data );
 
@@ -132,10 +138,28 @@ void MainWindow::GetQueryCmd( QByteArray &byData )
     controllerCmd.GetNewCmd( LedControll::CmdSyncModeDownTrigger, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, bMode );
+    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, false );
     byData.append( data );
 
     controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, bMode );
+    byData.append( data );
+
+    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, false );
+    byData.append( data );
+
+    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, bMode );
+    byData.append( data );
+
+    controllerCmd.GetNewCmd( LedControll::CmdLedFrequency, data, nParam, bQuery, bMode );
+    byData.append( data );
+
+    controllerCmd.GetNewCmd( LedControll::CmdLedWorkVoltage, data, nParam, bQuery, bMode );
+    byData.append( data );
+
+    controllerCmd.GetNewCmd( LedControll::CmdLedExternalTriggerSignalState, data, nParam, bQuery, bMode );
+    byData.append( data );
+
+    controllerCmd.GetNewCmd( LedControll::CmdSyncModeForFlash, data, nParam, bQuery, bMode );
     byData.append( data );
 
     qDebug( ) << byData.toHex( ).toUpper( ) << endl;
@@ -171,13 +195,13 @@ qint32 MainWindow::GetRbIndex( QObject *pSender )
     return nIndex;
 }
 
-void MainWindow::ChangMode( qint32 nMode )
+void MainWindow::ChangMode( qint32 nMode, const bool bNeedChange )
 {
     bool bNewDevice = ui->chkDevType->isChecked( );
 
     if ( bNewDevice ) {
         nMode = ( bFlash ? 0x00000001 : 0x00000000 );
-    } else {
+    } else if ( bNeedChange ) {
         nMode |= 0xFF03D800;
     }
 
@@ -199,7 +223,7 @@ void MainWindow::OnRbModeXClicked( )
 
     bFlash = ( 5 > nIndex );
     SwitchModeUI( !bFlash );
-    ChangMode( nIndex );
+    ChangMode( nIndex, true );
 }
 
 void MainWindow::OnRbSyncXClicked( )
@@ -228,8 +252,8 @@ void MainWindow::OnRbSyncXClicked( )
 
     bool bNewDevice = ui->chkDevType->isChecked( );
 
-    if ( bNewDevice ) {
-        ;
+    if ( bNewDevice && 1 == ui->cbMode->currentIndex( ) ) {
+        eCmd = LedControll::CmdSyncModeForFlash;
     } else {
         nIndex |= 0xFF03D800;
     }
@@ -269,6 +293,12 @@ void MainWindow::OnSpXValueChanged( int nValue )
 
         if ( bFlash ) {
             SendCmd( bNewDevice, eCmd, iTrack );
+
+            if ( !bNewDevice ) {
+                nValue &= 0xFFFFFF00;
+                nValue |= nModeIndex;
+                ChangMode( nValue, false );
+            }
         }
     } else if ( pSB == ui->spFlashLight ) {
         eCmd = LedControll::CmdFlashFrenquencyIntensityTune;
@@ -283,6 +313,17 @@ void MainWindow::OnSpXValueChanged( int nValue )
 
         if ( bFlash ) {
             SendCmd( bNewDevice, eCmd, nValue );
+
+            if ( !bNewDevice ) {
+                qint32 nLow = ( nValue >> 8 );
+                qint32 nHigh = ( ( nValue & 0x000000FF ) << 8 );
+                nValue = ( nLow | nHigh );
+                nValue <<= 16;
+                nValue |= 0x0000D800;
+                nValue |= nModeIndex;
+                //nValue |= 0x
+                ChangMode( nValue, false );
+            }
         }
     } else if ( pSB == ui->spFreqTime ) { // ф╣иа
         eCmd = LedControll::CmdFlashFrenquencyGearWorkTimeSet;
@@ -290,12 +331,19 @@ void MainWindow::OnSpXValueChanged( int nValue )
         if ( bNewDevice ) {
             ;
         } else {
+            nValue &= 0x000000FF;
             nValue <<= 16;
             nValue |= 0xff000000;
         }
 
         if ( !bFlash ) {
             SendCmd( bNewDevice, eCmd, nValue );
+        }
+
+        if ( !bNewDevice ) {
+            nValue &= 0xFFFFFF00;
+            nValue |= nModeIndex;
+            ChangMode( nValue, false );
         }
     } else if ( pSB == ui->spFreqLight ) {
         eCmd = LedControll::CmdFlashFrenquencyIntensityTune;
@@ -310,11 +358,17 @@ void MainWindow::OnSpXValueChanged( int nValue )
         if ( !bFlash ) {
             SendCmd( bNewDevice, eCmd, nValue );
         }
-    }
 
-    if ( !bNewDevice ) {
-
-        ChangMode( nModeIndex );
+        if ( !bNewDevice ) {
+            qint32 nLow = ( nValue >> 8 );
+            qint32 nHigh = ( ( nValue & 0x000000FF ) << 8 );
+            nValue = ( nLow | nHigh );
+            nValue <<= 16;
+            nValue |= 0x0000D800;
+            nValue |= nModeIndex;
+            //nValue |= 0x
+            ChangMode( nValue, false );
+        }
     }
 }
 
@@ -506,7 +560,7 @@ void MainWindow::on_chkBaseLight_clicked(bool checked)
 void MainWindow::on_cbMode_currentIndexChanged(int index)
 {
     bFlash = ( 0 != index );
-    ChangMode( index );
+    ChangMode( index, false );
 }
 
 void MainWindow::on_btnQuery_clicked()

@@ -985,13 +985,11 @@ void Win_QextSerialPort::monitorCommEvent()
 			_bytesToWrite = 0;
 			bytesToWriteLock->unlock();
 		}
-        if (eventMask & EV_DSR) { // zcy 2012.10.29
-            if (lineStatus() & LS_DSR) { // zcy 2012.10.29
+		if (eventMask & EV_DSR)
+			if (lineStatus() & LS_DSR)
 				emit dsrChanged(true);
-             } else { // zcy 2012.10.29
+			else
 				emit dsrChanged(false);
-            } // zcy 2012.10.29
-        }
 	}
 }
 

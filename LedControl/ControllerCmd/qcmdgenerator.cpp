@@ -145,6 +145,7 @@ void QCmdGenerator::GetOldCmdBody( QByteArray &body, LedControll::ECommand eCmd,
     case LedControll::CmdLedFrequency :
     case LedControll::CmdLedWorkVoltage :
     case LedControll::CmdLedExternalTriggerSignalState :
+    case LedControll::CmdSyncModeForFlash :
         break;
     }
 }
@@ -246,6 +247,12 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
 
     case LedControll::CmdLedExternalTriggerSignalState :
         nDI |= 0x0000000A;
+        break;
+
+    case LedControll::CmdSyncModeForFlash :
+        nDI |= 0x0000000B;
+        cDataLen += 1;
+        byData.append( ( char ) nParam );
         break;
     }
 

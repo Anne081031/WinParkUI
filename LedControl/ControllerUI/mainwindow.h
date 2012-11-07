@@ -24,7 +24,7 @@ private:
     qint32 GetRbIndex( QObject* pSender );
     char GetSelectedRbIndex( QHash< char, QRadioButton* >& hash );
     void SwitchModeUI( const bool bFreqMode );
-    void ChangMode( qint32 nMode );
+    void ChangMode( qint32 nMode, const bool bNeedChange );
     inline void SetOldMaxSize( );
     inline void SetNewMaxSize( );
     inline void SetSize( qint32 nWidth, qint32 nHeight );

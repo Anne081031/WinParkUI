@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qthreadsp.h'
 **
-** Created: Tue Nov 6 16:50:05 2012
+** Created: Wed Nov 7 13:49:08 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

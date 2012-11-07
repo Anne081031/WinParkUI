@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qthreadspwriter.h'
 **
-** Created: Mon Nov 5 20:39:15 2012
+** Created: Wed Nov 7 17:28:14 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

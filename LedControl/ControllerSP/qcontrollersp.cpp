@@ -27,10 +27,11 @@ void QControllerSP::ReceiveData( )
     // 4 115200 DalaLen
     // 8 2400
     // 6 9600
-    Sleep( 14 ); // Baud DataLen Relation
+    //Sleep( 8 ); // Baud DataLen Relation
 
     qint64 nRet = winPort->bytesAvailable( );
     if ( 0 == nRet ) {
+        //qDebug( ) << "winPort->bytesAvailable( ) return zero" << endl;
         return;
     }
 

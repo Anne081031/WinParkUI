@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Mon Nov 5 20:48:10 2012
+** Created: Wed Nov 7 17:27:46 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -43,7 +43,7 @@ static const uint qt_meta_data_MainWindow[] = {
      245,  174,   11,   11, 0x08,
      281,  275,   11,   11, 0x08,
      316,   11,   11,   11, 0x08,
-     343,  338,   11,   11, 0x08,
+     349,  338,   11,   11, 0x08,
 
        0        // eod
 };
@@ -58,8 +58,8 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_chkLightSensitive_clicked(bool)\0"
     "on_chkBaseLight_clicked(bool)\0index\0"
     "on_cbMode_currentIndexChanged(int)\0"
-    "on_btnQuery_clicked()\0data\0"
-    "HandleCmd(QByteArray)\0"
+    "on_btnQuery_clicked()\0data,bSend\0"
+    "HandleCmd(QByteArray,bool)\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -80,7 +80,7 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 9: _t->on_chkBaseLight_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 10: _t->on_cbMode_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 11: _t->on_btnQuery_clicked(); break;
-        case 12: _t->HandleCmd((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
+        case 12: _t->HandleCmd((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         default: ;
         }
     }
