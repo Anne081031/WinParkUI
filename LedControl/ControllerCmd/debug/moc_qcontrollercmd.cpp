@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qcontrollercmd.h'
 **
-** Created: Wed Nov 7 13:49:42 2012
+** Created: Thu Nov 8 11:46:52 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -14,12 +14,14 @@ Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ControllerCommon", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ControllerCmd", "Debug" )
 }
 
 Release {
     TARGET = $$sprintf( $$MYTARGET, "" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ControllerCommon", "" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "ControllerCmd", "" )
 }
 
 TEMPLATE = lib

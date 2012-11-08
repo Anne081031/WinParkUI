@@ -1,5 +1,6 @@
 #include "qcontrollercmd.h"
 
+QControllerCmd* QControllerCmd::cmdController = NULL;
 
 QControllerCmd::QControllerCmd()
 {
@@ -18,6 +19,20 @@ QControllerCmd::~QControllerCmd( )
         delete cmdParser;
         cmdParser = NULL;
     }
+}
+
+QControllerCmd* QControllerCmd::GetSingleton( )
+{
+    if ( NULL == cmdController ) {
+        cmdController = new QControllerCmd( );
+    }
+
+    return cmdController;
+}
+
+void QControllerCmd::ParseDataDomain( QByteArray &data, QString &strInfo, qint8& nIndex )
+{
+    cmdParser->ParseDataDomain( data, strInfo, nIndex );
 }
 
 void QControllerCmd::GetOldCmd( const LedControll::ECommand eCmd, QByteArray& oldData, qint32 nParam )

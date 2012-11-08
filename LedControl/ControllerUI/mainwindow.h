@@ -56,22 +56,30 @@ private slots:
 
     void HandleCmd( QByteArray data, bool bSend );
 
+    void HandleData( QByteArray data );
+
+    void HandleQuery( QString strInfo, qint8 nIndex );
+
 private:
     void DlgConfig( );
     void InitializeSlot( );
     void InitializeUI( );
     void InitializeUI( const QString& strFile );
     void InitializeUI( const LedControll::SSysConfig& sConfig );
+    void SetQueryTemplate( );
+
+private:
     QHash< char, QRadioButton* > hashMode;
     QHash< char, QRadioButton* > hashSync;
     
 private:
     Ui::MainWindow *ui;
     QController controller;
-    QControllerCmd controllerCmd;
+    QControllerCmd* controllerCmd;
     bool bFlash;
     qint32 nModeIndex;
     QString strState;
+    QString strStateValue[ 12 ];
     QByteArray byQueryCmd;
 };
 

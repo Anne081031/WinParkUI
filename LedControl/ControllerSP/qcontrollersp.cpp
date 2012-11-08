@@ -307,8 +307,8 @@ qint64 QControllerSP::WriteData( QByteArray& data, const bool bThread )
             winPort->flush( );
 
     #ifndef QT_NO_DEBUG
-            QString strData( data.toHex( ).toUpper( ) );
-            qDebug( ) << "Write Serial Port Cmd : " << strData << endl;
+            //QString strData( data.toHex( ).toUpper( ) );
+            //qDebug( ) << "Write Serial Port Cmd : " << strData << endl;
     #else
             //emit Cmd( data );
     #endif

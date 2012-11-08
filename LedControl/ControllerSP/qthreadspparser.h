@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include "ControllerSP_global.h"
+#include "../ControllerCmd/qcontrollercmd.h"
 
 class CONTROLLERSPSHARED_EXPORT QThreadSPParser : public QThread
 {
@@ -25,9 +26,11 @@ private:
 private:
     static QThreadSPParser* pSingleton;
     QByteArray byData;
+    QControllerCmd* cmdController;
     
 signals:
     void Cmd( QByteArray data, bool bSend );
+    void Query( QString strInfo, qint8 nIndex );
     
 public slots:
     

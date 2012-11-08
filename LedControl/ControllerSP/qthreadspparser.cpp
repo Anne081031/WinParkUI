@@ -8,6 +8,7 @@ QThreadSPParser* QThreadSPParser::pSingleton = NULL;
 QThreadSPParser::QThreadSPParser(QObject *parent) :
     QThread(parent)
 {
+    cmdController = QControllerCmd::GetSingleton( );
 }
 
 QThreadSPParser& QThreadSPParser::GetSingleton( )
@@ -85,6 +86,10 @@ bool QThreadSPParser::ParseData( )
 
         if ( cEndFrame == byData[ nLen - 1 ] ) {
             byDataDomain = byData.mid( nHead + 2, nDataLen );
+            for ( int nIndex = 0; nIndex < byDataDomain.length( ); nIndex++ ) {
+                byDataDomain[ nIndex ] = byDataDomain.at( nIndex ) - 0x33;
+            }
+
             ProcessData( 0xB1 == cCtrlCode, byDataDomain );
         }
         break;
@@ -114,7 +119,7 @@ bool QThreadSPParser::ParseData( )
     }
 
     if ( cEndFrame == byData[ nLen - 1 ] ) {
-        emit Cmd( byData.mid( 0, nLen ), false );
+        emit Cmd( byData.mid( 0, nLen ), false ); // Cmd Frame
     }
 
     byData.remove( 0, nLen );
@@ -127,6 +132,20 @@ bool QThreadSPParser::ParseData( )
 void QThreadSPParser::ProcessData( const bool bSubsequence, QByteArray& data )
 {
     qDebug( ) << QString( data.toHex( ).toUpper( ) );
+
+    if ( 4 > data.length( ) ) {
+        return;
+    }
+
+    if ( bSubsequence ) {
+        ;
+    } else {
+        QString strInfo;
+        qint8 nIndex = 0;
+        cmdController->ParseDataDomain( data, strInfo, nIndex );
+
+        emit Query( strInfo, nIndex );
+    }
 }
 
 void QThreadSPParser::ProcessSuccess( )
@@ -136,7 +155,8 @@ void QThreadSPParser::ProcessSuccess( )
 
 void QThreadSPParser::ProcessError( const char cErrorCode, const bool bWrite )
 {
-    qDebug( ) << ( bWrite ? "Write Error " : "Query Error " ) << QString::number( cErrorCode ) << endl;
+    char cError = cErrorCode - 0x33;
+    qDebug( ) << ( bWrite ? "Write Error " : "Query Error " ) << QString::number( cError ) << endl;
 }
 
 void QThreadSPParser::customEvent( QEvent *e )

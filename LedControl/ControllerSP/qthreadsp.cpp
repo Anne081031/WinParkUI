@@ -39,7 +39,7 @@ void QThreadSP::HandleData( QByteArray data )
 {
     SendData( data );
 
-    qDebug( ) << "Read Serial Port : " << data.toHex( ).toUpper( ) << endl;
+    //qDebug( ) << "Read Serial Port : " << data.toHex( ).toUpper( ) << endl;
 }
 
 void QThreadSP::SendData( QByteArray &data )

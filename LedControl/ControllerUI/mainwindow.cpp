@@ -21,17 +21,43 @@ MainWindow::MainWindow(QWidget *parent) :
     InitializeUI( );
 }
 
+void MainWindow::SetQueryTemplate( )
+{
+    ui->edtState->clear( );
+
+    strState = "照度(光敏电阻) %1\n";
+    strState += "温度 %2摄氏度\n";
+    strState += "灯工作状态 %3\n";
+    strState += "频闪触发方式 %4\n";
+    strState += "闪光触发方式 %5\n";
+    strState += "频闪时间（百分比显示）频闪时间 %6%\n";
+    strState += "闪光时间（百分比显示）闪光时间 %7%\n";
+    strState += "频闪亮度（百分比显示）频闪亮度 %8%\n";
+    strState += "闪光亮度（百分比显示）闪光亮度 %9%\n";
+    strState += "频闪频率 %10Hz\n";
+    strState += "LED灯工作电压 %11伏\n";
+    strState += "外部触发信号状态 %12";
+}
+
 void MainWindow::InitializeUI( )
 {
-    GetQueryCmd( byQueryCmd );
+    ui->cbMode->setVisible( false );
+    ui->btnQuery->setVisible( false );
     ui->chkQuery->setVisible( false );
-    strState = ui->edtState->toPlainText( );
+
+    controllerCmd = QControllerCmd::GetSingleton( );
+    GetQueryCmd( byQueryCmd );
+
+    SetQueryTemplate( );
     SetOldMaxSize( );
+
     LedControll::SSysConfig sConfig;
     QControllerCommon::GetSystemConfig( sConfig );
     InitializeUI( sConfig );
 
     connect( &controller, SIGNAL( Cmd( QByteArray, bool ) ), this, SLOT( HandleCmd( QByteArray, bool ) ) );
+    connect( &controller, SIGNAL( Data( QByteArray ) ), this, SLOT( HandleData( QByteArray ) ) );
+    connect( &controller, SIGNAL( Query( QString,qint8 ) ), this, SLOT( HandleQuery( QString, qint8 ) ) );
 }
 
 void MainWindow::HandleCmd( QByteArray data, bool bSend )
@@ -40,6 +66,28 @@ void MainWindow::HandleCmd( QByteArray data, bool bSend )
     strText += "\n";
     bSend ? ui->edtSendCmd->appendPlainText( strText ) :
             ui->edtReceiveCmd->appendPlainText( strText );
+}
+
+void MainWindow::HandleData( QByteArray data )
+{
+    QString strText( data.toHex( ).toUpper( ) );
+    ui->edtDataStream->appendPlainText( strText );
+}
+
+void MainWindow::HandleQuery( QString strInfo, qint8 nIndex )
+{
+    if ( 1 > nIndex || 12 < nIndex ) {
+        return;
+    }
+
+    ui->edtState->clear( );
+    strStateValue[ nIndex - 1 ] = strInfo;
+
+    QString strText = strState.arg( strStateValue[ 0 ], strStateValue[ 1 ], strStateValue[ 2 ],
+                                                    strStateValue[ 3 ], strStateValue[ 4 ], strStateValue[ 5 ],
+                                                    strStateValue[ 6 ], strStateValue[ 7 ], strStateValue[ 8 ] );
+    strText = strText.arg( strStateValue[ 9 ], strStateValue[ 10 ], strStateValue[ 11 ] );
+    ui->edtState->appendPlainText( strText );
 }
 
 void MainWindow::InitializeUI( const QString &strFile )
@@ -115,6 +163,22 @@ void MainWindow::InitializeSlot( )
 
 void MainWindow::GetQueryCmd( QByteArray &byData )
 {
+    #if false
+     //Query test cmd
+    FEFEFEFE68AAAAAAAAAAAA68910500030004000016
+    FEFEFEFE68AAAAAAAAAAAA689107010300041134560016
+    FEFEFEFE68AAAAAAAAAAAA68910502030004010016
+    FEFEFEFE68AAAAAAAAAAAA68910503030004020016
+    FEFEFEFE68AAAAAAAAAAAA6891050B030004010016
+    FEFEFEFE68AAAAAAAAAAAA68910504030004010016
+    FEFEFEFE68AAAAAAAAAAAA68910505030004020016
+    FEFEFEFE68AAAAAAAAAAAA68910506030004030016
+    FEFEFEFE68AAAAAAAAAAAA68910507030004040016
+    FEFEFEFE68AAAAAAAAAAAA68910508030004250016
+    FEFEFEFE68AAAAAAAAAAAA6891060903000411230016
+    FEFEFEFE68AAAAAAAAAAAA6891050A030004010016
+    #endif
+
     QByteArray data;
     bool bQuery = true;
     bool bMode = true; // true Flash
@@ -126,40 +190,40 @@ void MainWindow::GetQueryCmd( QByteArray &byData )
     //LedControll::CmdFlashFrenquencyIntensityTune bFlash true
 
 
-    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyLightSensitiveIfWork, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyLightSensitiveIfWork, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdLedTemperature, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdLedTemperature, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdFlashGearSet, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdFlashGearSet, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdSyncModeDownTrigger, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdSyncModeDownTrigger, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, false );
+    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, false );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, false );
+    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, false );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdLedFrequency, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdLedFrequency, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdLedWorkVoltage, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdLedWorkVoltage, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdLedExternalTriggerSignalState, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdLedExternalTriggerSignalState, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd.GetNewCmd( LedControll::CmdSyncModeForFlash, data, nParam, bQuery, bMode );
+    controllerCmd->GetNewCmd( LedControll::CmdSyncModeForFlash, data, nParam, bQuery, bMode );
     byData.append( data );
 
     qDebug( ) << byData.toHex( ).toUpper( ) << endl;
@@ -170,9 +234,9 @@ void MainWindow::SendCmd( const bool bNewDevice, const LedControll::ECommand eCm
     QByteArray byData;
 
     if ( bNewDevice ) {
-        controllerCmd.GetNewCmd( eCmd, byData, nParam, ui->chkQuery->isChecked( ), bFlash );
+        controllerCmd->GetNewCmd( eCmd, byData, nParam, ui->chkQuery->isChecked( ), bFlash );
     } else {
-        controllerCmd.GetOldCmd( eCmd, byData, nParam );
+        controllerCmd->GetOldCmd( eCmd, byData, nParam );
     }
 
     controller.WriteData( byData, true );
@@ -505,10 +569,8 @@ void MainWindow::on_chkDevType_clicked(bool checked)
     ui->spFreqTime->setMaximum( checked ? 100 : 32 );
     ui->spFreqLight->setMaximum( checked ? 100 : 32 );
 
-    ui->chkQuery->setChecked( false );
-    ui->chkQuery->setEnabled( checked );
-    ui->cbMode->setEnabled( checked );
-    ui->btnQuery->setEnabled( checked );
+    ui->cbMode->setVisible( checked );
+    ui->btnQuery->setVisible( checked );
 
     foreach ( QRadioButton* pButton, hashMode.values( ) ) {
         pButton->setEnabled( !checked );
@@ -535,7 +597,7 @@ void MainWindow::SetSize( qint32 nWidth, qint32 nHeight )
 
 void MainWindow::SetNewMaxSize( )
 {
-    SetSize( 551, 643 );
+    SetSize( 551, 653 );
 }
 
 void MainWindow::on_chkLightSensitive_clicked(bool checked)

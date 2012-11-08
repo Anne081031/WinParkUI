@@ -21,9 +21,13 @@ private:
 
 signals:
     void Cmd( QByteArray data, bool bSend );
+    void Data( QByteArray data );
+    void Query( QString strInfo, qint8 nIndex );
 
 private slots:
     void HandleCmd( QByteArray data, bool bSend );
+    void HandleData( QByteArray data );
+    void HandleQuery( QString strInfo, qint8 nIndex );
 };
 
 #endif // QCONTROLLER_H
