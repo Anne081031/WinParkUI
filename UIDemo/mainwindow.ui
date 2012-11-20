@@ -20,14 +20,53 @@
    <widget class="QPushButton" name="pushButton">
     <property name="geometry">
      <rect>
-      <x>40</x>
-      <y>60</y>
+      <x>30</x>
+      <y>90</y>
       <width>75</width>
       <height>23</height>
      </rect>
     </property>
     <property name="text">
      <string>获取图片</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>20</y>
+      <width>751</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>select stoprdid from stoprd where intime &gt; '2012-11-02' and inshebeiname in('24入','24出')</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>54</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>SQL</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>60</y>
+      <width>691</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>select stoprdid from stoprd</string>
     </property>
    </widget>
   </widget>

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'monitor.ui'
 **
-** Created: Tue Oct 23 13:58:30 2012
+** Created: Mon Nov 19 11:27:18 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -131,6 +131,7 @@ public:
     QLabel *label_3;
     QSpinBox *spinBox;
     QLabel *lblFileCount;
+    QPushButton *pushButton_2;
 
     void setupUi(QFrame *CMonitor)
     {
@@ -1101,6 +1102,11 @@ public:
         lblFileCount->setGeometry(QRect(1290, 130, 91, 16));
         lblFileCount->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "color: rgb(255, 0, 0);"));
+        pushButton_2 = new QPushButton(CMonitor);
+        pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
+        pushButton_2->setGeometry(QRect(390, 180, 75, 23));
+        pushButton_2->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
+"background-color: rgb(255, 255, 255);"));
 
         retranslateUi(CMonitor);
 
@@ -1156,6 +1162,9 @@ public:
         btnAdvSet->setText(QString());
         btnReport->setText(QString());
         btnHelp->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        btnShift->setToolTip(QApplication::translate("CMonitor", "\346\263\250\351\224\200\345\217\257\344\273\245\351\207\215\346\226\260\350\216\267\345\217\226\345\215\241\347\233\270\345\205\263\344\277\241\346\201\257\343\200\202", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         btnShift->setText(QString());
         btnMonthCard->setText(QString());
         btnValueCard->setText(QString());
@@ -1234,6 +1243,7 @@ public:
         pushButton->setText(QApplication::translate("CMonitor", "\346\217\222\345\205\245\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("CMonitor", "\344\270\207\346\235\241", 0, QApplication::UnicodeUTF8));
         lblFileCount->setText(QString());
+        pushButton_2->setText(QApplication::translate("CMonitor", "PushButton", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'scu.h'
 **
-** Created: Tue Oct 30 12:01:12 2012
+** Created: Mon Nov 19 09:03:03 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

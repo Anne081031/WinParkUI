@@ -4,6 +4,7 @@
 #include <QObject>
 #include "Network/udpclient.h"
 #include "Common/commonfunction.h"
+#include "../Network/http.h"
 
 class CScu : public QObject
 {
@@ -16,6 +17,7 @@ public:
 private:
     void ContructDatagram( QStringList& lstData );
     void SendDatagram( );
+    void HttpSendData( QStringList& lstData );
 
 private:
     CUdpClient udpClient;
@@ -23,6 +25,7 @@ private:
     QBuffer byBuffer;
     QSettings* pSystemSet;
     QTextCodec* pTxtCodec;
+    CHttp http;
     
 signals:
     

@@ -12,6 +12,7 @@
 #include <QDateTime>
 #include "Common/logicinterface.h"
 #include <QFile>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -71,7 +72,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_pushButton_clicked()
 {
 
-    QString strSql = "select stoprdid from stoprd";
+    QString strSql = ui->lineEdit->text( );
+    if (  strSql.isEmpty( ) ) {
+        strSql = "select stoprdid from stoprd";
+    }
+
     QStringList lstStoprdID;
     CLogicInterface intef;
 
@@ -85,7 +90,10 @@ void MainWindow::on_pushButton_clicked()
     }
 
     intef.ExecuteSql( strSql, lstStoprdID );
-    QString strFile = qApp->applicationDirPath( ) + "/Pic/%1%2.jpg";
+    QString strPath = qApp->applicationDirPath( ) + "/Pic/";
+    QDir dir;
+    dir.mkpath( strPath );
+    QString strFile = strPath + "%1%2.jpg";
     QString strTmp;
     QString strWhere = " where stoprdid = %1";
     QString strTmpWhere;

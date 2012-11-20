@@ -11,6 +11,9 @@ CScu::CScu(QObject *parent) :
 void CScu::InteractWithScu( QStringList &lstData )
 {
     pSystemSet->sync( );
+
+    HttpSendData( lstData );
+
     bool bScuMsgCenter = pSystemSet->value( "ThirdParty/ScuMsgCenter", false ).toBool( );
     if ( !bScuMsgCenter ) {
         return;
@@ -66,6 +69,20 @@ void CScu::ContructDatagram( QStringList &lstData )
     byBuffer.write( pTxtCodec->fromUnicode( strCheckSum ) );
 
     byBuffer.close( );
+}
+
+void CScu::HttpSendData( QStringList &lstData )
+{
+    QString strUrl = pSystemSet->value( "ThirdParty/Http", "" ).toString( );
+
+    if ( strUrl.isEmpty( ) ) {
+        return;
+    }
+
+    QString strDeviceID = pSystemSet->value( "ThirdParty/DeviceID", "0000000001" ).toString( );
+    QString strData = strDeviceID + "," + lstData.join( "," );
+    QByteArray byData = pTxtCodec->fromUnicode( strData );
+    http.HttpPost( strUrl, byData );
 }
 
 void CScu::SendDatagram( )

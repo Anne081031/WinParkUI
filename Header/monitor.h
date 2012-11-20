@@ -62,6 +62,7 @@ public:
     void ControlGateButton( );
     void WriteFrameInfo( QString& strInfo );
     //static void PrcCapSourceStream1( long lnCardID, long pBuf, long lnWidth, long lnHeight, long lnBiCount );
+    void SavePicture( QString& strFile );
 
     static bool bStartRecognization[ VIDEO_USEDWAY ];
     //static bool bPlateFilter[ VIDEO_USEDWAY ];
@@ -116,6 +117,7 @@ private:
     int nUsedWay;
     QLabel* lblStatistics[ 6 ];
     int nCurrentTotal[ 6 ];
+    QString strCapture;
 
     //bool bPlateFilter[ VIDEO_USEDWAY ];
     //bool bSuccession[ VIDEO_USEDWAY ];
@@ -124,6 +126,7 @@ private:
     bool bDisplayAlert;
     int nRefreshParkspaceTime;
     bool bPlateVideo;
+    bool bSavePicture;
 
     Ui::CMonitor *ui;
     MainWindow* pParent;
@@ -132,6 +135,7 @@ private:
     CMultimedia* pMultimedia;
     CVehicleLicense* pVehicle;
     QString strImagePath;
+    QString strRegPicPath;
     QString strButtonStyle;
     int nEncode;
     QStringList lstPark;
@@ -182,6 +186,8 @@ private slots:
     void DisplayDbError( QString strMsg );
 
     void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
 
 public:
 signals:

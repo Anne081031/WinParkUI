@@ -50,6 +50,7 @@ private slots:
     void on_btnOpenVideo_clicked();
     void on_btnImagePath_clicked();
     void on_btnParam_clicked();
+    void on_pushButton_clicked();
 };
 
 #endif // MAINWINDOW_PLATEDEMO_H

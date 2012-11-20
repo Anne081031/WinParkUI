@@ -12,16 +12,19 @@ TEMPLATE = lib
 INCLUDEPATH += "../Mysql/include"
 
 LIBS += "../lib/libDs40xxSDK.a"
+LIBS += "../lib/libJVSDK.a"
 
 DEFINES += MULTIMEDIA_LIBRARY
 
 SOURCES += multimedia.cpp \
     HikSDK/hikvision.cpp \
     ../Common/ommonfunction.cpp \
-    TmSDK/tm.cpp
+    TmSDK/tm.cpp \
+    JvsSDK/jvssdk.cpp
 
 HEADERS += multimedia.h\
         Multimedia_global.h \
     HikSDK/hikvision.h \
     ../Common/commonfunction.h \
-    TmSDK/tm.h
+    TmSDK/tm.h \
+    JvsSDK/jvssdk.h

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon May 21 14:32:19 2012
+** Created: Tue Nov 20 16:46:23 2012
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -48,6 +48,7 @@ public:
     QLabel *lblVideo2;
     QLabel *lblVideo4;
     QLabel *lblVideo3;
+    QPushButton *pushButton;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -158,6 +159,9 @@ public:
         lblVideo3->setFrameShadow(QFrame::Sunken);
         lblVideo3->setLineWidth(3);
         lblVideo3->setScaledContents(true);
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QString::fromUtf8("pushButton"));
+        pushButton->setGeometry(QRect(30, 560, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -208,6 +212,7 @@ public:
         lblVideo2->setText(QString());
         lblVideo4->setText(QString());
         lblVideo3->setText(QString());
+        pushButton->setText(QApplication::translate("MainWindow", "PushButton", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

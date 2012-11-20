@@ -21,14 +21,11 @@ DEFINES += PLATEDEMO_H #RAW_API
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    ../Dialog/recognizeparamdlg.cpp \
-    ../Common/ommonfunction.cpp \
-    mythread.cpp
+    mythread.cpp \
+    ../Common/ommonfunction.cpp
 
 HEADERS  += mainwindow.h \
-    ../Dialog/recognizeparamdlg.h \
-    ../Common/commonfunction.h \
-    mythread.h
+    mythread.h \
+    ../Common/commonfunction.h
 
-FORMS    += mainwindow.ui \
-    ../Dialog/recognizeparamdlg.ui
+FORMS    += mainwindow.ui

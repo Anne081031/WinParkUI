@@ -1199,6 +1199,9 @@ border-style: outset; </string>
      <height>97</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>注销可以重新获取卡相关信息。</string>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-image:url();
 border-style: outset; </string>
@@ -3104,6 +3107,23 @@ color: rgb(255, 0, 0);</string>
    </property>
    <property name="text">
     <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton_2">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>180</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image:url( );
+background-color: rgb(255, 255, 255);</string>
+   </property>
+   <property name="text">
+    <string>PushButton</string>
    </property>
   </widget>
  </widget>

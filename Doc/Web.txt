@@ -1,3 +1,21 @@
+//////////////////////
+JXTA Juxtapose OpenSourceProtocol  http://java.net/projects/jxta-c
+ad-hoc network
+
+中心化拓扑 Napster
+全分布式非结构化拓扑 Gnutella
+全分布式结构化拓扑 Tapestry Pastry Chord CAN
+半分布式拓扑 Kazaa
+//////////////////////////////
+
+VPI和VCI是ATM传输的名词，ATM把一条物理电路划分为几个虚拟的逻辑通路，称为VPI；然后在每一个VPI中再划分虚拟的信道（Channel），称为VCI。
+
+http://nosql-database.org/ 所有NoSQL介绍网站
+
+JDBC ODBC Bridge
+String strurl="jdbc:odbc:driver={Microsoft Access Driver (*.mdb)};DBQ=books.mdb";  
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");  
+
 http://www.cplusplus.com/ 语言参考
 
 XAMPP http://www.apachefriends.org

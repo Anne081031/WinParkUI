@@ -2717,6 +2717,20 @@ bool CProcessData::ExitConfirmDlg( bool bEnter,)
 }
 #endif
 
+QString CProcessData::GetCardStatus( QString &strCardNo, ParkCardType cardType )
+{
+    QString strTable;
+    CCommonFunction::GetTableName( ( CommonDataType::CardType ) cardType, strTable );
+
+    QStringList lstRows;
+    QString strSql = QString( "select cardstate from %1 where cardno = '%2'" ).arg( strTable, strCardNo );
+    if ( 0 < CLogicInterface::GetInterface()->ExecuteSql(  strSql, lstRows ) ) {
+        return lstRows.at( 0 );
+    } else {
+        return "นาสง";
+    }
+}
+
 void CProcessData::GetCardType2( QString &strCardNo, QStringList &lstRows, ParkCardType& cardKind )
 {
     cardKind = CardNone;
@@ -2743,6 +2757,10 @@ void CProcessData::GetCardType2( QString &strCardNo, QStringList &lstRows, ParkC
         lstRows << pInfo->cardStatus;
         return;
     }
+
+    //if ( "นาสง" == pInfo->cardStatus ) {
+        pInfo->cardStatus = GetCardStatus( strCardNo, cardKind );
+    //}
 
     QString& strKey = lstKey.first( );
 

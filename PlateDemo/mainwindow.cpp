@@ -19,6 +19,16 @@ MainWindow* pMainWnd1 = NULL;
 
 static bool bCard = false;
 
+void FuncEncDataCallback(int nChannel, PUCHAR pData, UINT nBuffLen, int nFrameType, BOOL bMov)
+{
+
+}
+
+void FuncRawDataCallback(int nChannel, PUCHAR pRawBuffer, DWORD dwVideo,DWORD dwHD1)
+{
+
+}
+
 void MainWindow::ImageStreamCallback( UINT nChannel, PVOID pContent )
 {
     if ( false == bStartRecognization[nChannel] ) {
@@ -130,11 +140,12 @@ MainWindow::MainWindow(QWidget *parent) :
 
     pMainWnd1 = this;
 
-    pMultimedia = CMultimedia::CreateInstance( bCard ? CMultimedia::TmSDK : CMultimedia::HikSdk );
+    pMultimedia = CMultimedia::CreateInstance( CMultimedia::JvsSDK );//bCard ? CMultimedia::TmSDK : CMultimedia::HikSdk );
     pVehicle = CVehicleLicense::CreateInstance( CVehicleLicense::WinToneSdk );
     hChannel[ 0 ] = INVALID_HANDLE;
 
     pMultimedia->SystemStartup( winId( ) );
+    //on_btnOpenVideo_clicked( );
 
     bStartVideo = false;
     pMultimedia->RegisterStreamCB( bCard ? ( HK_STREAM_CB ) PrcCapSourceStream : ImageStreamCallback, this );
@@ -146,7 +157,7 @@ MainWindow::MainWindow(QWidget *parent) :
 bool MainWindow::Init(int nFormat)
 {
     if ( bStartVideo ) {
-        CCommonFunction::MsgBox( this, "提示", "请停止视频！", QMessageBox::Information );
+        //CCommonFunction::MsgBox( this, "提示", "请停止视频！", QMessageBox::Information );
         return false;
     }
 
@@ -162,7 +173,7 @@ bool MainWindow::Init(int nFormat)
     bRet = pVehicle->Initialize( 1 );
 
     if ( false == bRet ) {
-        CCommonFunction::MsgBox( this, "提示", "请检查车牌识别加密狗是否插好！", QMessageBox::Information );
+        //CCommonFunction::MsgBox( this, "提示", "请检查车牌识别加密狗是否插好！", QMessageBox::Information );
     }
 
     return true;
@@ -186,8 +197,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_btnParam_clicked()
 {
-    CRecognizeParamDlg dlg( this );
-    dlg.exec( );
+    //CRecognizeParamDlg dlg( this );
+    //dlg.exec( );
 }
 
 void MainWindow::RecognizeFile( QString& strName )
@@ -300,9 +311,9 @@ void MainWindow::on_btnOpenVideo_clicked()
 
     ClearTable( );
 
-    if ( false == Init( bCard ? ImageFormatBGR : ImageFormatYUV420 ) ) {//ImageFormatBGR
-        return;
-    }
+    //if ( false == Init( bCard ? ImageFormatBGR : ImageFormatYUV420 ) ) {//ImageFormatBGR
+    //    return;
+    //}
 
     bStartVideo = true;
 
@@ -312,13 +323,11 @@ void MainWindow::on_btnOpenVideo_clicked()
 
     //if ( INVALID_HANDLE != hChannel ) {
         QRect rect = ui->lblVideo1->rect( );
-        rect.setX( rect.x( ) + ui->lblVideo1->lineWidth( ) );
-        rect.setY( rect.y( ) + ui->lblVideo1->lineWidth( ) );
-        rect.setWidth( rect.width( ) - 2 * ui->lblVideo1->lineWidth( ) );
-        rect.setHeight( rect.height( ) - 2 * ui->lblVideo1->lineWidth( ) );
+        nRet = pMultimedia->PlayVideo(hChannel[0], ui->lblVideo1->winId( ), rect, 0 );
 
-        nRet = pMultimedia->PlayVideo( bCard ? ( HANDLE )0 : hChannel[0], ui->lblVideo1->winId( ), rect, 0 );
-        nRet = pMultimedia->PlayVideo( bCard ? ( HANDLE )0 : hChannel[1], ui->lblVideo2->winId( ), rect, 0 );
+        rect = ui->lblVideo2->rect( );
+        nRet = pMultimedia->PlayVideo( hChannel[1], ui->lblVideo2->winId( ), rect, 0 );
+
         //nRet = pMultimedia->PlayVideo( ( HANDLE )1, ui->lblVideo2->winId( ), rect, 0 );
         //nRet = pMultimedia->PlayVideo( ( HANDLE )2, ui->lblVideo3->winId( ), rect, 0 );
         //nRet = pMultimedia->PlayVideo( ( HANDLE )3, ui->lblVideo4->winId( ), rect, 0 );
@@ -326,18 +335,18 @@ void MainWindow::on_btnOpenVideo_clicked()
         //nRet = pMultimedia->StopVideo( ( HANDLE )0 );
         //nRet = pMultimedia->PlayVideo( ( HANDLE )0, ui->lblVideo1->winId( ), rect, 0 );
 
-        nRet = pMultimedia->SetupDetection( bCard ? ( HANDLE )0 : hChannel[0], bCard ? ( HK_MOTION_CB ) MyPrcCbMotionDetect : MotionDetection, 0 );
-        nRet = pMultimedia->MotionDetection( bCard ? ( HANDLE )0 : hChannel[0], true );
+        nRet = pMultimedia->SetupDetection(hChannel[0], ( HK_MOTION_CB ) FuncEncDataCallback, 0, ( PVOID) FuncRawDataCallback );
+        nRet = pMultimedia->MotionDetection(  hChannel[0], true );
 
-        nRet = pMultimedia->SetupDetection( bCard ? ( HANDLE )0 : hChannel[1], bCard ? ( HK_MOTION_CB ) MyPrcCbMotionDetect : MotionDetection, 0 );
-        nRet = pMultimedia->MotionDetection( bCard ? ( HANDLE )0 : hChannel[1], true );
+        nRet = pMultimedia->SetupDetection(  hChannel[1], ( HK_MOTION_CB ) FuncEncDataCallback, 0, ( PVOID) FuncRawDataCallback );
+        nRet = pMultimedia->MotionDetection( hChannel[1], true );
 
         //nRet = pMultimedia->SetupDetection( ( HANDLE )1, ( HK_MOTION_CB ) MyPrcCbMotionDetect, 0 );
        // nRet = pMultimedia->MotionDetection( ( HANDLE )1, true );
     //}
 
-    nRet = pMultimedia->GetStreamData( bCard ? ( HANDLE )0 : hChannel[ 0 ], TRUE, imgData[ 0 ], bCard ? 3 : 0 );
-    nRet = pMultimedia->GetStreamData( bCard ? ( HANDLE )0 : hChannel[1], TRUE, imgData[ 1 ], bCard ? 3 : 0 );
+    //nRet = pMultimedia->GetStreamData( bCard ? ( HANDLE )0 : hChannel[ 0 ], TRUE, imgData[ 0 ], bCard ? 3 : 0 );
+    //nRet = pMultimedia->GetStreamData( bCard ? ( HANDLE )0 : hChannel[1], TRUE, imgData[ 1 ], bCard ? 3 : 0 );
     //nRet = pMultimedia->GetStreamData( ( HANDLE )1, TRUE, imgData, 3 );
     //nRet = pMultimedia->GetStreamData( ( HANDLE )2, TRUE, imgData, 3 );
     //nRet = pMultimedia->GetStreamData( ( HANDLE )3, TRUE, imgData, 3 );
@@ -364,9 +373,9 @@ void MainWindow::on_btnCloseVideo_clicked()
         bStartVideo = false;
         hChannel[ 0] = INVALID_HANDLE;
     } catch (  QtConcurrent::Exception& e ) {
-       CCommonFunction::MsgBox( this, "Error", e.what( ), QMessageBox::Critical );
+       //CCommonFunction::MsgBox( this, "Error", e.what( ), QMessageBox::Critical );
     } catch ( ... ) {
-       CCommonFunction::MsgBox( this, "Error", "出错了", QMessageBox::Critical );
+       //CCommonFunction::MsgBox( this, "Error", "出错了", QMessageBox::Critical );
     }
 }
 
@@ -396,3 +405,9 @@ void MainWindow::on_btnCapture_clicked()
     pMultimedia->CaptureJpeg( hChannel, strFile );
 }
 
+
+void MainWindow::on_pushButton_clicked()
+{
+    QString strFile = "d:/" + QString::number( QDateTime::currentDateTime( ).toTime_t( ) ) + ".bmp";
+    pMultimedia->CaptureBMP( 0, strFile );
+}

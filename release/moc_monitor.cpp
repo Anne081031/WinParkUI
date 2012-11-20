@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'monitor.h'
 **
-** Created: Tue Oct 30 11:52:32 2012
+** Created: Mon Nov 19 11:29:10 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CMonitor[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      32,   14, // methods
+      33,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -65,6 +65,7 @@ static const uint qt_meta_data_CMonitor[] = {
      885,  871,    9,    9, 0x08,
      908,  901,    9,    9, 0x08,
      932,    9,    9,    9, 0x08,
+     956,    9,    9,    9, 0x08,
 
        0        // eod
 };
@@ -98,6 +99,7 @@ static const char qt_meta_stringdata_CMonitor[] = {
     "nIndex,bVisible\0HideCtrl(int,bool)\0"
     "nPlateChannel\0ClearPlate(int)\0strMsg\0"
     "DisplayDbError(QString)\0on_pushButton_clicked()\0"
+    "on_pushButton_2_clicked()\0"
 };
 
 const QMetaObject CMonitor::staticMetaObject = {
@@ -161,9 +163,10 @@ int CMonitor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 29: ClearPlate((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 30: DisplayDbError((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 31: on_pushButton_clicked(); break;
+        case 32: on_pushButton_2_clicked(); break;
         default: ;
         }
-        _id -= 32;
+        _id -= 33;
     }
     return _id;
 }

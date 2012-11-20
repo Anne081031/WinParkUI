@@ -2,7 +2,7 @@
 #include <QDebug>
 #include "HikSDK/hikvision.h"
 #include "TmSDK/tm.h"
-
+#include "JvsSDK/jvssdk.h"
 
 CMultimedia::CMultimedia( QObject *parent ) : QObject( parent )
 {
@@ -32,6 +32,10 @@ CMultimedia* CMultimedia::CreateInstance( AvSdk sdkType )
 
     case TmSDK :
         pSdk = new CTm( );
+        break;
+
+    case JvsSDK :
+        pSdk = new CJvsSDK( );
         break;
     }
 

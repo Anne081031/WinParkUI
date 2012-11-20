@@ -182,6 +182,7 @@ private:
     void CreateBufferTable( );
 
     void SendPlate( QString strPlate, int nChannel, int nConfidence );
+    QString GetCardStatus( QString& strCardNo, ParkCardType cardType );
 
 private:
     CPing ping;

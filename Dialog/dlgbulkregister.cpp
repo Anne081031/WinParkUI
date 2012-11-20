@@ -100,8 +100,8 @@ void CDlgBulkRegister::AddColumn( )
 
     switch ( cardType ) {
     case CommonDataType::MonthlyCard :
-        nCols = 10;
-        lstColName << "卡号" << "入场必须刷卡" << "出场必须刷卡" << "卡类型"  << "有效期开始时间"
+        nCols = 11;
+        lstColName << "卡号" << "入场必须刷卡" << "出场必须刷卡" << "多进多出" << "卡类型"  << "有效期开始时间"
                               << "有效期结束时间" << "卡状态" << "卡片自编号" << "备注" << "登记者";
         ui->spMonth->setEnabled( true );
         connect( ui->spMonth, SIGNAL( valueChanged( int ) ), this, SLOT( OnBulkMonth( int  ) ) );
@@ -230,33 +230,34 @@ void CDlgBulkRegister::AddMonthRow( const QString &strCardID )
 
         case 1 :
         case 2 :
+        case 3 :
             AddCheckBoxItem( 0, nIndex, ui->tabRecord );
             break;
 
-        case 3 :
-        case 6 :
+        case 4 :
+        case 7 :
             AddComboBoxItem( 0, nIndex, 0, ( 6 == nIndex ), ui->tabRecord );
             break;
 
-        case 4 :
         case 5 :
-            if ( 5 == nIndex ) {
+        case 6 :
+            if ( 6 == nIndex ) {
                 dt = dt.addMonths( nBulkEndMonth );
             }
             AddDateTimeItem( 0, nIndex, dt, ui->tabRecord );
             break;
 
-        case 7 :
+        case 8 :
             GetSelfNumber( strText );
             AddItem( strText, 0, nIndex, ui->tabRecord );
             break;
 
-        case 8 :
+        case 9 :
             strText = "未知";
             AddItem( strText, 0, nIndex, ui->tabRecord );
             break;
 
-        case 9 :
+        case 10 :
             AddItem( strCreator, 0, nIndex, ui->tabRecord );
             break;
         }
@@ -405,9 +406,9 @@ void CDlgBulkRegister::SaveMonthData( QStringList &lstDuplication, QStringList& 
         for ( int nCol = 0; nCol < ui->tabRecord->columnCount( ); nCol++ ) {
             switch ( nCol ) {
                 case 0 :
-                case 7 :
                 case 8 :
                 case 9 :
+                case 10 :
                     strText = ui->tabRecord->item( nRow, nCol )->text( );
                     lstSql  << ( strQuotation + strText + strQuotation );
                     AddItem( strText, 0, nCol, tabWidget );
@@ -415,21 +416,22 @@ void CDlgBulkRegister::SaveMonthData( QStringList &lstDuplication, QStringList& 
 
                 case 1 :
                 case 2 :
+                case 3 :
                     bChecked = Qt::Checked == ui->tabRecord->item( nRow, nCol )->checkState( );
                     lstSql << ( bChecked ? strTrue : strFalse );
                     AddCheckBoxItem( 0, nCol, tabWidget, bChecked );
                     break;
 
-                case 3 :
-                case 6 :
+                case 4 :
+                case 7 :
                     pCB = ( QComboBox* ) ui->tabRecord->cellWidget( nRow, nCol );
                     strText = pCB->currentText( );
                     lstSql << ( strQuotation + strText + strQuotation );
                     AddItem( strText, 0, nCol, tabWidget );
                     break;
 
-                case 4 :
                 case 5 :
+                case 6 :
                     pDT = ( QDateTimeEdit* )  ui->tabRecord->cellWidget( nRow, nCol );
                     dt = pDT->dateTime( );
                     CCommonFunction::DateTime2String( dt, strDateTime );
@@ -564,7 +566,7 @@ void CDlgBulkRegister::ExecuteSql( QStringList &lstTotalSql )
 
     switch ( cardType ) {
     case CommonDataType::MonthlyCard :
-        strSql = "REPLACE Into monthcard ( cardno, EnterMustCard, LeaveMustCard, cardkind, starttime, endtime,cardstate, cardselfno, cardcomment, cardcreator ) Values ";
+        strSql = "REPLACE Into monthcard ( cardno, EnterMustCard, LeaveMustCard, MIMO, cardkind, starttime, endtime,cardstate, cardselfno, cardcomment, cardcreator ) Values ";
         break;
 
     case CommonDataType::ValueCard :

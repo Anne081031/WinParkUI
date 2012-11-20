@@ -44,6 +44,18 @@ void CMonitor::PictureRegconize( QString &strFile, int nChannel )
     if ( bRet ) { // Display Plate
         DisplayPlate( nChannel );
     }
+
+    SavePicture( strFile );
+}
+
+void CMonitor::SavePicture( QString &strFile )
+{
+    if ( !bSavePicture ) {
+        return;
+    }
+
+    QString strNew = strRegPicPath + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".jpg";
+    QFile::copy( strFile, strNew );
 }
 
 void CMonitor::keyPressEvent( QKeyEvent *event )
@@ -133,6 +145,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->pushButton_2->setVisible( false );
     ui->pushButton->setVisible( false );
     ui->spinBox->setVisible( false );
     ui->label_3->setVisible( false );
@@ -147,6 +160,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     pSystem= CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     nRealTimeRecord = pSystem->value( "CommonCfg/RealTimeRecord", 100 ).toInt( );
     bPlateVideo = pSystem->value( "CommonCfg/PlateVideo", true ).toBool( );
+    bSavePicture = pSystem->value( "CommonCfg/SavePicture", false ).toBool( );
 
     InitChannelHandle( );
 
@@ -162,6 +176,12 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
 
     CCommonFunction::GetPath( strImagePath, CommonDataType::PathUIImage );
     strButtonStyle = "background-image:url(%1NewIcon/%2-%3.JPG);\nborder-style: outset; ";
+
+    strRegPicPath = strImagePath + "PlatePicture/";
+    QDir dir;
+    if ( !dir.exists( strRegPicPath ) ) {
+        dir.mkpath( strRegPicPath );
+    }
 
     SpaceInfo( );
     InitVideoPlateUI( );
@@ -955,6 +975,12 @@ void CMonitor::CaptureImage( QString& strFile, int nChannel, CommonDataType::Cap
         QFile::remove( strFile );
     }
 
+    if ( "中维" == strCapture ) {
+        capType = CommonDataType::CaptureBMP;
+        strFile.remove( ".JPG" );
+        strFile += ".BMP";
+    }
+
     HANDLE hChan = hChannelHandle[ nChannel ];
     if ( NULL != pMultimedia && INVALID_HANDLE != hChan ) {
         if ( CommonDataType::CaptureBMP == capType ) {
@@ -1069,8 +1095,19 @@ void CMonitor::StartAvSdk( )
 
     StopAvSdk( );
 
-    for ( int nStart = CMultimedia::HikSdk; nStart <= CMultimedia::TmSDK; ++nStart ) {
-        pMultimedia = CMultimedia::CreateInstance( ( CMultimedia::AvSdk ) nStart );
+    strCapture = pSystem->value( "CommonCfg/CaptureCard", "海康" ).toString( );
+    int nCapture = -1;
+    //for ( int nStart = CMultimedia::HikSdk; nStart <= CMultimedia::TmSDK; ++nStart ) {
+    if ( "海康" == strCapture ) {
+        nCapture = CMultimedia::HikSdk;
+    } else if ( "中维" == strCapture ) {
+        nCapture = CMultimedia::JvsSDK;
+    } else if ( "天敏" == strCapture ) {
+        nCapture = CMultimedia::TmSDK;
+    }
+
+    if ( -1 != nCapture ) {
+        pMultimedia = CMultimedia::CreateInstance( ( CMultimedia::AvSdk ) nCapture );
         nEncode = pMultimedia->SystemStartup( );
         if ( 0 >= nEncode ) {
             CMultimedia::DestroyInstance( pMultimedia );
@@ -1078,9 +1115,10 @@ void CMonitor::StartAvSdk( )
             pMultimedia = NULL;
             //return;
         } else {
-            break;
+            ;//break;
         }
     }
+    //}
 
     int nRet = 0;
     if ( bPlateVideo ) { // Plate Video Mode
@@ -1809,6 +1847,15 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
         QString strWhere = QString( " Where cardno = '%1' and %2 = '%3' and %4 = '%5'" ).arg(
                                     strCardNo, strChannelField, strChannel, strTimeField, strDateTime );
 
+        CLogicInterface logInterf;
+        CMySqlDatabase& mySql = logInterf.GetMysqlDb( );
+        QStringList lstParams;
+        CCommonFunction::ConnectMySql( lstParams );
+        lstParams[ 0 ] = pWG->item( row, 10 )->text( ); //IP
+        bool bRet = mySql.DbConnect( lstParams[ 0 ], lstParams[ 1 ], lstParams[ 2 ], lstParams[ 3 ], lstParams[ 4 ].toUInt( ) );
+        if ( !bRet ) {
+            return;
+        }
 
         if ( 2 == nType ) {
             strSql  = QString( "select a.cardno, a.cardselfno, %1 '%2', '', \
@@ -1820,10 +1867,29 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
                       strChannelField, strChannel,
                       strTimeField, strDateTime );
         } else if ( bFreeCard ) {
-            strSql = QString( "Select cardno, cardselfno, feefactnum, '%1', '', inshebeiname, intime,outshebeiname,\
-                              outtime,cardkind, carcp, carcpout, feekind from stoprd " ).arg( ui->tabRecord->item( row, 0 )->text( ) );
-            strSql += strWhere;
-            nType = 2;
+            strSql = "Select cardkind from stoprd " + strWhere;
+            logInterf.ExecuteSql( strSql, lstData );
+            if ( lstData.length( ) > 0 && lstData.at( 0 ) == "月租卡" ) {
+                strTable = "monthcard";
+                int nIndex =  strCardNo.indexOf( "(" );
+                strUser = QString( "inner join userinfo b on a.cardno = '%1' and a.cardno = b.cardindex" ).arg(
+                            nIndex > 0 ? strCardNo.mid( 0, nIndex ) : strCardNo );
+                nType = 0;
+                strSql  = QString( "select a.cardno, a.cardselfno, %1 c.carcp, c.carmodel, \
+                d.inshebeiname, d.intime, d.outshebeiname, d.outtime, d.cardkind \
+                from %2 a \
+                %3 \
+                inner join carinfo c on a.cardno = c.cardindex \
+                inner join stoprd d on d.cardno = '%4' and %5 = '%6' and %7 = '%8'" ).arg(
+                strField[ nType ], strTable, strUser, strCardNo,
+                strChannelField, strChannel,
+                strTimeField, strDateTime );
+            } else {
+                strSql = QString( "Select cardno, cardselfno, feefactnum, '%1', '', inshebeiname, intime,outshebeiname,\
+                                  outtime,cardkind, carcp, carcpout, feekind from stoprd " ).arg( ui->tabRecord->item( row, 0 )->text( ) );
+                strSql += strWhere;
+                nType = 2;
+            }
         } else if ( 0 == nType || 1 == nType ) {
             strSql  = QString( "select a.cardno, a.cardselfno, %1 c.carcp, c.carmodel, \
                           d.inshebeiname, d.intime, d.outshebeiname, d.outtime, d.cardkind \
@@ -1838,16 +1904,6 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
         qDebug( ) << strSql << endl;
 
         //   CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstData, CCommonFunction::GetHistoryDb( ) );
-
-        CLogicInterface logInterf;
-        CMySqlDatabase& mySql = logInterf.GetMysqlDb( );
-        QStringList lstParams;
-        CCommonFunction::ConnectMySql( lstParams );
-        lstParams[ 0 ] = pWG->item( row, 10 )->text( ); //IP
-        bool bRet = mySql.DbConnect( lstParams[ 0 ], lstParams[ 1 ], lstParams[ 2 ], lstParams[ 3 ], lstParams[ 4 ].toUInt( ) );
-        if ( !bRet ) {
-            return;
-        }
 
         logInterf.ExecuteSql( strSql, lstData );
 
@@ -1926,4 +1982,17 @@ void CMonitor::on_pushButton_clicked()
         }
     }
 
+}
+
+#include "../Network/http.h"
+CHttp http;
+
+void CMonitor::on_pushButton_2_clicked()
+{
+    QString strUrl = "http://localhost:1692/ASPWebsite/WebService.asmx/HelloWorld";
+    QByteArray byData = strUrl.toAscii( );
+
+    static QFile file( "d:/vid1.avi" );//( "d://1.jpg" );
+    bool bRet = file.open( QIODevice::ReadOnly );
+    http.HttpPost( strUrl, &file );
 }

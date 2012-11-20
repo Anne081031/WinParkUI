@@ -12,6 +12,7 @@
 #include "../Common/commonfunction.h"
 #define VIDEO_WAY ( int ) ( 4 )
 #define INVALID_HANDLE ( HANDLE ) ( 0XFFFFFFFF )
+#define WM_SDK_NOTIFY		WM_USER + 0x600
 
 typedef void ( *HK_STREAM_CB )( UINT, void* );
 typedef void ( *HK_MOTION_CB )( ULONG, BOOL, void* );
@@ -29,6 +30,7 @@ public:
     typedef enum __AvSdk {
         HikSdk,
         TmSDK,
+        JvsSDK
     } AvSdk;
 
 public:
