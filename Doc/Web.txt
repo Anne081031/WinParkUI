@@ -1,3 +1,8 @@
+node.js + express.js + jade-lang.com
+ 
+Cloud
+Nodestack Openstack AppEngine WindowsAure ( ClondFoundry / anne081031.cloudfoundry.me christmas.cloudfoundry.me)
+
 //////////////////////
 JXTA Juxtapose OpenSourceProtocol  http://java.net/projects/jxta-c
 ad-hoc network
@@ -55,7 +60,7 @@ www.codeplex.org
 
 MySQL help 'xxxxxx' command
 
-PHP ZendServer ZendStudio ZF Symfony/Doctrine( ORM ) PECL
+PHP ZendServer ZendStudio ZF Symfony/Doctrine( ORM ) PECL PEAR
 
 C51 ( Keil ) Microcontroller / Dog
 TI CCStudio / DSP

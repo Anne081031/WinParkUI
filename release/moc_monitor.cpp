@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'monitor.h'
 **
-** Created: Mon Nov 19 11:29:10 2012
+** Created: Fri Nov 23 10:10:58 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
