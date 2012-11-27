@@ -1261,10 +1261,10 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
 
 bool CProcessData::ExcludeRemoteCardDuplication( quint32 nCardID, ParkCardType& cardKind )
 {
-    bool bRet = false;
+    bool bRet = true;
 
     if ( CardMonthly != cardKind ) {
-        return bRet;
+        return false;
     }
 
     quint64 nInterval = pSettings->value( "CommonCfg/RemoteCardTime", 60 ).toUInt( ) * 1000;
@@ -1284,9 +1284,9 @@ bool CProcessData::ExcludeRemoteCardDuplication( quint32 nCardID, ParkCardType& 
     pSettings->sync( );
     //quint64 nInterval = pSettings->value( "CommonCfg/RemoteCardTime", 60 ).toUInt( ) * 1000; // Ms
 
-    bRet = ( nTime < nInterval );
+    bRet = ( nTime >= nInterval );
 
-    if ( !bRet ) {
+    if ( bRet ) {
         hashCardTime.insert( nCardID, nTime2 );
     }
 
@@ -1514,6 +1514,12 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
     }
 #endif
 
+    if ( !ExcludeRemoteCardDuplication( lstRows[ 0 ] .toUInt( ), cardKind ) ) {
+        //PlayAudioDisplayInfo( byData, vData, CPortCmd::LedMonthlyExceed, CPortCmd::AudioMonthlyExceed );
+        //PlayAudioDisplayInfo( byData, vData, CPortCmd::LedContactAdmin, CPortCmd::AudioContactAdmin );
+        return bRet;
+    }
+
     QDateTime dtCurrent = QDateTime::currentDateTime( );
     QDateTime dtEndTime = CCommonFunction::String2DateTime( lstRows[ 3 ] );
     QDateTime dtSartTime = CCommonFunction::String2DateTime( lstRows[ 2 ] );
@@ -1524,10 +1530,10 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
             QString strText = "ÒÑ¹ýÆÚ";
             pMainWindow->SetAlertMsg( strText );
 
-            if ( !ExcludeRemoteCardDuplication( lstRows[ 0 ] .toUInt( ), cardKind ) ) {
+            //if ( !ExcludeRemoteCardDuplication( lstRows[ 0 ] .toUInt( ), cardKind ) ) {
                 PlayAudioDisplayInfo( byData, vData, CPortCmd::LedMonthlyExceed, CPortCmd::AudioMonthlyExceed );
                 //PlayAudioDisplayInfo( byData, vData, CPortCmd::LedContactAdmin, CPortCmd::AudioContactAdmin );
-            }
+            //}
 
             return bRet;
         }

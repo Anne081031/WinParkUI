@@ -6,6 +6,7 @@
 #include <QtNetwork>
 #include "netprocessdata.h"
 #include <Winsock2.h>
+#include "dataparserthread.h"
 
 class CUdpDispatcher : public QObject
 {
@@ -23,6 +24,7 @@ private:
     QThreadPool* svrThreadPool;
     struct sockaddr_in peerAddr;
     int nPeerSize;
+    CDataParserThread* pParserThread;
 
 signals:
     void NotifyMessage( QString );

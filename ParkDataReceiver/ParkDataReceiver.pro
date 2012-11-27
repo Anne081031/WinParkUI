@@ -45,7 +45,10 @@ SOURCES += main.cpp\
     ../Network/ftp.cpp \
     ../Common/logicinterface.cpp \
     ../Database/mysqldatabase.cpp \
-    ../Network/ftpevent.cpp
+    ../Network/ftpevent.cpp \
+    ../Network/ping.cpp \
+    ../Network/dataparserthread.cpp \
+    ../Network/parserevent.cpp
 
 HEADERS  += mainwindow.h \
     ../Database/mssqlserver.h \
@@ -74,6 +77,9 @@ HEADERS  += mainwindow.h \
     ../Network/ftp.h \
     ../Common/logicinterface.h \
     ../Database/mysqldatabase.h \
-    ../Network/ftpevent.h
+    ../Network/ftpevent.h \
+    ../Network/ping.h \
+    ../Network/dataparserthread.h \
+    ../Network/parserevent.h
 
 FORMS    += mainwindow.ui

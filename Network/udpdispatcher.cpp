@@ -22,12 +22,14 @@ CUdpDispatcher::~CUdpDispatcher( )
 
 bool CUdpDispatcher::InitServer( quint16 nPort, quint16 nThreadPool )
 {
-    svrThreadPool = new QThreadPool( this );
-    svrThreadPool->setMaxThreadCount( nThreadPool );
-    svrThreadPool->setExpiryTimeout( -1 );
+    //svrThreadPool = new QThreadPool( this );
+    //svrThreadPool->setMaxThreadCount( nThreadPool );
+    //svrThreadPool->setExpiryTimeout( -1 );
 
     bool bRet = connect( &udpServer, SIGNAL( readyRead( ) ), this, SLOT( GetDatagrams( ) ) );
     bRet = udpServer.bind( QHostAddress::Any, nPort, QUdpSocket::ShareAddress | QUdpSocket::ReuseAddressHint );
+
+    pParserThread = CDataParserThread::GetInstance( nThreadPool, false );
 
     return bRet;
 }
@@ -44,6 +46,30 @@ void CUdpDispatcher::UdpError( QAbstractSocket::SocketError socketError )
 void CUdpDispatcher::GetDatagrams( )
 {
     QUdpSocket* pUdpServer = qobject_cast< QUdpSocket* > ( sender( ) );
+    QHostAddress sender;
+    quint16 senderPort;
+
+    while ( pUdpServer->hasPendingDatagrams( ) ) {
+        QByteArray byData;
+        qint64 nDataLen = pUdpServer->pendingDatagramSize( );
+        byData.resize( nDataLen );
+        qint64 nReadLen = pUdpServer->readDatagram( byData.data( ), byData.size( ),
+                                                     &sender, &senderPort );
+#if false
+        QByteArray byToken = QString( "FutureInternet" ).toAscii( );
+        qint32 nMsgLen = sizeof ( quint32 );
+        quint32 nTotal = byToken.length( ) + nMsgLen + byData.length( );
+        nTotal = htonl( nTotal );
+
+        const char* pTotal = ( const char* ) &nTotal;
+
+        byData.insert( 0, pTotal, nMsgLen );
+        byData.insert( 0, byToken );
+#endif
+        pParserThread->PostDataMessage( byData );
+    }
+
+    return;
 
     while ( pUdpServer->hasPendingDatagrams( ) ) {
         quint64 nDataLen = pUdpServer->pendingDatagramSize( );

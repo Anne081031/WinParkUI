@@ -51,6 +51,8 @@ private:
     ClientType client;
     QSettings* pSettings;
     static CNetClient* clientInst[ CLIENT_INSTANCE ];
+    QHostAddress tcpAddr;
+    quint16 tcpPort;
 
 signals:
     void Notify( QString strMsg );

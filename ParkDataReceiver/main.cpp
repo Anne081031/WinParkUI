@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings( pCodec );
     QTextCodec::setCodecForTr( pCodec );
 
+    a.setApplicationName( "parkdatareceiver" );
+
     MainWindow w;
     //w.show();
 

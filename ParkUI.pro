@@ -163,7 +163,9 @@ SOURCES += mainwindow.cpp \
     PlateDilivery/qmytcpserver.cpp \
     Network/ping.cpp \
     Dialog/dlgsmsphone.cpp \
-    Dialog/cdlgquerywhere.cpp
+    Dialog/cdlgquerywhere.cpp \
+    Network/dataparserthread.cpp \
+    Network/parserevent.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -302,7 +304,9 @@ HEADERS  += Header/valuecard.h \
     PlateDilivery/qlistener.h \
     Network/ping.h \
     Dialog/dlgsmsphone.h \
-    Dialog/cdlgquerywhere.h
+    Dialog/cdlgquerywhere.h \
+    Network/dataparserthread.h \
+    Network/parserevent.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

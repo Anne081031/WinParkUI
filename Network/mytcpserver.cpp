@@ -5,9 +5,11 @@
 CMyTcpServer::CMyTcpServer( quint16 nThreadPool, QObject *parent) :
     QTcpServer(parent)
 {
-    svrThreadPool = new QThreadPool( this );
-    svrThreadPool->setMaxThreadCount( nThreadPool );
-    svrThreadPool->setExpiryTimeout( -1 );
+    svrThreadPool = NULL;//new QThreadPool( this );
+    //svrThreadPool->setMaxThreadCount( nThreadPool );
+    //svrThreadPool->setExpiryTimeout( -1 );
+
+    pParserThread = CDataParserThread::GetInstance( nThreadPool, true );
 }
 
 CMyTcpServer::~CMyTcpServer( )
@@ -95,6 +97,7 @@ void CMyTcpServer::HandleDisconnect( ) // Client / reconnect
     clientHash.remove( strKey );
     pSocket->close( );
     pSocket->deleteLater( ); // Leave event loop to delete
+    pParserThread->PostReleaseMessage( ( quint32 ) pSocket );
 
     emit NotifyMessage( strMsg );
 }
@@ -102,6 +105,11 @@ void CMyTcpServer::HandleDisconnect( ) // Client / reconnect
 void CMyTcpServer::GetStream( )
 {
     CPeerSocket* pSocket = qobject_cast< CPeerSocket* >( sender( ) );
+    QByteArray byData = pSocket->readAll( );
+
+    pParserThread->PostDataMessage( byData, ( quint32 ) pSocket );
+    return;
+
     quint64 nDataLen = pSocket->bytesAvailable( );
 
     QByteArray* pByteArray = pSocket->GetData( );
@@ -142,6 +150,7 @@ void CMyTcpServer::GetStream( )
 
 void CMyTcpServer::GetMgmtStream( )
 {
+    return;
     CPeerSocket* pSocket = qobject_cast< CPeerSocket* >( sender( ) );
     quint64 nDataLen = pSocket->bytesAvailable( );
 

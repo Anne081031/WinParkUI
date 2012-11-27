@@ -89,11 +89,11 @@ void CTcpClient::TcpError( QAbstractSocket::SocketError socketError )
 
 void CTcpClient::HandleDisconnect( )
 {
-    QString strIP = svrAddr.toString( );
-    if ( QAbstractSocket::UnconnectedState == state( ) &&
-         ping.IcmpPing( strIP ) ) {
+    //QString strIP = svrAddr.toString( );
+    //if ( ping.IcmpPing( strIP ) ) {
         connectToHost( svrAddr, nSvrPort );
-    }
+        qDebug( ) << "CTcpClient::HandleDisconnect( )" << endl;
+    //}
 }
 
 quint64 CTcpClient::SendData( const char * data, qint64 maxSize )

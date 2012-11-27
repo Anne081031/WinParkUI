@@ -131,7 +131,9 @@ void CNetClient::CreateClient( ClientType client, QTextCodec* pCodec, bool bToCe
         tcpClient->SetTextCodec( pCodec );
 
         connect( tcpClient, SIGNAL( NotifyMessage( QString ) ), this, SLOT( NotifyMessage( QString ) ) );
-        tcpClient->Connect2Server( QHostAddress( GetIP( client, bToCenterServer ) ), GetPort( client, bToCenterServer ) );
+        tcpAddr = QHostAddress( GetIP( client, bToCenterServer ) );
+        tcpPort = GetPort( client, bToCenterServer ) ;
+        tcpClient->Connect2Server( tcpAddr, tcpPort );
         break;
 
     case ClientHTTPClient:
@@ -227,6 +229,16 @@ bool CNetClient::WaitForReply( QAbstractSocket *pSockect )
 
 bool CNetClient::SocketSendData(ClientType client, QByteArray& byData )
 {
+    QByteArray byToken = QString( "FutureInternet" ).toAscii( );
+    qint32 nDataLen = sizeof ( quint32 );
+    quint32 nTotal = byToken.length( ) + nDataLen + byData.length( );
+    nTotal = htonl( nTotal );
+
+    const char* pTotal = ( const char* ) &nTotal;
+
+    byData.insert( 0, pTotal, nDataLen );
+    byData.insert( 0, byToken );
+
     bool bRet = false;
     quint64 nRetSize = 0;
 try {
@@ -242,7 +254,14 @@ try {
         break;
 
     case ClientTCPClient:
-        if ( NULL != tcpClient && QAbstractSocket::ConnectedState == tcpClient->state( ) ) {
+        if ( NULL != tcpClient ) {
+            QAbstractSocket::SocketState state = tcpClient->state( );
+
+            if ( QAbstractSocket::ConnectedState != state ) {
+                break;//tcpClient->Connect2Server( tcpAddr, tcpPort );
+            }
+
+            //state = tcpClient->state( );
             nRetSize = tcpClient->SendData( byData );
             tcpClient->flush( );
             tcpClient->waitForBytesWritten( );

@@ -5,6 +5,7 @@
 #include <QtNetwork>
 #include "NetProcessData.h"
 #include "peersocket.h"
+#include "dataparserthread.h"
 
 class CMyTcpServer : public QTcpServer
 {
@@ -26,6 +27,7 @@ private:
     QHash< QString, CPeerSocket* > clientHash;
     QThreadPool* svrThreadPool;
     CManipulateMessage processMsg;
+    CDataParserThread* pParserThread;
 
 signals:
     void NotifyMessage( QString );

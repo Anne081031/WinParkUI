@@ -134,6 +134,8 @@ INPUT(
 ./debug/ping.o
 ./debug/dlgsmsphone.o
 ./debug/cdlgquerywhere.o
+./debug/dataparserthread.o
+./debug/parserevent.o
 ./debug/moc_valuecard.o
 ./debug/moc_tolldiscounttypeset.o
 ./debug/moc_timecard.o
@@ -252,4 +254,5 @@ INPUT(
 ./debug/moc_ping.o
 ./debug/moc_dlgsmsphone.o
 ./debug/moc_cdlgquerywhere.o
+./debug/moc_dataparserthread.o
 );

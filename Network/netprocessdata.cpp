@@ -69,31 +69,41 @@ void CNetProcessData::ProcessData( const char* pData, quint64 nLen )
     }
 #endif
 
+    QString strInfo;
+
     switch ( processMsg.GetPacketType( commHeader.dgType ) ) {
     case NetTransport::PacketTable :
         ProcessTableData( pData );
+        strInfo = "ProcessTableData( pData )";
         break;
 
     case NetTransport::PacketImage :
         ProcessImageData( pData );
+        strInfo = "ProcessImageData( pData )";
         break;
 
     case NetTransport::PacketHeartbeat :
         ProcessHeartbeatData( pData );
+        strInfo = "ProcessHeartbeatData( pData )";
         break;
 
     case NetTransport::PacketSvrMsg :
         ProcessSvrMsgData( pData );
+        strInfo = "ProcessSvrMsgData( pData )";
         break;
 
     case NetTransport::PacketCltMsg :
         ProcessCltMsgData( pData );
+        strInfo = "ProcessCltMsgData( pData )";
         break;
 
    case NetTransport::PacketMgmtData :
         ProcessMgmtData( pData );
+        strInfo = "ProcessMgmtData( pData )";
         break;
     }
+
+    qDebug( ) << strInfo << endl;
 }
 
 bool CNetProcessData::WriteFile( const char *pData, const QString& strPath, quint32 nDataLen )
@@ -389,6 +399,11 @@ void CNetProcessData::GetInOutImage( QStringList &lstData )
 
 void CNetProcessData::ProcessSvrMsgData( const char *pData )
 {
+    QString strAppName = qApp->applicationName( );
+    if ( strAppName.contains( "parkdatareceiver" ) ) {
+        return;
+    }
+
     NetTransport::SvrMsgHeader& svrHeader = processMsg.GetSvrMsgHeader( pData );
     const char* pBody = processMsg.GetSvrMsgBody( pData );
     NetTransport::eSvrMsg svrType = processMsg.GetSvrMsgType( svrHeader.svrMsgType );
