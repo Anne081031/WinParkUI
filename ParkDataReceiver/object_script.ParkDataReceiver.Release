@@ -30,6 +30,8 @@ INPUT(
 ./release/ping.o
 ./release/dataparserthread.o
 ./release/parserevent.o
+./release/dbheartbeat.o
+./release/dbheartbeatevent.o
 ./release/moc_mainwindow.o
 ./release/moc_mssqlserver.o
 ./release/moc_udpdispatcher.o
@@ -53,4 +55,5 @@ INPUT(
 ./release/moc_mysqldatabase.o
 ./release/moc_ping.o
 ./release/moc_dataparserthread.o
+./release/moc_dbheartbeat.o
 );

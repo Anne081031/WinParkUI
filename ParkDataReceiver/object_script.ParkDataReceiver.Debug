@@ -30,6 +30,8 @@ INPUT(
 ./debug/ping.o
 ./debug/dataparserthread.o
 ./debug/parserevent.o
+./debug/dbheartbeat.o
+./debug/dbheartbeatevent.o
 ./debug/moc_mainwindow.o
 ./debug/moc_mssqlserver.o
 ./debug/moc_udpdispatcher.o
@@ -53,4 +55,5 @@ INPUT(
 ./debug/moc_mysqldatabase.o
 ./debug/moc_ping.o
 ./debug/moc_dataparserthread.o
+./debug/moc_dbheartbeat.o
 );

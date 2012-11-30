@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ping.h'
 **
-** Created: Mon Nov 26 10:46:23 2012
+** Created: Wed Nov 28 10:27:36 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -18,12 +18,18 @@ CHeartbeatThread::CHeartbeatThread(QObject *parent) :
     tcpClient = &CNetClient::GetInstance( true, true, pTextCodec, this ); // Communicate with center server
 
     int nInterval = pSettings->value( "CenterServer/HeartbeatIPInterval", 300000 ).toInt( );
-    strClientServerPort = pSettings->value( "Database/UdpPort", CLIENT_SERVER_UDP_PORT ).toString( );
+    //strClientServerPort = pSettings->value( "Database/UdpPort", CLIENT_SERVER_UDP_PORT ).toString( );
+    strClientServerPort = pSettings->value( "CenterServer/UdpPort", CLIENT_SERVER_UDP_PORT ).toString( );
 
     nIPTimerID = startTimer( nInterval );
 
     nInterval = pSettings->value( "CenterServer/HeartbeatNetStateInterval", 600000 ).toInt( );
     nNetStateTimerID = startTimer( nInterval );
+
+    nInterval = pSettings->value( "CenterServer/HeartbeatImgRequest", 300000 ).toInt( );
+    nImgRequestTimerID = startTimer( nInterval );
+
+    strCenterIP = pSettings->value( "CenterServer/CenterIP", "192.168.1.52" ).toString( );
 
     strHostIP = CCommonFunction::GetHostIP( );
     strParkID = CCommonFunction::GetParkID( );
@@ -50,7 +56,14 @@ void CHeartbeatThread::timerEvent( QTimerEvent * e )
         GetLiveNetworkInterfaceIP( );
     } else if ( nTimerID == nNetStateTimerID ){
         SyncNetState( );
+    } else if ( nTimerID == nImgRequestTimerID ) {
+        GetImgRequest( );
     }
+}
+
+void CHeartbeatThread::GetImgRequest( )
+{
+    udpClient->SendHeartbeatData( strParkID, NetTransport::HbImgRequest );
 }
 
 void CHeartbeatThread::SyncNetState( )
@@ -63,7 +76,8 @@ void CHeartbeatThread::SyncNetState( )
 
 void CHeartbeatThread::GetLiveNetworkInterfaceIP( )
 {
-    SyncIP( strHostIP );
+    //SyncIP( strHostIP );
+    SyncIP( strCenterIP );
     return;
     DWORD dwSize = 0;
     PMIB_IFROW pIfRow = NULL;

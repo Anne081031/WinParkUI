@@ -48,7 +48,9 @@ SOURCES += main.cpp\
     ../Network/ftpevent.cpp \
     ../Network/ping.cpp \
     ../Network/dataparserthread.cpp \
-    ../Network/parserevent.cpp
+    ../Network/parserevent.cpp \
+    ../Database/dbheartbeat.cpp \
+    ../Database/dbheartbeatevent.cpp
 
 HEADERS  += mainwindow.h \
     ../Database/mssqlserver.h \
@@ -80,6 +82,8 @@ HEADERS  += mainwindow.h \
     ../Network/ftpevent.h \
     ../Network/ping.h \
     ../Network/dataparserthread.h \
-    ../Network/parserevent.h
+    ../Network/parserevent.h \
+    ../Database/dbheartbeat.h \
+    ../Database/dbheartbeatevent.h
 
 FORMS    += mainwindow.ui

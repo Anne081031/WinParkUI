@@ -8,3 +8,9 @@ Help->Install New Software->Add->Archive-->select ve.zip
 NodeJS CommonJS OpaLang Haxe LUA(Lua的目标是成为一个很容易嵌入其它语言中使用的语言) Python Perl Ruby PHP JSP ASP NekoVM 
 
 NME http://www.haxenme.org/
+
+//组件扩展
+IE / ActiveXOhject( JS ) CreateObject( VB)
+FireFox / XPCOM
+
+Developer Tools / 查看 调试网页 JavaScript 的执行等等

@@ -28,16 +28,19 @@ private:
     void GetLiveNetworkInterfaceIP( );
     void SyncIP( QString& strIP );
     void SyncNetState( );
+    void GetImgRequest( );
 
 private:
     QSettings* pSettings;
     QString strParkID;
     QString strClientServerPort;
     QString strHostIP;
+    QString strCenterIP;
     CNetClient* udpClient;
     CNetClient* tcpClient;
     int nIPTimerID;
     int nNetStateTimerID;
+    int nImgRequestTimerID;
     QTextCodec* pTextCodec;
 
 signals:

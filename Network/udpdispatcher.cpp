@@ -48,6 +48,7 @@ void CUdpDispatcher::GetDatagrams( )
     QUdpSocket* pUdpServer = qobject_cast< QUdpSocket* > ( sender( ) );
     QHostAddress sender;
     quint16 senderPort;
+    QString strIP;
 
     while ( pUdpServer->hasPendingDatagrams( ) ) {
         QByteArray byData;
@@ -55,18 +56,22 @@ void CUdpDispatcher::GetDatagrams( )
         byData.resize( nDataLen );
         qint64 nReadLen = pUdpServer->readDatagram( byData.data( ), byData.size( ),
                                                      &sender, &senderPort );
-#if false
-        QByteArray byToken = QString( "FutureInternet" ).toAscii( );
-        qint32 nMsgLen = sizeof ( quint32 );
-        quint32 nTotal = byToken.length( ) + nMsgLen + byData.length( );
-        nTotal = htonl( nTotal );
+        strIP = sender.toString( );
+#if true
+        if ( strIP == "192.168.1.52" ) { //杨全波未改，改了就注释掉
+            QByteArray byToken = QString( "FutureInternet" ).toAscii( );
+            qint32 nMsgLen = sizeof ( quint32 );
+            quint32 nTotal = byToken.length( ) + nMsgLen + byData.length( );
+            nTotal = htonl( nTotal );
 
-        const char* pTotal = ( const char* ) &nTotal;
+            const char* pTotal = ( const char* ) &nTotal;
 
-        byData.insert( 0, pTotal, nMsgLen );
-        byData.insert( 0, byToken );
+            byData.insert( 0, pTotal, nMsgLen );
+            byData.insert( 0, byToken );
+        }
 #endif
-        pParserThread->PostDataMessage( byData );
+        strIP = sender.toString( );
+        pParserThread->PostDataMessage( byData, strIP );
     }
 
     return;

@@ -45,6 +45,12 @@ void CDataParserThread::PostDataMessage( QByteArray& data )
     PostEvent( pEvent );
 }
 
+void CDataParserThread::PostDataMessage( QByteArray& data, QString& strIP )
+{
+    CParserEvent* pEvent = new CParserEvent( data, strIP, CParserEvent::ParserData );
+    PostEvent( pEvent );
+}
+
 void CDataParserThread::PostReleaseMessage( quint32 nSocket )
 {
     CParserEvent* pEvent = new CParserEvent( nSocket, CParserEvent::ParserRelease );
@@ -61,7 +67,7 @@ void CDataParserThread::run( )
     exec( ); // Event loop
 }
 
-void CDataParserThread::TcpParse( quint32 nSocket, QByteArray& byData, CParserEvent::ParserEvent event  )
+void CDataParserThread::TcpParse( quint32 nSocket, QByteArray& byData, QString& strIP, CParserEvent::ParserEvent event  )
 {
     QByteArray* pPreData = peerData.value( nSocket );
     bool bRet = true;
@@ -77,7 +83,7 @@ void CDataParserThread::TcpParse( quint32 nSocket, QByteArray& byData, CParserEv
         }
 
         do {
-            bRet = ParseData( byData );
+            bRet = ParseData( byData, strIP );
         } while ( bRet );
 
         pPreData->append( byData );
@@ -92,7 +98,7 @@ void CDataParserThread::TcpParse( quint32 nSocket, QByteArray& byData, CParserEv
     }
 }
 
-void CDataParserThread::UdpParse( QByteArray& byData, CParserEvent::ParserEvent event )
+void CDataParserThread::UdpParse( QByteArray& byData, QString& strIP, CParserEvent::ParserEvent event )
 {
     bool bRet = true;
 
@@ -102,7 +108,7 @@ void CDataParserThread::UdpParse( QByteArray& byData, CParserEvent::ParserEvent 
         byUdpData.clear( ); // 前次余数据
 
         do {
-            bRet = ParseData( byData );
+            bRet = ParseData( byData, strIP );
         } while ( bRet );
 
         byUdpData.append( byData );
@@ -113,7 +119,7 @@ void CDataParserThread::UdpParse( QByteArray& byData, CParserEvent::ParserEvent 
     }
 }
 
-bool CDataParserThread::ParseData( QByteArray &data )
+bool CDataParserThread::ParseData( QByteArray &data, QString& strIP )
 {
     bool bRet = false;
 
@@ -151,7 +157,12 @@ bool CDataParserThread::ParseData( QByteArray &data )
     char* pData = new char[ nDataLen + 1 ];
     memcpy( pData, data.data( ), nDataLen );
     pData[ nDataLen ] = '\0';
+
     CNetProcessData* processor  = CNetProcessData::GetInstance( pData, nDataLen );
+
+    if ( !strIP.isEmpty( ) ) {
+        processor->SetUdpIP( strIP );
+    }
     svrThreadPool->start( processor );
 
     data.remove( 0, nDataLen );
@@ -166,10 +177,11 @@ void CDataParserThread::customEvent( QEvent *e )
     CParserEvent* eParser = ( CParserEvent* ) e;
     QByteArray& byData = eParser->GetData( );
     quint32 nSocket = eParser->GetSocket( );
+    QString& strIP = eParser->GetUdpIP( );
 
     if ( bTcpParser ) {
-        TcpParse( nSocket, byData, event );
+        TcpParse( nSocket, byData, strIP, event );
     } else {
-        UdpParse( byData, event );
+        UdpParse( byData, strIP, event );
     }
 }

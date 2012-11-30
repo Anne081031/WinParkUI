@@ -725,8 +725,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
 
     QString strText = "%1%2端功能。";
     CCommonFunction::ShowSplashMessage( strText.arg( "启用", bSyncServer ? "服务器" : "客户" ) );
-    ClientFunction( );
+
     ServerFunction( );
+    ClientFunction( );
 
     RegisterAxCtrl( );
 

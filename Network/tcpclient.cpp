@@ -91,18 +91,21 @@ void CTcpClient::HandleDisconnect( )
 {
     //QString strIP = svrAddr.toString( );
     //if ( ping.IcmpPing( strIP ) ) {
+    if ( QAbstractSocket::ConnectedState != state( ) ) {
         connectToHost( svrAddr, nSvrPort );
         qDebug( ) << "CTcpClient::HandleDisconnect( )" << endl;
-    //}
+    }
 }
 
 quint64 CTcpClient::SendData( const char * data, qint64 maxSize )
 {
+    HandleDisconnect( );
     return write( data, maxSize );
 }
 
 quint64 CTcpClient::SendData( const QByteArray & byteArray )
 {
+    HandleDisconnect( );
     quint64 nRet = 0;
 
     int nPackageSize = 10 * 1024 * 1024;

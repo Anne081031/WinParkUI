@@ -17,6 +17,7 @@ public:
 
     void PostDataMessage( QByteArray& data, quint32 nSocket );
     void PostDataMessage( QByteArray& data );
+    void PostDataMessage( QByteArray& data, QString& strIP );
     void PostReleaseMessage( quint32 nSocket );
 
 private:
@@ -30,9 +31,9 @@ protected:
     void customEvent( QEvent* e );
 
 private:
-    bool ParseData( QByteArray& data );
-    void TcpParse( quint32 nSocket, QByteArray& byData, CParserEvent::ParserEvent event );
-    void UdpParse( QByteArray& byData, CParserEvent::ParserEvent event );
+    bool ParseData( QByteArray& data, QString& strIP );
+    void TcpParse( quint32 nSocket, QByteArray& byData, QString& strIP, CParserEvent::ParserEvent event );
+    void UdpParse( QByteArray& byData, QString& strIP, CParserEvent::ParserEvent event );
 
 private:
     QHash< quint32, QByteArray* > peerData;

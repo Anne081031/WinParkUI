@@ -165,7 +165,9 @@ SOURCES += mainwindow.cpp \
     Dialog/dlgsmsphone.cpp \
     Dialog/cdlgquerywhere.cpp \
     Network/dataparserthread.cpp \
-    Network/parserevent.cpp
+    Network/parserevent.cpp \
+    Database/dbheartbeat.cpp \
+    Database/dbheartbeatevent.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -306,7 +308,9 @@ HEADERS  += Header/valuecard.h \
     Dialog/dlgsmsphone.h \
     Dialog/cdlgquerywhere.h \
     Network/dataparserthread.h \
-    Network/parserevent.h
+    Network/parserevent.h \
+    Database/dbheartbeat.h \
+    Database/dbheartbeatevent.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

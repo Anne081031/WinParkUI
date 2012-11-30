@@ -52,7 +52,7 @@ CMsSqlServer::~CMsSqlServer( )
 
 void CMsSqlServer::CreateDbPool( int nPoolThread )
 {
-    for ( int nIndex = 0; nIndex < nPoolThread; nIndex++ ) {
+    for ( int nIndex = 0; nIndex < nPoolThread + 1; nIndex++ ) {
         QString strConnName = "PMS Sql Server%1";
         QSqlDatabase db = QSqlDatabase::addDatabase( "QODBC",  strConnName.arg( nIndex ) );
         db.setDatabaseName( strConnection );
@@ -60,8 +60,18 @@ void CMsSqlServer::CreateDbPool( int nPoolThread )
         QSqlDatabase* pDb = new QSqlDatabase( db );
         //SQL_CP_OFF 0/ SQL_CP_ONE_PER_DRIVER 1/ SQL_CP_ONE_PER_HENV 2/ SQL_CP_DRIVER_AWARE
         pDb->setConnectOptions( "SQL_ATTR_CONNECTION_POOLING=SQL_CP_ONE_PER_HENV;" );
-        dbHash.insert( nIndex, pDb );
+
+        if ( nIndex != nPoolThread ) {
+            dbHash.insert( nIndex, pDb );
+        } else {
+            pDbHeartbeat = pDb;
+        }
     }
+}
+
+QSqlDatabase* CMsSqlServer::GetHeartbeatDb( )
+{
+    return pDbHeartbeat;
 }
 
 CMsSqlServer& CMsSqlServer::CreateSingleton( )
@@ -130,10 +140,9 @@ void CMsSqlServer::SendSqlError( QSqlError error )
 #endif
 }
 
-bool CMsSqlServer::ExecuteSql( QString &strSql )
+bool CMsSqlServer::ExecuteSql( QString &strSql, QSqlDatabase *pDb )
 {
     bool bRet = false;
-    QSqlDatabase* pDb = GetDb( );
     if ( NULL == pDb ) {
         return bRet;
     }
@@ -150,6 +159,16 @@ bool CMsSqlServer::ExecuteSql( QString &strSql )
     if ( QSqlError::ConnectionError == query.lastError( ).type( ) ) {
         pDb->close( );
     }
+
+    return bRet;
+}
+
+bool CMsSqlServer::ExecuteSql( QString &strSql )
+{
+    bool bRet = false;
+    QSqlDatabase* pDb = GetDb( );
+
+    bRet = ExecuteSql( strSql, pDb );
 
     return bRet;
 }

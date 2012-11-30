@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'netclient.h'
 **
-** Created: Tue Oct 30 11:53:20 2012
+** Created: Thu Nov 29 13:36:25 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

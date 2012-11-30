@@ -73,6 +73,11 @@ void CScu::ContructDatagram( QStringList &lstData )
 
 void CScu::HttpSendData( QStringList &lstData )
 {
+    bool bServer = pSystemSet->value( "Database/Server", false ).toBool( );
+    if ( !bServer ) {
+        return;
+    }
+    //Http=http://192.168.1.49:8080/Packing/action
     QString strUrl = pSystemSet->value( "ThirdParty/Http", "" ).toString( );
 
     if ( strUrl.isEmpty( ) ) {

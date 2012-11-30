@@ -10,6 +10,7 @@
 #endif
 
 #include "ftp.h"
+#include "../Database/dbheartbeat.h"
 
  QVector< QString > CNetProcessData::vecSql;
  QVector< QString > CNetProcessData::vecHBCmd;
@@ -18,6 +19,8 @@
  QFile* CNetProcessData::pFile = NULL;
  CMySqlDatabase* CNetProcessData::pMySQL = NULL;
  QHash< QString, QString > CNetProcessData::hashMgmtSql;
+ QMultiHash< QString, QString > CNetProcessData::hashImgRequest;
+ quint16 CNetProcessData::nUdpPort = 0;
 
 #ifndef PARKDATARECEIVER_APP
  extern
@@ -231,11 +234,69 @@ void CNetProcessData::ProcessMgmtData( const char *pData )
     }
 }
 
+void CNetProcessData::SendImgRequestData( QByteArray &byData )
+{
+    NetTransport::DispatcherData data;
+    memset( &data, 0, sizeof ( data ) );
+
+    data.CommHeader.dgType.PacketSvrMsg = 1;
+    quint16* pType = ( quint16* ) &data.auxHeader.svrHeader.svrMsgType;
+    *pType = ( quint16 ) ( 1 << ( quint16 ) NetTransport::SvrGetInOutImg );
+
+    int nCommHeader = sizeof ( data.CommHeader );
+    int nAuxHeader = sizeof ( data.auxHeader.svrHeader );
+    data.CommHeader.nDataLen = byData.count( ) + nCommHeader + nAuxHeader;
+
+    byData.insert( 0, ( char* ) &data.auxHeader.imgHeader, nAuxHeader );
+    byData.insert( 0, ( char* ) &data.CommHeader, nCommHeader );
+}
+
+void CNetProcessData::ProcessImgRequest( const char *pData )
+{
+    QString strBody( pData );
+    QList< QString> lstRequest = hashImgRequest.values( strBody );
+    if ( 0 == lstRequest.length( ) ) {
+        return;
+    }
+
+    QHostAddress addr( strUdpIP );
+    udpSocket = new QUdpSocket( );
+    QByteArray byToken = QString( "FutureInternet" ).toAscii( );
+    qint32 nMsgLen = sizeof ( quint32 );
+    quint32 nTotal = 0;
+
+    foreach ( const QString& str, lstRequest ) {
+        hashImgRequest.remove( strBody, str );
+
+        QByteArray byData = CCommonFunction::GetTextCodec( )->fromUnicode( str );
+        SendImgRequestData( byData );
+
+        nTotal = byToken.length( ) + nMsgLen + byData.length( );
+        nTotal = htonl( nTotal );
+
+        const char* pTotal = ( const char* ) &nTotal;
+        byData.insert( 0, pTotal, nMsgLen );
+        byData.insert( 0, byToken );
+
+        //udpSocket->connectToHost( addr, nUdpPort );
+        udpSocket->writeDatagram( byData, addr, nUdpPort );
+    }
+
+    delete udpSocket;
+    udpSocket = NULL;
+}
+
 void CNetProcessData::ProcessHeartbeatData( const char *pData )
 {
     NetTransport::HeartbeatHeader& hbHeader = processMsg.GetHeartbeatHeader( pData );
     const char* pBody = processMsg.GetHeartbeatBody( pData );
     NetTransport::eHeartbeat hbType = processMsg.GetHeartbeatType( hbHeader.hbType );
+
+    if ( NetTransport::HbImgRequest == hbType ) {
+        ProcessImgRequest( pBody );
+        return;
+    }
+
     if ( vecHBCmd.count( ) <= hbType ) {
         return;
     }
@@ -243,12 +304,15 @@ void CNetProcessData::ProcessHeartbeatData( const char *pData )
     QString strBody( pBody );
     QStringList lstBody;
     QString& strHBCmd = vecHBCmd[ hbType ];
-    CMsSqlServer& dbServer = CMsSqlServer::CreateSingleton( );
+    //CMsSqlServer& dbServer = CMsSqlServer::CreateSingleton( );
     QString strTmp = "";
 
     lstBody = strBody.split( "," );
 
     switch ( hbType ) {
+    case NetTransport::HbImgRequest:
+        break;
+
     case NetTransport::HbClientIP :
          // ParkID,IP,Port
         if  ( 3 != lstBody.count( ) ) {
@@ -256,7 +320,7 @@ void CNetProcessData::ProcessHeartbeatData( const char *pData )
         }
 
         strTmp = strHBCmd.arg( lstBody[ 0 ], lstBody[ 1 ], lstBody[ 2 ] );
-        dbServer.ExecuteSql( strTmp );
+        //dbServer.ExecuteSql( strTmp );
         break;
 
     case NetTransport::HbNetState :
@@ -269,10 +333,13 @@ void CNetProcessData::ProcessHeartbeatData( const char *pData )
         QString strDt = "";
         CCommonFunction::DateTime2String( dt, strDt );
         strTmp = strHBCmd.arg( lstBody[0], lstBody[ 1 ],  strDt );
-        dbServer.ExecuteSql( strTmp );
+        //dbServer.ExecuteSql( strTmp );
         break;
     }
 
+    if ( !strTmp.isEmpty( ) ) {
+        CDbHeartbeat::GetInstance( )->PostSql( strTmp );
+    }
 }
 
 void CNetProcessData::ProcessTableData( const char* pData )
@@ -397,10 +464,41 @@ void CNetProcessData::GetInOutImage( QStringList &lstData )
     QApplication::postEvent( g_pHeartbeatThread, pHbEvent );
 }
 
+void CNetProcessData::WebBrowserRequest( const QString &strParkID, const QString &strRequest )
+{
+    hashImgRequest.insertMulti( strParkID, strRequest );
+}
+
+void CNetProcessData::ProcessWebBrowserRequest( const char* pData )
+{
+    NetTransport::SvrMsgHeader& svrHeader = processMsg.GetSvrMsgHeader( pData );
+    const char* pBody = processMsg.GetSvrMsgBody( pData );
+    NetTransport::eSvrMsg svrType = processMsg.GetSvrMsgType( svrHeader.svrMsgType );
+
+    QString strBody( pBody );
+    QStringList lstData = strBody.split( "|" ); // Seperator
+
+    switch ( svrType ) {
+    case NetTransport::SvrAlert :
+        if ( 6 > lstData.count( ) ) {
+            break;
+        }
+
+        WebBrowserRequest( lstData.at( 0 ), strBody );
+        break;
+
+    case NetTransport::SvrGetInOutImg :
+        WebBrowserRequest( lstData.at( 0 ), strBody );
+        break;
+    }
+}
+
 void CNetProcessData::ProcessSvrMsgData( const char *pData )
 {
     QString strAppName = qApp->applicationName( );
     if ( strAppName.contains( "parkdatareceiver" ) ) {
+        // GetImg
+        ProcessWebBrowserRequest( pData );
         return;
     }
 
@@ -489,6 +587,11 @@ void CNetProcessData::ReleaseResource( )
     }
 }
 
+void CNetProcessData::SetUdpIP( QString &strIP )
+{
+    strUdpIP = strIP;
+}
+
 void CNetProcessData::GetCommonParams(  )
 {
     CMsSqlServer::CreateSingleton( );
@@ -498,6 +601,9 @@ void CNetProcessData::GetCommonParams(  )
     QString strParam;
     QString strKey = "SQL/Table%1";
     int nIndex = 0;
+
+    QString strPort = pSettings->value( "Database/UdpPort", "6011" ).toString( );
+     nUdpPort = strPort.toUInt( );
 
     int TableCount = pSettings->value( "SQL/TableCount", TABLE_COUNT ).toInt( );
     for ( nIndex = 0; nIndex < TableCount; nIndex++ ) {

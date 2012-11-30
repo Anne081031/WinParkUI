@@ -82,7 +82,8 @@ namespace NetTransport {
 
     typedef enum __eHeartbeat {
         HbClientIP,
-        HbNetState
+        HbNetState,
+        HbImgRequest
     } eHeartbeat;
 
     typedef enum __eMgmtData {

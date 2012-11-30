@@ -136,6 +136,8 @@ INPUT(
 ./debug/cdlgquerywhere.o
 ./debug/dataparserthread.o
 ./debug/parserevent.o
+./debug/dbheartbeat.o
+./debug/dbheartbeatevent.o
 ./debug/moc_valuecard.o
 ./debug/moc_tolldiscounttypeset.o
 ./debug/moc_timecard.o
@@ -255,4 +257,5 @@ INPUT(
 ./debug/moc_dlgsmsphone.o
 ./debug/moc_cdlgquerywhere.o
 ./debug/moc_dataparserthread.o
+./debug/moc_dbheartbeat.o
 );

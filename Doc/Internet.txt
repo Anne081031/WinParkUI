@@ -1,0 +1,53 @@
+BroadCastData=false 必须建立办公室虚率设备
+
+if ( strIP == "192.168.1.52" ) { //杨全波未改，改了就注释掉
+
+联网
+CommonCfg/Alert true
+CommonCfg/ToInternet true
+
+显示告警
+CommonCfg/DisplayAlert true
+
+[ServerInfo] ParkDataReceiver
+TcpPort=6000
+MaxPendingConn=100
+UdpPort=6001
+TcpThreadPool=20
+UdpThreadPool=20
+
+[Database] Passes End
+Host=192.168.1.53 办公室IP
+Schema=parkadmin
+User=test
+Pwd=test
+Port=3306
+Server=true
+Agent=192.168.1.24
+TcpPort=6010 门岗连接到办公室端口
+UdpPort=6011
+IntervalTime=12
+TcpThreadPool=2
+UdpThreadPool=2
+MaxPendingConn=10
+MsServer=192.168.1.52
+MsDatabase=ParkDB
+MsUser=parkdb
+MsPwd=123456789
+ConnPoolThread=10
+ 
+[CenterServer] Office End 连接到【数据接收端】
+CenterIP=192.168.1.52 WebBrowser 请求的IP
+FtpIP=192.168.1.52
+FtpPort=21
+FtpUser=ftp
+FtpPwd=123456
+HttpIP=192.168.1.24
+HttpPort=80
+TcpIP=192.168.1.24 数据接收端
+TcpPort=6000
+UdpIP=192.168.1.24 数据接收端
+UdpPort=6001
+HeartbeatIPInterval=3000000
+HeartbeatNetStateInterval=60000000
+HeartbeatImgRequest=3000

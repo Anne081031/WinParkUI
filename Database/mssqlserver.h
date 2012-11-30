@@ -15,9 +15,12 @@ public:
     static CMsSqlServer& CreateSingleton( );
     static void DestroySingleton( );
 
+    QSqlDatabase* GetHeartbeatDb( );
+
 public:
     bool BulkInsert( QString& strSql, CBulkInsert& bulkInsert );
     bool ExecuteSql( QString& strSql );
+    bool ExecuteSql( QString& strSql,  QSqlDatabase* pDb );
     inline bool Open( QSqlDatabase* pDbServer );
     CBulkInsert& GetBulkInsert( );
 
@@ -34,6 +37,8 @@ private:
     QSettings* pSettings;
     QString strConnection;
      int nPoolThread;
+
+     QSqlDatabase* pDbHeartbeat;
 
 signals:
      void ReportError( QString strMsg );

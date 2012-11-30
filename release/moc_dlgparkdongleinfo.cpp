@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgparkdongleinfo.h'
 **
-** Created: Mon Nov 26 13:01:06 2012
+** Created: Thu Nov 29 13:36:33 2012
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
