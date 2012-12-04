@@ -1,3 +1,6 @@
+http://www.w3school.com.cn
+http://www.json.org/
+
 VE for Eclipse / GWT for 
 
 Eclipse http://wiki.eclipse.org/VE/Installing
@@ -14,3 +17,23 @@ IE / ActiveXOhject( JS ) CreateObject( VB)
 FireFox / XPCOM
 
 Developer Tools / 查看 调试网页 JavaScript 的执行等等
+
+/////////////////
+表述由数据、描述数据的元数据、以及（有时候存在的）描述元数据的元数据组成（通
+常用来验证消息的完整性）。元数据以名称-值对的形式出现，其中的名称对应于一个定义
+值的结构和语义的标准。响应消息可以同时包括表述元数据和资源元数据（关于资源的信息，
+并不特定于所提供的表述）。
+控制数据定义了组件之间的消息的用途，例如被请求的动作或响应的含义。它也被用来
+提供请求的参数，以及覆盖某些连接元素（connecting elements）的默认行为。例如，可以
+使用包括在请求或响应消息中的控制数据来修改缓存的行为。
+
+Representations Connectors Components
+
+UserAgent Proxy Gateway Tunnel OriginServer
+
+REST通过强制消息具有自描述性 REST的无状态本质允许每个交互独立于其他的交互
+
+Pull ( Polling ) / Push ( Event ) Style
+Publisher / Subscribor Push Style
+REST Pull Style
+/////////////////////

@@ -1,0 +1,4 @@
+http://nodejsdb.org nodejs database interface
+var dbDriver = require( 'db-X' ); // x mysql oracle sqlserver postgres
+npm install threads_a_gogo
+npm install db-mysql
