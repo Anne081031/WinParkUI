@@ -169,6 +169,26 @@ void QCmdParser::GetLedExternalTriggerSignalState( QByteArray& data, QString& st
     qDebug( ) << Q_FUNC_INFO << endl;
 }
 
+void QCmdParser::GetLedFlashRadiance( QByteArray& data, QString& strInfo )
+{
+    if ( 1 > data.length( ) ) {
+        return;
+    }
+
+    GetIntegerValue( data, strInfo );
+    qDebug( ) << Q_FUNC_INFO << endl;
+}
+
+void QCmdParser::GetLedFrenquencyRadiance( QByteArray& data, QString& strInfo )
+{
+    if ( 1 > data.length( ) ) {
+        return;
+    }
+
+    GetIntegerValue( data, strInfo );
+    qDebug( ) << Q_FUNC_INFO << endl;
+}
+
 void QCmdParser::GetLedFlashTriggerMode( QByteArray& data, QString& strInfo )
 {
     if ( 1 > data.length( ) ) {
@@ -200,64 +220,79 @@ void QCmdParser::ParseDataDomain( QByteArray &data, QString& strInfo, qint8& nIn
     strInfo = "";
 
     switch ( nDI ) {
-    case 0x04000300 : // 照度(光敏电阻) (00 = 暗；01=亮)光敏
+    case 0x04000300 : // 频闪照度(光敏电阻) (00 = 暗；01=亮)光敏
         GeLedtIlluminance( data, strInfo );
         nIndex = 1;
         break;
 
     case 0x04000301 : // 温度
         GetLedTemperature( data, strInfo );
-        nIndex = 2;
+        nIndex = 3;
         break;
 
     case 0x04000302 : // 灯工作状态（00 =频闪；01=闪光）模式
         GetLedWorkState( data, strInfo );
-        nIndex = 3;
+        nIndex = 4;
         break;
 
     case 0x04000303 : // 频闪触发方式（00=上升沿触发；01=下降沿触发；02=跟随模式）同步
         GetLedFreqTriggerMode( data, strInfo );
-        nIndex = 4;
+        nIndex = 5;
         break;
 
     case 0x04000304 : // 输出脉宽0（百分比显示）频闪时间
         GetLedFreqTime( data, strInfo );
-        nIndex = 6;
+        nIndex = 7;
         break;
 
     case 0x04000305 : // 输出脉宽1（百分比显示）闪光时间
         GetLedFlashTime( data, strInfo );
-        nIndex = 7;
+        nIndex = 8;
         break;
 
     case 0x04000306 : // 输出脉宽2（百分比显示）频闪亮度
         GetLedFreqBrightness( data, strInfo );
-        nIndex = 8;
+        nIndex = 9;
         break;
 
     case 0x04000307 : // 输出脉宽3（百分比显示）闪光亮度
         GetLedFlashBrightness( data, strInfo );
-        nIndex = 9;
+        nIndex = 10;
         break;
 
     case 0x04000308 : // 频闪频率
         GetLedFrequency( data, strInfo );
-        nIndex = 10;
+        nIndex = 13;
         break;
 
     case 0x04000309 : // LED灯工作电压
         GetLedWorkVoltage( data, strInfo );
-        nIndex = 11;
+        nIndex = 14;
         break;
 
     case 0x0400030A : // 外部触发信号状态（00= 正常；01 = 异常）
         GetLedExternalTriggerSignalState( data, strInfo );
-        nIndex = 12;
+        nIndex = 15;
         break;
 
     case 0x0400030B : // 闪光触发方式（00=上升沿触发；01=下降沿触发；02=跟随模式）同步
         GetLedFlashTriggerMode( data, strInfo );
-        nIndex = 5;
+        nIndex = 6;
+        break;
+
+    case 0x0400030C : // 光敏（百分比显示）频闪光敏
+        GetLedFrenquencyRadiance( data, strInfo );
+        nIndex = 11;
+        break;
+
+    case 0x0400030D : // 光敏（百分比显示）闪光光敏
+        GetLedFlashRadiance( data, strInfo );
+        nIndex = 12;
+        break;
+
+    case 0x0400030E : // 闪光照度(光敏电阻) (00 = 暗；01=亮)光敏
+        GeLedtIlluminance( data, strInfo );
+        nIndex = 2;
         break;
     }
 }

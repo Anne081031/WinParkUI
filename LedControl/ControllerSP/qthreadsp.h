@@ -8,7 +8,7 @@ class CONTROLLERSPSHARED_EXPORT QThreadSP : public QThread
 {
     Q_OBJECT
 public:
-    void SetController( QControllerSP* pCtrlr );
+    void SetController( QControllerSP* pCtrl );
     void SetDataReceiver( QThread* pThread );
     static QThreadSP& GetSingleton(  );
 

@@ -165,6 +165,7 @@ void QThreadSPParser::customEvent( QEvent *e )
     bool bRet = false;
 
     if ( QCtrlEvent::SPParse == ( QCtrlEvent::CtrlEvent ) pEvent->type( ) ) {
+        //qDebug( ) << "QThreadSPParser: " << pEvent->GetData( ).toHex( ).toUpper( ) << endl;
         byData.append( pEvent->GetData( ) );
 
         do {

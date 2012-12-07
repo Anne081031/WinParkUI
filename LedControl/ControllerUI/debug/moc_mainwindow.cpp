@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Thu Nov 8 13:31:10 2012
+** Created: Fri Dec 7 17:19:37 2012
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      15,   14, // methods
+      19,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -46,6 +46,10 @@ static const uint qt_meta_data_MainWindow[] = {
      349,  338,   11,   11, 0x08,
      381,  376,   11,   11, 0x08,
      419,  404,   11,   11, 0x08,
+     446,  275,   11,   11, 0x08,
+     485,  174,   11,   11, 0x08,
+     524,  174,   11,   11, 0x08,
+     564,  275,   11,   11, 0x08,
 
        0        // eod
 };
@@ -64,6 +68,10 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "HandleCmd(QByteArray,bool)\0data\0"
     "HandleData(QByteArray)\0strInfo,nIndex\0"
     "HandleQuery(QString,qint8)\0"
+    "on_tabWidgetDevice_currentChanged(int)\0"
+    "on_chkLightSensitiveFreq_clicked(bool)\0"
+    "on_chkLightSensitiveFlash_clicked(bool)\0"
+    "on_tabWidget_currentChanged(int)\0"
 };
 
 void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -87,6 +95,10 @@ void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 12: _t->HandleCmd((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 13: _t->HandleData((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
         case 14: _t->HandleQuery((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< qint8(*)>(_a[2]))); break;
+        case 15: _t->on_tabWidgetDevice_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 16: _t->on_chkLightSensitiveFreq_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 17: _t->on_chkLightSensitiveFlash_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 18: _t->on_tabWidget_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -124,9 +136,9 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 15)
+        if (_id < 19)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 15;
+        _id -= 19;
     }
     return _id;
 }

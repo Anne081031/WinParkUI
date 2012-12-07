@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
     a.setApplicationName( "parkdatareceiver" );
 
     MainWindow w;
-    //w.show();
+    w.show();
 
     return a.exec();
 }

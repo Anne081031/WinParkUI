@@ -22,6 +22,20 @@ const unsigned int  nLOCATION_SIZE = 128;
         unsigned char nFlowCtrl;
     } SComConfig;
 
+    typedef struct __SNewSysConfig {
+        unsigned char nFlashTime;
+        unsigned char nFlashRadiance;
+        unsigned char nFlashActivated;
+        unsigned char nFlashSwitch;
+        unsigned char nFlashMode;
+        unsigned char nFrequencyTime;
+        unsigned char nFrequencyRadiance;
+        unsigned char nFrequencyActivated;
+        unsigned char nFrequencySwitch;
+        unsigned char nFrequencyMode;
+        wchar_t cLocation[ nLOCATION_SIZE ];
+    } SNewSysConfig;
+
     typedef struct __SSysConfig {
         unsigned char nRunMode;
         unsigned char nSyncMode;
@@ -31,11 +45,12 @@ const unsigned int  nLOCATION_SIZE = 128;
         unsigned char nFrequencyRadiance;
         unsigned char nFlashTime;
         unsigned char nFlashRadiance;
+        SNewSysConfig sNewConfig;
         wchar_t cLocation[ nLOCATION_SIZE ];
     } SSysConfig;
 
     typedef enum __ECommand {
-        CmdFlashStateAlwaysRadianceChane, // Cmd 0x01
+        CmdFlashStateAlwaysRadianceChange, // Cmd 0x01
         CmdFlashFrenquencyIntensityTune, // 0x02
         CmdFlashGearSet, // 0x03
         CmdFrenquencyGearSet,
@@ -53,7 +68,9 @@ const unsigned int  nLOCATION_SIZE = 128;
         CmdLedTemperature, // New Device
         CmdLedFrequency,
         CmdLedWorkVoltage,
-        CmdLedExternalTriggerSignalState
+        CmdLedExternalTriggerSignalState,
+        CmdFlashRadianceChange,
+        CmdFrenquencyRadianceChange
     } ECommand;
 }
 

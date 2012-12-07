@@ -12,11 +12,15 @@ QThreadSP::QThreadSP(QObject *parent) :
     pController = NULL;
 }
 
-void QThreadSP::SetController( QControllerSP *pCtrlr )
+void QThreadSP::SetController( QControllerSP *pCtrl )
 {
-    pController = pCtrlr;
+    static bool bEnter = false;
 
-    connect( pController, SIGNAL( Data( QByteArray ) ), this, SLOT( HandleData( QByteArray ) ) );
+    if ( !bEnter ) {
+        pController = pCtrl;
+        connect( pController, SIGNAL( Data( QByteArray ) ), this, SLOT( HandleData( QByteArray ) ) );
+        bEnter = true;
+    }
 }
 
 void QThreadSP::SetDataReceiver( QThread *pThread )

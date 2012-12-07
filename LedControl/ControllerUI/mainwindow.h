@@ -4,6 +4,8 @@
 #include <QMainWindow>
 #include "../Controller/qcontroller.h"
 #include <QRadioButton>
+#include <QSpinBox>
+#include <QCheckBox>
 #include "../ControllerCmd/qcontrollercmd.h"
 
 namespace Ui {
@@ -28,6 +30,12 @@ private:
     inline void SetOldMaxSize( );
     inline void SetNewMaxSize( );
     inline void SetSize( qint32 nWidth, qint32 nHeight );
+    void SaveOldDevConfig( LedControll::SSysConfig& sConfig );
+    void SaveNewDevConfig( LedControll::SNewSysConfig& sConfig );
+    void SaveLocationConfig( QString& strLocation, wchar_t* pBuffer );
+    void GetLocationDefault( QString& strLocation, const bool bNewDev );
+    inline bool IsNewDevice( );
+    inline void SetNewFlash( QObject* pBox);
 
 private slots:
     void on_btnSet_clicked();
@@ -60,17 +68,34 @@ private slots:
 
     void HandleQuery( QString strInfo, qint8 nIndex );
 
+    void on_tabWidgetDevice_currentChanged(int index);
+
+    void on_chkLightSensitiveFreq_clicked(bool checked);
+
+    void on_chkLightSensitiveFlash_clicked(bool checked);
+
+    void on_tabWidget_currentChanged(int index);
+
 private:
     void DlgConfig( );
     void InitializeSlot( );
     void InitializeUI( );
-    void InitializeUI( const QString& strFile );
-    void InitializeUI( const LedControll::SSysConfig& sConfig );
+    void InitializeUI( const QString& strFile, const bool bNewDev );
+    void InitializeUI( const LedControll::SSysConfig& sConfig, const bool bNewDev );
     void SetQueryTemplate( );
+    inline void GetCheckBoxState( QHash< char, QRadioButton* >& hash,  char c );
+    void SetSpinBoxValue( const LedControll::SSysConfig& sConfig, const bool bNewDev );
+    void SetCheckBoxValue( const LedControll::SSysConfig& sConfig, const bool bNewDev );
+    void SetLocation( const LedControll::SSysConfig& sConfig, const bool bNewDev );
+    inline void SetFlash( const bool bValue );
+    inline bool GetFlash( );
 
 private:
     QHash< char, QRadioButton* > hashMode;
     QHash< char, QRadioButton* > hashSync;
+    QHash< char, QRadioButton* > hashFlashSync;
+    QHash< char, QRadioButton* > hashFreqSync;
+    QList< QObject* > lstFlashCtrl;
     
 private:
     Ui::MainWindow *ui;
@@ -79,7 +104,7 @@ private:
     bool bFlash;
     qint32 nModeIndex;
     QString strState;
-    QString strStateValue[ 12 ];
+    QString strStateValue[ 15 ];
     QByteArray byQueryCmd;
 };
 

@@ -25,18 +25,21 @@ void MainWindow::SetQueryTemplate( )
 {
     ui->edtState->clear( );
 
-    strState = "照度(光敏电阻) %1\n";
-    strState += "温度 %2摄氏度\n";
-    strState += "灯工作状态 %3\n";
-    strState += "频闪触发方式 %4\n";
-    strState += "闪光触发方式 %5\n";
-    strState += "频闪时间（百分比显示）频闪时间 %6%\n";
-    strState += "闪光时间（百分比显示）闪光时间 %7%\n";
-    strState += "频闪亮度（百分比显示）频闪亮度 %8%\n";
-    strState += "闪光亮度（百分比显示）闪光亮度 %9%\n";
-    strState += "频闪频率 %10Hz\n";
-    strState += "LED灯工作电压 %11伏\n";
-    strState += "外部触发信号状态 %12";
+    strState = "频闪照度(光敏电阻) %1\n";
+    strState += "闪光照度(光敏电阻) %2\n";
+    strState += "温度 %3摄氏度\n";
+    strState += "灯工作状态 %4\n";
+    strState += "频闪触发方式 %5\n";
+    strState += "闪光触发方式 %6\n";
+    strState += "频闪时间（百分比显示）频闪时间 %7%\n";
+    strState += "闪光时间（百分比显示）闪光时间 %8%\n";
+    strState += "频闪亮度（百分比显示）频闪亮度 %9%\n";
+    strState += "闪光亮度（百分比显示）闪光亮度 %10%\n";
+    strState += "频闪光敏（百分比显示）频闪光敏强度 %11%\n";
+    strState += "闪光光敏（百分比显示）闪光光敏强度 %12%\n";
+    strState += "频闪频率 %13Hz\n";
+    strState += "LED灯工作电压 %14伏\n";
+    strState += "外部触发信号状态 %15";
 }
 
 void MainWindow::InitializeUI( )
@@ -44,20 +47,23 @@ void MainWindow::InitializeUI( )
     ui->cbMode->setVisible( false );
     ui->btnQuery->setVisible( false );
     ui->chkQuery->setVisible( false );
+    ui->tabWidgetDevice->setCurrentIndex( 1 );
+    ui->tabWidget->setCurrentIndex( 1 );
 
     controllerCmd = QControllerCmd::GetSingleton( );
     GetQueryCmd( byQueryCmd );
 
     SetQueryTemplate( );
-    SetOldMaxSize( );
+    //SetOldMaxSize( );
 
     LedControll::SSysConfig sConfig;
     QControllerCommon::GetSystemConfig( sConfig );
-    InitializeUI( sConfig );
+    InitializeUI( sConfig, false );
+    InitializeUI( sConfig, true );
 
     connect( &controller, SIGNAL( Cmd( QByteArray, bool ) ), this, SLOT( HandleCmd( QByteArray, bool ) ) );
     connect( &controller, SIGNAL( Data( QByteArray ) ), this, SLOT( HandleData( QByteArray ) ) );
-    connect( &controller, SIGNAL( Query( QString,qint8 ) ), this, SLOT( HandleQuery( QString, qint8 ) ) );
+    connect( &controller, SIGNAL( Query( QString, qint8 ) ), this, SLOT( HandleQuery( QString, qint8 ) ) );
 }
 
 void MainWindow::HandleCmd( QByteArray data, bool bSend )
@@ -76,7 +82,7 @@ void MainWindow::HandleData( QByteArray data )
 
 void MainWindow::HandleQuery( QString strInfo, qint8 nIndex )
 {
-    if ( 1 > nIndex || 12 < nIndex ) {
+    if ( 1 > nIndex || 15 < nIndex ) {
         return;
     }
 
@@ -86,47 +92,98 @@ void MainWindow::HandleQuery( QString strInfo, qint8 nIndex )
     QString strText = strState.arg( strStateValue[ 0 ], strStateValue[ 1 ], strStateValue[ 2 ],
                                                     strStateValue[ 3 ], strStateValue[ 4 ], strStateValue[ 5 ],
                                                     strStateValue[ 6 ], strStateValue[ 7 ], strStateValue[ 8 ] );
-    strText = strText.arg( strStateValue[ 9 ], strStateValue[ 10 ], strStateValue[ 11 ] );
+    strText = strText.arg( strStateValue[ 9 ], strStateValue[ 10 ], strStateValue[ 11 ],
+                                      strStateValue[ 12 ], strStateValue[ 13 ], strStateValue[ 14 ] );
     ui->edtState->appendPlainText( strText );
 }
 
-void MainWindow::InitializeUI( const QString &strFile )
+void MainWindow::InitializeUI( const QString &strFile, const bool bNewDev )
 {
     LedControll::SSysConfig sConfig;
     QControllerCommon::GetSystemConfig( sConfig, strFile );
-    InitializeUI( sConfig );
+    InitializeUI( sConfig, bNewDev );
 }
 
-void MainWindow::InitializeUI( const LedControll::SSysConfig &sConfig )
+void MainWindow::GetCheckBoxState( QHash<char, QRadioButton *> &hash, char c )
 {
-    QRadioButton* pButton = hashMode.value( sConfig.nRunMode );
+    QRadioButton* pButton = hash.value( c );
     if ( NULL != pButton ) {
         pButton->setChecked( true );
     }
+}
 
-    bFlash = ( 1 <= sConfig.nRunMode && 4 >= sConfig.nRunMode );
-    SwitchModeUI( !bFlash );
+void MainWindow::SetSpinBoxValue( const LedControll::SSysConfig &sConfig, const bool bNewDev )
+{
+    if ( !bNewDev ) {
+        ui->spFlashLight->setValue( sConfig.nFlashRadiance );
+        ui->spFlashTime->setValue( sConfig.nFlashTime );
+        ui->spFreqLight->setValue( sConfig.nFrequencyRadiance );
+        ui->spFreqTime->setValue( sConfig.nFrequencyTime );
+    } else {
+        ui->spFlashLightNew->setValue( sConfig.sNewConfig.nFlashRadiance );
+        ui->spFlashTimeNew->setValue( sConfig.sNewConfig.nFlashTime );
+        ui->spFreqLightNew->setValue( sConfig.sNewConfig.nFrequencyRadiance );
+        ui->spFreqTimeNew->setValue( sConfig.sNewConfig.nFrequencyTime );
+        ui->spLightSensitiveFreq->setValue( sConfig.sNewConfig.nFrequencyActivated );
+        ui->spLightSensitiveFlash->setValue( sConfig.sNewConfig.nFlashActivated );
+    }
+}
 
-    pButton = hashSync.value( sConfig.nSyncMode );
-    if ( NULL != pButton ) {
-        pButton->setChecked( true );
+void MainWindow::SetCheckBoxValue( const LedControll::SSysConfig &sConfig, const bool bNewDev )
+{
+    if ( !bNewDev ) {
+        ui->chkBaseLight->setChecked( 0 != sConfig.nBaseRadiance );
+        ui->chkLightSensitive->setChecked( 0 != sConfig.nActivatedSwitch );
+    } else {
+        ui->chkLightSensitiveFlash->setChecked( 0 != sConfig.sNewConfig.nFlashSwitch );
+        ui->chkLightSensitiveFreq->setChecked( 0 != sConfig.sNewConfig.nFrequencySwitch );
+    }
+}
+
+void MainWindow::SetFlash( const bool bValue )
+{
+    bFlash = bValue;
+}
+
+bool MainWindow::GetFlash( )
+{
+    return bFlash;
+}
+
+void MainWindow::SetLocation( const LedControll::SSysConfig &sConfig, const bool bNewDev )
+{
+    QString strLocation;
+
+    if ( !bNewDev ) {
+        strLocation = QString::fromWCharArray( sConfig.cLocation );
+        ui->edtLocation->setText( strLocation );
+    } else {
+        strLocation = QString::fromWCharArray( sConfig.sNewConfig.cLocation );
+        ui->edtLocationNew->setText( strLocation );
+    }
+}
+
+void MainWindow::InitializeUI( const LedControll::SSysConfig &sConfig, const bool bNewDev )
+{
+    if ( bNewDev ) {
+        GetCheckBoxState( hashFlashSync, sConfig.sNewConfig.nFlashMode );
+        GetCheckBoxState( hashFreqSync, sConfig.sNewConfig.nFrequencyMode );
+    } else {
+        GetCheckBoxState( hashMode, sConfig.nRunMode );
+        GetCheckBoxState( hashSync, sConfig.nSyncMode );
     }
 
-    ui->spFlashLight->setValue( sConfig.nFlashRadiance );
-    ui->spFlashTime->setValue( sConfig.nFlashTime );
-    ui->spFreqLight->setValue( sConfig.nFrequencyRadiance );
-    ui->spFreqTime->setValue( sConfig.nFrequencyTime );
+    SetSpinBoxValue( sConfig, bNewDev );
+    SetCheckBoxValue( sConfig, bNewDev );
+    SetLocation( sConfig, bNewDev );
 
-    ui->chkBaseLight->setChecked( 0 != sConfig.nBaseRadiance );
-    ui->chkLightSensitive->setChecked( 0 != sConfig.nActivatedSwitch );
-
-    QString strLocation = QString::fromWCharArray( sConfig.cLocation );
-    ui->edtLocation->setText( strLocation );
+    SetFlash( 1 <= sConfig.nRunMode && 4 >= sConfig.nRunMode );
+    SwitchModeUI( !GetFlash( ) );
 }
 
 void MainWindow::InitializeSlot( )
 {
-    bFlash = false;
+    SetFlash( false );
     nModeIndex = 0;
 
     hashMode.insert( 1, ui->rb01 );
@@ -142,6 +199,22 @@ void MainWindow::InitializeSlot( )
     hashSync.insert( 2, ui->rbSync02 );
     hashSync.insert( 3, ui->rbSync03 );
 
+    hashFlashSync.insert( 1, ui->rbSync04 );
+    hashFlashSync.insert( 2, ui->rbSync05 );
+    hashFlashSync.insert( 3, ui->rbSync06 );
+
+    hashFreqSync.insert( 1, ui->rbSync07 );
+    hashFreqSync.insert( 2, ui->rbSync08 );
+    hashFreqSync.insert( 3, ui->rbSync09 );
+
+    lstFlashCtrl.append( ui->rbSync04 );
+    lstFlashCtrl.append( ui->rbSync05 );
+    lstFlashCtrl.append( ui->rbSync06 );
+    lstFlashCtrl.append( ui->chkLightSensitiveFlash );
+    lstFlashCtrl.append( ui->spFlashLightNew );
+    lstFlashCtrl.append( ui->spFlashTimeNew );
+    lstFlashCtrl.append( ui->spLightSensitiveFlash );
+
     connect( ui->rb01, SIGNAL( clicked( ) ), this, SLOT( OnRbModeXClicked( ) ) );
     connect( ui->rb02, SIGNAL( clicked( ) ), this, SLOT( OnRbModeXClicked( ) ) );
     connect( ui->rb03, SIGNAL( clicked( ) ), this, SLOT( OnRbModeXClicked( ) ) );
@@ -154,29 +227,45 @@ void MainWindow::InitializeSlot( )
     connect( ui->rbSync01, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
     connect( ui->rbSync02, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
     connect( ui->rbSync03, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    connect( ui->rbSync04, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    connect( ui->rbSync05, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    connect( ui->rbSync06, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    connect( ui->rbSync07, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    connect( ui->rbSync08, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    connect( ui->rbSync09, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
 
     connect( ui->spFlashLight, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
     connect( ui->spFlashTime, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
     connect( ui->spFreqLight, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
     connect( ui->spFreqTime, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
+
+    connect( ui->spFlashLightNew, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
+    connect( ui->spFlashTimeNew, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
+    connect( ui->spFreqLightNew, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
+    connect( ui->spFreqTimeNew, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
+    connect( ui->spLightSensitiveFlash, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
+    connect( ui->spLightSensitiveFreq, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
 }
 
 void MainWindow::GetQueryCmd( QByteArray &byData )
 {
     #if false
      //Query test cmd
-    FEFEFEFE68AAAAAAAAAAAA68910500030004000016
-    FEFEFEFE68AAAAAAAAAAAA689107010300041134560016
-    FEFEFEFE68AAAAAAAAAAAA68910502030004010016
-    FEFEFEFE68AAAAAAAAAAAA68910503030004020016
-    FEFEFEFE68AAAAAAAAAAAA6891050B030004010016
-    FEFEFEFE68AAAAAAAAAAAA68910504030004010016
-    FEFEFEFE68AAAAAAAAAAAA68910505030004020016
-    FEFEFEFE68AAAAAAAAAAAA68910506030004030016
-    FEFEFEFE68AAAAAAAAAAAA68910507030004040016
-    FEFEFEFE68AAAAAAAAAAAA68910508030004250016
-    FEFEFEFE68AAAAAAAAAAAA6891060903000411230016
-    FEFEFEFE68AAAAAAAAAAAA6891050A030004010016
+    FEFEFEFE68AAAAAAAAAAAA68910533363337330016
+    FEFEFEFE68AAAAAAAAAAAA68910541363337330016
+    FEFEFEFE68AAAAAAAAAAAA689107343633374467890016
+    FEFEFEFE68AAAAAAAAAAAA68910535363337340016
+    FEFEFEFE68AAAAAAAAAAAA68910536363337350016
+    FEFEFEFE68AAAAAAAAAAAA6891053E363337340016
+    FEFEFEFE68AAAAAAAAAAAA68910537363337340016
+    FEFEFEFE68AAAAAAAAAAAA68910538363337350016
+    FEFEFEFE68AAAAAAAAAAAA68910539363337360016
+    FEFEFEFE68AAAAAAAAAAAA6891053A363337370016
+    FEFEFEFE68AAAAAAAAAAAA6891053F363337380016
+    FEFEFEFE68AAAAAAAAAAAA68910540363337390016
+    FEFEFEFE68AAAAAAAAAAAA6891053B363337580016
+    FEFEFEFE68AAAAAAAAAAAA6891063C36333744560016
+    FEFEFEFE68AAAAAAAAAAAA6891053D363337340016
     #endif
 
     QByteArray data;
@@ -190,6 +279,9 @@ void MainWindow::GetQueryCmd( QByteArray &byData )
     //LedControll::CmdFlashFrenquencyIntensityTune bFlash true
 
 
+    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyLightSensitiveIfWork, data, nParam, bQuery, !bMode );
+    byData.append( data );
+
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyLightSensitiveIfWork, data, nParam, bQuery, bMode );
     byData.append( data );
 
@@ -202,13 +294,13 @@ void MainWindow::GetQueryCmd( QByteArray &byData )
     controllerCmd->GetNewCmd( LedControll::CmdSyncModeDownTrigger, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, false );
+    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, !bMode );
     byData.append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, bMode );
     byData.append( data );
 
-    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, false );
+    controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, !bMode );
     byData.append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, bMode );
@@ -226,6 +318,12 @@ void MainWindow::GetQueryCmd( QByteArray &byData )
     controllerCmd->GetNewCmd( LedControll::CmdSyncModeForFlash, data, nParam, bQuery, bMode );
     byData.append( data );
 
+    controllerCmd->GetNewCmd( LedControll::CmdFrenquencyRadianceChange, data, nParam, bQuery, !bMode );
+    byData.append( data );
+
+    controllerCmd->GetNewCmd( LedControll::CmdFlashRadianceChange, data, nParam, bQuery, bMode );
+    byData.append( data );
+
     qDebug( ) << byData.toHex( ).toUpper( ) << endl;
 }
 
@@ -234,7 +332,7 @@ void MainWindow::SendCmd( const bool bNewDevice, const LedControll::ECommand eCm
     QByteArray byData;
 
     if ( bNewDevice ) {
-        controllerCmd->GetNewCmd( eCmd, byData, nParam, ui->chkQuery->isChecked( ), bFlash );
+        controllerCmd->GetNewCmd( eCmd, byData, nParam, ui->chkQuery->isChecked( ), GetFlash( ) );
     } else {
         controllerCmd->GetOldCmd( eCmd, byData, nParam );
     }
@@ -252,7 +350,7 @@ qint32 MainWindow::GetRbIndex( QObject *pSender )
     }
 
     qint32 nIndex = strName.right( 2 ).toInt( );
-    if ( 8 < nIndex || 0 >= nIndex ) { // 1-- 8
+    if ( 9 < nIndex || 0 >= nIndex ) { // 1-- 9
         return 0;
     }
 
@@ -261,17 +359,17 @@ qint32 MainWindow::GetRbIndex( QObject *pSender )
 
 void MainWindow::ChangMode( qint32 nMode, const bool bNeedChange )
 {
-    bool bNewDevice = ui->chkDevType->isChecked( );
+    bool bNewDevice = IsNewDevice( );
 
     if ( bNewDevice ) {
-        nMode = ( bFlash ? 0x00000001 : 0x00000000 );
+        nMode = ( GetFlash( ) ? 0x00000001 : 0x00000000 );
     } else if ( bNeedChange ) {
         nMode |= 0xFF03D800;
     }
 
-    SendCmd( bNewDevice, bFlash ? LedControll::CmdFlashGearSet : LedControll::CmdFrenquencyGearSet, nMode );
+    SendCmd( bNewDevice, GetFlash( ) ? LedControll::CmdFlashGearSet : LedControll::CmdFrenquencyGearSet, nMode );
 
-    QString strTxt = QString( "目前处于:%1" ).arg( bFlash ? ui->lblFlash->text( ) : ui->lblFreq->text( ) );
+    QString strTxt = QString( "目前处于:%1" ).arg( GetFlash( ) ? ui->lblFlash->text( ) : ui->lblFreq->text( ) );
     ui->lblMode->setText( strTxt );
 }
 
@@ -285,16 +383,17 @@ void MainWindow::OnRbModeXClicked( )
 
     nModeIndex = nIndex;
 
-    bFlash = ( 5 > nIndex );
-    SwitchModeUI( !bFlash );
+    SetFlash( 5 > nIndex );
+    SwitchModeUI( !GetFlash( ) );
     ChangMode( nIndex, true );
 }
 
 void MainWindow::OnRbSyncXClicked( )
 {
-    qint32 nIndex = GetRbIndex( sender( ) );
+    QObject* pSender = sender( );
+    qint32 nIndex = GetRbIndex( pSender );
 
-    if ( 0 >= nIndex || 3 < nIndex ) {
+    if ( 0 >= nIndex || 9 < nIndex ) {
         return;
     }
 
@@ -302,19 +401,28 @@ void MainWindow::OnRbSyncXClicked( )
 
     switch ( nIndex ) {
     case 1 :
+    case 4 :
+    case 7 :
         eCmd = LedControll::CmdSyncModeDownTrigger;
         break;
 
     case 2 :
+    case 5 :
+    case 8 :
         eCmd = LedControll::CmdSyncModeUpTrigger;
         break;
 
     case 3 :
+    case 6 :
+    case 9 :
         eCmd = LedControll::CmdSyncModeFollowTrigger;
         break;
     }
 
-    bool bNewDevice = ui->chkDevType->isChecked( );
+    bool bNewDevice = IsNewDevice( );
+    if ( bNewDevice ) {
+        SetNewFlash(  pSender );
+    }
 
     if ( bNewDevice && 1 == ui->cbMode->currentIndex( ) ) {
         eCmd = LedControll::CmdSyncModeForFlash;
@@ -329,9 +437,13 @@ void MainWindow::OnSpXValueChanged( int nValue )
 {
     QSpinBox* pSB = ( QSpinBox* ) sender( );
     LedControll::ECommand eCmd;
-    bool bNewDevice = ui->chkDevType->isChecked( );
+    bool bNewDevice = IsNewDevice( );
 
-    if ( pSB == ui->spFlashTime ) { // 闪光灯
+    if ( bNewDevice ) {
+        SetNewFlash( pSB );
+    }
+
+    if ( pSB == ui->spFlashTime || pSB == ui->spFlashTimeNew ) { // 闪光灯
         eCmd = LedControll::CmdFlashFrenquencyGearWorkTimeSet;
         int iTrack = nValue;
 
@@ -355,7 +467,7 @@ void MainWindow::OnSpXValueChanged( int nValue )
             nValue = iTrack;
         }
 
-        if ( bFlash ) {
+        if ( GetFlash( ) ) {
             SendCmd( bNewDevice, eCmd, iTrack );
 
             if ( !bNewDevice ) {
@@ -364,7 +476,7 @@ void MainWindow::OnSpXValueChanged( int nValue )
                 ChangMode( nValue, false );
             }
         }
-    } else if ( pSB == ui->spFlashLight ) {
+    } else if ( pSB == ui->spFlashLight  || pSB == ui->spFlashLightNew ) {
         eCmd = LedControll::CmdFlashFrenquencyIntensityTune;
 
         if( bNewDevice ) {
@@ -375,7 +487,7 @@ void MainWindow::OnSpXValueChanged( int nValue )
             nValue &= 0x0000ffff;
         }
 
-        if ( bFlash ) {
+        if ( GetFlash( ) ) {
             SendCmd( bNewDevice, eCmd, nValue );
 
             if ( !bNewDevice ) {
@@ -389,7 +501,7 @@ void MainWindow::OnSpXValueChanged( int nValue )
                 ChangMode( nValue, false );
             }
         }
-    } else if ( pSB == ui->spFreqTime ) { // 频闪
+    } else if ( pSB == ui->spFreqTime || pSB == ui->spFreqTimeNew ) { // 频闪
         eCmd = LedControll::CmdFlashFrenquencyGearWorkTimeSet;
 
         if ( bNewDevice ) {
@@ -400,7 +512,7 @@ void MainWindow::OnSpXValueChanged( int nValue )
             nValue |= 0xff000000;
         }
 
-        if ( !bFlash ) {
+        if ( !GetFlash( ) ) {
             SendCmd( bNewDevice, eCmd, nValue );
         }
 
@@ -409,7 +521,7 @@ void MainWindow::OnSpXValueChanged( int nValue )
             nValue |= nModeIndex;
             ChangMode( nValue, false );
         }
-    } else if ( pSB == ui->spFreqLight ) {
+    } else if ( pSB == ui->spFreqLight || pSB == ui->spFreqLightNew ) {
         eCmd = LedControll::CmdFlashFrenquencyIntensityTune;
 
         if( bNewDevice ) {
@@ -419,7 +531,7 @@ void MainWindow::OnSpXValueChanged( int nValue )
             nValue &= 0x0000ffff;
         }
 
-        if ( !bFlash ) {
+        if ( !GetFlash( ) ) {
             SendCmd( bNewDevice, eCmd, nValue );
         }
 
@@ -433,6 +545,12 @@ void MainWindow::OnSpXValueChanged( int nValue )
             //nValue |= 0x
             ChangMode( nValue, false );
         }
+    } else if ( pSB == ui->spLightSensitiveFlash ) {
+        eCmd = LedControll::CmdFlashRadianceChange;
+        SendCmd( bNewDevice, eCmd, nValue );
+    } else if ( pSB == ui->spLightSensitiveFreq ) {
+        eCmd = LedControll::CmdFrenquencyRadianceChange;
+        SendCmd( bNewDevice, eCmd, nValue );
     }
 }
 
@@ -492,10 +610,8 @@ char MainWindow::GetSelectedRbIndex( QHash<char, QRadioButton *> &hash )
     return cRet;
 }
 
-void MainWindow::on_btnSaveSet_clicked()
+void MainWindow::SaveOldDevConfig ( LedControll::SSysConfig &sConfig )
 {
-    LedControll::SSysConfig sConfig;
-
     sConfig.nRunMode = GetSelectedRbIndex( hashMode );
     sConfig.nSyncMode = GetSelectedRbIndex( hashSync );
     sConfig.nFlashRadiance = ui->spFlashLight->value( );
@@ -504,11 +620,17 @@ void MainWindow::on_btnSaveSet_clicked()
     sConfig.nFrequencyTime = ui->spFreqTime->value( );
     sConfig.nActivatedSwitch = ui->chkLightSensitive->isChecked( ) ? 1 : 0;
     sConfig.nBaseRadiance = ui->chkBaseLight->isChecked( ) ? 1 : 0;
+}
 
-    QString strLocation = ui->edtLocation->text( );
+void MainWindow::GetLocationDefault( QString &strLocation, const bool bNewDev )
+{
     if ( strLocation.isEmpty( ) ) {
-        strLocation = "未设置";
+        strLocation = QString( "%1设备未设置" ).arg( bNewDev ? "新" : "老" );
     }
+}
+
+void MainWindow::SaveLocationConfig( QString &strLocation, wchar_t *pBuffer )
+{
     const wchar_t* pData = ( wchar_t* ) strLocation.utf16( );
     qint32 nLen = strLocation.length( );
     qint32 nRealLen = LedControll::nLOCATION_SIZE - 1;
@@ -516,7 +638,43 @@ void MainWindow::on_btnSaveSet_clicked()
         strLocation.remove( nRealLen, nLen - nRealLen );
     }
 
-    wcscpy( sConfig.cLocation, pData );
+    wcscpy( pBuffer, pData );
+}
+
+void MainWindow::SaveNewDevConfig( LedControll::SNewSysConfig &sConfig )
+{
+    sConfig.nFlashTime = ui->spFlashTimeNew->value( );
+    sConfig.nFlashRadiance = ui->spFlashLightNew->value( );
+    sConfig.nFlashActivated = ui->spLightSensitiveFlash->value( );
+    sConfig.nFlashSwitch = ui->chkLightSensitiveFlash->isChecked( ) ? 1 : 0;
+    sConfig.nFlashMode = GetSelectedRbIndex( hashFlashSync ) ;
+
+    sConfig.nFrequencyTime = ui->spFreqTimeNew->value( );
+    sConfig.nFrequencyRadiance = ui->spFreqLightNew->value( );
+    sConfig.nFrequencyActivated = ui->spLightSensitiveFreq->value( );
+    sConfig.nFrequencySwitch = ui->chkLightSensitiveFreq->isChecked( ) ? 1 : 0;
+    sConfig.nFrequencyMode = GetSelectedRbIndex( hashFreqSync ) ;
+}
+
+void MainWindow::on_btnSaveSet_clicked()
+{
+    LedControll::SSysConfig sConfig;
+    //ZeroMemory( &sConfig, sizeof ( sConfig ) );
+
+    bool bNewDevice = IsNewDevice( );
+    QString strLocation;
+
+    //if ( bNewDevice ) {
+        strLocation = ui->edtLocationNew->text( );
+        GetLocationDefault( strLocation, bNewDevice );
+        SaveNewDevConfig( sConfig.sNewConfig );
+        SaveLocationConfig( strLocation, sConfig.sNewConfig.cLocation );
+    //} else {
+        strLocation = ui->edtLocation->text( );
+        GetLocationDefault( strLocation, bNewDevice );
+        SaveOldDevConfig( sConfig );
+        SaveLocationConfig( strLocation, sConfig.cLocation );
+    //}
 
     QControllerCommon::SaveSystemConfig( sConfig );
 
@@ -526,6 +684,19 @@ void MainWindow::on_btnSaveSet_clicked()
     QControllerCommon::SaveSystemConfig( sConfig, strPath );
 
     QControllerCommon::MsgBox( NULL, "提示" , QString( "配置成功保存到\r\n【%1】" ).arg( strPath ), QMessageBox::Information );
+}
+
+bool MainWindow::IsNewDevice( )
+{
+    return ui->chkDevType->isChecked( );
+}
+
+void MainWindow::SetNewFlash( QObject *pBox )
+{
+    bool bValue = lstFlashCtrl.contains( pBox );
+    SetFlash( bValue );
+
+    ui->cbMode->setCurrentIndex( bValue ? 1 : 0 );
 }
 
 void MainWindow::on_tbnReadSet_clicked()
@@ -544,7 +715,7 @@ void MainWindow::on_tbnReadSet_clicked()
        return;
    }
 
-    InitializeUI( lstFiles.at( 0 ) );
+    InitializeUI( lstFiles.at( 0 ), IsNewDevice( ) );
 }
 
 void MainWindow::on_btnTestFlash_clicked()
@@ -554,7 +725,7 @@ void MainWindow::on_btnTestFlash_clicked()
     static bool bOpen = false;
 
     qint32 nParam = bOpen ? 0x00000003 : 0x00000001;
-    SendCmd( ui->chkDevType->isChecked( ),
+    SendCmd( IsNewDevice( ),
              bOpen ? LedControll::CmdTestFlashOpen : LedControll::CmdTestFlashClose, nParam );
     bOpen = !bOpen;
 
@@ -602,7 +773,7 @@ void MainWindow::SetNewMaxSize( )
 
 void MainWindow::on_chkLightSensitive_clicked(bool checked)
 {
-    bool bNewDevice = ui->chkDevType->isChecked( );
+    bool bNewDevice = IsNewDevice( );
     qint32 nParam = 0;
     if ( bNewDevice ) {
         nParam = checked ? 0x00000000 : 0x00000001;
@@ -616,16 +787,41 @@ void MainWindow::on_chkLightSensitive_clicked(bool checked)
 void MainWindow::on_chkBaseLight_clicked(bool checked)
 {
     qint32 nParam = checked ? 0xFF03D801 : 0xFF03D800;
-    SendCmd( ui->chkDevType->isChecked( ), LedControll::CmdFlashGearAlwaysRadianceClose, nParam );
+    SendCmd( IsNewDevice( ), LedControll::CmdFlashGearAlwaysRadianceClose, nParam );
 }
 
 void MainWindow::on_cbMode_currentIndexChanged(int index)
 {
-    bFlash = ( 0 != index );
+    SetFlash( 0 != index );
     ChangMode( index, false );
 }
 
 void MainWindow::on_btnQuery_clicked()
 {
     controller.WriteData( byQueryCmd, true );
+}
+
+void MainWindow::on_tabWidget_currentChanged(int index)
+{
+    ui->chkDevType->setChecked( 0 != index );
+}
+
+void MainWindow::on_chkLightSensitiveFreq_clicked(bool checked)
+{
+    SetNewFlash( sender( ) );
+    on_chkLightSensitive_clicked( checked );
+}
+
+void MainWindow::on_chkLightSensitiveFlash_clicked(bool checked)
+{
+    SetNewFlash( sender( ) );
+    on_chkLightSensitive_clicked( checked );
+}
+
+void MainWindow::on_tabWidgetDevice_currentChanged(int index)
+{
+    if ( 0 == index && IsNewDevice( ) ) {
+        ui->chkQuery->setChecked( true );
+        on_btnQuery_clicked( );
+    }
 }

@@ -94,7 +94,7 @@ void QCmdGenerator::GetFrenquencyGearSet( const qint32 nGear, QByteArray &body )
 void QCmdGenerator::GetOldCmdBody( QByteArray &body, LedControll::ECommand eCmd, qint32 nParam )
 {
     switch ( eCmd ) {
-    case LedControll::CmdFlashStateAlwaysRadianceChane : // 0x01
+    case LedControll::CmdFlashStateAlwaysRadianceChange : // 0x01
         GetFlashStateAlwaysRadianceChane( body );
         break;
 
@@ -146,6 +146,8 @@ void QCmdGenerator::GetOldCmdBody( QByteArray &body, LedControll::ECommand eCmd,
     case LedControll::CmdLedWorkVoltage :
     case LedControll::CmdLedExternalTriggerSignalState :
     case LedControll::CmdSyncModeForFlash :
+    case LedControll::CmdFlashRadianceChange :
+    case LedControll::CmdFrenquencyRadianceChange :
         break;
     }
 }
@@ -184,7 +186,7 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
     QByteArray byDataDomain;
 
     switch ( eCmd ) {
-    case LedControll::CmdFlashStateAlwaysRadianceChane : // Cmd 0x01
+    case LedControll::CmdFlashStateAlwaysRadianceChange : // Cmd 0x01
         break;
 
     case LedControll::CmdFlashFrenquencyIntensityTune : // 0x02
@@ -217,6 +219,7 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
         break;
 
     case LedControll::CmdFlashFrenquencyLightSensitiveIfWork : // 0x08
+        nDI |= bFlash ? 0x0000000E : 0x00000000;
         cDataLen += 1;
         byData.append( ( char ) nParam );
         break;
@@ -251,6 +254,18 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
 
     case LedControll::CmdSyncModeForFlash :
         nDI |= 0x0000000B;
+        cDataLen += 1;
+        byData.append( ( char ) nParam );
+        break;
+
+    case LedControll::CmdFlashRadianceChange :
+        nDI |= 0x0000000C;
+        cDataLen += 1;
+        byData.append( ( char ) nParam );
+        break;
+
+    case LedControll::CmdFrenquencyRadianceChange :
+        nDI |= 0x0000000D;
         cDataLen += 1;
         byData.append( ( char ) nParam );
         break;

@@ -36,6 +36,7 @@ void QControllerSP::ReceiveData( )
     }
 
     QByteArray byData = winPort->readAll( );
+    //qDebug( ) << byData.toHex( ).toUpper( ) << endl;
     emit Data( byData );
 }
 

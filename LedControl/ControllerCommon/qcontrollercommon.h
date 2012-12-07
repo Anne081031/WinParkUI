@@ -34,6 +34,9 @@ private:
     static void SaveSystemConfig( LedControll::SSysConfig &sConfig, QSettings& settings );
     static void GetSystemConfig( LedControll::SSysConfig &sConfig, QSettings& settings );
 
+    static void SaveLocation( QSettings& settings, wchar_t* pBuffer, const bool bNewDevice );
+    static void GetLocation( QSettings& settings, wchar_t* pBuffer, const bool bNewDevice );
+
 protected:
     QControllerCommon();
 };

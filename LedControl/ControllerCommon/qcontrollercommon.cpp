@@ -169,9 +169,29 @@ void QControllerCommon::SaveSystemConfig( LedControll::SSysConfig &sConfig, QSet
     settings.setValue( "System/FlashTime", sConfig.nFlashTime );
     settings.setValue( "System/FlashRadiance", sConfig.nFlashRadiance );
 
-    sConfig.cLocation[ LedControll::nLOCATION_SIZE - 1 ] = 0;
-    QString strLocation = QString::fromWCharArray( sConfig.cLocation );
-    settings.setValue( "System/Location", strLocation );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    settings.setValue( "System/NewFlashTime", sConfig.sNewConfig.nFlashTime );
+    settings.setValue( "System/NewFlashRadiance", sConfig.sNewConfig.nFlashRadiance );
+    settings.setValue( "System/NewFlashActivated", sConfig.sNewConfig.nFlashActivated );
+    settings.setValue( "System/NewFlashSwitch", sConfig.sNewConfig.nFlashSwitch );
+    settings.setValue( "System/NewFlashMode", sConfig.sNewConfig.nFlashMode );
+
+    settings.setValue( "System/NewFrequencyTime", sConfig.sNewConfig.nFrequencyTime );
+    settings.setValue( "System/NewFrequencyRadiance", sConfig.sNewConfig.nFrequencyRadiance );
+    settings.setValue( "System/NewFrequencyActivated", sConfig.sNewConfig.nFrequencyActivated );
+    settings.setValue( "System/NewFrequencySwitch", sConfig.sNewConfig.nFrequencySwitch );
+    settings.setValue( "System/NewFrequencyMode", sConfig.sNewConfig.nFrequencyMode );
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    SaveLocation( settings, sConfig.cLocation, false );
+    SaveLocation( settings, sConfig.sNewConfig.cLocation, true );
+}
+
+void QControllerCommon::SaveLocation( QSettings& settings, wchar_t *pBuffer, const bool bNewDevice )
+{
+    pBuffer[ LedControll::nLOCATION_SIZE - 1 ] = 0;
+    QString strLocation = QString::fromWCharArray( pBuffer );
+    settings.setValue( QString( "System/Location%1" ).arg( bNewDevice ? "New" : "" ), strLocation );
 }
 
 void QControllerCommon::SaveSystemConfig( LedControll::SSysConfig &sConfig )
@@ -198,7 +218,29 @@ void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig, QSett
     sConfig.nFlashTime = settings.value( "System/FlashTime", 0 ).toUInt( );
     sConfig.nFlashRadiance = settings.value( "System/FlashRadiance", 0 ).toUInt( );
 
-    QString strLocation = settings.value( "System/Location", "未设置" ).toString( );
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    sConfig.sNewConfig.nFlashTime = settings.value( "System/NewFlashTime", 0 ).toUInt( );
+    sConfig.sNewConfig.nFlashRadiance = settings.value( "System/NewFlashRadiance", 0 ).toUInt( );
+    sConfig.sNewConfig.nFlashActivated = settings.value( "System/NewFlashActivated", 0 ).toUInt( );
+    sConfig.sNewConfig.nFlashSwitch = settings.value( "System/NewFlashSwitch", 0 ).toUInt( );
+    sConfig.sNewConfig.nFlashMode = settings.value( "System/NewFlashMode", 1 ).toUInt( );
+
+    sConfig.sNewConfig.nFrequencyTime = settings.value( "System/NewFrequencyTime", 0 ).toUInt( );
+    sConfig.sNewConfig.nFrequencyRadiance = settings.value( "System/NewFrequencyRadiance", 0 ).toUInt( );
+    sConfig.sNewConfig.nFrequencyActivated = settings.value( "System/NewFrequencyActivated", 0 ).toUInt( );
+    sConfig.sNewConfig.nFrequencySwitch = settings.value( "System/NewFrequencySwitch", 0 ).toUInt( );
+    sConfig.sNewConfig.nFrequencyMode = settings.value( "System/NewFrequencyMode", 1 ).toUInt( );
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    GetLocation( settings, sConfig.cLocation, false );
+    GetLocation( settings, sConfig.sNewConfig.cLocation, true );
+}
+
+void QControllerCommon::GetLocation( QSettings &settings, wchar_t *pBuffer, const bool bNewDevice )
+{
+    QString strKey = QString( "System/Location%1" ).arg( bNewDevice ? "New" : "" );
+    QString strDefault = QString( "%1设备未设置" ).arg( bNewDevice ? "新" : "老" );
+    QString strLocation = settings.value( strKey, strDefault ).toString( );
     const wchar_t* pData = ( wchar_t* ) strLocation.utf16( );
     qint32 nLen = strLocation.length( );
     qint32 nRealLen = LedControll::nLOCATION_SIZE - 1;
@@ -206,7 +248,7 @@ void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig, QSett
         strLocation.remove( nRealLen, nLen - nRealLen );
     }
 
-    wcscpy( sConfig.cLocation, pData );
+    wcscpy( pBuffer, pData );
 }
 
 void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig )

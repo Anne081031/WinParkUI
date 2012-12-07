@@ -21,6 +21,8 @@ private:
     inline void GetLedFlashTime( QByteArray& data, QString& strInfo );
     inline void GetLedFreqBrightness( QByteArray& data, QString& strInfo );
     inline void GetLedFlashBrightness( QByteArray& data, QString& strInfo );
+    inline void GetLedFlashRadiance( QByteArray& data, QString& strInfo );
+    inline void GetLedFrenquencyRadiance( QByteArray& data, QString& strInfo );
     inline void GetLedFrequency( QByteArray& data, QString& strInfo );
     inline void GetLedWorkVoltage( QByteArray& data, QString& strInfo );
     inline void GetLedExternalTriggerSignalState( QByteArray& data, QString& strInfo );

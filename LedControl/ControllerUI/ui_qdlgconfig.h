@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'qdlgconfig.ui'
 **
-** Created: Wed Nov 7 12:42:09 2012
+** Created: Fri Dec 7 15:29:31 2012
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
