@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!-- saved from url=(0074)http://resources.esri.com/help/9.3/arcgisserver/apis/rest/formattypes.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
+  
+  <meta name="taxonomy" content="Resource Center/ArcGIS Server/Developer Help/API Reference">
+            <meta name="product" content="ArcGIS Server 9.3;ArcGIS Server for the Microsoft .NET Framework 9.3;ArcGIS Server for the Java Platform 9.3">
+            <meta name="devAPI" content="REST">
+<title>Output formats</title>
+  <link href="./Rest Output formats_files/jsdoc.css" type="text/css" rel="stylesheet">
+
+</head>
+<body>
+<font size="-2">
+<a target="_top" href="http://resources.esri.com/help/9.3/arcgisserver/apis/rest/index.html?formattypes.html">FRAMES</a>
+| <a target="_top" href="./Rest Output formats_files/Rest Output formats.htm">NO FRAMES</a>
+</font>
+
+<div id="pageBanner">Output formats</div>
+
+<div id="nstext">
+
+<p>The REST API supports responses in several formats.  You specify the response format using the query parameter <code>f</code>.  A list of valid formats is included for each of the resources and operations where <code>f</code> is a parameter.</p>
+
+<ul>
+  <li><b>f=html</b>:  Default format unless otherwise stated.  The response is an HTML page. The set of these HTML pages for each resource in the system is called the <a href="http://resources.esri.com/help/9.3/arcgisserver/apis/rest/servicesdirectory.html">Services Directory</a>.
+
+<p>To view the Services Directory page for the root directory of ArcGIS Online, you would use the following URL:</p>
+
+<p></p><div class="detailSample">
+<pre><a href="http://server.arcgisonline.com/arcgis/rest/services" target="_new">http://server.arcgisonline.com/arcgis/rest/services?<b>f=html</b></a></pre>
+</div><p></p>
+
+<p>Note that since "html" is the default value, you are not required to include this parameter in the URL. This means that the above URL is equivalent to the following URL:</p>
+
+<p></p><div class="detailSample">
+<pre><a href="http://server.arcgisonline.com/arcgis/rest/services" target="_new">http://server.arcgisonline.com/arcgis/rest/services</a></pre>
+</div><p></p>
+</li>
+  <li><b>f=json</b>:  The response is a <a href="http://json.org/" target="_new">JSON</a> object.  This format is used primarily by the JavaScript APIs.
+
+<p>To retrieve the information in a JSON object, you would use the following URL:</p>
+
+<p></p><div class="detailSample">
+<pre><a href="http://server.arcgisonline.com/arcgis/rest/services?f=json" target="_new">http://server.arcgisonline.com/arcgis/rest/services?<b>f=json</b></a></pre>
+</div><p></p>
+
+<p>You can also reference a callback function in the URL:</p>
+<p></p><div class="detailSample">
+<pre>http://server.arcgisonline.com/arcgis/rest/services?<b>f=json&amp;callback=myMethod</b></pre>
+</div><p></p>
+
+<p>If you want the JSON object to be more readable, you can use <code>pjson</code>.  You should not include this parameter in your production applications as it will affect performance.  Use the parameter for debugging purposes only.  </p>
+
+<p></p><div class="detailSample">
+<pre><a href="http://server.arcgisonline.com/arcgis/rest/services?f=pjson" target="_new">http://server.arcgisonline.com/arcgis/rest/services?<b>f=pjson</b></a>
+</pre></div>
+<p></p>
+
+</li>
+
+	<li><b>f=image</b>:  The response is a streamed image. No other information is included in the response.
+
+<p></p><div class="detailSample">
+<code>
+<a href="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer/export?bbox=-117,35.79,-122,42.38&f=image" target="_new">http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer/export?bbox=-117,35.79,-122,42.38&amp;<b>f=image</b></a>
+</code>
+</div><p></p>
+
+</li>
+	<li><b>f=help</b>:  The response is a context sensitive help document. The following URL opens the Help on the page that provides information about the map service resource:
+
+<p></p><div class="detailSample">
+<code><a href="http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_Imagery_World_2D/MapServer?f=help" target="_new">http://server.arcgisonline.com/ArcGIS/rest/services/ESRI_Imagery_World_2D/MapServer?<b>f=help</b></a></code>
+</div><p></p>
+
+</li>
+
+	<li><b>f=lyr</b>:  Generates a layer file for viewing in ArcMap:
+
+<p></p><div class="detailSample">
+<code><a href="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?f=lyr" target="_new">http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?<b>f=lyr</b></a></code>
+</div><p></p>
+
+</li>
+
+	<li><b>f=nmf</b>:  Generates a layer file for viewing in ArcGIS Explorer:
+
+<p></p><div class="detailSample">
+<code><a href="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?f=nmf" target="_new">http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?<b>f=nmf</b></a></code>
+</div><p></p>
+
+</li>
+
+	<li><b>f=jsapi</b>:  The response is a Web page for viewing a map service in a Web browser using the ArcGIS JavaScript API.
+
+<p></p><div class="detailSample">
+<code><a href="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?f=jsapi" target="_new">http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?<b>f=jsapi</b></a></code>
+</div><p></p>
+
+</li>
+
+	<li><b>f=ve</b>:  The response is a Web page for viewing a map service in a Web browser using Virtual Earth.  Note that this format is supported only when the service is cached and in the Web mercator projection (102113):
+
+<p></p><div class="detailSample">
+<code><a href="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?f=ve" target="_new">http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?<b>f=ve</b></a></code>
+</div><p></p>
+
+</li>
+
+	<li><b>f=gmaps</b>:  The response is a Web page for viewing a map service in a Web browser using Google maps.  Note that this format is supported  only when the service is cached and in the Web mercator projection (102113):
+
+<p></p><div class="detailSample">
+<code><a href="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?f=gmaps" target="_new">http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Portland/ESRI_LandBase_WebMercator/MapServer?<b>f=gmaps</b></a></code>
+</div><p></p>
+
+</li>
+
+	<li><b>f=kmz</b>:  The response is a KML document wrapped in a KMZ file.  It may be a footprint or the result of an operation.
+
+<p>In the following example, a request is made for a KML footprint of a map service with an extent of the United States:</p>
+
+<p></p><div class="detailSample">
+<code><a href="http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer?f=kmz" target="_new">http://sampleserver1.arcgisonline.com/ArcGIS/rest/services/Specialty/ESRI_StateCityHighway_USA/MapServer?<b>f=kmz</b></a></code>
+</div><p></p>
+
+<p>For more information about kml as an output option, see <a href="http://resources.esri.com/help/9.3/arcgisserver/apis/rest/kmlinfo.html">KML support</a>.</p>
+</li>
+</ul>
+
+
+
+
+
+<br>
+</div> <!--nstext-->
+
+
+</body></html>

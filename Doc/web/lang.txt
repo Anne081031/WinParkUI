@@ -1,3 +1,11 @@
+/////////////
+Data-Driven Programming PowerBuilder LightSwitch
+
+Spiceworks SNMP
+anne081031@hotmail.com
+zcypanasonic@hotmail.com
+///////////////////////////////////
+
 http://www.w3school.com.cn
 http://www.json.org/
 
@@ -18,7 +26,18 @@ FireFox / XPCOM
 
 Developer Tools / 查看 调试网页 JavaScript 的执行等等
 
-/////////////////
+///////////////// REST API / SOAP API / Web API / SOA( Web Service )
+Java:
+http://<host>:8399/argis/rest
+.NET:
+http://<host>/arcgis/rest
+
+Reponse Format = html json xml
+f=html: Default format unless otherwise stated. The response is an HTML page.
+f=json: The response is a JSON object. This format is used primarily by the JavaScript APIs. PJSON pJSON is the JSON serialization format for reading and writing data into a Vesper datastore.
+f=image: The response is a streamed image. No other information is included in the response.
+f=help: The response is a context sensitive help document.
+
 表述由数据、描述数据的元数据、以及（有时候存在的）描述元数据的元数据组成（通
 常用来验证消息的完整性）。元数据以名称-值对的形式出现，其中的名称对应于一个定义
 值的结构和语义的标准。响应消息可以同时包括表述元数据和资源元数据（关于资源的信息，
@@ -37,3 +56,35 @@ Pull ( Polling ) / Push ( Event ) Style
 Publisher / Subscribor Push Style
 REST Pull Style
 /////////////////////
+CRUD Create Read Update Delete / Database Insert Select Update Delete / Http Post Get Put Delete( Method )
+SOA WebService ( SOAP WSDL / REST )
+通过基于 REST 的 API 公开系统资源是一种灵活的方法，可以为不同种类的应用程序提供以标准方式格式化的数据。
+Mashup (web application hybrid) Ajax
+FirefoxOS
+ChromeOS
+https://wiki.mozilla.org/WebAPI
+http://restfulobjects.org/
+
+
+浏览器要发出跨域的请求时必须要得到被请求域的许可 浏览器一次访问多域/多服务器
+CORS Cross Origin Resource Sharing / Html iframe 早期方法
+
+/////////////////////////////
+XML Modeling / XMLSPY 常用UML工具PowerDesigner 常用UML工具ROSE 常用UML工具VISIO 常用UML工具Star UML
+Umbrello UML Modeller ( UML ) http://www.spiceworks.com/product/
+Model Driven Architecture (MDA) is a software design approach for the development of software systems.
+platform-independent model (PIM) ( DSL ) --->Compiler---> platform-specific models (PSMs)
+
+Domain-Driven Design (DDD)
+Restful Objects
+The Restful Objects specification defines a set of RESTful resources, and corresponding JSON representations, for accessing and manipulating a domain object model. 
+http://restfulobjects.org/
+用例驱动 UML
+
+Server-side Client-side
+frontend backend
+OData is a Web API for Data Access and manipulation
+OData Protocol / Open Data Protocol
+http://www.odata.org/libraries
+
+General-purpose programming language (GPL) / C C++ C## Java .... /  domain-specific language (DSL) HTML SQL VHDL...

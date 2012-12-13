@@ -546,10 +546,14 @@ void CProcessData::ClearSenseImage( QByteArray &byData )
     if ( bQueue ) {
         if ( !imgQueue[ nChannel ].isEmpty( ) ) {
             strFile = imgQueue[ nChannel ].dequeue( );
+
+            imgQueue[ nChannel ].clear( ) ;
         }
     } else {
         if ( !imgStack[ nChannel ].isEmpty( ) ) {
             strFile = imgStack[ nChannel ].pop( );
+
+            imgStack[ nChannel ].clear( );
         }
     }
 
@@ -569,6 +573,8 @@ void CProcessData::CaptureSenseImage( QByteArray &byData, CommonDataType::Captur
     QString strCardNo = "Sense" + QString::number( QDateTime::currentMSecsSinceEpoch( ) );
     GetCaptureFile( strFileName, strCardNo, nChannel, capType );
     pMainWindow->CaptureImage( strFileName, nChannel, capType  );
+
+    LoadCapturedImg( strFileName, nChannel );
 
     if ( bHavePlateRecog ) {
         QString strTmp;
@@ -597,20 +603,25 @@ void CProcessData::CaptureImage( QString& strCardNo, int nChannel, CommonDataTyp
     pSettings->sync( );
     bool bQueue = pSettings->value( "CommonCfg/SenseGetImg", true ).toBool( );
     bool bEmpty = bQueue ? imgQueue[ nChannel ].isEmpty( ) : imgStack[ nChannel ].isEmpty( );
+    bool bFault = false;
 
     //if ( imgQueue[ nChannel ].isEmpty( ) ) {
     if ( bEmpty ) {
         pMainWindow->CaptureImage( strFileName, nChannel, capType );
+        bFault = true;
     } else {
         //QString strTmpFile = imgQueue[ nChannel ].dequeue( );
         QString strTmpFile = bQueue ? imgQueue[ nChannel ].dequeue( ) : imgStack[ nChannel ].pop( );
         QFile file( strTmpFile );
         if ( !file.rename( strFileName ) ) {
             pMainWindow->CaptureImage( strFileName, nChannel, capType );
+            bFault = true;
         }
     }
 
-    LoadCapturedImg( strFileName, nChannel );
+    if ( bCardCapture[ nChannel ] || bFault ) {
+        LoadCapturedImg( strFileName, nChannel );
+    }
 }
 
 void CProcessData::LoadEntranceImg( QString &strCardNo, CommonDataType::CaptureImageType capType )

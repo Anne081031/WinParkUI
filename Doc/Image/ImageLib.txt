@@ -16,7 +16,7 @@ curl is a tool to transfer data from or to a server, using one of the supported 
 FreeType is a software font engine that is designed to be small, efficient, highly customizable and portable while capable of producing high-quality output (glyph images). http://www.freetype.org
 
 
-SDL
+SDL http://www.libsdl.org/
 Simple DirectMedia Layer is a cross-platform multimedia library designed to provide low level access to audio, keyboard, mouse, joystick, 3D hardware via OpenGL, and 2D video framebuffer. It is used by MPEG playback software, emulators, and many popular games, including the award winning Linux port of "Civilization: Call To Power." http://www.libsdl.org/ http://tjumyk.github.com/sdl-tutorial-cn/
 
 .Net性能分析工具
