@@ -1,0 +1,6 @@
+Struts2.pdf 18
+JSP语法，内置对象
+
+基于Action框架 Struts
+
+基于Component框架 JSF Tapestry WebPart AJAX

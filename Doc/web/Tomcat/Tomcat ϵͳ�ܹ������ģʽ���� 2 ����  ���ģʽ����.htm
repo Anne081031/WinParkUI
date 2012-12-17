@@ -1,0 +1,1140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0055)http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Tomcat 系统架构与设计模式，第 2 部分: 设计模式分析</title>
+<meta http-equiv="PICS-Label" content="(PICS-1.1 &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0) &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))">
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+  <meta name="Owner" content="dw@cn.ibm.com">
+  <meta name="DC.Language" scheme="rfc1766" content="zh-CN">
+  <meta name="IBM.Country" content="CN">
+<meta name="Security" content="Public">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.PageAttributes" content="sid=1003,1004">
+<meta name="Source" content="v16 Template Generator">
+<meta name="Robots" content="index,follow">
+<meta name="Abstract" content="这个分为两个部分的系列文章研究了 Apache Tomcat 服务器的系统架构以及其运用的很多经典设计模式。第 1 部分分析了 Tomcat 的工作原理，第 2 部分将分析 Tomcat 中运用的许多经典设计模式，如模版模式、工厂模式和单例模式等。通过学习它们的实践运用能给我们以后的软件设计起到一定的借鉴作用。">
+<meta name="Description" content="这个分为两个部分的系列文章研究了 Apache Tomcat 服务器的系统架构以及其运用的很多经典设计模式。第 1 部分分析了 Tomcat 的工作原理，第 2 部分将分析 Tomcat 中运用的许多经典设计模式，如模版模式、工厂模式和单例模式等。通过学习它们的实践运用能给我们以后的软件设计起到一定的借鉴作用。">
+<meta name="Keywords" content="Java, Apache Tomcat, 设计模式, 系统架构, tttjca, tttosca">
+<meta name="DC.Date" scheme="iso8601" content="2010-05-27">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="TT300">
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCJVACN">
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2010">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2010-05-27">
+<meta name="title" content="Tomcat 系统架构与设计模式，第 2 部分: 设计模式分析">
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/all.css" media="all" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/print.css" media="print" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+
+<!-- dW-specific CSS -->
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dw-local-site.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/jquery.cluetip.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+
+<!-- JPP: LOCAL URL FOR TESTING V16 DEFIANT MASTHEAD/FOOTER -->
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dw-mf2012-01.css" rel="stylesheet" title="www" type="text/css">
+<link href="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dw-mf-cn.css" rel="stylesheet" title="www" type="text/css">
+<script src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/ibmcommon.js" type="text/javascript">//</script><link rel="search" type="application/opensearchdescription+xml" href="http://www.ibm.com/search/opensearch/description.xml" title="IBM Search">
+<script src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dynamicnav.js" type="text/javascript">//</script>
+<script language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" type="text/javascript">
+  // <![CDATA[
+
+ dwr = {};
+  dwr.clickhere = '点击评分';
+  dwr.starIntro = ''; 
+  dwr.stars = '星';
+  dwr.star = '星'; 
+  dwr.avgRatingOf = '平均分';
+  dwr.youRated = '您的评分是';
+  dwr.avgRating = '平均分';
+  dwr.basedOnVote = '共 {1} 个评分'; // {1} to be substitue by code
+  dwr.basedOnVotes = '共 {1} 个评分';
+  dwr.leftParen = '（'; 
+  dwr.rightParen = ' ）'; 
+  dwr.space = ' '; 
+  dwr.yourRating = '您的评分';
+dwr.avgRating2 = '总共 {1} 评分的平均分';
+dwr.avgRating3 = '平均分{1} 星';
+dwr.rateThisArticle = '为本文评分';
+dwr.votes = '{1}个评分';
+dwr.vote = '{1}个评分';
+dwr.submitErr = '错误：提交失败，请重试。';
+dwr.noRatingErr = '错误：请选择一个评分并重新提交。';
+dwr.submit = '提交';
+// ]]>
+</script>
+
+<!-- Rating_START -->
+<script language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+  .metavalue {
+  display: none;
+  }
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('dwchina');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+  <!-- Include file support -->
+  <script language="JavaScript" type="text/javascript">
+    (function($) {
+    jQuery.extend({
+    getInc: function(u,d){
+    if(u==null)return;
+    jQuery.ajax({
+    type: "GET",
+    url: u,
+    dataType: "text",
+    success: function(t) {
+    jQuery(d).html(t);
+    ibmCommon.initShowHide(jQuery(d).children()[0]);	
+    },
+    async: true
+    });
+    }
+    });
+    })(jQuery);
+  </script>
+<script id="flashdetect" type="text/javascript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/flash-detect.js" charset="UTF-8"></script><script id="mhMenu" type="text/javascript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/cnzh-utf8.js" charset="UTF-8"></script><script id="wiBundle" type="text/javascript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/Controller" charset="UTF-8"></script></head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#ibm-content">跳转到主要内容</a></div>
+<div id="ibm-masthead-dw">
+  
+    <!-- TOP ROW -->    
+    <div id="dw-masthead-top-row">
+    	<ul id="ibm-mast-options-dw" class="cn">
+    		<li id="dw-mast-top-0"> 	
+    			<a class="" href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&lang=zh&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-tomcat2%2F" title="">登录 (或注册)</a>
+    		</li>
+    		<li id="dw-mast-top-1" class="dw-mast-top-1-cn">
+    			<a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#SELECTLANG">中文</a><img class="dw-preload" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/arrow-down-active.gif" width="8" height="7" alt="">
+    		</li>
+    		<li id="dw-mast-top-2" class="dw-mf-hide">
+    			<a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/photo.do" alt="PHOTO" class="dw-mast-profimg" width="20" height="20"> [userid]</a>
+    		</li>
+    		<li id="dw-mast-top-3">
+    			<a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/ibm-smlogo.gif" width="44" height="16" alt="IBM®"></a>
+    		</li>
+    	</ul>
+	</div>
+    
+    <!-- TOP ROW SLIDER -->
+    <div id="ibm-my-menu-dw">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+                <!-- Sign-in -->
+                <div class="dw-mast-columns">                
+					<div class="dw-mast-col-1-1">
+						<div id="dw-mast-sso">
+							<!--<div id="dw-mast-sso-reg">
+								<p class="dw-mast-sso-reg-cn">如果您还没有注册到 IBM 注册系统，我们为给您带来的不便表示道歉，并请您马上注册。 							
+									<a href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh&amp;d='+encodeURIComponent(location.href);})();">现在注册</a>。</p>
+							</div>-->
+							<div id="signin_error_mf" class="no-display"></div>
+							<div id="dw-mast-sso-form">
+								<form id="sForm_mf" action="" method="post" name="sForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-sso-id" class="dw-mast-sso-id-cn">
+										<label for="ibmid_mf">IBM ID：</label>
+										<input id="ibmid_mf" type="text" value="" name="ibmid_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,&#39;mf&#39;);" class="">
+									</div>
+									<div id="dw-mast-sso-pw" class="dw-mast-sso-pw-cn">
+										<label for="pw_mf">密码：</label>
+										<input id="pw_mf" type="password" value="" name="pw_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,&#39;mf&#39;);" class="">
+									</div>
+									<div id="dw-mast-sso-target" class="dw-mast-sso-target-cn">
+										<p class="dw-mf-perm-box">
+											<input id="perm_mf" type="checkbox" name="perm_name_mf"><label for="perm_mf"> 保持登录。</label>
+										</p>
+									</div>
+									<div id="dw-mast-sso-terms">
+										<p class="dw-mast-sso-terms-cn">单击提交则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/mydeveloperworks/terms?lang=zh">查看条款和条件</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn-cn" name="ibm_submit_name_mf" value="提交" onclick="signin(&#39;mf&#39;);return false;" type="submit">
+									</div>
+								</form>
+							</div>
+							<div id="dw-mast-sso-update">
+								<div id="dw-mast-sso-update-id">
+									<ul>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="(function () {window.location=&#39;/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d=&#39;+encodeURIComponent(location.href);})();">需要一个 IBM ID？</a></li>
+										
+									<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a></li>
+									</ul>
+								</div>
+								<div id="dw-mast-sso-update-pw">
+								<ul class="dw-mf-pwupdate">
+									<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(getAuthUrl())+&#39;%3Fm%3Dloginpage%26lang%3Dzh_CN%26d%3D&#39;+encodeURIComponent(location.href);})();">忘记密码？</a></li>
+									<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(location.href);})();">更改您的密码</a></li>
+								</ul>
+									</div>
+							</div>
+							<div id="dw-mast-sso-text">
+								<p>当您初次登录到 developerWorks 时，将会为您创建一份概要信息。<strong>您在 developerWorks 概要信息中选择公开的信息将公开显示给其他人，但您可以随时修改这些信息的显示状态。</strong>您的姓名（除非选择隐藏）和昵称将和您在 developerWorks 发布的内容一同显示。</p>
+								<p class="dw-mf-secure-cn">所有提交的信息确保安全。</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>	
+						</div>
+						
+						<div id="dw-mast-dname" class="dw-mf-hide">
+							<p>当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+							<div id="signin_dname_error_mf" class="no-display"></div>
+							<div id="dw-mast-dname-form">
+								<form id="dForm_mf" action="" method="post" name="dForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-dname-mf">
+										<label for="dname_mf">昵称：</label>
+										<input id="dname_mf" name="dname_name_mf" maxlength="31" size="25" value="" type="text" onkeypress="handleEP(event,this.form,&#39;mf&#39;);">
+									</div>
+									<div id="dw-mast-dname-terms">
+										<p class="dw-mast-dname-terms-cn">单击<strong>提交</strong>则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/mydeveloperworks/terms?lang=zh">查看条款和条件</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn-cn" name="dname_submit_name_mf" value="提交" onclick="signin(&#39;mf&#39;);return false;" type="submit">
+									</div>
+								</form>								
+							</div>
+							<div id="dw-mast-dname-secure">
+								<p class="dw-mf-secure-cn">所有提交的信息确保安全。</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>	
+						</div>
+	
+						<div id="dw-mast-auth" class="dw-mf-hide">
+							<div>
+
+								<h2>My developerWorks:</h2>
+								<ul>
+									<li><a id="dw-mast-top-0-0" href="http://www.ibm.com/developerworks/mydeveloperworks/profiles/html/myProfileView.do?lang=zh">我的概要信息</a></li>
+									<li><a href="http://www.ibm.com/developerworks/mydeveloperworks/homepage?lang=zh">我的首页</a></li>
+									<li><a href="http://www.ibm.com/developerworks/mydeveloperworks/groups/service/html/mycommunities?lang=zh">我的群组</a></li>
+								</ul>     
+							</div>
+							<div id="dw-mast-notify" class="dw-mf-hide">
+								<h2>我的通知：</h2>
+								<ul>
+									<li><a id="new_notify" href="http://www.ibm.com/developerworks/mydeveloperworks/homepage?lang=zh">{[num_notify] 个新通知}([num_notify] 个新通知)</a></li>
+									<li><a id="new_invite" href="http://www.ibm.com/developerworks/mydeveloperworks/profiles/html/wc.do?action=in&requireAuth=true&widgetId=friends&lang=[lang]">{[num_invite] 个网络请求}([num_invite] 个网络请求)</a></li>  
+								</ul>
+							</div>
+							<div class="dw-mast-more">
+								<ul class="ibm-link-list">
+									<li><a class="dw-more-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="signOut(); return false;"><strong>退出</strong></a></li>
+								</ul>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>		
+						</div>
+						
+					</div>
+                	
+                </div>
+                <!-- Site selector --> 
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<h2>选择语言：</h2>
+						<ul>
+							<li><a id="dw-mast-top-1-0" href="http://www.ibm.com/developerworks/">English</a></li>
+							<li><a href="http://www.ibm.com/developerworks/cn/">中文</a></li>
+							<li><a href="http://www.ibm.com/developerworks/jp/">日本語</a></li>
+						    <li><a href="http://www.ibm.com/developerworks/ru/">Русский</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/br/">Português (Brasil)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ssa/">Español</a></li>
+							<li><a href="http://www.ibm.com/developerworks/vn/">Việt</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-lang"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+                <div class="dw-mast-columns"><!-- Authenticated --></div>
+                <!-- IBM -->
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<ul>
+							<li><a id="dw-mast-top-3-0" href="http://www.ibm.com/cn/zh/">IBM 主页</a></li>
+							<li><a href="http://www.ibm.com/solutions/cn/zh/">解决方案</a></li>
+							<li><a href="http://www.ibm.com/software/cn/">软件</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2 dw-mast-ibm">
+						<ul>
+							<li><a href="http://www.ibm.com/support/cn/zh/">支持门户</a></li>
+							<li><a href="http://www.ibm.com/support/documentation/cn/zh/">产品文档</a></li>
+							<li><a href="http://www.ibm.com/redbooks/">Redbooks（英文）</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-ibm-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div> 
+				</div>
+			</div>
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div id="ibm-universal-nav-dw">
+        <ul id="ibm-unav-links-dw">
+        	<li id="ibm-unav-home-dwlogo">
+        		<a href="http://www.ibm.com/developerworks/cn/"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dw-wordmark.gif" width="218" height="32" alt="developerWorks®"></a>
+        	</li>
+        </ul>
+    	<ul id="ibm-menu-links-dw" class="ibm-menu-links-dw-cn">
+    		
+    		<li id="dw-mast-nav-0"><a href="http://www.ibm.com/developerworks/cn/topics">技术主题</a></li>
+    		<li id="dw-mast-nav-1"><a href="http://www.ibm.com/developerworks/cn/downloads/">软件下载</a></li>
+    		<li id="dw-mast-nav-2"><a href="https://www.ibm.com/developerworks/community/?lang=zh">社区</a></li>
+    		<li id="dw-mast-nav-3"><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&lang=zh">技术讲座</a></li>
+    	</ul>   
+    	<form id="ibm-search-form" action="http://www.ibm.com/search/csass/search/" method="get" name="form1">
+    		<input type="hidden" name="sn" value="dw">
+    		<input type="hidden" name="lang" value="zh">
+    		<input type="hidden" name="cc" value="CN">
+    		<input type="hidden" name="en" value="utf">
+    		<input type="hidden" name="hpp" value="20">
+    		<input type="hidden" name="dws" value="cndw">
+    		<input type="hidden" name="lo" value="zh">
+    		<p>
+    			<label for="q"><img alt="查询:" height="1" width="1" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif"></label>
+    			<input type="text" value="搜索 developerWorks" name="q" maxlength="100" id="q">
+    			<input type="submit" id="ibm-search" class="ibm-btn-search ibm-btn-search-cn" name="Search" value="搜索">
+    		</p>
+    	</form>
+    </div>
+    
+    <!-- BOTTOM ROW SLIDER -->
+    <div id="ibm-common-menu-dw">
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Technical topics category -->
+  
+            	<div class="dw-mast-columns">
+            	<div class="dw-mast-col-5-1">
+            		<h2><a id="dw-mast-nav-0-0" href="http://www.ibm.com/developerworks/cn/topics/">技术主题</a></h2>
+            		
+            		<ul>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/agile/">Agile
+            			    transformation</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/aix/">AIX and UNIX</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/bigdata/">Big data</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/cloud/">Cloud computing</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/ibmi/">IBM i</a></li>
+            			
+            		</ul>     
+            	</div>
+            	<div class="dw-mast-col-5-2">
+            		
+            		<ul>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/data/">Information management</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/java/">Java technology</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/linux/">Linux</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/lotus/">Lotus</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/mobile/">Mobile
+            		        development</a></li>
+           			
+            		</ul>
+            	</div>
+            	<div class="dw-mast-col-5-3">
+            		
+            		<ul>
+          			<li><a href="http://www.ibm.com/developerworks/cn/opensource/">Open source</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/rational/">Rational</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/webservices/">SOA and web services</a></li>
+             			<li><a href="http://www.ibm.com/developerworks/cn/web/">Web development</a></li>  
+            			<li><a href="http://www.ibm.com/developerworks/cn/websphere/">WebSphere</a></li>     
+    
+            		</ul>
+            		
+            	</div>
+            	<div class="dw-mast-col-5-4">
+            		<ul>
+           			<li><a href="http://www.ibm.com/developerworks/cn/xml/">XML</a></li>
+            		</ul>        
+            	</div>
+            	<div class="dw-mast-col-5-5">
+            		<ul>
+            			<li><a href="http://www.ibm.com/developerworks/cn/library/"><strong>文档库</strong></a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/products/"><strong>产品 A - Z</strong></a></li>				    
+            		</ul>        
+            	</div>
+            	<div class="dw-mast-close">
+            		<ul>
+            			<li><div class="dw-mast-close-tech-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+            		</ul>
+            	</div>
+            </div>
+            	<!-- Evaluation software category -->
+            	<div class="dw-mast-columns">
+            		<div class="dw-mast-col-2-1">
+            			<h2><a id="dw-mast-nav-1-0" href="http://www.ibm.com/developerworks/cn/downloads">软件下载</a></h2>
+            			<ul>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#data">Information management</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#lotus">Lotus</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#rational">Rational</a></li>
+            			</ul>            
+            		</div>
+            		<div class="dw-mast-col-2-2">
+            			<ul>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#tivoli">Tivoli</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#websphere">WebSphere</a></li>
+            				
+            			</ul>            
+            		</div>
+            		<div class="dw-mast-close">
+            			<ul>
+            				<li><div class="dw-mast-close-eval-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+            			</ul>
+            		</div>
+            	</div>
+            	<!-- Community category -->
+            	<div class="dw-mast-columns">
+            		<div class="dw-mast-col-2-1">
+            			<h2><a id="dw-mast-nav-2-0" href="https://www.ibm.com/developerworks/community/?lang=zh">社区</a></h2>
+            			<ul>
+            				<li><a href="https://www.ibm.com/developerworks/community/homepage/?lang=zh">我的首页</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/profiles/home.do?lang=zh">概要信息</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/groups/service/html/allcommunities?lang=zh">群组</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/mydeveloperworks/blogs/?lang=zh">博客</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/bookmarks/html?lang=zh">书签</a></li>  
+            			</ul>     
+            		</div>
+            		<div class="dw-mast-col-2-2">
+            			<ul>
+            				<!--	<li><a href="">Forums</a></li> -->
+            				<li><a href="https://www.ibm.com/developerworks/mydeveloperworks/wikis/home?lang=zh">Wiki</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/files/app?lang=zh">文件</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/activities/service/html/mainpage?lang=zh#dashboard,myactivities">活动</a></li>
+            				<!--	<li><a href="">Podcasts</a></li> -->    
+            			</ul>
+            		</div>
+            		<div class="dw-mast-close">
+            			<ul>
+            				<li><div class="dw-mast-close-comm-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+            			</ul>
+            		</div>
+            	</div>
+            	<!-- Events category -->
+            	<div class="dw-mast-columns">
+            		<div class="dw-mast-col-1-1">
+            			<h2><a id="dw-mast-nav-3-0" href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&lang=zh">技术讲座</a></h2>
+            			<ul>
+            				<li><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&lang=zh">技术讲座</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/cn/swi/">多媒体课堂</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/find/webcasts/">网络广播（英文）</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/find/events/">查找活动（技术讲座，网络广播，会议等）（英文）</a></li> 
+            			</ul>            
+            		</div>
+            		<div class="dw-mast-close">
+            			<ul>
+            				<li><div class="dw-mast-close-event-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+            			</ul>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
+	
+</div>
+<div id="fdiv" class="ibm-access"><embed type="application/x-shockwave-flash" src="https://www.ibm.com/developerworks/js/dw-mf/connect.swf" width="1" height="1" id="sflash" name="sflash" quality="high" menu="false" wmode="window" movie="https://www.ibm.com/developerworks/js/dw-mf/connect.swf" swliveconnect="true" allowscriptaccess="always"></div>
+<!-- MASTHEAD_END --><!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+      <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/cn/">developerWorks 中国</a></li><li><a href="http://www.ibm.com/developerworks/cn/java/">Java technology</a></li><li><a href="http://www.ibm.com/developerworks/cn/views/java/libraryview.jsp">文档库</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>Tomcat 系统架构与设计模式，第 2 部分: 设计模式分析</h1><p>
+</p></div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#author1">许 令波</a>, Java 开发工程师, 淘宝网</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print" style="display: none;">许令波，现就职于淘宝网，是一名 Java 开发工程师。对大型互联网架构设计颇感兴趣，并对一些开源框架也有比较深入的研究。</div>
+<p></p>
+  <p><strong>简介：</strong>&nbsp;这个分为两个部分的系列文章研究了 Apache Tomcat 服务器的系统架构以及其运用的很多经典设计模式。<a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/">第 1 部分</a> 分析了 Tomcat 的工作原理，第 2 部分将分析 Tomcat 中运用的许多经典设计模式，如模版模式、工厂模式和单例模式等。通过学习它们的实践运用能给我们以后的软件设计起到一定的借鉴作用。</p>
+
+ 
+</div>
+
+<div class="ibm-column ibm-second">
+
+<p class="leading"><b>发布日期：</b>&nbsp;2010 年 5 月 27 日
+  
+<br><b>级别：</b>&nbsp;中级
+    
+
+<br><strong>访问情况 ：</strong>&nbsp;23182 次浏览
+  <br><strong>评论：</strong>&nbsp;<span id="nCmts">3&nbsp;(<a class="dw-view-comment" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#icomments">查看</a>&nbsp;|&nbsp;<a onclick="showSignIn();return false;" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#">添加评论</a> - 登录)</span>
+  <!-- Rating_Area_Begin -->
+  </p><div id="art-rating-summary"><img alt="平均分 4 星 共 64 个评分" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/stars120x20-4b.jpg" class="dw-avg-rating"> 平均分 (64个评分)<br><a class="dw-view-comment" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#iratings">为本文评分</a></div>
+  <!-- Rating_Area_End -->
+  <br>
+<p></p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area_And_Overlays_Begin -->
+
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p><a name="major1"><span class="atitle">门面设计模式</span></a></p>
+			<p>门面设计模式在 Tomcat 中有多处使用，在 Request 和 Response 对象封装中、Standard Wrapper 到 ServletConfig 封装中、ApplicationContext 到 ServletContext 封装中等都用到了这种设计模式。</p>
+			<p><a name="minor1.1"><span class="smalltitle">门面设计模式的原理</span></a></p>
+			<p>这么多场合都用到了这种设计模式，那这种设计模式究竟能有什么作用呢？顾名思义，就是将一个东西封装成一个门面好与人家更容易进行交流，就像一个国家的外交部一样。</p>
+			<p>这种设计模式主要用在一个大的系统中有多个子系统组成时，这多个子系统肯定要涉及到相互通信，但是每个子系统又不能将自己的内部数据过多的暴露给其它系统，不然就没有必要划分子系统了。每个子系统都会设计一个门面，把别的系统感兴趣的数据封装起来，通过这个门面来进行访问。这就是门面设计模式存在的意义。</p>
+			<p>门面设计模式示意图如下：</p>
+			
+				<br><a name="fig1"><b>图 1. 门面示意图</b></a><br>
+				<img alt="图 1. 门面示意图" height="213" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/image001.jpg" width="365">
+			<br>
+			<p>Client 只能访问到 Façade 中提供的数据是门面设计模式的关键，至于 Client 如何访问 Façade 和 Subsystem 如何提供 Façade 门面设计模式并没有规定死。</p>
+			<p><a name="minor1.2"><span class="smalltitle">Tomcat 的门面设计模式示例</span></a></p>
+			<p>Tomcat 中门面设计模式使用的很多，因为 Tomcat 中有很多不同组件，每个组件要相互交互数据，用门面模式隔离数据是个很好的方法。</p>
+			<p>下面是 Request 上使用的门面设计模式：</p>
+			
+				<br><a name="fig2"><b>图 2. Request 的门面设计模式类图</b></a><br>
+				<img alt="图 2. Request 的门面设计模式类图" height="497" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/image002.png" width="572">
+			<br>
+			<p>从图中可以看出 HttpRequestFacade 类封装了 HttpRequest 接口能够提供数据，通过 HttpRequestFacade 访问到的数据都被代理到 HttpRequest 中，通常被封装的对象都被设为 Private 或者 Protected 访问修饰，以防止在 Façade 中被直接访问。</p>
+			<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major2"><span class="atitle">观察者设计模式</span></a></p>
+			<p>这种设计模式也是常用的设计方法通常也叫发布 - 订阅模式，也就是事件监听机制，通常在某个事件发生的前后会触发一些操作。</p>
+			<p><a name="minor2.1"><span class="smalltitle">观察者模式的原理</span></a></p>
+			<p>观察者模式原理也很简单，就是你在做事的时候旁边总有一个人在盯着你，当你做的事情是它感兴趣的时候，它就会跟着做另外一些事情。但是盯着你的人必须要到你那去登记，不然你无法通知它。观察者模式通常包含下面这几个角色：</p>
+			<ul>
+				<li>Subject 就是抽象主题：它负责管理所有观察者的引用，同时定义主要的事件操作。</li>
+				<li>ConcreteSubject 具体主题：它实现了抽象主题的所有定义的接口，当自己发生变化时，会通知所有观察者。</li>
+				<li>Observer 观察者：监听主题发生变化相应的操作接口。</li>
+			</ul>
+			<p><a name="minor2.2"><span class="smalltitle">Tomcat 的观察者模式示例</span></a></p>
+			<p>Tomcat 中观察者模式也有多处使用，前面讲的控制组件生命周期的 Lifecycle 就是这种模式的体现，还有对 Servlet 实例的创建、Session 的管理、Container 等都是同样的原理。下面主要看一下 Lifecycle 的具体实现。</p>
+			<p>Lifecycle 的观察者模式结构图：</p>
+			
+				<br><a name="fig3"><b>图 3. Lifecycle 的观察者模式结构图</b></a><br>
+				<img alt="图 3. Lifecycle 的观察者模式结构图" height="506" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/image003.png" width="531">
+			<br>
+			<p>上面的结构图中，LifecycleListener 代表的是抽象观察者，它定义一个 lifecycleEvent 方法，这个方法就是当主题变化时要执行的方法。 ServerLifecycleListener 代表的是具体的观察者，它实现了 LifecycleListener 接口的方法，就是这个具体的观察者具体的实现方式。Lifecycle 接口代表的是抽象主题，它定义了管理观察者的方法和它要所做的其它方法。而 StandardServer 代表的是具体主题，它实现了抽象主题的所有方法。这里 Tomcat 对观察者做了扩展，增加了另外两个类：LifecycleSupport、LifecycleEvent，它们作为辅助类扩展了观察者的功能。LifecycleEvent 使得可以定义事件类别，不同的事件可区别处理，更加灵活。LifecycleSupport 类代理了主题对多观察者的管理，将这个管理抽出来统一实现，以后如果修改只要修改 LifecycleSupport 类就可以了，不需要去修改所有具体主题，因为所有具体主题的对观察者的操作都被代理给 LifecycleSupport 类了。这可以认为是观察者模式的改进版。</p>
+			<p>LifecycleSupport 调用观察者的方法代码如下：</p>
+			<br><a name="listing1"><b>清单 1. LifecycleSupport 中的 fireLifecycleEvent 方法</b></a><br><table width="100%" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td class="code-outline"><pre class="displaycode">				
+public void fireLifecycleEvent(String type, Object data) {
+    LifecycleEvent event = new LifecycleEvent(lifecycle, type, data);
+    LifecycleListener interested[] = null;
+    synchronized (listeners) {
+        interested = (LifecycleListener[]) listeners.clone();
+    }
+    for (int i = 0; i &lt; interested.length; i++)
+        interested[i].lifecycleEvent(event);
+}
+</pre></td></tr></tbody></table><br>
+			<p>主题是怎么通知观察者呢？看下面代码：</p>
+			<br><a name="listing2"><b>清单 2. 容器中的 start 方法</b></a><br><table width="100%" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td class="code-outline"><pre class="displaycode">				
+public void start() throws LifecycleException {
+    lifecycle.fireLifecycleEvent(BEFORE_START_EVENT, null);
+    lifecycle.fireLifecycleEvent(START_EVENT, null);
+    started = true;
+    synchronized (services) {
+        for (int i = 0; i &lt; services.length; i++) {
+            if (services[i] instanceof Lifecycle)
+                ((Lifecycle) services[i]).start();
+            }
+        }
+    lifecycle.fireLifecycleEvent(AFTER_START_EVENT, null);
+}
+</pre></td></tr></tbody></table><br>
+			<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major3"><span class="atitle">命令设计模式</span></a></p>
+			<p>前面把 Tomcat 中两个核心组件 Connector 和 Container，比作一对夫妻。男的将接受过来的请求以命令的方式交给女主人。对应到 Connector 和 Container，Connector 也是通过命令模式调用 Container 的。</p>
+			<p><a name="minor3.1"><span class="smalltitle">命令模式的原理</span></a></p>
+			<p>命令模式主要作用就是封装命令，把发出命令的责任和执行命令的责任分开。也是一种功能的分工。不同的模块可以对同一个命令做出不同解释。</p>
+			<p>下面是命令模式通常包含下面几个角色：</p>
+			<ul>
+				<li>Client：创建一个命令，并决定接受者</li>
+				<li>Command 命令：命令接口定义一个抽象方法</li>
+				<li>ConcreteCommand：具体命令，负责调用接受者的相应操作</li>
+				<li>Invoker 请求者：负责调用命令对象执行请求</li>
+				<li>Receiver 接受者：负责具体实施和执行一次请求</li>
+			</ul>
+			<p><a name="minor3.2"><span class="smalltitle">Tomcat 中的命令模式的示例</span></a></p>
+			<p>Tomcat 中命令模式在 Connector 和 Container 组件之间有体现，Tomcat 作为一个应用服务器，无疑会接受到很多请求，如何分配和执行这些请求是必须的功能。</p>
+			<p>下面看一下 Tomcat 是如何实现命令模式的，下面是 Tomcat 命令模式的结构图：</p>
+			
+				<br><a name="fig4"><b>图 4. Tomcat 命令模式的结构图</b></a><br>
+				<img alt="图 4. Tomcat 命令模式的结构图" height="376" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/image004.png" width="572">
+			<br>
+			<p>Connector 作为抽象请求者，HttpConnector 作为具体请求者。HttpProcessor 作为命令。Container 作为命令的抽象接受者，ContainerBase 作为具体的接受者。客户端就是应用服务器 Server 组件了。Server 首先创建命令请求者 HttpConnector 对象，然后创建命令 HttpProcessor 命令对象。再把命令对象交给命令接受者 ContainerBase 容器来处理命令。命令的最终是被 Tomcat 的 Container 执行的。命令可以以队列的方式进来，Container 也可以以不同的方式来处理请求，如 HTTP1.0 协议和 HTTP1.1 的处理方式就会不同。</p>
+			<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major4"><span class="atitle">责任链模式</span></a></p>
+			<p>Tomcat 中一个最容易发现的设计模式就是责任链模式，这个设计模式也是 Tomcat 中 Container 设计的基础，整个容器的就是通过一个链连接在一起，这个链一直将请求正确的传递给最终处理请求的那个 Servlet。</p>
+			<p><a name="minor4.1"><span class="smalltitle">责任链模式的原理</span></a></p>
+			<p>责任链模式，就是很多对象有每个对象对其下家的引用而连接起来形成一条链，请求在这条链上传递，直到链上的某个对象处理此请求，或者每个对象都可以处理请求，并传给下一家，直到最终链上每个对象都处理完。这样可以不影响客户端而能够在链上增加任意的处理节点。</p>
+			<p>通常责任链模式包含下面几个角色：</p>
+			<ul>
+				<li>Handler（抽象处理者）：定义一个处理请求的接口</li>
+				<li>ConcreteHandler（具体处理者）：处理请求的具体类，或者传给下家</li>
+			</ul>
+			<p><a name="minor4.2"><span class="smalltitle">Tomcat 中责任链模式示例</span></a></p>
+			<p>在 tomcat 中这种设计模式几乎被完整的使用，tomcat 的容器设置就是责任链模式，从 Engine 到 Host 再到 Context 一直到 Wrapper 都是通过一个链传递请求。</p>
+			<p>Tomcat 中责任链模式的类结构图如下：</p>
+			
+				<br><a name="fig5"><b>图 5. Tomcat 责任链模式的结构图</b></a><br>
+				<img alt="图 5. Tomcat 责任链模式的结构图" height="718" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/image005.jpg" width="512">
+			<br>
+			<p>上图基本描述了四个子容器使用责任链模式的类结构图，对应的责任链模式的角色，Container 扮演抽象处理者角色，具体处理者由 StandardEngine 等子容器扮演。与标准的责任链不同的是，这里引入了 Pipeline 和 Valve 接口。他们有什么作用呢？</p>
+			<p>实际上 Pipeline 和 Valve 是扩展了这个链的功能，使得在链往下传递过程中，能够接受外界的干预。Pipeline 就是连接每个子容器的管子，里面传递的 Request 和 Response 对象好比管子里流的水，而 Valve 就是这个管子上开的一个个小口子，让你有机会能够接触到里面的水，做一些额外的事情。</p>
+			<p>为了防止水被引出来而不能流到下一个容器中，每一段管子最后总有一个节点保证它一定能流到下一个子容器，所以每个容器都有一个 StandardXXXValve。只要涉及到这种有链式是处理流程这是一个非常值得借鉴的模式。</p>
+		<!-- CMA ID: 492842 --> <!-- Site ID: 10 --> <!-- XSLT stylesheet used to transform this file:  dw-article-6.0-beta.xsl -->
+<br>
+<p><a name="resources"><span class="atitle">参考资料 </span></a></p><p><b>学习</b></p><ul><li>查看本系列的第 1 部分：“<a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/">Tomcat 系统原理分析</a>”。<br><br></li><li>“<a href="http://www.ibm.com/developerworks/cn/edu/j-dw-java-tomcat-i.html">面向初级 Web 开发人员的 Tomcat</a>”（developerWorks，2005 年 10 月）：Apache Tomcat 应用服务器不再是高级 Web 系统开发人员的专用领域。在本教程中，Sing Li 将向初级 Web 开发人员展示如何利用他们当前的 Java 开发技能，使用 Tomcat 编写服务器端 JSP、servlet 和 Web 服务。<br><br></li><li>
+				<a href="http://www.ibm.com/developerworks/apps/SendTo?bookstore=safari">技术书店</a>：浏览关于这些和其他技术主题的图书。<br><br></li><li>
+				<a href="http://www.ibm.com/developerworks/cn/java/">developerWorks Java 技术专区</a>：数百篇关于 Java 编程各个方面的文章。<br><br></li></ul><p><b>讨论</b></p><ul><li>加入 <a href="http://www.ibm.com/developerworks/mydeveloperworks" onmouseover="linkQueryAppend(this)">developerWorks 社区</a>。<br><br></li><li>查看 <a href="http://www.ibm.com/developerworks/blogs/" onmouseover="linkQueryAppend(this)">developerWorks 博客</a> 的最新信息。<br><br></li></ul>
+<p><a name="author"><span class="atitle">关于作者</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><p><a name="author1"> </a>许令波，现就职于淘宝网，是一名 Java 开发工程师。对大型互联网架构设计颇感兴趣，并对一些开源框架也有比较深入的研究。</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+  <!-- OVERLAYS_START -->
+  <!-- Report_Abuse_Start -->
+  <div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+    <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#">关闭 [x]</a></p></div>
+    <div class="ibm-body">
+      <div class="ibm-main">
+        <a class="ibm-access" name="reportabuseoverlay">关于报告滥用的帮助</a>   
+        <div class="ibm-title"><h1>报告滥用</h1></div>
+        <div class="ibm-container ibm-alternate">
+          <p><strong>谢谢!</strong>  此内容已经标识给管理员注意。</p>
+          <div class="ibm-overlay-rule"><hr></div>
+          <div class="ibm-buttons-row">
+            <input type="button" onclick="ibmCommon.Overlays.hide(&#39;reportabuseoverlay&#39;);return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="关闭">
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="ibm-footer"></div>
+  </div>
+  <!-- Report_Abuse_Error_Start -->
+  <div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+    <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#">关闭 [x]</a></p></div>
+    <div class="ibm-body">
+      <div class="ibm-main">
+        <a class="ibm-access" name="reportabuseoverlayerror">关于报告滥用的帮助</a>   
+        <div class="ibm-title"><h1>报告滥用</h1></div>
+        <div class="ibm-container ibm-alternate">
+          <p class="ibm-ind-error"><strong>报告滥用提交失败。  请稍后重试。</strong></p>
+          <div class="ibm-overlay-rule"><hr></div>
+          <div class="ibm-buttons-row">
+            <input type="button" onclick="ibmCommon.Overlays.hide(&#39;reportabuseoverlayerror&#39;);return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="关闭">
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="ibm-footer"></div>
+  </div>
+  <!-- Sign in OVERLAY STARTS HERE --> 
+  <div class="ibm-common-overlay" id="signin_overlay">
+    <div class="ibm-head">
+      <p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="clearForm();">关闭 [x]</a></p>
+    </div>
+    <div class="ibm-body">
+      <div class="ibm-main">
+        <div class="ibm-title ibm-subtitle">
+          <h1>developerWorks：登录</h1>
+          <div id="ibm-overlay-error-signin" class="no-display"></div>
+        </div>
+        
+        <div class="ibm-container ibm-alternate ibm-buttons-last">
+          <div class="ibm-container-body">
+
+            <form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+              <p><label for="ibmid">IBM ID：</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);">
+                <br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="(function () {window.location=&#39;/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d=&#39;+encodeURIComponent(location.href);})();">需要一个 IBM ID？</a>
+                <br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a></span>   
+              </p> 
+              <p><label for="password">密码：</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);"><br>
+                <a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(getAuthUrl())+&#39;%3Fm%3Dloginpage%26lang%3Dzh_CN%26d%3D&#39;+encodeURIComponent(location.href);})();">忘记密码？</a><br>
+                <a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(location.href);})();">更改您的密码</a></span></p> 
+
+              <p class="dw-perm-box">
+                <span><input id="perm" type="checkbox" name="perm_name"><label for="perm"> 保持登录。</label></span>
+              </p>
+
+              <p>单击提交则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/mydeveloperworks/terms?lang=zh">使用条款</a></p>
+              <div class="ibm-buttons-row">
+                <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+                  <input value="取消" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide(&#39;signin_overlay&#39;);return false;"></p>
+              </div>
+            </form>
+            <div class="ibm-overlay-rule"><hr></div>
+            <p>当您初次登录到 developerWorks 时，将会为您创建一份概要信息。<strong>您在 developerWorks 概要信息中选择公开的信息将公开显示给其他人，但您可以随时修改这些信息的显示状态。</strong>您的姓名（除非选择隐藏）和昵称将和您在 developerWorks 发布的内容一同显示。</p>
+            <div class="dw-overlay-legal"><p>所有提交的信息确保安全。</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ibm-footer"></div>
+  </div>
+  <!-- Sign in OVERLAY ENDS HERE --> 
+  
+  
+  <!-- Display name OVERLAY STARTS HERE --> 
+  <div class="ibm-common-overlay" id="displayname_overlay">
+    <div class="ibm-head">
+      <p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="clearForm();">关闭 [x]</a></p>
+    </div>
+    <div class="ibm-body">
+      <div class="ibm-main">
+        <div class="ibm-title ibm-subtitle">
+          <h1>请选择您的昵称：</h1>
+          <div id="ibm-overlay-error-dname" class="no-display"></div>
+        </div>
+        <div class="ibm-container ibm-alternate ibm-buttons-last">
+          <div class="ibm-container-body">
+            <p class="ibm-overlay-intro">当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+            <form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+              <p><label for="displayname">昵称：</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);"></span><span class="ibm-form-note">（长度在 3 至 31 个字符之间）</span>
+              </p>
+              
+              <div class="ibm-overlay-rule"><hr>
+              </div>
+              <p>单击<strong>提交</strong>则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/mydeveloperworks/terms?lang=zh">使用条款</a>.</p>
+              <div class="ibm-buttons-row">
+                <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+                  <input value="取消" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide(&#39;displayname_overlay&#39;);return false;"></p>
+              </div>
+            </form>
+            <div class="ibm-overlay-rule"><hr></div>
+            <div class="dw-overlay-legal"><p>所有提交的信息确保安全。</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ibm-footer"></div>
+  </div>
+  <!-- Display name OVERLAY ENDS HERE -->
+  <!-- OVERLAYS_END -->
+  <!-- RATINGS START -->
+  <p class="ibm-no-print"><span class="atitle"><a name="iratings">为本文评分</a></span></p>
+  <input id="art-rating" name="ratinga" type="hidden" value="4"><div id="art-rating-module"><p id="submitErr" class="ibm-ind-error" style="display: none;"><strong>错误：提交失败，请重试。</strong></p><p><span id="ratingSectUI"><img alt="平均分 4 星 共 64 个评分" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/stars120x20-4gw.jpg" class="dw-avg-rating"> 平均分 (64个评分)</span></p><div class="ibm-container" id="ratingForm"><div class="ibm-container-body dw-container-ratings"><form class="dw-ratings-form" onsubmit="artRating.submitRating(); return false;"><input type="radio" name="ratingstars" id="rat-1" value="1"><label class="rating-label" id="star1" for="rat-1">1 星</label><img id="rat-1-img" alt="1 星" title="1 星" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/stars120x20-1w.jpg" class="rating-image"><span class="dw-rating-text">1 星</span><br><input type="radio" name="ratingstars" id="rat-2" value="2"><label class="rating-label" id="star2" for="rat-2">2 星</label><img id="rat-2-img" alt="2 星" title="2 星" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/stars120x20-2w.jpg" class="rating-image2"><span class="dw-rating-text">2 星</span><br><input type="radio" name="ratingstars" id="rat-3" value="3"><label class="rating-label" id="star3" for="rat-3">3 星</label><img id="rat-3-img" alt="3 星" title="3 星" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/stars120x20-3w.jpg" class="rating-image2"><span class="dw-rating-text">3 星</span><br><input type="radio" name="ratingstars" id="rat-4" value="4"><label class="rating-label" id="star4" for="rat-4">4 星</label><img id="rat-4-img" alt="4 星" title="4 星" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/stars120x20-4w.jpg" class="rating-image2"><span class="dw-rating-text">4 星</span><br><input type="radio" name="ratingstars" id="rat-5" value="5"><label class="rating-label" id="star5" for="rat-5">5 星</label><img id="rat-5-img" alt="5 星" title="5 星" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/stars120x20-5w.jpg" class="rating-image2"><span class="dw-rating-text">5 星</span><div class="ibm-buttons-row"><p class="ibm-first"><input value="提交" type="submit" name="ibm-submit" class="ibm-btn-arrow-pri dw-ratings-submit"></p></div></form></div></div></div>
+  <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+  </script>
+  <!-- RATINGS END --> 
+  
+  <!-- INLINE_COMMENTS_START -->
+  <p class="ibm-no-print"><span class="atitle"><a name="icomments">评论</a></span></p>
+    <script language="JavaScript" type="text/javascript">
+      // <![CDATA[
+dwc = {};
+dwc.cmts = '条评论';
+dwc.signInPreText = '请';
+dwc.signIn = '登录';
+dwc.or = '或';
+dwc.register = '注册';
+dwc.signInPostText = '';
+dwc.leaveCmt = '后发表评论。';
+dwc.view = '查看';
+dwc.totalCmts = '共有评论';
+dwc.postYourCmt = '添加您的评论';
+dwc.show = '显示：';
+dwc.recentCmts = '最新评论';
+dwc.allCmts = '所有评论';
+dwc.tooLongCmt = '您的评论超过了 1000 字符限制';
+dwc.numCharsLeft = '剩余 <span id="charCount">{1}</span> 字符';
+dwc.reportAbuse = '报告滥用';
+dwc.notifyMsg = '有新评论时提醒我';
+dwc.htmlWarning = '注意：评论中不支持 HTML 语法'; 
+dwc.cmt = '评论：';
+dwc.addCmts = '添加评论';
+dwc.addCmt = '添加评论';
+dwc.doNotErase = '--在下方添加评论--'; 
+dwc.viewOrAddCmts = '查看或添加评论';
+dwc.reportInapprCont = '举报不良信息';
+dwc.reportInapprContLink = 'http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1834';
+dwc.postingCmt = '正在发布评论……';
+dwc.noCmt = '快来添加第一条评论';
+dwc.netwkErr = '在检索评论时出错，请稍后刷新。';
+dwc.addACmt = '添加评论';
+dwc.instructCmt = '标有星号（<span class="ibm-required">*</span>）的是必填项目。';
+dwc.btnPost = '发布';
+dwc.btnPostAnon = '匿名发布';
+dwc.btnClrCmt = '清除评论';
+dwc.btnCancel = '取消';
+dwc.showRecent = '显示最新的 {1} 条评论'; // {1} is the count to be substituted
+dwc.showNext = '显示后 {1} 条评论'; // {1} is the count to be substituted
+dwc.showAllCmts = '显示所有评论';
+dwc.enterCmt = '请输入评论内容。';
+dwc.loginErr = '暂时无法验证您的登录状态，请稍后再试。';
+dwc.postErr = '暂时无法发布您的评论，请稍后再试。';
+dwc.postBy = '由 <strong>{1}</strong>  于 {2} '; // {1} is the author to be substituted; {2} is the date
+dwc.siteId = 10;
+dwc.lang = 'zh_CN';
+dwc.viperLang = 'zh';
+// ]]>
+    </script>
+    <div id="threadShow"><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><p id="cmtHead"><label for="newCmt"><strong>添加评论:</strong></label></p><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect" style="">请 <a onclick="showSignIn();return false;" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#">登录</a> 或 <a href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=register&lang=zh_CN&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-tomcat2%2F%23icomments">注册</a>  后发表评论。</p><p>注意：评论中不支持 HTML 语法</p><span id="infoCmt"></span><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form"><p><textarea cols="120" rows="5" name="newCmt" id="newCmt" class="dw-inoperable" disabled=""></textarea><br></p><span class="ibm-input-group"><input type="checkbox" value="1" name="comment_notification" id="comment_notification" disabled=""><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">有新评论时提醒我</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount">剩余 <span id="charCount">1000</span> 字符</span><br><br><p></p><p class="ibm-buttons-row"><input type="button" value="发布" jquery1275054459750="11" name="postCmt" id="postCmt" class="ibm-btn-arrow-sec dw-btn-arrow-sec" alt="添加您的评论" disabled=""><br><br></p></form></div></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style=""><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p><span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts">3</span>)</strong></span><span><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" width="100" height="10" alt=""></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts"><label for="howManyComments">显示：</label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论   </option></select><input type="image" class="ibm-btn-go" name="ibm-go" value="Go" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/short-btn.gif" alt="Go"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>Facade模式与Decorator模式的区别在于二者的意图或者说要解决的问题不同：前者是要将一些子系统对外暴露为一个统一的接口，而后者意图透明得为其它接口增加功能。</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="http://www.ibm.com/developerworks/forums/profile.jspa?userID=449972">U57P_Viscent_Huang</a></strong>  于 2011年10月02日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="https://www.ibm.com/developerworks/community/report?lang=zh&referingURL=http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/&mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20Facade%E6%A8%A1%E5%BC%8F%E4%B8%8EDecorator%E6%A8%A1%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB%E5%9C%A8%E4%BA%8E%E4%BA%8C%E8%80%85%E7%9A%84%E6%84%8F%E5%9B%BE%E6%88%96%E8%80%85%E8%AF%B4%E8%A6%81%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98%E4%B8%8D%E5%90%8C%EF%BC%9A%E5%89%8D%E8%80%85%E6%98%AF%E8%A6%81%E5%B0%86%E4%B8%80%E4%BA%9B%E5%AD%90%E7%B3%BB%E7%BB%9F%E5%AF%B9%E5%A4%96%E6%9A%B4%E9%9C%B2%E4%B8%BA%E4%B8%80%E4%B8%AA%E7%BB%9F%E4%B8%80%E7%9A%84%E6%8E%A5%E5%8F%A3%EF%BC%8C%E8%80%8C%E5%90%8E%E8%80%85%E6%84%8F%E5%9B%BE%E9%80%8F%E6%98%8E%E5%BE%97%E4%B8%BA%E5%85%B6%E5%AE%83%E6%8E%A5%E5%8F%A3%E5%A2%9E%E5%8A%A0%E5%8A%9F%E8%83%BD%E3%80%82%0D%E7%94%B1%20U57P_Viscent_Huang%20%20%E4%BA%8E%202011%E5%B9%B410%E6%9C%8802%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_newtab">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>推荐一个国内开源javaweb框架<br>http://code.google.com/p/simpleframework/</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="http://www.ibm.com/developerworks/forums/profile.jspa?userID=309952">cknet</a></strong>  于 2010年08月30日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="https://www.ibm.com/developerworks/community/report?lang=zh&referingURL=http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/&mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E6%8E%A8%E8%8D%90%E4%B8%80%E4%B8%AA%E5%9B%BD%E5%86%85%E5%BC%80%E6%BA%90javaweb%E6%A1%86%E6%9E%B6http%3A%2F%2Fcode.google.com%2Fp%2Fsimpleframework%2F%0D%E7%94%B1%20cknet%20%20%E4%BA%8E%202010%E5%B9%B408%E6%9C%8830%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_newtab">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>对于门面模式意义那里我有一个疑问，这样的处理方式跟装饰模式有什么区别吗？<br>  或者是装饰模式是在原有对象上添加功能，门面模式只是抽取原有对象的部分功能向外提供，对吗？</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="http://www.ibm.com/developerworks/forums/profile.jspa?userID=298062">ivanzhang</a></strong>  于 2010年07月02日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="https://www.ibm.com/developerworks/community/report?lang=zh&referingURL=http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/&mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E5%AF%B9%E4%BA%8E%E9%97%A8%E9%9D%A2%E6%A8%A1%E5%BC%8F%E6%84%8F%E4%B9%89%E9%82%A3%E9%87%8C%E6%88%91%E6%9C%89%E4%B8%80%E4%B8%AA%E7%96%91%E9%97%AE%EF%BC%8C%E8%BF%99%E6%A0%B7%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%E8%B7%9F%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB%E5%90%97%EF%BC%9F%20%20%E6%88%96%E8%80%85%E6%98%AF%E8%A3%85%E9%A5%B0%E6%A8%A1%E5%BC%8F%E6%98%AF%E5%9C%A8%E5%8E%9F%E6%9C%89%E5%AF%B9%E8%B1%A1%E4%B8%8A%E6%B7%BB%E5%8A%A0%E5%8A%9F%E8%83%BD%EF%BC%8C%E9%97%A8%E9%9D%A2%E6%A8%A1%E5%BC%8F%E5%8F%AA%E6%98%AF%E6%8A%BD%E5%8F%96%E5%8E%9F%E6%9C%89%E5%AF%B9%E8%B1%A1%E7%9A%84%E9%83%A8%E5%88%86%E5%8A%9F%E8%83%BD%E5%90%91%E5%A4%96%E6%8F%90%E4%BE%9B%EF%BC%8C%E5%AF%B9%E5%90%97%EF%BC%9F%0D%E7%94%B1%20ivanzhang%20%20%E4%BA%8E%202010%E5%B9%B407%E6%9C%8802%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_newtab">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display:none"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p><span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts2">3</span>)</strong></span><span><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" width="100" height="10" alt=""></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts2"><label for="howManyComments2">显示：</label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论   </option></select><input type="image" class="ibm-btn-go" name="ibm-go" value="Go" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/short-btn.gif" alt="Go"><br></span></p></form></div></div></div>
+  <!-- INLINE_COMMENTS_END -->
+  
+
+  <p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#ibm-pcon">回页首</a></p>
+
+<!-- Overlays -->
+<!-- lk - pull in overlays from ww when required on cn -->
+  </div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=10</div><div class="metavalue">Zone=Java technology, Open source</div><div class="metavalue">ArticleID=492842</div><div class="metavalue">ArticleTitle=Tomcat 系统架构与设计模式，第 2 部分: 设计模式分析</div><div class="metavalue">publish-date=05272010</div><div class="metavalue">author1-email=xulingbo0201@163.com</div><div class="metavalue">author1-email-cc=</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g, '%3C')+'</div>');</script><div class="metavalue">url=http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>内容</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c(1).gif"><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#major1">门面设计模式</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#major2">观察者设计模式</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#major3">命令设计模式</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#major4">责任链模式</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#resources">参考资料 </a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#author">关于作者</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#icomments">建议</a></li></ul></div></div>
+
+ 
+
+
+<!-- Dig_Deeper -->
+
+<!-- High_Visibility_Offer -->
+
+<!-- Special_Offers -->
+
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-footer">
+<!-- IBM footer container; disabled -->
+</div>
+
+<div id="ibm-page-tools-dw">
+	<div id="dw-footer-top-row">
+		<ul id="dw-foot-options">
+			<li id="dw-print"><a class="ibm-print-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#">打印此页面</a></li>
+		</ul>
+		<ul id="ibm-foot-options-dw">
+			<li id="dw-foot-0" class="dw-foot-0-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#">分享此页面</a></li>
+			<li id="dw-foot-1" class="dw-foot-1-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#">关注 developerWorks</a></li>
+		</ul>
+	</div>       
+	
+	
+	<!-- TOP ROW SLIDER -->
+    <div id="dw-page-tools-menu">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Share this page -->			
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-4-1">
+                    	<h2>分享此页面：</h2>                            
+						<ul class="ibm-link-list">
+						  <!--<li><a id="dw-foot-0-0" class="dwcn-sina-link"
+						        href="#"
+						        onClick="javascript:location.href='http://hits.sinajs.cn/A1/weiboshare.html?&amp;appkey=&amp;title='+escape(document.title)+'&amp;url='+escape(location.href)'+'&amp;pic=&ralateUid&amp;language=zh_cn;
+						        ">新浪微博</a></li> -->
+						   <li><a id="dw-foot-0-0" class="dwcn-sina-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="javascript:location.href=&#39;http://service.weibo.com/share/share.php?title=&#39;+encodeURIComponent(document.title)+&#39;&amp;url=&#39;+escape(location.href)+&#39;&amp;language=zh_cn&#39;
+						        ; ">新浪微博</a></li> 
+						   <li><a class="dwcn-renren-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="javascript:location.href=&#39;http://share.renren.com/share/buttonshare?title=&#39;+encodeURIComponent(document.title)+&#39;&amp;link=&#39;+escape(location.href);
+						        ">人人网</a></li> 
+						    <li><a class="dwcn-tencent-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="javascript:location.href=&#39;http://v.t.qq.com/share/share.php?title=&#39;+encodeURIComponent(document.title)+&#39;&amp;url=&#39;+escape(location.href);
+						        ">腾讯微博</a></li> 
+						   				
+						</ul>
+                    </div>
+                    <div class="dw-footer-col-4-2">
+						<ul class="ibm-link-list">
+						    <li><a class="dwcn-sohu-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="javascript:location.href=&#39;http://t.sohu.com/third/post.jsp?title=&#39;+encodeURIComponent(document.title)+&#39;&amp;link=&#39;+escape(location.href);
+						        ">搜狐微博</a></li>
+						    
+						    <li><a class="dwcn-netease-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#" onclick="javascript:location.href=&#39;http://t.163.com/article/user/checkLogin.do?info=&#39;+encodeURIComponent(document.title)+ &#39;&#39; +escape(location.href);
+						        ">网易微博</a></li>
+						    <li><a class="ibm-facebook-link" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-tomcat2%2F&t=Tomcat%20%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%AC%AC%202%20%E9%83%A8%E5%88%86%3A%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90">Facebook</a></li>
+						</ul>
+                </div>
+                    <div class="dw-footer-col-4-3">
+						<ul class="ibm-link-list">
+						 <li><a class="ibm-linkedin-link" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-tomcat2%2F&title=Tomcat%20%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%AC%AC%202%20%E9%83%A8%E5%88%86%3A%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90">LinkedIn</a></li>   
+						 <li><a class="ibm-twitter-link" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-tomcat2%2F%20-%20Tomcat%20%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%AC%AC%202%20%E9%83%A8%E5%88%86%3A%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90">Twitter</a></li>   
+						 <li><a class="ibm-delicious-link" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-tomcat2%2F&title=Tomcat%20%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%AC%AC%202%20%E9%83%A8%E5%88%86%3A%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90">Delicious</a></li>
+						
+						</ul>
+                    </div>
+                   <div class="dw-footer-col-4-4">
+						<ul class="ibm-link-list">
+						 <li><a class="ibm-digg-link" href="http://digg.com/submit?phase=2&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-tomcat2%2F&title=Tomcat%20%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84%E4%B8%8E%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%EF%BC%8C%E7%AC%AC%202%20%E9%83%A8%E5%88%86%3A%20%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%88%86%E6%9E%90">Digg</a></li>   
+						 <li><a class="ibm-email-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#">发送此页面</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-share"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+                  <!-- Follow developerWorks -->
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-1-1 dw-footer-col-1-1-cn">
+                    	<h2>关注 developerWorks 中国网站：</h2>
+						<ul class="ibm-link-list">
+							<!--<li><a id="dw-foot-1-0" class="ibm-twitter-link" href="http://www.twitter.com/dwchina">Twitter</a></li>-->
+						    <li><a id="dw-foot-1-0" class="dwcn-sina-link" href="http://weibo.com/ibmdw/">新浪微博</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-follow-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat2/#"><img src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/c.gif" alt="关闭 [x]" width="20" height="10"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div><div id="ibm-overlay-top"></div>
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-6-1">
+			<ul>
+				<!--<li><a href="http://www.ibm.com/developerworks/aboutdw/">About</a></li>-->
+				<li><a href="https://www.ibm.com/developerworks/secure/feedback.jsp?domain=dwchina">帮助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/author/">联系编辑</a></li>
+				<li><a href="https://www.ibm.com/developerworks/secure/myideas2.jsp?domain=dwchina&start=true">提交内容</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/sitemap/">网站导航</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-2">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/cn/rss/">订阅源</a></li>
+				<li><a href="http://www.ibm.com/vrm/newsletter/10104?S_TACT=105AGX52&S_CMP=dwcntop">在线浏览每周时事通讯</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-3">
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/community/report?lang=zh">报告滥用</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms?lang=zh">使用条款</a></li>
+				<li><a href="http://www.ibm.com/privacy/cn/zh/">隐私条约</a></li>
+				<li><a href="http://www.ibm.com/ibm/accessibility/cn/">浏览辅助</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-4-cn">
+			<ul>
+				<li><a href="http://www-900.ibm.com/cn/ai/">IBM 教育学院教育培养计划</a></li>
+				<li><a href="http://www.ibm.com/partnerworld/isv/">ISV 资源 (英语)</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-5">
+		</div>
+		<div class="dw-footer-col-6-6">
+		</div>
+	</div>
+	<!-- Language selector no-script -->
+	<noscript>
+	&lt;div id="dw-footer-selectlang"&gt;
+		&lt;h2&gt;&lt;a name="SELECTLANG"&gt;选择语言：&lt;/a&gt;&lt;/h2&gt;
+		&lt;ul&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/"&gt;English&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/cn/"&gt;中文&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/jp/"&gt;日本語&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/ru/"&gt;Русский&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/br/"&gt;Português (Brasil)&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/ssa/"&gt;Español&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/vn/"&gt;Việt&lt;/a&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	</noscript>
+</div><!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+</div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/jquery.cluetip.js"></script>
+<script type="text/javascript" language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/ui.core-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/ui.slider-1.7.1.js"></script>
+
+<!-- xM Masthead/Footer -->
+<script src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/jquery.tools.min.js" type="text/javascript">//</script>
+<script src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/jquery.jscroll.js" type="text/javascript">//</script>
+<script src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dw_v16.js" type="text/javascript">//</script>
+<script src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/flash-detect(1).js" type="text/javascript">//</script>
+<script src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dwsi.js" type="text/javascript">//</script>
+<script type="text/javascript" language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/dwjquerytags.js"></script>
+<script type="text/javascript" language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/showcomments.js">//</script>
+<script language="JavaScript" type="text/javascript">
+	// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+	local: true,
+	showTitle: false,
+	positionBy: 'bottomTop',
+	sticky: true,	
+	mouseOutClose: true,
+	closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+	arrows: false,
+	dropShadow: true,
+	cluetipClass: 'dwbasic'
+	});   	
+	//tagging
+	login="false";
+	userid="";
+	whichTags = "init";
+	pCont = "";
+	mCont = "";
+	signInMCont = "";
+	accessCont = "";
+	pValue = 0;
+	mValue = 0;
+	
+	rBHash = null;
+	rBHash = new Object();
+	rBHash['viperLang'] = 'zh';
+	rBHash['urlLang'] = 'cn';
+	rBHash['tagThisWinTitle'] = '添加标签';
+	rBHash['pTags1'] = '热门标签';		
+	rBHash['pTags2'] = '热门标签结束';
+	rBHash['mTags1'] = '我的标签';
+	rBHash['mTags2'] = '我的标签结束';
+	rBHash['alt1'] = '正在加载内容';
+	rBHash['noATags'] = '没有可用的标签';
+	rBHash['signIn1'] = '请';
+	rBHash['signIn2'] = '登录';
+	rBHash['signIn3'] = '以访问';
+	rBHash['signIn4'] = '我的标签';
+	rBHash['signIn5'] = '要访问我的标签，请';
+	rBHash['signIn6'] = '登录';
+	rBHash['signIn7'] = '查看热门标签';
+	rBHash['dnameSuffix'] = '';
+
+	zoneHash = new Object();
+	zoneHash['aix'] = 'AIX and UNIX';
+	zoneHash['ibmi'] = 'IBM i zone';
+	zoneHash['data'] = 'Information Management';
+	zoneHash['lotus'] = 'Lotus';
+	zoneHash['rational'] = 'Rational';
+	//zoneHash['tivoli'] = 'Tivoli zone';
+	zoneHash['websphere'] = 'WebSphere';
+	zoneHash['architecture'] = 'Technical library';
+	//zoneHash['autonomic'] = 'Technical library';
+	zoneHash['java'] = 'Java technology';
+	zoneHash['cloud'] = 'Cloud computing';
+	//zoneHash['industry'] = 'Technical library';
+	zoneHash['library'] = '文档库';
+	zoneHash['linux'] = 'Linux';
+	zoneHash['opensource'] = 'Open source';
+	//zoneHash['power'] = 'Technical library';
+	zoneHash['webservices'] = 'SOA and web services';
+	zoneHash['web'] = 'Web development';
+	zoneHash['xml'] = 'XML';
+	//zoneHash['wireless'] = 'Technical library';
+	jQuery.checkRB();
+	jQuery.getPopularTags("/developerworks/dwtags/dwjquerytabtags?lang=" + rBHash['viperLang'] + "&base=" + jQuery.getNormalizedZoneUrl(location.href));
+	jQuery.getUserTags();
+	if(jQuery.isTutorial(location.href) == "true") {
+	jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=tutorials&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+	}
+	else {
+	jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=articles&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+	
+	}
+	// si
+	initSI();
+	});
+</script>
+<!-- JQuery end -->
+<!-- Overlay js -->
+<script language="JavaScript" src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/overlay.js" type="text/javascript"></script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=3&ibmAdoptPhase=651&ibmRole=710&ibmCmaId=492842";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="./Tomcat 系统架构与设计模式，第 2 部分  设计模式分析_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+
+<div id="cluetip-waitimage" style="position: absolute; z-index: 95; display: none;"></div><div id="cluetip" style="z-index: 96; display: none; position: absolute;"><div style="z-index: 95; opacity: 0.1; top: 1px; left: 1px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 94; opacity: 0.1; top: 2px; left: 2px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 93; opacity: 0.1; top: 3px; left: 3px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 92; opacity: 0.1; top: 4px; left: 4px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 91; opacity: 0.1; top: 5px; left: 5px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 90; opacity: 0.1; top: 6px; left: 6px; position: absolute; background-color: rgb(0, 0, 0);"></div><div id="cluetip-outer" style="position: relative; z-index: 97;"><div id="cluetip-title"></div><div id="cluetip-inner"></div></div><div id="cluetip-extra"></div><div id="cluetip-arrows" class="cluetip-arrows" style="z-index: 97;"></div></div></body></html>

@@ -1,3 +1,6 @@
+JSR168 Portal-->Portlet-->Portlet Container JSP--Servlet--> Servlet Container Applet-->Applet Container
+Portal的主要任务是将不同的应用程序集合到一个页面，这个页面的外观是Portal 用户共有的。
+
 ////////////////
 API based-network
 API based-library

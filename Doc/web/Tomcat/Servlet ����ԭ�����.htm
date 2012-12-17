@@ -1,0 +1,1289 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0055)http://www.ibm.com/developerworks/cn/java/j-lo-servlet/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Servlet 工作原理解析</title>
+<meta http-equiv="PICS-Label" content="(PICS-1.1 &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0) &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))">
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+  <meta name="Owner" content="dw@cn.ibm.com">
+  <meta name="DC.Language" scheme="rfc1766" content="zh-CN">
+  <meta name="IBM.Country" content="CN">
+<meta name="Security" content="Public">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.PageAttributes" content="sid=1003,1004">
+<meta name="Source" content="v16 Template Generator">
+<meta name="Robots" content="index,follow">
+<meta name="Abstract" content="Web 技术成为当今主流的互联网 Web 应用技术之一，而 Servlet 是 Java Web 技术的核心基础。因而掌握 Servlet 的工作原理是成为一名合格的 Java Web 技术开发人员的基本要求。本文将带你认识 Java Web 技术是如何基于 Servlet 工作，你将知道：以 Tomcat 为例了解 Servlet 容器是如何工作的？一个 Web 工程在 Servlet 容器中是如何启动的？ Servlet 容器如何解析你在 web.xml 中定义的 Servlet ？用户的请求是如何被分配给指定的 Servlet 的？ Servlet 容器如何管理 Servlet 生命周期？你还将了解到最新的 Servlet 的 API 的类层次结构，以及 Servlet 中一些难点问题的分析。">
+<meta name="Description" content="Web 技术成为当今主流的互联网 Web 应用技术之一，而 Servlet 是 Java Web 技术的核心基础。因而掌握 Servlet 的工作原理是成为一名合格的 Java Web 技术开发人员的基本要求。本文将带你认识 Java Web 技术是如何基于 Servlet 工作，你将知道：以 Tomcat 为例了解 Servlet 容器是如何工作的？一个 Web 工程在 Servlet 容器中是如何启动的？ Servlet 容器如何解析你在 web.xml 中定义的 Servlet ？用户的请求是如何被分配给指定的 Servlet 的？ Servlet 容器如何管理 Servlet 生命周期？你还将了解到最新的 Servlet 的 API 的类层次结构，以及 Servlet 中一些难点问题的分析。">
+<meta name="Keywords" content="Java,Servlet,原理,容器, tttjca">
+<meta name="DC.Date" scheme="iso8601" content="2011-02-24">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="TT300">
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCJVACN">
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2011">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2011-02-24">
+<meta name="title" content="Servlet 工作原理解析">
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="./Servlet 工作原理解析_files/all.css" media="all" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/print.css" media="print" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+
+<!-- dW-specific CSS -->
+<link href="./Servlet 工作原理解析_files/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/dw-local-site.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/jquery.cluetip.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+
+<!-- JPP: LOCAL URL FOR TESTING V16 DEFIANT MASTHEAD/FOOTER -->
+<link href="./Servlet 工作原理解析_files/dw-mf2012-01.css" rel="stylesheet" title="www" type="text/css">
+<link href="./Servlet 工作原理解析_files/dw-mf-cn.css" rel="stylesheet" title="www" type="text/css">
+<script src="./Servlet 工作原理解析_files/ibmcommon.js" type="text/javascript">//</script><link rel="search" type="application/opensearchdescription+xml" href="http://www.ibm.com/search/opensearch/description.xml" title="IBM Search">
+<script src="./Servlet 工作原理解析_files/dynamicnav.js" type="text/javascript">//</script>
+<script language="JavaScript" src="./Servlet 工作原理解析_files/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" type="text/javascript">
+  // <![CDATA[
+
+ dwr = {};
+  dwr.clickhere = '点击评分';
+  dwr.starIntro = ''; 
+  dwr.stars = '星';
+  dwr.star = '星'; 
+  dwr.avgRatingOf = '平均分';
+  dwr.youRated = '您的评分是';
+  dwr.avgRating = '平均分';
+  dwr.basedOnVote = '共 {1} 个评分'; // {1} to be substitue by code
+  dwr.basedOnVotes = '共 {1} 个评分';
+  dwr.leftParen = '（'; 
+  dwr.rightParen = ' ）'; 
+  dwr.space = ' '; 
+  dwr.yourRating = '您的评分';
+dwr.avgRating2 = '总共 {1} 评分的平均分';
+dwr.avgRating3 = '平均分{1} 星';
+dwr.rateThisArticle = '为本文评分';
+dwr.votes = '{1}个评分';
+dwr.vote = '{1}个评分';
+dwr.submitErr = '错误：提交失败，请重试。';
+dwr.noRatingErr = '错误：请选择一个评分并重新提交。';
+dwr.submit = '提交';
+// ]]>
+</script>
+
+<!-- Rating_START -->
+<script language="JavaScript" src="./Servlet 工作原理解析_files/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+  .metavalue {
+  display: none;
+  }
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="./Servlet 工作原理解析_files/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="./Servlet 工作原理解析_files/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="./Servlet 工作原理解析_files/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('dwchina');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+  <!-- Include file support -->
+  <script language="JavaScript" type="text/javascript">
+    (function($) {
+    jQuery.extend({
+    getInc: function(u,d){
+    if(u==null)return;
+    jQuery.ajax({
+    type: "GET",
+    url: u,
+    dataType: "text",
+    success: function(t) {
+    jQuery(d).html(t);
+    ibmCommon.initShowHide(jQuery(d).children()[0]);	
+    },
+    async: true
+    });
+    }
+    });
+    })(jQuery);
+  </script>
+<script id="mhMenu" type="text/javascript" src="./Servlet 工作原理解析_files/cnzh-utf8.js" charset="UTF-8"></script><script id="wiBundle" type="text/javascript" src="./Servlet 工作原理解析_files/Controller" charset="UTF-8"></script></head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#ibm-content">跳转到主要内容</a></div>
+<div id="ibm-masthead-dw">
+  
+    <!-- TOP ROW -->    
+    <div id="dw-masthead-top-row">
+    	<ul id="ibm-mast-options-dw" class="cn">
+    		<li id="dw-mast-top-0"> 	
+    			<a class="" href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&lang=zh&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-servlet%2F" title="">登录 (或注册)</a>
+    		</li>
+    		<li id="dw-mast-top-1" class="dw-mast-top-1-cn">
+    			<a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#SELECTLANG">中文</a><img class="dw-preload" src="./Servlet 工作原理解析_files/arrow-down-active.gif" width="8" height="7" alt="">
+    		</li>
+    		<li id="dw-mast-top-2" class="dw-mf-hide">
+    			<a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/photo.do" alt="PHOTO" class="dw-mast-profimg" width="20" height="20"> [userid]</a>
+    		</li>
+    		<li id="dw-mast-top-3">
+    			<a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/ibm-smlogo.gif" width="44" height="16" alt="IBM®"></a>
+    		</li>
+    	</ul>
+	</div>
+    
+    <!-- TOP ROW SLIDER -->
+    <div id="ibm-my-menu-dw">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+                <!-- Sign-in -->
+                <div class="dw-mast-columns">                
+					<div class="dw-mast-col-1-1">
+						<div id="dw-mast-sso">
+							<!--<div id="dw-mast-sso-reg">
+								<p class="dw-mast-sso-reg-cn">如果您还没有注册到 IBM 注册系统，我们为给您带来的不便表示道歉，并请您马上注册。 							
+									<a href="#" onclick="(function () {window.location='/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh&amp;d='+encodeURIComponent(location.href);})();">现在注册</a>。</p>
+							</div>-->
+							<div id="signin_error_mf" class="no-display"></div>
+							<div id="dw-mast-sso-form">
+								<form id="sForm_mf" action="" method="post" name="sForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-sso-id" class="dw-mast-sso-id-cn">
+										<label for="ibmid_mf">IBM ID：</label>
+										<input id="ibmid_mf" type="text" value="" name="ibmid_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,&#39;mf&#39;);" class="">
+									</div>
+									<div id="dw-mast-sso-pw" class="dw-mast-sso-pw-cn">
+										<label for="pw_mf">密码：</label>
+										<input id="pw_mf" type="password" value="" name="pw_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,&#39;mf&#39;);" class="">
+									</div>
+									<div id="dw-mast-sso-target" class="dw-mast-sso-target-cn">
+										<p class="dw-mf-perm-box">
+											<input id="perm_mf" type="checkbox" name="perm_name_mf"><label for="perm_mf"> 保持登录。</label>
+										</p>
+									</div>
+									<div id="dw-mast-sso-terms">
+										<p class="dw-mast-sso-terms-cn">单击提交则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/mydeveloperworks/terms?lang=zh">查看条款和条件</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn-cn" name="ibm_submit_name_mf" value="提交" onclick="signin(&#39;mf&#39;);return false;" type="submit">
+									</div>
+								</form>
+							</div>
+							<div id="dw-mast-sso-update">
+								<div id="dw-mast-sso-update-id">
+									<ul>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="(function () {window.location=&#39;/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d=&#39;+encodeURIComponent(location.href);})();">需要一个 IBM ID？</a></li>
+										
+									<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a></li>
+									</ul>
+								</div>
+								<div id="dw-mast-sso-update-pw">
+								<ul class="dw-mf-pwupdate">
+									<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(getAuthUrl())+&#39;%3Fm%3Dloginpage%26lang%3Dzh_CN%26d%3D&#39;+encodeURIComponent(location.href);})();">忘记密码？</a></li>
+									<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(location.href);})();">更改您的密码</a></li>
+								</ul>
+									</div>
+							</div>
+							<div id="dw-mast-sso-text">
+								<p>当您初次登录到 developerWorks 时，将会为您创建一份概要信息。<strong>您在 developerWorks 概要信息中选择公开的信息将公开显示给其他人，但您可以随时修改这些信息的显示状态。</strong>您的姓名（除非选择隐藏）和昵称将和您在 developerWorks 发布的内容一同显示。</p>
+								<p class="dw-mf-secure-cn">所有提交的信息确保安全。</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>	
+						</div>
+						
+						<div id="dw-mast-dname" class="dw-mf-hide">
+							<p>当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+							<div id="signin_dname_error_mf" class="no-display"></div>
+							<div id="dw-mast-dname-form">
+								<form id="dForm_mf" action="" method="post" name="dForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-dname-mf">
+										<label for="dname_mf">昵称：</label>
+										<input id="dname_mf" name="dname_name_mf" maxlength="31" size="25" value="" type="text" onkeypress="handleEP(event,this.form,&#39;mf&#39;);">
+									</div>
+									<div id="dw-mast-dname-terms">
+										<p class="dw-mast-dname-terms-cn">单击<strong>提交</strong>则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/mydeveloperworks/terms?lang=zh">查看条款和条件</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn-cn" name="dname_submit_name_mf" value="提交" onclick="signin(&#39;mf&#39;);return false;" type="submit">
+									</div>
+								</form>								
+							</div>
+							<div id="dw-mast-dname-secure">
+								<p class="dw-mf-secure-cn">所有提交的信息确保安全。</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>	
+						</div>
+	
+						<div id="dw-mast-auth" class="dw-mf-hide">
+							<div>
+
+								<h2>My developerWorks:</h2>
+								<ul>
+									<li><a id="dw-mast-top-0-0" href="http://www.ibm.com/developerworks/mydeveloperworks/profiles/html/myProfileView.do?lang=zh">我的概要信息</a></li>
+									<li><a href="http://www.ibm.com/developerworks/mydeveloperworks/homepage?lang=zh">我的首页</a></li>
+									<li><a href="http://www.ibm.com/developerworks/mydeveloperworks/groups/service/html/mycommunities?lang=zh">我的群组</a></li>
+								</ul>     
+							</div>
+							<div id="dw-mast-notify" class="dw-mf-hide">
+								<h2>我的通知：</h2>
+								<ul>
+									<li><a id="new_notify" href="http://www.ibm.com/developerworks/mydeveloperworks/homepage?lang=zh">{[num_notify] 个新通知}([num_notify] 个新通知)</a></li>
+									<li><a id="new_invite" href="http://www.ibm.com/developerworks/mydeveloperworks/profiles/html/wc.do?action=in&requireAuth=true&widgetId=friends&lang=[lang]">{[num_invite] 个网络请求}([num_invite] 个网络请求)</a></li>  
+								</ul>
+							</div>
+							<div class="dw-mast-more">
+								<ul class="ibm-link-list">
+									<li><a class="dw-more-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="signOut(); return false;"><strong>退出</strong></a></li>
+								</ul>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>		
+						</div>
+						
+					</div>
+                	
+                </div>
+                <!-- Site selector --> 
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<h2>选择语言：</h2>
+						<ul>
+							<li><a id="dw-mast-top-1-0" href="http://www.ibm.com/developerworks/">English</a></li>
+							<li><a href="http://www.ibm.com/developerworks/cn/">中文</a></li>
+							<li><a href="http://www.ibm.com/developerworks/jp/">日本語</a></li>
+						    <li><a href="http://www.ibm.com/developerworks/ru/">Русский</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/br/">Português (Brasil)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ssa/">Español</a></li>
+							<li><a href="http://www.ibm.com/developerworks/vn/">Việt</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-lang"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+                <div class="dw-mast-columns"><!-- Authenticated --></div>
+                <!-- IBM -->
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<ul>
+							<li><a id="dw-mast-top-3-0" href="http://www.ibm.com/cn/zh/">IBM 主页</a></li>
+							<li><a href="http://www.ibm.com/solutions/cn/zh/">解决方案</a></li>
+							<li><a href="http://www.ibm.com/software/cn/">软件</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2 dw-mast-ibm">
+						<ul>
+							<li><a href="http://www.ibm.com/support/cn/zh/">支持门户</a></li>
+							<li><a href="http://www.ibm.com/support/documentation/cn/zh/">产品文档</a></li>
+							<li><a href="http://www.ibm.com/redbooks/">Redbooks（英文）</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-ibm-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div> 
+				</div>
+			</div>
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div id="ibm-universal-nav-dw">
+        <ul id="ibm-unav-links-dw">
+        	<li id="ibm-unav-home-dwlogo">
+        		<a href="http://www.ibm.com/developerworks/cn/"><img src="./Servlet 工作原理解析_files/dw-wordmark.gif" width="218" height="32" alt="developerWorks®"></a>
+        	</li>
+        </ul>
+    	<ul id="ibm-menu-links-dw" class="ibm-menu-links-dw-cn">
+    		
+    		<li id="dw-mast-nav-0"><a href="http://www.ibm.com/developerworks/cn/topics">技术主题</a></li>
+    		<li id="dw-mast-nav-1"><a href="http://www.ibm.com/developerworks/cn/downloads/">软件下载</a></li>
+    		<li id="dw-mast-nav-2"><a href="https://www.ibm.com/developerworks/community/?lang=zh">社区</a></li>
+    		<li id="dw-mast-nav-3"><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&lang=zh">技术讲座</a></li>
+    	</ul>   
+    	<form id="ibm-search-form" action="http://www.ibm.com/search/csass/search/" method="get" name="form1">
+    		<input type="hidden" name="sn" value="dw">
+    		<input type="hidden" name="lang" value="zh">
+    		<input type="hidden" name="cc" value="CN">
+    		<input type="hidden" name="en" value="utf">
+    		<input type="hidden" name="hpp" value="20">
+    		<input type="hidden" name="dws" value="cndw">
+    		<input type="hidden" name="lo" value="zh">
+    		<p>
+    			<label for="q"><img alt="查询:" height="1" width="1" src="./Servlet 工作原理解析_files/c.gif"></label>
+    			<input type="text" value="搜索 developerWorks" name="q" maxlength="100" id="q">
+    			<input type="submit" id="ibm-search" class="ibm-btn-search ibm-btn-search-cn" name="Search" value="搜索">
+    		</p>
+    	</form>
+    </div>
+    
+    <!-- BOTTOM ROW SLIDER -->
+    <div id="ibm-common-menu-dw">
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Technical topics category -->
+  
+            	<div class="dw-mast-columns">
+            	<div class="dw-mast-col-5-1">
+            		<h2><a id="dw-mast-nav-0-0" href="http://www.ibm.com/developerworks/cn/topics/">技术主题</a></h2>
+            		
+            		<ul>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/agile/">Agile
+            			    transformation</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/aix/">AIX and UNIX</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/bigdata/">Big data</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/cloud/">Cloud computing</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/ibmi/">IBM i</a></li>
+            			
+            		</ul>     
+            	</div>
+            	<div class="dw-mast-col-5-2">
+            		
+            		<ul>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/data/">Information management</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/java/">Java technology</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/linux/">Linux</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/lotus/">Lotus</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/mobile/">Mobile
+            		        development</a></li>
+           			
+            		</ul>
+            	</div>
+            	<div class="dw-mast-col-5-3">
+            		
+            		<ul>
+          			<li><a href="http://www.ibm.com/developerworks/cn/opensource/">Open source</a></li>
+            		    <li><a href="http://www.ibm.com/developerworks/cn/rational/">Rational</a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/webservices/">SOA and web services</a></li>
+             			<li><a href="http://www.ibm.com/developerworks/cn/web/">Web development</a></li>  
+            			<li><a href="http://www.ibm.com/developerworks/cn/websphere/">WebSphere</a></li>     
+    
+            		</ul>
+            		
+            	</div>
+            	<div class="dw-mast-col-5-4">
+            		<ul>
+           			<li><a href="http://www.ibm.com/developerworks/cn/xml/">XML</a></li>
+            		</ul>        
+            	</div>
+            	<div class="dw-mast-col-5-5">
+            		<ul>
+            			<li><a href="http://www.ibm.com/developerworks/cn/library/"><strong>文档库</strong></a></li>
+            			<li><a href="http://www.ibm.com/developerworks/cn/products/"><strong>产品 A - Z</strong></a></li>				    
+            		</ul>        
+            	</div>
+            	<div class="dw-mast-close">
+            		<ul>
+            			<li><div class="dw-mast-close-tech-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+            		</ul>
+            	</div>
+            </div>
+            	<!-- Evaluation software category -->
+            	<div class="dw-mast-columns">
+            		<div class="dw-mast-col-2-1">
+            			<h2><a id="dw-mast-nav-1-0" href="http://www.ibm.com/developerworks/cn/downloads">软件下载</a></h2>
+            			<ul>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#data">Information management</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#lotus">Lotus</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#rational">Rational</a></li>
+            			</ul>            
+            		</div>
+            		<div class="dw-mast-col-2-2">
+            			<ul>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#tivoli">Tivoli</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/cn/downloads/#websphere">WebSphere</a></li>
+            				
+            			</ul>            
+            		</div>
+            		<div class="dw-mast-close">
+            			<ul>
+            				<li><div class="dw-mast-close-eval-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+            			</ul>
+            		</div>
+            	</div>
+            	<!-- Community category -->
+            	<div class="dw-mast-columns">
+            		<div class="dw-mast-col-2-1">
+            			<h2><a id="dw-mast-nav-2-0" href="https://www.ibm.com/developerworks/community/?lang=zh">社区</a></h2>
+            			<ul>
+            				<li><a href="https://www.ibm.com/developerworks/community/homepage/?lang=zh">我的首页</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/profiles/home.do?lang=zh">概要信息</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/groups/service/html/allcommunities?lang=zh">群组</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/mydeveloperworks/blogs/?lang=zh">博客</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/bookmarks/html?lang=zh">书签</a></li>  
+            			</ul>     
+            		</div>
+            		<div class="dw-mast-col-2-2">
+            			<ul>
+            				<!--	<li><a href="">Forums</a></li> -->
+            				<li><a href="https://www.ibm.com/developerworks/mydeveloperworks/wikis/home?lang=zh">Wiki</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/files/app?lang=zh">文件</a></li>
+            				<li><a href="https://www.ibm.com/developerworks/community/activities/service/html/mainpage?lang=zh#dashboard,myactivities">活动</a></li>
+            				<!--	<li><a href="">Podcasts</a></li> -->    
+            			</ul>
+            		</div>
+            		<div class="dw-mast-close">
+            			<ul>
+            				<li><div class="dw-mast-close-comm-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+            			</ul>
+            		</div>
+            	</div>
+            	<!-- Events category -->
+            	<div class="dw-mast-columns">
+            		<div class="dw-mast-col-1-1">
+            			<h2><a id="dw-mast-nav-3-0" href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&lang=zh">技术讲座</a></h2>
+            			<ul>
+            				<li><a href="https://www.ibm.com/developerworks/community/groups/service/html/communityview?communityUuid=6d7f9e5d-5f89-4767-a006-a81b8d186370&lang=zh">技术讲座</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/cn/swi/">多媒体课堂</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/find/webcasts/">网络广播（英文）</a></li>
+            				<li><a href="http://www.ibm.com/developerworks/find/events/">查找活动（技术讲座，网络广播，会议等）（英文）</a></li> 
+            			</ul>            
+            		</div>
+            		<div class="dw-mast-close">
+            			<ul>
+            				<li><div class="dw-mast-close-event-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10" border="0"></a></div></li>
+            			</ul>
+            		</div>
+            	</div>
+            </div>
+        </div>
+    </div>
+	
+</div>
+<div id="fdiv" class="ibm-access"><embed type="application/x-shockwave-flash" src="https://www.ibm.com/developerworks/js/dw-mf/connect.swf" width="1" height="1" id="sflash" name="sflash" quality="high" menu="false" wmode="window" movie="https://www.ibm.com/developerworks/js/dw-mf/connect.swf" swliveconnect="true" allowscriptaccess="always"></div>
+<!-- MASTHEAD_END --><!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+      <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/cn/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/cn/topics/">技术主题</a></li><li><a href="http://www.ibm.com/developerworks/cn/java/">Java technology</a></li><li><a href="http://www.ibm.com/developerworks/cn/views/java/libraryview.jsp">文档库</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>Servlet 工作原理解析</h1><p>
+</p></div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#author1">许 令波</a>, Java 工程师, 淘宝网</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print" style="display: none;">许令波，developerWorks 中国网站最佳作者，现就职于淘宝网，是一名 Java 开发工程师。对大型互联网架构设计颇感兴趣，喜欢钻研开源框架的设计原理。有时间将学到的知识整理成文章，也喜欢记录下工作和生活中的一些思考。个人网站是： HYPERLINK "http://xulingbo.net" http://xulingbo.net。</div>
+<p></p>
+  <p><strong>简介：</strong>&nbsp;Web 技术成为当今主流的互联网 Web 应用技术之一，而 Servlet 是 Java Web 技术的核心基础。因而掌握 Servlet 的工作原理是成为一名合格的 Java Web 技术开发人员的基本要求。本文将带你认识 Java Web 技术是如何基于 Servlet 工作，你将知道：以 Tomcat 为例了解 Servlet 容器是如何工作的？一个 Web 工程在 Servlet 容器中是如何启动的？ Servlet 容器如何解析你在 web.xml 中定义的 Servlet ？用户的请求是如何被分配给指定的 Servlet 的？ Servlet 容器如何管理 Servlet 生命周期？你还将了解到最新的 Servlet 的 API 的类层次结构，以及 Servlet 中一些难点问题的分析。</p>
+
+ 
+</div>
+
+<div class="ibm-column ibm-second">
+
+<p class="leading"><b>发布日期：</b>&nbsp;2011 年 2 月 24 日
+  
+<br><b>级别：</b>&nbsp;高级
+    
+
+<br><strong>访问情况 ：</strong>&nbsp;81259 次浏览
+  <br><strong>评论：</strong>&nbsp;<span id="nCmts">28&nbsp;(<a class="dw-view-comment" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#icomments">查看</a>&nbsp;|&nbsp;<a onclick="showSignIn();return false;" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#">添加评论</a> - 登录)</span>
+  <!-- Rating_Area_Begin -->
+  </p><div id="art-rating-summary"><img alt="平均分 5 星 共 390 个评分" src="./Servlet 工作原理解析_files/stars120x20-5b.jpg" class="dw-avg-rating"> 平均分 (390个评分)<br><a class="dw-view-comment" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#iratings">为本文评分</a></div>
+  <!-- Rating_Area_End -->
+  <br>
+<p></p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area_And_Overlays_Begin -->
+
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p><a name="major1"><span class="atitle">从 Servlet 容器说起</span></a></p>
+			 <p>要介绍 Servlet 必须要先把 Servlet 容器说清楚，Servlet 与 Servlet 容器的关系有点像枪和子弹的关系，枪是为子弹而生，而子弹又让枪有了杀伤力。虽然它们是彼此依存的，但是又相互独立发展，这一切都是为了适应工业化生产的结果。从技术角度来说是为了解耦，通过标准化接口来相互协作。既然接口是连接 Servlet 与 Servlet 容器的关键，那我们就从它们的接口说起。</p>
+			 <p>前面说了 Servlet 容器作为一个独立发展的标准化产品，目前它的种类很多，但是它们都有自己的市场定位，很难说谁优谁劣，各有特点。例如现在比较流行的 Jetty，在定制化和移动领域有不错的发展，我们这里还是以大家最为熟悉 Tomcat 为例来介绍 Servlet 容器如何管理 Servlet。Tomcat 本身也很复杂，我们只从 Servlet 与 Servlet 容器的接口部分开始介绍，关于 Tomcat 的详细介绍可以参考我的另外一篇文章《 Tomcat 系统架构与模式设计分析》。</p>
+			 <p>Tomcat 的容器等级中，Context 容器是直接管理 Servlet 在容器中的包装类 Wrapper，所以 Context 容器如何运行将直接影响 Servlet 的工作方式。</p>
+				 <br><a name="fig1"><b>图 1 . Tomcat 容器模型</b></a><br>
+				 <img alt="图 1 . Tomcat 容器模型" height="284" src="./Servlet 工作原理解析_files/image002.jpg" width="437">
+			<br>
+			 <p>从上图可以看出 Tomcat 的容器分为四个等级，真正管理 Servlet 的容器是 Context 容器，一个 Context 对应一个 Web 工程，在 Tomcat 的配置文件中可以很容易发现这一点，如下：</p>
+			 <br><a name="listing1"><b>清单 1 Context 配置参数</b></a><br><table width="100%" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td class="code-outline"><pre class="displaycode">				 
+ &lt;Context path="/projectOne " docBase="D:\projects\projectOne" 
+ reloadable="true" /&gt; 
+</pre></td></tr></tbody></table><br>
+			 <p>下面详细介绍一下 Tomcat 解析 Context 容器的过程，包括如何构建 Servlet 的过程。</p>
+			 <p><a name="minor1.1"><span class="smalltitle">Servlet 容器的启动过程</span></a></p>
+			 <p>Tomcat7 也开始支持嵌入式功能，增加了一个启动类 org.apache.catalina.startup.Tomcat。创建一个实例对象并调用 start 方法就可以很容易启动 Tomcat，我们还可以通过这个对象来增加和修改 Tomcat 的配置参数，如可以动态增加 Context、Servlet 等。下面我们就利用这个 Tomcat 类来管理新增的一个 Context 容器，我们就选择 Tomcat7 自带的 examples Web 工程，并看看它是如何加到这个 Context 容器中的。</p>
+			 <br><a name="listing2"><b>清单 2 . 给 Tomcat 增加一个 Web 工程</b></a><br><table width="100%" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td class="code-outline"><pre class="displaycode">				 
+ Tomcat tomcat = getTomcatInstance(); 
+ File appDir = new File(getBuildDirectory(), "webapps/examples"); 
+ tomcat.addWebapp(null, "/examples", appDir.getAbsolutePath()); 
+ tomcat.start(); 
+ ByteChunk res = getUrl("http://localhost:" + getPort() + 
+               "/examples/servlets/servlet/HelloWorldExample"); 
+ assertTrue(res.toString().indexOf("&lt;h1&gt;Hello World!&lt;/h1&gt;") &gt; 0); 
+</pre></td></tr></tbody></table><br>
+			 <p>清单 1 的代码是创建一个 Tomcat 实例并新增一个 Web 应用，然后启动 Tomcat 并调用其中的一个 HelloWorldExample Servlet，看有没有正确返回预期的数据。</p>
+			 <p>Tomcat 的 addWebapp 方法的代码如下：</p>
+			 <br><a name="listing3"><b>清单 3 .Tomcat.addWebapp</b></a><br><table width="100%" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td class="code-outline"><pre class="displaycode">				 
+ public Context addWebapp(Host host, String url, String path) { 
+        silence(url); 
+        Context ctx = new StandardContext(); 
+        ctx.setPath( url ); 
+        ctx.setDocBase(path); 
+        if (defaultRealm == null) { 
+            initSimpleAuth(); 
+        } 
+        ctx.setRealm(defaultRealm); 
+        ctx.addLifecycleListener(new DefaultWebXmlListener()); 
+        ContextConfig ctxCfg = new ContextConfig(); 
+        ctx.addLifecycleListener(ctxCfg); 
+        ctxCfg.setDefaultWebXml("org/apache/catalin/startup/NO_DEFAULT_XML"); 
+        if (host == null) { 
+            getHost().addChild(ctx); 
+        } else { 
+            host.addChild(ctx); 
+        } 
+        return ctx; 
+ } 
+</pre></td></tr></tbody></table><br>
+			 <p>前面已经介绍了一个 Web 应用对应一个 Context 容器，也就是 Servlet 运行时的 Servlet 容器，添加一个 Web 应用时将会创建一个 StandardContext 容器，并且给这个 Context 容器设置必要的参数，url 和 path 分别代表这个应用在 Tomcat 中的访问路径和这个应用实际的物理路径，这个两个参数与清单 1 中的两个参数是一致的。其中最重要的一个配置是 ContextConfig，这个类将会负责整个 Web 应用配置的解析工作，后面将会详细介绍。最后将这个 Context 容器加到父容器 Host 中。</p>
+			 <p>接下去将会调用 Tomcat 的 start 方法启动 Tomcat，如果你清楚 Tomcat 的系统架构，你会容易理解 Tomcat 的启动逻辑，Tomcat 的启动逻辑是基于观察者模式设计的，所有的容器都会继承 Lifecycle 接口，它管理者容器的整个生命周期，所有容器的的修改和状态的改变都会由它去通知已经注册的观察者（Listener），关于这个设计模式可以参考《 Tomcat 的系统架构与设计模式，第二部分：设计模式》。Tomcat 启动的时序图可以用图 2 表示。</p>
+				 <br><a name="fig2"><b>图 2. Tomcat 主要类的启动时序图（</b></a><b><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/image003.jpg">查看大图</a>）</b><br>
+				 <img alt="图 2. Tomcat 主要类的启动时序图" height="515" src="./Servlet 工作原理解析_files/image004.jpg" width="535">
+			<br>
+			 <p>上图描述了 Tomcat 启动过程中，主要类之间的时序关系，下面我们将会重点关注添加 examples 应用所对应的 StandardContext 容器的启动过程。</p>
+			 <p>当 Context 容器初始化状态设为 init 时，添加在 Contex 容器的 Listener 将会被调用。ContextConfig 继承了 LifecycleListener 接口，它是在调用清单 3 时被加入到 StandardContext 容器中。ContextConfig 类会负责整个 Web 应用的配置文件的解析工作。</p>
+			 <p>ContextConfig 的 init 方法将会主要完成以下工作：</p><ol type="1">
+				 <li>
+创建用于解析 xml 配置文件的 contextDigester 对象</li>
+				 <li>
+读取默认 context.xml 配置文件，如果存在解析它</li>
+				 <li>
+读取默认 Host 配置文件，如果存在解析它</li>
+				 <li>
+读取默认 Context 自身的配置文件，如果存在解析它</li>
+				 <li>
+设置 Context 的 DocBase</li>
+			</ol>
+			 <p>ContextConfig 的 init 方法完成后，Context 容器的会执行 startInternal 方法，这个方法启动逻辑比较复杂，主要包括如下几个部分：</p><ol type="1">
+				 <li>
+创建读取资源文件的对象</li>
+				 <li>
+创建 ClassLoader 对象</li>
+				 <li>
+设置应用的工作目录</li>
+				 <li>
+启动相关的辅助类如：logger、realm、resources 等</li>
+				 <li>
+修改启动状态，通知感兴趣的观察者（Web 应用的配置）</li>
+				 <li>
+子容器的初始化</li>
+				 <li>
+获取 ServletContext 并设置必要的参数</li>
+				 <li>
+初始化“load on startup”的 Servlet</li>
+			</ol>
+			 <p><a name="minor1.2"><span class="smalltitle">Web 应用的初始化工作</span></a></p>
+			 <p>Web 应用的初始化工作是在 ContextConfig 的 configureStart 方法中实现的，应用的初始化主要是要解析 web.xml 文件，这个文件描述了一个 Web 应用的关键信息，也是一个 Web 应用的入口。</p>
+			 <p>Tomcat 首先会找 globalWebXml 这个文件的搜索路径是在 engine 的工作目录下寻找以下两个文件中的任一个 org/apache/catalin/startup/NO_DEFAULT_XML 或 conf/web.xml。接着会找 hostWebXml 这个文件可能会在 System.getProperty("catalina.base")/conf/${EngineName}/${HostName}/web.xml.default，接着寻找应用的配置文件 examples/WEB-INF/web.xml。web.xml 文件中的各个配置项将会被解析成相应的属性保存在 WebXml 对象中。如果当前应用支持 Servlet3.0，解析还将完成额外 9 项工作，这个额外的 9 项工作主要是为 Servlet3.0 新增的特性，包括 jar 包中的 META-INF/web-fragment.xml 的解析以及对 annotations 的支持。</p>
+			 <p>接下去将会将 WebXml 对象中的属性设置到 Context 容器中，这里包括创建 Servlet 对象、filter、listener 等等。这段代码在 WebXml 的 configureContext 方法中。下面是解析 Servlet 的代码片段：</p>
+			 <br><a name="listing4"><b>清单 4. 创建 Wrapper 实例</b></a><br><table width="100%" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td class="code-outline"><pre class="displaycode">				 
+ for (ServletDef servlet : servlets.values()) { 
+            Wrapper wrapper = context.createWrapper(); 
+            String jspFile = servlet.getJspFile(); 
+            if (jspFile != null) { 
+                wrapper.setJspFile(jspFile); 
+            } 
+            if (servlet.getLoadOnStartup() != null) { 
+                wrapper.setLoadOnStartup(servlet.getLoadOnStartup().intValue()); 
+            } 
+            if (servlet.getEnabled() != null) { 
+                wrapper.setEnabled(servlet.getEnabled().booleanValue()); 
+            } 
+            wrapper.setName(servlet.getServletName()); 
+            Map&lt;String,String&gt; params = servlet.getParameterMap(); 
+            for (Entry&lt;String, String&gt; entry : params.entrySet()) { 
+                wrapper.addInitParameter(entry.getKey(), entry.getValue()); 
+            } 
+            wrapper.setRunAs(servlet.getRunAs()); 
+            Set&lt;SecurityRoleRef&gt; roleRefs = servlet.getSecurityRoleRefs(); 
+            for (SecurityRoleRef roleRef : roleRefs) { 
+                wrapper.addSecurityReference( 
+                        roleRef.getName(), roleRef.getLink()); 
+            } 
+            wrapper.setServletClass(servlet.getServletClass()); 
+            MultipartDef multipartdef = servlet.getMultipartDef(); 
+            if (multipartdef != null) { 
+                if (multipartdef.getMaxFileSize() != null &amp;&amp; 
+                        multipartdef.getMaxRequestSize()!= null &amp;&amp; 
+                        multipartdef.getFileSizeThreshold() != null) { 
+                    wrapper.setMultipartConfigElement(new 
+ MultipartConfigElement( 
+                            multipartdef.getLocation(), 
+                            Long.parseLong(multipartdef.getMaxFileSize()), 
+                            Long.parseLong(multipartdef.getMaxRequestSize()), 
+                            Integer.parseInt( 
+                                    multipartdef.getFileSizeThreshold()))); 
+                } else { 
+                    wrapper.setMultipartConfigElement(new 
+ MultipartConfigElement( 
+                            multipartdef.getLocation())); 
+                } 
+            } 
+            if (servlet.getAsyncSupported() != null) { 
+                wrapper.setAsyncSupported( 
+                        servlet.getAsyncSupported().booleanValue()); 
+            } 
+            context.addChild(wrapper); 
+ } 
+</pre></td></tr></tbody></table><br>
+			 <p>这段代码清楚的描述了如何将 Servlet 包装成 Context 容器中的 StandardWrapper，这里有个疑问，为什么要将 Servlet 包装成 StandardWrapper 而不直接是 Servlet 对象。这里 StandardWrapper 是 Tomcat 容器中的一部分，它具有容器的特征，而 Servlet 为了一个独立的 web 开发标准，不应该强耦合在 Tomcat 中。</p>
+			 <p>除了将 Servlet 包装成 StandardWrapper 并作为子容器添加到 Context 中，其它的所有 web.xml 属性都被解析到 Context 中，所以说 Context 容器才是真正运行 Servlet 的 Servlet 容器。一个 Web 应用对应一个 Context 容器，容器的配置属性由应用的 web.xml 指定，这样我们就能理解 web.xml 到底起到什么作用了。</p>
+			 <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major2"><span class="atitle">创建 Servlet 实例</span></a></p>
+			 <p>前面已经完成了 Servlet 的解析工作，并且被包装成 StandardWrapper 添加在 Context 容器中，但是它仍然不能为我们工作，它还没有被实例化。下面我们将介绍 Servlet 对象是如何创建的，以及如何被初始化的。</p>
+			 <p><a name="minor2.1"><span class="smalltitle">创建 Servlet 对象</span></a></p>
+			 <p>如果 Servlet 的 load-on-startup 配置项大于 0，那么在 Context 容器启动的时候就会被实例化，前面提到在解析配置文件时会读取默认的 globalWebXml，在 conf 下的 web.xml 文件中定义了一些默认的配置项，其定义了两个 Servlet，分别是：org.apache.catalina.servlets.DefaultServlet 和 org.apache.jasper.servlet.JspServlet 它们的 load-on-startup 分别是 1 和 3，也就是当 Tomcat 启动时这两个 Servlet 就会被启动。</p>
+			 <p>创建 Servlet 实例的方法是从 Wrapper. loadServlet 开始的。loadServlet 方法要完成的就是获取 servletClass 然后把它交给 InstanceManager 去创建一个基于 servletClass.class 的对象。如果这个 Servlet 配置了 jsp-file，那么这个 servletClass 就是 conf/web.xml 中定义的 org.apache.jasper.servlet.JspServlet 了。</p>
+			 <p>创建 Servlet 对象的相关类结构图如下：</p>
+				 <br><a name="fig3"><b>图 3. 创建 Servlet 对象的相关类结构</b></a><br>
+				 <img alt="图 3. 创建 Servlet 对象的相关类结构" height="213" src="./Servlet 工作原理解析_files/image006.jpg" width="294">
+			<br>
+			 <p><a name="minor2.2"><span class="smalltitle">初始化 Servlet</span></a></p>
+			 <p>初始化 Servlet 在 StandardWrapper 的 initServlet 方法中，这个方法很简单就是调用 Servlet 的 init 的方法，同时把包装了 StandardWrapper 对象的 StandardWrapperFacade 作为 ServletConfig 传给 Servlet。Tomcat 容器为何要传 StandardWrapperFacade 给 Servlet 对象将在后面做详细解析。</p>
+			 <p>如果该 Servlet 关联的是一个 jsp 文件，那么前面初始化的就是 JspServlet，接下去会模拟一次简单请求，请求调用这个 jsp 文件，以便编译这个 jsp 文件为 class，并初始化这个 class。</p>
+			 <p>这样 Servlet 对象就初始化完成了，事实上 Servlet 从被 web.xml 中解析到完成初始化，这个过程非常复杂，中间有很多过程，包括各种容器状态的转化引起的监听事件的触发、各种访问权限的控制和一些不可预料的错误发生的判断行为等等。我们这里只抓了一些关键环节进行阐述，试图让大家有个总体脉络。</p>
+			 <p>下面是这个过程的一个完整的时序图，其中也省略了一些细节。</p>
+				 <br><a name="fig4"><b>图 4. 初始化 Servlet 的时序图（</b></a><b><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/image007.jpg">查看大图</a>）</b><br>
+				 <img alt="图 4. 初始化 Servlet 的时序图" height="765" src="./Servlet 工作原理解析_files/image008.jpg" width="577">
+			<br>
+			 <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major3"><span class="atitle">Servlet 体系结构</span></a></p>
+			 <p>我们知道 Java Web 应用是基于 Servlet 规范运转的，那么 Servlet 本身又是如何运转的呢？为何要设计这样的体系结构。</p>
+				 <br><a name="fig5"><b>图 5.Servlet 顶层类关联图</b></a><br>
+				 <img alt="图 5.Servlet 顶层类关联图" height="212" src="./Servlet 工作原理解析_files/image010.jpg" width="434">
+			<br>
+			 <p>从上图可以看出 Servlet 规范就是基于这几个类运转的，与 Servlet 主动关联的是三个类，分别是 ServletConfig、ServletRequest 和 ServletResponse。这三个类都是通过容器传递给 Servlet 的，其中 ServletConfig 是在 Servlet 初始化时就传给 Servlet 了，而后两个是在请求达到时调用 Servlet 时传递过来的。我们很清楚 ServletRequest 和 ServletResponse 在 Servlet 运行的意义，但是 ServletConfig 和 ServletContext 对 Servlet 有何价值？仔细查看 ServletConfig 接口中声明的方法发现，这些方法都是为了获取这个 Servlet 的一些配置属性，而这些配置属性可能在 Servlet 运行时被用到。而 ServletContext 又是干什么的呢？ Servlet 的运行模式是一个典型的“握手型的交互式”运行模式。所谓“握手型的交互式”就是两个模块为了交换数据通常都会准备一个交易场景，这个场景一直跟随个这个交易过程直到这个交易完成为止。这个交易场景的初始化是根据这次交易对象指定的参数来定制的，这些指定参数通常就会是一个配置类。所以对号入座，交易场景就由 ServletContext 来描述，而定制的参数集合就由 ServletConfig 来描述。而 ServletRequest 和 ServletResponse 就是要交互的具体对象了，它们通常都是作为运输工具来传递交互结果。</p>
+			 <p>ServletConfig 是在 Servlet init 时由容器传过来的，那么 ServletConfig 到底是个什么对象呢？</p>
+			 <p>下图是 ServletConfig 和 ServletContext 在 Tomcat 容器中的类关系图。</p>
+				 <br><a name="fig6"><b>图 6. ServletConfig 在容器中的类关联图</b></a><br>
+				 <img alt="图 6. ServletConfig 在容器中的类关联图" height="406" src="./Servlet 工作原理解析_files/image012.jpg" width="537">
+			<br>
+			 <p>上图可以看出 StandardWrapper 和 StandardWrapperFacade 都实现了 ServletConfig 接口，而 StandardWrapperFacade 是 StandardWrapper 门面类。所以传给 Servlet 的是 StandardWrapperFacade 对象，这个类能够保证从 StandardWrapper 中拿到 ServletConfig 所规定的数据，而又不把 ServletConfig 不关心的数据暴露给 Servlet。</p>
+			 <p>同样 ServletContext 也与 ServletConfig 有类似的结构，Servlet 中能拿到的 ServletContext 的实际对象也是 ApplicationContextFacade 对象。ApplicationContextFacade 同样保证 ServletContex 只能从容器中拿到它该拿的数据，它们都起到对数据的封装作用，它们使用的都是门面设计模式。</p>
+			 <p>通过 ServletContext 可以拿到 Context 容器中一些必要信息，比如应用的工作路径，容器支持的 Servlet 最小版本等。</p>
+			 <p>Servlet 中定义的两个 ServletRequest 和 ServletResponse 它们实际的对象又是什么呢？，我们在创建自己的 Servlet 类时通常使用的都是 HttpServletRequest 和 HttpServletResponse，它们继承了 ServletRequest 和 ServletResponse。为何 Context 容器传过来的 ServletRequest、ServletResponse 可以被转化为 HttpServletRequest 和 HttpServletResponse 呢？</p>
+				 <br><a name="fig7"><b>图 7.Request 相关类结构图</b></a><br>
+				 <img alt="图 7.Request 相关类结构图" height="471" src="./Servlet 工作原理解析_files/image014.jpg" width="500">
+			<br>
+			 <p>上图是 Tomcat 创建的 Request 和 Response 的类结构图。Tomcat 一接受到请求首先将会创建 org.apache.coyote.Request 和 org.apache.coyote.Response，这两个类是 Tomcat 内部使用的描述一次请求和相应的信息类它们是一个轻量级的类，它们作用就是在服务器接收到请求后，经过简单解析将这个请求快速的分配给后续线程去处理，所以它们的对象很小，很容易被 JVM 回收。接下去当交给一个用户线程去处理这个请求时又创建 org.apache.catalina.connector. Request 和 org.apache.catalina.connector. Response 对象。这两个对象一直穿越整个 Servlet 容器直到要传给 Servlet，传给 Servlet 的是 Request 和 Response 的门面类 RequestFacade 和 RequestFacade，这里使用门面模式与前面一样都是基于同样的目的——封装容器中的数据。一次请求对应的 Request 和 Response 的类转化如下图所示：</p>
+				 <br><a name="fig8"><b>图 8.Request 和 Response 的转变过程</b></a><br>
+				 <img alt="图 8.Request 和 Response 的转变过程" height="110" src="./Servlet 工作原理解析_files/image016.jpg" width="565">
+			<br>
+			 <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major4"><span class="atitle">Servlet 如何工作</span></a></p>
+			 <p>我们已经清楚了 Servlet 是如何被加载的、Servlet 是如何被初始化的，以及 Servlet 的体系结构，现在的问题就是它是如何被调用的。</p>
+			 <p>当用户从浏览器向服务器发起一个请求，通常会包含如下信息：http://hostname: port /contextpath/servletpath，hostname 和 port 是用来与服务器建立 TCP 连接，而后面的 URL 才是用来选择服务器中那个子容器服务用户的请求。那服务器是如何根据这个 URL 来达到正确的 Servlet 容器中的呢？</p>
+			 <p>Tomcat7.0 中这件事很容易解决，因为这种映射工作有专门一个类来完成的，这个就是 org.apache.tomcat.util.http.mapper，这个类保存了 Tomcat 的 Container 容器中的所有子容器的信息，当 org.apache.catalina.connector. Request 类在进入 Container 容器之前，mapper 将会根据这次请求的 hostnane 和 contextpath 将 host 和 context 容器设置到 Request 的 mappingData 属性中。所以当 Request 进入 Container 容器之前，它要访问那个子容器这时就已经确定了。</p>
+				 <br><a name="fig9"><b>图 9.Request 的 Mapper 类关系图</b></a><br>
+				 <img alt="图 9.Request 的 Mapper 类关系图" height="384" src="./Servlet 工作原理解析_files/image018.jpg" width="337">
+			<br>
+			 <p>可能你有疑问，mapper 中怎么会有容器的完整关系，这要回到图 2 中 19 步 MapperListener 类的初始化过程，下面是 MapperListener 的 init 方法代码 :</p>
+			 <br><a name="listing5"><b>清单 5. MapperListener.init</b></a><br><table width="100%" cellpadding="0" cellspacing="0" border="0"><tbody><tr><td class="code-outline"><pre class="displaycode">				 
+ public void init() { 
+        findDefaultHost(); 
+        Engine engine = (Engine) connector.getService().getContainer(); 
+        engine.addContainerListener(this); 
+        Container[] conHosts = engine.findChildren(); 
+        for (Container conHost : conHosts) { 
+            Host host = (Host) conHost; 
+            if (!LifecycleState.NEW.equals(host.getState())) { 
+                host.addLifecycleListener(this); 
+                registerHost(host); 
+            } 
+        } 
+ } 
+</pre></td></tr></tbody></table><br>
+			 <p>这段代码的作用就是将 MapperListener 类作为一个监听者加到整个 Container 容器中的每个子容器中，这样只要任何一个容器发生变化，MapperListener 都将会被通知，相应的保存容器关系的 MapperListener 的 mapper 属性也会修改。for 循环中就是将 host 及下面的子容器注册到 mapper 中。</p>
+				 <br><a name="fig10"><b>图 10.Request 在容器中的路由图</b></a><br>
+				 <img alt="图 10.Request 在容器中的路由图" height="303" src="./Servlet 工作原理解析_files/image020.jpg" width="557">
+			<br>
+			 <p>上图描述了一次 Request 请求是如何达到最终的 Wrapper 容器的，我们现正知道了请求是如何达到正确的 Wrapper 容器，但是请求到达最终的 Servlet 还要完成一些步骤，必须要执行 Filter 链，以及要通知你在 web.xml 中定义的 listener。</p>
+			 <p>接下去就要执行 Servlet 的 service 方法了，通常情况下，我们自己定义的 servlet 并不是直接去实现 javax.servlet.servlet 接口，而是去继承更简单的 HttpServlet 类或者 GenericServlet 类，我们可以有选择的覆盖相应方法去实现我们要完成的工作。</p>
+			 <p>Servlet 的确已经能够帮我们完成所有的工作了，但是现在的 web 应用很少有直接将交互全部页面都用 servlet 来实现，而是采用更加高效的 MVC 框架来实现。这些 MVC 框架基本的原理都是将所有的请求都映射到一个 Servlet，然后去实现 service 方法，这个方法也就是 MVC 框架的入口。</p>
+			 <p>当 Servlet 从 Servlet 容器中移除时，也就表明该 Servlet 的生命周期结束了，这时 Servlet 的 destroy 方法将被调用，做一些扫尾工作。</p>
+			 <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major5"><span class="atitle">Session 与 Cookie</span></a></p>
+			 <p>前面我们已经说明了 Servlet 如何被调用，我们基于 Servlet 来构建应用程序，那么我们能从 Servlet 获得哪些数据信息呢？</p>
+			 <p>Servlet 能够给我们提供两部分数据，一个是在 Servlet 初始化时调用 init 方法时设置的 ServletConfig，这个类基本上含有了 Servlet 本身和 Servlet 所运行的 Servlet 容器中的基本信息。根据前面的介绍 ServletConfig 的实际对象是 StandardWrapperFacade，到底能获得哪些容器信息可以看看这类提供了哪些接口。还有一部分数据是由 ServletRequest 类提供，它的实际对象是 RequestFacade，从提供的方法中发现主要是描述这次请求的 HTTP 协议的信息。所以要掌握 Servlet 的工作方式必须要很清楚 HTTP 协议，如果你还不清楚赶紧去找一些参考资料。关于这一块还有一个让很多人迷惑的 Session 与 Cookie。</p>
+			 <p>Session 与 Cookie 不管是对 Java Web 的熟练使用者还是初学者来说都是一个令人头疼的东西。Session 与 Cookie 的作用都是为了保持访问用户与后端服务器的交互状态。它们有各自的优点也有各自的缺陷。然而具有讽刺意味的是它们优点和它们的使用场景又是矛盾的，例如使用 Cookie 来传递信息时，随着 Cookie 个数的增多和访问量的增加，它占用的网络带宽也很大，试想假如 Cookie 占用 200 个字节，如果一天的 PV 有几亿的时候，它要占用多少带宽。所以大访问量的时候希望用 Session，但是 Session 的致命弱点是不容易在多台服务器之间共享，所以这也限制了 Session 的使用。</p>
+			 <p>不管 Session 和 Cookie 有什么不足，我们还是要用它们。下面详细讲一下，Session 如何基于 Cookie 来工作。实际上有三种方式能可以让 Session 正常工作：</p><ol type="1">
+				 <li>
+基于 URL Path Parameter，默认就支持</li>
+				 <li>
+基于 Cookie，如果你没有修改 Context 容器个 cookies 标识的话，默认也是支持的</li>
+				 <li>
+基于 SSL，默认不支持，只有 connector.getAttribute("SSLEnabled") 为 TRUE 时才支持</li>
+			</ol>
+			 <p>第一种情况下，当浏览器不支持 Cookie 功能时，浏览器会将用户的 SessionCookieName 重写到用户请求的 URL 参数中，它的传递格式如 /path/Servlet;name=value;name2=value2? Name3=value3，其中“Servlet；”后面的 K-V 对就是要传递的 Path Parameters，服务器会从这个 Path Parameters 中拿到用户配置的 SessionCookieName。关于这个 SessionCookieName，如果你在 web.xml 中配置 session-config 配置项的话，其 cookie-config 下的 name 属性就是这个 SessionCookieName 值，如果你没有配置 session-config 配置项，默认的 SessionCookieName 就是大家熟悉的“JSESSIONID”。接着 Request 根据这个 SessionCookieName 到 Parameters 拿到 Session ID 并设置到 request.setRequestedSessionId 中。</p>
+			 <p>请注意如果客户端也支持 Cookie 的话，Tomcat 仍然会解析 Cookie 中的 Session ID，并会覆盖 URL 中的 Session ID。</p>
+			 <p>如果是第三种情况的话将会根据 javax.servlet.request.ssl_session 属性值设置 Session ID。</p>
+			 <p>有了 Session ID 服务器端就可以创建 HttpSession 对象了，第一次触发是通过 request. getSession() 方法，如果当前的 Session ID 还没有对应的 HttpSession 对象那么就创建一个新的，并将这个对象加到 org.apache.catalina. Manager 的 sessions 容器中保存，Manager 类将管理所有 Session 的生命周期，Session 过期将被回收，服务器关闭，Session 将被序列化到磁盘等。只要这个 HttpSession 对象存在，用户就可以根据 Session ID 来获取到这个对象，也就达到了状态的保持。</p>
+				 <br><a name="fig11"><b>图 11.Session 相关类图</b></a><br>
+				 <img alt="图 11.Session 相关类图" height="216" src="./Servlet 工作原理解析_files/image022.jpg" width="386">
+			<br>
+			 <p>上从图中可以看出从 request.getSession 中获取的 HttpSession 对象实际上是 StandardSession 对象的门面对象，这与前面的 Request 和 Servlet 是一样的原理。下图是 Session 工作的时序图：</p>
+				 <br><a name="fig12"><b>图 12.Session 工作的时序图（</b></a><b><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/image023.jpg">查看大图</a>）</b><br>
+				 <img alt="图 12.Session 工作的时序图" height="666" src="./Servlet 工作原理解析_files/image024.jpg" width="568">
+			<br>
+			 <p>还有一点与 Session 关联的 Cookie 与其它 Cookie 没有什么不同，这个配置的配置可以通过 web.xml 中的 session-config 配置项来指定。</p>
+			 <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major6"><span class="atitle">Servlet 中的 Listener</span></a></p>
+			 <p>整个 Tomcat 服务器中 Listener 使用的非常广泛，它是基于观察者模式设计的，Listener 的设计对开发 Servlet 应用程序提供了一种快捷的手段，能够方便的从另一个纵向维度控制程序和数据。目前 Servlet 中提供了 5 种两类事件的观察者接口，它们分别是：4 个 EventListeners 类型的，ServletContextAttributeListener、ServletRequestAttributeListener、ServletRequestListener、HttpSessionAttributeListener 和 2 个 LifecycleListeners 类型的，ServletContextListener、HttpSessionListener。如下图所示：</p>
+				 <br><a name="fig13"><b>图 13.Servlet 中的 Listener（</b></a><b><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/image025.png">查看大图</a>）</b><br>
+				 <img alt="图 13.Servlet 中的 Listener" height="198" src="./Servlet 工作原理解析_files/image026.jpg" width="495">
+			<br>
+			 <p>它们基本上涵盖了整个 Servlet 生命周期中，你感兴趣的每种事件。这些 Listener 的实现类可以配置在 web.xml 中的 &lt;listener&gt; 标签中。当然也可以在应用程序中动态添加 Listener，需要注意的是 ServletContextListener 在容器启动之后就不能再添加新的，因为它所监听的事件已经不会再出现。掌握这些 Listener 的使用，能够让我们的程序设计的更加灵活。</p>
+			 <div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#ibm-pcon" class="ibm-anchor-up-link">回页首</a></p><p><a name="major7"><span class="atitle">总结</span></a></p>
+			 <p>本文涉及到内容有点多，要把每个细节都说清楚，似乎不可能，本文试着从 Servlet 容器的启动到 Servlet 的初始化，以及 Servlet 的体系结构等这些环节中找出一些重点来讲述，目的是能读者有一个总体的完整的结构图，同时也详细分析了其中的一些难点问题，希望对大家有所帮助。</p>
+			
+		<!-- CMA ID: 629199 --> <!-- Site ID: 10 --> <!-- XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl -->
+<br>
+<p><a name="resources"><span class="atitle">参考资料 </span></a></p><p><b>学习</b></p><ul><li>
+查看文章 <a href="http://www.ibm.com/developerworks/cn/java/j-lo-tomcat1/index.html">《 Tomcat 系统架构与设计模式》</a>（developerWorks，2010 年 5 月）：了解 Tomcat 中容器的体系结构，基本的工作原理，以及 Tomcat 中使用的经典的设计模式介绍。<br><br></li><li>
+					 <a href="http://www.ibm.com/developerworks/cn/education/java/j-intserv/index.html">Java Servlet</a><a href="http://www.ibm.com/developerworks/cn/education/java/j-intserv/index.html">技术简介</a>（developerWorks，2004 年 12 月）：介绍并解释 servlet 是什么，它们是如何工作的，如何使用它们来创建您能够想像到的任意复杂度的 Web 应用程序，以及作为一名专业编程人员，您如何才能最有效地使用 servlet。<br><br></li><li>
+参考 <a href="http://tomcat.apache.org/tomcat-7.0-doc/index.html">Apache Tomcat</a>官网，了解 Tomcat 最新动态，以及开发人员参考手册。<br><br></li><li>
+					 <a href="http://www.oracle.com/technetwork/java/download-139443.html">Servlet 最新规范</a>，本文是基于 Servlet3.0 规范讲解的，这里有最新的 Servlet 规范，以及 API 的介绍。<br><br></li><li>
+					 <a href="http://www.w3.org/Protocols/">HTTP 协议</a>，W3C 关于 HTTP 协议的详细描述。<br><br></li><li>
+            <a href="http://www.ibm.com/developerworks/cn/web/">developerWorks Web development
+               专区</a>：通过专门关于 Web 技术的文章和教程，扩展您在网站开发方面的技能。<br><br></li><li>
+            <a href="http://www.ibm.com/developerworks/cn/ajax/">developerWorks Ajax 资源中心</a>：这是有关 Ajax 编程模型信息的一站式中心，包括很多文档、教程、论坛、blog、wiki 和新闻。任何 Ajax 的新信息都能在这里找到。<br><br></li><li>
+            <a href="http://www.ibm.com/developerworks/cn/web20/">developerWorks Web 2.0 资源中心</a>，这是有关 Web 2.0 相关信息的一站式中心，包括大量 Web 2.0 技术文章、教程、下载和相关技术资源。您还可以通过 <a href="http://www.ibm.com/developerworks/cn/web20/newto/">Web 2.0 新手入门</a> 栏目，迅速了解 Web 2.0 的相关概念。<br><br></li><li>查看 <a href="http://www.ibm.com/developerworks/cn/web/lp/html5/">HTML5 专题</a>，了解更多和 HTML5 相关的知识和动向。<br><br></li></ul><p><b>讨论</b></p><ul><li>加入 <a href="http://www.ibm.com/developerworks/cn/community/" onmouseover="linkQueryAppend(this)">developerWorks 中文社区</a>。<br><br></li></ul>
+<p><a name="author"><span class="atitle">关于作者</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><p><a name="author1"> </a>许令波，developerWorks 中国网站最佳作者，现就职于淘宝网，是一名 Java 开发工程师。对大型互联网架构设计颇感兴趣，喜欢钻研开源框架的设计原理。有时间将学到的知识整理成文章，也喜欢记录下工作和生活中的一些思考。个人网站是： HYPERLINK "http://xulingbo.net" http://xulingbo.net。</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+  <!-- OVERLAYS_START -->
+  <!-- Report_Abuse_Start -->
+  <div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+    <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#">关闭 [x]</a></p></div>
+    <div class="ibm-body">
+      <div class="ibm-main">
+        <a class="ibm-access" name="reportabuseoverlay">关于报告滥用的帮助</a>   
+        <div class="ibm-title"><h1>报告滥用</h1></div>
+        <div class="ibm-container ibm-alternate">
+          <p><strong>谢谢!</strong>  此内容已经标识给管理员注意。</p>
+          <div class="ibm-overlay-rule"><hr></div>
+          <div class="ibm-buttons-row">
+            <input type="button" onclick="ibmCommon.Overlays.hide(&#39;reportabuseoverlay&#39;);return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="关闭">
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="ibm-footer"></div>
+  </div>
+  <!-- Report_Abuse_Error_Start -->
+  <div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+    <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#">关闭 [x]</a></p></div>
+    <div class="ibm-body">
+      <div class="ibm-main">
+        <a class="ibm-access" name="reportabuseoverlayerror">关于报告滥用的帮助</a>   
+        <div class="ibm-title"><h1>报告滥用</h1></div>
+        <div class="ibm-container ibm-alternate">
+          <p class="ibm-ind-error"><strong>报告滥用提交失败。  请稍后重试。</strong></p>
+          <div class="ibm-overlay-rule"><hr></div>
+          <div class="ibm-buttons-row">
+            <input type="button" onclick="ibmCommon.Overlays.hide(&#39;reportabuseoverlayerror&#39;);return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="关闭">
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="ibm-footer"></div>
+  </div>
+  <!-- Sign in OVERLAY STARTS HERE --> 
+  <div class="ibm-common-overlay" id="signin_overlay">
+    <div class="ibm-head">
+      <p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="clearForm();">关闭 [x]</a></p>
+    </div>
+    <div class="ibm-body">
+      <div class="ibm-main">
+        <div class="ibm-title ibm-subtitle">
+          <h1>developerWorks：登录</h1>
+          <div id="ibm-overlay-error-signin" class="no-display"></div>
+        </div>
+        
+        <div class="ibm-container ibm-alternate ibm-buttons-last">
+          <div class="ibm-container-body">
+
+            <form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+              <p><label for="ibmid">IBM ID：</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);">
+                <br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="(function () {window.location=&#39;/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=zh_CN&amp;d=&#39;+encodeURIComponent(location.href);})();">需要一个 IBM ID？</a>
+                <br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=zh_CN">忘记 IBM ID？</a></span>   
+              </p> 
+              <p><label for="password">密码：</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);"><br>
+                <a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=forgot&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(getAuthUrl())+&#39;%3Fm%3Dloginpage%26lang%3Dzh_CN%26d%3D&#39;+encodeURIComponent(location.href);})();">忘记密码？</a><br>
+                <a class="ibm-forward-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=chpw&amp;lang=zh_CN&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(location.href);})();">更改您的密码</a></span></p> 
+
+              <p class="dw-perm-box">
+                <span><input id="perm" type="checkbox" name="perm_name"><label for="perm"> 保持登录。</label></span>
+              </p>
+
+              <p>单击提交则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/mydeveloperworks/terms?lang=zh">使用条款</a></p>
+              <div class="ibm-buttons-row">
+                <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+                  <input value="取消" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide(&#39;signin_overlay&#39;);return false;"></p>
+              </div>
+            </form>
+            <div class="ibm-overlay-rule"><hr></div>
+            <p>当您初次登录到 developerWorks 时，将会为您创建一份概要信息。<strong>您在 developerWorks 概要信息中选择公开的信息将公开显示给其他人，但您可以随时修改这些信息的显示状态。</strong>您的姓名（除非选择隐藏）和昵称将和您在 developerWorks 发布的内容一同显示。</p>
+            <div class="dw-overlay-legal"><p>所有提交的信息确保安全。</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ibm-footer"></div>
+  </div>
+  <!-- Sign in OVERLAY ENDS HERE --> 
+  
+  
+  <!-- Display name OVERLAY STARTS HERE --> 
+  <div class="ibm-common-overlay" id="displayname_overlay">
+    <div class="ibm-head">
+      <p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="clearForm();">关闭 [x]</a></p>
+    </div>
+    <div class="ibm-body">
+      <div class="ibm-main">
+        <div class="ibm-title ibm-subtitle">
+          <h1>请选择您的昵称：</h1>
+          <div id="ibm-overlay-error-dname" class="no-display"></div>
+        </div>
+        <div class="ibm-container ibm-alternate ibm-buttons-last">
+          <div class="ibm-container-body">
+            <p class="ibm-overlay-intro">当您初次登录到 developerWorks 时，将会为您创建一份概要信息，您需要指定一个昵称。您的昵称将和您在 developerWorks 发布的内容显示在一起。</p><p><strong>昵称长度在 3 至 31 个字符之间</strong>。 您的昵称在 developerWorks 社区中必须是唯一的，并且出于隐私保护的原因，不能是您的电子邮件地址。</p>
+            <form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+              <p><label for="displayname">昵称：</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);"></span><span class="ibm-form-note">（长度在 3 至 31 个字符之间）</span>
+              </p>
+              
+              <div class="ibm-overlay-rule"><hr>
+              </div>
+              <p>单击<strong>提交</strong>则表示您同意developerWorks 的条款和条件。 <a href="http://www.ibm.com/developerworks/mydeveloperworks/terms?lang=zh">使用条款</a>.</p>
+              <div class="ibm-buttons-row">
+                <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="提交" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+                  <input value="取消" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide(&#39;displayname_overlay&#39;);return false;"></p>
+              </div>
+            </form>
+            <div class="ibm-overlay-rule"><hr></div>
+            <div class="dw-overlay-legal"><p>所有提交的信息确保安全。</p></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="ibm-footer"></div>
+  </div>
+  <!-- Display name OVERLAY ENDS HERE -->
+  <!-- OVERLAYS_END -->
+  <!-- RATINGS START -->
+  <p class="ibm-no-print"><span class="atitle"><a name="iratings">为本文评分</a></span></p>
+  <input id="art-rating" name="ratinga" type="hidden" value="5"><div id="art-rating-module"><p id="submitErr" class="ibm-ind-error" style="display: none;"><strong>错误：提交失败，请重试。</strong></p><p><span id="ratingSectUI"><img alt="平均分 5 星 共 390 个评分" src="./Servlet 工作原理解析_files/stars120x20-5gw.jpg" class="dw-avg-rating"> 平均分 (390个评分)</span></p><div class="ibm-container" id="ratingForm"><div class="ibm-container-body dw-container-ratings"><form class="dw-ratings-form" onsubmit="artRating.submitRating(); return false;"><input type="radio" name="ratingstars" id="rat-1" value="1"><label class="rating-label" id="star1" for="rat-1">1 星</label><img id="rat-1-img" alt="1 星" title="1 星" src="./Servlet 工作原理解析_files/stars120x20-1w.jpg" class="rating-image"><span class="dw-rating-text">1 星</span><br><input type="radio" name="ratingstars" id="rat-2" value="2"><label class="rating-label" id="star2" for="rat-2">2 星</label><img id="rat-2-img" alt="2 星" title="2 星" src="./Servlet 工作原理解析_files/stars120x20-2w.jpg" class="rating-image2"><span class="dw-rating-text">2 星</span><br><input type="radio" name="ratingstars" id="rat-3" value="3"><label class="rating-label" id="star3" for="rat-3">3 星</label><img id="rat-3-img" alt="3 星" title="3 星" src="./Servlet 工作原理解析_files/stars120x20-3w.jpg" class="rating-image2"><span class="dw-rating-text">3 星</span><br><input type="radio" name="ratingstars" id="rat-4" value="4"><label class="rating-label" id="star4" for="rat-4">4 星</label><img id="rat-4-img" alt="4 星" title="4 星" src="./Servlet 工作原理解析_files/stars120x20-4w.jpg" class="rating-image2"><span class="dw-rating-text">4 星</span><br><input type="radio" name="ratingstars" id="rat-5" value="5"><label class="rating-label" id="star5" for="rat-5">5 星</label><img id="rat-5-img" alt="5 星" title="5 星" src="./Servlet 工作原理解析_files/stars120x20-5w.jpg" class="rating-image2"><span class="dw-rating-text">5 星</span><div class="ibm-buttons-row"><p class="ibm-first"><input value="提交" type="submit" name="ibm-submit" class="ibm-btn-arrow-pri dw-ratings-submit"></p></div></form></div></div></div>
+  <script language="JavaScript" type="text/javascript">
+    // <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+  </script>
+  <!-- RATINGS END --> 
+  
+  <!-- INLINE_COMMENTS_START -->
+  <p class="ibm-no-print"><span class="atitle"><a name="icomments">评论</a></span></p>
+    <script language="JavaScript" type="text/javascript">
+      // <![CDATA[
+dwc = {};
+dwc.cmts = '条评论';
+dwc.signInPreText = '请';
+dwc.signIn = '登录';
+dwc.or = '或';
+dwc.register = '注册';
+dwc.signInPostText = '';
+dwc.leaveCmt = '后发表评论。';
+dwc.view = '查看';
+dwc.totalCmts = '共有评论';
+dwc.postYourCmt = '添加您的评论';
+dwc.show = '显示：';
+dwc.recentCmts = '最新评论';
+dwc.allCmts = '所有评论';
+dwc.tooLongCmt = '您的评论超过了 1000 字符限制';
+dwc.numCharsLeft = '剩余 <span id="charCount">{1}</span> 字符';
+dwc.reportAbuse = '报告滥用';
+dwc.notifyMsg = '有新评论时提醒我';
+dwc.htmlWarning = '注意：评论中不支持 HTML 语法'; 
+dwc.cmt = '评论：';
+dwc.addCmts = '添加评论';
+dwc.addCmt = '添加评论';
+dwc.doNotErase = '--在下方添加评论--'; 
+dwc.viewOrAddCmts = '查看或添加评论';
+dwc.reportInapprCont = '举报不良信息';
+dwc.reportInapprContLink = 'http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1834';
+dwc.postingCmt = '正在发布评论……';
+dwc.noCmt = '快来添加第一条评论';
+dwc.netwkErr = '在检索评论时出错，请稍后刷新。';
+dwc.addACmt = '添加评论';
+dwc.instructCmt = '标有星号（<span class="ibm-required">*</span>）的是必填项目。';
+dwc.btnPost = '发布';
+dwc.btnPostAnon = '匿名发布';
+dwc.btnClrCmt = '清除评论';
+dwc.btnCancel = '取消';
+dwc.showRecent = '显示最新的 {1} 条评论'; // {1} is the count to be substituted
+dwc.showNext = '显示后 {1} 条评论'; // {1} is the count to be substituted
+dwc.showAllCmts = '显示所有评论';
+dwc.enterCmt = '请输入评论内容。';
+dwc.loginErr = '暂时无法验证您的登录状态，请稍后再试。';
+dwc.postErr = '暂时无法发布您的评论，请稍后再试。';
+dwc.postBy = '由 <strong>{1}</strong>  于 {2} '; // {1} is the author to be substituted; {2} is the date
+dwc.siteId = 10;
+dwc.lang = 'zh_CN';
+dwc.viperLang = 'zh';
+// ]]>
+    </script>
+    <div id="threadShow"><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><p id="cmtHead"><label for="newCmt"><strong>添加评论:</strong></label></p><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect" style="">请 <a onclick="showSignIn();return false;" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#">登录</a> 或 <a href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=register&lang=zh_CN&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-servlet%2F%23icomments">注册</a>  后发表评论。</p><p>注意：评论中不支持 HTML 语法</p><span id="infoCmt"></span><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form"><p><textarea cols="120" rows="5" name="newCmt" id="newCmt" class="dw-inoperable" disabled=""></textarea><br></p><span class="ibm-input-group"><input type="checkbox" value="1" name="comment_notification" id="comment_notification" disabled=""><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">有新评论时提醒我</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount">剩余 <span id="charCount">1000</span> 字符</span><br><br><p></p><p class="ibm-buttons-row"><input type="button" value="发布" jquery1275054459750="11" name="postCmt" id="postCmt" class="ibm-btn-arrow-sec dw-btn-arrow-sec" alt="添加您的评论" disabled=""><br><br></p></form></div></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style=""><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p><span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts">28</span>)</strong></span><span><img src="./Servlet 工作原理解析_files/c.gif" width="100" height="10" alt=""></span><span class="dw-how-many-comments-label" style="" id="dropdownCmts"><label for="howManyComments">显示：</label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论   </option><option value="all">所有评论</option></select><input type="image" class="ibm-btn-go" name="ibm-go" value="Go" src="./Servlet 工作原理解析_files/short-btn.gif" alt="Go"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>感谢rensanning找出了不少bug，如果书有重印的话，一定修正这些。</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="http://www.ibm.com/developerworks/forums/profile.jspa?userID=378332">junshan</a></strong>  于 2012年11月18日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="https://www.ibm.com/developerworks/community/report?lang=zh&referingURL=http://www.ibm.com/developerworks/cn/java/j-lo-servlet/&mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E6%84%9F%E8%B0%A2rensanning%E6%89%BE%E5%87%BA%E4%BA%86%E4%B8%8D%E5%B0%91bug%EF%BC%8C%E5%A6%82%E6%9E%9C%E4%B9%A6%E6%9C%89%E9%87%8D%E5%8D%B0%E7%9A%84%E8%AF%9D%EF%BC%8C%E4%B8%80%E5%AE%9A%E4%BF%AE%E6%AD%A3%E8%BF%99%E4%BA%9B%E3%80%82%0D%E7%94%B1%20junshan%20%20%E4%BA%8E%202012%E5%B9%B411%E6%9C%8818%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_newtab">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>（1）几处拼写错误<br>Web 应用的初始化工作 的第二段 中<br>org/apache/catalin/startup/NO_DEFAULT_XML<br>-&gt;org/apache/catalina/startup/NO_DEFAULT_XML<br><br>Servlet 体系结构 倒数第4段<br>ApplicationContextFacade 同样保证 ServletContex 只能从容器中拿到它该拿的数据<br>-&gt;ApplicationContextFacade 同样保证 ServletContext 只能从容器中拿到它该拿的数据<br><br>Servlet 体系结构 倒数第1段<br>传给 Servlet 的是 Request 和 Response 的门面类 RequestFacade 和 RequestFacade<br>-&gt;传给 Servlet 的是 Request 和 Response 的门面类 RequestFacade 和 ResponseFacade<br><br>《深入分析Java Web技术内幕》书的260页<br>最常路径匹配 <br>-&gt;最长路径匹配<br><br>（2）2个问题<br>创建 Servlet 对象<br>load-on-startup 配置项大于 0<br>-&gt;load-on-startup 配置项大于等于0<br><br>书的259页最后一句<br>如果这个请求没有匹配到所有的Servlet，那么这个请求就直接返回，也不会有后续的调用任何Filter对喜了。<br>****没能匹配到Servlet和调用Filter没有关系，像Struts2这种基于Filter的设计。</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="http://www.ibm.com/developerworks/forums/profile.jspa?userID=573799">rensanning</a></strong>  于 2012年11月17日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="https://www.ibm.com/developerworks/community/report?lang=zh&referingURL=http://www.ibm.com/developerworks/cn/java/j-lo-servlet/&mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%EF%BC%881%EF%BC%89%E5%87%A0%E5%A4%84%E6%8B%BC%E5%86%99%E9%94%99%E8%AF%AFWeb%20%E5%BA%94%E7%94%A8%E7%9A%84%E5%88%9D%E5%A7%8B%E5%8C%96%E5%B7%A5%E4%BD%9C%20%E7%9A%84%E7%AC%AC%E4%BA%8C%E6%AE%B5%20%E4%B8%ADorg%2Fapache%2Fcatalin%2Fstartup%2FNO_DEFAULT_XML-%26gt%3Borg%2Fapache%2Fcatalina%2Fstartup%2FNO_DEFAULT_XMLServlet%20%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%20%E5%80%92%E6%95%B0%E7%AC%AC4%E6%AE%B5ApplicationContextFacade%20%E5%90%8C%E6%A0%B7%E4%BF%9D%E8%AF%81%20ServletContex%20%E5%8F%AA%E8%83%BD%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%8B%BF%E5%88%B0%E5%AE%83%E8%AF%A5%E6%8B%BF%E7%9A%84%E6%95%B0%E6%8D%AE-%26gt%3BApplicationContextFacade%20%E5%90%8C%E6%A0%B7%E4%BF%9D%E8%AF%81%20ServletContext%20%E5%8F%AA%E8%83%BD%E4%BB%8E%E5%AE%B9%E5%99%A8%E4%B8%AD%E6%8B%BF%E5%88%B0%E5%AE%83%E8%AF%A5%E6%8B%BF%E7%9A%84%E6%95%B0%E6%8D%AEServlet%20%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%20%E5%80%92%E6%95%B0%E7%AC%AC1%E6%AE%B5%E4%BC%A0%E7%BB%99%20Servlet%20%E7%9A%84%E6%98%AF%20Request%20%E5%92%8C%20Response%20%E7%9A%84%E9%97%A8%E9%9D%A2%E7%B1%BB%20RequestFacade%20%E5%92%8C%20RequestFacade-%26gt%3B%E4%BC%A0%E7%BB%99%20Servlet%20%E7%9A%84%E6%98%AF%20Request%20%E5%92%8C%20Response%20%E7%9A%84%E9%97%A8%E9%9D%A2%E7%B1%BB%20RequestFacade%20%E5%92%8C%20ResponseFacade%E3%80%8A%E6%B7%B1%E5%85%A5%E5%88%86%E6%9E%90Java%20Web%E6%8A%80%E6%9C%AF%E5%86%85%E5%B9%95%E3%80%8B%E4%B9%A6%E7%9A%84260%E9%A1%B5%E6%9C%80%E5%B8%B8%E8%B7%AF%E5%BE%84%E5%8C%B9%E9%85%8D%20-%26gt%3B%E6%9C%80%E9%95%BF%E8%B7%AF%E5%BE%84%E5%8C%B9%E9%85%8D%EF%BC%882%EF%BC%892%E4%B8%AA%E9%97%AE%E9%A2%98%E5%88%9B%E5%BB%BA%20Servlet%20%E5%AF%B9%E8%B1%A1load-on-startup%20%E9%85%8D%E7%BD%AE%E9%A1%B9%E5%A4%A7%E4%BA%8E%200-%26gt%3Bload-on-startup%20%E9%85%8D%E7%BD%AE%E9%A1%B9%E5%A4%A7%E4%BA%8E%E7%AD%89%E4%BA%8E0%E4%B9%A6%E7%9A%84259%E9%A1%B5%E6%9C%80%E5%90%8E%E4%B8%80%E5%8F%A5%E5%A6%82%E6%9E%9C%E8%BF%99%E4%B8%AA%E8%AF%B7%E6%B1%82%E6%B2%A1%E6%9C%89%E5%8C%B9%E9%85%8D%E5%88%B0%E6%89%80%E6%9C%89%E7%9A%84Servlet%EF%BC%8C%E9%82%A3%E4%B9%88%E8%BF%99%E4%B8%AA%E8%AF%B7%E6%B1%82%E5%B0%B1%E7%9B%B4%E6%8E%A5%E8%BF%94%E5%9B%9E%EF%BC%8C%E4%B9%9F%E4%B8%8D%E4%BC%9A%E6%9C%89%E5%90%8E%E7%BB%AD%E7%9A%84%E8%B0%83%E7%94%A8%E4%BB%BB%E4%BD%95Filter%E5%AF%B9%E5%96%9C%E4%BA%86%E3%80%82****%E6%B2%A1%E8%83%BD%E5%8C%B9%E9%85%8D%E5%88%B0Servlet%E5%92%8C%E8%B0%83%E7%94%A8Filter%E6%B2%A1%E6%9C%89%E5%85%B3%E7%B3%BB%EF%BC%8C%E5%83%8FStruts2%E8%BF%99%E7%A7%8D%E5%9F%BA%E4%BA%8EFilter%E7%9A%84%E8%AE%BE%E8%AE%A1%E3%80%82%0D%E7%94%B1%20rensanning%20%20%E4%BA%8E%202012%E5%B9%B411%E6%9C%8817%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_newtab">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>很不错，很喜欢</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="http://www.ibm.com/developerworks/forums/profile.jspa?userID=572644">yannick89</a></strong>  于 2012年11月05日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="https://www.ibm.com/developerworks/community/report?lang=zh&referingURL=http://www.ibm.com/developerworks/cn/java/j-lo-servlet/&mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E5%BE%88%E4%B8%8D%E9%94%99%EF%BC%8C%E5%BE%88%E5%96%9C%E6%AC%A2%0D%E7%94%B1%20yannick89%20%20%E4%BA%8E%202012%E5%B9%B411%E6%9C%8805%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_newtab">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>很有看点。</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="http://www.ibm.com/developerworks/forums/profile.jspa?userID=566500">jiadongpo</a></strong>  于 2012年09月23日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="https://www.ibm.com/developerworks/community/report?lang=zh&referingURL=http://www.ibm.com/developerworks/cn/java/j-lo-servlet/&mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E5%BE%88%E6%9C%89%E7%9C%8B%E7%82%B9%E3%80%82%0D%E7%94%B1%20jiadongpo%20%20%E4%BA%8E%202012%E5%B9%B409%E6%9C%8823%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_newtab">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div><div class="comment"><div class="dw-icomment-container"><div class="dw-icomment-body dw-noborder"><div class="dw-icomment-body dw-noborder"><p>写得非常详尽啊，长知识了，非常感谢！</p><p class="ibm-item-note-alternate dw-item-note-alternate-left">由 <strong><a href="http://www.ibm.com/developerworks/forums/profile.jspa?userID=557019">jasonwen</a></strong>  于 2012年08月23日发布 </p><p class="ibm-ind-link ibm-item-note-alternate dw-item-note-alternate-right"><a class="ibm-caution-link dw-report-abuse" href="https://www.ibm.com/developerworks/community/report?lang=zh&referingURL=http://www.ibm.com/developerworks/cn/java/j-lo-servlet/&mymessage=%E8%AF%84%E8%AE%BA%EF%BC%9A%20%E5%86%99%E5%BE%97%E9%9D%9E%E5%B8%B8%E8%AF%A6%E5%B0%BD%E5%95%8A%EF%BC%8C%E9%95%BF%E7%9F%A5%E8%AF%86%E4%BA%86%EF%BC%8C%E9%9D%9E%E5%B8%B8%E6%84%9F%E8%B0%A2%EF%BC%81%0D%E7%94%B1%20jasonwen%20%20%E4%BA%8E%202012%E5%B9%B408%E6%9C%8823%E6%97%A5%E5%8F%91%E5%B8%83%20%0D%0D--%E5%9C%A8%E4%B8%8B%E6%96%B9%E6%B7%BB%E5%8A%A0%E8%AF%84%E8%AE%BA--" target="_newtab">报告滥用</a></p><div class="dw-clear-both"></div></div></div></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display:none"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p><span class="dw-comment-totals-label"><strong>共有评论 (<span id="numCmts2">28</span>)</strong></span><span><img src="./Servlet 工作原理解析_files/c.gif" width="100" height="10" alt=""></span><span class="dw-how-many-comments-label" style="" id="dropdownCmts2"><label for="howManyComments2">显示：</label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">最新评论   </option><option value="all">所有评论</option></select><input type="image" class="ibm-btn-go" name="ibm-go" value="Go" src="./Servlet 工作原理解析_files/short-btn.gif" alt="Go"><br></span></p></form></div></div></div>
+  <!-- INLINE_COMMENTS_END -->
+  
+
+  <p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#ibm-pcon">回页首</a></p>
+
+<!-- Overlays -->
+<!-- lk - pull in overlays from ww when required on cn -->
+  </div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=10</div><div class="metavalue">Zone=Java technology</div><div class="metavalue">ArticleID=629199</div><div class="metavalue">ArticleTitle=Servlet 工作原理解析</div><div class="metavalue">publish-date=02242011</div><div class="metavalue">author1-email=xulingbo0201@163.com</div><div class="metavalue">author1-email-cc=</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g, '%3C')+'</div>');</script><div class="metavalue">url=http://www.ibm.com/developerworks/cn/java/j-lo-servlet/</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>内容</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="./Servlet 工作原理解析_files/c(1).gif"><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#major1">从 Servlet 容器说起</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#major2">创建 Servlet 实例</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#major3">Servlet 体系结构</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#major4">Servlet 如何工作</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#major5">Session 与 Cookie</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#major6">Servlet 中的 Listener</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#major7">总结</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#resources">参考资料 </a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#author">关于作者</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#icomments">建议</a></li></ul></div></div>
+
+ 
+
+
+<!-- Dig_Deeper -->
+
+<!-- High_Visibility_Offer -->
+
+<!-- Special_Offers -->
+
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-footer">
+<!-- IBM footer container; disabled -->
+</div>
+
+<div id="ibm-page-tools-dw">
+	<div id="dw-footer-top-row">
+		<ul id="dw-foot-options">
+			<li id="dw-print"><a class="ibm-print-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#">打印此页面</a></li>
+		</ul>
+		<ul id="ibm-foot-options-dw">
+			<li id="dw-foot-0" class="dw-foot-0-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#">分享此页面</a></li>
+			<li id="dw-foot-1" class="dw-foot-1-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#">关注 developerWorks</a></li>
+		</ul>
+	</div>       
+	
+	
+	<!-- TOP ROW SLIDER -->
+    <div id="dw-page-tools-menu">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Share this page -->			
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-4-1">
+                    	<h2>分享此页面：</h2>                            
+						<ul class="ibm-link-list">
+						  <!--<li><a id="dw-foot-0-0" class="dwcn-sina-link"
+						        href="#"
+						        onClick="javascript:location.href='http://hits.sinajs.cn/A1/weiboshare.html?&amp;appkey=&amp;title='+escape(document.title)+'&amp;url='+escape(location.href)'+'&amp;pic=&ralateUid&amp;language=zh_cn;
+						        ">新浪微博</a></li> -->
+						   <li><a id="dw-foot-0-0" class="dwcn-sina-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="javascript:location.href=&#39;http://service.weibo.com/share/share.php?title=&#39;+encodeURIComponent(document.title)+&#39;&amp;url=&#39;+escape(location.href)+&#39;&amp;language=zh_cn&#39;
+						        ; ">新浪微博</a></li> 
+						   <li><a class="dwcn-renren-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="javascript:location.href=&#39;http://share.renren.com/share/buttonshare?title=&#39;+encodeURIComponent(document.title)+&#39;&amp;link=&#39;+escape(location.href);
+						        ">人人网</a></li> 
+						    <li><a class="dwcn-tencent-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="javascript:location.href=&#39;http://v.t.qq.com/share/share.php?title=&#39;+encodeURIComponent(document.title)+&#39;&amp;url=&#39;+escape(location.href);
+						        ">腾讯微博</a></li> 
+						   				
+						</ul>
+                    </div>
+                    <div class="dw-footer-col-4-2">
+						<ul class="ibm-link-list">
+						    <li><a class="dwcn-sohu-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="javascript:location.href=&#39;http://t.sohu.com/third/post.jsp?title=&#39;+encodeURIComponent(document.title)+&#39;&amp;link=&#39;+escape(location.href);
+						        ">搜狐微博</a></li>
+						    
+						    <li><a class="dwcn-netease-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#" onclick="javascript:location.href=&#39;http://t.163.com/article/user/checkLogin.do?info=&#39;+encodeURIComponent(document.title)+ &#39;&#39; +escape(location.href);
+						        ">网易微博</a></li>
+						    <li><a class="ibm-facebook-link" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-servlet%2F&t=Servlet%20%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90">Facebook</a></li>
+						</ul>
+                </div>
+                    <div class="dw-footer-col-4-3">
+						<ul class="ibm-link-list">
+						 <li><a class="ibm-linkedin-link" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-servlet%2F&title=Servlet%20%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90">LinkedIn</a></li>   
+						 <li><a class="ibm-twitter-link" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-servlet%2F%20-%20Servlet%20%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90">Twitter</a></li>   
+						 <li><a class="ibm-delicious-link" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-servlet%2F&title=Servlet%20%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90">Delicious</a></li>
+						
+						</ul>
+                    </div>
+                   <div class="dw-footer-col-4-4">
+						<ul class="ibm-link-list">
+						 <li><a class="ibm-digg-link" href="http://digg.com/submit?phase=2&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Fcn%2Fjava%2Fj-lo-servlet%2F&title=Servlet%20%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90">Digg</a></li>   
+						 <li><a class="ibm-email-link" href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#">发送此页面</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-share"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+                  <!-- Follow developerWorks -->
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-1-1 dw-footer-col-1-1-cn">
+                    	<h2>关注 developerWorks 中国网站：</h2>
+						<ul class="ibm-link-list">
+							<!--<li><a id="dw-foot-1-0" class="ibm-twitter-link" href="http://www.twitter.com/dwchina">Twitter</a></li>-->
+						    <li><a id="dw-foot-1-0" class="dwcn-sina-link" href="http://weibo.com/ibmdw/">新浪微博</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-follow-cn"><a href="http://www.ibm.com/developerworks/cn/java/j-lo-servlet/#"><img src="./Servlet 工作原理解析_files/c.gif" alt="关闭 [x]" width="20" height="10"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-6-1">
+			<ul>
+				<!--<li><a href="http://www.ibm.com/developerworks/aboutdw/">About</a></li>-->
+				<li><a href="https://www.ibm.com/developerworks/secure/feedback.jsp?domain=dwchina">帮助</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/author/">联系编辑</a></li>
+				<li><a href="https://www.ibm.com/developerworks/secure/myideas2.jsp?domain=dwchina&start=true">提交内容</a></li>
+				<li><a href="http://www.ibm.com/developerworks/cn/sitemap/">网站导航</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-2">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/cn/rss/">订阅源</a></li>
+				<li><a href="http://www.ibm.com/vrm/newsletter/10104?S_TACT=105AGX52&S_CMP=dwcntop">在线浏览每周时事通讯</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-3">
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/community/report?lang=zh">报告滥用</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms?lang=zh">使用条款</a></li>
+				<li><a href="http://www.ibm.com/privacy/cn/zh/">隐私条约</a></li>
+				<li><a href="http://www.ibm.com/ibm/accessibility/cn/">浏览辅助</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-4-cn">
+			<ul>
+				<li><a href="http://www-900.ibm.com/cn/ai/">IBM 教育学院教育培养计划</a></li>
+				<li><a href="http://www.ibm.com/partnerworld/isv/">ISV 资源 (英语)</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-5">
+		</div>
+		<div class="dw-footer-col-6-6">
+		</div>
+	</div>
+	<!-- Language selector no-script -->
+	<noscript>
+	&lt;div id="dw-footer-selectlang"&gt;
+		&lt;h2&gt;&lt;a name="SELECTLANG"&gt;选择语言：&lt;/a&gt;&lt;/h2&gt;
+		&lt;ul&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/"&gt;English&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/cn/"&gt;中文&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/jp/"&gt;日本語&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/ru/"&gt;Русский&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/br/"&gt;Português (Brasil)&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/ssa/"&gt;Español&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/vn/"&gt;Việt&lt;/a&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	</noscript>
+</div><!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+<div id="ibm-overlay-top"></div></div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="./Servlet 工作原理解析_files/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="./Servlet 工作原理解析_files/jquery.cluetip.js"></script>
+<script type="text/javascript" language="JavaScript" src="./Servlet 工作原理解析_files/ui.core-1.7.1.js"></script>
+<script type="text/javascript" language="JavaScript" src="./Servlet 工作原理解析_files/ui.slider-1.7.1.js"></script>
+
+<!-- xM Masthead/Footer -->
+<script src="./Servlet 工作原理解析_files/jquery.tools.min.js" type="text/javascript">//</script>
+<script src="./Servlet 工作原理解析_files/jquery.jscroll.js" type="text/javascript">//</script>
+<script src="./Servlet 工作原理解析_files/dw_v16.js" type="text/javascript">//</script>
+<script src="./Servlet 工作原理解析_files/flash-detect.js" type="text/javascript">//</script>
+<script src="./Servlet 工作原理解析_files/dwsi.js" type="text/javascript">//</script>
+<script type="text/javascript" language="JavaScript" src="./Servlet 工作原理解析_files/dwjquerytags.js"></script>
+<script type="text/javascript" language="JavaScript" src="./Servlet 工作原理解析_files/showcomments.js">//</script>
+<script language="JavaScript" type="text/javascript">
+	// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+	local: true,
+	showTitle: false,
+	positionBy: 'bottomTop',
+	sticky: true,	
+	mouseOutClose: true,
+	closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+	arrows: false,
+	dropShadow: true,
+	cluetipClass: 'dwbasic'
+	});   	
+	//tagging
+	login="false";
+	userid="";
+	whichTags = "init";
+	pCont = "";
+	mCont = "";
+	signInMCont = "";
+	accessCont = "";
+	pValue = 0;
+	mValue = 0;
+	
+	rBHash = null;
+	rBHash = new Object();
+	rBHash['viperLang'] = 'zh';
+	rBHash['urlLang'] = 'cn';
+	rBHash['tagThisWinTitle'] = '添加标签';
+	rBHash['pTags1'] = '热门标签';		
+	rBHash['pTags2'] = '热门标签结束';
+	rBHash['mTags1'] = '我的标签';
+	rBHash['mTags2'] = '我的标签结束';
+	rBHash['alt1'] = '正在加载内容';
+	rBHash['noATags'] = '没有可用的标签';
+	rBHash['signIn1'] = '请';
+	rBHash['signIn2'] = '登录';
+	rBHash['signIn3'] = '以访问';
+	rBHash['signIn4'] = '我的标签';
+	rBHash['signIn5'] = '要访问我的标签，请';
+	rBHash['signIn6'] = '登录';
+	rBHash['signIn7'] = '查看热门标签';
+	rBHash['dnameSuffix'] = '';
+
+	zoneHash = new Object();
+	zoneHash['aix'] = 'AIX and UNIX';
+	zoneHash['ibmi'] = 'IBM i zone';
+	zoneHash['data'] = 'Information Management';
+	zoneHash['lotus'] = 'Lotus';
+	zoneHash['rational'] = 'Rational';
+	//zoneHash['tivoli'] = 'Tivoli zone';
+	zoneHash['websphere'] = 'WebSphere';
+	zoneHash['architecture'] = 'Technical library';
+	//zoneHash['autonomic'] = 'Technical library';
+	zoneHash['java'] = 'Java technology';
+	zoneHash['cloud'] = 'Cloud computing';
+	//zoneHash['industry'] = 'Technical library';
+	zoneHash['library'] = '文档库';
+	zoneHash['linux'] = 'Linux';
+	zoneHash['opensource'] = 'Open source';
+	//zoneHash['power'] = 'Technical library';
+	zoneHash['webservices'] = 'SOA and web services';
+	zoneHash['web'] = 'Web development';
+	zoneHash['xml'] = 'XML';
+	//zoneHash['wireless'] = 'Technical library';
+	jQuery.checkRB();
+	jQuery.getPopularTags("/developerworks/dwtags/dwjquerytabtags?lang=" + rBHash['viperLang'] + "&base=" + jQuery.getNormalizedZoneUrl(location.href));
+	jQuery.getUserTags();
+	if(jQuery.isTutorial(location.href) == "true") {
+	jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=tutorials&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+	}
+	else {
+	jQuery.getTagsForContent("/developerworks/tagging/UseCaseServlet?lang=" + rBHash['viperLang'] + "&format=maverick&cType=articles&use_case=geturltags&action=gettags&url=" + jQuery.normalizeUrl(location.href));
+	
+	}
+	// si
+	initSI();
+	});
+</script>
+<!-- JQuery end -->
+<!-- Overlay js -->
+<script language="JavaScript" src="./Servlet 工作原理解析_files/overlay.js" type="text/javascript"></script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=4&ibmAdoptPhase=651&ibmRole=36&ibmCmaId=629199";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="./Servlet 工作原理解析_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+
+<div id="cluetip-waitimage" style="position: absolute; z-index: 95; display: none;"></div><div id="cluetip" style="z-index: 96; display: none; position: absolute;"><div style="z-index: 95; opacity: 0.1; top: 1px; left: 1px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 94; opacity: 0.1; top: 2px; left: 2px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 93; opacity: 0.1; top: 3px; left: 3px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 92; opacity: 0.1; top: 4px; left: 4px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 91; opacity: 0.1; top: 5px; left: 5px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 90; opacity: 0.1; top: 6px; left: 6px; position: absolute; background-color: rgb(0, 0, 0);"></div><div id="cluetip-outer" style="position: relative; z-index: 97;"><div id="cluetip-title"></div><div id="cluetip-inner"></div></div><div id="cluetip-extra"></div><div id="cluetip-arrows" class="cluetip-arrows" style="z-index: 97;"></div></div></body></html>

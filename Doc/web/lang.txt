@@ -1,3 +1,12 @@
+http://www.amqp.org http://www.openamq.org/
+AMQP 面向消息的中间件（MOM）系统
+
+https://www.oasis-open.org
+是一个推进电子商务标准的发展、融合与采纳的非盈利性国际化组织。
+
+RTC WebRTC
+XMPP
+
 /////////////
 Data-Driven Programming PowerBuilder LightSwitch
 
