@@ -7,7 +7,10 @@
 QT       += core gui
 
 INCLUDEPATH += ../VehicleLicense/WinTone
+INCLUDEPATH += ../Multimedia/HikSDK
+
 LIBS += ../lib/libLPKernelEx.a
+LIBS += ../lib/libDs40xxSDK.a
 
 TARGET = VZPlateDemo
 TEMPLATE = app

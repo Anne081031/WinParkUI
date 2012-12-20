@@ -32,6 +32,7 @@ void MainWindow::HandlePlateResult( QStringList lstResult )
         ui->tabResult->setItem( 0, nCol++, pItem );
     }
 
+    LoadImg( ui->lblVideo, ui->lblPicture, ui->lblPlatePic, 0 );
      //qDebug( ) << Q_FUNC_INFO << ":" << lstResult.join( "," ) << endl;
 }
 
@@ -53,18 +54,51 @@ void MainWindow::on_btnFile_clicked()
 
 void MainWindow::on_tabResult_cellClicked(int row, int column)
 {
-    QTableWidget* tabWid = ( QTableWidget* ) sender( );
-    column = tabWid->columnCount( ) - 1;
-    QString strFile = tabWid->item( row, column )->text( );
+    column = 0;
+    LoadImg( ui->lblVideo, ui->lblPicture, ui->lblPlatePic, row );
+}
+
+void MainWindow::LoadImg( QLabel *lblCtrlLeft, QLabel *lblCtrlRight, QLabel* lblCtrlDown, int nRow )
+{
+    QTableWidget* tabWid = ui->tabResult;
+    int nCol = tabWid->columnCount( ) - 1;
+    QString strFile = tabWid->item( nRow, nCol )->text( );
 
     if ( strFile.isEmpty( ) ) {
         return;
     }
 
     QPixmap picMap( strFile );
-    ui->lblPicture->setPixmap( picMap );
+    lblCtrlLeft->setPixmap( picMap );
+    lblCtrlRight->setPixmap( picMap );
 
-    strFile = tabWid->item( row, column - 1 )->text( );
+    strFile = tabWid->item( nRow, nCol - 1 )->text( );
     QPixmap plateMap( strFile );
-    ui->lblPlatePic->setPixmap( plateMap );
+    lblCtrlDown->setPixmap( plateMap );
+}
+
+void MainWindow::on_btnClear_clicked()
+{
+    for ( int nIndex = ui->tabResult->rowCount( ) - 1 ; nIndex >= 0; nIndex-- ) {
+        ui->tabResult->removeRow( nIndex );
+    }
+
+    ui->lblPicture->clear( );
+    ui->lblPlatePic->clear( );
+    ui->lblVideo->clear( );
+}
+
+void MainWindow::on_btnAnalogCamera_clicked()
+{
+
+}
+
+void MainWindow::on_btnDigitalCamera_clicked()
+{
+
+}
+
+void MainWindow::on_btnVideoFile_clicked()
+{
+
 }

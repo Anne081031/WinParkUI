@@ -1,0 +1,41 @@
+/////////////////////////////
+市场 / 中矿 www.shchinamine.com
+Android
+车牌识别一体机
+系统架构
+/////////////////////////////
+
+目前全球三大网络视频标准ONVIF、PSIA与HDcctv仍旧是壁垒分明，分别在网络与闭路高清中扮演重要的角色。
+网络高清(ONVIF、PSIA)或者闭路高清(HDcctv)
+
+ONVIF，全称Open Network Video Interface Forum，即开放性网络视频接口论坛 网络视频监控行业标准 http://www.onvif.org/
+ONVIF 规范可确保基于 IP 的不同物理安全产品（无论其品牌为何）之间的互操作性。设计和构建网络视频系统。
+
+PSIA：(Physical Security Interoperability Alliance)实体安防互通联盟 http://www.psialliance.org
+
+HDcctv (闭路高清) 基于广电网络 同轴电缆Cable 赌场/实时性很好 未压缩传输 http://www.highdefcctv.org/ 协议 HD-SDI/high-definition serial digital interface 由SMPTE/Society of Motion Picture and Television Engineers制定
+ONVIF、PSIA 基于IP网络/Internet 压缩传输
+
+模拟电视 NTSC, named for the National Television System Committee PAL / short for Phase Alternating Line 数字电视 HDTV HDcctv CCTV
+
+DVR/NVR Camera IPCamera IVS CCTV ITS
+
+HDTV looks better than PAL/NTSC(Analogue). HDcctv is a digital interface that delivers HDTV signals without any compression artifacts or transmission-related delays. 
+
+“三网融合”又叫“三网合一”，意指电信网、广播电视网和互联网的相互渗透、互相兼容、并逐步整合成为全世界统一的信息通信网络，其中互联网是其核心部分。四网融合  现有的三网融合的基础上加入电网
+数字技术 信息数字化 0 1， 宽带技术 / 光纤网络， 软件技术 / 终端统一， IP技术 / 统一协议TCP/IP
+
+///////////////////////////
+1、核心规范 设备配置 管理 安全 探索 事件处理 WebService暴露
+2、数据格式 RTP RTSP RTCP HTTP UDP TCP IP
+3、设备类型 NVD Network Video Display/显示设备 NVS Network Video Storage/存储设备 NVT Network Video Transmitter/传输设备 数据源 NVA Network Video Analytics/ 视频分析
+
+
+/////////////////
+Web Services framework / 实现方式
+The device is a service provider.
+The client is a service requester.
+
+//////////////////
+WebService XML XSD WSDL UDDI SOAP HTTP gSOAP
+http://www.cs.fsu.edu/~engelen/soap.html gSOAP c/c++ 开发WebService利器

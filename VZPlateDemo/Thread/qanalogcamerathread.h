@@ -3,6 +3,8 @@
 
 #include <QThread>
 #include "qcameraevent.h"
+#include <windows.h>
+#include "HikVisionSdk.h"
 
 class QAnalogCameraThread : public QThread
 {
@@ -18,8 +20,12 @@ protected:
 private:
     explicit QAnalogCameraThread(QObject *parent = 0);
 
+    void InitHikSDK( int nChannel, HWND hVideo );
+    void UninitHikSDK( );
+
 private:
     static QAnalogCameraThread* pThreadInstance;
+    HANDLE hChannel;
     
 signals:
     
