@@ -13,7 +13,7 @@ java.until.concurrent.* 线程池
 
 明确主线程和子线程的职责。主线程的职责是创建、显示和更新UI控件、处理UI事件、启动子线程、停止子线程;子线程的职责是计算逝去的时间和向主线程发出更新UI消息，而不是直接更新UI。在Android中，线程有两个对象—消息(Message)和消息队列(MessageQueue)可以实现线程间的通信。
 
-Android
+Android http://developer.android.com/guide/components/fundamentals.html
 Handler Message Looper MessageQueue HandlerThread
 Looper/Class used to run a message loop for a thread. 
 
@@ -26,8 +26,12 @@ Services-----A service is a component that runs in the background to perform lon
 Content providers---A content provider manages a shared set of application data. 
 Broadcast receivers---A broadcast receiver is a component that responds to system-wide broadcast announcements. 
 
+Three of the four component types—activities, services, and broadcast receivers—are activated by an asynchronous message called an intent.
+Content providers,it is activated when targeted by a request from a ContentResolver. 
+
 Don't have a single entry point(there's no main() function)
 A unique aspect of the Android system design is that any application can start another application’s component，运行在另一个Process内(App-->SendMessage-->OS-->Start App Component). 
+The Manifest File,AndroidManifest.xml
 
 http://sqlite.org
 Android开发中使用SQLite数据库 SQLiteOpenHelper /data/data//databases文件夹中 android.database 一个最方便的 SQLite 客户端是 FireFox SQLite Manager 扩展，它可以跨所有平台使用。Berkeley DB
