@@ -35,3 +35,22 @@ The Manifest File,AndroidManifest.xml
 
 http://sqlite.org
 Android开发中使用SQLite数据库 SQLiteOpenHelper /data/data//databases文件夹中 android.database 一个最方便的 SQLite 客户端是 FireFox SQLite Manager 扩展，它可以跨所有平台使用。Berkeley DB
+
+Dalvik虚拟机
+大多数虚拟机包括JVM都是一種堆疊機器，而Dalvik虚拟机则是基于寄存器的。两种架构各有优劣，一般而言，基于栈的机器需要更多指令，而基于寄存器的机器指令更大。DDMS( .dex)
+dx 是一套工具，可以將 Java .class 轉換成 .dex 格式. 一個dex檔通常會有多個.class。由於dex有時必須進行最佳化，會使檔案大小增加1-4倍，以ODEX结尾。
+Dalvik虚拟机早期并没有使用JIT（Just-In-Time）技术. 从 Android 2.2 开始, Dalvik 虚拟机也支持 JIT.
+
+DDMS Dalvik Debug Monitor Service
+ADB Android Debug Bridge
+AAPT Android Asset Packaging Tool
+AIDL Android Interface Definition Language
+
+SD Secure Digital Memory Card 外部存储卡
+
+android.content.Context.getSystemService( String name ); 获取操作系统提供的服务，GPS Multimedia eg.
+
+Java调试模式
+JPDA(Java Platform Debugger Architecture)-->JVMTI(JVM Tools Interface)/JDI(Java Debug Interface)/JDWP(Java Debug Wire Protocol) 
+Eclipse( JDWP Debugger )---DDMS---ADB----Device( ADB--- APP VM )
+p54
