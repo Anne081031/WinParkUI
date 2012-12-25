@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ShopInformation>
+    <Shop place="北京">
+        <Name>中关村</Name>
+        <Phone>123456</Phone>
+        <Seller>Guojing</Seller>
+    </Shop>
+</ShopInformation>

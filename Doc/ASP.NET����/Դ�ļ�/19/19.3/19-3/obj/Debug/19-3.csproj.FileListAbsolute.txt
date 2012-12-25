@@ -1,0 +1,10 @@
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\bin\Debug\_19_3.exe
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\bin\Debug\_19_3.pdb
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\obj\Debug\Window1.baml
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\obj\Debug\Window1.g.cs
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\obj\Debug\App.g.cs
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\obj\Debug\_19_3_MarkupCompile.cache
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\obj\Debug\_19_3.g.resources
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\obj\Debug\_19_3.exe
+D:\ASP.NET 3.5\源代码\第19章\19-3\19-3\obj\Debug\_19_3.pdb

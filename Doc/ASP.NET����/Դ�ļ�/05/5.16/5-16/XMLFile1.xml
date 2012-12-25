@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Advertisements>
+  <Ad>
+    <ImageUrl>http://www.shangducms.com/images/cms.jpg</ImageUrl>
+    <NavigateUrl>http://www.shangducms.com</NavigateUrl>
+    <AlternateText>我的网站</AlternateText>
+    <Keyword>software</Keyword>
+    <Impression>100</Impression>
+  </Ad>
+  <Ad>
+    <ImageUrl>http://www.shangducms.com/images/hello.jpg</ImageUrl>
+    <NavigateUrl>http://www.shangducms.com</NavigateUrl>
+    <AlternateText>我的网站</AlternateText>
+    <Keyword>software</Keyword>
+    <Impression>100</Impression>
+  </Ad>
+</Advertisements>

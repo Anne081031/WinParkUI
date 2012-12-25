@@ -1,0 +1,51 @@
+﻿body
+{
+font-size:12px;
+font-family:Geneva, Arial, Helvetica, sans-serif;
+margin:0px 0px 0px 0px;
+background:white url(images/background.gif);
+}
+
+.all
+{
+margin:50px auto;
+width:520px;
+background:white;
+border:1px solid #ccc;
+}
+
+.top
+{
+margin:0px auto;
+width:500px;
+padding:10px 10px 10px 10px;
+background:white url(images/bg.png) repeat-x;
+}
+
+.center
+{
+margin:0px auto;
+width:500px;
+padding:10px 10px 10px 10px;
+}
+
+.end
+{
+margin:0px auto;
+width:500px;
+padding:10px 10px 10px 10px;
+}
+
+.room
+{
+margin:10px auto;
+width:800px;
+background:white;
+border:1px solid #ccc;
+}
+
+.banner
+{
+width: 536px;
+background:white url(images/bg.png) repeat-x;
+}

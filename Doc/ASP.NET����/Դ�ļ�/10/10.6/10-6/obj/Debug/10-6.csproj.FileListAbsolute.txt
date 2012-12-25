@@ -1,0 +1,6 @@
+D:\ASP.NET 3.5\源代码\第10章\10-6\10-6\bin\10-6.dll
+D:\ASP.NET 3.5\源代码\第10章\10-6\10-6\bin\10-6.pdb
+D:\ASP.NET 3.5\源代码\第10章\10-6\10-6\bin\System.Data.SQLite.DLL
+D:\ASP.NET 3.5\源代码\第10章\10-6\10-6\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第10章\10-6\10-6\obj\Debug\10-6.dll
+D:\ASP.NET 3.5\源代码\第10章\10-6\10-6\obj\Debug\10-6.pdb

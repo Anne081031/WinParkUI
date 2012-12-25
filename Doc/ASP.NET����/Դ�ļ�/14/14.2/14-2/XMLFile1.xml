@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+    <ShopInformation area="Asia">
+        <Shop place="Wuhan" value="Wuhan">
+            <Name>武汉电脑城</Name>
+            <Phone>123456789</Phone>
+            <Seller>J.Dan</Seller>
+            <Seller>Bill Gates</Seller>
+        </Shop>
+        <Shop place="ShangHai">
+            <Name>武汉电脑城</Name>
+            <Phone>123456789</Phone>
+            <Seller>Bill Gates</Seller>
+        </Shop>
+    </ShopInformation>
+
+    <ShopInformation>
+        <Area name="Usa">
+            <Shop>
+                <Name>PC STORE</Name>
+                <Phone>123456789</Phone>
+                <Seller>J.Dan</Seller>
+                <Seller>Bill Gates</Seller>
+                <Place>S.K</Place>
+            </Shop>
+            <Shop>
+                <Name>Windows Mobile Store</Name>
+                <Phone>123456789</Phone>
+                <Seller>Bill Gates</Seller>
+                <Place>S</Place>
+            </Shop>
+        </Area>
+    </ShopInformation>
+</Root>

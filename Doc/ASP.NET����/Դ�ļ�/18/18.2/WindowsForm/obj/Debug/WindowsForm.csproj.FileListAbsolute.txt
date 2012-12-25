@@ -1,0 +1,9 @@
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\bin\Debug\WindowsForm.exe.config
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\bin\Debug\WindowsForm.exe
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\bin\Debug\WindowsForm.pdb
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\obj\Debug\WindowsForm.Properties.Resources.resources
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\obj\Debug\WindowsForm.csproj.GenerateResource.Cache
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\obj\Debug\WindowsForm.exe
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\obj\Debug\WindowsForm.pdb
+D:\ASP.NET 3.5\源代码\第18章\18-2\WindowsForm\obj\Debug\WindowsForm.Form1.resources

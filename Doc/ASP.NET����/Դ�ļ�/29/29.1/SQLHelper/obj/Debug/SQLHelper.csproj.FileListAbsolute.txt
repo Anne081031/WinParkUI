@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第29章\29-1\SQLHelper\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第29章\29-1\SQLHelper\bin\Debug\SQLHelper.dll
+D:\ASP.NET 3.5\源代码\第29章\29-1\SQLHelper\bin\Debug\SQLHelper.pdb
+D:\ASP.NET 3.5\源代码\第29章\29-1\SQLHelper\obj\Debug\SQLHelper.dll
+D:\ASP.NET 3.5\源代码\第29章\29-1\SQLHelper\obj\Debug\SQLHelper.pdb

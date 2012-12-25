@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet type="text/xsl" href="XSLTFile1.xslt"?>
+<Root>
+    <ShopInformation area="Asia">
+        <Shop place="Shanghai" value="Wuhan">
+            <Name>上海电脑</Name>
+            <Phone>123456789</Phone>
+            <Seller>J.Dan</Seller>
+            <Seller>Bill Gates</Seller>
+        </Shop>
+        <Shop place="Wuhan">
+            <Name>广埠屯</Name>
+            <Phone>123456789</Phone>
+            <Seller>Bill Gates</Seller>
+        </Shop>
+    </ShopInformation>
+</Root>

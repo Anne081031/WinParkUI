@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<news>
+    <title>新闻标题1</title>
+    <time>2008</time>
+    <author>guojing</author>
+    <content>这是新闻正文</content>
+    <title>新闻标题2</title>
+    <time>2008</time>
+    <author>guojing</author>
+    <content>这是新闻正文</content>
+</news>

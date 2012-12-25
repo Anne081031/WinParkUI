@@ -1,0 +1,14 @@
+﻿body
+{
+font-size:12px;
+font-family:Geneva, Arial, Helvetica, sans-serif;
+margin:0px 0px 0px 0px;
+}
+
+.login
+{
+margin:100px auto;
+width:500px;
+padding:5px 5px 5px 5px;
+border:1px dashed #ccc;
+}

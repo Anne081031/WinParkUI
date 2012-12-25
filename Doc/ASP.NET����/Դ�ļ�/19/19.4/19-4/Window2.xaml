@@ -1,0 +1,16 @@
+﻿<Window
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	x:Class="_19_4.Window2"
+	x:Name="Window"
+	Title="Window2"
+	Width="500" Height="500" FontFamily="Microsoft YaHei">
+
+	<Grid x:Name="LayoutRoot">
+		<Image Margin="0,0,2,23" Source="bg.png" Stretch="Fill" Width="495" Height="450"/>
+		<Image Margin="80,29,0,0" Source="ok.png" Stretch="Fill" Width="91" Height="91" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+		<Label HorizontalAlignment="Left" Margin="194,54,0,0" VerticalAlignment="Top" Content="输入相应书籍名称" FontWeight="Bold"/>
+		<TextBox HorizontalAlignment="Left" Margin="194,83.837,0,0" VerticalAlignment="Top" Text="" TextWrapping="Wrap" Width="246.487" TextChanged="TextBox_TextChanged" Name="search" />
+		<TextBox Margin="44,137,31.513,36" Text="" TextWrapping="Wrap" Name="result" />
+	</Grid>
+</Window>

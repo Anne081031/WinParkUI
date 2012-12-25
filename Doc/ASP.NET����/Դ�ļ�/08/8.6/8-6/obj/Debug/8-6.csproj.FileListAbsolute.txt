@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第8章\8-6\8-6\bin\8-6.dll
+D:\ASP.NET 3.5\源代码\第8章\8-6\8-6\bin\8-6.pdb
+D:\ASP.NET 3.5\源代码\第8章\8-6\8-6\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第8章\8-6\8-6\obj\Debug\8-6.dll
+D:\ASP.NET 3.5\源代码\第8章\8-6\8-6\obj\Debug\8-6.pdb

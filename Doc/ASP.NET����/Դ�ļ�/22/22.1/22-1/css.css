@@ -1,0 +1,43 @@
+﻿body
+{
+font-size:12px;
+font-family:Geneva, Arial, Helvetica, sans-serif;
+margin:0px 0px 0px 0px;
+}
+
+.style1
+{
+width: 100%;
+}
+
+.style2
+{
+}
+
+.style3
+{
+width: 175px;
+}
+
+.top
+{
+background:white url(top.png) no-repeat top center;
+height:200px;
+margin:0px auto;
+width:800px;
+}
+
+.register
+{
+margin:0px auto;
+width:800px;
+}
+
+.end
+{
+background:#f9fbfd;
+margin:0px auto;
+width:800px;
+text-align:center;
+padding:10px 10px 10px 10px;
+}

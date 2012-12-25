@@ -1,0 +1,14 @@
+<publishData>
+  <publishTarget publishUrl="C:\Users\Administrator\Desktop\ASPNET\">
+    <file relUrl="bin/1-1.pdb" publishTime="10/24/2008 13:24:17" />
+    <file relUrl="Default.aspx" publishTime="10/24/2008 13:24:16" />
+    <file relUrl="bin/1-1.dll" publishTime="10/24/2008 13:24:18" />
+    <file relUrl="Web.config" publishTime="10/24/2008 13:26:01" />
+  </publishTarget>
+  <publishTarget publishUrl="C:\Users\Administrator\Desktop\">
+    <file relUrl="bin/1-1.pdb" publishTime="10/24/2008 13:24:17" />
+    <file relUrl="Default.aspx" publishTime="10/24/2008 13:24:16" />
+    <file relUrl="bin/1-1.dll" publishTime="10/24/2008 13:24:18" />
+    <file relUrl="Web.config" publishTime="10/24/2008 13:26:01" />
+  </publishTarget>
+</publishData>

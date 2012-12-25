@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第15章\15-5\15-5\bin\15-5.dll
+D:\ASP.NET 3.5\源代码\第15章\15-5\15-5\bin\15-5.pdb
+D:\ASP.NET 3.5\源代码\第15章\15-5\15-5\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第15章\15-5\15-5\obj\Debug\15-5.dll
+D:\ASP.NET 3.5\源代码\第15章\15-5\15-5\obj\Debug\15-5.pdb

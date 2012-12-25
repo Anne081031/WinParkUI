@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第9章\9-6\MYSQL\bin\Debug\MYSQL.dll
+D:\ASP.NET 3.5\源代码\第9章\9-6\MYSQL\bin\Debug\MYSQL.pdb
+D:\ASP.NET 3.5\源代码\第9章\9-6\MYSQL\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第9章\9-6\MYSQL\obj\Debug\MYSQL.dll
+D:\ASP.NET 3.5\源代码\第9章\9-6\MYSQL\obj\Debug\MYSQL.pdb

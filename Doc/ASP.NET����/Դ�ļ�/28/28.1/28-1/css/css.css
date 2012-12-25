@@ -1,0 +1,97 @@
+﻿body
+{
+font-size:12px;
+font-family:Geneva, Arial, Helvetica, sans-serif;
+margin:0px 0px 0px 0px;
+}
+
+.admin_login
+{
+margin:100px auto;
+width:500px;
+border:1px solid #ccc;
+background:#f0f0f0;
+}
+
+.register
+{
+margin:100px auto;
+width:400px;
+border:1px solid #ccc;
+background:#f0f0f0;
+}
+
+.gbook_main_title
+{
+margin:0px auto;
+margin-top:50px;
+width:800px;
+border:1px solid #ccc;
+background:white url(../images/top.png);
+height:200px;
+}
+
+.gbook_main
+{
+margin:5px auto;
+width:800px;
+border:1px solid #ccc;
+background:white;
+}
+
+.gbook_banner
+{
+margin:5px auto;
+width:790px;
+border:1px solid #ccc;
+background:white;
+padding:5px 5px 5px 5px;
+}
+
+.left
+{
+width:200px;
+float:left;
+}
+
+.right
+{
+width:579px;
+margin-left:10px;
+float:left;
+border-left:1px dashed #ccc;
+padding:5px 5px 5px 5px;
+}
+
+.copyright
+{
+margin:5px auto;
+width:800px;
+border:1px solid #ccc;
+background:white;
+font-size:10px;
+text-align:center;
+}
+
+.g_title
+{
+background:#f0f0f0;
+padding:5px 5px 5px 5px;
+}
+
+.g_content
+{
+padding:5px 5px 5px 5px;
+}
+
+.g_reply
+{
+padding:5px 5px 5px 5px;
+}
+
+.g_table
+{
+border:1px solid #ccc;
+margin:5px 5px 5px 5px;
+width:98%;
+}

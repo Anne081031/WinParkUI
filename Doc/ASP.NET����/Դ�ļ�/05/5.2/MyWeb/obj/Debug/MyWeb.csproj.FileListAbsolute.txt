@@ -1,0 +1,5 @@
+D:\beta\ASP.NET 3.5\MyWeb\MyWeb\bin\MyWeb.dll
+D:\beta\ASP.NET 3.5\MyWeb\MyWeb\bin\MyWeb.pdb
+D:\beta\ASP.NET 3.5\MyWeb\MyWeb\obj\Debug\ResolveAssemblyReference.cache
+D:\beta\ASP.NET 3.5\MyWeb\MyWeb\obj\Debug\MyWeb.dll
+D:\beta\ASP.NET 3.5\MyWeb\MyWeb\obj\Debug\MyWeb.pdb

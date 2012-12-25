@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0" >
+    <siteMapNode url="" title="根目录"  description="根目录">
+        <siteMapNode url="SqlDataSource.aspx" title="SqlDataSource.aspx"  description="SQL数据库" />
+        <siteMapNode url="AccessDataSource" title="AccessDataSource"  description="Access数据库" />
+        <siteMapNode url="LinqDataSource" title="LinqDataSource"  description="Linq" />
+        <siteMapNode url="ObjectDataSource" title="ObjectDataSource"  description="Object" />
+        <siteMapNode url="XmlDataSource" title="XmlDataSource"  description="Xml" />
+    </siteMapNode>
+</siteMap>

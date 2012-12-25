@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第8章\8-1\ClassLibrary1\bin\Debug\ClassLibrary1.dll
+D:\ASP.NET 3.5\源代码\第8章\8-1\ClassLibrary1\bin\Debug\ClassLibrary1.pdb
+D:\ASP.NET 3.5\源代码\第8章\8-1\ClassLibrary1\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第8章\8-1\ClassLibrary1\obj\Debug\ClassLibrary1.dll
+D:\ASP.NET 3.5\源代码\第8章\8-1\ClassLibrary1\obj\Debug\ClassLibrary1.pdb

@@ -1,0 +1,7 @@
+D:\ASP.NET 3.5\源代码\第29章\29-1\AddFriends\bin\Debug\AddFriends.dll
+D:\ASP.NET 3.5\源代码\第29章\29-1\AddFriends\bin\Debug\AddFriends.pdb
+D:\ASP.NET 3.5\源代码\第29章\29-1\AddFriends\bin\Debug\SQLHelper.dll
+D:\ASP.NET 3.5\源代码\第29章\29-1\AddFriends\bin\Debug\SQLHelper.pdb
+D:\ASP.NET 3.5\源代码\第29章\29-1\AddFriends\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第29章\29-1\AddFriends\obj\Debug\AddFriends.dll
+D:\ASP.NET 3.5\源代码\第29章\29-1\AddFriends\obj\Debug\AddFriends.pdb

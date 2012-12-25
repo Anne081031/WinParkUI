@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="student" Class="linqtosqlDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=WIN-YXDGNGPG621;Initial Catalog=student;Integrated Security=True" SettingsObjectName="_21_1.Properties.Settings" SettingsPropertyName="studentConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Class" Member="Class">
+    <Type Name="Class">
+      <Column Name="C_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="C_GREAD" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="C_INFOR" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Student" Member="Student">
+    <Type Name="Student">
+      <Column Name="S_ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="S_NAME" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="S_CLASS" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="C_ID" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

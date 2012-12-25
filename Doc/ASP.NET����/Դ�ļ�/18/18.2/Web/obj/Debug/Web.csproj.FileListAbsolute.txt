@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第18章\18-2\Web\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第18章\18-2\Web\bin\Web.dll
+D:\ASP.NET 3.5\源代码\第18章\18-2\Web\bin\Web.pdb
+D:\ASP.NET 3.5\源代码\第18章\18-2\Web\obj\Debug\Web.dll
+D:\ASP.NET 3.5\源代码\第18章\18-2\Web\obj\Debug\Web.pdb

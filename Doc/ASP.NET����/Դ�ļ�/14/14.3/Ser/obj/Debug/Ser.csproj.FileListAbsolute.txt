@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第14章\14-3\Ser\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第14章\14-3\Ser\bin\Debug\Ser.dll
+D:\ASP.NET 3.5\源代码\第14章\14-3\Ser\bin\Debug\Ser.pdb
+D:\ASP.NET 3.5\源代码\第14章\14-3\Ser\obj\Debug\Ser.dll
+D:\ASP.NET 3.5\源代码\第14章\14-3\Ser\obj\Debug\Ser.pdb

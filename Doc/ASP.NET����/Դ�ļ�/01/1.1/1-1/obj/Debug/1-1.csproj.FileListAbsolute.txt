@@ -1,0 +1,10 @@
+D:\ASP.NET 3.5\源代码\第1章\1-1\1-1\bin\1-1.dll
+D:\ASP.NET 3.5\源代码\第1章\1-1\1-1\bin\1-1.pdb
+D:\ASP.NET 3.5\源代码\第1章\1-1\1-1\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第1章\1-1\1-1\obj\Debug\1-1.dll
+D:\ASP.NET 3.5\源代码\第1章\1-1\1-1\obj\Debug\1-1.pdb
+D:\asp.net开发技术大全\源文件\01\1.1\1-1\bin\1-1.dll
+D:\asp.net开发技术大全\源文件\01\1.1\1-1\bin\1-1.pdb
+D:\asp.net开发技术大全\源文件\01\1.1\1-1\obj\Debug\ResolveAssemblyReference.cache
+D:\asp.net开发技术大全\源文件\01\1.1\1-1\obj\Debug\1-1.dll
+D:\asp.net开发技术大全\源文件\01\1.1\1-1\obj\Debug\1-1.pdb

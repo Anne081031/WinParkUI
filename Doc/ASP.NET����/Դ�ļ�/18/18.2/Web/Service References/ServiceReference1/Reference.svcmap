@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="592d056c-2580-4b1d-8a4f-3f3811d8224f" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8731/Design_Time_Addresses/_18_2/Service1/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="fa06feb0-7168-44e3-8c38-0bba6ef4414e" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/_18_2/Service1/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="73088eb3-47b6-4eba-8d9f-47ac86a01e19" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/_18_2/Service1/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="5c4e5639-f439-426d-9e20-0498bf26842b" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/_18_2/Service1/mex" />
+    <MetadataFile FileName="_18_2.xsd" MetadataType="Schema" ID="aafed6b1-1d97-4f97-a67d-78a29f4cad04" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/_18_2/Service1/mex" />
+    <MetadataFile FileName="Message.xsd" MetadataType="Schema" ID="2b2f1653-ddb2-4f47-b28b-5cbee9b2d275" SourceId="1" SourceUrl="http://localhost:8731/Design_Time_Addresses/_18_2/Service1/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

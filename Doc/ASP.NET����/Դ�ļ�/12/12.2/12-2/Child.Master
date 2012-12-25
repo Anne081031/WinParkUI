@@ -1,0 +1,4 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Child.master.cs" Inherits="_12_2.Child" MasterPageFile="~/MyMaster.Master"%>
+<asp:Content ID="ContentPlaceHolder4" ContentPlaceHolderID="ContentPlaceHolder4" runat="server">
+子母版页:<asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+</asp:Content>

@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14-3", "14-3\14-3.csproj", "{D36C8F58-97FB-485F-8C79-CB081968DA5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Ser", "Ser\Ser.csproj", "{F763EFD7-2C1E-4869-9462-1987EE082658}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D36C8F58-97FB-485F-8C79-CB081968DA5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D36C8F58-97FB-485F-8C79-CB081968DA5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D36C8F58-97FB-485F-8C79-CB081968DA5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D36C8F58-97FB-485F-8C79-CB081968DA5A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F763EFD7-2C1E-4869-9462-1987EE082658}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F763EFD7-2C1E-4869-9462-1987EE082658}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F763EFD7-2C1E-4869-9462-1987EE082658}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F763EFD7-2C1E-4869-9462-1987EE082658}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

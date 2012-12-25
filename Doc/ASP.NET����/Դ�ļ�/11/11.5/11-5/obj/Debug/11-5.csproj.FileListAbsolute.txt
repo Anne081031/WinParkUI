@@ -1,0 +1,7 @@
+D:\ASP.NET 3.5\源代码\第11章\11-5\11-5\bin\11-5.dll
+D:\ASP.NET 3.5\源代码\第11章\11-5\11-5\bin\11-5.pdb
+D:\ASP.NET 3.5\源代码\第11章\11-5\11-5\bin\MyPager.dll
+D:\ASP.NET 3.5\源代码\第11章\11-5\11-5\bin\MyPager.pdb
+D:\ASP.NET 3.5\源代码\第11章\11-5\11-5\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第11章\11-5\11-5\obj\Debug\11-5.dll
+D:\ASP.NET 3.5\源代码\第11章\11-5\11-5\obj\Debug\11-5.pdb

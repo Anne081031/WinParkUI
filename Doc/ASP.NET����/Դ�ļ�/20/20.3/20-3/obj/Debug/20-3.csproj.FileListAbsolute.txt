@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第20章\20-3\20-3\bin\20-3.dll
+D:\ASP.NET 3.5\源代码\第20章\20-3\20-3\bin\20-3.pdb
+D:\ASP.NET 3.5\源代码\第20章\20-3\20-3\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第20章\20-3\20-3\obj\Debug\20-3.dll
+D:\ASP.NET 3.5\源代码\第20章\20-3\20-3\obj\Debug\20-3.pdb

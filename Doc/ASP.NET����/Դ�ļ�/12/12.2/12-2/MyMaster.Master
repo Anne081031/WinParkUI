@@ -1,0 +1,91 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="MyMaster.master.cs" Inherits="_12_2.MyMaster" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head runat="server">
+    <title>无标题页</title>
+    <style type="text/css">
+        body
+        {
+         font-size:12px;
+         text-align:center;
+        }
+        .style1
+        {
+            width: 100%;
+            height: 129px;
+        }
+        .style2
+        {
+            background:url('images/bg.jpg') repeat-x;
+            height: 111px;
+            text-align: center;
+            font-size:18px;
+            font-weight:bolder;
+        }
+        .style3
+        {
+        background:url('images/bg.jpg') repeat-x;
+            height: 94px;
+        }
+        .style4
+        {
+        background:url('images/bg2.jpg') repeat-x;
+            width: 129px;
+        }
+        .style5
+        {
+        background:url('images/bg2.jpg') repeat-x;
+            width: 476px;
+        }
+        
+        .style6
+        {
+        background:url('images/bg2.jpg') repeat-x;
+        }
+    </style>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <table class="style1">
+            <tr>
+                <td class="style2">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <table class="style1">
+                        <tr>
+                            <td class="style4">
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder2" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </td>
+                            <td class="style5">
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder3" runat="server">
+                                    Master母版页:
+                                    <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+                                </asp:ContentPlaceHolder>
+                            </td>
+                            <td class="style6">
+                                <asp:ContentPlaceHolder ID="ContentPlaceHolder4" runat="server">
+                                </asp:ContentPlaceHolder>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <tr>
+                <td class="style3">
+                    <asp:ContentPlaceHolder ID="ContentPlaceHolder5" runat="server">
+                    </asp:ContentPlaceHolder>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </form>
+</body>
+</html>

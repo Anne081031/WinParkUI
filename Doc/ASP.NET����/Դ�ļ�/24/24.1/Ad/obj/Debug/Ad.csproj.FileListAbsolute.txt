@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第24章\24-1\Ad\bin\Debug\Ad.dll
+D:\ASP.NET 3.5\源代码\第24章\24-1\Ad\bin\Debug\Ad.pdb
+D:\ASP.NET 3.5\源代码\第24章\24-1\Ad\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第24章\24-1\Ad\obj\Debug\Ad.dll
+D:\ASP.NET 3.5\源代码\第24章\24-1\Ad\obj\Debug\Ad.pdb

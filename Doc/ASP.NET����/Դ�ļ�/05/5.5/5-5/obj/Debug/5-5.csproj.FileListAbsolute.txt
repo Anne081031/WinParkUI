@@ -1,0 +1,5 @@
+D:\beta\ASP.NET 3.5\源代码\第5章\5-5\5-5\bin\5-5.dll
+D:\beta\ASP.NET 3.5\源代码\第5章\5-5\5-5\bin\5-5.pdb
+D:\beta\ASP.NET 3.5\源代码\第5章\5-5\5-5\obj\Debug\ResolveAssemblyReference.cache
+D:\beta\ASP.NET 3.5\源代码\第5章\5-5\5-5\obj\Debug\5-5.dll
+D:\beta\ASP.NET 3.5\源代码\第5章\5-5\5-5\obj\Debug\5-5.pdb

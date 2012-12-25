@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "11-5", "11-5\11-5.csproj", "{BF874C76-528D-450A-90A3-FEF9B579333A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyPager", "MyPager\MyPager.csproj", "{FFEF046E-3197-48AC-9E5D-65A3E30BA72A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BF874C76-528D-450A-90A3-FEF9B579333A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF874C76-528D-450A-90A3-FEF9B579333A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF874C76-528D-450A-90A3-FEF9B579333A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF874C76-528D-450A-90A3-FEF9B579333A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFEF046E-3197-48AC-9E5D-65A3E30BA72A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFEF046E-3197-48AC-9E5D-65A3E30BA72A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFEF046E-3197-48AC-9E5D-65A3E30BA72A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFEF046E-3197-48AC-9E5D-65A3E30BA72A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

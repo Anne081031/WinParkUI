@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第14章\14-7\MyWeb\bin\MyWeb.dll
+D:\ASP.NET 3.5\源代码\第14章\14-7\MyWeb\bin\MyWeb.pdb
+D:\ASP.NET 3.5\源代码\第14章\14-7\MyWeb\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第14章\14-7\MyWeb\obj\Debug\MyWeb.dll
+D:\ASP.NET 3.5\源代码\第14章\14-7\MyWeb\obj\Debug\MyWeb.pdb

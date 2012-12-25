@@ -1,0 +1,7 @@
+D:\ASP.NET 3.5\源代码\第29章\29-1\DiaryAdmins\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第29章\29-1\DiaryAdmins\bin\Debug\DiaryAdmins.dll
+D:\ASP.NET 3.5\源代码\第29章\29-1\DiaryAdmins\bin\Debug\DiaryAdmins.pdb
+D:\ASP.NET 3.5\源代码\第29章\29-1\DiaryAdmins\bin\Debug\SQLHelper.dll
+D:\ASP.NET 3.5\源代码\第29章\29-1\DiaryAdmins\bin\Debug\SQLHelper.pdb
+D:\ASP.NET 3.5\源代码\第29章\29-1\DiaryAdmins\obj\Debug\DiaryAdmins.dll
+D:\ASP.NET 3.5\源代码\第29章\29-1\DiaryAdmins\obj\Debug\DiaryAdmins.pdb

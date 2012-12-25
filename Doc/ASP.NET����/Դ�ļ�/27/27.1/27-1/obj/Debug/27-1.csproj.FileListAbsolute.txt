@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第27章\27-1\27-1\bin\27-1.dll
+D:\ASP.NET 3.5\源代码\第27章\27-1\27-1\bin\27-1.pdb
+D:\ASP.NET 3.5\源代码\第27章\27-1\27-1\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第27章\27-1\27-1\obj\Debug\27-1.dll
+D:\ASP.NET 3.5\源代码\第27章\27-1\27-1\obj\Debug\27-1.pdb

@@ -1,0 +1,99 @@
+﻿body
+{
+font-size:12px;
+font-family:Geneva, Arial, Helvetica, sans-serif;
+margin:0px 0px 0px 0px;
+background:#f5f5f5;
+}
+
+.cmain
+{
+margin:100px auto;
+width:500px;
+padding:5px 5px 5px 5px;
+border:1px dashed #ccc;
+background:white;
+}
+
+.login
+{
+margin:100px auto;
+width:500px;
+padding:5px 5px 5px 5px;
+border:1px dashed #ccc;
+background:white;
+}
+
+.top
+{
+background:#6699cc;
+}
+
+.banner
+{
+background:white;
+height:10px;
+}
+
+.center
+{
+margin:10px auto;
+width:700px;
+background:white;
+}
+
+.main_board
+{
+background:white url(../images/board.png);
+height:300px;
+}
+
+.main_board_font
+{
+float:right;
+width:300px;
+margin-top:90px;
+border:1px dashed white;
+color:White;
+}
+
+.main_board_admin
+{
+float:right;
+width:100px;
+margin-top:40px;
+}
+
+.main_site
+{
+margin-top:10px;
+}
+
+.main_left
+{
+width:498px;
+border:1px solid #ccc;
+float:left;
+}
+
+.main_right
+{
+width:188px;
+margin-left:10px;
+border:1px solid #ccc;
+float:left;
+}
+
+.end
+{
+width:700px;
+margin:0px auto;
+font-size:10px;
+}
+
+.clearfloat {
+clear:both;
+height:1px;
+overflow:hidden;
+margin-top:-2px;
+}

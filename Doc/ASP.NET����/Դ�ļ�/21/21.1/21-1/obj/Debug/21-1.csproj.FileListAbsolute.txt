@@ -1,0 +1,6 @@
+D:\ASP.NET 3.5\源代码\第21章\21-1\21-1\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第21章\21-1\21-1\bin\Debug\21-1.exe
+D:\ASP.NET 3.5\源代码\第21章\21-1\21-1\bin\Debug\21-1.pdb
+D:\ASP.NET 3.5\源代码\第21章\21-1\21-1\obj\Debug\21-1.exe
+D:\ASP.NET 3.5\源代码\第21章\21-1\21-1\obj\Debug\21-1.pdb
+D:\ASP.NET 3.5\源代码\第21章\21-1\21-1\bin\Debug\21-1.exe.config

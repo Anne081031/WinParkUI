@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第11章\11-2\ServerControl1\bin\Debug\ServerControl1.dll
+D:\ASP.NET 3.5\源代码\第11章\11-2\ServerControl1\bin\Debug\ServerControl1.pdb
+D:\ASP.NET 3.5\源代码\第11章\11-2\ServerControl1\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第11章\11-2\ServerControl1\obj\Debug\ServerControl1.dll
+D:\ASP.NET 3.5\源代码\第11章\11-2\ServerControl1\obj\Debug\ServerControl1.pdb

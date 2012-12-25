@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/Child.Master" AutoEventWireup="true" CodeBehind="Default.aspx.cs" Inherits="_12_2.Default" Title="无标题页" %>

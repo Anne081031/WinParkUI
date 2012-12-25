@@ -1,0 +1,1 @@
+FCKLang.InsertMusic   = '≤Â»Î“Ù¿÷' ;

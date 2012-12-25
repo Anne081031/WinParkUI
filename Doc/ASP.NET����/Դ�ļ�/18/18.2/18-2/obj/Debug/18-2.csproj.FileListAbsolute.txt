@@ -1,0 +1,6 @@
+D:\ASP.NET 3.5\源代码\第18章\18-2\18-2\bin\Debug\18-2.dll.config
+D:\ASP.NET 3.5\源代码\第18章\18-2\18-2\bin\Debug\18-2.dll
+D:\ASP.NET 3.5\源代码\第18章\18-2\18-2\bin\Debug\18-2.pdb
+D:\ASP.NET 3.5\源代码\第18章\18-2\18-2\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第18章\18-2\18-2\obj\Debug\18-2.dll
+D:\ASP.NET 3.5\源代码\第18章\18-2\18-2\obj\Debug\18-2.pdb

@@ -1,0 +1,1 @@
+FCKLang.InsertMusic   = 'Insert Music' ;

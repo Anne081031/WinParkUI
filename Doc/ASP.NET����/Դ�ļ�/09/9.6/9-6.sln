@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "9-6", "9-6\9-6.csproj", "{36AC08D0-49E7-4028-B3E1-223727C1A06A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MYSQL", "MYSQL\MYSQL.csproj", "{02E47EE6-3233-4135-87FC-135EEB1A202E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{36AC08D0-49E7-4028-B3E1-223727C1A06A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36AC08D0-49E7-4028-B3E1-223727C1A06A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36AC08D0-49E7-4028-B3E1-223727C1A06A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36AC08D0-49E7-4028-B3E1-223727C1A06A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02E47EE6-3233-4135-87FC-135EEB1A202E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02E47EE6-3233-4135-87FC-135EEB1A202E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02E47EE6-3233-4135-87FC-135EEB1A202E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02E47EE6-3233-4135-87FC-135EEB1A202E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

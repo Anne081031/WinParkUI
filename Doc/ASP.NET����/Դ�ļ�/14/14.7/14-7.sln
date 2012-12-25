@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "14-7", "14-7\14-7.csproj", "{F63C6A02-A29B-4667-A22F-432746F6C187}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyWeb", "MyWeb\MyWeb.csproj", "{71A305ED-D9F9-4820-AAE8-F4AD2867EE7B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{F63C6A02-A29B-4667-A22F-432746F6C187} = {F63C6A02-A29B-4667-A22F-432746F6C187}
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F63C6A02-A29B-4667-A22F-432746F6C187}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F63C6A02-A29B-4667-A22F-432746F6C187}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F63C6A02-A29B-4667-A22F-432746F6C187}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F63C6A02-A29B-4667-A22F-432746F6C187}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71A305ED-D9F9-4820-AAE8-F4AD2867EE7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71A305ED-D9F9-4820-AAE8-F4AD2867EE7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71A305ED-D9F9-4820-AAE8-F4AD2867EE7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71A305ED-D9F9-4820-AAE8-F4AD2867EE7B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

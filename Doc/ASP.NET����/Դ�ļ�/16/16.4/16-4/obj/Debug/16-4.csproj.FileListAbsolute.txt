@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第16章\16-4\16-4\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第16章\16-4\16-4\bin\16-4.dll
+D:\ASP.NET 3.5\源代码\第16章\16-4\16-4\bin\16-4.pdb
+D:\ASP.NET 3.5\源代码\第16章\16-4\16-4\obj\Debug\16-4.dll
+D:\ASP.NET 3.5\源代码\第16章\16-4\16-4\obj\Debug\16-4.pdb

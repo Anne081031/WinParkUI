@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第23章\23-1\23-1\bin\23-1.dll
+D:\ASP.NET 3.5\源代码\第23章\23-1\23-1\bin\23-1.pdb
+D:\ASP.NET 3.5\源代码\第23章\23-1\23-1\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第23章\23-1\23-1\obj\Debug\23-1.dll
+D:\ASP.NET 3.5\源代码\第23章\23-1\23-1\obj\Debug\23-1.pdb

@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Root>
+    <Books>
+        <Title>ASP.NET 开发大全</Title>
+        <Author>Guojing</Author>
+        <Time>2008/10/10</Time>
+        <Content>欢迎大家阅读本书</Content>
+    </Books>
+
+    <Books>
+        <Title>Windows Mobile开发</Title>
+        <Author>Guojing</Author>
+        <Time>2008/10/10</Time>
+        <Content>欢迎大家阅读本书</Content>
+    </Books>
+</Root>

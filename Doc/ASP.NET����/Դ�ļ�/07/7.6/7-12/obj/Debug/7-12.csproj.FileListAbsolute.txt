@@ -1,0 +1,5 @@
+D:\ASP.NET 3.5\源代码\第7章\7-12\7-12\bin\7-12.dll
+D:\ASP.NET 3.5\源代码\第7章\7-12\7-12\bin\7-12.pdb
+D:\ASP.NET 3.5\源代码\第7章\7-12\7-12\obj\Debug\ResolveAssemblyReference.cache
+D:\ASP.NET 3.5\源代码\第7章\7-12\7-12\obj\Debug\7-12.dll
+D:\ASP.NET 3.5\源代码\第7章\7-12\7-12\obj\Debug\7-12.pdb
