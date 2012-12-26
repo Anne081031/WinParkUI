@@ -53,4 +53,15 @@ android.content.Context.getSystemService( String name ); »ñÈ¡²Ù×÷ÏµÍ³Ìá¹©µÄ·şÎñ£
 Javaµ÷ÊÔÄ£Ê½
 JPDA(Java Platform Debugger Architecture)-->JVMTI(JVM Tools Interface)/JDI(Java Debug Interface)/JDWP(Java Debug Wire Protocol) 
 Eclipse( JDWP Debugger )---DDMS---ADB----Device( ADB--- APP VM )
-p54
+ABD C/S Model
+
+Applications Market Èí¼ş½»Ò×ÊĞ³¡£¬ÊĞ³¡½»Ò×Æ½Ì¨Ò»°ãÓĞÏà¹ØÆ½Ì¨¹«Ë¾(Google,Microsoft,HP,IBM,Oracle,Apple,Amazon etc.),¿ª·¢Õß¿ª·¢Ïà¹ØÆ½Ì¨µÄÓ¦ÓÃ³ÌĞò£¬²âÊÔºó·¢²¼µ½½»Ò×Æ½Ì¨£¬¹©ÓÃ»§Ãâ·ÑÊ¹ÓÃ·Ñ»ò¹ºÂòÊ¹ÓÃ£¬ËùµÃ·ÑÓÃÒ»°ãÓÉ½»Ò×Æ½Ì¨¹«Ë¾ÓëÓ¦ÓÃÂô¼Ò°´Ïà¹ØĞ­Òé·Ö³É¡£ÔÆ¼ÆËã(IDC)ÊÇÂô·şÎñ IAAS PAAS( AppEngine WindowsAzure OpenStack AWS) NAAS SAAS(Office Or Other Clound Version Software)
+
+2.3.3-2.3.7
+4.0.3-4.0.4
+
+Activity(Page) ActivityGroup Window FlagWindow FullScreen Interaction Task BackStack LifeCircle StateChart StateMachine Fragment FragmentManager
+View Widgets(UI Component) ViewGroup/Layout/Container
+Intent/Intent Filters
+
+ContentProvider/ÏòÍâÌá¹©Êı¾İ  ContentResolver/·ÃÎÊContentProviderÌá¹©µÄÊı¾İ
