@@ -101,4 +101,4 @@ DataControl <--->DataAdapter<--->DataSource
 android.content.Context Interface to global information about an application environment. This is an abstract class whose implementation is provided by the Android system. It allows access to application-specific resources and classes, as well as up-calls for application-level operations such as launching activities, broadcasting and receiving intents, etc.
   	  					
 Resources Activity.getResources()/SharedPreferences Activity.openFileInput openFileOutput
-P159
+android.util.Log --->LogCat
