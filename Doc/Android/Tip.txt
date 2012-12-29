@@ -1,4 +1,8 @@
 http://www.eoeandroid.com/ 主要中文网站
+
+http://www.androidjavadoc.com Class Hierarchy
+
+
 CrossPlatform Middleware / framework
 
 Web Techlonogy 实现平台
@@ -65,3 +69,36 @@ View Widgets(UI Component) ViewGroup/Layout/Container
 Intent/Intent Filters
 
 ContentProvider/向外提供数据  ContentResolver/访问ContentProvider提供的数据
+
+setContentView 使用Layout XML文件描述界面布局，达到实现代码与UI分离的目的
+Interface做参数的优势，可以接受任何实现了该Interface的实例
+LayoutInflater 把Layout XML转化为Layout类的实例
+				UITree
+				  
+			      MainWindow(Activity/Page)
+				  |
+			         \|/
+                          --------------------
+                          |                  |
+			 \|/  		    \|/
+
+		     SingleView         ViewGroup(Layout/Container)
+
+						 |
+						\|/
+					 ------------------
+					 |	          |
+					\|/		 \|/
+				     SingleView	     ViewGroup(Layout/Container)
+							       |
+							      \|/
+							   SingleView				
+
+
+Spinner<--->ArrayAdapter<--->ArrayList<String>
+DataControl <--->DataAdapter<--->DataSource
+
+android.content.Context Interface to global information about an application environment. This is an abstract class whose implementation is provided by the Android system. It allows access to application-specific resources and classes, as well as up-calls for application-level operations such as launching activities, broadcasting and receiving intents, etc.
+  	  					
+Resources Activity.getResources()/SharedPreferences Activity.openFileInput openFileOutput
+P159

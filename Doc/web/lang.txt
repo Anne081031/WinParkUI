@@ -1,3 +1,5 @@
+Application Server:Tomcat(Apache) Jetty(Eclipse) JBOSS(Redhat) GlassFish(Oralce-Sun) WebLogic(Oralce) WebSphere(IBM)
+
 http://www.amqp.org http://www.openamq.org/
 AMQP 面向消息的中间件（MOM）系统
 
