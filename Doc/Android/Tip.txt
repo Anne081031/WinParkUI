@@ -1,3 +1,5 @@
+http://www.web3d.org OpenGL DirectX  Java3D Web3D VRML WebCam
+
 http://www.eoeandroid.com/ 主要中文网站
 
 http://www.androidjavadoc.com Class Hierarchy
@@ -102,3 +104,20 @@ android.content.Context Interface to global information about an application env
   	  					
 Resources Activity.getResources()/SharedPreferences Activity.openFileInput openFileOutput
 android.util.Log --->LogCat
+
+/////////////////////////////////////////////////
+GPIO General Purpose Input Output / 对板子编程
+TTL Time To Live IP
+TTL Transistor Transistor Logic
+LVDS Low Voltage Differential Singaling
+
+TTL--->LVDS Sender--->LVDS Receiver--->TTL
+N/A Not Available
+////////////////////////////////////////////////
+
+Java Comment/Annotation JavaDoc JavaC Java JavaW CLASSPATH
+
+Google Android开发入门与实战.pdf p224
+android-architecture.pdf P19
+Java编程思想第四版完整中文高清版.pdf p180
+
