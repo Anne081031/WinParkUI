@@ -59,6 +59,7 @@ private:
     void SetCurrentRadioBox( QRadioButton* pRbx );
     void AnalogClicked( QRadioButton* pBtn );
     void ClearPlate( );
+    QLabel* lblLicense[ 4 ][ 8 ];
 
 private slots:
     void on_btnPass_clicked();

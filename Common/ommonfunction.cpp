@@ -280,24 +280,33 @@ QString CCommonFunction::GetFeeStd( QString &strFee )
     return strFeeStd;
 }
 
-void CCommonFunction::DisplayPlateChar( QWidget& wg, int nChannel, QString& strContent )
+void CCommonFunction::DisplayPlateChar( QLabel**pLicenseRow, int nChannel, QString& strContent )
 {
     qDebug( ) << "CCommonFunction::DisplayPlateChar " << strContent << endl;
     try {
     int nCount = strContent.count( ); //lblLicence11
-    static const QString strName( "lblLicence%1%2" );
+    //static const QString strName( "lblLicence%1%2" );
     QLabel* pLabel = NULL;
     //static const QString strLink = "<a href=\"/\" style = \"text-decoration:none;color: rgb(255, 255, 255);\">%1</a>";
 
     for ( int nIndex = 0; nIndex < 8; nIndex ++ ) {
-        pLabel = wg.findChild< QLabel* >(  strName.arg( nChannel + 1 ).arg( nIndex + 1 ) );
+        pLabel = pLicenseRow[ nIndex ];
 
         if ( NULL != pLabel ) {
             //pLabel->setText( strLink.arg( ( nIndex > nCount - 1 ) ? " " : QString( strContent[ nIndex ] ) ) );
             //pLabel->setText( "" );
             if ( nIndex < nCount ) {
                 QString strChar = QString( strContent[ nIndex ] );
-                pLabel->setText( strChar );
+                //HWND hWnd = pLabel->winId( );
+                //QByteArray byText = GetTextCodec( )->fromUnicode( strChar );
+                //LPCSTR pText = byText.data( );
+                //HDC hDc = GetWindowDC( hWnd );
+                //SetTextAlign( hDc, TA_CENTER );
+                //BOOL bRet = TextOutA( hDc, 0, 0, pText, byText.length( ) );
+                //ReleaseDC( hWnd, hDc );
+                //if ( !bRet ) {
+                    pLabel->setText( strChar );
+                //}
             }
             //pLabel->setText( ( nIndex > nCount - 1 ) ? " " : QString( strContent[ nIndex ] ) );
             //if ( pLabel->updatesEnabled( ) ) {

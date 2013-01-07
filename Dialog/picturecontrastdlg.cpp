@@ -87,6 +87,7 @@ CPictureContrastDlg::CPictureContrastDlg( QWidget *parent ) :
     for ( int nChannel = 1; nChannel <= 2; nChannel++ ) {
         for ( int nIndex = 1; nIndex <= 8; nIndex++ ) {
             pLabel = findChild< QLabel* >( strName.arg( nChannel ).arg( nIndex ) );
+            lblLicense[ nChannel - 1 ][ nIndex - 1 ] = pLabel;
 
             if ( NULL != pLabel ) {
                 QObject::connect( pLabel, SIGNAL( linkActivated( QString ) ), this, SLOT( onLinkActivated( QString ) ) );
@@ -304,7 +305,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
     int nCount = bEnter ? 0 : 1;
     for ( int nIndex = 0; nIndex <= nCount; nIndex++ ) {
         if ( "δ֪" != strPlates[ nIndex ] ) {
-            CCommonFunction::DisplayPlateChar( *this, nIndex, strPlates[ nIndex ] );
+            CCommonFunction::DisplayPlateChar( lblLicense[ nIndex ], nIndex, strPlates[ nIndex ] );
         }
     }
 }

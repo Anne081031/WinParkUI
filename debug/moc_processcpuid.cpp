@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'processcpuid.h'
 **
-** Created: Thu Nov 29 11:14:12 2012
+** Created: Sun Jan 6 15:52:31 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

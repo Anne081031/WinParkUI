@@ -85,7 +85,7 @@ public:
     static QString GetHostIP( );
     static QString GetParkID( );
     static void WindowCenter( QWidget& widget );
-    static void DisplayPlateChar( QWidget& wg, int nChannel, QString& strContent );
+    static void DisplayPlateChar( QLabel**pLicenseRow , int nChannel, QString& strContent );
     static QString GetFeeStd( QString &strFee );
     static void MySetWindowPos( QWidget* pWidget );
     static void ConnectCloseButton( QLabel* lblClose );

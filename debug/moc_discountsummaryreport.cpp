@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'discountsummaryreport.h'
 **
-** Created: Thu Nov 29 11:13:31 2012
+** Created: Sun Jan 6 15:51:11 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

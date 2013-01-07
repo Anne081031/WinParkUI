@@ -235,6 +235,7 @@ void CMonitor::InitVideoPlateUI( )
     /////////////////////////////////////////////////////////////////////////////
     QString strVideo = "video%1";
     QString strDirection = "lblDir%1";
+    QString strMoving = "lblMoving%1";
     QString strTitle = "lblTitle%1";
     QString strPlate = "WintonePlate/WintonePlate%1/PlateStart";
     QLabel* pTitle = NULL;
@@ -268,6 +269,7 @@ void CMonitor::InitVideoPlateUI( )
         connect( lblVideoWnd[ nIndex ], SIGNAL( HideCtrl( int, bool ) ), this, SLOT( HideCtrl( int, bool ) ) );
         bPlateStart[ nIndex ] = ( 1 == pSet->value( strPlate.arg( nIndex ), 0 ).toInt( ) );
         lblDirection[ nIndex ] = findChild< QLabel* >( strDirection.arg( nRealIndex ) );
+        lblMoving[ nIndex ] = findChild< QLabel* >( strMoving.arg( nRealIndex ) );
         pTitle = findChild< QLabel* >( strTitle.arg( nRealIndex ) );
         pTitle->setText( pSystem->value( strKey.arg( nRealIndex ), nRealIndex ).toString( ) );
 
@@ -285,6 +287,7 @@ void CMonitor::InitVideoPlateUI( )
     for ( int nChannel = 1; nChannel <= 4; nChannel++ ) {
         for ( int nIndex = 1; nIndex <= 8; nIndex++ ) {
             pLabel = findChild< QLabel* >( strName.arg( nChannel ).arg( nIndex ) );
+            lblLicense[ nChannel - 1 ][ nIndex - 1 ] = pLabel;
 
             if ( NULL != pLabel ) {
                 QObject::connect( pLabel, SIGNAL( linkActivated( QString ) ), this, SLOT( onLinkActivated( QString ) ) );
@@ -299,7 +302,8 @@ void CMonitor::HideCtrl( int nIndex, bool bVisible )
     QLabel* pLbl = NULL;
 
     for ( int nItem = 0; nItem < 4; nItem++ ) {
-        pLbl = findChild< QLabel* >( strMoving.arg( nItem + 1 ) );
+        //pLbl = findChild< QLabel* >( strMoving.arg( nItem + 1 ) );
+        pLbl = lblMoving[ nItem ];
         pLbl->setVisible( bVisible );
 
         if ( nIndex == nItem ) {
@@ -746,8 +750,12 @@ void CMonitor::DirectionIndicator( int nChannel, bool bMoving )
 {
     static QString strStyle = "background-image: url( );background-color: rgb(255, 0, 0);";
     static QString strBackImage = "background-image: url( );";
-    QString strName = QString( "lblMoving%1" ).arg( nChannel + 1 );
-    QLabel* pLbl = findChild< QLabel* >( strName );
+
+    if ( 0 > nChannel || 4 <= nChannel ) {
+        return;
+    }
+
+    QLabel* pLbl = lblMoving[ nChannel ];
     if ( NULL == pLbl ) {
         return;
     }
@@ -929,7 +937,7 @@ void CMonitor::DisplayPlate( int nChannel )
                                                 QString::number( nHeight ) );
     lblDirection[ nChannel ]->setText( strWindth + strDirection );
 
-    CCommonFunction::DisplayPlateChar( *this, nChannel, strPlate );
+    CCommonFunction::DisplayPlateChar( lblLicense[ nChannel ], nChannel, strPlate );
     //Sleep( 500 );
 
     emit OnRecognizePlate( strPlate, nChannel, nConfidence );
@@ -1724,7 +1732,7 @@ void CMonitor::ClearPlate( int nPlateChannel )
 {
     //return;
     QString strPlate = "        ";
-    CCommonFunction::DisplayPlateChar( *this, nPlateChannel, strPlate );
+    CCommonFunction::DisplayPlateChar( lblLicense[ nPlateChannel ], nPlateChannel, strPlate );
     strPlates[ nPlateChannel ].clear( );
 }
 

@@ -1,3 +1,60 @@
+///////////////////////////////////////////////////////
+malloc/free 库函数 内存分配与释放
+
+
+new/delete 运算符 编译器会做特殊处理
+new --> sizeof -->operator new(可以重置) --> malloc(或其他的分配函数) --> HeapAlloc -- > constructor
+delete --> destuctor -- >operator delete(可以重置) -->free(或其他函数) --> HeadpFree
+
+ _beginthreadex/_endthreadex CreateThread/ExitThread
+CRT是线程出现之前实现的，_beginthreadex先把全局成员私有化，成员结构实例化，调用CreateThread，保存到TLS,这样每个线程都有自己全局数据存储区；_endthreadex先释放TLS，调用ExitThread
+如果你正在编写C/C++代码，决不应该调用CreateThread； 应该使用Visual C++运行期库函数_beginthreadex。
+
+当开发C/C++程序要使用CRT时，
+
+
+Type的含义 例如 class struct enum int float string等等
+
+new 操作符 先为对象分配内存即生成对象,然后执行构造函数
+delete 操作符 先执行析构函数，再释放内存即销毁对象
+
+构造、析构函数是递归调用方式，继承关系
+Constructor( )
+{
+	ParentConstructor( );
+	IncludedObjectConstructor( );
+	其他代码
+}
+
+Destructor( )
+{
+	其他代码
+	IncludedObjectDestructor( );
+	ParentDestructor( );
+}
+
+Object 布局 所占内存大小要考虑对齐与优化，空类默认占1字节
+pVTavle 虚函数表指针 第一个成员
+其他按顺序声明的成员
+int a;
+CMyTest b;
+char c;
+
+成员函数数存放在函数区，不占对象尺寸
+
+public protected private 继承会把能继承的成员访问限制大于该修饰的限制修改为继承修饰限制,virtual base的运用/菱形，保证只有一个q实例存在
+
+   q
+c     b
+   d
+
+namespace nest template friend(函数 成员函数 类)，一类的友元能方问该类一切成员
+
+同一类的不同实例共享同一虚函数表，从最高一级有虚函数的开始，以后每级子类（无论有无虚函数，或重置）都有自己的虚函数表,虚函数表有自己的存储空间，多继承。
+虚函数表不同编译器实现方式不一样
+
+/////////////////////////////////////////////////
+
 http://www.web3d.org OpenGL DirectX  Java3D Web3D VRML WebCam
 
 http://www.eoeandroid.com/ 主要中文网站
@@ -119,5 +176,5 @@ Java Comment/Annotation JavaDoc JavaC Java JavaW CLASSPATH
 
 Google Android开发入门与实战.pdf p224
 android-architecture.pdf P19
-Java编程思想第四版完整中文高清版.pdf p180
+Java编程思想第四版完整中文高清版.pdf p209
 

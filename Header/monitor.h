@@ -111,7 +111,10 @@ private:
     static TH_PlateIDResult recogResult[ VIDEO_USEDWAY ][ RECOG_RES ];
     static TH_PlateIDResult structPlates[ VIDEO_USEDWAY ];
     QLabel* lblDirection[ VIDEO_USEDWAY ];
+    QLabel* lblMoving[ VIDEO_USEDWAY ];
     QLabel* lblVideoWnd[ VIDEO_USEDWAY ];
+    QLabel* lblLicense[ VIDEO_USEDWAY ][ 8 ];
+
     bool bPlateStart[ VIDEO_USEDWAY ];
     bool bBallotSense[ ENCODECHANNEL ];
     int nUsedWay;
