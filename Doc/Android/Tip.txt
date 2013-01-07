@@ -10,7 +10,7 @@ delete --> destuctor -- >operator delete(可以重置) -->free(或其他函数) --> Headp
 CRT是线程出现之前实现的，_beginthreadex先把全局成员私有化，成员结构实例化，调用CreateThread，保存到TLS,这样每个线程都有自己全局数据存储区；_endthreadex先释放TLS，调用ExitThread
 如果你正在编写C/C++代码，决不应该调用CreateThread； 应该使用Visual C++运行期库函数_beginthreadex。
 
-当开发C/C++程序要使用CRT时，
+当开发C/C++程序要使用CRT时，_beginthreadex/_endthreadex，否则可以不用 Win32API MFC等等
 
 
 Type的含义 例如 class struct enum int float string等等
