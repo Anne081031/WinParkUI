@@ -1,3 +1,11 @@
+//////////////////////
+DSRC的ETC中RSU和OBU Electronic Toll Collection/ OnBoard Unit/RoadSide Unit/ Dedicated Short Range Communication
+//////////////////////
+
+PHP yiiframework
+JACOB is a JAVA-COM Bridge that allows you to call COM Automation comp
+Desktop App应用网络(Web)部署 .Net ClickOnce / Java JNLP 
+AWT(Abstract Windowing Toolkit)-->Swing-->SWT(Standard Diwget Toolkit)
 ///////////////////////////////////////////////////////
 malloc/free 库函数 内存分配与释放
 
@@ -54,6 +62,8 @@ namespace nest template friend(函数 成员函数 类)，一类的友元能方问该类一切成员
 虚函数表不同编译器实现方式不一样
 
 /////////////////////////////////////////////////
+
+http://docs.oracle.com/javase/7/docs/ Java核心
 
 http://www.web3d.org OpenGL DirectX  Java3D Web3D VRML WebCam
 
@@ -174,7 +184,17 @@ N/A Not Available
 
 Java Comment/Annotation JavaDoc JavaC Java JavaW CLASSPATH
 
+The virtual machine's built-in class loader, called the "bootstrap class loader
+/////////////////
+Android RPC AIDL
+AppDomain(.Net) Sandbox(Android)
+
+Android App可以分区，UI用Java(SDK)开发(Dlvik VM),性能部分用C/C++开发(NDK)/JNI Call(JNA)
+glibc、libc.so标准C库 libm.so数学 libpthread.so libusb libupnp libwww libz
+
+嵌入式C/C++库 http://www.uclibc.org/ uClibc uClibc++
+Workbench Benchmark基准检测程序
+
 Google Android开发入门与实战.pdf p224
-android-architecture.pdf P19
-Java编程思想第四版完整中文高清版.pdf p209
+android-architecture.pdf P32
 
