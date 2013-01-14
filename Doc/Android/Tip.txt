@@ -1,3 +1,7 @@
+http://www.winehq.org/ Wine 在类Unix上运行Windows程序
+
+
+深入理解Android 卷1 对Framework层的分析为主，兼顾Native层和Application层 / 深入理解Android 卷2 重点是Android Framework的Java层 未下载
 //////////////////////
 DSRC的ETC中RSU和OBU Electronic Toll Collection/ OnBoard Unit/RoadSide Unit/ Dedicated Short Range Communication
 //////////////////////
@@ -195,6 +199,18 @@ glibc、libc.so标准C库 libm.so数学 libpthread.so libusb libupnp libwww libz
 嵌入式C/C++库 http://www.uclibc.org/ uClibc uClibc++
 Workbench Benchmark基准检测程序
 
+		       				 ----X0.apk(至少一个线程)	
+		                                |		
+Zygote Service Process--->Android Process(VM GC)---
+		      				|
+			            	         ----Xn.apk(至少一个线程)	
+
+Service与其他应用组件一样都是运行在主线程中的，如果Servcie很耗时或要阻塞，需要开子线程来单独运行服务，新建线程并在线程内启动服务
+Local Service / startService( ) stopService( ) / 同一Application内通信。Remote Service / bindService( ) unbindService( ) RPC / 跨Application之间通信 / android.app.IntentService实现了线程封装
+
+BusyBox 是一个集成了一百多个最常用linux命令和工具的软件。
+Source Insight是一个面向项目开发的程序编辑器和代码浏览器，它拥有内置的对C/C++, C#和Java等程序的分析。
+
 Google Android开发入门与实战.pdf p224
-android-architecture.pdf P32
+android-src.pdf P83
 

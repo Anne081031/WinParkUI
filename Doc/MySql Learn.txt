@@ -1,0 +1,58 @@
+declare var int default 0;
+set var = 1;
+set var := 1;
+
+INFORMATION_SCHEMA / Catalog
+DDL DML DCL
+@@SystemVar
+@SessionVar
+
+show ...
+
+Dynaminc SQL / Static SQL
+
+CONCAT
+
+leave / break
+iterate / continue
+
+select Fileds into Vars from 
+768
+
+NEW. / Insert
+OLD. / DELETE
+
+sql mode 
+sql state 
+error code
+
+x '123abcd'
+X'123bcfd'
+B'10101'
+b'1110111'
+
+select @Test := '2011-12-02 12:59:59.12345' + interval 2 second;
+scalar expressions
+row exp
+table exp
+((PLAYERNO, 'John', 100 * 50),
+(PLAYERNO, 'Alex', 5000),
+(PLAYERNO, 'Arnold', 1000 / 20))
+
+is not null
+a = null
+a <> null
+表达式中有NULL参与的结果还是NULL
+
+'data'||'base' database
+
+% 取余数
+DIV 取商
+
+(E1, E2) = (E3, E4) (E1 = E3) AND (E2 = E4)
+(E1, E2) <> (E3, E4) (E1 <> E3) OR (E2 <> E4)
+(E1, E2) ? (E3, E4) (E1 ? E3) OR (E1 = E3 AND E2 ? E4)
+(E1, E2, E3) ? (E4, E5, E6) (E1 ? E4) OR (E1 = E4 AND E2 ? E5) OR
+(E1 = E4 AND E2 = E5 AND E3 ? E6)
+
+402
