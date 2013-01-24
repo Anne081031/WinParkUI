@@ -1,3 +1,7 @@
+ACE ICE POCO 
+Boost
+unixODBC iODBC
+
 http://www.winehq.org/ Wine 在类Unix上运行Windows程序
 
 
