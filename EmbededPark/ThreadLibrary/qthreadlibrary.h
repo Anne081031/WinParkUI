@@ -13,15 +13,19 @@ public:
 
     void PostListenerThreadEvent( QCommonLibrary::ThreadEventType eEvent );
     void PostClientSocketThreadEvent( QCommonLibrary::ThreadEventType eEvent,
-                                      QCommonLibrary::EventParam& uParam, bool bSingelton );
+                                      QCommonLibrary::EventParam& uParam,
+                                      bool bSingelton,
+                                      QObject* pUIReceiver = NULL );
 
 private:
     typedef QHash< QString, QSocketThread* > QSocketThreadHash;
 
     void PostSingeltonEvent( QCommonLibrary::ThreadEventType eEvent,
-                             QCommonLibrary::EventParam& uParam );
+                             QCommonLibrary::EventParam& uParam,
+                             QObject* pUIReceiver );
     void PostInstanceEvent( QCommonLibrary::ThreadEventType eEvent,
-                            QCommonLibrary::EventParam& uParam );
+                            QCommonLibrary::EventParam& uParam,
+                            QObject* pUIReceiver );
     void PostEventByHash( QCommonLibrary::ThreadEventType eEvent,
                            QCommonLibrary::EventParam& uParam,
                            QThreadLibrary::QSocketThreadHash* pHash );
@@ -48,6 +52,7 @@ protected slots:
     void HandleClientReconnect( QTcpSocket* pSocket );
     void HandleClientDisconnect( QTcpSocket* pSocket );
     void HandleDisplayLog( QString strText );
+    void HandleErrorCode( QTcpSocket* pSocket );
 };
 
 #endif // QTHREADLIBRARY_H

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qthreadlibrary.h'
 **
-** Created: Wed Jan 23 17:12:06 2013
+** Created: Mon Jan 28 10:32:53 2013
 **      by: The Qt Meta Object Compiler version 67 (Qt 5.0.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QThreadLibrary_t {
-    QByteArrayData data[9];
-    char stringdata[118];
+    QByteArrayData data[10];
+    char stringdata[134];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -38,12 +38,13 @@ QT_MOC_LITERAL(4, 35, 21),
 QT_MOC_LITERAL(5, 57, 11),
 QT_MOC_LITERAL(6, 69, 7),
 QT_MOC_LITERAL(7, 77, 22),
-QT_MOC_LITERAL(8, 100, 16)
+QT_MOC_LITERAL(8, 100, 16),
+QT_MOC_LITERAL(9, 117, 15)
     },
     "QThreadLibrary\0DisplayLog\0\0strText\0"
     "HandleClientReconnect\0QTcpSocket*\0"
     "pSocket\0HandleClientDisconnect\0"
-    "HandleDisplayLog\0"
+    "HandleDisplayLog\0HandleErrorCode\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -53,7 +54,7 @@ static const uint qt_meta_data_QThreadLibrary[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       4,   14, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -61,12 +62,13 @@ static const uint qt_meta_data_QThreadLibrary[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    1,   34,    2, 0x05,
+       1,    1,   39,    2, 0x05,
 
  // slots: name, argc, parameters, tag, flags
-       4,    1,   37,    2, 0x09,
-       7,    1,   40,    2, 0x09,
-       8,    1,   43,    2, 0x09,
+       4,    1,   42,    2, 0x09,
+       7,    1,   45,    2, 0x09,
+       8,    1,   48,    2, 0x09,
+       9,    1,   51,    2, 0x09,
 
  // signals: parameters
     QMetaType::Void, QMetaType::QString,    3,
@@ -75,6 +77,7 @@ static const uint qt_meta_data_QThreadLibrary[] = {
     QMetaType::Void, 0x80000000 | 5,    6,
     QMetaType::Void, 0x80000000 | 5,    6,
     QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, 0x80000000 | 5,    6,
 
        0        // eod
 };
@@ -88,6 +91,7 @@ void QThreadLibrary::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
         case 1: _t->HandleClientReconnect((*reinterpret_cast< QTcpSocket*(*)>(_a[1]))); break;
         case 2: _t->HandleClientDisconnect((*reinterpret_cast< QTcpSocket*(*)>(_a[1]))); break;
         case 3: _t->HandleDisplayLog((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 4: _t->HandleErrorCode((*reinterpret_cast< QTcpSocket*(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -101,6 +105,13 @@ void QThreadLibrary::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _
             }
             break;
         case 2:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QTcpSocket* >(); break;
+            }
+            break;
+        case 4:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -145,13 +156,13 @@ int QThreadLibrary::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 4)
+        if (_id < 5)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 4;
+        _id -= 5;
     }
     return _id;
 }

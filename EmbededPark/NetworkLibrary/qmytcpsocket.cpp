@@ -3,8 +3,14 @@
 QMyTcpSocket::QMyTcpSocket(QObject *parent) :
     QTcpSocket(parent)
 {
+    bPeerSocket = false;
     connect( this, SIGNAL( readyRead( ) ), this, SLOT( ReceiveData( ) ) );
     connect( this, SIGNAL( error( QAbstractSocket::SocketError ) ), this, SLOT( TcpError( QAbstractSocket::SocketError ) ) );
+}
+
+QMyTcpSocket::~QMyTcpSocket( )
+{
+
 }
 
 void QMyTcpSocket::ReceiveData( )
@@ -58,6 +64,9 @@ void QMyTcpSocket::TcpError( QAbstractSocket::SocketError socketError )
     GetErrorMsg( strMsg, socketError, this );
     strMsg = strHostInfo + strMsg;
 
+    if ( !bPeerSocket ) {
+        emit ErrorCode( this );
+    }
     emit ErrorInfo( QCommonLibrary::LogError, strMsg );
 }
 

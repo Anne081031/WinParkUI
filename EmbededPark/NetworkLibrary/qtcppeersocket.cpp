@@ -3,8 +3,14 @@
 QTcpPeerSocket::QTcpPeerSocket(QObject *parent) :
     QMyTcpSocket(parent)
 {
+    bPeerSocket = true;
     connect( this, SIGNAL( connected( ) ), this, SLOT( HandleConnected( ) ) );
     connect( this, SIGNAL( disconnected( ) ), this, SLOT( HandleDisconnected( ) ) );
+}
+
+QTcpPeerSocket::~QTcpPeerSocket( )
+{
+
 }
 
 void QTcpPeerSocket::HandleConnected( )

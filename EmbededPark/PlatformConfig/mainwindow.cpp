@@ -12,3 +12,13 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+
+void MainWindow::on_btnOK_clicked()
+{
+
+}
+
+void MainWindow::on_btnCancel_clicked()
+{
+
+}

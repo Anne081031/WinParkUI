@@ -27,6 +27,11 @@ void QSocketThread::HandleClientDisconnect( QTcpSocket *pSocket )
     emit ClientDisconnect( pSocket );
 }
 
+void QSocketThread::HandleErrorCode( QTcpSocket *pSocket )
+{
+    emit ErrorCode( pSocket );
+}
+
 void QSocketThread::InitializeSubThread( )
 {
     pNetwork = new QNetworkLibrary( );
@@ -45,6 +50,8 @@ void QSocketThread::InitializeSubThread( )
                  this, SLOT( HandleClientReconnect( QTcpSocket* ) ) );
         connect( pNetwork, SIGNAL( ClientDisconnect( QTcpSocket* ) ),
                  this, SLOT( HandleClientDisconnect( QTcpSocket* ) ) );
+        connect( pNetwork, SIGNAL( ErrorCode( QTcpSocket* ) ),
+                 this, SLOT( HandleErrorCode( QTcpSocket* ) ) );
     }
 }
 
@@ -55,33 +62,35 @@ QSocketThread::~QSocketThread( )
         pHostSocketHash = NULL;
     }
 
-    if ( 0 != pNetwork ) {
-        delete pNetwork;
-        pNetwork = NULL;
-    }
+    FreeNetwork( );
 }
 
-QSocketThread* QSocketThread::CreateThread( bool bServerSide, QDataParserThread* pDataParser, QObject *pParent )
+QSocketThread* QSocketThread::CreateThread( bool bServerSide, QDataParserThread* pDataParser, QObject* pUIReceiver, QObject *pParent )
 {
     QSocketThread* pThread = new QSocketThread( bServerSide, pDataParser, pParent );
     pThread->StartThread( pThread );
 
+    if ( NULL != pUIReceiver && !bServerSide && NULL != pDataParser ) {
+        connect( pDataParser, SIGNAL( DataIncoming( QTcpSocket*, QByteArray* ) ),
+                 pUIReceiver, SLOT( HandleDataIncoming( QTcpSocket*, QByteArray* ) ) );
+    }
+
     return pThread;
 }
 
-QSocketThread* QSocketThread::GetSingletonInstance( bool bServerSide, QObject *pParent )
+QSocketThread* QSocketThread::GetSingletonInstance( bool bServerSide, QObject* pUIReceiver, QObject *pParent )
 {
     if ( 0 == pThreadInstance ) {
         QDataParserThread* pDataParser = QDataParserThread::GetSingletonInstance( );
-        pThreadInstance = CreateThread( bServerSide, pDataParser, pParent );
+        pThreadInstance = CreateThread( bServerSide, pDataParser, pUIReceiver, pParent );
     }
 
     return pThreadInstance;
 }
 
-QSocketThread* QSocketThread::GetInstance( bool bServerSide, QDataParserThread *pDataParser, QObject *pParent )
+QSocketThread* QSocketThread::GetInstance( bool bServerSide, QDataParserThread *pDataParser, QObject* pUIReceiver, QObject *pParent )
 {
-    return CreateThread( bServerSide, pDataParser, pParent );
+    return CreateThread( bServerSide, pDataParser, pUIReceiver, pParent );
 }
 
 void QSocketThread::SetDispatcherThread( QThread *pThread )
@@ -109,6 +118,14 @@ void QSocketThread::run( )
     exec( ); // Event Loop
 }
 
+void QSocketThread::FreeNetwork( )
+{
+    if ( 0 != pNetwork ) {
+        delete pNetwork;
+        pNetwork = NULL;
+    }
+}
+
 void QSocketThread::customEvent( QEvent *event )
 {
     QThreadEvent* pEvent = ( QThreadEvent* ) event;
@@ -120,11 +137,7 @@ void QSocketThread::customEvent( QEvent *event )
             PostThreadExit( pDataParserThread );
         }
 
-        if ( 0 != pNetwork ) {
-            delete pNetwork;
-            pNetwork = NULL;
-        }
-
+        FreeNetwork( );
         LaunchThreadExit( );
         pThreadInstance = NULL;
     } else if ( QCommonLibrary::EventAttachSocketDescriptor == type ) {

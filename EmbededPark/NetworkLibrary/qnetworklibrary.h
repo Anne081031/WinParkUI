@@ -12,7 +12,7 @@ class NETWORKLIBRARYSHARED_EXPORT QNetworkLibrary : public QObject
 {
     Q_OBJECT
 public:
-    QNetworkLibrary();
+    QNetworkLibrary( QObject* parent = 0 );
     ~QNetworkLibrary( );
 
     bool StartServerListen( QString& strInfo );
@@ -31,7 +31,7 @@ private:
 
     void Set2Null( );
     void ConnectLog( QTcpSocket* pSocket, bool bConnected, bool bPeer );
-    void DisconnctHashChange( QTcpSocket* pSocket );
+    void DisconnectHashChange( QTcpSocket* pSocket );
 
     void CreateHash( );
     void CreateQueue( );
@@ -47,9 +47,9 @@ private:
 
 private:
     QHostSocketHash* pConnectedSocketHash;
-    QHostSocketHash* pDisconnectedSocketHash;
+    QHostSocketHash* pDisconnectedSocketHash; // Client Host--Socket
     QSocketQueue* pAttachedSocketQueue;
-    QSocketQueue* pDetachedSocketQueue;
+    QSocketQueue* pDetachedSocketQueue; //  Server Peer Socket Queue
 
 private:
     QMyTcpServer* pTcpServer;
@@ -59,6 +59,7 @@ signals:
     void DataIncoming( void* pSocket, void* pByteArray );
     void PeerDisconenct( QTcpSocket* pSocket ); // Server Socket
     void ErrorInfo( qint32, QString strText );
+    void ErrorCode( QTcpSocket* pSocket );
     void ClientReconnect( QTcpSocket* pSocket );
     void ClientDisconnect( QTcpSocket* pSocket );
 
@@ -68,6 +69,7 @@ protected slots:
     void HandleConnectFinished( QTcpSocket* pSocket, bool bPeer );
     void HandleDisconnectFinished( QTcpSocket* pSocket, bool bPeer );
     void HandleErrorInfo( qint32 logType, QString strText );
+    void HandleErrorCode( QTcpSocket* pSocket );
 };
 
 #endif // QNETWORKLIBRARY_H

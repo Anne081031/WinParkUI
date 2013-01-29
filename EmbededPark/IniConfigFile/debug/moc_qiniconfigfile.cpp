@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qiniconfigfile.h'
 **
-** Created: Wed Jan 23 15:56:01 2013
+** Created: Mon Jan 28 10:31:13 2013
 **      by: The Qt Meta Object Compiler version 67 (Qt 5.0.0)
 **
 ** WARNING! All changes made in this file will be lost!

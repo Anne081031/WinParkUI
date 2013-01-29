@@ -2,7 +2,7 @@
 #include "../IniConfigFile/qiniconfigfile.h"
 
 
-QNetworkLibrary::QNetworkLibrary()
+QNetworkLibrary::QNetworkLibrary( QObject *parent ) : QObject ( parent )
 {
     Set2Null( );
 }
@@ -49,6 +49,7 @@ void QNetworkLibrary::DestroyHash( QNetworkLibrary::QHostSocketHash *pHash )
     }
 
     foreach ( QTcpSocket* pSocket, pHash->values( ) ) {
+        pSocket->disconnect( );
         pSocket->close( );
         delete pSocket;
     }
@@ -174,7 +175,7 @@ void QNetworkLibrary::Disconnect2Hots( QTcpSocket *pSocket )
 
     CreateHash( );
 
-    DisconnctHashChange( pSocket );
+    DisconnectHashChange( pSocket );
     pSocket->disconnectFromHost( );
 }
 
@@ -213,7 +214,7 @@ void QNetworkLibrary::Connect2Server( QTcpSocket *pSocket, bool bManual )
     }
 }
 
-void QNetworkLibrary::DisconnctHashChange( QTcpSocket *pSocket )
+void QNetworkLibrary::DisconnectHashChange( QTcpSocket *pSocket )
 {
     QString strKey = pConnectedSocketHash->key( pSocket );
     if ( strKey.isEmpty( ) ) {
@@ -221,7 +222,10 @@ void QNetworkLibrary::DisconnctHashChange( QTcpSocket *pSocket )
     }
 
     pConnectedSocketHash->remove( strKey, pSocket );
-    pDisconnectedSocketHash->insertMulti( strKey, pSocket );
+
+    if ( !pDisconnectedSocketHash->contains( strKey, pSocket ) ) {
+        pDisconnectedSocketHash->insertMulti( strKey, pSocket );
+    }
 }
 
 void QNetworkLibrary::HandleConnectFinished( QTcpSocket *pSocket, bool bPeer )
@@ -238,13 +242,25 @@ void QNetworkLibrary::HandleConnectFinished( QTcpSocket *pSocket, bool bPeer )
             GetKey( pSocket->localAddress( ).toIPv4Address( ), pSocket->peerPort( ), strKey );
         }
 
-        pConnectedSocketHash->insert( strKey, pSocket );
+        if ( !pConnectedSocketHash->contains( strKey, pSocket ) ) {
+            pConnectedSocketHash->insertMulti( strKey, pSocket );
+        }
     }
 }
 
 void QNetworkLibrary::HandleErrorInfo( qint32 logType, QString strText )
 {
     emit ErrorInfo( logType, strText );
+}
+
+void QNetworkLibrary::HandleErrorCode( QTcpSocket* pSocket )
+{
+    QAbstractSocket::SocketError nCode = pSocket->error( );
+
+    if ( QAbstractSocket::ConnectionRefusedError == nCode ) {
+        DisconnectHashChange( pSocket );
+        emit ErrorCode( pSocket );
+    }
 }
 
 void QNetworkLibrary::HandleDisconnectFinished( QTcpSocket *pSocket, bool bPeer )
@@ -255,7 +271,7 @@ void QNetworkLibrary::HandleDisconnectFinished( QTcpSocket *pSocket, bool bPeer 
         emit PeerDisconenct( pSocket );
     } else { // Client Side
         emit ClientDisconnect( pSocket );
-        DisconnctHashChange( pSocket );
+        DisconnectHashChange( pSocket );
         Connect2Server( pSocket, false );
     }
 }
@@ -314,6 +330,8 @@ void QNetworkLibrary::ConnectSocketEvent( QTcpSocket *pSocket )
                     this, SLOT( HandleErrorInfo( qint32, QString ) ) );
     bRet = connect( pSocket, SIGNAL( DataIncoming( void*, void* ) ),
                     this, SLOT( HandleDataIncoming( void*, void* ) ) );
+    bRet = connect( pSocket, SIGNAL( ErrorCode( QTcpSocket* ) ),
+                    this, SLOT( HandleErrorCode( QTcpSocket* ) ) );
 }
 
 void QNetworkLibrary::RemoveSocketFromQueue( QNetworkLibrary::QSocketQueue* pQueue, QTcpSocket* pSocket )

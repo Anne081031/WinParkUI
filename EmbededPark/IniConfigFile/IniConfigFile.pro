@@ -13,11 +13,13 @@ MYDESTLIB = $$quote( %1/%2%3.lib )
 Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "Debug" )
 }
 
 Release {
     TARGET = $$sprintf( $$MYTARGET, "" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "" )
 }
 
 TEMPLATE = lib

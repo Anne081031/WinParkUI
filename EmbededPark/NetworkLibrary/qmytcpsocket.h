@@ -9,6 +9,7 @@ class QMyTcpSocket : public QTcpSocket
     Q_OBJECT
 public:
     explicit QMyTcpSocket(QObject *parent = 0);
+    ~QMyTcpSocket( );
     quint64 SendData( const QByteArray & byteArray );
 
 private:
@@ -19,10 +20,14 @@ signals:
     void ConnectFinished( QTcpSocket* pSocket, bool bPeer );
     void DisconnectFinished( QTcpSocket* pSocket, bool bPeer );
     void ErrorInfo( qint32 logType, QString strText );
+    void ErrorCode( QTcpSocket* pSocket );
     
 protected slots:
     void ReceiveData( );
     void TcpError( QAbstractSocket::SocketError socketError );
+
+protected:
+    bool bPeerSocket;
 };
 
 #endif // QMYTCPSOCKET_H

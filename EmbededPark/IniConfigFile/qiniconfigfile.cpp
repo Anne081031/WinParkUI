@@ -1,7 +1,7 @@
 #include "qiniconfigfile.h"
 
 
-QIniConfigFile::QIniConfigFile()
+QIniConfigFile::QIniConfigFile( QObject* parent ) : QObject( parent )
 {
 }
 
@@ -26,7 +26,7 @@ qint32 QIniConfigFile::GetSocketCountEachServerThread( )
     return nSocketCount;
 }
 
-qint32 QIniConfigFile::GetDataParserCountEachServerThread( )
+qint32 QIniConfigFile::GetServerThreadCountEachDataParser( )
 {
     qint32 nParserCount = 2;
 

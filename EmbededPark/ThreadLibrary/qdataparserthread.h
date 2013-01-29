@@ -37,6 +37,7 @@ private:
     QSocketByteArrayHash udpSocketByteArrayHash;
     
 signals:
+    void DataIncoming( QTcpSocket* pSocket, QByteArray* pByteArray );
     
 public slots:
     

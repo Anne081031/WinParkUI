@@ -10,7 +10,7 @@ DEFINES += _WIN32_WINDOWS=0x0490
 
 MYTARGET = $$quote( CommonLibrary%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
-MYDESTLIB = $$quote( %1/%2%3.a )
+MYDESTLIB = $$quote( %1/%2%3.lib )
 
 Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )

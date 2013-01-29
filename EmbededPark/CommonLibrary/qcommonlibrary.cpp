@@ -5,7 +5,7 @@ const QString QCommonLibrary::strDateFormat = "yyyy-MM-dd";
 const QString QCommonLibrary::strTimeFormat = "HH:mm:ss";
 
 
-QCommonLibrary::QCommonLibrary()
+QCommonLibrary::QCommonLibrary( QObject* parent ) : QObject( parent )
 {
 }
 

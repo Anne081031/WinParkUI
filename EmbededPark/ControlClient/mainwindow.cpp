@@ -16,10 +16,22 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::HandleDisplayLog( QString strText )
+void MainWindow::AppendMessage( QString &strText )
 {
     ui->edtLog->appendPlainText( strText );
     ui->edtLog->appendPlainText( "\r\n" );
+}
+
+void MainWindow::HandleDisplayLog( QString strText )
+{
+    AppendMessage( strText );
+}
+
+void MainWindow::HandleDataIncoming( QTcpSocket* pSocket, QByteArray* pByteArray )
+{
+    QString strText( *pByteArray );
+    AppendMessage( strText );
+    delete pByteArray;
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -31,7 +43,7 @@ void MainWindow::on_pushButton_clicked()
 
     while ( nConn-- ) {
         uParam.ParamValue.ClientSocketThread.Host.nSequence = nConn;
-        libThread.PostClientSocketThreadEvent( QCommonLibrary::EventClientConnection, uParam, false );
+        libThread.PostClientSocketThreadEvent( QCommonLibrary::EventClientConnection, uParam, false, this );
     }
 }
 
@@ -49,11 +61,12 @@ void MainWindow::on_pushButton_4_clicked()
 {
     qint32 nConn = 10;
 
-    //while ( nConn-- ) {
+    while ( nConn-- ) {
         QByteArray* pByteArray = new QByteArray( );
-        QByteArray byToken = QCommonLibrary::GetDataToken( ).toLatin1( );
+        QString strToken = QCommonLibrary::GetDataToken( );
+        QByteArray byToken = QCommonLibrary::GetTextCodec( )->fromUnicode( strToken );
         pByteArray->append( byToken );
-        QByteArray byBody = "Test success.";
+        QByteArray byBody = QString( "Test success %1." ).arg( nConn ).toLatin1( );
         qint32 nPackageLen = byToken.length( ) + sizeof ( quint32 ) + byBody.length( );
         nPackageLen = qToBigEndian< qint32 >( nPackageLen );
         pByteArray->append( ( char* ) &nPackageLen, sizeof ( quint32 ) );
@@ -65,5 +78,5 @@ void MainWindow::on_pushButton_4_clicked()
         uParam.ParamValue.ClientSocketThread.Data.Host.nSequence = nConn;
         uParam.ParamValue.ClientSocketThread.Data.pByteArray = pByteArray;
         libThread.PostClientSocketThreadEvent( QCommonLibrary::EventClientSendData, uParam, false );
-    //}
+    }
 }

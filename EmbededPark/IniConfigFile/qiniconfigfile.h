@@ -11,16 +11,17 @@ public:
     static quint16 GetServerListenPort( );
     static qint32 GetMaxPendingConnections( );
     static qint32 GetSocketCountEachServerThread( );
-    static qint32 GetDataParserCountEachServerThread( );
+    static qint32 GetServerThreadCountEachDataParser( );
+    static qint32 GetSocketThreadServerSleepTime( );
+
     static qint32 GetDbThreadPoolThreadCount( );
     static qint32 GetDbMaxDbConnections( );
     static QString GetServerIP( );
     static qint32 GetTaskCount4DbConnection( );
-    static quint8 GetLogCount( );
-    static qint32 GetSocketThreadServerSleepTime( );
+    static quint8 GetLogCount( );  
 
 private:
-    QIniConfigFile();
+    QIniConfigFile( QObject* parent = 0 );
 
 signals:
 

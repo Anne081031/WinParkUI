@@ -6,7 +6,7 @@ QDataParserThread::QDataParserThread(QObject *parent) :
     QMyThread(parent)
 {
     QString strToken = QCommonLibrary::GetDataToken( );
-    byDataToken = strToken.toLatin1( );
+    byDataToken = QCommonLibrary::GetTextCodec( )->fromUnicode( strToken );
     bServerSideParser = false;
     setObjectName( "[Data Parser Thread]" );
 }
@@ -154,6 +154,11 @@ bool QDataParserThread::ParseData( QTcpSocket* pSocket, QByteArray &data )
 
     QString strBody = QString( byBody );
     QCommonLibrary::PrintLog( strBody );
+
+    if( !bServerSideParser ) {
+        QByteArray* pUIData = new QByteArray( byBody );
+        emit DataIncoming( pSocket, pUIData );
+    }
 
     data.remove( 0, nDataLen );
     bRet = ( data.length( ) > nExtraSize );

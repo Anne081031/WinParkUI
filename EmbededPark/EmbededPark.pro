@@ -9,4 +9,5 @@ SUBDIRS += \
     CommonLibrary \
     DatabaseLibrary \
     PlatformConfig \
-    IniConfigFile
+    IniConfigFile \
+    DataProtocol

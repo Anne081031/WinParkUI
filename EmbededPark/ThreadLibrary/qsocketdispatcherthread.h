@@ -35,7 +35,7 @@ private:
     QSockThreadHash hashSocketThreads;
     QParserSocketThreadHash hashParserSocketThread;
     qint32 nSocketCountEachServerThread;
-    qint32 nDataParserCountEachServerThread;
+    qint32 nServerThreadCountEachDataParser;
     qint32 nSocketThreadSleepTime;
     
 signals:

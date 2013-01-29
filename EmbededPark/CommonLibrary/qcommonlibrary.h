@@ -9,7 +9,7 @@
 #include <QtEndian>
 #include <QDebug>
 
-class COMMONLIBRARYSHARED_EXPORT QCommonLibrary
+class COMMONLIBRARYSHARED_EXPORT QCommonLibrary : public QObject
 {
 public:
 
@@ -149,7 +149,7 @@ private:
     static const QString strTimeFormat;
 
 private:
-    QCommonLibrary();
+    QCommonLibrary( QObject* parent = 0 );
 };
 
 #endif // QCOMMONLIBRARY_H

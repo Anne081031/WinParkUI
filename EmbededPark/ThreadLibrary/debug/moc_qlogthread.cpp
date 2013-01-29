@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qlogthread.h'
 **
-** Created: Wed Jan 23 15:44:26 2013
+** Created: Mon Jan 28 10:32:03 2013
 **      by: The Qt Meta Object Compiler version 67 (Qt 5.0.0)
 **
 ** WARNING! All changes made in this file will be lost!

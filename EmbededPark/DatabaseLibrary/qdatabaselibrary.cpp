@@ -1,6 +1,6 @@
 #include "qdatabaselibrary.h"
 
 
-QDatabaseLibrary::QDatabaseLibrary()
+QDatabaseLibrary::QDatabaseLibrary( QObject* parent  ) : QObject( parent )
 {
 }

@@ -14,6 +14,11 @@ void QThreadLibrary::HandleDisplayLog( QString strText )
     emit DisplayLog( strText );
 }
 
+void QThreadLibrary::HandleErrorCode( QTcpSocket *pSocket )
+{
+    ChangeHash( pSocket, false );
+}
+
 void QThreadLibrary::HandleClientDisconnect( QTcpSocket *pSocket )
 {
     ChangeHash( pSocket, false );
@@ -58,6 +63,8 @@ void QThreadLibrary::ConnectClientSocktThreadEvent( QSocketThread *pThread )
              this, SLOT( HandleClientDisconnect( QTcpSocket* ) ) );
     connect( pThread, SIGNAL( ClientReconnect( QTcpSocket* ) ),
              this, SLOT( HandleClientReconnect( QTcpSocket* ) ) );
+    connect( pThread, SIGNAL( ErrorCode( QTcpSocket* ) ),
+             this, SLOT( HandleErrorCode( QTcpSocket* ) ) );
 }
 
 void QThreadLibrary::ClientThreadExit( QThreadLibrary::QSocketThreadHash *pHash )
@@ -93,7 +100,10 @@ void QThreadLibrary::PostListenerThreadEvent( QCommonLibrary::ThreadEventType eE
     }
 }
 
-void QThreadLibrary::PostClientSocketThreadEvent( QCommonLibrary::ThreadEventType eEvent, QCommonLibrary::EventParam& uParam, bool bSingelton )
+void QThreadLibrary::PostClientSocketThreadEvent( QCommonLibrary::ThreadEventType eEvent,
+                                                  QCommonLibrary::EventParam& uParam,
+                                                  bool bSingelton,
+                                                  QObject* pUIReceiver )
 {
     if ( 0 == pClientConnectHash ) {
         pClientConnectHash = new QSocketThreadHash( );
@@ -104,9 +114,9 @@ void QThreadLibrary::PostClientSocketThreadEvent( QCommonLibrary::ThreadEventTyp
     }
 
     if ( bSingelton ) {
-        PostSingeltonEvent( eEvent, uParam );
+        PostSingeltonEvent( eEvent, uParam, pUIReceiver );
     } else {
-        PostInstanceEvent( eEvent, uParam );
+        PostInstanceEvent( eEvent, uParam, pUIReceiver );
     }
 }
 
@@ -142,14 +152,16 @@ void QThreadLibrary::GetKey( QString &strKey, QCommonLibrary::EventParam &uParam
                                           QString::number( nSequence  ) );
 }
 
-void QThreadLibrary::PostSingeltonEvent( QCommonLibrary::ThreadEventType eEvent, QCommonLibrary::EventParam& uParam )
+void QThreadLibrary::PostSingeltonEvent( QCommonLibrary::ThreadEventType eEvent,
+                                         QCommonLibrary::EventParam& uParam,
+                                         QObject* pUIReceiver )
 {
     QSocketThread* pThread = NULL;
     QString strKey = "";
     GetKey( strKey, uParam );
 
     if ( pClientDisconnectHash->isEmpty( ) ) {
-        pThread = QSocketThread::GetSingletonInstance( false );
+        pThread = QSocketThread::GetSingletonInstance( false, pUIReceiver );
         ConnectClientSocktThreadEvent( pThread );
 
     } else {
@@ -161,7 +173,9 @@ void QThreadLibrary::PostSingeltonEvent( QCommonLibrary::ThreadEventType eEvent,
     PostClientEvent( eEvent, uParam, pThread );
 }
 
-void QThreadLibrary::PostInstanceEvent( QCommonLibrary::ThreadEventType eEvent, QCommonLibrary::EventParam& uParam )
+void QThreadLibrary::PostInstanceEvent( QCommonLibrary::ThreadEventType eEvent,
+                                        QCommonLibrary::EventParam& uParam,
+                                        QObject* pUIReceiver )
 {
     QSocketThread* pThread = NULL;
     QString strKey = "";
@@ -169,7 +183,7 @@ void QThreadLibrary::PostInstanceEvent( QCommonLibrary::ThreadEventType eEvent, 
 
     if ( QCommonLibrary::EventClientConnection == eEvent ) {
         if ( pClientDisconnectHash->isEmpty( ) ) {
-            pThread = QSocketThread::GetInstance( false, QDataParserThread::GetInstance( ) );
+            pThread = QSocketThread::GetInstance( false, QDataParserThread::GetInstance( ), pUIReceiver );
             ConnectClientSocktThreadEvent( pThread );
         } else {
             pThread = pClientDisconnectHash->take( strKey );

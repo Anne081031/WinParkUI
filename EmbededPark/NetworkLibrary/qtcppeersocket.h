@@ -8,6 +8,7 @@ class QTcpPeerSocket : public QMyTcpSocket
     Q_OBJECT
 public:
     explicit QTcpPeerSocket(QObject *parent = 0);
+    ~QTcpPeerSocket( );
     
 signals:
     

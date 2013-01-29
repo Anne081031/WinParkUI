@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qmytcpsocket.h'
 **
-** Created: Wed Jan 23 15:55:56 2013
+** Created: Fri Jan 25 10:11:02 2013
 **      by: The Qt Meta Object Compiler version 67 (Qt 5.0.0)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -20,8 +20,8 @@
 
 QT_BEGIN_MOC_NAMESPACE
 struct qt_meta_stringdata_QMyTcpSocket_t {
-    QByteArrayData data[16];
-    char stringdata[188];
+    QByteArrayData data[17];
+    char stringdata[198];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -42,16 +42,18 @@ QT_MOC_LITERAL(8, 80, 18),
 QT_MOC_LITERAL(9, 99, 9),
 QT_MOC_LITERAL(10, 109, 7),
 QT_MOC_LITERAL(11, 117, 7),
-QT_MOC_LITERAL(12, 125, 11),
-QT_MOC_LITERAL(13, 137, 8),
-QT_MOC_LITERAL(14, 146, 28),
-QT_MOC_LITERAL(15, 175, 11)
+QT_MOC_LITERAL(12, 125, 9),
+QT_MOC_LITERAL(13, 135, 11),
+QT_MOC_LITERAL(14, 147, 8),
+QT_MOC_LITERAL(15, 156, 28),
+QT_MOC_LITERAL(16, 185, 11)
     },
     "QMyTcpSocket\0DataIncoming\0\0pSocket\0"
     "pByteArray\0ConnectFinished\0QTcpSocket*\0"
     "bPeer\0DisconnectFinished\0ErrorInfo\0"
-    "logType\0strText\0ReceiveData\0TcpError\0"
-    "QAbstractSocket::SocketError\0socketError\0"
+    "logType\0strText\0ErrorCode\0ReceiveData\0"
+    "TcpError\0QAbstractSocket::SocketError\0"
+    "socketError\0"
 };
 #undef QT_MOC_LITERAL
 
@@ -61,32 +63,34 @@ static const uint qt_meta_data_QMyTcpSocket[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-       6,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       4,       // signalCount
+       5,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   44,    2, 0x05,
-       5,    2,   49,    2, 0x05,
-       8,    2,   54,    2, 0x05,
-       9,    2,   59,    2, 0x05,
+       1,    2,   49,    2, 0x05,
+       5,    2,   54,    2, 0x05,
+       8,    2,   59,    2, 0x05,
+       9,    2,   64,    2, 0x05,
+      12,    1,   69,    2, 0x05,
 
  // slots: name, argc, parameters, tag, flags
-      12,    0,   64,    2, 0x09,
-      13,    1,   65,    2, 0x09,
+      13,    0,   72,    2, 0x09,
+      14,    1,   73,    2, 0x09,
 
  // signals: parameters
     QMetaType::Void, QMetaType::VoidStar, QMetaType::VoidStar,    3,    4,
     QMetaType::Void, 0x80000000 | 6, QMetaType::Bool,    3,    7,
     QMetaType::Void, 0x80000000 | 6, QMetaType::Bool,    3,    7,
     QMetaType::Void, QMetaType::Int, QMetaType::QString,   10,   11,
+    QMetaType::Void, 0x80000000 | 6,    3,
 
  // slots: parameters
     QMetaType::Void,
-    QMetaType::Void, 0x80000000 | 14,   15,
+    QMetaType::Void, 0x80000000 | 15,   16,
 
        0        // eod
 };
@@ -100,8 +104,9 @@ void QMyTcpSocket::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 1: _t->ConnectFinished((*reinterpret_cast< QTcpSocket*(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 2: _t->DisconnectFinished((*reinterpret_cast< QTcpSocket*(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 3: _t->ErrorInfo((*reinterpret_cast< qint32(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 4: _t->ReceiveData(); break;
-        case 5: _t->TcpError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
+        case 4: _t->ErrorCode((*reinterpret_cast< QTcpSocket*(*)>(_a[1]))); break;
+        case 5: _t->ReceiveData(); break;
+        case 6: _t->TcpError((*reinterpret_cast< QAbstractSocket::SocketError(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
@@ -121,7 +126,14 @@ void QMyTcpSocket::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
                 *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QTcpSocket* >(); break;
             }
             break;
-        case 5:
+        case 4:
+            switch (*reinterpret_cast<int*>(_a[1])) {
+            default: *reinterpret_cast<int*>(_a[0]) = -1; break;
+            case 0:
+                *reinterpret_cast<int*>(_a[0]) = qRegisterMetaType< QTcpSocket* >(); break;
+            }
+            break;
+        case 6:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -156,6 +168,12 @@ void QMyTcpSocket::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
                 *result = 3;
             }
         }
+        {
+            typedef void (QMyTcpSocket::*_t)(QTcpSocket * );
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QMyTcpSocket::ErrorCode)) {
+                *result = 4;
+            }
+        }
     }
 }
 
@@ -184,13 +202,13 @@ int QMyTcpSocket::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 6)
+        if (_id < 7)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 6;
+        _id -= 7;
     }
     return _id;
 }
@@ -221,5 +239,12 @@ void QMyTcpSocket::ErrorInfo(qint32 _t1, QString _t2)
 {
     void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
     QMetaObject::activate(this, &staticMetaObject, 3, _a);
+}
+
+// SIGNAL 4
+void QMyTcpSocket::ErrorCode(QTcpSocket * _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 4, _a);
 }
 QT_END_MOC_NAMESPACE

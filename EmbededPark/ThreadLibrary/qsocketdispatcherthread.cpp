@@ -8,7 +8,7 @@ QSocketDispatcherThread::QSocketDispatcherThread(QObject *parent) :
 {
     setObjectName( "[Socket Dispatcher Thread]" );
     nSocketCountEachServerThread = QIniConfigFile::GetSocketCountEachServerThread( );
-    nDataParserCountEachServerThread = QIniConfigFile::GetDataParserCountEachServerThread( );
+    nServerThreadCountEachDataParser = QIniConfigFile::GetServerThreadCountEachDataParser( );
     nSocketThreadSleepTime = QIniConfigFile::GetSocketThreadServerSleepTime( );
 }
 
@@ -121,7 +121,7 @@ QSocketThread* QSocketDispatcherThread::FindSocketThread( )
     QSocketThreadQueue* pQueue = FindSocketThreadQueue( nKey );
 
     if ( pQueue->isEmpty( ) ) {
-        static qint32 nParser = nDataParserCountEachServerThread;
+        static qint32 nParser = nServerThreadCountEachDataParser;
         static QDataParserThread* pParserThread = NULL;
 
         if ( 0 == pParserThread ) {
@@ -134,7 +134,7 @@ QSocketThread* QSocketDispatcherThread::FindSocketThread( )
 
         nParser--;
         if ( 0 == nParser ) {
-            nParser = nDataParserCountEachServerThread;
+            nParser = nServerThreadCountEachDataParser;
             pParserThread = NULL;
         }
     } else {

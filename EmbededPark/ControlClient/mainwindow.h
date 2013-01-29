@@ -15,9 +15,11 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+private:
+    inline void AppendMessage( QString& strText );
 
 private slots:
-    //void HandleDataIncoming( void* pSocket, void* pByteArray );
+    void HandleDataIncoming( QTcpSocket* pSocket, QByteArray* pByteArray );
     void HandleDisplayLog( QString strText );
     
 private slots:
