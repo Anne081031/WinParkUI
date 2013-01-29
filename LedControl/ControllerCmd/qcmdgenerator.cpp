@@ -219,7 +219,7 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
         break;
 
     case LedControll::CmdFlashFrenquencyLightSensitiveIfWork : // 0x08
-        nDI |= bFlash ? 0x0000000E : 0x00000000;
+        nDI |= bFlash ? 0x0000000D : 0x0000000C;
         cDataLen += 1;
         byData.append( ( char ) nParam );
         break;
@@ -259,13 +259,13 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
         break;
 
     case LedControll::CmdFlashRadianceChange :
-        nDI |= 0x0000000C;
+        nDI |= 0x0000000F;
         cDataLen += 1;
         byData.append( ( char ) nParam );
         break;
 
     case LedControll::CmdFrenquencyRadianceChange :
-        nDI |= 0x0000000D;
+        nDI |= 0x0000000E;
         cDataLen += 1;
         byData.append( ( char ) nParam );
         break;

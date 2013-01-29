@@ -184,7 +184,7 @@ background-color: rgb(72, 72, 72);</string>
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
@@ -827,7 +827,7 @@ background-color: rgb(72, 72, 72);</string>
          <rect>
           <x>50</x>
           <y>40</y>
-          <width>100</width>
+          <width>127</width>
           <height>164</height>
          </rect>
         </property>
@@ -846,8 +846,11 @@ background-color: rgb(72, 72, 72);</string>
            </item>
            <item>
             <widget class="QSpinBox" name="spFreqTimeNew">
+             <property name="minimum">
+              <number>1</number>
+             </property>
              <property name="maximum">
-              <number>32</number>
+              <number>100</number>
              </property>
             </widget>
            </item>
@@ -867,8 +870,11 @@ background-color: rgb(72, 72, 72);</string>
            </item>
            <item>
             <widget class="QSpinBox" name="spFreqLightNew">
+             <property name="minimum">
+              <number>1</number>
+             </property>
              <property name="maximum">
-              <number>32</number>
+              <number>100</number>
              </property>
             </widget>
            </item>
@@ -887,10 +893,52 @@ background-color: rgb(72, 72, 72);</string>
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spLightSensitiveFreq">
-             <property name="maximum">
-              <number>32</number>
-             </property>
+            <widget class="QComboBox" name="cbLightSensitiveFreq">
+             <item>
+              <property name="text">
+               <string>1.5</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1.6</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1.8</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.0</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.4</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.6</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.8</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>3.0</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
@@ -903,7 +951,7 @@ background-color: rgb(72, 72, 72);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>光敏禁用  </string>
+              <string>光敏控制</string>
              </property>
             </widget>
            </item>
@@ -1018,7 +1066,7 @@ background-color: rgb(72, 72, 72);</string>
          <rect>
           <x>50</x>
           <y>40</y>
-          <width>100</width>
+          <width>127</width>
           <height>164</height>
          </rect>
         </property>
@@ -1037,6 +1085,9 @@ background-color: rgb(72, 72, 72);</string>
            </item>
            <item>
             <widget class="QSpinBox" name="spFlashTimeNew">
+             <property name="minimum">
+              <number>1</number>
+             </property>
              <property name="maximum">
               <number>100</number>
              </property>
@@ -1058,6 +1109,9 @@ background-color: rgb(72, 72, 72);</string>
            </item>
            <item>
             <widget class="QSpinBox" name="spFlashLightNew">
+             <property name="minimum">
+              <number>1</number>
+             </property>
              <property name="maximum">
               <number>100</number>
              </property>
@@ -1078,10 +1132,52 @@ background-color: rgb(72, 72, 72);</string>
             </widget>
            </item>
            <item>
-            <widget class="QSpinBox" name="spLightSensitiveFlash">
-             <property name="maximum">
-              <number>32</number>
-             </property>
+            <widget class="QComboBox" name="cbLightSensitiveFlash">
+             <item>
+              <property name="text">
+               <string>1.5</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1.6</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>1.8</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.0</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.2</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.4</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.6</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>2.8</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>3.0</string>
+              </property>
+             </item>
             </widget>
            </item>
           </layout>
@@ -1094,7 +1190,7 @@ background-color: rgb(72, 72, 72);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>光敏禁用  </string>
+              <string>光敏控制</string>
              </property>
             </widget>
            </item>
@@ -1226,6 +1322,38 @@ color: rgb(255, 255, 255);</string>
       </widget>
      </widget>
     </widget>
+   </widget>
+   <widget class="QSpinBox" name="spLightSensitiveFlash">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>80</y>
+      <width>42</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+   </widget>
+   <widget class="QSpinBox" name="spLightSensitiveFreq">
+    <property name="geometry">
+     <rect>
+      <x>230</x>
+      <y>80</y>
+      <width>42</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="minimum">
+     <number>1</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
    </widget>
   </widget>
  </widget>

@@ -129,26 +129,32 @@ bool CMySqlDatabase::DbCrud( QString& strSql, QString& strError )
 quint64 CMySqlDatabase::GetRowData( QStringList& lstRows, QString& strError  )
 {
     lstRows.clear( );
-    MYSQL_RES* pRowSet = mysql_store_result( &hConnect );
-
-    if ( NULL == pRowSet ) {
-        GetErrorMsg( 0, strError, true, strError );
-        return 0;
-    }
-
-    my_ulonglong nRows = mysql_num_rows( pRowSet ); // Row
-    unsigned int nFields = mysql_num_fields( pRowSet ); //Column
-    // mysql_fetch_lengths( ) field length
-
+    my_ulonglong nRows = 0;
+    MYSQL_RES* pRowSet = NULL;
+    unsigned int nFields = 0;
     MYSQL_ROW row = NULL;
-    while ( NULL != ( row = mysql_fetch_row( pRowSet) ) ) {
-        for ( unsigned int nIndex = 0; nIndex < nFields; nIndex++ ){
-            qDebug( ) << row[ nIndex ] << endl;
-           lstRows << row[ nIndex ];
-        }
-    }
 
-    mysql_free_result( pRowSet );
+    do { // MultiStatement MultiResult
+         pRowSet = mysql_store_result( &hConnect );
+
+        if ( NULL == pRowSet ) {
+            GetErrorMsg( 0, strError, true, strError );
+           // return 0;
+        } else {
+            nRows += mysql_num_rows( pRowSet ); // Row
+            nFields = mysql_num_fields( pRowSet ); //Column
+            // mysql_fetch_lengths( ) field length
+
+            while ( NULL != ( row = mysql_fetch_row( pRowSet ) ) ) { // One Resultset
+                for ( unsigned int nIndex = 0; nIndex < nFields; nIndex++ ){
+                    qDebug( ) << row[ nIndex ] << endl;
+                   lstRows << row[ nIndex ];
+                }
+            }
+
+            mysql_free_result( pRowSet );
+        }
+    } while ( mysql_next_result( &hConnect ) == 0 ) ;
 
     return nRows;
 }

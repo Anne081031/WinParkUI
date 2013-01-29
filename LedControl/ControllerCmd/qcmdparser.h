@@ -31,6 +31,7 @@ private:
     inline void GetFloatValue( QByteArray& data, QString& strInfo );
     inline void GetIntegerValue( QByteArray& data, QString& strInfo );
     inline void GetTriggerMode( QByteArray& data, QString& strInfo );
+    inline void GetThreshold( QByteArray& data, QString& strInfo );
     
 signals:
     

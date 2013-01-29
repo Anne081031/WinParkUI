@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Dec 7 17:36:05 2012
+** Created: Tue Jan 29 11:37:17 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -119,7 +119,7 @@ public:
     QSpinBox *spFreqLightNew;
     QHBoxLayout *horizontalLayout_10;
     QLabel *label_19;
-    QSpinBox *spLightSensitiveFreq;
+    QComboBox *cbLightSensitiveFreq;
     QHBoxLayout *horizontalLayout_11;
     QLabel *label_21;
     QCheckBox *chkLightSensitiveFreq;
@@ -144,7 +144,7 @@ public:
     QSpinBox *spFlashLightNew;
     QHBoxLayout *horizontalLayout_22;
     QLabel *label_20;
-    QSpinBox *spLightSensitiveFlash;
+    QComboBox *cbLightSensitiveFlash;
     QHBoxLayout *horizontalLayout_16;
     QLabel *label_27;
     QCheckBox *chkLightSensitiveFlash;
@@ -162,6 +162,8 @@ public:
     QHBoxLayout *horizontalLayout_14;
     QLabel *label_18;
     QLineEdit *edtLocationNew;
+    QSpinBox *spLightSensitiveFlash;
+    QSpinBox *spLightSensitiveFreq;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -528,7 +530,7 @@ public:
         lblFreq_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         layoutWidget4 = new QWidget(groupBox_4);
         layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(50, 40, 100, 164));
+        layoutWidget4->setGeometry(QRect(50, 40, 127, 164));
         verticalLayout_5 = new QVBoxLayout(layoutWidget4);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
@@ -545,7 +547,8 @@ public:
 
         spFreqTimeNew = new QSpinBox(layoutWidget4);
         spFreqTimeNew->setObjectName(QString::fromUtf8("spFreqTimeNew"));
-        spFreqTimeNew->setMaximum(32);
+        spFreqTimeNew->setMinimum(1);
+        spFreqTimeNew->setMaximum(100);
 
         horizontalLayout_8->addWidget(spFreqTimeNew);
 
@@ -563,7 +566,8 @@ public:
 
         spFreqLightNew = new QSpinBox(layoutWidget4);
         spFreqLightNew->setObjectName(QString::fromUtf8("spFreqLightNew"));
-        spFreqLightNew->setMaximum(32);
+        spFreqLightNew->setMinimum(1);
+        spFreqLightNew->setMaximum(100);
 
         horizontalLayout_9->addWidget(spFreqLightNew);
 
@@ -579,11 +583,10 @@ public:
 
         horizontalLayout_10->addWidget(label_19);
 
-        spLightSensitiveFreq = new QSpinBox(layoutWidget4);
-        spLightSensitiveFreq->setObjectName(QString::fromUtf8("spLightSensitiveFreq"));
-        spLightSensitiveFreq->setMaximum(32);
+        cbLightSensitiveFreq = new QComboBox(layoutWidget4);
+        cbLightSensitiveFreq->setObjectName(QString::fromUtf8("cbLightSensitiveFreq"));
 
-        horizontalLayout_10->addWidget(spLightSensitiveFreq);
+        horizontalLayout_10->addWidget(cbLightSensitiveFreq);
 
 
         verticalLayout_5->addLayout(horizontalLayout_10);
@@ -666,7 +669,7 @@ public:
         lblFlash_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         layoutWidget5 = new QWidget(groupBox_5);
         layoutWidget5->setObjectName(QString::fromUtf8("layoutWidget5"));
-        layoutWidget5->setGeometry(QRect(50, 40, 100, 164));
+        layoutWidget5->setGeometry(QRect(50, 40, 127, 164));
         verticalLayout_6 = new QVBoxLayout(layoutWidget5);
         verticalLayout_6->setSpacing(6);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
@@ -683,6 +686,7 @@ public:
 
         spFlashTimeNew = new QSpinBox(layoutWidget5);
         spFlashTimeNew->setObjectName(QString::fromUtf8("spFlashTimeNew"));
+        spFlashTimeNew->setMinimum(1);
         spFlashTimeNew->setMaximum(100);
 
         horizontalLayout_20->addWidget(spFlashTimeNew);
@@ -701,6 +705,7 @@ public:
 
         spFlashLightNew = new QSpinBox(layoutWidget5);
         spFlashLightNew->setObjectName(QString::fromUtf8("spFlashLightNew"));
+        spFlashLightNew->setMinimum(1);
         spFlashLightNew->setMaximum(100);
 
         horizontalLayout_21->addWidget(spFlashLightNew);
@@ -717,11 +722,10 @@ public:
 
         horizontalLayout_22->addWidget(label_20);
 
-        spLightSensitiveFlash = new QSpinBox(layoutWidget5);
-        spLightSensitiveFlash->setObjectName(QString::fromUtf8("spLightSensitiveFlash"));
-        spLightSensitiveFlash->setMaximum(32);
+        cbLightSensitiveFlash = new QComboBox(layoutWidget5);
+        cbLightSensitiveFlash->setObjectName(QString::fromUtf8("cbLightSensitiveFlash"));
 
-        horizontalLayout_22->addWidget(spLightSensitiveFlash);
+        horizontalLayout_22->addWidget(cbLightSensitiveFlash);
 
 
         verticalLayout_6->addLayout(horizontalLayout_22);
@@ -822,11 +826,21 @@ public:
         horizontalLayout_14->addWidget(edtLocationNew);
 
         tabWidget->addTab(tab_6, QString());
+        spLightSensitiveFlash = new QSpinBox(centralWidget);
+        spLightSensitiveFlash->setObjectName(QString::fromUtf8("spLightSensitiveFlash"));
+        spLightSensitiveFlash->setGeometry(QRect(290, 80, 42, 20));
+        spLightSensitiveFlash->setMinimum(1);
+        spLightSensitiveFlash->setMaximum(100);
+        spLightSensitiveFreq = new QSpinBox(centralWidget);
+        spLightSensitiveFreq->setObjectName(QString::fromUtf8("spLightSensitiveFreq"));
+        spLightSensitiveFreq->setGeometry(QRect(230, 80, 42, 20));
+        spLightSensitiveFreq->setMinimum(1);
+        spLightSensitiveFreq->setMaximum(100);
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
 
-        tabWidgetDevice->setCurrentIndex(0);
+        tabWidgetDevice->setCurrentIndex(1);
         tabWidget->setCurrentIndex(0);
 
 
@@ -904,7 +918,19 @@ public:
         label_13->setText(QApplication::translate("MainWindow", "\346\227\266\351\227\264\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
         label_14->setText(QApplication::translate("MainWindow", "\344\272\256\345\272\246\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
         label_19->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
-        label_21->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\347\246\201\347\224\250  ", 0, QApplication::UnicodeUTF8));
+        cbLightSensitiveFreq->clear();
+        cbLightSensitiveFreq->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "1.5", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "1.6", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "1.8", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.0", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.2", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.4", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.6", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.8", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "3.0", 0, QApplication::UnicodeUTF8)
+        );
+        label_21->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFreq->setText(QString());
         label_17->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync07->setText(QString());
@@ -917,7 +943,19 @@ public:
         label_15->setText(QApplication::translate("MainWindow", "\346\227\266\351\227\264\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
         label_16->setText(QApplication::translate("MainWindow", "\344\272\256\345\272\246\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
         label_20->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
-        label_27->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\347\246\201\347\224\250  ", 0, QApplication::UnicodeUTF8));
+        cbLightSensitiveFlash->clear();
+        cbLightSensitiveFlash->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "1.5", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "1.6", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "1.8", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.0", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.2", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.4", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.6", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "2.8", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "3.0", 0, QApplication::UnicodeUTF8)
+        );
+        label_27->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFlash->setText(QString());
         label_26->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync04->setText(QString());

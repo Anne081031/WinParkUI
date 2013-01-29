@@ -6,6 +6,7 @@
 #include <QRadioButton>
 #include <QSpinBox>
 #include <QCheckBox>
+#include <QComboBox>
 #include "../ControllerCmd/qcontrollercmd.h"
 
 namespace Ui {
@@ -76,6 +77,8 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
+    void CbCurrentIndexChanged( int index );
+
 private:
     void DlgConfig( );
     void InitializeSlot( );
@@ -86,9 +89,12 @@ private:
     inline void GetCheckBoxState( QHash< char, QRadioButton* >& hash,  char c );
     void SetSpinBoxValue( const LedControll::SSysConfig& sConfig, const bool bNewDev );
     void SetCheckBoxValue( const LedControll::SSysConfig& sConfig, const bool bNewDev );
+    void SetComboBoxValue( const LedControll::SSysConfig& sConfig );
     void SetLocation( const LedControll::SSysConfig& sConfig, const bool bNewDev );
     inline void SetFlash( const bool bValue );
     inline bool GetFlash( );
+    quint8 GetCbBCDValue( const QComboBox* pCB  );
+    void InitializeCB( QComboBox* pCB );
 
 private:
     QHash< char, QRadioButton* > hashMode;

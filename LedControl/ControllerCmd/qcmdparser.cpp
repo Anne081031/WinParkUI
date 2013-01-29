@@ -15,6 +15,15 @@ QCmdParser::~QCmdParser( )
 
 }
 
+void QCmdParser::GetThreshold( QByteArray &data, QString &strInfo )
+{
+    quint8 cValue = data.at( 0 );
+    quint8 cHigh = cValue >> 4;
+    quint8 nLow = cValue & 0x0F;
+
+    strInfo.sprintf( "%d.%d", cHigh, nLow );
+}
+
 void QCmdParser::GetFloatValue( QByteArray &data, QString& strInfo )
 {
     float fValue = 0.0F;
@@ -48,7 +57,7 @@ void QCmdParser::GeLedtIlluminance( QByteArray& data, QString& strInfo )
         return;
     }
 
-    strInfo = data.at( 0 ) ? "亮" : "暗";
+    strInfo = data.at( 0 ) ? "控制" : "不控制";
     qDebug( ) << Q_FUNC_INFO << endl;
 }
 
@@ -220,7 +229,7 @@ void QCmdParser::ParseDataDomain( QByteArray &data, QString& strInfo, qint8& nIn
     strInfo = "";
 
     switch ( nDI ) {
-    case 0x04000300 : // 频闪照度(光敏电阻) (00 = 暗；01=亮)光敏
+    case 0x0400030C : // 频闪光敏控制
         GeLedtIlluminance( data, strInfo );
         nIndex = 1;
         break;
@@ -280,17 +289,17 @@ void QCmdParser::ParseDataDomain( QByteArray &data, QString& strInfo, qint8& nIn
         nIndex = 6;
         break;
 
-    case 0x0400030C : // 光敏（百分比显示）频闪光敏
-        GetLedFrenquencyRadiance( data, strInfo );
+    case 0x0400030E : // 频闪光敏阀值
+        GetThreshold( data, strInfo );
         nIndex = 11;
         break;
 
-    case 0x0400030D : // 光敏（百分比显示）闪光光敏
-        GetLedFlashRadiance( data, strInfo );
+    case 0x0400030F : // 闪光光敏阀值
+        GetThreshold( data, strInfo );
         nIndex = 12;
         break;
 
-    case 0x0400030E : // 闪光照度(光敏电阻) (00 = 暗；01=亮)光敏
+    case 0x0400030D : // 闪光光敏控制
         GeLedtIlluminance( data, strInfo );
         nIndex = 2;
         break;
