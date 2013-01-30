@@ -18,6 +18,7 @@ public:
     void CANAddr( int& nAddr, bool bGet );
     void ChannelName( QString& strName, bool bGet );
     void HostIP( QString& strIP, bool bGet );
+    void IPCIP( QString& strIP, bool bGet );
 
 private:
     Ui::CChannelAttribute *ui;

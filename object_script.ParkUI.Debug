@@ -138,6 +138,9 @@ INPUT(
 ./debug/parserevent.o
 ./debug/dbheartbeat.o
 ./debug/dbheartbeatevent.o
+./debug/qipcevent.o
+./debug/qipcthread.o
+./debug/ipcvideoframe.o
 ./debug/moc_valuecard.o
 ./debug/moc_tolldiscounttypeset.o
 ./debug/moc_timecard.o
@@ -258,4 +261,6 @@ INPUT(
 ./debug/moc_cdlgquerywhere.o
 ./debug/moc_dataparserthread.o
 ./debug/moc_dbheartbeat.o
+./debug/moc_qipcthread.o
+./debug/moc_ipcvideoframe.o
 );

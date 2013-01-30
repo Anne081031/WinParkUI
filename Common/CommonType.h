@@ -33,6 +33,7 @@ namespace CommonDataType {
         DGSvrAlert,
         DGCpuidRequest,
         DGCpuidResponse,
+        DGGateCommand,
         DGTypeCount
     } DatagramType;
 
@@ -167,7 +168,8 @@ namespace CommonDataType {
         HandheldICProcessWnd,
         MonitorWnd,
         BlacklistWnd,
-        PictureContrast
+        PictureContrast,
+        RemoteMgmt
     } ChildWndType, *PChildWndType;
 
     typedef enum __CfgType {

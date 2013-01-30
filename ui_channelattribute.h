@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'channelattribute.ui'
 **
-** Created: Fri Sep 7 15:20:06 2012
+** Created: Wed Jan 30 14:21:35 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -33,7 +33,7 @@ public:
     QHBoxLayout *horizontalLayout_4;
     QPushButton *btnOk;
     QPushButton *btnCancel;
-    QWidget *layoutWidget1;
+    QWidget *widget;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
@@ -44,15 +44,18 @@ public:
     QHBoxLayout *horizontalLayout_3;
     QLabel *label_3;
     QLineEdit *edtIP;
+    QHBoxLayout *horizontalLayout_5;
+    QLabel *label_4;
+    QLineEdit *edtIPCIP;
 
     void setupUi(QDialog *CChannelAttribute)
     {
         if (CChannelAttribute->objectName().isEmpty())
             CChannelAttribute->setObjectName(QString::fromUtf8("CChannelAttribute"));
-        CChannelAttribute->resize(258, 144);
+        CChannelAttribute->resize(258, 167);
         layoutWidget = new QWidget(CChannelAttribute);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(50, 100, 158, 25));
+        layoutWidget->setGeometry(QRect(50, 130, 158, 25));
         horizontalLayout_4 = new QHBoxLayout(layoutWidget);
         horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
         horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
@@ -66,20 +69,20 @@ public:
 
         horizontalLayout_4->addWidget(btnCancel);
 
-        layoutWidget1 = new QWidget(CChannelAttribute);
-        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(20, 10, 215, 80));
-        verticalLayout = new QVBoxLayout(layoutWidget1);
+        widget = new QWidget(CChannelAttribute);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(20, 11, 215, 108));
+        verticalLayout = new QVBoxLayout(widget);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout = new QHBoxLayout();
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        label = new QLabel(layoutWidget1);
+        label = new QLabel(widget);
         label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout->addWidget(label);
 
-        edtName = new QLineEdit(layoutWidget1);
+        edtName = new QLineEdit(widget);
         edtName->setObjectName(QString::fromUtf8("edtName"));
 
         horizontalLayout->addWidget(edtName);
@@ -89,12 +92,12 @@ public:
 
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        label_2 = new QLabel(layoutWidget1);
+        label_2 = new QLabel(widget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         horizontalLayout_2->addWidget(label_2);
 
-        spAddr = new QSpinBox(layoutWidget1);
+        spAddr = new QSpinBox(widget);
         spAddr->setObjectName(QString::fromUtf8("spAddr"));
         spAddr->setMaximum(63);
 
@@ -105,12 +108,12 @@ public:
 
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        label_3 = new QLabel(layoutWidget1);
+        label_3 = new QLabel(widget);
         label_3->setObjectName(QString::fromUtf8("label_3"));
 
         horizontalLayout_3->addWidget(label_3);
 
-        edtIP = new QLineEdit(layoutWidget1);
+        edtIP = new QLineEdit(widget);
         edtIP->setObjectName(QString::fromUtf8("edtIP"));
         edtIP->setReadOnly(false);
 
@@ -118,6 +121,22 @@ public:
 
 
         verticalLayout->addLayout(horizontalLayout_3);
+
+        horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
+        label_4 = new QLabel(widget);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        horizontalLayout_5->addWidget(label_4);
+
+        edtIPCIP = new QLineEdit(widget);
+        edtIPCIP->setObjectName(QString::fromUtf8("edtIPCIP"));
+        edtIPCIP->setReadOnly(false);
+
+        horizontalLayout_5->addWidget(edtIPCIP);
+
+
+        verticalLayout->addLayout(horizontalLayout_5);
 
 
         retranslateUi(CChannelAttribute);
@@ -133,6 +152,7 @@ public:
         label->setText(QApplication::translate("CChannelAttribute", "\346\216\247\345\210\266\345\231\250\345\220\215\347\247\260\357\274\232", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("CChannelAttribute", "\346\216\247\345\210\266\345\231\250\345\234\260\345\235\200\357\274\232", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("CChannelAttribute", "PC\346\234\272IP\345\234\260\345\235\200\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_4->setText(QApplication::translate("CChannelAttribute", "IPC\346\234\272IP\345\234\260\345\235\200\357\274\232", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

@@ -22,6 +22,7 @@
 #include "Header/printyearlyreport.h"
 #include "Header/handheldicprocess.h"
 #include "Header/monitor.h"
+#include "Header/ipcvideoframe.h"
 #include "Header/picturecontrast.h"
 #include "Dialog/pwddialog.h"
 #include "Dialog/ledinfodialog.h"
@@ -755,6 +756,28 @@ void MainWindow::RegisterAxCtrl( )
     }
 }
 
+void MainWindow::ProcessGateCommand( QStringList &lstData )
+{
+    CProcessData* pProcessor = CProcessData::GetProcessor( );
+    if ( NULL == pProcessor ) {
+        return;
+    }
+
+    quint8 nItems = lstData.count( ) ;
+    nItems -= nItems % 2;
+    if ( 2 > nItems ) {
+        return;
+    }
+
+    for ( quint8 nIndex = 0; nIndex < nItems; nIndex += 2 ) {
+        const QString& strOp = lstData.at( nIndex );
+        char cCan = lstData.at( nIndex + 1 ).toShort( );
+        pProcessor->ControlGate( "1" == strOp, cCan );
+    }
+
+    // Open(1)Close(0) CANAddr
+}
+
 void MainWindow::ProcessCpuidRequest( QStringList &lstData )
 {
     if ( 3 > lstData.count( ) ) {
@@ -968,6 +991,7 @@ void MainWindow::CreateChildren( )
      CreateChildWnd( CommonDataType::DeviceConfigWnd );
      CreateChildWnd( CommonDataType::BlacklistWnd );
      //CreateChildWnd( CommonDataType::MonitorWnd );
+     //CreateChildWnd( CommonDataType::RemoteMgmt );
 }
 
 void MainWindow::ModiyToobar()
@@ -1047,6 +1071,8 @@ void MainWindow::ProcessDatagram( QStringList &lstData )
         }
     } else if ( CommonDataType::DGCpuidRequest == nType ) {
         ProcessCpuidRequest( lstData );
+    } else if ( CommonDataType::DGGateCommand == nType ) {
+        ProcessGateCommand( lstData );
     } else {
         ProcessMonitorMsg( ( CommonDataType::DatagramType ) nType, lstData );
     }
@@ -1486,6 +1512,11 @@ QWidget* MainWindow::CreateChildWnd( CommonDataType::ChildWndType childType )
         case CommonDataType::MonitorWnd :
             pFrame = new CMonitor( this,  this->pMdiArea );
             this->pMdiArea->addSubWindow( pFrame, Qt::FramelessWindowHint );
+            break;
+
+        case CommonDataType::RemoteMgmt :
+            pFrame = new CIPCVideoFrame( );
+            bPictureContrast = true;
             break;
 
         default :
@@ -1998,4 +2029,12 @@ void MainWindow::on_actStay_triggered()
 {
         CDlgStaying dlg;
         dlg.exec( );
+}
+
+void MainWindow::on_actRemoteMgmt_triggered()
+{
+    //ShowWnd( CommonDataType::RemoteMgmt );
+
+    static CIPCVideoFrame vidFrame;
+    vidFrame.show( );
 }

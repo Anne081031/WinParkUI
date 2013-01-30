@@ -26,6 +26,7 @@ LIBS += "./lib/libQAxContainer.a"
 LIBS += "./lib/liboleaut32.a"
 LIBS += "./lib/libole32.a"
 LIBS += "./lib/libgdi32.a"
+LIBS += "./lib/libHCNetSDK.a"
 
 DEFINES += PARK_UI RAW_API COMMON_DB _WIN32_WINNT=0x0501
 
@@ -167,7 +168,10 @@ SOURCES += mainwindow.cpp \
     Network/dataparserthread.cpp \
     Network/parserevent.cpp \
     Database/dbheartbeat.cpp \
-    Database/dbheartbeatevent.cpp
+    Database/dbheartbeatevent.cpp \
+    HKIPC/qipcevent.cpp \
+    HKIPC/qipcthread.cpp \
+    Implement/ipcvideoframe.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -310,7 +314,10 @@ HEADERS  += Header/valuecard.h \
     Network/dataparserthread.h \
     Network/parserevent.h \
     Database/dbheartbeat.h \
-    Database/dbheartbeatevent.h
+    Database/dbheartbeatevent.h \
+    HKIPC/qipcthread.h \
+    HKIPC/qipcevent.h \
+    Header/ipcvideoframe.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \
@@ -377,7 +384,8 @@ FORMS    += UIWnd/valuecard.ui \
     Dialog/dlgstaying.ui \
     Dialog/dlgcardloss.ui \
     Dialog/dlgsmsphone.ui \
-    Dialog/cdlgquerywhere.ui
+    Dialog/cdlgquerywhere.ui \
+    UIWnd/ipcvideoframe.ui
 
 OTHER_FILES += \
     Doc/LedProtocol.doc \

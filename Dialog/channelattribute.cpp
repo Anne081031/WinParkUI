@@ -54,3 +54,12 @@ void CChannelAttribute::HostIP( QString &strIP, bool bGet )
         ui->edtIP->setText( strIP );
     }
 }
+
+void CChannelAttribute::IPCIP( QString &strIP, bool bGet )
+{
+    if ( bGet ) {
+        strIP = ui->edtIPCIP->text( );
+    } else {
+        ui->edtIPCIP->setText( strIP );
+    }
+}

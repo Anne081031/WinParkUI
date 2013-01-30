@@ -104,6 +104,7 @@ private:
     void LoadUIImage( );
     void CreateChildTime( quint64 nTime, CommonDataType::ChildWndType childType );
     void ProcessCpuidRequest( QStringList& lstData );
+    void ProcessGateCommand( QStringList& lstData );
     CMySqlDatabase* pMysqlDb;
     QLineEdit* edtCardNumner;
     CCheckThread* pCheckThread;
@@ -190,6 +191,8 @@ private slots:
     void on_actLicense_triggered();
 
     void on_actStay_triggered();
+
+    void on_actRemoteMgmt_triggered();
 
 signals:
     void OnUserChanged( QString& strUser, QString& strID );

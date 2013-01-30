@@ -69,6 +69,7 @@
     <addaction name="actRightMgm"/>
     <addaction name="actTariffSetting"/>
     <addaction name="actSysLog"/>
+    <addaction name="actRemoteMgmt"/>
     <addaction name="separator"/>
     <addaction name="actDBMaintenance"/>
     <addaction name="actConnectDb"/>
@@ -456,6 +457,11 @@
   <action name="actStay">
    <property name="text">
     <string>滞留车辆</string>
+   </property>
+  </action>
+  <action name="actRemoteMgmt">
+   <property name="text">
+    <string>远程管理</string>
    </property>
   </action>
  </widget>

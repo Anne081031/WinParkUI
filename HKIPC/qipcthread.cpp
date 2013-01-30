@@ -315,7 +315,7 @@ LONG QIPCThread::GetPlayHandle( HWND hPlayWnd )
     LONG lPlayHandle = -1;
 
     if ( INVALID_HANDLE_VALUE != hPlayWnd ) {
-        hashWnd_PlayHandle.value( hPlayWnd, -1 );
+        lPlayHandle = hashWnd_PlayHandle.value( hPlayWnd, -1 );
     }
 
     return lPlayHandle;

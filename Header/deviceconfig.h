@@ -60,6 +60,7 @@ public:
         QString strDevType;
         QString strParkNum;
         QString strHostIP;
+        QString strIPCIP;
 
         __NodeData( bool bPark = true )
         {
@@ -69,6 +70,7 @@ public:
             strDevType = "tcc";
             strParkNum = bPark ? "88" : "0";
             strHostIP = CCommonFunction::GetHostIP( );
+            strIPCIP = CCommonFunction::GetHostIP( );
         }
     } NodeData, *PNodeData;
 

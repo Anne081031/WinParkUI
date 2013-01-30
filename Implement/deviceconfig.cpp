@@ -82,8 +82,8 @@ void CDeviceConfig::SaveTree( CommonDataType::DatabaseOperation operate, QTreeWi
                                data.strDevName, data.strParkNum, data.strDevID );
         } else if ( KZQ == data.strDevType ) {
             strSql = QString( "Update roadconerinfo Set shebeiname = '%1', shebeiadr = %2, \
-                               video1ip = '%3' Where shebeiid = %4" ).arg(
-                               data.strDevName, data.strParkNum, data.strHostIP, data.strDevID );
+                              video1ip = '%3', video2ip = '%4' Where shebeiid = %5" ).arg(
+                               data.strDevName, data.strParkNum, data.strHostIP, data.strIPCIP, data.strDevID );
         }
 
         tvCurNode.setText( 0, data.strDevName );
@@ -108,17 +108,18 @@ void CDeviceConfig::BuildTree( int nID, QTreeWidgetItem& tvNode )
     // select distinct level from treeview
     // Select parkname,parkindex, parknum,shebeiid From parkinfo
     static const char* pszFormat = "Select shebeiname, shebeiid, parentid, \
-                                   shebeikind, parknum, parkname \
-                                   From ( select a.shebeiname, a.shebeiid, a.parentid, A.shebeikind, b.parknum, b.parkname \
+                                   shebeikind, parknum, parkname, tmp \
+            From ( select a.shebeiname, a.shebeiid, a.parentid, A.shebeikind, b.parknum, b.parkname, 'tmp' \
                                           from treeview as a, parkinfo as b \
                                           where a.shebeiid = b.shebeiid And a.shebeikind = 'tcc' \
                                           union \
-                                          select a.shebeiname, a.shebeiid, a.parentid, a.shebeikind, b.shebeiadr as parknum, b.video1ip as parkname \
+                                          select a.shebeiname, a.shebeiid, a.parentid, a.shebeikind, \
+                                          b.shebeiadr as parknum, b.video1ip as parkname, b.video2ip as tmp \
                                           from treeview a, roadconerinfo b \
                                           where a.shebeiid = b.shebeiid And a.shebeikind = 'kzq' ) as tmpTbale \
                                    Where tmpTbale.parentid = %d"; //1 Begin
 
-    static const int nCols = 6;
+    static const int nCols = 7;
 
     QStringList lstNodes;
     QString strSqlNodes;
@@ -149,6 +150,7 @@ void CDeviceConfig::BuildTree( int nID, QTreeWidgetItem& tvNode )
         pData->strDevType = lstNodes[ nField++ ];
         pData->strParkNum = lstNodes[ nField++ ];
         pData->strHostIP = lstNodes[ nField++ ];
+        pData->strIPCIP = lstNodes[ nField++ ];
 
         pChild->setData( 0, Qt::ToolTipRole, pData->strParkNum );
         pChild->setText( 0, strText );
@@ -272,6 +274,7 @@ void CDeviceConfig::ModifyAttribute( )
         dlg.CANAddr( nCan, bGet );
         dlg.ChannelName( data.strDevName, bGet );
         dlg.HostIP( data.strHostIP, bGet );
+        dlg.IPCIP( data.strIPCIP, bGet );
 
         if ( CChannelAttribute::Accepted == dlg.exec( ) ) {
             bGet = true;
@@ -279,6 +282,7 @@ void CDeviceConfig::ModifyAttribute( )
             data.strParkNum = QString::number( nCan );
             dlg.ChannelName( data.strDevName, bGet );
             dlg.HostIP( data.strHostIP, bGet );
+            dlg.IPCIP( data.strIPCIP, bGet );
             bSave = true;
         }
     }
