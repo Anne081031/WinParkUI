@@ -4,6 +4,7 @@
 #include <QHash>
 #include <QThread>
 #include "qipcevent.h"
+#include "Common/commonfunction.h"
 
 class QIPCThread : public QThread
 {
@@ -24,6 +25,9 @@ public:
     void PostIPCStopRealPlayEvent( QIPCEvent::EventParam& uParam );
     void PostIPCLogoutEvent( QIPCEvent::EventParam& uParam );
     void PostIPCCleanupEvent( );
+
+    void CapturePreviewImage( HWND hPlayWnd, QString& strFileName );
+    void CaptureDeviceImage( QString& strIP, QString& strFileName );
 
 private:
     typedef QHash< QString, LONG > QIPCUserIDHash;
@@ -64,6 +68,7 @@ private:
     QIPCWndPlayHandleHash hashWnd_PlayHandle;
     bool bStarted;
     static QIPCThread* pThreadInstance;
+    QTextCodec* pCodec;
 
 signals:
     void NotifyMessage( QString strMsg );

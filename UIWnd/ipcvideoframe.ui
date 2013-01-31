@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>872</width>
-    <height>684</height>
+    <width>694</width>
+    <height>510</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,10 +22,10 @@
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
     <rect>
-     <x>0</x>
-     <y>0</y>
+     <x>7</x>
+     <y>7</y>
      <width>681</width>
-     <height>441</height>
+     <height>491</height>
     </rect>
    </property>
    <property name="sizePolicy">
@@ -35,7 +35,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tabVideo">
     <property name="sizePolicy">
@@ -72,6 +72,71 @@
     <attribute name="title">
      <string>开关闸</string>
     </attribute>
+    <widget class="QTableWidget" name="tableWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>10</y>
+       <width>651</width>
+       <height>401</height>
+      </rect>
+     </property>
+     <column>
+      <property name="text">
+       <string>通道名</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>CAN地址</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>开关闸</string>
+      </property>
+     </column>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>430</y>
+       <width>320</width>
+       <height>25</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="btnOpen">
+        <property name="text">
+         <string>开选定闸</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnClose">
+        <property name="text">
+         <string>关选定闸</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnOpenAll">
+        <property name="text">
+         <string>开所有闸</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnCloseAll">
+        <property name="text">
+         <string>关所有闸</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
   </widget>
  </widget>

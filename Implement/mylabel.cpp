@@ -1,9 +1,10 @@
 #include "Header/mylabel.h"
 #include <QDebug>
 
-CMyLabel::CMyLabel( int nIndexFps, const QRect& rect, QWidget *parent) :
+CMyLabel::CMyLabel( int nIndexFps, const QRect& rect, bool bIPC, QWidget *parent) :
     QLabel(parent)
 {
+    bIPCVideo = bIPC;
     bSwitch = true;
     recRawSize = rect;
     pMulti = NULL;
@@ -32,7 +33,7 @@ void CMyLabel::SetParams( HANDLE hChannelHk, CMultimedia* pMultiHk )
 
 void CMyLabel::mouseDoubleClickEvent( QMouseEvent * )
 {
-    if ( INVALID_HANDLE == hChannel || NULL == pMulti ) {
+    if ( !bIPCVideo && ( INVALID_HANDLE == hChannel || NULL == pMulti ) ) {
         return;
     }
 
@@ -55,8 +56,10 @@ void CMyLabel::mouseDoubleClickEvent( QMouseEvent * )
         rec.setHeight( recRawSize.height( ) );
     }
 
-    pMulti->StopVideo( hChannel );
-    pMulti->PlayVideo( hChannel, hVidWnd, rec, nIndex );
+    if ( !bIPCVideo ) {
+        pMulti->StopVideo( hChannel );
+        pMulti->PlayVideo( hChannel, hVidWnd, rec, nIndex );
+    }
 
     bSwitch = !bSwitch;
 }

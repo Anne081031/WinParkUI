@@ -9,7 +9,7 @@ class CMyLabel : public QLabel
 {
     Q_OBJECT
 public:
-    explicit CMyLabel( int nIndexFps, const QRect& rect, QWidget *parent = 0 );
+    explicit CMyLabel( int nIndexFps, const QRect& rect, bool bIPC, QWidget *parent = 0 );
 
     void SetParams( HANDLE hChannelHk, CMultimedia* pMultiHk );
 
@@ -23,6 +23,7 @@ private:
      QWidget* pParent;
      HANDLE hChannel;
      CMultimedia* pMulti;
+     bool bIPCVideo;
      int nIndex;
 
 signals:

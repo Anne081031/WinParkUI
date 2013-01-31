@@ -1,4 +1,4 @@
-#include "qipcthread.h"
+﻿#include "qipcthread.h"
 #include <QApplication>
 
 QIPCThread* QIPCThread::pThreadInstance = NULL;
@@ -20,6 +20,7 @@ QIPCThread::QIPCThread(QObject *parent) :
     QThread(parent)
 {
     bStarted = false;
+    pCodec = CCommonFunction::GetTextCodec( );
 }
 
 void QIPCThread::SendNotify( DWORD dwType, LONG lUserID, LONG lHandle )
@@ -215,6 +216,50 @@ void QIPCThread::run( )
     exec( );
 }
 
+void QIPCThread::CapturePreviewImage( HWND hPlayWnd, QString& strFileName )
+{
+    if ( INVALID_HANDLE_VALUE == hPlayWnd ) {
+        return;
+    }
+
+    QByteArray byData = pCodec->fromUnicode( strFileName );
+    byData.append( char( 0 ) );
+    char* pFile = byData.data( );
+
+    LONG lPlayHandle = GetPlayHandle( hPlayWnd );
+    if ( -1 == lPlayHandle ) {
+        return;
+    }
+
+    BOOL bRet = NET_DVR_CapturePicture( lPlayHandle, pFile );
+    bRet = TRUE;
+}
+
+void QIPCThread::CaptureDeviceImage( QString& strIP, QString& strFileName )
+{
+    //CProcessData::CaptureSenseImage
+    QByteArray byData = pCodec->fromUnicode( strIP );
+    byData.append( char( 0 ) );
+    char* pIP = byData.data( );
+    LONG lUserID = GetUserID( pIP );
+
+    byData = pCodec->fromUnicode( strFileName );
+    byData.append( char( 0 ) );
+    char* pFile = byData.data( );
+
+    if ( -1 == lUserID ) {
+        return;
+    }
+
+    BOOL bRet = FALSE;
+    NET_DVR_JPEGPARA sJpgData = { 0 };
+
+    sJpgData.wPicSize = 0xff;
+    sJpgData.wPicQuality = 0;
+
+    bRet = NET_DVR_CaptureJPEGPicture( lUserID, 1, &sJpgData, pFile );
+}
+
 void QIPCThread::GetErrorMessage( )
 {
     char* pMsg = NET_DVR_GetErrorMsg( );
@@ -348,10 +393,11 @@ void QIPCThread::ProcessIPCLoginEvent( QIPCEvent* pEvent )
                                  uParam.EventLogin.cUser,
                                  uParam.EventLogin.cPwd,
                                  &sDevInfo );
-    SetUserID( pIP, lUserID );
 
     if ( -1 == lUserID ) {
         GetErrorMessage( );
+    } else {
+        SetUserID( pIP, lUserID );
     }
 }
 
@@ -412,10 +458,11 @@ void QIPCThread::ProcessIPCStartRealPlayEvent( QIPCEvent* pEvent )
     sClientInfo.hPlayWnd = hPlayWnd;
 
     lPlayHandle = NET_DVR_RealPlay_V30( lUserID, &sClientInfo, NULL );
-    SetPlayHandle( hPlayWnd, lPlayHandle );
 
     if ( -1 == lPlayHandle ) {
         GetErrorMessage( );
+    } else {
+        SetPlayHandle( hPlayWnd, lPlayHandle );
     }
 }
 

@@ -14,6 +14,7 @@
 #include "VehicleLicense/vehiclelicense.h"
 #include "Header/mylabel.h"
 #include "Dialog/dlgalert.h"
+#include "ipcvideoframe.h"
 
 #define ENCODECHANNEL ( int ) ( 4 )
 #define VIDEO_USEDWAY ( int ) ( 4 )
@@ -32,6 +33,8 @@ public:
     explicit CMonitor( QWidget* mainWnd, QWidget *parent = 0);
     ~CMonitor();
 
+    void DisplayRemoteUI( );
+
     void SetFileCount( quint32 nCount );
     void PictureRegconize( QString& strFile, int nChannel );
 
@@ -49,10 +52,18 @@ public:
     void SetMenu( QList< QMenu* >& lstMenu );
 
     void ControlDetection( int nChannel, bool bStart );
+
+    void StartIPC( );
+    void StopIPC( );
+
+    void IPCVideo( bool bPlayVideo );
+
     void StartAvSdk( );
     void StopAvSdk( );
+
     void StartPlateRecog( );
     void StopPlateRecog( );
+
     QLabel* GetDateTimeCtrl( );
     void FillDataGrid( QStringList& lstData );
     void DisplayAlert( QStringList& lstData );
@@ -125,11 +136,13 @@ private:
     //bool bPlateFilter[ VIDEO_USEDWAY ];
     //bool bSuccession[ VIDEO_USEDWAY ];
 
+    CIPCVideoFrame* ipcVideoFrame;
     CDlgAlert* pDlgAlert;
     bool bDisplayAlert;
     int nRefreshParkspaceTime;
     bool bPlateVideo;
     bool bSavePicture;
+    bool bNetworkCamera;
 
     Ui::CMonitor *ui;
     MainWindow* pParent;

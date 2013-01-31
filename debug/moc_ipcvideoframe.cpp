@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ipcvideoframe.h'
 **
-** Created: Wed Jan 30 16:10:08 2013
+** Created: Thu Jan 31 16:17:38 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

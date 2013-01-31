@@ -82,7 +82,7 @@ typedef struct tagInitInfo
 //宏定义
 #define MAX_NAMELEN			    16		//DVR本地登陆名
 #define MAX_RIGHT			    32		//设备支持的权限（1-12表示本地权限，13-32表示远程权限）
-#define NAME_LEN			    32      //用户名长度
+#define NAME_LENGTH			    32      //用户名长度
 #define PASSWD_LEN			    16      //密码长度
 #define SERIALNO_LEN		    48      //序列号长度
 #define MACADDR_LEN			    6       //mac地址长度
@@ -2540,7 +2540,7 @@ typedef struct
 typedef struct
 {
 	DWORD dwSize;
-	BYTE sDVRName[NAME_LEN];     //DVR名称
+	BYTE sDVRName[NAME_LENGTH];     //DVR名称
 	DWORD dwDVRID;				//DVR ID,用于遥控器 //V1.4(0-99), V1.5(0-255)
 	DWORD dwRecycleRecord;		//是否循环录像,0:不是; 1:是
 	//以下不可更改
@@ -2608,7 +2608,7 @@ typedef struct
 typedef struct 
 {
 	DWORD	dwPPPOE;										//0-不启用,1-启用
-	BYTE	sPPPoEUser[NAME_LEN];							//PPPoE用户名
+	BYTE	sPPPoEUser[NAME_LENGTH];							//PPPoE用户名
 	char	sPPPoEPassword[PASSWD_LEN];						// PPPoE密码
 	NET_DVR_IPADDR	struPPPoEIP;							//PPPoE IP地址
 }NET_DVR_PPPOECFG, *LPNET_DVR_PPPOECFG;
@@ -2689,7 +2689,7 @@ typedef struct
 	char sNFSIP[16];			//NFS主机IP地址
 	BYTE sNFSDirectory[PATHNAME_LEN];//NFS目录
 	DWORD dwPPPOE;				//0-不启用,1-启用
-	BYTE sPPPoEUser[NAME_LEN];	//PPPoE用户名
+	BYTE sPPPoEUser[NAME_LENGTH];	//PPPoE用户名
 	char sPPPoEPassword[PASSWD_LEN];// PPPoE密码
 	char sPPPoEIP[16];			//PPPoE IP地址(只读)
 	WORD wHttpPort;				//HTTP端口号
@@ -2783,7 +2783,7 @@ typedef struct
 typedef struct
 {
 	DWORD dwSize;
-	BYTE  sChanName[NAME_LEN];
+	BYTE  sChanName[NAME_LENGTH];
 	DWORD dwVideoFormat;	/* 只读 视频制式 1-NTSC 2-PAL*/
 	BYTE  byReservedData[64];/*保留*/
 	DWORD dwShowChanName; // 预览的图象上是否显示通道名称,0-不显示,1-显示 区域大小704*576
@@ -2829,7 +2829,7 @@ typedef struct
 typedef struct 
 {
 	DWORD dwSize;
-	BYTE sChanName[NAME_LEN];
+	BYTE sChanName[NAME_LENGTH];
 	DWORD dwVideoFormat;	/* 只读 视频制式 1-NTSC 2-PAL*/
 	BYTE byBrightness;  	/*亮度,0-255*/
 	BYTE byContrast;    	/*对比度,0-255*/	
@@ -2875,7 +2875,7 @@ typedef struct
 typedef struct 
 {
 	DWORD dwSize;
-	BYTE sChanName[NAME_LEN];
+	BYTE sChanName[NAME_LENGTH];
 	DWORD dwVideoFormat;	/* 只读 视频制式 1-NTSC 2-PAL*/
 	BYTE byBrightness;  	/*亮度,0-255*/
 	BYTE byContrast;    	/*对比度,0-255*/	
@@ -3104,7 +3104,7 @@ typedef struct
 	NET_DVR_IPADDR struRemoteIP;	//远端IP地址
 	NET_DVR_IPADDR struLocalIP;		//本地IP地址
 	char sLocalIPMask[16];			//本地IP地址掩码
-	BYTE sUsername[NAME_LEN];		/* 用户名 */
+	BYTE sUsername[NAME_LENGTH];		/* 用户名 */
 	BYTE sPassword[PASSWD_LEN];		/* 密码 */
 	BYTE byPPPMode;					//PPP模式, 0－主动，1－被动
 	BYTE byRedial;					//是否回拨 ：0-否,1-是
@@ -3120,7 +3120,7 @@ typedef struct
 	char sRemoteIP[16];				//远端IP地址
 	char sLocalIP[16];				//本地IP地址
 	char sLocalIPMask[16];			//本地IP地址掩码
-	BYTE sUsername[NAME_LEN];		/* 用户名 */
+	BYTE sUsername[NAME_LENGTH];		/* 用户名 */
 	BYTE sPassword[PASSWD_LEN];		/* 密码 */
 	BYTE byPPPMode;					//PPP模式, 0－主动，1－被动
 	BYTE byRedial;					//是否回拨 ：0-否,1-是
@@ -3166,7 +3166,7 @@ typedef struct
 typedef struct 
 {
 	DWORD dwSize;
-	BYTE sAlarmInName[NAME_LEN];	/* 名称 */
+	BYTE sAlarmInName[NAME_LENGTH];	/* 名称 */
 	BYTE byAlarmType;	            //报警器类型,0：常开,1：常闭
 	BYTE byAlarmInHandle;	        /* 是否处理 0-不处理 1-处理*/
     BYTE byChannel;                 // 报警输入触发智能识别通道
@@ -3188,7 +3188,7 @@ typedef struct
 typedef struct 
 {
 	DWORD dwSize;
-	BYTE sAlarmInName[NAME_LEN];	/* 名称 */
+	BYTE sAlarmInName[NAME_LENGTH];	/* 名称 */
 	BYTE byAlarmType;	//报警器类型,0：常开,1：常闭
 	BYTE byAlarmInHandle;	/* 是否处理 0-不处理 1-处理*/
     BYTE byChannel;                 // 报警输入触发智能识别通道
@@ -3237,7 +3237,7 @@ typedef struct
 typedef struct 
 {
     DWORD dwEnable;				    /* 该IP设备是否启用 */
-    BYTE sUserName[NAME_LEN];		/* 用户名 */
+    BYTE sUserName[NAME_LENGTH];		/* 用户名 */
     BYTE sPassword[PASSWD_LEN];	    /* 密码 */ 
     NET_DVR_IPADDR struIP;			/* IP地址 */
     WORD wDVRPort;			 	    /* 端口号 */
@@ -3252,7 +3252,7 @@ typedef struct tagNET_DVR_IPDEVINFO_V31
     BYTE byEnableQuickAdd;        // 0 不支持快速添加  1 使用快速添加 
     // 快速添加需要设备IP和协议类型，其他信息由设备默认指定
     BYTE byRes1;					//保留字段，置0
-    BYTE sUserName[NAME_LEN];		//用户名
+    BYTE sUserName[NAME_LENGTH];		//用户名
     BYTE sPassword[PASSWD_LEN];	    //密码
     BYTE byDomain[MAX_DOMAIN_NAME];	//设备域名
     NET_DVR_IPADDR struIP;			//IP地址
@@ -3294,11 +3294,11 @@ typedef  struct tagNET_DVR_IPSERVER_STREAM
     NET_DVR_IPADDR struIPServer;    //IPServer 地址
     WORD    wPort;                  //IPServer 端口
     WORD    wDvrNameLen;            // DVR 名称长度
-    BYTE    byDVRName[NAME_LEN];    // DVR名称
+    BYTE    byDVRName[NAME_LENGTH];    // DVR名称
     WORD    wDVRSerialLen;          // 序列号长度
     WORD    byRes1[2];              // 保留字节
     BYTE    byDVRSerialNumber[SERIALNO_LEN];    // DVR序列号长度
-    BYTE    byUserName[NAME_LEN];   // DVR 登陆用户名
+    BYTE    byUserName[NAME_LENGTH];   // DVR 登陆用户名
     BYTE    byPassWord[PASSWD_LEN]; // DVR登陆密码
     BYTE    byChannel;              // DVR 通道
     BYTE    byRes2[11];             //  保留字节
@@ -3330,7 +3330,7 @@ typedef struct tagNET_DVR_DEV_CHAN_INFO
 	BYTE	byResolution;	//; 1-CIF 2-4CIF 3-720P 4-1080P 5-500w大屏控制器使用，大屏控制器会根据该参数分配解码资源
     BYTE	byRes[2];
     BYTE    byDomain[MAX_DOMAIN_NAME];	//设备域名
-    BYTE	sUserName[NAME_LEN];	//监控主机登陆帐号
+    BYTE	sUserName[NAME_LENGTH];	//监控主机登陆帐号
     BYTE	sPassword[PASSWD_LEN];	//监控主机密码
 }NET_DVR_DEV_CHAN_INFO,*LPNET_DVR_DEV_CHAN_INFO;
 
@@ -3353,11 +3353,11 @@ typedef struct tagNET_DVR_DDNS_STREAM_CFG
 	NET_DVR_IPADDR   struIPServer;          //IPSERVER地址
 	WORD   wIPServerPort;        //IPserver端口号
 	BYTE   byRes3[2];           
-    BYTE   sDVRName[NAME_LEN];   //DVR名称
+    BYTE   sDVRName[NAME_LENGTH];   //DVR名称
 	WORD   wDVRNameLen;            // DVR名称长度
     WORD   wDVRSerialLen;          // 序列号长度
     BYTE   sDVRSerialNumber[SERIALNO_LEN];    // DVR序列号
-    BYTE   sUserName[NAME_LEN];   // DVR 登陆用户名
+    BYTE   sUserName[NAME_LENGTH];   // DVR 登陆用户名
     BYTE   sPassWord[PASSWD_LEN]; // DVR登陆密码
 	WORD   wDVRPort;   //DVR端口号
     BYTE   byRes4[2];    
@@ -3384,11 +3384,11 @@ typedef struct tagNET_DVR_HKDDNS_STREAM
     BYTE    byDDNSDomain[64];		// hkDDNS服务器
     WORD    wPort;                  // hkDDNS 端口
     WORD    wAliasLen;              // 别名长度
-    BYTE    byAlias[NAME_LEN];		 // 别名
+    BYTE    byAlias[NAME_LENGTH];		 // 别名
     WORD    wDVRSerialLen;          // 序列号长度
     BYTE    byRes1[2];              // 保留字节
     BYTE    byDVRSerialNumber[SERIALNO_LEN];    // DVR序列号
-    BYTE    byUserName[NAME_LEN];   // DVR 登陆用户名
+    BYTE    byUserName[NAME_LENGTH];   // DVR 登陆用户名
     BYTE    byPassWord[PASSWD_LEN]; // DVR登陆密码
     BYTE    byChannel;              // DVR通道
     BYTE    byRes2[11];             // 保留字	
@@ -3590,7 +3590,7 @@ typedef struct
 typedef struct 
 {
 	DWORD dwSize;
-	BYTE sAlarmOutName[NAME_LEN];	/* 名称 */
+	BYTE sAlarmOutName[NAME_LENGTH];	/* 名称 */
 	DWORD dwAlarmOutDelay;	/* 输出保持时间(-1为无限，手动关闭) */
 	//0-5秒,1-10秒,2-30秒,3-1分钟,4-2分钟,5-5分钟,6-10分钟,7-手动
 	NET_DVR_SCHEDTIME struAlarmOutTime[MAX_DAYS][MAX_TIMESEGMENT_V30];/* 报警输出激活时间段 */
@@ -3601,7 +3601,7 @@ typedef struct
 typedef struct 
 {
 	DWORD dwSize;
-	BYTE sAlarmOutName[NAME_LEN];	/* 名称 */
+	BYTE sAlarmOutName[NAME_LENGTH];	/* 名称 */
 	DWORD dwAlarmOutDelay;	/* 输出保持时间(-1为无限，手动关闭) */
 	//0-5秒,1-10秒,2-30秒,3-1分钟,4-2分钟,5-5分钟,6-10分钟,7-手动
 	NET_DVR_SCHEDTIME struAlarmOutTime[MAX_DAYS][MAX_TIMESEGMENT];/* 报警输出激活时间段 */
@@ -3687,7 +3687,7 @@ typedef struct
 //单用户参数(子结构)(9000扩展)
 typedef struct
 {
-	BYTE sUserName[NAME_LEN];		/* 用户名 */
+	BYTE sUserName[NAME_LENGTH];		/* 用户名 */
 	BYTE sPassword[PASSWD_LEN];		/* 密码 */
 	BYTE byLocalRight[MAX_RIGHT];	/* 本地权限 */
 	/*数组0: 本地控制云台*/
@@ -3742,7 +3742,7 @@ typedef struct
 //单用户参数(SDK_V15扩展)(子结构)
 typedef struct 
 {
-	BYTE sUserName[NAME_LEN];		/* 用户名 */
+	BYTE sUserName[NAME_LENGTH];		/* 用户名 */
 	BYTE sPassword[PASSWD_LEN];		/* 密码 */
 	DWORD dwLocalRight[MAX_RIGHT];	/* 权限 */
 	/*数组0: 本地控制云台*/
@@ -3773,7 +3773,7 @@ typedef struct
 //单用户参数(子结构)
 typedef struct 
 {
-	BYTE sUserName[NAME_LEN];		/* 用户名 */
+	BYTE sUserName[NAME_LENGTH];		/* 用户名 */
 	BYTE sPassword[PASSWD_LEN];		/* 密码 */
 	DWORD dwLocalRight[MAX_RIGHT];	/* 权限 */
 	/*数组0: 本地控制云台*/
@@ -3946,7 +3946,7 @@ typedef struct tagNET_DVR_ALARMHOST_SEARCH_LOG_PARAM
 typedef struct tagNET_DVR_ALARMHOST_LOG_RET
 {
     NET_DVR_TIME	struLogTime;                //  日志时间
-    BYTE		    sUserName[NAME_LEN];     // 操作用户
+    BYTE		    sUserName[NAME_LENGTH];     // 操作用户
     NET_DVR_IPADDR	struIPAddr;                 // 操作IP地址
     WORD		    wMajorType;                 // 主类型 
     WORD		    wMinorType;                 // 次类型
@@ -4266,7 +4266,7 @@ typedef struct
 {
 	char sDVRIP[16];				/* DVR IP地址 */
 	WORD wDVRPort;			 		/* 端口号 */
-	BYTE sUserName[NAME_LEN];		/* 用户名 */
+	BYTE sUserName[NAME_LENGTH];		/* 用户名 */
 	BYTE sPassword[PASSWD_LEN];		/* 密码 */
 	BYTE byChannel;					/* 通道号 */
 	BYTE byLinkMode;				/* 连接模式 */
@@ -4320,7 +4320,7 @@ typedef struct
 		struct
 		{
 			DWORD dwChannel;
-			BYTE sUserName[NAME_LEN];	/*请求视频用户名*/
+			BYTE sUserName[NAME_LENGTH];	/*请求视频用户名*/
 			BYTE sPassword[PASSWD_LEN];	/* 密码 */
 			NET_DVR_TIME struStartTime;	/* 按时间回放的开始时间 */
 			NET_DVR_TIME struStopTime;	/* 按时间回放的结束时间 */
@@ -4341,7 +4341,7 @@ typedef struct
 	{
 		struct
 		{
-			BYTE sUserName[NAME_LEN];	/*请求视频用户名*/
+			BYTE sUserName[NAME_LENGTH];	/*请求视频用户名*/
 			BYTE sPassword[PASSWD_LEN];	/* 密码 */
 			char cReserve[52];
 		}userInfo;
@@ -4352,7 +4352,7 @@ typedef struct
 		struct
 		{
 			DWORD	dwChannel;
-			BYTE	sUserName[NAME_LEN];	/*请求视频用户名*/
+			BYTE	sUserName[NAME_LENGTH];	/*请求视频用户名*/
 			BYTE	sPassword[PASSWD_LEN];	/* 密码 */
 			NET_DVR_TIME struStartTime;		/* 按时间回放的开始时间 */
 			NET_DVR_TIME struStopTime;		/* 按时间回放的结束时间 */
@@ -4405,18 +4405,18 @@ EMAIL参数结构
 typedef struct
 {		
 	DWORD		dwSize;
-	BYTE		sAccount[NAME_LEN];				/* 账号*/ 
+	BYTE		sAccount[NAME_LENGTH];				/* 账号*/ 
 	BYTE		sPassword[MAX_EMAIL_PWD_LEN];			/*密码 */
 	struct
 	{
-		BYTE	sName[NAME_LEN];				/* 发件人姓名 */
+		BYTE	sName[NAME_LENGTH];				/* 发件人姓名 */
 		BYTE	sAddress[MAX_EMAIL_ADDR_LEN];		/* 发件人地址 */
 	}struSender;
 	BYTE		sSmtpServer[MAX_EMAIL_ADDR_LEN];	/* smtp服务器 */
 	BYTE		sPop3Server[MAX_EMAIL_ADDR_LEN];	/* pop3服务器 */
 	struct
 	{
-		BYTE	sName[NAME_LEN];				/* 收件人姓名 */
+		BYTE	sName[NAME_LENGTH];				/* 收件人姓名 */
 		BYTE	sAddress[MAX_EMAIL_ADDR_LEN];		/* 收件人地址 */
 	}struReceiver[3];							/* 最多可以设置3个收件人 */
 	BYTE		byAttachment;					/* 是否带附件 */
@@ -4506,7 +4506,7 @@ typedef struct
 //ddns
 typedef struct 
 {
-	BYTE sUsername[NAME_LEN];  /* DDNS账号用户名/密码 */
+	BYTE sUsername[NAME_LENGTH];  /* DDNS账号用户名/密码 */
 	BYTE sPassword[PASSWD_LEN];
 	BYTE sDomainName[64];       /* 域名 */
 	BYTE byEnableDDNS;			/*是否应用 0-否，1-是*/
@@ -4519,7 +4519,7 @@ typedef struct
 	BYTE byHostIndex;					/* 0-私有DDNS 1－Dyndns 2－PeanutHull(花生壳)*/
 	BYTE byEnableDDNS;					/*是否应用DDNS 0-否，1-是*/
 	WORD wDDNSPort;						/* DDNS端口号 */
-	BYTE sUsername[NAME_LEN];			/* DDNS用户名*/
+	BYTE sUsername[NAME_LENGTH];			/* DDNS用户名*/
 	BYTE sPassword[PASSWD_LEN];			/* DDNS密码 */
 	BYTE sDomainName[MAX_DOMAIN_NAME];	/* 设备配备的域名地址 */
 	BYTE sServerName[MAX_DOMAIN_NAME];	/* DDNS 对应的服务器地址，可以是IP地址或域名 */
@@ -4534,7 +4534,7 @@ typedef struct
     BYTE byRes1[2];
     struct
     {    
-        BYTE sUsername[NAME_LEN];			/* DDNS账号用户名*/
+        BYTE sUsername[NAME_LENGTH];			/* DDNS账号用户名*/
         BYTE sPassword[PASSWD_LEN];			/* 密码 */
         BYTE sDomainName[MAX_DOMAIN_NAME];	/* 设备配备的域名地址 */
         BYTE sServerName[MAX_DOMAIN_NAME];	/* DDNS协议对应的服务器地址，可以是IP地址或域名 */
@@ -4621,7 +4621,7 @@ typedef struct
 	BYTE	byTransProtocol;			/* 传输协议类型 0-TCP, 1-UDP */
 	BYTE	byTransMode;				/* 传输码流模式 0－主码流 1－子码流*/
 	BYTE	byRes[3];
-	BYTE	sUserName[NAME_LEN];			/* 监控主机登陆帐号 */
+	BYTE	sUserName[NAME_LENGTH];			/* 监控主机登陆帐号 */
 	BYTE	sPassword[PASSWD_LEN];			/* 监控主机密码 */
 }NET_DVR_MATRIX_DECINFO, *LPNET_DVR_MATRIX_DECINFO;
 
@@ -4715,7 +4715,7 @@ typedef struct
 	WORD	wDVRPort;			/* 端口号 */	
 	BYTE	byChannel;			/* 通道号 */
 	BYTE 	byReserve;
-	BYTE	sUserName[NAME_LEN];		/* 用户名 */
+	BYTE	sUserName[NAME_LENGTH];		/* 用户名 */
 	BYTE	sPassword[PASSWD_LEN];		/* 密码 */
 	DWORD	dwPlayMode;   	/* 0－按文件 1－按时间*/        	
 	NET_DVR_TIME StartTime;
@@ -4785,7 +4785,7 @@ typedef struct tagMATRIX_TRAN_CHAN_INFO
     BYTE    byIsEstablished;			/* 透明通道建立成功标志，0-没有成功，1-建立成功 */
     BYTE	byRes2;						/* 保留 */
 	TTY_CONFIG RemoteSerialDevCfg;
-	BYTE  	byUsername[NAME_LEN]; 		/* 32BYTES */
+	BYTE  	byUsername[NAME_LENGTH]; 		/* 32BYTES */
 	BYTE   	byPassword[PASSWD_LEN]; 		/* 16BYTES */
 	BYTE 	byRes3[16];
 } NET_DVR_MATRIX_TRAN_CHAN_INFO_V30,*LPNET_DVR_MATRIX_TRAN_CHAN_INFO_V30;
@@ -5067,7 +5067,7 @@ typedef struct tagNET_DVR_SUBSYSTEMINFO
     BYTE		byRes2[6];
     NET_DVR_IPADDR  struSubSystemIPMask;//子网掩码
     NET_DVR_IPADDR	struGatewayIpAddr;	/* 网关地址*/   
-    BYTE		sUserName[NAME_LEN];	/* 用户名 （此参数只能获取）*/
+    BYTE		sUserName[NAME_LENGTH];	/* 用户名 （此参数只能获取）*/
     BYTE		sPassword[PASSWD_LEN];	/*密码（此参数只能获取）*/
     char		sDomainName[MAX_DOMAIN_NAME];//域名(可修改)
     char 		sDnsAddress[MAX_DOMAIN_NAME];/*DNS域名或IP地址*/
@@ -5103,7 +5103,7 @@ typedef struct  tagNET_DVR_CODESPLITTERINFO
     NET_DVR_IPADDR   struIP;		/*码分器IP地址*/
     WORD		wPort;        			//码分器端口号
     BYTE		byRes1[6];
-    BYTE		sUserName[NAME_LEN];	/* 用户名 */
+    BYTE		sUserName[NAME_LENGTH];	/* 用户名 */
     BYTE		sPassword[PASSWD_LEN];	/*密码 */
     BYTE        byChan;//码分器485号
     BYTE		by485Port;//485口地址
@@ -5351,7 +5351,7 @@ typedef struct
     LONG lUserID;                       /* NET_DVR_Login()返回值, 布防时有效 */
     BYTE sSerialNumber[SERIALNO_LEN];	/* 序列号 */
     DWORD dwDeviceVersion;			    /* 版本信息 高16位表示主版本，低16位表示次版本*/
-    char sDeviceName[NAME_LEN];		    /* 设备名字 */
+    char sDeviceName[NAME_LENGTH];		    /* 设备名字 */
     BYTE byMacAddr[MACADDR_LEN];		/* MAC地址 */    
     WORD wLinkPort;                     /* link port */
     char sDeviceIP[128];    			/* IP地址 */
@@ -5521,9 +5521,9 @@ typedef struct tagNET_DVR_WIFI_CFG_EX
                     BYTE byEapolVersion; //EAPOL版本，0-版本1，1-版本2
                     BYTE byAuthType; //内部认证方式，0-PAP，1-MSCHAPV2
                     BYTE byRes1[2];
-                    BYTE byAnonyIdentity [NAME_LEN]; //匿名身份
-					BYTE byUserName[NAME_LEN]; //用户名
-                    BYTE byPassword[NAME_LEN]; //密码
+                    BYTE byAnonyIdentity [NAME_LENGTH]; //匿名身份
+					BYTE byUserName[NAME_LENGTH]; //用户名
+                    BYTE byPassword[NAME_LENGTH]; //密码
                     BYTE byRes[44];
 				}EAP_TTLS; //WPA-enterprise/WPA2-enterpris模式适用
 				struct 
@@ -5532,17 +5532,17 @@ typedef struct tagNET_DVR_WIFI_CFG_EX
                     BYTE byAuthType; //内部认证方式，0-GTC，1-MD5，2-MSCHAPV2
                     BYTE byPeapVersion; //PEAP版本，0-版本0，1-版本1
                     BYTE byPeapLabel; //PEAP标签，0-老标签，1-新标签
-                    BYTE byAnonyIdentity[NAME_LEN]; //匿名身份
-					BYTE byUserName[NAME_LEN]; //用户名
-					BYTE byPassword[NAME_LEN]; //密码
+                    BYTE byAnonyIdentity[NAME_LENGTH]; //匿名身份
+					BYTE byUserName[NAME_LENGTH]; //用户名
+					BYTE byPassword[NAME_LENGTH]; //密码
                     BYTE byRes[44]; 
 				}EAP_PEAP; //WPA-enterprise/WPA2-enterpris模式适用
 				struct 
 				{
                     BYTE byEapolVersion; //EAPOL版本，0-版本1，1-版本2
                     BYTE byRes1[3]; 
-                    BYTE byIdentity[NAME_LEN]; //身份
-					BYTE byPrivateKeyPswd[NAME_LEN]; //私钥密码
+                    BYTE byIdentity[NAME_LENGTH]; //身份
+					BYTE byPrivateKeyPswd[NAME_LENGTH]; //私钥密码
                     BYTE byRes[76]; 
 				}EAP_TLS; 
             }auth_param;
@@ -6006,7 +6006,7 @@ typedef struct tagNET_VCA_ONE_RULE
 {
 	BYTE   byActive;					//是否激活规则,0-否,非0-是
 	BYTE   byRes[7];         			//保留，设置为0字段
-    BYTE   byRuleName[NAME_LEN];		//规则名称
+    BYTE   byRuleName[NAME_LENGTH];		//规则名称
 	VCA_EVENT_TYPE dwEventType;			//行为分析事件类型
     NET_VCA_EVENT_UNION uEventParam;	//行为分析事件参数
     NET_VCA_SIZE_FILTER  struSizeFilter;  //尺寸过滤器
@@ -6032,7 +6032,7 @@ typedef struct tagNET_VCA_ONE_RULE_V41
 {
 	BYTE   byActive;					//是否激活规则,0-否,非0-是
 	BYTE   byRes1[7];         			//保留，设置为0字段
-    BYTE   byRuleName[NAME_LEN];		//规则名称
+    BYTE   byRuleName[NAME_LENGTH];		//规则名称
 	VCA_EVENT_TYPE dwEventType;			//行为分析事件类型
     NET_VCA_EVENT_UNION uEventParam;	//行为分析事件参数
     NET_VCA_SIZE_FILTER  struSizeFilter;  //尺寸过滤器
@@ -6069,7 +6069,7 @@ typedef struct tagNET_VCA_RULE_INFO
 {
 	BYTE   byRuleID;		    //规则ID,0-7
 	BYTE   byRes[3];			//保留
-    BYTE   byRuleName[NAME_LEN]; //规则名称
+    BYTE   byRuleName[NAME_LENGTH]; //规则名称
 	VCA_EVENT_TYPE  dwEventType; //警戒事件类型
     NET_VCA_EVENT_UNION uEventParam;//事件参数
 }NET_VCA_RULE_INFO, *LPNET_VCA_RULE_INFO;
@@ -6178,7 +6178,7 @@ typedef struct tagNET_IVMS_ONE_RULE_
 {
 	BYTE    byActive;           /* 是否激活规则,0-否, 非0-是 */
 	BYTE	byRes1[7];	//保留，设置为0字段
-	BYTE   byRuleName[NAME_LEN]; //规则名称
+	BYTE   byRuleName[NAME_LENGTH]; //规则名称
 	VCA_EVENT_TYPE dwEventType;   //行为分析事件类型
     NET_VCA_EVENT_UNION uEventParam;//行为分析事件参数
     NET_VCA_SIZE_FILTER  struSizeFilter;  //尺寸过滤器
@@ -6448,7 +6448,7 @@ typedef struct tagNET_DVR_SEARCH_EVENT_RET
 			DWORD dwChanNo;					//触发事件的通道号
 			BYTE byRuleID;					//规则ID
 			BYTE byRes1[3];					//保留
-			BYTE byRuleName[NAME_LEN];		//规则名称
+			BYTE byRuleName[NAME_LENGTH];		//规则名称
 			NET_VCA_EVENT_UNION uEvent;     //行为事件参数
 		}struVcaRet;
 		struct//审讯事件
@@ -6468,7 +6468,7 @@ typedef struct tagNET_DVR_SEARCH_EVENT_RET
 			BYTE  byLockFlag;    // 锁定标志 0：没锁定 1：锁定
 			BYTE  byDrawFrameType;    // 0：非抽帧录像 1：抽帧录像
 			BYTE  byRes1[2];
-			BYTE  byFileName[NAME_LEN]; 	//文件名
+			BYTE  byFileName[NAME_LENGTH]; 	//文件名
 			BYTE  byRes[260];
 		}struStreamIDRet;
 	}uSeniorRet;
@@ -6697,7 +6697,7 @@ typedef struct    tagNET_DVR_PTZ_POSITION
     // 是否启用场景，在设置场景行为规则的时候该字段无效，在设置球机本地配置场景位置信息时作为使能位
     BYTE byEnable;
     BYTE byRes1[3];  //保留
-    BYTE byPtzPositionName[NAME_LEN]; //场景位置名称
+    BYTE byPtzPositionName[NAME_LENGTH]; //场景位置名称
     NET_DVR_PTZPOS struPtzPos; //ptz 坐标
     BYTE byRes2[40];
 }NET_DVR_PTZ_POSITION, *LPNET_DVR_PTZ_POSITION;
@@ -6864,7 +6864,7 @@ typedef struct tagNET_DVR_ONE_LANE
 {
 	BYTE	byEnable; // 车道是否启用
 	BYTE	byRes1[11];	// 保留字节
-	BYTE    byLaneName[NAME_LEN];       // 车道规则名称
+	BYTE    byLaneName[NAME_LENGTH];       // 车道规则名称
 	NET_DVR_DIRECTION struFlowDirection;	// 车道内车流方向
 	NET_VCA_POLYGON struPolygon;		// 车道区域
 }NET_DVR_ONE_LANE, *LPNET_DVR_ONE_LANE;
@@ -6896,7 +6896,7 @@ typedef struct tagNET_DVR_ONE_AID_RULE
 {   
     BYTE    byEnable;   // 是否启用事件规则
     BYTE    byRes1[3];  // 保留字节
-    BYTE    byRuleName[NAME_LEN];   // 规则名称 
+    BYTE    byRuleName[NAME_LENGTH];   // 规则名称 
     DWORD   dwEventType;    // 交通事件检测类型 TRAFFIC_AID_TYPE
     NET_VCA_SIZE_FILTER struSizeFilter; // 尺寸过滤器
     NET_VCA_POLYGON     struPolygon;    // 规则区域
@@ -6945,7 +6945,7 @@ typedef struct tagNET_DVR_AID_INFO
 {
     BYTE            byRuleID;   // 规则序号，为规则配置结构下标，0-16
     BYTE            byRes1[3];
-    BYTE            byRuleName[NAME_LEN]; //  规则名称
+    BYTE            byRuleName[NAME_LENGTH]; //  规则名称
     DWORD           dwAIDType;  // 报警事件类型
     NET_DVR_DIRECTION   struDirect; // 报警指向区域   
     BYTE            byRes2[40];  // 保留字节 
@@ -6982,7 +6982,7 @@ typedef enum tagTRAFFIC_DATA_VARY_TYPE
 
 typedef struct tagNET_DVR_LANE_PARAM
 {
-    BYTE    byRuleName[NAME_LEN];                 //车道规则名称 
+    BYTE    byRuleName[NAME_LENGTH];                 //车道规则名称 
     BYTE    byRuleID;               // 规则序号，为规则配置结构下标，0-7 
     BYTE    byVaryType;             // 车道交通参数变化类型 参照 TRAFFIC_DATA_VARY_TYPE
 	BYTE	byLaneType;			// 车道上行或下行
@@ -7022,7 +7022,7 @@ typedef struct tagNET_DVR_FACEDETECT_RULECFG
     BYTE           byEventType;			//警戒事件类型， 0-异常人脸; 1-正常人脸;2-异常人脸&正常人脸;
 	BYTE           byUpLastAlarm;       //2011-04-06 是否先上传最近一次的报警
 	BYTE           byUpFacePic; //是否上传人脸子图，0-否，1-是	
-    BYTE           byRuleName[NAME_LEN];
+    BYTE           byRuleName[NAME_LENGTH];
     NET_VCA_POLYGON     struVcaPolygon;    // 人脸检测规则区域
     BYTE           byPicProType;	//报警时图片处理方式 0-不处理 非0-上传
     BYTE           bySensitivity;   // 规则灵敏度
@@ -7052,7 +7052,7 @@ typedef struct tagNET_DVR_FACEDETECT_RULECFG_V41
     BYTE  byEventType;			//警戒事件类型， 0-异常人脸; 1-正常人脸;2-异常人脸&正常人脸;
 	BYTE  byUpLastAlarm;       //2011-04-06 是否先上传最近一次的报警
 	BYTE  byUpFacePic; //是否上传人脸子图，0-否，1-是	
-    BYTE  byRuleName[NAME_LEN];
+    BYTE  byRuleName[NAME_LENGTH];
     NET_VCA_POLYGON struVcaPolygon;    // 人脸检测规则区域
     BYTE  byPicProType;	//报警时图片处理方式 0-不处理 非0-上传
     BYTE  bySensitivity;   // 规则灵敏度
@@ -7074,7 +7074,7 @@ typedef struct tagNET_DVR_FACEDETECT_ALARM
     DWORD  dwSize;     		// 结构大小
     DWORD 	dwRelativeTime; // 相对时标
     DWORD	dwAbsTime;			// 绝对时标
-    BYTE        byRuleName[NAME_LEN];   // 规则名称
+    BYTE        byRuleName[NAME_LENGTH];   // 规则名称
     NET_VCA_TARGET_INFO  struTargetInfo;	//报警目标信息
     NET_VCA_DEV_INFO  	 struDevInfo;		//前端设备信息
     DWORD dwPicDataLen;						//返回图片的长度 为0表示没有图片，大于0表示该结构后面紧跟图片数据*/
@@ -7099,7 +7099,7 @@ typedef struct tagNET_DVR_EVENT_INFO
 {
     BYTE   byRuleID;				// Rule ID
     BYTE   byRes[3];				// 保留字节
-    BYTE   byRuleName[NAME_LEN];	// 规则名称
+    BYTE   byRuleName[NAME_LENGTH];	// 规则名称
     DWORD       dwEventType;    		// 参照VCA_EVENT_TYPE
     NET_DVR_EVENT_PARAM_UNION uEventParam;  // 
 }NET_DVR_EVENT_INFO, *LPNET_DVR_EVENT_INFO;
@@ -7769,7 +7769,7 @@ typedef struct
 	DWORD	dwEnableFTP;			/*是否启动ftp上传功能*/
 	char	sFTPIP[16];				/*ftp 服务器*/
 	DWORD	dwFTPPort;				/*ftp端口*/
-	BYTE	sUserName[NAME_LEN];	/*用户名*/
+	BYTE	sUserName[NAME_LENGTH];	/*用户名*/
 	BYTE	sPassword[PASSWD_LEN];	/*密码*/
 	DWORD	dwDirLevel;	/*0 = 不使用目录结构，直接保存在根目录,1 = 使用1级目录,2=使用2级目录*/
 	WORD 	wTopDirMode;	/* 一级目录，0x1 = 使用设备名,0x2 = 使用设备号,0x3 = 使用设备ip地址，0x4=使用监测点,0x5=使用时间(年月)*/
@@ -7969,7 +7969,7 @@ typedef struct tagNET_DVR_IPSAN_SERACH_RET
 typedef struct
 {
 	DWORD dwSize;
-	BYTE sDVRName[NAME_LEN];     //DVR名称
+	BYTE sDVRName[NAME_LENGTH];     //DVR名称
 	DWORD dwDVRID;				//DVR ID,用于遥控器 //V1.4(0-99), V1.5(0-255)
 	DWORD dwRecycleRecord;		//是否循环录像,0:不是; 1:是
 	//以下不可更改
@@ -8056,8 +8056,8 @@ typedef struct tagNET_DVR_SNMPCFG
     BYTE    byRes1[3];			//保留
     WORD    wVersion;		//snmp 版本  v1 = 1, v2 =2, v3 =3，设备目前不支持 v3
     WORD    wServerPort; //snmp消息接收端口，默认 161
-    BYTE    byReadCommunity[NAME_LEN]; //读共同体，最多31,默认"public"
-    BYTE    byWriteCommunity[NAME_LEN];//写共同体,最多31 字节,默认 "private"
+    BYTE    byReadCommunity[NAME_LENGTH]; //读共同体，最多31,默认"public"
+    BYTE    byWriteCommunity[NAME_LENGTH];//写共同体,最多31 字节,默认 "private"
     BYTE 	byTrapHostIP [DESC_LEN_64];	//自陷主机ip地址描述，支持IPV4 IPV6和域名描述    
     WORD    wTrapHostPort;   // trap主机端口
     BYTE    byRes2[102];        // 保留
@@ -8066,7 +8066,7 @@ typedef struct tagNET_DVR_SNMPCFG
 
 typedef struct tagNET_DVR_SNMPv3_USER
 {
-    BYTE	byUserName[NAME_LEN];			// 用户名				
+    BYTE	byUserName[NAME_LENGTH];			// 用户名				
     BYTE	bySecLevel;						// 安全级别 1-无校验 2-无授权校验 3-授权校验
     BYTE	byAuthtype;						// 认证类型 0-MD5认证 1-SHA认证 2: none
 	BYTE	byPrivtype;						// 0: DES; 1: AES; 2: none;
@@ -8084,8 +8084,8 @@ typedef struct tagNET_DVR_SNMPCFG_V30
 	BYTE				byEnableV3;		//0-禁用SNMP V3，1-表示启用SNMP V3
     BYTE				byRes1[3];
     WORD				wServerPort;					//snmp消息接收端口，默认 161
-    BYTE				byReadCommunity[NAME_LEN];		//读共同体，最多31,默认"public"
-    BYTE				byWriteCommunity[NAME_LEN];		//写共同体,最多31 字节,默认 "private"
+    BYTE				byReadCommunity[NAME_LENGTH];		//读共同体，最多31,默认"public"
+    BYTE				byWriteCommunity[NAME_LENGTH];		//写共同体,最多31 字节,默认 "private"
     BYTE 				byTrapHostIP [DESC_LEN_64];		//自陷主机ip地址描述，支持IPV4 IPV6和域名描述    
     WORD				wTrapHostPort;					// trap主机端口
     BYTE				byRes2[2];       
@@ -8527,7 +8527,7 @@ typedef struct  tagNET_DVR_CODESPLITTERASSOCIATE
 	NET_DVR_IPADDR   struIP;  /*编码器IP地址*/
 	WORD		wPort;        //编码器端口号
 	BYTE		byRes1[6];
-    BYTE		sUserName[NAME_LEN];	/* 用户名（32） */
+    BYTE		sUserName[NAME_LENGTH];	/* 用户名（32） */
 	BYTE		sPassword[PASSWD_LEN];	/*密码 （16）*/
 	BYTE        byChan;//编码器通道号
 	BYTE		byRes2[15];
@@ -8718,7 +8718,7 @@ typedef struct tagNET_DVR_UNITEDMATRIXINFO
 
 typedef struct tagNET_DVR_REGCALLBACKPARAM
 {
-	char sDeviceID[NAME_LEN];//设备ID串
+	char sDeviceID[NAME_LENGTH];//设备ID串
 	char sPassword[PASSWD_LEN];
 	BYTE sSerialNumber[SERIALNO_LEN]; /* 设备序列号 */
 	DWORD dwDeviceType;//设备类型
@@ -8831,7 +8831,7 @@ typedef struct tagNET_DVR_ALARMSETUPREQUESETPARAM
 	
 typedef struct tagNET_DVR_GPSALARMINFO
 {
-    BYTE byDeviceID[NAME_LEN];/*设备的ID串*/
+    BYTE byDeviceID[NAME_LENGTH];/*设备的ID串*/
     NET_DVR_TIME_EX struGpsTime;    /*GPS上传的时间*/
     DWORD	dwLongitude;	/* 经度*/
     DWORD	dwLatitude;  /* 纬度*/
@@ -8854,7 +8854,7 @@ typedef struct tagNET_DVR_PICINFO
 	DWORD   dwSize;				//结构长度
 	BYTE    byChanIndex;			//通道号
 	BYTE    byRes1[3];				//保留
-	BYTE 	byDeviceID[NAME_LEN];/*设备的ID串*/
+	BYTE 	byDeviceID[NAME_LENGTH];/*设备的ID串*/
 	BYTE    byAbsTime[32];		//绝对时间点, yyyymmddhhmmssxxx,
 	DWORD   dwPicLen;					//图片长度
 	BYTE	byRes2[32];
@@ -8868,7 +8868,7 @@ typedef struct tagNET_DVR_CMSPARAM
 	NET_DVR_IPADDR struCmsAddr;
 	WORD   wCmsPort;
 	BYTE   byRes1[2];
-	BYTE   sDeviceID[NAME_LEN];
+	BYTE   sDeviceID[NAME_LENGTH];
 	BYTE   byPassword[PASSWD_LEN];
 	NET_DVR_IPADDR struPicServerAddr;
 	WORD   wPicServerPort;
@@ -8890,10 +8890,10 @@ typedef struct tagNET_DVR_QOSPARAM
 
 typedef struct tagNET_DVR_PPPDPARAM
 {
-	BYTE byDialNum[NAME_LEN];		/* dial number, eg. "#777" */
-	BYTE byUserName[NAME_LEN];	/* user name, eg. "card" */
+	BYTE byDialNum[NAME_LENGTH];		/* dial number, eg. "#777" */
+	BYTE byUserName[NAME_LENGTH];	/* user name, eg. "card" */
 	BYTE byPassword[DIALPASSWD_LEN];	/* password, eg. "card" */
-	BYTE byApn[NAME_LEN];		/* access point name, eg. "cmnet" */
+	BYTE byApn[NAME_LENGTH];		/* access point name, eg. "cmnet" */
 	NET_DVR_IPADDR struLocalIp;/* local IP address */
 	NET_DVR_IPADDR struRemoteIp;/* remote IP address */
 	WORD wMtuSize;		/* max transfer unit of ppp interface */
@@ -9101,7 +9101,7 @@ typedef struct tagNET_DVR_PUSHALARMINFO
 	DWORD dwAlarmRelateChannel[MAX_CHANNUM];/*触发的录像通道，哪一位为1表示对应哪一路录像, dwAlarmRelateChannel[0]对应第1个通道*/
 	DWORD dwChannel[MAX_CHANNUM];/*dwAlarmType为2或3,6时，表示哪个通道，dwChannel[0]对应第1个通道*/
 	DWORD dwDiskNumber[MAX_DISKNUM];/*dwAlarmType为1,4,5时,表示哪个硬盘, dwDiskNumber[0]位对应第1个硬盘*/
-	BYTE byDeviceID[NAME_LEN];/*设备的ID串*/
+	BYTE byDeviceID[NAME_LENGTH];/*设备的ID串*/
 	BYTE byRes[4];
 }NET_DVR_PUSHALARMINFO, *LPNET_DVR_PUSHALARMINFO;
 
@@ -9113,7 +9113,7 @@ typedef struct
 	BYTE byAlarmRelateChannel[MAX_CHANNUM_V30];/*触发的录像通道，为1表示对应录像, dwAlarmRelateChannel[0]对应第1个通道*/
 	BYTE byChannel[MAX_CHANNUM_V30];/*dwAlarmType为2或3,6，9，10时，表示哪个通道，dwChannel[0]对应第1个通道*/
 	BYTE byDiskNumber[MAX_DISKNUM_V30];/*dwAlarmType为1,4,5时,表示哪个硬盘, dwDiskNumber[0]对应第1个硬盘*/
-	BYTE byDeviceID[NAME_LEN];/*设备的ID串*/
+	BYTE byDeviceID[NAME_LENGTH];/*设备的ID串*/
 	BYTE byRes[7];
 }NET_DVR_PUSHALARMINFO_V30, *LPNET_DVR_PUSHALARMINFO_V30;
 
@@ -9299,7 +9299,7 @@ typedef enum tagSENSOR_TYPE
 typedef struct tagNET_DVR_SENSOR_INFO
 {
 	DWORD  dwSize;                 // 结构体大小
-	BYTE    byName[NAME_LEN];    // 传感器名称
+	BYTE    byName[NAME_LENGTH];    // 传感器名称
 	BYTE    byEnable;               // 是否启用 
 	BYTE    byValid;                // 是否有效 传感器正常不正常(该参数只能获取不能个配置)
 	BYTE    byType;                 // 模拟量类型 参照SENSOR_TYPE
@@ -9318,7 +9318,7 @@ typedef struct tagNET_DVR_SENSOR_INFO
 typedef struct tagNET_DVR_SIREN_PARAM
 {
 	DWORD   dwSize;     // 结构大小
-    BYTE    byName[NAME_LEN];   // 名称
+    BYTE    byName[NAME_LENGTH];   // 名称
 	WORD    wDelay;     // 输出延迟 单位为秒, 范围 0~5599s 0表示一直有输出
     BYTE	byRes1[2];
     BYTE    byAssociateAlarmIn[MAX_ALARMHOST_ALARMIN_NUM];   //表示警号跟随的报警输入通道 （多个报警输入同时触发一个警号输出）数组下标0表示报警输入1，依次类推 0-不跟随 1-跟随
@@ -9354,7 +9354,7 @@ typedef enum tagDETECTOR_TYPE
 typedef struct tagNET_DVR_ALARMIN_PARAM
 {
 	DWORD   dwSize;
-	BYTE    byName[NAME_LEN];
+	BYTE    byName[NAME_LENGTH];
 	WORD    wDetectorType; // DETECTOR_TYPE
 	BYTE    byType;     //防区类型，0:即时防区,1-24小时防区,2-延时防区 ,3-内部防区，4-钥匙防区 5-火警防区 6-周界防区 7-24小时无声防区 0xff-无
 	BYTE    byRes1;    
@@ -9376,7 +9376,7 @@ typedef struct tagNET_DVR_ALARMIN_PARAM
 typedef struct tagNET_DVR_ALARMOUT_PARAM
 {
 	DWORD   dwSize;             // 结构体大小
-	BYTE    byName[NAME_LEN];   // 名称
+	BYTE    byName[NAME_LENGTH];   // 名称
 	WORD    wDelay;             // 输出延迟 单位s, 范围：0~3599s 0 表示一直有输出
 	WORD	wTriggerIndex;		//触发器号，该参数只能获取
 	BYTE    byAssociateAlarmIn[MAX_ALARMHOST_ALARMIN_NUM];   //表示警号跟随的报警输入通道 （多个报警输入同时触发一个警号输出）数组下标0表示报警输入1，依次类推 0-不跟随 1-跟随
@@ -9496,7 +9496,7 @@ typedef struct tagNET_DVR_ALARMHOST_ABILITY
 typedef struct tagNET_DVR_ALARM_RS485CFG
 {
 	DWORD   dwSize;                 // 结构体大小
-	BYTE    sDeviceName[NAME_LEN];  // 前端设备名称 
+	BYTE    sDeviceName[NAME_LENGTH];  // 前端设备名称 
 	WORD    wDeviceType;            // 前端设备类型ALARM_FRONT_DEVICE _TYPE
 	WORD    wDeviceProtocol;        // 前端设备协议 通过获取协议列表获取	
 	DWORD   dwBaudRate;             //波特率(bps)，0-50，1-75，2-110，3-150，4-300，5-600，6-1200，7-2400，8-4800，9-9600，10-19200，11-38400，12-57600，13-76800，14-115.2k 
@@ -9539,7 +9539,7 @@ typedef struct tagNET_DVR_DEVICE_TYPE_LIST
 typedef struct tagNET_DVR_ALARM_DEVICE_USER
 {
 	DWORD  dwSize;                 // 结构体大小
-	BYTE   sUserName[NAME_LEN];    // 用户名
+	BYTE   sUserName[NAME_LENGTH];    // 用户名
 	BYTE   sPassword[PASSWD_LEN];	// 密码
     NET_DVR_IPADDR	struUserIP;					/* 用户IP地址(为0时表示允许任何地址) */
     BYTE   byMACAddr[MACADDR_LEN];			/* 物理地址 */
@@ -9582,7 +9582,7 @@ typedef struct tagNET_DVR_KEYBOARD_USER
 typedef struct tagNET_DVR_OPERATE_USER
 {
 	DWORD	 dwSize;		// 结构体大小
-	BYTE    sUserName[NAME_LEN];    // 用户名
+	BYTE    sUserName[NAME_LENGTH];    // 用户名
     BYTE    sPassword[PASSWD_LEN];  // 密码
     BYTE   bySubSystemPermission;/*0-安装员权限 操作员权限（所有子系统）如下： 1-单布防，无布防报告，不能旁路 2-单撤防，无撤防报告，不能旁路 3-布撤防，无布撤防报告，不能旁路 
 	4-单布防，有布//防报告，不能旁路 5-单撤防，有撤防报告，不能旁路 6-布撤防，有布撤防报告，不能旁路  7-单布防，无布撤防报告，允许旁路 
@@ -9594,7 +9594,7 @@ typedef struct tagNET_DVR_OPERATE_USER
 typedef struct tagNET_DVR_GATEWAY_CFG
 {
     DWORD	dwSize;		// 结构体大小
-    BYTE	byName[NAME_LEN];	//  门禁名称	
+    BYTE	byName[NAME_LENGTH];	//  门禁名称	
     BYTE	byEnable;	// 是否启用
     BYTE    byLocalEnable;  //  本地是否启用
     WORD    wDelayTime;	// 开启延时时间	单位为秒0-65535 0为一直开启
@@ -9606,7 +9606,7 @@ typedef struct tagNET_DVR_SENSOR_ALARM
 {
     DWORD   dwSize;		        // 结构体大小
     DWORD   dwAbsTime;	        // 绝对时标信息  OSD显示信息
-    BYTE    byName[NAME_LEN]; 	// sensor 名称
+    BYTE    byName[NAME_LENGTH]; 	// sensor 名称
     BYTE    bySensorChannel;    // 模拟量通道
     BYTE    byType;             // 模拟量类型
     BYTE	byAlarmType;	    // 1-上4、2-上3、3-上2、4-上1、5-下1、6-下2、7-下3、8-下4 和当前模式有关
@@ -9628,7 +9628,7 @@ typedef struct
 typedef struct tagNET_DVR_SWITCH_ALARM
 {
     DWORD dwSize;
-    BYTE   byName[NAME_LEN]; 	// switch 名称
+    BYTE   byName[NAME_LENGTH]; 	// switch 名称
     WORD  wSwitchChannel;     // 开关量通道, 0-255
     BYTE	byAlarmType;		// 报警类型 0--正常，1--短路，2--断路,3-异常 
     BYTE	byEventType;//事件类型0-报警，1-报警主机防区故障
@@ -9660,7 +9660,7 @@ typedef struct tagNET_DVR_ALARMHOST_EXCEPTION_ALARM
 #define MAX_CENTERNUM			4		//G1,G2 G3 G4或者N1，N2，N3，N4或者T1，T2，T3，T4
 typedef struct tagNET_DVR_PHONECENTERDIALCFG
 {
-    BYTE sCenterName[NAME_LEN];
+    BYTE sCenterName[NAME_LENGTH];
     BYTE byPhoneNum[MAX_PHONE_NUM/*32*/];  //中心号码  
     BYTE byRepeatCall;          //重复拨号次数，1~15次
     BYTE byPstnProtocol;        //通信协议，0-CID；
@@ -9781,7 +9781,7 @@ typedef struct tagNET_DVR_ALARMHOST_PARAM
 typedef  struct tagNET_DVR_LED_SCREEN_CFG
 {
 	DWORD 		dwSize;
-	BYTE		sLEDName[NAME_LEN/*32*/];	// LED屏幕名称
+    BYTE		sLEDName[NAME_LENGTH/*32*/];	// LED屏幕名称
 	BYTE		byTransMode; 				// 现只支持串口通讯 1-串口通信
 	BYTE		byProtocolType;				// 协议类型，对应LED屏的厂家
 	BYTE		byLEDColor; 				// 1-单色， 2-双色， 3-256级灰度双基色， 4- 全彩色（目前只用单色）
@@ -9897,7 +9897,7 @@ typedef struct tagNET_MATRIX_DEV_CHAN_INFO
     BYTE	byUsedSlotNum;			//是否使用槽位号，0-不使用，1-使用
     BYTE	bySlotNum;//槽位号
     BYTE	byRes[68];
-    BYTE	sUserName[NAME_LEN];	//监控主机登陆帐号
+    BYTE	sUserName[NAME_LENGTH];	//监控主机登陆帐号
     BYTE	sPassword[PASSWD_LEN];	//监控主机密码
 }NET_MATRIX_DEV_CHAN_INFO,*LPNET_MATRIX_DEV_CHAN_INFO;
 
@@ -9913,7 +9913,7 @@ typedef struct tagNET_DVR_MATRIX_CAMERACFG
 {
     DWORD					dwGlobalIndex;//全局编号
     DWORD					dwInterIndex;//局部编号
-	BYTE					sCamName[NAME_LEN];
+	BYTE					sCamName[NAME_LENGTH];
     NET_MATRIX_PU_STREAM_CFG struPuStreamCfg;
 } NET_DVR_MATRIX_CAMERACFG,*LPNET_DVR_MATRIX_CAMERACFG;
 
@@ -9934,7 +9934,7 @@ typedef struct tagNET_DVR_DISP_CHAN_INFO
     BYTE	byUsedSlotNum;			//是否使用槽位号，0-使用，1-不使用
     BYTE	bySlotNum;//槽位号
     BYTE	byRes[7];
-    BYTE	sUserName[NAME_LEN];	/*登陆帐号 */
+    BYTE	sUserName[NAME_LENGTH];	/*登陆帐号 */
     BYTE	sPassword[PASSWD_LEN];	/*密码 */
 }NET_DVR_DISP_CHAN_INFO,*LPNET_DVR_DISP_CHAN_INFO;
 
@@ -9943,7 +9943,7 @@ typedef struct tagNET_DVR_MATRIX_MONITORCFG
 {
     DWORD						dwGlobalIndex;//全局编号
     DWORD						dwInterIndex;
-	BYTE						sMonName[NAME_LEN];
+	BYTE						sMonName[NAME_LENGTH];
     NET_DVR_DISP_CHAN_INFO		struDispChanCfg;
 } NET_DVR_MATRIX_MONITORCFG,*LPNET_DVR_MATRIX_MONITORCFG;
 typedef struct tagNET_DVR_MATRIX_MONITORLIST
@@ -9967,7 +9967,7 @@ typedef struct tagNET_DVR_SUBMATRIXINFO
 	BYTE		byRes2[6];
 	NET_DVR_IPADDR  struSubMatrixIPMask;    /*IP地址掩码*/
 	NET_DVR_IPADDR	struGatewayIpAddr;		 /* 网关地址 */    
-	BYTE		sUserName[NAME_LEN];	/* 用户名 （此参数只能获取）*/
+	BYTE		sUserName[NAME_LENGTH];	/* 用户名 （此参数只能获取）*/
 	BYTE		sPassword[PASSWD_LEN];	/*密码 （此参数只能获取）*/
 	char		sDomainName[MAX_DOMAIN_NAME];//域名(可修改)
 	char 		sDnsAddress[MAX_DOMAIN_NAME];/*DNS域名或IP地址*/
@@ -10073,7 +10073,7 @@ typedef struct tagNET_DVR_SUBSYSTEMINFO_V40
 	NET_DVR_IPADDR	 struGatewayIpAddr;	/* 网关地址 */
 	WORD		wSubSystemPort;        //子系统端口号（可修改）
 	BYTE		byRes2[6];
-    BYTE		sUserName[NAME_LEN];	/* 用户名 （此参数只能获取）*/
+    BYTE		sUserName[NAME_LENGTH];	/* 用户名 （此参数只能获取）*/
 	BYTE		sPassword[PASSWD_LEN];	/*密码(可修改)*/
 	char		sDomainName[MAX_DOMAIN_NAME];//域名(可修改)
 	char 		sDnsAddress[MAX_DOMAIN_NAME];/*DNS域名或IP地址*/
@@ -10319,7 +10319,7 @@ typedef struct tagNET_DVR_HOLIDAY_PARAM
     BYTE	byDateMode;			// 日期模式 0-模式A 1-模式B 2-模式C
     BYTE	byRes1[2];			// 保留字节
     NET_DVR_HOLIDATE_UNION uHolidate;	// 假日日期
-    BYTE	byName[NAME_LEN];	// 假日名称
+    BYTE	byName[NAME_LENGTH];	// 假日名称
     BYTE	byRes2[20];			// 保留字节
 }NET_DVR_HOLIDAY_PARAM, *LPNET_DVR_HOLIDAY_PARAM;
 
@@ -10922,7 +10922,7 @@ typedef struct tagNET_DVR_SOCKS_CFG
 	WORD			wProxyPort;				// 代理端口，默认1080
 	BYTE			byProxyaddr[MAX_DOMAIN_NAME];  	// 代理IP地址，可以是域名
     BYTE 			byUserName[MAX_DOMAIN_NAME]; 	// 用户名 SOCKS才用
-    BYTE 			byPassword[NAME_LEN];			// 密码SOCKS5才用
+    BYTE 			byPassword[NAME_LENGTH];			// 密码SOCKS5才用
 	BYTE 			byLocalAddr[MAX_LOCAL_ADDR_LEN];  //不使用socks代理的网段，格式为"ip/netmask;ip/netmask;…"
     BYTE 			byRes[128];
 }NET_DVR_SOCKS_CFG, *LPNET_DVR_SOCKS_CFG;
@@ -10979,12 +10979,12 @@ typedef struct tagNET_DVR_CERT_INFO
 	DWORD 				dwSize;
 	NET_DVR_CERT_PARAM 	struCertParam;	//证书参数
 	DWORD				dwValidDays;   //有效天数，类型为自签名时有效
-	BYTE     			byPasswd[NAME_LEN];   //私钥密码
+	BYTE     			byPasswd[NAME_LENGTH];   //私钥密码
 	NET_DVR_CERT_NAME 	struCertName;    // 证书名称
 	NET_DVR_CERT_NAME 	struIssuerName;    // 证书发行者名称（自签名证书信息获取时有效）
 	NET_DVR_TIME_EX     	struBeginTime;   //证书创建时间（自签名证书信息获取时有效）
 	NET_DVR_TIME_EX     	struEndTime;   //证书截止时间（自签名证书信息获取时有效）
-	BYTE     			serialNumber[NAME_LEN];   //证书标识码（自签名证书信息获取时有效）
+	BYTE     			serialNumber[NAME_LENGTH];   //证书标识码（自签名证书信息获取时有效）
 	BYTE 				byVersion; 
 	BYTE     			byKeyAlgorithm;			//加密类型 0-RSA  1-DSA
 	BYTE      			byKeyLen;				//加密长度 0-512  1-1024、 2-2048
@@ -11067,7 +11067,7 @@ typedef struct tagNET_DVR_SCREENZOOM
 typedef struct tagNET_MATRIX_CAMERAINFO
 {  
     DWORD dwGlobalCamId;      /* cam的全局编号*/
-    BYTE  sCamName[NAME_LEN]; /*cam的名称*/
+    BYTE  sCamName[NAME_LENGTH]; /*cam的名称*/
     DWORD dwMatrixId;          /*cam对应矩阵的编号*/
     DWORD dwLocCamId;         /*cam对应矩阵的内部编号*/ 
     BYTE  byValid;    /*是否有效，0-否，1-是*/
@@ -11077,7 +11077,7 @@ typedef struct tagNET_MATRIX_CAMERAINFO
 	BYTE  byTrunkReq; /*摄像机分辨率,以D1为单位：1 - 1个D1，2- 2个D1，作为干线使用时，指的是干线的带宽*/
 	BYTE  byRes1[3];
 	NET_DVR_TIME struInstallTime;//安装时间
-    BYTE  sPurpose[NAME_LEN];/*用途描述*/
+    BYTE  sPurpose[NAME_LENGTH];/*用途描述*/
 	BYTE  byRes2[20];  
 }NET_MATRIX_CAMERAINFO, *LPNET_MATRIX_CAMERAINFO;
 
@@ -11085,7 +11085,7 @@ typedef struct tagNET_MATRIX_CAMERAINFO
 typedef struct tagNET_MATRIX_MONITORINFO 
 {
     DWORD	dwGloalMonId; /*mon 的统一编号*/
-    BYTE	sMonName[NAME_LEN];
+    BYTE	sMonName[NAME_LENGTH];
     DWORD	dwMatrixId;  /*mon所在矩阵的编号*/
     DWORD	dwLocalMonId; /*mon的内部编号*/
     BYTE	byValid;    /*是否有效，0-否，1-是*/
@@ -11093,7 +11093,7 @@ typedef struct tagNET_MATRIX_MONITORINFO
 	BYTE	byUsedByTrunk;//当前使用状态，0-没有被使用，1-被干线使用 
 	BYTE	byTrunkReq; /*分辨率, 以D1为单位：1- 1个D1，2- 2个D1，作为干线使用时，指的是干线的带宽*/
 	NET_DVR_TIME struInstallTime;//安装时间
-    BYTE	sPurpose[NAME_LEN];/*用途描述*/
+    BYTE	sPurpose[NAME_LENGTH];/*用途描述*/
     BYTE	byRes[20];  
 }NET_MATRIX_MONITORINFO, *LPNET_MATRIX_MONITORINFO;
 
@@ -11123,17 +11123,17 @@ typedef struct tagNET_MATRIX_MATRIXINFO
 {
 	DWORD   dwSize;
 	DWORD	dwMatrixId;  /*矩阵编号*/
-	BYTE	sDevName[NAME_LEN];
+	BYTE	sDevName[NAME_LENGTH];
 	BYTE	byCtrlType; /*指通讯方式是串口通信, 还是网络通信*/
 	BYTE	byProtocolType;/*设置通信控制协议*/
 	BYTE	byRes1[6];   /*预留*/
 	NET_MATRIX_UNION struMatrixUnion;
 	DWORD	dwMaxPortsIn; /*矩阵输入数*/
 	DWORD	dwMaxPortsOut;/*矩阵输出数*/
-	BYTE	sUserName[NAME_LEN];   /*登录用户名*/
+	BYTE	sUserName[NAME_LENGTH];   /*登录用户名*/
 	BYTE	sPassword[PASSWD_LEN];  /*登录密码*/        
 	NET_DVR_TIME struInstallTime;//安装时间
-	BYTE	sPurpose[NAME_LEN];/*用途描述*/
+	BYTE	sPurpose[NAME_LENGTH];/*用途描述*/
 	BYTE	byRes2[20];   /*预留*/
 }NET_MATRIX_MATRIXINFO, *LPNET_MATRIX_MATRIXINFO;
 
@@ -11151,7 +11151,7 @@ typedef struct tagNET_DVR_MATRIXLIST
 typedef struct tagNET_MATRIX_UARTPARAM
 {	
 	DWORD dwSize;
-	BYTE  byPortName[NAME_LEN];
+	BYTE  byPortName[NAME_LENGTH];
 	WORD  wUserId; /*用户编号，当连接设备为键盘时，绑定一个用户，用于权限管理*/
 	BYTE  byPortType;    /*串口类型，三种0-RS232/1-RS485/2-RS422*/
 	BYTE  byFuncType; /*串口连接的设备的类型0-空闲，1-键盘，2-用作透明通道(485串口不可配置成透明通道),3-模拟矩阵*/     
@@ -11168,7 +11168,7 @@ typedef struct tagNET_MATRIX_UARTPARAM
 typedef struct tagNET_MATRIX_USERPARAM 
 {
 	DWORD dwSize;
-    BYTE	sUserName[NAME_LEN];
+    BYTE	sUserName[NAME_LENGTH];
     BYTE	sPassword[PASSWD_LEN/*16*/];
     BYTE	byRole;/*用户角色:0-管理员,1-操作员；只有一个系统管理员，255个操作员*/
     BYTE	byLevel;  /*统一级别，用于操作级别管理,1- 255*/
@@ -11179,7 +11179,7 @@ typedef struct tagNET_MATRIX_USERPARAM
 typedef struct tagNET_MATRIX_RESOURSEGROUPPARAM
 {
     DWORD dwSize;
-    BYTE  byGroupName[NAME_LEN];
+    BYTE  byGroupName[NAME_LENGTH];
 	BYTE  byGroupType;/*0-摄像机CAM组，1-监视器MON组*/
 	BYTE  byRes1;
     WORD  wMemNum;
@@ -11191,7 +11191,7 @@ typedef struct tagNET_MATRIX_RESOURSEGROUPPARAM
 typedef struct tagNET_MATRIX_USERGROUPPARAM
 {
 	DWORD dwSize;
-	BYTE  sGroupName[NAME_LEN];
+	BYTE  sGroupName[NAME_LENGTH];
 	WORD  wUserMember[255];  /*包含的用户成员*/
 	WORD  wResorceGroupMember[255]; /*包含的资源组成员*/
 	BYTE  byPermission[32];//权限，数组0-ptz权限、切换权限、查询权限
@@ -11202,7 +11202,7 @@ typedef struct tagNET_MATRIX_TRUNKPARAM
 {
 	DWORD	dwSize;
     DWORD	dwTrunkId;
-    BYTE	sTrunkName[NAME_LEN];
+    BYTE	sTrunkName[NAME_LENGTH];
     DWORD	dwSrcMonId;
     DWORD	dwDstCamId;
 	BYTE	byTrunkType;  /*使用类型  1-BNC，2-SP3光纤高清，3-SP3光纤D1， 4-V6光纤，5-其他光纤*/
@@ -11373,9 +11373,9 @@ typedef struct tagNET_VCA_HUMAN_ATTRIBUTE
 	BYTE   bySex; //性别：0-男，1-女
 	BYTE   byCertificateType; //证件类型：0-身份证，1-警官证
 	BYTE   byBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //出生年月，如：201106
-	BYTE   byName[NAME_LEN]; //姓名
+	BYTE   byName[NAME_LENGTH]; //姓名
 	NET_DVR_AREAINFOCFG struNativePlace; //籍贯参数
-	BYTE   byCertificateNumber[NAME_LEN];  //证件号
+	BYTE   byCertificateNumber[NAME_LENGTH];  //证件号
 	BYTE   byRes2[20];
 }NET_VCA_HUMAN_ATTRIBUTE, *LPNET_VCA_HUMAN_ATTRIBUTE;
 
@@ -11385,9 +11385,9 @@ typedef struct tagNET_VCA_HUMANATTRIBUTE_COND
 	BYTE   byCertificateType; //证件类型：0-不启用，1-身份证，2-警官证
 	BYTE   byStartBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //起始出生年月，如：201106
 	BYTE   byEndBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //截止出生年月，如201106
-	BYTE   byName[NAME_LEN]; //姓名
+	BYTE   byName[NAME_LENGTH]; //姓名
 	NET_DVR_AREAINFOCFG struNativePlace; //籍贯参数
-	BYTE   byCertificateNumber[NAME_LEN];  //证件号
+	BYTE   byCertificateNumber[NAME_LENGTH];  //证件号
 	BYTE   byRes[20];
 }NET_VCA_HUMANATTRIBUTE_COND, *LPNET_VCA_HUMANATTRIBUTE_COND;
 
@@ -11401,7 +11401,7 @@ typedef struct tagNET_VCA_BLACKLIST_INFO
 	BYTE   byLevel; //黑名单等级，0-全部，1-低，2-中，3-高
 	BYTE   byRes1[2];  //保留
 	NET_VCA_HUMAN_ATTRIBUTE struAttribute;  //人员信息
-	BYTE   byRemark[NAME_LEN]; //备注信息
+	BYTE   byRemark[NAME_LENGTH]; //备注信息
 	BYTE   byRes2[20];
 }NET_VCA_BLACKLIST_INFO, *LPNET_VCA_BLACKLIST_INFO;
 
@@ -11597,7 +11597,7 @@ typedef struct tagNET_DVR_DEV_ACCESS_CFG
     WORD 	wDevicePort;			 	//端口号
 	BYTE	byEnable;		         //是否启用，0-否，1-是
 	BYTE 	byRes1;				//保留
-    BYTE	sUserName[NAME_LEN];	//接入设备的登录帐号
+    BYTE	sUserName[NAME_LENGTH];	//接入设备的登录帐号
 	BYTE	sPassword[PASSWD_LEN];	//接入设备的登录密码
 	BYTE	byRes2[60];
 }NET_DVR_DEV_ACCESS_CFG,*LPNET_DVR_DEV_ACCESS_CFG;
@@ -11771,7 +11771,7 @@ typedef struct tagNET_DVR_MATRIX_DEC_REMOTE_PLAY_V41
     WORD	wDVRPort;			/* 端口号 */	
     BYTE	byChannel;			/* 通道号 */
     BYTE 	byReserve;
-    BYTE	sUserName[NAME_LEN];		/* 用户名 */
+    BYTE	sUserName[NAME_LENGTH];		/* 用户名 */
     BYTE	sPassword[PASSWD_LEN];		/* 密码 */
     DWORD	dwPlayMode;   	/* 0－按文件 1－按时间*/        	
     NET_DVR_TIME StartTime;
@@ -11828,7 +11828,7 @@ typedef struct tagDEV_CHAN_INFO_SCENE
 	BYTE	byFactoryType;				/*前端设备厂家类型*/
 	BYTE	byDeviceType;			//设备类型，1-IPC，2- ENCODER
     BYTE	byRes[5];
-	BYTE	sUserName[NAME_LEN];	/* 监控主机登陆帐号 */
+	BYTE	sUserName[NAME_LENGTH];	/* 监控主机登陆帐号 */
 	BYTE	sPassword[PASSWD_LEN];	/* 监控主机密码 */
 } NET_DVR_DEV_CHAN_INFO_SCENE,*LPNET_DVR_DEV_CHAN_INFO_SCENE;
 
@@ -11896,7 +11896,7 @@ typedef struct tagNET_DVR_BIGSCREENCFG_SCENE
 typedef struct tagNET_DVR_MATRIX_SCENECFG
 {
     DWORD dwSize;
-    BYTE  sSceneName[NAME_LEN];
+    BYTE  sSceneName[NAME_LENGTH];
     BYTE  byBigScreenNums;//大屏的个数，最大值通过能力集获取
     BYTE  byRes1[3];
     WORD  wDecChanNums;//场景中解码通道的个数
@@ -11952,7 +11952,7 @@ typedef struct tagNET_DVR_LAYOUTCFG
 	DWORD dwSize;
     BYTE  byValid;								//布局是否有效
     BYTE  byRes1[3];
-    BYTE  byLayoutName[NAME_LEN/*32*/];			//布局名称			
+    BYTE  byLayoutName[NAME_LENGTH/*32*/];			//布局名称
 	NET_DVR_SCREEN_WINCFG struWinCfg[MAX_WIN_COUNT/*224*/];	//布局内窗口参数
 	BYTE  byRes2[16];
 }NET_DVR_LAYOUTCFG, *LPNET_DVR_LAYOUTCFG;
@@ -11985,7 +11985,7 @@ typedef struct tagNET_DVR_INPUTSTREAMCFG
 	BYTE	byValid ;
 	BYTE	byCamMode;						//信号输入源类型，见NET_DVR_CAM_MODE
     WORD	wInputNo;						//信号源序号0-224
-    BYTE	sCamName[NAME_LEN] ;			//信号输入源名称
+    BYTE	sCamName[NAME_LENGTH] ;			//信号输入源名称
 	NET_DVR_VIDEOEFFECT struVideoEffect;	//视频参数
 	NET_DVR_PU_STREAM_CFG	struPuStream;	//ip输入时使用
 	WORD	wBoardNum ;						//信号源所在的板卡号
@@ -11994,7 +11994,7 @@ typedef struct tagNET_DVR_INPUTSTREAMCFG
 	WORD	wResolutionY;
 	BYTE	byVideoFormat;					//视频制式，0-无，1-NTSC，2-PAL
     BYTE	byNetSignalResolution;	//; 1-CIF 2-4CIF 3-720P 4-1080P 5-500wp 。网络信号源的分辨率，在添加网络信号源时传给设备，设备根据这个分辨率来分配解码资源。
-    BYTE	sGroupName[NAME_LEN/*32*/];	//网络信号源分组 组名
+    BYTE	sGroupName[NAME_LENGTH/*32*/];	//网络信号源分组 组名
 	BYTE	byJointMatrix;			//  关联矩阵 ，0-不关联  1-关联
 	BYTE	byRes;  
 }NET_DVR_INPUTSTREAMCFG, *LPNET_DVR_INPUTSTREAMCFG;
@@ -12162,9 +12162,9 @@ typedef struct tagNET_DVR_SCREEN_SCREENINFO
     BYTE byScreenLayX;			//大屏布局-横坐标
     BYTE byScreenLayY;			//大屏布局-纵坐标
     BYTE byRes1[3];
-    BYTE sUserName[NAME_LEN];	/*登录用户名*/
+    BYTE sUserName[NAME_LENGTH];	/*登录用户名*/
     BYTE sPassword[PASSWD_LEN]; /*登录密码*/   
-	BYTE sDevName[NAME_LEN];	/*设备名称*/
+	BYTE sDevName[NAME_LENGTH];	/*设备名称*/
     NET_DVR_SCREEN_UNION struScreenUnion;
     BYTE byInputNum;			// 输入源个数
 	BYTE byOutputNum;			// 输出源个数
@@ -12313,7 +12313,7 @@ typedef struct tagNET_DVR_PLAN_CFG
 	BYTE  	byValid;      	// 该预案是否有效
 	BYTE  	byWorkMode;  	// 预案工作模式 1表示手动，2自动，3预案循环
 	BYTE	byRes1[2];
-	BYTE  	byPlanName[NAME_LEN/*32*/]; //预案名称
+    BYTE  	byPlanName[NAME_LENGTH/*32*/]; //预案名称
 	NET_DVR_TIME_EX struTime; // 工作模式为自动时使用
 	NET_DVR_CYCLE_TIME struTimeCycle[DAYS_A_WEEK/*7*/]; /*循环时间，周期为一个星期，年、月、日三个参数不使用。如：struTimeCycle[0]中的byValid的值是1，表示星期天执行该预案。星期取值区间为[0,6]，其中0代表星期天，1代表星期一，以此类推*/
 	DWORD 	dwWorkCount;  	// 预案内容执行次数，0为一直循环播放，其他值表示次数
@@ -12340,7 +12340,7 @@ typedef struct tagNET_DVR_PLAN_LIST
 typedef struct tagNET_DVR_CONTROL_PARAM
 {
 	DWORD	dwSize;
-	BYTE	sDeviceID[NAME_LEN]; //被控设备的设备ID
+	BYTE	sDeviceID[NAME_LENGTH]; //被控设备的设备ID
 	WORD	wChan;				 //被控通道
 	BYTE	byIndex;			 //控制索引，根据命令确定具体表示什么索引
 	BYTE	byRes1;
@@ -12578,7 +12578,7 @@ typedef struct tagNET_DVR_MATRIX_TRUNKCFG
 {
     DWORD     dwGlobalIndex;  //主键
     DWORD     dwInterIndex;   //本地全局编号
-    BYTE      sTrunkName[NAME_LEN];
+    BYTE      sTrunkName[NAME_LENGTH];
     BYTE      byType;   //设备类型1-bnc, 2-SP3, 3-V6
     BYTE      byDir;   //干线方向 1-输入2-输出
     BYTE      byAbility;   //干线能力，D1衡量
@@ -12720,7 +12720,7 @@ typedef struct tagNET_DVR_ALARMHOST_WIRELESS_NETWORK_CFG
 	BYTE	byOverTime;		//超时时间，超过OverTime时间没有收到有效数据则重连，范围1-254，单位30秒
 	BYTE	byDetectLinkTime;	//	//探测链路是否还保持，范围1-30，单位10s
 	BYTE	byRes1;
-	BYTE	bySIMNum[NAME_LEN/*32*/]; //SIM卡号（手机号）
+    BYTE	bySIMNum[NAME_LENGTH/*32*/]; //SIM卡号（手机号）
 	NET_DVR_IPADDR	struSIMIP;	  //登陆网络后网络给分配的IP地址，只能获取
 	BYTE	byRes2[64];
 }NET_DVR_ALARMHOST_WIRELESS_NETWORK_CFG, *LPNET_DVR_ALARMHOST_WIRELESS_NETWORK_CFG;
@@ -12854,13 +12854,13 @@ typedef struct tagNET_DVR_CID_ALARM
 {
     DWORD	dwSize;
     BYTE	sCIDCode[CID_CODE_LEN/*4*/];	//CID事件号
-    BYTE	sCIDDescribe[NAME_LEN/*32*/];	//CID事件名
+    BYTE	sCIDDescribe[NAME_LENGTH/*32*/];	//CID事件名
     NET_DVR_TIME_EX struTriggerTime;			//触发报警的时间点
     NET_DVR_TIME_EX struUploadTime;				//上传报警的时间点
 	BYTE	sCenterAccount[ACCOUNTNUM_LEN/*6*/];	//中心帐号
 	BYTE	byReportType;					//见定义NET_DVR_ALARMHOST_REPORT_TYPE
 	BYTE	byUserType;						//用户类型，0-网络用户 1-键盘用户
-	BYTE	sUserName[NAME_LEN/*32*/];		//网络用户用户名
+    BYTE	sUserName[NAME_LENGTH/*32*/];		//网络用户用户名
 	WORD	wKeyUserNo;						//键盘用户号	0xFFFF表示无效
 	BYTE	byKeypadNo;						//键盘号		0xFF表示无效
 	BYTE	bySubSysNo;						//子系统号		0xFF表示无效
@@ -12928,7 +12928,7 @@ typedef struct tagNET_DVR_DIRECT_CONNECT_CHAN_INFO
     BYTE		byEnable;					//是否启用
 	BYTE		byProType;					//协议类型，0-海康协议(default), (需要从设备获取能力)
     BYTE		byRes1[2];					//保留字段，置0
-    BYTE		sUserName[NAME_LEN];		//用户名
+    BYTE		sUserName[NAME_LENGTH];		//用户名
     BYTE		sPassword[PASSWD_LEN];	    //密码
     BYTE		byDomain[MAX_DOMAIN_NAME];	//设备域名
     NET_DVR_IPADDR  struIP;				        //IP地址
@@ -13745,7 +13745,7 @@ typedef struct tagNET_VCA_DATABASE_PARAM
 	DWORD dwSize;
 	DWORD dwDataBaseID; //数据库ID（设备生成，添加时无效，修改和删除时有效）
 	DWORD dwDataBaseType; //数据库类型，见VCA_DATABASE_TYPE
-	BYTE byDataBaseName[NAME_LEN]; //数据库名称
+	BYTE byDataBaseName[NAME_LENGTH]; //数据库名称
 	BYTE byAttribute[64]; //数据库属性
 	BYTE byRes[20];
 }NET_VCA_DATABASE_PARAM, *LPNET_VCA_DATABASE_PARAM;
@@ -13773,8 +13773,8 @@ typedef struct tagNET_VCA_INQUIRE_SNAPDB_COND
 	BYTE byRes1[3]; //保留
 	BYTE byStartBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //起始出生年月，如：201106
 	BYTE byEndBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //截止出生年月，如201106
-	BYTE byAttribute1[NAME_LEN]; //属性1
-	BYTE byAttribute2[NAME_LEN]; //属性2
+	BYTE byAttribute1[NAME_LENGTH]; //属性1
+	BYTE byAttribute2[NAME_LENGTH]; //属性2
 	BYTE byRes[12]; //保留
 }NET_VCA_INQUIRE_SNAPDB_COND, *LPNET_VCA_INQUIRE_SNAPDB_COND;
 
@@ -13788,8 +13788,8 @@ typedef struct tagNET_VCA_INQUIRE_SNAPRECORD_RESULT
 	BYTE byRes1[3]; //保留
 	BYTE byStartBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //起始出生年月，如：201106
 	BYTE byEndBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //截止出生年月，如201106
-	BYTE byAttribute1[NAME_LEN]; //属性1
-	BYTE byAttribute2[NAME_LEN]; //属性2
+	BYTE byAttribute1[NAME_LENGTH]; //属性1
+	BYTE byAttribute2[NAME_LENGTH]; //属性2
 	DWORD dwFacePicID; //人脸图ID
 	DWORD dwFacePicLen;  //人脸图数据长度
 	BYTE byRes[80];  //保留
@@ -13853,8 +13853,8 @@ typedef struct tagNET_VCA_SEARCH_SNAPDB_COND
 	BYTE byRes1[3]; //保留
 	BYTE byStartBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //起始出生年月，如：201106
 	BYTE byEndBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //截止出生年月，如201106
-	BYTE byAttribute1[NAME_LEN]; //属性1
-	BYTE byAttribute2[NAME_LEN]; //属性2
+	BYTE byAttribute1[NAME_LENGTH]; //属性1
+	BYTE byAttribute2[NAME_LENGTH]; //属性2
 	NET_VCA_SEARCH_DATABASE_PARAM struSearchParam;  //检索参数
 	DWORD dwMaxSearchNum; //最大检索条数
 	WORD wThreshold;  //阈值，0-100
@@ -13871,8 +13871,8 @@ typedef struct tagNET_VCA_SEARCH_SNAPRECORD_RESULT
 	BYTE byRes1[3]; //保留
 	BYTE byStartBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //起始出生年月，如：201106
 	BYTE byEndBirthDate[MAX_HUMAN_BIRTHDATE_LEN]; //截止出生年月，如201106
-	BYTE byAttribute1[NAME_LEN]; //属性1
-	BYTE byAttribute2[NAME_LEN]; //属性2
+	BYTE byAttribute1[NAME_LENGTH]; //属性1
+	BYTE byAttribute2[NAME_LENGTH]; //属性2
 	float fSimilarity; //相似度，[0.001,1]
 	DWORD dwFacePicID; //人脸图ID
 	DWORD dwFacePicLen;  //人脸图数据长度
@@ -13886,7 +13886,7 @@ typedef struct tagNET_VCA_DATARECORD_INFO
     DWORD dwRecordID; //记录ID，添加时无效，修改时有效
 	NET_VCA_HUMAN_ATTRIBUTE struAttribute;  //人员信息
 	NET_VCA_REGISTER_PIC struRegisterPic;  //人员图片信息
-	BYTE  byRemark1[NAME_LEN]; //备注信息1
+	BYTE  byRemark1[NAME_LENGTH]; //备注信息1
 	BYTE  byRemark2[64]; //备注信息2
 	BYTE  byRes[32]; //保留
 }NET_VCA_DATARECORD_INFO, *LPNET_VCA_DATARECORD_INFO;
@@ -13895,7 +13895,7 @@ typedef struct tagNET_VCA_FAST_DATARECORD_INFO
 { 
 	DWORD dwSize; //结构体大小
 	NET_VCA_HUMAN_ATTRIBUTE struAttribute;  //人员信息
-	BYTE  byRemark1[NAME_LEN]; //备注信息1
+	BYTE  byRemark1[NAME_LENGTH]; //备注信息1
 	BYTE  byRemark2[64]; //备注信息2
 	DWORD dwImageLen;  //图像数据长度
 	BYTE  byRes[80];  //保留
@@ -13908,7 +13908,7 @@ typedef struct tagNET_VCA_INQUIRE_DATARECORD_RESULT
 	DWORD dwDataBaseID;  //数据库ID
     DWORD dwRecordID; //记录ID
 	NET_VCA_HUMAN_ATTRIBUTE struAttribute;  //人员信息
-	BYTE  byRemark1[NAME_LEN]; //备注信息1
+	BYTE  byRemark1[NAME_LENGTH]; //备注信息1
 	BYTE  byRemark2[64]; //备注信息2
 	DWORD dwFacePicID; //人脸图ID
 	DWORD dwFacePicLen;  //人脸图数据长度
@@ -13922,7 +13922,7 @@ typedef struct tagNET_VCA_SEARCH_DATARECORD_RESULT
 	DWORD dwDataBaseID;  //数据库ID
     DWORD dwRecordID; //记录ID
 	NET_VCA_HUMAN_ATTRIBUTE struAttribute;  //人员信息
-	BYTE  byRemark1[NAME_LEN]; //备注信息1
+	BYTE  byRemark1[NAME_LENGTH]; //备注信息1
 	BYTE  byRemark2[64]; //备注信息2
 	float fSimilarity; //相似度，[0.001,1]
 	DWORD dwFacePicID; //人脸图ID
@@ -14019,7 +14019,7 @@ typedef enum _IPC_AUX_ALARM_TYPE_
 
 typedef struct tagNET_IPC_PIR_ALARMCFG
 {
-    BYTE byAlarmName[NAME_LEN];	/* 报警名称 */
+    BYTE byAlarmName[NAME_LENGTH];	/* 报警名称 */
 	BYTE byAlarmHandle;	        /* 是否处理 0-不处理 1-处理*/
 	BYTE byRes1[3];			
 	NET_DVR_HANDLEEXCEPTION_V30 struAlarmHandleType;	/* 处理方式 */	
@@ -14039,7 +14039,7 @@ typedef struct tagNET_IPC_CALLHELP_ALARMCFG
 
 typedef struct tagNET_IPC_SINGLE_WIRELESS_ALARMCFG
 {
-    BYTE byAlarmName[NAME_LEN];	/* 报警名称 */
+    BYTE byAlarmName[NAME_LENGTH];	/* 报警名称 */
 	BYTE byAlarmHandle;	        /* 是否处理 0-不处理 1-处理*/
 	BYTE byID; //无线报警ID，1-8
 	BYTE byRes1[2];			
@@ -14186,8 +14186,8 @@ typedef struct tagNET_DVR_DECODER_JOINT_PARAM
     NET_DVR_IPADDR	struIP;	// 被关联解码器的IP地址
     WORD	wPort;			// 被关联解码器的端口号
 	WORD	wChannel;		// 被关联解码器的解码通道号
-	BYTE	sDeviceName[NAME_LEN];	//被关联解码器的设备名称
-	BYTE	sChanName[NAME_LEN];	//被关联解码器的解码通道名称
+	BYTE	sDeviceName[NAME_LENGTH];	//被关联解码器的设备名称
+	BYTE	sChanName[NAME_LENGTH];	//被关联解码器的解码通道名称
 	BYTE	byRes2[32];		// 保留字节
 }NET_DVR_DECODER_JOINT_PARAM, *LPNET_DVR_DECODER_JOINT_PARAM;
 #define  NET_DVR_GET_DECODER_JOINT_CHAN	1151
@@ -14251,7 +14251,7 @@ typedef struct tagNET_DVR_CHAN_INFO
 	BYTE   byValid;			//0-无效 1-有效
 	BYTE   byUsed;           /*是否使用,0-没有使用，1-在使用*/
 	BYTE   byRes1[2];
-	BYTE   sChanName[NAME_LEN];    /*通道名称*/
+	BYTE   sChanName[NAME_LENGTH];    /*通道名称*/
 	NET_DVR_COLOR struVideoColor;      /*信号源颜色*/
 	BYTE   byRes2[44];	
 } NET_DVR_CHAN_INFO, *LPNET_DVR_CHAN_INFO;
@@ -14272,11 +14272,11 @@ typedef struct tagNET_DVR_DECODEDEV_INFO
 typedef struct tagNET_DVR_NETSIGNAL_INFO
 {
 	DWORD	dwSize;
-	BYTE	byDevName[NAME_LEN/*32*/];//网络信号源名称
+    BYTE	byDevName[NAME_LENGTH/*32*/];//网络信号源名称
 	NET_DVR_PU_STREAM_CFG struPuStream;  //网络信号源信息，当流媒体结构体struStreamMediaSvrCfg中的byValid为0时，直接使用struDevChanInfo中的参数作为网络信号源参数
 	BYTE    byValid;			//网络信号源是否有效，0-无效，删除网络信号源时设为0  1-有效，添加和修改网络信号源时设为1/
 	BYTE 	byRes1[3];	//保留
-    BYTE	sGroupName[NAME_LEN/*32*/];//网络信号源所在组的组名，网络信号源根据这个组名来分类
+    BYTE	sGroupName[NAME_LENGTH/*32*/];//网络信号源所在组的组名，网络信号源根据这个组名来分类
     BYTE	byRes2[28];	//保留		
 }NET_DVR_NETSIGNAL_INFO, *LPNET_DVR_NETSIGNAL_INFO;
 
@@ -14313,7 +14313,7 @@ typedef struct  tagNET_DVR_SINGLE_DEV_INFO
 	BYTE	byDeviceType;			/*设备类型(只能获取)  见DEVICE_TYPE*/ 
 	BYTE	byRes1;
 	BYTE	sDeviceID[DVCS_DEVICEID_LEN];    /*设备ID标识符*/ 
-	BYTE	sDevName[NAME_LEN];     /*设备名称*/
+	BYTE	sDevName[NAME_LENGTH];     /*设备名称*/
 	NET_DVR_SINGLE_NETPARAM struEtherNet[MAX_ETHERNET]; /*设备网络参数*/
 	BYTE	sSerialNumber[SERIALNO_LEN];	/*设备序列号*/
 	NET_DVR_DIFFDEV_INFO  struSubDevInfo;		/*设备信息*/ 
@@ -14337,7 +14337,7 @@ typedef struct tagNET_DVR_DEV_BASE_INFO
 	BYTE   byEnable;          /*是否在系统中使用*/
 	BYTE   byDeviceType;      /*设备类型(只能获取)*/ 
 	BYTE   byRes1[2];
-	BYTE   sDevName[NAME_LEN]; /*设备名称*/ 
+	BYTE   sDevName[NAME_LENGTH]; /*设备名称*/ 
 	BYTE   byRes2[24];
 } NET_DVR_DEV_BASE_INFO,*LPNET_DVR_DEV_BASE_INFO;
 
@@ -14908,7 +14908,7 @@ typedef struct tagNET_DVR_MB_IPADDR
 typedef struct tagNET_DVR_MB_WVSPARA
 {
 	NET_DVR_MB_IPADDR struWVSAddr;
-	BYTE byPuid[NAME_LEN];    //设备id
+	BYTE byPuid[NAME_LENGTH];    //设备id
 	BYTE byPassword[PASSWD_LEN];  //密码
 	BYTE byRes[8];
 }NET_DVR_MB_WVSPARA, *LPNET_DVR_MB_WVSPARA;
@@ -14916,7 +14916,7 @@ typedef struct tagNET_DVR_MB_WVSPARA
 typedef struct tagNET_DVR_MB_EHOMEPARA
 {
 	NET_DVR_MB_IPADDR struEHomeAddr;
-	BYTE byPuid[NAME_LEN];   //设备id
+	BYTE byPuid[NAME_LENGTH];   //设备id
 }NET_DVR_MB_EHOMEPARA, *LPNET_DVR_MB_EHOMEPARA;
 
 typedef struct tagNET_DVR_MB_PLATFORMPARA
@@ -15350,7 +15350,7 @@ typedef struct tagNET_DVR_CMD_TRIGGER_PERIOD_RECORD_PARA
 
 typedef struct tagNET_DVR_LOCK_FILE_BY_NAME_PARA
 {
-	BYTE				byFileName[NAME_LEN]; 	// 录像文件名，老协议只传32个文件名
+	BYTE				byFileName[NAME_LENGTH]; 	// 录像文件名，老协议只传32个文件名
     DWORD				dwLockDuration;			// 锁定持续时间,单位秒，0xffffffff表示永久锁定
 	BYTE				byRes[512];
 }NET_DVR_LOCK_FILE_BY_NAME_PARA, *LPNET_DVR_LOCK_FILE_BY_NAME_PARA;
@@ -15385,7 +15385,7 @@ typedef struct tagNET_DVR_PUSHALARMINFO_V40
 			BYTE  byAlarmOutputNumber[MAX_ALARMOUT_V30];   /*按位,第0位对应第0个输出端口, */
 			BYTE  byAlarmRelateChannel[MAX_CHANNUM_V30];  /*按位,第0位对应第0个通道*/
 			BYTE  byRes1[97];
-            BYTE  byDeviceID[NAME_LEN]; /*设备的ID串*/
+            BYTE  byDeviceID[NAME_LENGTH]; /*设备的ID串*/
             BYTE  byRes2[7];
 		}struIOAlarm;
 		struct
@@ -15394,14 +15394,14 @@ typedef struct tagNET_DVR_PUSHALARMINFO_V40
 			BYTE byRes1[132];
 			BYTE byChannel[MAX_CHANNUM_V30];             /*按位,0x2表示第1通道，第1位对应第1个通道(从通道1开始)，dwAlarmType为2或3, 6，9，10时需要设置, */
 			BYTE byRes2[33];
-            BYTE byDeviceID[NAME_LEN]; /*设备的ID串*/
+            BYTE byDeviceID[NAME_LENGTH]; /*设备的ID串*/
             BYTE byRes3[7];
 		}struStreamIDorChannel;
 		struct
 		{
 			BYTE byRes1[228];
 			BYTE byDiskNumber[MAX_DISKNUM_V30];  /*按位,第0位对应第0个硬盘,dwAlarmType为1,4,5时需要设置*/
-            BYTE byDeviceID[NAME_LEN]; /*设备的ID串*/
+            BYTE byDeviceID[NAME_LENGTH]; /*设备的ID串*/
             BYTE byRes2[7];
 		}struDiskAlarm;
 	}uAlarmInfo;
@@ -15522,7 +15522,7 @@ typedef struct tagNET_DVR_WALLWINPARAM
 typedef struct tagNET_DVR_WALLSCENECFG
 {
 	DWORD dwSize;
-	BYTE  sSceneName[NAME_LEN];//场景名称
+	BYTE  sSceneName[NAME_LENGTH];//场景名称
 	BYTE  byRes [80];
 }NET_DVR_WALLSCENECFG, *LPNET_DVR_WALLSCENECFG;
 
@@ -15564,7 +15564,7 @@ typedef struct tagNET_DVR_ASSOCIATEDDEV_CHAN_INFO
 	BYTE   sAddress[MAX_DOMAIN_NAME];//ip地址，或是域名
     WORD   wDVRPort;			 	/* 端口号 */
     WORD   wChannel;				/* 通道号 */
-    BYTE   sUserName[NAME_LEN];	/* 监控主机登陆帐号 */
+    BYTE   sUserName[NAME_LENGTH];	/* 监控主机登陆帐号 */
 	BYTE   sPassword[PASSWD_LEN];	/* 监控主机密码 */
     BYTE   byRes[24];
 }NET_DVR_ASSOCIATEDDEV_CHAN_INFO,*LPNET_DVR_ASSOCIATEDDEV_CHAN_INFO;
@@ -15586,7 +15586,7 @@ typedef struct NET_DVR_SUBMATRIXSYSTEMINFO
 	BYTE		sAddress[MAX_DOMAIN_NAME];//ip地址，或是域名
     WORD		wSubMatrixPort;        /*子系统端口号*/
 	BYTE		byRes1[6];   
-	BYTE		sUserName[NAME_LEN];	/*用户名*/
+	BYTE		sUserName[NAME_LENGTH];	/*用户名*/
 	BYTE		sPassword[PASSWD_LEN];	/*密码 */   
 	BYTE		byRes2[36];
 }NET_DVR_SUBMATRIXSYSTEMINFO,*LPNET_DVR_SUBMATRIXSYSTEMINFO;
@@ -15664,7 +15664,7 @@ typedef struct tagNET_DVR_EXTERNAL_MATRIX_CFG
 	DWORD		dwSize;
 	BYTE		byValid;			// 有效时为设置，无效时为删除
 	BYTE		byRes1[3];
-	BYTE	    sMatrixName[NAME_LEN/*32*/];       // 矩阵的名称
+    BYTE	    sMatrixName[NAME_LENGTH/*32*/];       // 矩阵的名称
 	DWORD  	    dwMatrixID;		// 矩阵的ID号，只能获取
 	WORD		wMatrixInputChanNum;				// 矩阵的输入通道数目
 	WORD		wMatrixOutputChanNum;			// 矩阵的输出通道数目
@@ -15700,7 +15700,7 @@ typedef struct tagNET_DVR_ASSOCIATE_OUTPUT_PARAM
 typedef struct tagNET_DVR_VCS_USER_INFO
 {
 	DWORD   dwSize;
-	BYTE	sUserName[NAME_LEN];			// 用户名，最大16字节
+	BYTE	sUserName[NAME_LENGTH];			// 用户名，最大16字节
 	BYTE	sPassWord[PASSWD_LEN];		// 密码
 	NET_DVR_IPADDR	struUserIP;	// 用户IP地址(为0时表示允许任何地址)
 	BYTE	byMacAddr[MACADDR_LEN];			// 物理地址
@@ -15754,7 +15754,7 @@ typedef struct tagNET_DVR_DEV_CHAN_INFO_V41
     BYTE	bySubDispChan;//显示通道子通道号，智能配置时使用
 	BYTE	byResolution;	//; 1-CIF 2-4CIF 3-720P 4-1080P 5-500w大屏控制器使用，大屏控制器会根据该参数分配解码资源
     BYTE	byRes[2];    
-    BYTE	sUserName[NAME_LEN];	//监控主机登陆帐号
+    BYTE	sUserName[NAME_LENGTH];	//监控主机登陆帐号
     BYTE	sPassword[PASSWD_LEN];	//监控主机密码
 }NET_DVR_DEV_CHAN_INFO_V41,*LPNET_DVR_DEV_CHAN_INFO_V41;
 

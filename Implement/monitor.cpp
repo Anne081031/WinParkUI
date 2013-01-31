@@ -1,5 +1,3 @@
-#include "Header/monitor.h"
-#include "ui_monitor.h"
 #include "Dialog/parkspacelotdialog.h"
 #include "Dialog/parkspacelotdialog.h"
 #include "SerialPort/processdata.h"
@@ -21,6 +19,9 @@
 #include "windows.h"
 #include "PmsLog/pmslog.h"
 #include "ThirdParty/scu.h"
+
+#include "Header/monitor.h"
+#include "ui_monitor.h"
 
 quint8 CMonitor::imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ] = { { 0 } };
 TH_PlateIDResult CMonitor::recogResult[ VIDEO_USEDWAY ][ RECOG_RES ] = { { 0 } };
@@ -161,6 +162,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     nRealTimeRecord = pSystem->value( "CommonCfg/RealTimeRecord", 100 ).toInt( );
     bPlateVideo = pSystem->value( "CommonCfg/PlateVideo", true ).toBool( );
     bSavePicture = pSystem->value( "CommonCfg/SavePicture", false ).toBool( );
+    bNetworkCamera = pSystem->value( "CommonCfg/NetworkCamera", false ).toBool( );
 
     InitChannelHandle( );
 
@@ -193,6 +195,8 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
 
     connect( &CLogicInterface::GetInterface( )->GetMysqlDb( ), SIGNAL( NotifyError( QString ) ), this, SLOT( DisplayDbError( QString ) ) );
     ControlGateButton( );
+
+    ipcVideoFrame = new CIPCVideoFrame( bNetworkCamera, this );
 }
 
 void CMonitor::SetFileCount( quint32 nCount )
@@ -253,7 +257,7 @@ void CMonitor::InitVideoPlateUI( )
     ui->video4->setVisible( false );
     ui->video5->setVisible( false );
 
-    for ( int nIndex = 0; nIndex < VIDEO_USEDWAY; nIndex ++ ) {
+    for ( int nIndex = 0; nIndex < VIDEO_USEDWAY; nIndex++ ) {
         nRealIndex = nIndex + 1;
         if ( bAuto ) {
             nMode = nIndex % 2;
@@ -261,7 +265,19 @@ void CMonitor::InitVideoPlateUI( )
             rect.setY( nIndex - nMode ? 546 : 203 );
             rect.setWidth( 410 );
             rect.setHeight( 275 );
-            lblVideoWnd[ nIndex ] = new CMyLabel( nIndex, rect, this );
+            lblVideoWnd[ nIndex ] = new CMyLabel( nIndex, rect, bNetworkCamera );
+
+            if ( bNetworkCamera ) {
+                QString strKey = QString( "CommonCfg/Video%1" ).arg( nIndex + 1 );
+                QString strCan = pSystem->value( strKey, "0" ).toString( );
+                QString strSQL = QString( "Select video2ip from roadconerinfo where \
+                                          shebeiadr = %1 and video1ip = '%2'" ).arg(
+                        strCan, CCommonFunction::GetHostIP( ) );
+                QStringList lstRow;
+                if ( 0 < CLogicInterface::GetInterface( )->ExecuteSql( strSQL, lstRow ) ) {
+                    lblVideoWnd[ nIndex ]->setToolTip( lstRow.at( 0 ) );
+                }
+            }
         } else {
              lblVideoWnd[ nIndex ] = findChild< QLabel* >( strVideo.arg( nRealIndex ) );
         }
@@ -974,6 +990,12 @@ CMonitor::~CMonitor()
 {
     delete pDlgAlert;
     StopAvSdk( );
+    StopIPC( );
+
+    if ( NULL !=  ipcVideoFrame ) {
+        delete ipcVideoFrame;
+    }
+
     delete ui;
 }
 
@@ -1065,6 +1087,10 @@ void CMonitor::StopPlateRecog( )
 
 void CMonitor::StopAvSdk( )
 {
+    if ( bNetworkCamera ) {
+        return;
+    }
+
     if ( NULL == pMultimedia ) {
         return;
     }
@@ -1092,8 +1118,54 @@ void CMonitor::StopAvSdk( )
     InitChannelHandle( );
 }
 
+void CMonitor::DisplayRemoteUI( )
+{
+    ipcVideoFrame->show( );
+}
+
+void CMonitor::StartIPC( )
+{
+    if ( !bNetworkCamera ) {
+        return;
+    }
+
+    IPCVideo( true );
+}
+
+void CMonitor::StopIPC( )
+{
+    if ( !bNetworkCamera ) {
+        return;
+    }
+
+    IPCVideo( false );
+    ipcVideoFrame->LocalIPCLogout( );
+}
+
+void CMonitor::IPCVideo( bool bPlayVideo )
+{
+    HWND hPlayWnd;
+    QString strIP;
+
+    for ( int nIndex = 0; nIndex < nUsedWay; nIndex++ ) {
+        //PlayVideo( nIndex, lblVideoWnd[ nIndex ] );
+        hPlayWnd = lblVideoWnd[ nIndex ]->winId( );
+        strIP = lblVideoWnd[ nIndex ]->toolTip( );
+
+        if ( bPlayVideo ) {
+            ipcVideoFrame->LocalIPCStartVideo( strIP, hPlayWnd );
+        } else {
+            ipcVideoFrame->LocalIPCStopVideo(  hPlayWnd );
+        }
+    }
+}
+
 void CMonitor::StartAvSdk( )
 {
+    if ( bNetworkCamera ) {
+        return;
+    }
+
     pSysSet->sync( );
     QString strKey = "VideoMode/AutoVideo";
     bool bAuto = pSysSet->value( strKey, 0 ).toBool( );
@@ -1526,6 +1598,7 @@ void CMonitor::resizeEvent( QResizeEvent* )
     //CalculatePos( );
     LoadImg( );
     StartAvSdk( );
+    StartIPC( );
     StartPlateRecog( );
 }
 

@@ -3,12 +3,20 @@
 #include <QByteArray>
 #include "./Common/logicinterface.h"
 
-CIPCVideoFrame::CIPCVideoFrame(QWidget *parent) :
+CIPCVideoFrame::CIPCVideoFrame(bool bIPC, QWidget *parent) :
     QFrame(parent),
     ui(new Ui::CIPCVideoFrame)
 {
     ui->setupUi(this);
-    pVideoThread = QIPCThread::GetInstance( );
+    bNetworkCamera = bIPC;
+
+    if ( bNetworkCamera ) {
+        pVideoThread = QIPCThread::GetInstance( );
+    } else {
+        ui->tabWidget->removeTab( 0 );
+        pVideoThread = NULL;
+    }
+
     setWindowState( Qt::WindowMaximized );
     InitializeIPC( );
 }
@@ -21,6 +29,13 @@ CIPCVideoFrame::~CIPCVideoFrame()
 
 void CIPCVideoFrame::resizeEvent( QResizeEvent *event )
 {
+    if ( !bNetworkCamera ) {
+        setMaximumSize( width( ), height( ) );
+        setMinimumSize( width( ), height( ) );
+        move( 123, 177 );
+        return;
+    }
+
     Q_UNUSED( event )
     QRect rect = frameRect( );
     ui->tabWidget->setGeometry( rect );
@@ -38,17 +53,26 @@ void CIPCVideoFrame::closeEvent( QCloseEvent *event )
 
 void CIPCVideoFrame::UninitializeIPC( )
 {
-    pVideoThread->PostIPCCleanupEvent( );
-}
-
-void CIPCVideoFrame::LocalIPCVideo( HWND hPlayWnd, bool bPlay )
-{
-    if ( INVALID_HANDLE_VALUE == hPlayWnd ) {
+    if ( NULL == pVideoThread ) {
         return;
     }
 
-    QString strIP = CCommonFunction::GetHostIP( );
-    bPlay ? StartPlayIPC( strIP, hPlayWnd ) : StopPlayIPC( hPlayWnd );
+    pVideoThread->PostIPCCleanupEvent( );
+}
+
+void CIPCVideoFrame::LocalIPCLogout( )
+{
+    LogIPC( true, false );
+}
+
+void CIPCVideoFrame::LocalIPCStartVideo( QString &strIP, HWND hPlayWnd )
+{
+    StartPlayIPC( strIP, hPlayWnd );
+}
+
+void CIPCVideoFrame::LocalIPCStopVideo( HWND hPlayWnd )
+{
+    StopPlayIPC( hPlayWnd );
 }
 
 void CIPCVideoFrame::showEvent( QShowEvent *event )
@@ -63,6 +87,10 @@ void CIPCVideoFrame::showEvent( QShowEvent *event )
 
 void CIPCVideoFrame::VideoIPC( bool bPlay )
 {
+    if ( NULL == pVideoThread ) {
+        return;
+    }
+
     QList< QString > lstIPC = hashHostIPC.values( );
     int nIPC = lstIPC.count( );
     int nTab = ui->tabWidgetVideo->count( );
@@ -116,6 +144,10 @@ void CIPCVideoFrame::InitializeIPC( )
 {
     GetHostIPC( );
 
+    if ( NULL == pVideoThread ) {
+        return;
+    }
+
     QIPCEvent::EventParam uParam;
 
     pVideoThread->PostIPCStartupEvent( );
@@ -133,6 +165,10 @@ void CIPCVideoFrame::InitializeIPC( )
 
 void CIPCVideoFrame::LogIPC( bool bLocal, bool bLogin )
 {
+    if ( NULL == pVideoThread ) {
+        return;
+    }
+
     QList< QString > lstIPC;
     QString strIP = CCommonFunction::GetHostIP( );
 
@@ -157,6 +193,10 @@ void CIPCVideoFrame::LogIPC( bool bLocal, bool bLogin )
 
 void CIPCVideoFrame::LoginIPC( const QString &strIP )
 {
+    if ( NULL == pVideoThread ) {
+        return;
+    }
+
     if ( strIP.isEmpty( ) ) {
         return;
     }
@@ -176,6 +216,10 @@ void CIPCVideoFrame::LoginIPC( const QString &strIP )
 
 void CIPCVideoFrame::LogoutIPC( const QString &strIP )
 {
+    if ( NULL == pVideoThread ) {
+        return;
+    }
+
     if ( strIP.isEmpty( ) ) {
         return;
     }
@@ -192,6 +236,10 @@ void CIPCVideoFrame::LogoutIPC( const QString &strIP )
 
 void CIPCVideoFrame::StartPlayIPC( const QString &strIP, HWND hPlayWnd )
 {
+    if ( NULL == pVideoThread ) {
+        return;
+    }
+
     if ( strIP.isEmpty( ) || INVALID_HANDLE_VALUE == hPlayWnd ) {
         return;
     }
@@ -209,6 +257,10 @@ void CIPCVideoFrame::StartPlayIPC( const QString &strIP, HWND hPlayWnd )
 
 void CIPCVideoFrame::StopPlayIPC( HWND hPlayWnd )
 {
+    if ( NULL == pVideoThread ) {
+        return;
+    }
+
     QIPCEvent::EventParam uParam;
 
     uParam.EventStopRealPlay.hPlayWnd = hPlayWnd;

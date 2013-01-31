@@ -487,8 +487,15 @@ void MainWindow::OnRbSyncXClicked( )
         SetNewFlash(  pSender );
     }
 
-    if ( bNewDevice && 1 == ui->cbMode->currentIndex( ) ) {
-        eCmd = LedControll::CmdSyncModeForFlash;
+    if ( bNewDevice ) {
+        //1 == ui->cbMode->currentIndex( )
+
+        if ( bFlash ) {
+            eCmd = LedControll::CmdSyncModeForFlash;
+            nIndex -= 4;
+        } else {
+            nIndex -= 7;
+        }
     } else {
         nIndex |= 0xFF03D800;
     }

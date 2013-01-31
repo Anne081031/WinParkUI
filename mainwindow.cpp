@@ -1515,7 +1515,7 @@ QWidget* MainWindow::CreateChildWnd( CommonDataType::ChildWndType childType )
             break;
 
         case CommonDataType::RemoteMgmt :
-            pFrame = new CIPCVideoFrame( );
+            pFrame = new CIPCVideoFrame( false );
             bPictureContrast = true;
             break;
 
@@ -2035,6 +2035,6 @@ void MainWindow::on_actRemoteMgmt_triggered()
 {
     //ShowWnd( CommonDataType::RemoteMgmt );
 
-    static CIPCVideoFrame vidFrame;
-    vidFrame.show( );
+    CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
+    pMonitor->DisplayRemoteUI( );
 }

@@ -39,7 +39,7 @@ public:
         struct __EventLogin {
             char cIP[ IPC_IP_LEN + 1 ];
             WORD wPort;
-            char cUser[NAME_LEN + 1 ];
+            char cUser[NAME_LENGTH + 1 ];
             char cPwd[ PASSWD_LEN + 1 ];
         } EventLogin;
 

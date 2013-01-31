@@ -15,9 +15,11 @@ class CIPCVideoFrame : public QFrame
     Q_OBJECT
     
 public:
-    explicit CIPCVideoFrame(QWidget *parent = 0);
+    explicit CIPCVideoFrame( bool bIPC, QWidget *parent = 0);
     ~CIPCVideoFrame();
-    void LocalIPCVideo( HWND hPlayWnd, bool bPlay );
+    void LocalIPCStartVideo( QString& strIP, HWND hPlayWnd );
+    void LocalIPCStopVideo( HWND hPlayWnd );
+    void LocalIPCLogout( );
 
 protected:
     void resizeEvent( QResizeEvent * event );
@@ -45,6 +47,7 @@ private:
     QIPCThread* pVideoThread;
     QHostIPCHash hashHostIPC;
     QHostIPCHash hashIPCName;
+    bool bNetworkCamera;
 };
 
 #endif // IPCVIDEOFRAME_H
