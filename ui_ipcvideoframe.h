@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ipcvideoframe.ui'
 **
-** Created: Thu Jan 31 16:49:53 2013
+** Created: Fri Feb 1 13:10:09 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -46,14 +46,16 @@ public:
         if (CIPCVideoFrame->objectName().isEmpty())
             CIPCVideoFrame->setObjectName(QString::fromUtf8("CIPCVideoFrame"));
         CIPCVideoFrame->resize(694, 510);
+        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(CIPCVideoFrame->sizePolicy().hasHeightForWidth());
+        CIPCVideoFrame->setSizePolicy(sizePolicy);
         CIPCVideoFrame->setFrameShape(QFrame::StyledPanel);
         CIPCVideoFrame->setFrameShadow(QFrame::Raised);
         tabWidget = new QTabWidget(CIPCVideoFrame);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
         tabWidget->setGeometry(QRect(7, 7, 681, 491));
-        QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-        sizePolicy.setHorizontalStretch(0);
-        sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(tabWidget->sizePolicy().hasHeightForWidth());
         tabWidget->setSizePolicy(sizePolicy);
         tabVideo = new QWidget();
@@ -62,7 +64,7 @@ public:
         tabVideo->setSizePolicy(sizePolicy);
         tabWidgetVideo = new QTabWidget(tabVideo);
         tabWidgetVideo->setObjectName(QString::fromUtf8("tabWidgetVideo"));
-        tabWidgetVideo->setGeometry(QRect(20, 10, 127, 80));
+        tabWidgetVideo->setGeometry(QRect(20, 10, 341, 271));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         tabWidgetVideo->addTab(tab, QString());
@@ -72,6 +74,8 @@ public:
         tabWidget->addTab(tabVideo, QString());
         tabGate = new QWidget();
         tabGate->setObjectName(QString::fromUtf8("tabGate"));
+        sizePolicy.setHeightForWidth(tabGate->sizePolicy().hasHeightForWidth());
+        tabGate->setSizePolicy(sizePolicy);
         tableWidget = new QTableWidget(tabGate);
         if (tableWidget->columnCount() < 3)
             tableWidget->setColumnCount(3);
@@ -85,7 +89,7 @@ public:
         tableWidget->setGeometry(QRect(10, 10, 651, 401));
         layoutWidget = new QWidget(tabGate);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(340, 430, 320, 25));
+        layoutWidget->setGeometry(QRect(340, 440, 320, 25));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
@@ -113,7 +117,7 @@ public:
 
         retranslateUi(CIPCVideoFrame);
 
-        tabWidget->setCurrentIndex(1);
+        tabWidget->setCurrentIndex(0);
 
 
         QMetaObject::connectSlotsByName(CIPCVideoFrame);

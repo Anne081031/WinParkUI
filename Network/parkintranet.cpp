@@ -130,7 +130,26 @@ void CNetwork::MultiCastData( const QByteArray& byData )
     }
 }
 
-void CNetwork::BroadcastDatagram( CommonDataType::DatagramType dgType, QStringList &lstData )
+void CNetwork::BroadcastDatagram( CommonDataType::DatagramType dgType, QStringList &lstData, QString &strDestIP )
+{
+    QByteArray byType;
+    OrgnizeData( dgType, lstData, byType );
+
+    if ( 0 == byType.count( ) ) {
+        return;
+    }
+
+    BOOL bRet = CheckNetwork( );
+
+    if ( bRet ) {
+        QHostAddress addr( strDestIP );
+        udpClient->writeDatagram( byType, addr, BROADCAST_PORT );
+    } else {
+        udpClient->writeDatagram( byType, QHostAddress::LocalHost, LOCALHOST_PORT );
+    }
+}
+
+void CNetwork::OrgnizeData( CommonDataType::DatagramType dgType, QStringList& lstData, QByteArray& byType )
 {
     bool bType = ( -1 < dgType && dgType < CommonDataType::DGTypeCount );
     if ( NULL == udpClient || 0 == lstData.count( ) || !bType) {
@@ -138,7 +157,7 @@ void CNetwork::BroadcastDatagram( CommonDataType::DatagramType dgType, QStringLi
     }
 
     // Format : Token Type Data
-    QByteArray byType = DATAGRAM_TOKEN;
+    byType = DATAGRAM_TOKEN;
     byType.append( SEPERATOR );
 
     QString strType = QString::number( dgType );
@@ -148,8 +167,12 @@ void CNetwork::BroadcastDatagram( CommonDataType::DatagramType dgType, QStringLi
         byType.append( SEPERATOR ); // Seperator
         byType.append( pCodec->fromUnicode( strType ) );
     }
+}
 
+bool CNetwork::CheckNetwork( )
+{
     BOOL bRet = false;
+
     if ( NULL != MyIsNetworkAlive ) {
         DWORD dwType;
         bRet = MyIsNetworkAlive( &dwType );
@@ -162,6 +185,20 @@ void CNetwork::BroadcastDatagram( CommonDataType::DatagramType dgType, QStringLi
             bRet = false;
         }
     }
+
+    return bRet;
+}
+
+void CNetwork::BroadcastDatagram( CommonDataType::DatagramType dgType, QStringList &lstData )
+{
+    QByteArray byType;
+    OrgnizeData( dgType, lstData, byType );
+
+    if ( 0 == byType.count( ) ) {
+        return;
+    }
+
+    BOOL bRet = CheckNetwork( );
 
     if ( bRet ) {
         if ( bMultiCast ) {

@@ -196,7 +196,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     connect( &CLogicInterface::GetInterface( )->GetMysqlDb( ), SIGNAL( NotifyError( QString ) ), this, SLOT( DisplayDbError( QString ) ) );
     ControlGateButton( );
 
-    ipcVideoFrame = new CIPCVideoFrame( bNetworkCamera, this );
+    ipcVideoFrame = new CIPCVideoFrame( bNetworkCamera );
 }
 
 void CMonitor::SetFileCount( quint32 nCount )
@@ -265,7 +265,7 @@ void CMonitor::InitVideoPlateUI( )
             rect.setY( nIndex - nMode ? 546 : 203 );
             rect.setWidth( 410 );
             rect.setHeight( 275 );
-            lblVideoWnd[ nIndex ] = new CMyLabel( nIndex, rect, bNetworkCamera );
+            lblVideoWnd[ nIndex ] = new CMyLabel( nIndex, rect, bNetworkCamera, this );
 
             if ( bNetworkCamera ) {
                 QString strKey = QString( "CommonCfg/Video%1" ).arg( nIndex + 1 );
@@ -1003,6 +1003,14 @@ void CMonitor::CaptureImage( QString& strFile, int nChannel, CommonDataType::Cap
 {
     if ( QFile::exists( strFile ) ) {
         QFile::remove( strFile );
+    }
+
+    if ( bNetworkCamera ) {
+        //HWND hPlayWnd = lblVideoWnd[ nChannel ]->winId( );
+        QString strIP = lblVideoWnd[ nChannel ]->toolTip( );
+
+        ipcVideoFrame->CaptureDeviceImage( strIP, strFile );
+        return;
     }
 
     if ( "ÖÐÎ¬" == strCapture ) {

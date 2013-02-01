@@ -17,6 +17,7 @@ public:
     explicit CNetwork(QObject *parent = 0);
 
     void BroadcastDatagram( CommonDataType::DatagramType dgType, QStringList& lstData );
+    void BroadcastDatagram( CommonDataType::DatagramType dgType, QStringList& lstData, QString& strDestIP );
 
     static CNetwork& Singleton( QObject* parent = 0 );
 
@@ -26,6 +27,8 @@ private:
     void ProcessData( QByteArray& byData );
     void GetTargetHostIP( );
     void MultiCastData( const QByteArray& byData );
+    void OrgnizeData( CommonDataType::DatagramType dgType, QStringList& lstData, QByteArray& byType );
+    bool CheckNetwork( );
 
 signals:
     void OnReceiveDatagram( QStringList& lstData );

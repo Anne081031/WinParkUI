@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'cdlgquerywhere.h'
 **
-** Created: Tue Oct 30 13:33:57 2012
+** Created: Fri Feb 1 11:05:37 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

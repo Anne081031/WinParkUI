@@ -10,6 +10,12 @@
     <height>510</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>远程管理</string>
   </property>
@@ -35,7 +41,7 @@
     </sizepolicy>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tabVideo">
     <property name="sizePolicy">
@@ -52,8 +58,8 @@
       <rect>
        <x>20</x>
        <y>10</y>
-       <width>127</width>
-       <height>80</height>
+       <width>341</width>
+       <height>271</height>
       </rect>
      </property>
      <widget class="QWidget" name="tab">
@@ -69,6 +75,12 @@
     </widget>
    </widget>
    <widget class="QWidget" name="tabGate">
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
     <attribute name="title">
      <string>开关闸</string>
     </attribute>
@@ -101,7 +113,7 @@
      <property name="geometry">
       <rect>
        <x>340</x>
-       <y>430</y>
+       <y>440</y>
        <width>320</width>
        <height>25</height>
       </rect>

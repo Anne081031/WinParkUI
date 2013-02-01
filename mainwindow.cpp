@@ -763,6 +763,12 @@ void MainWindow::ProcessGateCommand( QStringList &lstData )
         return;
     }
 
+    if ( 3 > lstData.count( ) ) {
+        return;
+    }
+
+    lstData.removeAt( 0 );
+
     quint8 nItems = lstData.count( ) ;
     nItems -= nItems % 2;
     if ( 2 > nItems ) {

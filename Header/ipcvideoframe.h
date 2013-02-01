@@ -21,10 +21,24 @@ public:
     void LocalIPCStopVideo( HWND hPlayWnd );
     void LocalIPCLogout( );
 
+    void CapturePreviewImage( HWND hPlayWnd, QString& strFileName );
+    void CaptureDeviceImage( QString& strIP, QString& strFileName );
+
 protected:
     void resizeEvent( QResizeEvent * event );
     void closeEvent( QCloseEvent * event );
     void showEvent( QShowEvent * event );
+
+private slots:
+    void on_tabWidget_currentChanged(int index);
+
+    void on_btnOpen_clicked();
+
+    void on_btnClose_clicked();
+
+    void on_btnOpenAll_clicked();
+
+    void on_btnCloseAll_clicked();
 
 private:
     typedef QMultiHash< QString, QString > QHostIPCHash;
@@ -41,6 +55,9 @@ private:
     void GetHostIPC( );
     void LogIPC( bool bLocal, bool bLogin );
     void VideoIPC( bool bPlay );
+
+    void FillTable( );
+    void OperateGate( bool bOpen, bool bAll );
     
 private:
     Ui::CIPCVideoFrame *ui;
@@ -48,6 +65,8 @@ private:
     QHostIPCHash hashHostIPC;
     QHostIPCHash hashIPCName;
     bool bNetworkCamera;
+    QRect recSmallSize;
+    QRect recBigSize;
 };
 
 #endif // IPCVIDEOFRAME_H

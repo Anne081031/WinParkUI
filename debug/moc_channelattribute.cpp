@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'channelattribute.h'
 **
-** Created: Wed Jan 30 14:21:48 2013
+** Created: Fri Feb 1 11:03:44 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

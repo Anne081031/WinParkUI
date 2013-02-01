@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ipcvideoframe.h'
 **
-** Created: Thu Jan 31 16:17:38 2013
+** Created: Fri Feb 1 12:37:17 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,18 +23,29 @@ static const uint qt_meta_data_CIPCVideoFrame[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       5,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
        0,       // signalCount
 
+ // slots: signature, parameters, type, tag, flags
+      22,   16,   15,   15, 0x08,
+      55,   15,   15,   15, 0x08,
+      76,   15,   15,   15, 0x08,
+      98,   15,   15,   15, 0x08,
+     122,   15,   15,   15, 0x08,
+
        0        // eod
 };
 
 static const char qt_meta_stringdata_CIPCVideoFrame[] = {
-    "CIPCVideoFrame\0"
+    "CIPCVideoFrame\0\0index\0"
+    "on_tabWidget_currentChanged(int)\0"
+    "on_btnOpen_clicked()\0on_btnClose_clicked()\0"
+    "on_btnOpenAll_clicked()\0"
+    "on_btnCloseAll_clicked()\0"
 };
 
 const QMetaObject CIPCVideoFrame::staticMetaObject = {
@@ -64,6 +75,17 @@ int CIPCVideoFrame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QFrame::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: on_tabWidget_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 1: on_btnOpen_clicked(); break;
+        case 2: on_btnClose_clicked(); break;
+        case 3: on_btnOpenAll_clicked(); break;
+        case 4: on_btnCloseAll_clicked(); break;
+        default: ;
+        }
+        _id -= 5;
+    }
     return _id;
 }
 QT_END_MOC_NAMESPACE
