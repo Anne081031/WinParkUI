@@ -216,18 +216,21 @@ void MainWindow::InitializeSlot( )
     hashFlashSync.insert( 1, ui->rbSync04 );
     hashFlashSync.insert( 2, ui->rbSync05 );
     hashFlashSync.insert( 3, ui->rbSync06 );
+    hashFlashSync.insert( 4, ui->rbSync07 );
 
-    hashFreqSync.insert( 1, ui->rbSync07 );
-    hashFreqSync.insert( 2, ui->rbSync08 );
-    hashFreqSync.insert( 3, ui->rbSync09 );
+    hashFreqSync.insert( 1, ui->rbSync08 );
+    hashFreqSync.insert( 2, ui->rbSync09 );
+    hashFreqSync.insert( 3, ui->rbSync10 );
+    hashFreqSync.insert( 4, ui->rbSync11 );
 
     lstFlashCtrl.append( ui->rbSync04 );
     lstFlashCtrl.append( ui->rbSync05 );
     lstFlashCtrl.append( ui->rbSync06 );
+    lstFlashCtrl.append( ui->rbSync07 );
     lstFlashCtrl.append( ui->chkLightSensitiveFlash );
     lstFlashCtrl.append( ui->spFlashLightNew );
     lstFlashCtrl.append( ui->spFlashTimeNew );
-    //lstFlashCtrl.append( ui->spLightSensitiveFlash );
+    lstFlashCtrl.append( ui->cbLightSensitiveFlash );
 
     connect( ui->rb01, SIGNAL( clicked( ) ), this, SLOT( OnRbModeXClicked( ) ) );
     connect( ui->rb02, SIGNAL( clicked( ) ), this, SLOT( OnRbModeXClicked( ) ) );
@@ -247,6 +250,8 @@ void MainWindow::InitializeSlot( )
     connect( ui->rbSync07, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
     connect( ui->rbSync08, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
     connect( ui->rbSync09, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    connect( ui->rbSync10, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    connect( ui->rbSync11, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
 
     connect( ui->spFlashLight, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
     connect( ui->spFlashTime, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
@@ -295,6 +300,8 @@ quint8 MainWindow::GetCbBCDValue( const QComboBox *pCB )
 
 void MainWindow::CbCurrentIndexChanged( int index )
 {
+    SetNewFlash( sender( ) );
+
     const QComboBox* pCB = ( QComboBox* ) sender( );
     LedControll::ECommand eCmd;
     bool bNewDevice = true;
@@ -413,7 +420,7 @@ qint32 MainWindow::GetRbIndex( QObject *pSender )
     }
 
     qint32 nIndex = strName.right( 2 ).toInt( );
-    if ( 9 < nIndex || 0 >= nIndex ) { // 1-- 9
+    if ( 11 < nIndex || 0 >= nIndex ) { // 1-- 11
         return 0;
     }
 
@@ -456,7 +463,7 @@ void MainWindow::OnRbSyncXClicked( )
     QObject* pSender = sender( );
     qint32 nIndex = GetRbIndex( pSender );
 
-    if ( 0 >= nIndex || 9 < nIndex ) {
+    if ( 0 >= nIndex || 11 < nIndex ) {
         return;
     }
 
@@ -478,7 +485,12 @@ void MainWindow::OnRbSyncXClicked( )
     case 3 :
     case 6 :
     case 9 :
+    case 10 :
         eCmd = LedControll::CmdSyncModeFollowTrigger;
+        break;
+
+    case 11 :
+        eCmd = LedControll::CmdSyncModeFollowDownTrigger;
         break;
     }
 
@@ -494,7 +506,7 @@ void MainWindow::OnRbSyncXClicked( )
             eCmd = LedControll::CmdSyncModeForFlash;
             nIndex -= 4;
         } else {
-            nIndex -= 7;
+            nIndex -= 8;
         }
     } else {
         nIndex |= 0xFF03D800;

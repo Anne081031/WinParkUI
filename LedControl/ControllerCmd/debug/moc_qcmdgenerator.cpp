@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qcmdgenerator.h'
 **
-** Created: Fri Dec 7 15:30:08 2012
+** Created: Mon Feb 4 14:47:58 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

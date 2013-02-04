@@ -1,3 +1,5 @@
+Wine, MinGW GCC/MSYS, Cygwin GCC, POSIX
+
 ACE ICE POCO 
 Boost
 unixODBC iODBC

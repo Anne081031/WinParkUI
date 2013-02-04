@@ -62,6 +62,7 @@ const unsigned int  nLOCATION_SIZE = 128;
         CmdSyncModeDownTrigger, // 0x09
         CmdSyncModeUpTrigger,
         CmdSyncModeFollowTrigger,
+        CmdSyncModeFollowDownTrigger,
         CmdTestFlashOpen,    // 0x0A
         CmdTestFlashClose,
         CmdSyncModeForFlash,

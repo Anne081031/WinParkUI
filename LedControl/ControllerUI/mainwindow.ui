@@ -826,9 +826,9 @@ background-color: rgb(72, 72, 72);</string>
         <property name="geometry">
          <rect>
           <x>50</x>
-          <y>40</y>
-          <width>127</width>
-          <height>164</height>
+          <y>31</y>
+          <width>119</width>
+          <height>185</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -977,7 +977,7 @@ background-color: rgb(72, 72, 72);</string>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="rbSync07">
+            <widget class="QRadioButton" name="rbSync08">
              <property name="text">
               <string/>
              </property>
@@ -998,7 +998,7 @@ background-color: rgb(72, 72, 72);</string>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="rbSync08">
+            <widget class="QRadioButton" name="rbSync09">
              <property name="text">
               <string/>
              </property>
@@ -1014,12 +1014,33 @@ background-color: rgb(72, 72, 72);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>跟随触发  </string>
+              <string>上升沿跟随触发</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QRadioButton" name="rbSync09">
+            <widget class="QRadioButton" name="rbSync10">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_23">
+           <item>
+            <widget class="QLabel" name="label_28">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>下降沿跟随触发</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="rbSync11">
              <property name="text">
               <string/>
              </property>
@@ -1065,9 +1086,9 @@ background-color: rgb(72, 72, 72);</string>
         <property name="geometry">
          <rect>
           <x>50</x>
-          <y>40</y>
-          <width>127</width>
-          <height>164</height>
+          <y>31</y>
+          <width>119</width>
+          <height>185</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1253,12 +1274,33 @@ background-color: rgb(72, 72, 72);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>跟随触发  </string>
+              <string>上升沿跟随触发</string>
              </property>
             </widget>
            </item>
            <item>
             <widget class="QRadioButton" name="rbSync06">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_24">
+           <item>
+            <widget class="QLabel" name="label_29">
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>下降沿跟随触发</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="rbSync07">
              <property name="text">
               <string/>
              </property>

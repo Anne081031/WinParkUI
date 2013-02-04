@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Jan 29 11:37:17 2013
+** Created: Mon Feb 4 14:59:36 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -125,13 +125,16 @@ public:
     QCheckBox *chkLightSensitiveFreq;
     QHBoxLayout *horizontalLayout_12;
     QLabel *label_17;
-    QRadioButton *rbSync07;
+    QRadioButton *rbSync08;
     QHBoxLayout *horizontalLayout_13;
     QLabel *label_22;
-    QRadioButton *rbSync08;
+    QRadioButton *rbSync09;
     QHBoxLayout *horizontalLayout_15;
     QLabel *label_23;
-    QRadioButton *rbSync09;
+    QRadioButton *rbSync10;
+    QHBoxLayout *horizontalLayout_23;
+    QLabel *label_28;
+    QRadioButton *rbSync11;
     QGroupBox *groupBox_5;
     QLabel *lblFlash_2;
     QWidget *layoutWidget5;
@@ -157,6 +160,9 @@ public:
     QHBoxLayout *horizontalLayout_19;
     QLabel *label_24;
     QRadioButton *rbSync06;
+    QHBoxLayout *horizontalLayout_24;
+    QLabel *label_29;
+    QRadioButton *rbSync07;
     QGroupBox *groupBox_6;
     QWidget *layoutWidget6;
     QHBoxLayout *horizontalLayout_14;
@@ -530,7 +536,7 @@ public:
         lblFreq_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         layoutWidget4 = new QWidget(groupBox_4);
         layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(50, 40, 127, 164));
+        layoutWidget4->setGeometry(QRect(50, 31, 119, 185));
         verticalLayout_5 = new QVBoxLayout(layoutWidget4);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
@@ -617,10 +623,10 @@ public:
 
         horizontalLayout_12->addWidget(label_17);
 
-        rbSync07 = new QRadioButton(layoutWidget4);
-        rbSync07->setObjectName(QString::fromUtf8("rbSync07"));
+        rbSync08 = new QRadioButton(layoutWidget4);
+        rbSync08->setObjectName(QString::fromUtf8("rbSync08"));
 
-        horizontalLayout_12->addWidget(rbSync07);
+        horizontalLayout_12->addWidget(rbSync08);
 
 
         verticalLayout_5->addLayout(horizontalLayout_12);
@@ -634,10 +640,10 @@ public:
 
         horizontalLayout_13->addWidget(label_22);
 
-        rbSync08 = new QRadioButton(layoutWidget4);
-        rbSync08->setObjectName(QString::fromUtf8("rbSync08"));
+        rbSync09 = new QRadioButton(layoutWidget4);
+        rbSync09->setObjectName(QString::fromUtf8("rbSync09"));
 
-        horizontalLayout_13->addWidget(rbSync08);
+        horizontalLayout_13->addWidget(rbSync09);
 
 
         verticalLayout_5->addLayout(horizontalLayout_13);
@@ -651,13 +657,30 @@ public:
 
         horizontalLayout_15->addWidget(label_23);
 
-        rbSync09 = new QRadioButton(layoutWidget4);
-        rbSync09->setObjectName(QString::fromUtf8("rbSync09"));
+        rbSync10 = new QRadioButton(layoutWidget4);
+        rbSync10->setObjectName(QString::fromUtf8("rbSync10"));
 
-        horizontalLayout_15->addWidget(rbSync09);
+        horizontalLayout_15->addWidget(rbSync10);
 
 
         verticalLayout_5->addLayout(horizontalLayout_15);
+
+        horizontalLayout_23 = new QHBoxLayout();
+        horizontalLayout_23->setSpacing(6);
+        horizontalLayout_23->setObjectName(QString::fromUtf8("horizontalLayout_23"));
+        label_28 = new QLabel(layoutWidget4);
+        label_28->setObjectName(QString::fromUtf8("label_28"));
+        label_28->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_23->addWidget(label_28);
+
+        rbSync11 = new QRadioButton(layoutWidget4);
+        rbSync11->setObjectName(QString::fromUtf8("rbSync11"));
+
+        horizontalLayout_23->addWidget(rbSync11);
+
+
+        verticalLayout_5->addLayout(horizontalLayout_23);
 
         groupBox_5 = new QGroupBox(frame_2);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
@@ -669,7 +692,7 @@ public:
         lblFlash_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         layoutWidget5 = new QWidget(groupBox_5);
         layoutWidget5->setObjectName(QString::fromUtf8("layoutWidget5"));
-        layoutWidget5->setGeometry(QRect(50, 40, 127, 164));
+        layoutWidget5->setGeometry(QRect(50, 31, 119, 185));
         verticalLayout_6 = new QVBoxLayout(layoutWidget5);
         verticalLayout_6->setSpacing(6);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
@@ -797,6 +820,23 @@ public:
 
 
         verticalLayout_6->addLayout(horizontalLayout_19);
+
+        horizontalLayout_24 = new QHBoxLayout();
+        horizontalLayout_24->setSpacing(6);
+        horizontalLayout_24->setObjectName(QString::fromUtf8("horizontalLayout_24"));
+        label_29 = new QLabel(layoutWidget5);
+        label_29->setObjectName(QString::fromUtf8("label_29"));
+        label_29->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_24->addWidget(label_29);
+
+        rbSync07 = new QRadioButton(layoutWidget5);
+        rbSync07->setObjectName(QString::fromUtf8("rbSync07"));
+
+        horizontalLayout_24->addWidget(rbSync07);
+
+
+        verticalLayout_6->addLayout(horizontalLayout_24);
 
         layoutWidget->raise();
         lblFlash_2->raise();
@@ -933,11 +973,13 @@ public:
         label_21->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFreq->setText(QString());
         label_17->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
-        rbSync07->setText(QString());
-        label_22->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync08->setText(QString());
-        label_23->setText(QApplication::translate("MainWindow", "\350\267\237\351\232\217\350\247\246\345\217\221  ", 0, QApplication::UnicodeUTF8));
+        label_22->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync09->setText(QString());
+        label_23->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        rbSync10->setText(QString());
+        label_28->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        rbSync11->setText(QString());
         groupBox_5->setTitle(QString());
         lblFlash_2->setText(QApplication::translate("MainWindow", "\351\227\252\345\205\211\347\201\257\346\250\241\345\274\217", 0, QApplication::UnicodeUTF8));
         label_15->setText(QApplication::translate("MainWindow", "\346\227\266\351\227\264\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
@@ -961,8 +1003,10 @@ public:
         rbSync04->setText(QString());
         label_25->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync05->setText(QString());
-        label_24->setText(QApplication::translate("MainWindow", "\350\267\237\351\232\217\350\247\246\345\217\221  ", 0, QApplication::UnicodeUTF8));
+        label_24->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync06->setText(QString());
+        label_29->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        rbSync07->setText(QString());
         groupBox_6->setTitle(QString());
         label_18->setText(QApplication::translate("MainWindow", "\344\275\215\347\275\256\344\277\241\346\201\257", 0, QApplication::UnicodeUTF8));
         edtLocationNew->setText(QString());

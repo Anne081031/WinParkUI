@@ -227,6 +227,7 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
     case LedControll::CmdSyncModeDownTrigger : // 0x09
     case LedControll::CmdSyncModeUpTrigger :
     case LedControll::CmdSyncModeFollowTrigger :
+    case LedControll::CmdSyncModeFollowDownTrigger :
         nDI |= 0x00000003;
         cDataLen += 1;
         byData.append( ( char ) nParam );
