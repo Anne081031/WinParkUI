@@ -67,7 +67,7 @@ void MainWindow::InitializeUI( )
 
     connect( &controller, SIGNAL( Cmd( QByteArray, bool ) ), this, SLOT( HandleCmd( QByteArray, bool ) ) );
     connect( &controller, SIGNAL( Data( QByteArray ) ), this, SLOT( HandleData( QByteArray ) ) );
-    connect( &controller, SIGNAL( Query( QString, qint8 ) ), this, SLOT( HandleQuery( QString, qint8 ) ) );
+    connect( &controller, SIGNAL( Query( QString, qint8, QByteArray ) ), this, SLOT( HandleQuery( QString, qint8, QByteArray ) ) );
 }
 
 void MainWindow::HandleCmd( QByteArray data, bool bSend )
@@ -84,7 +84,7 @@ void MainWindow::HandleData( QByteArray data )
     ui->edtDataStream->appendPlainText( strText );
 }
 
-void MainWindow::HandleQuery( QString strInfo, qint8 nIndex )
+void MainWindow::HandleQuery( QString strInfo, qint8 nIndex, QByteArray byData )
 {
     if ( 1 > nIndex || 15 < nIndex ) {
         return;
@@ -99,6 +99,82 @@ void MainWindow::HandleQuery( QString strInfo, qint8 nIndex )
     strText = strText.arg( strStateValue[ 9 ], strStateValue[ 10 ], strStateValue[ 11 ],
                                       strStateValue[ 12 ], strStateValue[ 13 ], strStateValue[ 14 ] );
     ui->edtState->appendPlainText( strText );
+
+    UpdateUI( nIndex - 1, byData );
+}
+
+void MainWindow::UpdateUI( qint8 nIndex, QByteArray byData )
+{
+    if ( 0 >= byData.count( )  ) {
+        return;
+    }
+
+    qint8 nValue = byData.at( 0 );
+
+    switch ( nIndex ) {
+    case 0 : // 频闪光敏控制
+        ui->chkLightSensitiveFreq->setChecked( 0 !=nValue );
+        break;
+
+    case 1 : // 闪光光敏控制
+        ui->chkLightSensitiveFlash->setChecked( 0 != nValue );
+        break;
+
+    case 4 : // 频闪触发方式
+        ClearRadioboxValue( );
+        hashFreqSync.value( nValue - 1 )->setChecked( true );
+        break;
+
+    case 5 : // 闪光触发方式
+        ClearRadioboxValue( );
+        hashFlashSync.value( nValue - 1 )->setChecked( true );
+        break;
+
+    case 6 : // 频闪时间
+        ui->spFreqTimeNew->setValue( nValue );
+        break;
+
+    case 7 : // 闪光时间
+        ui->spFlashTimeNew->setValue( nValue );
+        break;
+
+    case 8 : // 频闪亮度
+        ui->spFreqLightNew->setValue( nValue );
+        break;
+
+    case 9 : // 闪光亮度
+        ui->spFlashLightNew->setValue( nValue );
+        break;
+
+    case 10 : // 频闪光敏阀值
+        SetComboxValue( ui->cbLightSensitiveFreq, nValue );
+        break;
+
+    case 11 : // 闪光光敏阀值
+        SetComboxValue( ui->cbLightSensitiveFlash, nValue );
+        break;
+    }
+}
+
+void MainWindow::SetComboxValue( QComboBox *pCB, qint8 nValue )
+{
+    for ( qint32 nIndex = 0; nIndex < pCB->count( ); nIndex++ ) {
+        if ( ( qint8 ) pCB->itemData( nIndex ).toInt( ) == nValue )  {
+            pCB->setCurrentIndex( nIndex );
+            break;
+        }
+    }
+}
+
+void MainWindow::ClearRadioboxValue( )
+{
+    for ( qint32 nIndex = 1; nIndex <= hashFreqSync.count( ); nIndex++ ) {
+        hashFreqSync.value( nIndex )->setChecked( false );
+    }
+
+    for ( qint32 nIndex = 1; nIndex <= hashFlashSync.count( ); nIndex++ ) {
+        hashFlashSync.value( nIndex )->setChecked( false );
+    }
 }
 
 void MainWindow::InitializeUI( const QString &strFile, const bool bNewDev )

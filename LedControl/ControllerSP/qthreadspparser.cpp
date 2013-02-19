@@ -144,7 +144,7 @@ void QThreadSPParser::ProcessData( const bool bSubsequence, QByteArray& data )
         qint8 nIndex = 0;
         cmdController->ParseDataDomain( data, strInfo, nIndex );
 
-        emit Query( strInfo, nIndex );
+        emit Query( strInfo, nIndex, data );
     }
 }
 

@@ -38,6 +38,10 @@ private:
     inline bool IsNewDevice( );
     inline void SetNewFlash( QObject* pBox);
 
+    void UpdateUI( qint8 nIndex, QByteArray byData );
+    void SetComboxValue( QComboBox* pCB, qint8 nValue );
+    void ClearRadioboxValue( );
+
 private slots:
     void on_btnSet_clicked();
 
@@ -67,7 +71,7 @@ private slots:
 
     void HandleData( QByteArray data );
 
-    void HandleQuery( QString strInfo, qint8 nIndex );
+    void HandleQuery( QString strInfo, qint8 nIndex, QByteArray byData );
 
     void on_tabWidgetDevice_currentChanged(int index);
 

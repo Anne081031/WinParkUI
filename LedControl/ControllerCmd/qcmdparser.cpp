@@ -93,7 +93,11 @@ void QCmdParser::GetTriggerMode( QByteArray &data, QString &strInfo )
         break;
 
     case 2 :
-        strInfo = "跟随模式";
+        strInfo = "上升跟随模式";
+        break;
+
+    case 3 :
+        strInfo = "下降沿跟随模式";
         break;
     }
 }

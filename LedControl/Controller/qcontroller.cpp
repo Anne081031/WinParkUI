@@ -10,8 +10,8 @@ QController::QController( QObject* parent ) : QObject( parent )
     connect( pController, SIGNAL( Cmd( QByteArray, bool ) ), this, SLOT( HandleCmd( QByteArray, bool ) ) );
     connect( &QThreadSPParser::GetSingleton( ), SIGNAL( Cmd( QByteArray, bool ) ),
              this, SLOT( HandleCmd( QByteArray,bool ) ) );
-    connect( &QThreadSPParser::GetSingleton( ), SIGNAL( Query( QString, qint8 ) ),
-             this, SLOT( HandleQuery( QString, qint8 ) ) );
+    connect( &QThreadSPParser::GetSingleton( ), SIGNAL( Query( QString, qint8, QByteArray ) ),
+             this, SLOT( HandleQuery( QString, qint8, QByteArray ) ) );
     connect( pController, SIGNAL( Data( QByteArray ) ), this, SLOT( HandleData( QByteArray ) ) );
 }
 
@@ -33,9 +33,9 @@ void QController::HandleData( QByteArray data )
     emit Data( data );
 }
 
-void QController::HandleQuery( QString strInfo, qint8 nIndex )
+void QController::HandleQuery( QString strInfo, qint8 nIndex, QByteArray byData )
 {
-    emit Query( strInfo, nIndex );
+    emit Query( strInfo, nIndex, byData );
 }
 
 qint64 QController::WriteData( QByteArray &data, const bool bThread )

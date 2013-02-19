@@ -30,7 +30,7 @@ private:
     
 signals:
     void Cmd( QByteArray data, bool bSend );
-    void Query( QString strInfo, qint8 nIndex );
+    void Query( QString strInfo, qint8 nIndex, QByteArray byData );
     
 public slots:
     

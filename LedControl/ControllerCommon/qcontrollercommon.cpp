@@ -112,9 +112,9 @@ void QControllerCommon::GetSPConfig( LedControll::SComConfig &sConfig )
     QSettings &settings = GetConfigSettings( );
 
     sConfig.nComName = settings.value( "SerialPort/Com", 0 ).toUInt( );
-    sConfig.nBaudRate = settings.value( "SerialPort/BaudRate", 12 ).toUInt( );
+    sConfig.nBaudRate = settings.value( "SerialPort/BaudRate", 10 ).toUInt( );
     sConfig.nDataBit = settings.value( "SerialPort/DataBit", 3 ).toUInt( );
-    sConfig.nParity = settings.value( "SerialPort/Parity", 0 ).toUInt( );
+    sConfig.nParity = settings.value( "SerialPort/Parity", 2 ).toUInt( );
     sConfig.nStopBit = settings.value( "SerialPort/StopBit", 0 ).toUInt( );
     sConfig.nFlowCtrl = settings.value( "SerialPort/FlowCtrl", 0 ).toUInt( );
 }
