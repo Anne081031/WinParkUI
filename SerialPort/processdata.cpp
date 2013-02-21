@@ -1628,7 +1628,12 @@ bool CProcessData::PictureContrast( QStringList& lstRows, int& nAmount, QByteArr
     pMainWindow->GetParkName( strParkName, byData[ 5 ], 0 );
     pFeeDlg->SetParkID( strParkName );
     pFeeDlg->setModal( true );
-    pFeeDlg->InitDlg( lstRows,  bmpEnter, bmpLeave, byData, GetTimeCardBuffer( ) );
+
+    bool bBuffer = GetTimeCardBuffer( ) ;
+    if ( bBuffer ) {
+        lstRows.append( strCardno );
+    }
+    pFeeDlg->InitDlg( lstRows,  bmpEnter, bmpLeave, byData, bBuffer );
 
     if ( CPictureContrastDlg::Accepted == pFeeDlg->exec( ) ) {
         pFeeDlg->hide( );
@@ -2625,7 +2630,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
         bool bBuffer = GetTimeCardBuffer( );
         QString strBufferTable = bBuffer ? "tmpcardintime" : "stoprd";
         QStringList lstInOut;
-        QString strSql = QString( "select cardno, intime, inshebeiname from %1" ).arg( strBufferTable );
+        QString strSql = QString( "select cardno, intime, inshebeiname %1 from %2" ).arg( bBuffer ? ",idtmpcardintime" : "", strBufferTable );
         QString strWhere = QString( " Where cardno = '%1' And intime in \
                                     ( Select intime From ( Select Max( intime ) As intime \
                                                            From %2 \
@@ -2637,6 +2642,12 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
             //qDebug << QString( "Not enter" ) << endl;
             return bRet;
         }
+
+        QString strTmpID = "";
+        if ( bBuffer ) {
+            strTmpID = lstInOut[ 3 ];
+        }
+
         QDateTime dtEnd = QDateTime::currentDateTime( );
         // lstInOut[ 1 ] 无数据 未入场
         QDateTime dtStart = CCommonFunction::String2DateTime( lstInOut[ 1 ] );
@@ -2676,7 +2687,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
         lstInit << lstInOut[ 1 ] << strEnd << strPlate;
         lstInit << GetFeeStd( lstRows[ 0 ] );
 
-        bool bGate = PictureContrast( lstInit, nAmount, byData, lstRows[ 0 ] );
+        bool bGate = PictureContrast( lstInit, nAmount, byData, strTmpID );
         if ( bGate ) {
             pMainWindow->UpdateStatistics( nAmount, 2 );
             pMainWindow->UpdateStatistics( pFeeDlg->GetAmount( ) - nAmount, 5 );

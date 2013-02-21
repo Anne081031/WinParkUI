@@ -972,7 +972,7 @@ background-color: rgb(72, 72, 72);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>下降沿触发</string>
+              <string>上降沿触发</string>
              </property>
             </widget>
            </item>
@@ -993,7 +993,7 @@ background-color: rgb(72, 72, 72);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>上升沿触发</string>
+              <string>下升沿触发</string>
              </property>
             </widget>
            </item>
@@ -1232,7 +1232,7 @@ background-color: rgb(72, 72, 72);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>下降沿触发</string>
+              <string>上降沿触发</string>
              </property>
             </widget>
            </item>
@@ -1253,7 +1253,7 @@ background-color: rgb(72, 72, 72);</string>
               <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
              <property name="text">
-              <string>上升沿触发</string>
+              <string>下升沿触发</string>
              </property>
             </widget>
            </item>

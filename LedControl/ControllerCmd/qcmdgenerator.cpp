@@ -275,7 +275,7 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
     if( !bQuery ) {
         cDataLen += 12;
     } else {
-        cDataLen = 4;
+        cDataLen += 4;
     }
 
     body.append( cDataLen );

@@ -1617,6 +1617,7 @@ void CLogicInterface::OperateBlob( QString& strFile, bool bSave2Db, CommonDataTy
     QString strError = "";
     QString strSql = "";
     GetBlobSql( strSql, bSave2Db, type, strWhere );
+    qDebug( ) << Q_FUNC_INFO << strSql << endl;
 
     ConnectHistoryDb( bHistory );
     if ( bSave2Db ) {

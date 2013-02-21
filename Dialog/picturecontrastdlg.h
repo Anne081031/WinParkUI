@@ -31,7 +31,7 @@ public:
     void InitDlg( QStringList& lstData, QString& strWhere, QString& strCardNo, int nType, bool bEnter  );
     int GetAmount( );
     int GetDisAmount( );
-    void LoadMyImage( CommonDataType::BlobType blob, QString& strCardNo, bool bHistory, bool bAuto = true );
+    void LoadMyImage( CommonDataType::BlobType blob, QString& strCardNo, bool bHistory, bool bAuto = true, bool bBuffer = false );
     void LoadRemoteImg( CommonDataType::BlobType blob, QString& strWhere, bool bHistory, QLabel *pLbl );
     void SetParkID( QString& strID );
 

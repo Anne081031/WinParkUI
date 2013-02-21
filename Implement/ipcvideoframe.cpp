@@ -265,6 +265,7 @@ void CIPCVideoFrame::LogIPC( bool bLocal, bool bLogin )
     }
 
     QList< QString > lstIPC;
+    QList< QString > lstLocalIPC;
     QString strIP = CCommonFunction::GetHostIP( );
 
     if ( bLocal ) {
@@ -274,10 +275,15 @@ void CIPCVideoFrame::LogIPC( bool bLocal, bool bLogin )
 
         foreach ( const QString& strKey, lstKey ) {
             if ( strKey == strIP ) {
+                lstLocalIPC = hashHostIPC.values( strKey );
                 continue;
             }
 
             lstIPC.append( hashHostIPC.values( strKey ) );
+        }
+
+        foreach ( const QString& strIPC, lstLocalIPC ) {
+            lstIPC.removeAll( strIPC );
         }
     }
 

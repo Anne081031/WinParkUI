@@ -325,8 +325,9 @@ void CDeviceConfig::DeleteItem( )
 void CDeviceConfig::TraverseTree( QTreeWidgetItem &tvNode, QList< QTreeWidgetItem* >& lstDescendants )
 {
     QList< QTreeWidgetItem* > lstItem = tvNode.takeChildren( );
+    PNodeData pData = ( PNodeData ) tvNode.data( 0, Qt::UserRole ).toInt( );
 
-    if ( 0 != tvNode.data( 0, Qt::UserRole ).toInt( ) ) {
+    if ( 0 != pData && pData->strDevType != ROOT ) {
         lstDescendants.append( &tvNode );
     }
 
@@ -400,7 +401,7 @@ void CDeviceConfig::CreateContextMenu( QTreeWidget *parent, QPoint pos )
         actMenu.append( pAct );
     }
 
-    pMenu->exec( parent->cursor().pos( ) );
+    pMenu->exec( parent->cursor( ).pos( ) );
 }
 
 void CDeviceConfig::on_treeWidget_customContextMenuRequested(QPoint pos)

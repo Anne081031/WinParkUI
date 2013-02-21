@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Feb 4 14:59:36 2013
+** Created: Wed Feb 20 16:35:43 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -972,9 +972,9 @@ public:
         );
         label_21->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFreq->setText(QString());
-        label_17->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        label_17->setText(QApplication::translate("MainWindow", "\344\270\212\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync08->setText(QString());
-        label_22->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        label_22->setText(QApplication::translate("MainWindow", "\344\270\213\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync09->setText(QString());
         label_23->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync10->setText(QString());
@@ -999,9 +999,9 @@ public:
         );
         label_27->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFlash->setText(QString());
-        label_26->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        label_26->setText(QApplication::translate("MainWindow", "\344\270\212\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync04->setText(QString());
-        label_25->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        label_25->setText(QApplication::translate("MainWindow", "\344\270\213\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync05->setText(QString());
         label_24->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync06->setText(QString());

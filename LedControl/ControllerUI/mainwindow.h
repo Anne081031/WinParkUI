@@ -40,7 +40,7 @@ private:
 
     void UpdateUI( qint8 nIndex, QByteArray byData );
     void SetComboxValue( QComboBox* pCB, qint8 nValue );
-    void ClearRadioboxValue( );
+    void ClearRadioboxValue( QHash< char, QRadioButton* >& hash, qint8 nKey );
 
 private slots:
     void on_btnSet_clicked();

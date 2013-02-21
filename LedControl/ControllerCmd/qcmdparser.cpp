@@ -17,11 +17,18 @@ QCmdParser::~QCmdParser( )
 
 void QCmdParser::GetThreshold( QByteArray &data, QString &strInfo )
 {
-    quint8 cValue = data.at( 0 );
-    quint8 cHigh = cValue >> 4;
-    quint8 nLow = cValue & 0x0F;
+    QByteArray byHex = data.toHex(  );
+    if ( 2 > byHex.count( ) ) {
+        return;
+    }
 
-    strInfo.sprintf( "%d.%d", cHigh, nLow );
+    qint8 cHigh = byHex.at( 0 );
+    qint8 nLow = byHex.at( 1 );
+
+    data.clear( );
+    data.append( ( qint8 ) byHex.toShort( ) );
+
+    strInfo.sprintf( "%c.%c", cHigh, nLow );
 }
 
 void QCmdParser::GetFloatValue( QByteArray &data, QString& strInfo )

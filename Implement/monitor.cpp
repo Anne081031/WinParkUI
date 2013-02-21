@@ -2032,8 +2032,10 @@ void CMonitor::on_pushButton_clicked()
     QString strDt;
     QString strCardno;
 
-    QString strSql = "insert into stoprd ( cardno, inshebeiname, outshebeiname, intime, outtime, feetime,  feeoperator, cardkind ) values %1";
-    QString strValue = "( %1, '南门入口', '南门出口', '%2', '%3', '%4', '系统管理员', '月租卡' )";
+    //QString strSql = "insert into stoprd ( cardno, inshebeiname, outshebeiname, intime, outtime, feetime,  feeoperator, cardkind ) values %1";
+    //QString strValue = "( %1, '南门入口', '南门出口', '%2', '%3', '%4', '系统管理员', '月租卡' )";
+    QString strSql = "insert into stoprd ( cardno, inshebeiname, intime, cardkind ) values %1";
+    QString strValue = "( %1, '南门入口', '%2',  '计时卡' )";
     QDate date = QDate::currentDate( );
 
     for ( int nIndex = 1; nIndex <= ui->spinBox->value( ) * 10000; nIndex++ ) {
@@ -2041,24 +2043,26 @@ void CMonitor::on_pushButton_clicked()
         CCommonFunction::DateTime2String( dt, strDt );
         strCardno = QString::number( dt.toMSecsSinceEpoch( ) );
 
-        lstValue << strValue.arg( strCardno, strDt, strDt, strDt );
+        //lstValue << strValue.arg( strCardno, strDt, strDt, strDt );
+        lstValue << strValue.arg( strCardno, strDt );
         lstCardno << strCardno;
 
-        if ( 0 == nIndex % 1000 ) {
+        if ( 0 == nIndex % 3000 ) {
             QString strTmp = strSql.arg( lstValue.join( "," ) );
-            CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::SQLExternal, strTmp, true, false );
+            CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::SQLExternal, strTmp, false, true );
             lstValue.clear( );
 
             Sleep( 10 );
             foreach ( const QString str, lstCardno ) {
                 strTmp =  QString( " where cardno = '%1'" ).arg( str );
-                CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::ImgExternal, strTmp, true, false,
+                CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::ImgExternal, strTmp, false, false,
                                                                    CommonDataType::BlobVehicleIn1, byData );
 
-                CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::ImgExternal, strTmp, true, false,
-                                                                   CommonDataType::BlobVehicleOut1, byData );
+                //CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::ImgExternal, strTmp, false, false,
+                //                                                   CommonDataType::BlobVehicleOut1, byData );
             }
 
+            return;
             lstCardno.clear( );
             Sleep( 60000 );
         }

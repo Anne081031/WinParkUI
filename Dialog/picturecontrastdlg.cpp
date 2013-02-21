@@ -210,7 +210,10 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
         ui->edtExpiration->clear( );
         ui->edtSurplus->clear( );
 
-        strTmp = CCommonFunction::GetCarTypeString( lstRows[ lstRows.count( ) -1 ] );
+        strTmp = CCommonFunction::GetCarTypeString( lstRows[ lstRows.count( ) - bBuffer ? 2 : 1 ] );
+        if ( bBuffer ) {
+            strCardID = lstRows[ lstRows.count( ) - 1 ];
+        }
         lstRows.clear( );
         //CLogicInterface::GetInterface()->ExecuteSql( strSql, lstRows );
         //if ( ( 0 == nAmount ) && ( 0 >= lstRows.count( ) ) ) {
@@ -237,7 +240,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
         //ui->edtOwner->setText( lstRows[ nField++ ] );
 
         CommonDataType ::BlobType blob = bBuffer ? CommonDataType::BlobTimeInImg : CommonDataType::BlobVehicleIn1;
-        LoadMyImage( blob, strCardID, false, true );
+        LoadMyImage( blob, strCardID, false, true, bBuffer );
     } else {
         ui->edtCardID->setText( lstRows[ nField++ ] );
         ui->edtCardSelf->setText( lstRows[ nField++ ] );
@@ -585,7 +588,7 @@ void CPictureContrastDlg::OnClickedDlgPopup( )
     }
 }
 
-void CPictureContrastDlg::LoadMyImage( CommonDataType::BlobType blob, QString& strCardNo, bool bHistory, bool bAuto )
+void CPictureContrastDlg::LoadMyImage( CommonDataType::BlobType blob, QString& strCardNo, bool bHistory, bool bAuto, bool bBuffer )
 {
     QLabel* pLbl = NULL;
     QString strWhere = " Where %1 = '%2'";
@@ -627,7 +630,11 @@ void CPictureContrastDlg::LoadMyImage( CommonDataType::BlobType blob, QString& s
         QString strChannel = ui->edtEnterChannel->text( );
         QString strTime = ui->edtEnterTime->text( );
         if ( CommonDataType::BlobTimeInImg == blob ) {
-            strWhere = QString( " Where cardno ='%1' and intime = '%2'" ).arg( strCardNo, strTime );
+            if ( bBuffer ) {
+                strWhere = QString( " Where idtmpcardintime = %1" ).arg( strCardNo );
+            } else {
+                strWhere = QString( " Where cardno ='%1' and intime = '%2'" ).arg( strCardNo, strTime );
+            }
         } else {
             strWhere = QString( " Where cardno = '%1' and inshebeiname = '%2' and intime = '%3'" ).arg(
                                         strCardNo, strChannel, strTime );
