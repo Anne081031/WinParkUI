@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qthreadspparser.h'
 **
-** Created: Mon Feb 4 14:53:24 2013
+** Created: Thu Feb 21 12:30:40 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -32,15 +32,15 @@ static const uint qt_meta_data_QThreadSPParser[] = {
 
  // signals: signature, parameters, type, tag, flags
       28,   17,   16,   16, 0x05,
-      64,   49,   16,   16, 0x05,
+      71,   49,   16,   16, 0x05,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QThreadSPParser[] = {
     "QThreadSPParser\0\0data,bSend\0"
-    "Cmd(QByteArray,bool)\0strInfo,nIndex\0"
-    "Query(QString,qint8)\0"
+    "Cmd(QByteArray,bool)\0strInfo,nIndex,byData\0"
+    "Query(QString,qint8,QByteArray)\0"
 };
 
 void QThreadSPParser::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -50,7 +50,7 @@ void QThreadSPParser::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         QThreadSPParser *_t = static_cast<QThreadSPParser *>(_o);
         switch (_id) {
         case 0: _t->Cmd((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
-        case 1: _t->Query((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< qint8(*)>(_a[2]))); break;
+        case 1: _t->Query((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< qint8(*)>(_a[2])),(*reinterpret_cast< QByteArray(*)>(_a[3]))); break;
         default: ;
         }
     }
@@ -103,9 +103,9 @@ void QThreadSPParser::Cmd(QByteArray _t1, bool _t2)
 }
 
 // SIGNAL 1
-void QThreadSPParser::Query(QString _t1, qint8 _t2)
+void QThreadSPParser::Query(QString _t1, qint8 _t2, QByteArray _t3)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_END_MOC_NAMESPACE

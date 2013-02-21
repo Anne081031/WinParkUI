@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qcontroller.h'
 **
-** Created: Mon Feb 4 14:52:54 2013
+** Created: Thu Feb 21 12:30:22 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -33,22 +33,23 @@ static const uint qt_meta_data_QController[] = {
  // signals: signature, parameters, type, tag, flags
       24,   13,   12,   12, 0x05,
       50,   45,   12,   12, 0x05,
-      82,   67,   12,   12, 0x05,
+      89,   67,   12,   12, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     103,   13,   12,   12, 0x08,
-     130,   45,   12,   12, 0x08,
-     153,   67,   12,   12, 0x08,
+     121,   13,   12,   12, 0x08,
+     148,   45,   12,   12, 0x08,
+     171,   67,   12,   12, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QController[] = {
     "QController\0\0data,bSend\0Cmd(QByteArray,bool)\0"
-    "data\0Data(QByteArray)\0strInfo,nIndex\0"
-    "Query(QString,qint8)\0HandleCmd(QByteArray,bool)\0"
+    "data\0Data(QByteArray)\0strInfo,nIndex,byData\0"
+    "Query(QString,qint8,QByteArray)\0"
+    "HandleCmd(QByteArray,bool)\0"
     "HandleData(QByteArray)\0"
-    "HandleQuery(QString,qint8)\0"
+    "HandleQuery(QString,qint8,QByteArray)\0"
 };
 
 void QController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -59,10 +60,10 @@ void QController::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id,
         switch (_id) {
         case 0: _t->Cmd((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 1: _t->Data((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
-        case 2: _t->Query((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< qint8(*)>(_a[2]))); break;
+        case 2: _t->Query((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< qint8(*)>(_a[2])),(*reinterpret_cast< QByteArray(*)>(_a[3]))); break;
         case 3: _t->HandleCmd((*reinterpret_cast< QByteArray(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 4: _t->HandleData((*reinterpret_cast< QByteArray(*)>(_a[1]))); break;
-        case 5: _t->HandleQuery((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< qint8(*)>(_a[2]))); break;
+        case 5: _t->HandleQuery((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< qint8(*)>(_a[2])),(*reinterpret_cast< QByteArray(*)>(_a[3]))); break;
         default: ;
         }
     }
@@ -122,9 +123,9 @@ void QController::Data(QByteArray _t1)
 }
 
 // SIGNAL 2
-void QController::Query(QString _t1, qint8 _t2)
+void QController::Query(QString _t1, qint8 _t2, QByteArray _t3)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
     QMetaObject::activate(this, &staticMetaObject, 2, _a);
 }
 QT_END_MOC_NAMESPACE

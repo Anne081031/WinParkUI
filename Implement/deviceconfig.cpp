@@ -300,6 +300,10 @@ void CDeviceConfig::DeleteItem( )
     }
 
     QTreeWidgetItem* pParentIem = pCurItem->parent( );
+    if ( NULL == pParentIem &&
+         0 == pParentIem->childCount( ) ) { // Only root node
+        return;
+    }
 
     QVariant itemData = GetItemType( pCurItem );
     QString strText = "确定要删除所有停车场吗？";
@@ -327,7 +331,7 @@ void CDeviceConfig::TraverseTree( QTreeWidgetItem &tvNode, QList< QTreeWidgetIte
     QList< QTreeWidgetItem* > lstItem = tvNode.takeChildren( );
     PNodeData pData = ( PNodeData ) tvNode.data( 0, Qt::UserRole ).toInt( );
 
-    if ( 0 != pData && pData->strDevType != ROOT ) {
+    if ( NULL != pData && pData->strDevType != ROOT ) {
         lstDescendants.append( &tvNode );
     }
 
