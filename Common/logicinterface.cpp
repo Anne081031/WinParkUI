@@ -204,7 +204,7 @@ int CLogicInterface::OperateBlacklistInfo( QStringList &lstRows, CommonDataType:
         break;
 
     case CommonDataType::UpdateData :
-        strSql = "Update blacklist set plate = '%1', kind = '%2', color = %3 ";
+        strSql = "Update blacklist set plate = '%1', kind = '%2', color = '%3' ";
         nCols = 3;
         strSql += strWhere;
         nRows = lstRows.count( ) / nCols;
@@ -222,7 +222,7 @@ int CLogicInterface::OperateBlacklistInfo( QStringList &lstRows, CommonDataType:
 
     case CommonDataType::InsertData :
         strSql = "Insert Into blacklist ( plate, kind, color ) ";
-        strSql += "Values( '%1', '%2', %3 )";
+        strSql += "Values( '%1', '%2', '%3' )";
         nCols = 3;
         nRows = lstRows.count( ) / nCols;
         ReplaceSqlParam( nRows, nCols, strSql, lstRows );
