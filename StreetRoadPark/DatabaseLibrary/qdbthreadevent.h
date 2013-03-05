@@ -1,0 +1,49 @@
+#ifndef QDBTHREADEVENT_H
+#define QDBTHREADEVENT_H
+
+#include <QEvent>
+#include <QGuiApplication>
+#include <QDebug>
+#include <QByteArray>
+#include <QTcpSocket>
+#include "cdbconfigurator.h"
+
+class QDbThreadEvent : public QEvent
+{
+public:
+    ~QDbThreadEvent( );
+    typedef enum __ThreadType {
+        ThreadDispatcher,
+        ThreadDbProcessor
+    } ThreadType;
+
+    typedef enum __EventType {
+        EventDispatchData = User, // ThreadDispatcher
+
+        EventConnectDb,
+        EventProcessDbData // ThreadDbProcessor
+    } EventType;
+
+    static QDbThreadEvent* CreateThreadEvent( ThreadType thrType, EventType evtType );
+
+    void SetByteArray( QByteArray& byData );
+    QByteArray& GetByteArray( );
+
+    void SetDataPackageType( qint32 nType );
+    qint32 GetDataPackageType( );
+
+    void SetPeerSocket( QTcpSocket* pSocket );
+    QTcpSocket* GetPeerSocket( );
+
+private:
+    QDbThreadEvent( ThreadType thrType, Type evtType );
+    ThreadType typeThread;
+    EventType typeEvent;
+
+    QByteArray byByteArray;
+    qint32 nDataPackageType;
+
+    QTcpSocket* pPeerSocket;
+};
+
+#endif // QDBTHREADEVENT_H

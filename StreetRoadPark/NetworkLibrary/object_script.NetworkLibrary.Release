@@ -1,0 +1,17 @@
+INPUT(
+./release\networkcontroller.o
+./release\qsocketthread.o
+./release\qsocketdispatcherthread.o
+./release\qlistenerthread.o
+./release\qdataparserthread.o
+./release\qthreadevent.o
+./release\qmytcpserver.o
+./release\cnetconfigurator.o
+./release\moc_networkcontroller.o
+./release\moc_qsocketthread.o
+./release\moc_qsocketdispatcherthread.o
+./release\moc_qlistenerthread.o
+./release\moc_qdataparserthread.o
+./release\moc_qmytcpserver.o
+./release\moc_cnetconfigurator.o
+);

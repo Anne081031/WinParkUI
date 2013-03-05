@@ -1,0 +1,16 @@
+INPUT(
+./release\databasecontroller.o
+./release\mysqldatabase.o
+./release\cdbconfigurator.o
+./release\qdbthreadevent.o
+./release\qdatadispactherthread.o
+./release\qdatabaseprocessor.o
+./release\qthreadpooltask.o
+./release\qdbdataprocess.o
+./release\moc_databasecontroller.o
+./release\moc_mysqldatabase.o
+./release\moc_cdbconfigurator.o
+./release\moc_qdatadispactherthread.o
+./release\moc_qdatabaseprocessor.o
+./release\moc_qdbdataprocess.o
+);
