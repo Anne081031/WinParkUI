@@ -14,14 +14,22 @@ public:
     static qint32 GetServerThreadCountEachDataParser( );
     static qint32 GetSocketThreadServerSleepTime( );
 
+    static QString GetClientServerIP( );
+    static quint16 GetClientServerPort( );
+
+    static QString GetAdminServerIP( );
+    static quint16 GetAdminServerPort( );
+
     static qint32 GetDbThreadPoolThreadCount( );
     static qint32 GetDbMaxDbConnections( );
-    static QString GetServerIP( );
     static qint32 GetTaskCount4DbConnection( );
-    static quint8 GetLogCount( );  
+    static quint8 GetLogCount( );
+
+    static void CreateSettings( );
 
 private:
     QIniConfigFile( QObject* parent = 0 );
+    static QSettings* pSettings;
 
 signals:
 

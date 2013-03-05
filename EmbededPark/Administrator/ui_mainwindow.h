@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Jan 16 12:58:43 2013
+** Created: Fri Feb 1 16:05:30 2013
 **      by: Qt User Interface Compiler version 5.0.0
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

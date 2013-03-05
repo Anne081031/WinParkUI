@@ -79,31 +79,57 @@ public:
         ProtocolBody body;
     } ProtocolData, *PProtocolData;
 
-    QDataProtocol::CommonHeader& GetCommonHeader( QDataProtocol::ProtocolData& parcel );
-    QByteArray& GetCommonHeaderDataToken( QDataProtocol::ProtocolData& parcel );
-    quint32 GetCommonHeaderDataLength( QDataProtocol::ProtocolData& parcel );
-    quint32& GetCommonHeaderReserved( QDataProtocol::ProtocolData& parcel );
-    QDataProtocol::PackageType GetCommonHeaderPackageType( QDataProtocol::ProtocolData& parcel );
+    ////////////////////////////////////////
+    void SetCommonHeader( CommonHeader& sHeader );
+    void SetCommonHeaderDataToken( );
+    void SetCommonHeaderDataLength( quint32 nDataLength );
+    void SetCommonHeaderReserved( quint32 nReserved );
+    void SetCommonHeaderPackageType( PackageType eType );
 
-    QDataProtocol::AuxHeader& GetAuxHeader( QDataProtocol::ProtocolData& parcel );
+    void SetAuxHeader( AuxHeader& sHeader );
 
-    QDataProtocol::DataTableHeader& GetAuxDataTableHeader( QDataProtocol::ProtocolData& parcel );
-    QDataProtocol::TableType GetAuxDataTableHeaderType( QDataProtocol::ProtocolData& parcel );
-    quint16 GetAuxDataTableHeaderRow( QDataProtocol::ProtocolData& parcel );
-    quint16 GetAuxDataTableHeaderColumn( QDataProtocol::ProtocolData& parcel );
-    quint32 GetAuxDataTableHeaderReserved( QDataProtocol::ProtocolData& parcel );
+    void SetAuxDataTableHeader( DataTableHeader& sHeader );
+    void SetAuxDataTableHeaderType( TableType eType );
+    void SetAuxDataTableHeaderRow( quint16 nRow );
+    void SetAuxDataTableHeaderColumn( quint16 nColumn );
+    void SetAuxDataTableHeaderReserved( quint32 nReserved );
 
+    void SetAuxFileHeader( FileHeader& sHeader );
+    void SetAuxFileHeaderType( FileType eType );
+    void SetAuxFileHeaderNameLength( quint32 nNameLen );
+    void SetAuxFileHeaderContentLength( quint32 nContentLen );
+    void SetAuxFileHeaderReserved( quint32 nReserved );
 
-    QDataProtocol::FileHeader& GetAuxFileHeader( QDataProtocol::ProtocolData& parcel );
-    QDataProtocol::FileType GetAuxFileHeaderType( QDataProtocol::ProtocolData& parcel );
-    quint32 GetAuxFileHeaderNameLength( QDataProtocol::ProtocolData& parcel );
-    quint32 GetAuxFileHeaderContentLength( QDataProtocol::ProtocolData& parcel );
-    quint32 GetAuxFileHeaderReserved( QDataProtocol::ProtocolData& parcel );
+    void SetBody( ProtocolBody& sBody );
 
-    QDataProtocol::ProtocolBody& GetBody( QDataProtocol::ProtocolData& parcel );
+    void SetProtocolData( ProtocolData& sData );
+    ////////////////////////////////////////
 
-    QDataProtocol::ProtocolData& GetProtocolData( );
+    CommonHeader& GetCommonHeader( );
+    QByteArray& GetCommonHeaderDataToken( );
+    quint32 GetCommonHeaderDataLength( );
+    quint32& GetCommonHeaderReserved( );
+    PackageType GetCommonHeaderPackageType( );
+
+    AuxHeader& GetAuxHeader( );
+
+    DataTableHeader& GetAuxDataTableHeader( );
+    TableType GetAuxDataTableHeaderType( );
+    quint16 GetAuxDataTableHeaderRow( );
+    quint16 GetAuxDataTableHeaderColumn( );
+    quint32 GetAuxDataTableHeaderReserved( );
+
+    FileHeader& GetAuxFileHeader( );
+    FileType GetAuxFileHeaderType( );
+    quint32 GetAuxFileHeaderNameLength( );
+    quint32 GetAuxFileHeaderContentLength( );
+    quint32 GetAuxFileHeaderReserved( );
+
+    ProtocolBody& GetBody( );
+
+    ProtocolData& GetProtocolData( );
     bool ParsePackageData( QByteArray& byPackageData, QString& strInfo );
+    bool GeneratePackageData( QByteArray& byPackageData, QString& strInfo );
 
     QDataProtocol( QObject* parent = 0 );
     ~QDataProtocol( );
@@ -113,6 +139,12 @@ private:
     template< class T > T H2N( T tValue );
     template< typename T > T N2H( QByteArray& byValue );
     bool HostByteSequence( ); // true LE else BE
+
+    bool GenerateCommonHeader( QBuffer& buffer );
+    bool GenerateAuxHeader( QBuffer& buffer );
+    bool GenerateTableHeader( QBuffer& buffer );
+    bool GenerateFileHeader( QBuffer& buffer );
+    bool GenerateCustomHeader( QBuffer& buffer );
 
     bool ParseCommonHeader( QBuffer& buffer, QByteArray& byData );
     bool ParseAuxHeader( QBuffer& buffer, QByteArray& byData );

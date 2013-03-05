@@ -17,7 +17,7 @@ protected:
 
 private:
     typedef QQueue< QSocketThread* > QSocketThreadQueue;
-    typedef QHash< qint32, QSocketThreadQueue * > QSockThreadHash;
+    typedef QHash< qint32, QSocketThreadQueue * > QSocketThreadHash;
     typedef QMultiHash< QDataParserThread*, QSocketThread* > QParserSocketThreadHash;
 
     QSocketDispatcherThread(QObject *parent = 0);
@@ -32,7 +32,7 @@ private:
 
 private:
     static QSocketDispatcherThread* pThreadInstance;
-    QSockThreadHash hashSocketThreads;
+    QSocketThreadHash hashSocketThreads;
     QParserSocketThreadHash hashParserSocketThread;
     qint32 nSocketCountEachServerThread;
     qint32 nServerThreadCountEachDataParser;

@@ -50,9 +50,16 @@ QDate QCommonLibrary::String2Date( QString& strDate )
     return QDate::fromString( strDate );
 }
 
-QString QCommonLibrary::GetDataToken( )
+QString& QCommonLibrary::GetDataToken( )
 {
-    return QString( "EmbededPark" );
+    static QString strToken = "EmbededPark";
+    return strToken;
+}
+
+QString& QCommonLibrary::GetConfigFileName( )
+{
+    static QString strFileName = "EmbededPark.ini";
+    return strFileName;
 }
 
 void QCommonLibrary::PrintLog( QString &strText )

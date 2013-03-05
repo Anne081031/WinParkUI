@@ -8,6 +8,7 @@
 #include <QtNetwork>
 #include <QtEndian>
 #include <QDebug>
+#include <QSettings>
 
 class COMMONLIBRARYSHARED_EXPORT QCommonLibrary : public QObject
 {
@@ -132,10 +133,11 @@ public:
     static QDateTime String2DateTime( QString& strDateTime );
     static QTime String2Time( QString& strTime );
     static QDate String2Date( QString& strDate );
-    static QString GetDataToken( );
+    static QString& GetDataToken( );
     static void PrintLog( QString& strText );
     static QString GetKeySeperator( );
     static bool GetDisplayLog( );
+    static QString& GetConfigFileName( );
 
     // Application Initialization
     static void AppInitialize( );

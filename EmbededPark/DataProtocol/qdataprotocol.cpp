@@ -4,7 +4,7 @@
 QDataProtocol::QDataProtocol( QObject* parent ) : QObject( parent )
 {
     pCodec = QCommonLibrary::GetTextCodec( );
-    const QString strToken = QCommonLibrary::GetDataToken( );
+    const QString& strToken = QCommonLibrary::GetDataToken( );
     byDataToken = pCodec->fromUnicode( strToken );
 }
 
@@ -12,6 +12,7 @@ QDataProtocol::~QDataProtocol( )
 {
 
 }
+
 QDataProtocol::ProtocolData& QDataProtocol::GetProtocolData( )
 {
     return dataPackage;
@@ -135,15 +136,15 @@ bool QDataProtocol::ParseAuxHeader( QBuffer &buffer, QByteArray &byData )
 
     switch ( dataPackage.header.common.eParcelType ) {
     case PackageDatabase :
-        bRet = ParseTableHeader( byBuffer, byData );
+        bRet = ParseTableHeader( buffer, byData );
         break;
 
     case PackageFile :
-        bRet = ParseFileHeader( byBuffer, byData );
+        bRet = ParseFileHeader( buffer, byData );
         break;
 
     case PackageCustom :
-        bRet = ParseCustomHeader( byBuffer, byData );
+        bRet = ParseCustomHeader( buffer, byData );
         break;
     }
 
@@ -180,6 +181,134 @@ bool QDataProtocol::ParseBody( QBuffer &buffer, QByteArray &byData )
     case PackageCustom :
         break;
     }
+
+    return bRet;
+}
+
+bool QDataProtocol::GenerateCommonHeader( QBuffer& buffer )
+{
+    qint32 nUInt32Len = sizeof ( quint32 );
+    bool bRet = true;
+
+    quint32 nIntValue = H2N< quint32 >( dataPackage.header.common.nDataLength );
+    buffer.write( ( const char* ) & nIntValue, nUInt32Len );
+
+    nIntValue = H2N< quint32 >( dataPackage.header.common.nReserved );
+    buffer.write( ( const char* ) & nIntValue, nUInt32Len );
+
+    nIntValue = H2N< quint32 >( dataPackage.header.common.eParcelType );
+    buffer.write( ( const char* ) & nIntValue, nUInt32Len );
+
+    return bRet;
+}
+
+bool QDataProtocol::GenerateAuxHeader( QBuffer& buffer )
+{
+    bool bRet = true;
+
+    switch ( dataPackage.header.common.eParcelType ) {
+    case PackageDatabase :
+        bRet = GenerateTableHeader( buffer );
+        break;
+
+    case PackageFile :
+        bRet = GenerateFileHeader( buffer );
+        break;
+
+    case PackageCustom :
+        bRet = GenerateCustomHeader( buffer );
+        break;
+    }
+
+    return bRet;
+}
+
+bool QDataProtocol::GenerateTableHeader( QBuffer& buffer )
+{
+    bool bRet = true;
+    qint32 nUInt32Len = sizeof ( quint32 );
+    qint32 nUInt16Len = sizeof ( quint16 );
+
+    quint32 nIntValue = H2N< quint32 >( dataPackage.header.aux.headerTable.eType );
+    buffer.write( ( const char* ) &nIntValue, nUInt32Len );
+
+    nIntValue = H2N< quint32 >( dataPackage.header.aux.headerTable.nColumnCount );
+    buffer.write( ( const char* ) &nIntValue, nUInt16Len );
+
+    nIntValue = H2N< quint32 >( dataPackage.header.aux.headerTable.nReserved );
+    buffer.write( ( const char* ) &nIntValue, nUInt32Len );
+
+    nIntValue = H2N< quint32 >( dataPackage.header.aux.headerTable.nRowCount );
+    buffer.write( ( const char* ) &nIntValue, nUInt16Len );
+
+    return bRet;
+}
+
+bool QDataProtocol::GenerateFileHeader( QBuffer& buffer )
+{
+    bool bRet = true;
+    qint32 nUInt32Len = sizeof ( quint32 );
+
+    quint32 nIntValue = H2N< quint32 >( dataPackage.header.aux.headerFile.eType );
+    buffer.write( ( const char* ) &nIntValue, nUInt32Len );
+
+    nIntValue = H2N< quint32 >( dataPackage.header.aux.headerFile.nContentLength );
+    buffer.write( ( const char* ) &nIntValue, nUInt32Len );
+
+    nIntValue = H2N< quint32 >( dataPackage.header.aux.headerFile.nNameLength );
+    buffer.write( ( const char* ) &nIntValue, nUInt32Len );
+
+    nIntValue = H2N< quint32 >( dataPackage.header.aux.headerFile.nReserved );
+    buffer.write( ( const char* ) &nIntValue, nUInt32Len );
+
+
+    return bRet;
+}
+
+bool QDataProtocol::GenerateCustomHeader( QBuffer& buffer )
+{
+    bool bRet = true;
+    return bRet;
+}
+
+bool QDataProtocol::GeneratePackageData( QByteArray &byPackageData, QString &strInfo )
+{
+    byPackageData.clear( );
+    qint64 nRetLen;
+
+    byBuffer.setBuffer( &byPackageData );
+    bool bRet = byBuffer.open( QIODevice::WriteOnly );
+    if( !bRet ) {
+        goto ERROR_PROCESS;
+    }
+
+    bRet = byBuffer.reset( );
+    if( !bRet ) {
+        goto ERROR_PROCESS;
+    }
+
+    nRetLen = byBuffer.write( byDataToken );
+    bRet = ( byDataToken.length( ) != nRetLen );
+    if ( !bRet ) {
+        goto ERROR_PROCESS;
+    }
+
+    bRet = GenerateCommonHeader( byBuffer );
+    if( !bRet ) {
+        goto ERROR_PROCESS;
+    }
+
+    bRet = GenerateAuxHeader( byBuffer );
+    if( !bRet ) {
+        goto ERROR_PROCESS;
+    }
+
+    ERROR_PROCESS:
+    if( !bRet ) {
+        strInfo = byBuffer.errorString( );
+    }
+
+    byBuffer.close( );
 
     return bRet;
 }
@@ -227,96 +356,189 @@ bool QDataProtocol::ParsePackageData( QByteArray& byPackageData, QString& strInf
     return bRet;
 }
 
-QDataProtocol::CommonHeader& QDataProtocol::GetCommonHeader( QDataProtocol::ProtocolData &parcel )
+void QDataProtocol::SetCommonHeader( CommonHeader& sHeader )
 {
-    return parcel.header.common;
+    dataPackage.header.common = sHeader;
 }
 
-QByteArray& QDataProtocol::GetCommonHeaderDataToken( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetCommonHeaderDataToken( )
 {
-    return parcel.header.common.byDataToken;
+    dataPackage.header.common.byDataToken = byDataToken;
 }
 
-quint32 QDataProtocol::GetCommonHeaderDataLength( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetCommonHeaderDataLength( quint32 nDataLength )
 {
-    return parcel.header.common.nDataLength;
+    dataPackage.header.common.nDataLength = nDataLength;
 }
 
-quint32& QDataProtocol::GetCommonHeaderReserved( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetCommonHeaderReserved( quint32 nReserved )
 {
-    return parcel.header.common.nReserved;
+    dataPackage.header.common.nReserved = nReserved;
 }
 
-QDataProtocol::PackageType QDataProtocol::GetCommonHeaderPackageType( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetCommonHeaderPackageType( PackageType eType )
 {
-    return parcel.header.common.eParcelType;
+    dataPackage.header.common.eParcelType = eType;
 }
 
-QDataProtocol::AuxHeader& QDataProtocol::GetAuxHeader( QDataProtocol::ProtocolData &parcel )
+void QDataProtocol::SetAuxHeader( AuxHeader& sHeader )
 {
-    return parcel.header.aux;
+    dataPackage.header.aux = sHeader;
 }
 
-QDataProtocol::DataTableHeader& QDataProtocol::GetAuxDataTableHeader( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxDataTableHeader( DataTableHeader& sHeader )
 {
-    return parcel.header.aux.headerTable;
+    dataPackage.header.aux.headerTable = sHeader;
 }
 
-QDataProtocol::TableType QDataProtocol::GetAuxDataTableHeaderType( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxDataTableHeaderType( TableType eType )
 {
-    return parcel.header.aux.headerTable.eType;
+    dataPackage.header.aux.headerTable.eType = eType;
 }
 
-quint16 QDataProtocol::GetAuxDataTableHeaderRow( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxDataTableHeaderRow( quint16 nRow )
 {
-    return parcel.header.aux.headerTable.nRowCount;
+    dataPackage.header.aux.headerTable.nRowCount = nRow;
 }
 
-quint16 QDataProtocol::GetAuxDataTableHeaderColumn( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxDataTableHeaderColumn( quint16 nColumn )
 {
-    return parcel.header.aux.headerTable.nColumnCount;
+    dataPackage.header.aux.headerTable.nColumnCount = nColumn;
 }
 
-quint32 QDataProtocol::GetAuxDataTableHeaderReserved( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxDataTableHeaderReserved( quint32 nReserved )
 {
-    return parcel.header.aux.headerTable.nReserved;
+    dataPackage.header.aux.headerTable.nReserved = nReserved;
 }
 
-QDataProtocol::FileHeader& QDataProtocol::GetAuxFileHeader( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxFileHeader( FileHeader& sHeader )
 {
-    return parcel.header.aux.headerFile;
+    dataPackage.header.aux.headerFile = sHeader;
 }
 
-QDataProtocol::FileType QDataProtocol::GetAuxFileHeaderType( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxFileHeaderType( FileType eType )
 {
-    return parcel.header.aux.headerFile.eType;
+    dataPackage.header.aux.headerFile.eType = eType;
 }
 
-quint32 QDataProtocol::GetAuxFileHeaderNameLength( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxFileHeaderNameLength( quint32 nNameLen )
 {
-    return parcel.header.aux.headerFile.nNameLength;
+    dataPackage.header.aux.headerFile.nNameLength = nNameLen;
 }
 
-quint32 QDataProtocol::GetAuxFileHeaderContentLength( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxFileHeaderContentLength( quint32 nContentLen )
 {
-    return parcel.header.aux.headerFile.nContentLength;
+    dataPackage.header.aux.headerFile.nContentLength = nContentLen;
 }
 
-quint32 QDataProtocol::GetAuxFileHeaderReserved( QDataProtocol::ProtocolData& parcel )
+void QDataProtocol::SetAuxFileHeaderReserved( quint32 nReserved )
 {
-    return parcel.header.aux.headerFile.nReserved;
+    dataPackage.header.aux.headerFile.nReserved = nReserved;
 }
 
-QDataProtocol::ProtocolBody& QDataProtocol::GetBody( QDataProtocol::ProtocolData &parcel )
+void QDataProtocol::SetBody( ProtocolBody& sBody )
 {
-    return parcel.body;
+    dataPackage.body = sBody;
+}
+
+void QDataProtocol::SetProtocolData( ProtocolData& sData )
+{
+    dataPackage = sData;
+}
+
+QDataProtocol::CommonHeader& QDataProtocol::GetCommonHeader( )
+{
+    return dataPackage.header.common;
+}
+
+QByteArray& QDataProtocol::GetCommonHeaderDataToken( )
+{
+    return dataPackage.header.common.byDataToken;
+}
+
+quint32 QDataProtocol::GetCommonHeaderDataLength( )
+{
+    return dataPackage.header.common.nDataLength;
+}
+
+quint32& QDataProtocol::GetCommonHeaderReserved( )
+{
+    return dataPackage.header.common.nReserved;
+}
+
+QDataProtocol::PackageType QDataProtocol::GetCommonHeaderPackageType( )
+{
+    return dataPackage.header.common.eParcelType;
+}
+
+QDataProtocol::AuxHeader& QDataProtocol::GetAuxHeader( )
+{
+    return dataPackage.header.aux;
+}
+
+QDataProtocol::DataTableHeader& QDataProtocol::GetAuxDataTableHeader( )
+{
+    return dataPackage.header.aux.headerTable;
+}
+
+QDataProtocol::TableType QDataProtocol::GetAuxDataTableHeaderType( )
+{
+    return dataPackage.header.aux.headerTable.eType;
+}
+
+quint16 QDataProtocol::GetAuxDataTableHeaderRow( )
+{
+    return dataPackage.header.aux.headerTable.nRowCount;
+}
+
+quint16 QDataProtocol::GetAuxDataTableHeaderColumn( )
+{
+    return dataPackage.header.aux.headerTable.nColumnCount;
+}
+
+quint32 QDataProtocol::GetAuxDataTableHeaderReserved( )
+{
+    return dataPackage.header.aux.headerTable.nReserved;
+}
+
+QDataProtocol::FileHeader& QDataProtocol::GetAuxFileHeader( )
+{
+    return dataPackage.header.aux.headerFile;
+}
+
+QDataProtocol::FileType QDataProtocol::GetAuxFileHeaderType( )
+{
+    return dataPackage.header.aux.headerFile.eType;
+}
+
+quint32 QDataProtocol::GetAuxFileHeaderNameLength( )
+{
+    return dataPackage.header.aux.headerFile.nNameLength;
+}
+
+quint32 QDataProtocol::GetAuxFileHeaderContentLength( )
+{
+    return dataPackage.header.aux.headerFile.nContentLength;
+}
+
+quint32 QDataProtocol::GetAuxFileHeaderReserved( )
+{
+    return dataPackage.header.aux.headerFile.nReserved;
+}
+
+QDataProtocol::ProtocolBody& QDataProtocol::GetBody( )
+{
+    return dataPackage.body;
 }
 
 template< class T >
 T QDataProtocol::H2N( T tValue )
 {
     bool bLE = HostByteSequence( );
-    tValue = ( bLE ? qFromLittleEndian< T >( tValue ) : qFromBigEndian< T >( tValue ) );
+
+    if ( bLE ) {
+        tValue = qToBigEndian< T >( tValue );
+    }
 
     return tValue;
 }
@@ -330,7 +552,7 @@ T QDataProtocol::N2H( QByteArray& byValue )
     bool bLE = HostByteSequence( );
 
     if ( bLE ) {
-        tData = qToLittleEndian< T >( tData );
+        tData = qFromBigEndian< T >( tData );
     }
 
     return tData;

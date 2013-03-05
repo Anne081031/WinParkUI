@@ -9,7 +9,7 @@ DEFINES += StartupDebug
 QT       += core gui network
 MYTARGET = $$quote( Administrator%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
-MYDESTLIB = $$quote( %1/%2%3.lib )
+MYDESTLIB = $$quote( %1/lib%2%3.a )
 
 Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )

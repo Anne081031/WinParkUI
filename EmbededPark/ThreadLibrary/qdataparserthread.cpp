@@ -5,10 +5,25 @@ QDataParserThread* QDataParserThread::pThreadInstance = 0;
 QDataParserThread::QDataParserThread(QObject *parent) :
     QMyThread(parent)
 {
-    QString strToken = QCommonLibrary::GetDataToken( );
+    QString& strToken = QCommonLibrary::GetDataToken( );
     byDataToken = QCommonLibrary::GetTextCodec( )->fromUnicode( strToken );
     bServerSideParser = false;
     setObjectName( "[Data Parser Thread]" );
+}
+
+QDataParserThread::~QDataParserThread( )
+{
+    FreeSocketByteArray( tcpSocketByteArrayHash );
+    FreeSocketByteArray( udpSocketByteArrayHash );
+}
+
+void QDataParserThread::FreeSocketByteArray( QSocketByteArrayHash &hash )
+{
+    foreach ( const QByteArray* pByteArray, hash.values( ) ) {
+        delete pByteArray;
+    }
+
+    hash.clear( );
 }
 
 void QDataParserThread::InitializeSubThread( )
@@ -75,7 +90,7 @@ void QDataParserThread::TcpParse( QCommonLibrary::EventParam &uParam )
     QByteArray* pData = tcpSocketByteArrayHash.value( pSocket );
 
     if ( 0 == pData ) {
-        pData = new QByteArray( );
+        pData = new QByteArray( ); // Free in Destructor
         tcpSocketByteArrayHash.insert( pSocket, pData );
     }
 
@@ -98,47 +113,47 @@ bool QDataParserThread::ParseData( QTcpSocket* pSocket, QByteArray &data )
     QByteArray& byToken = byDataToken;
 
     qint32 nIndex = data.indexOf( byToken );
-    qint32 nToken = byToken.length( );
-    qint32 nLen = data.length( ); // Current Stream Length
+    quint32 nTokenSize = byToken.length( );
+    quint32 nCuurentStreamSize = data.length( ); // Current Stream Length
 
-    if ( -1 == nIndex ) {
+    if ( -1 == nIndex ) { // No Token
         data.clear( );
         return bRet;
     } else if ( 0 < nIndex ) {
-        data.remove( 0, nIndex ); // Not Token
+        ;//data.remove( 0, nIndex ); // Remove Token
     }
 
-    qint32 nDataSize = sizeof ( qint32 );
-    if ( nLen <= ( nToken + nDataSize ) ) {
+    quint32 nDataSize = sizeof ( qint32 );
+    if ( nCuurentStreamSize <= ( nTokenSize + nDataSize * 3 ) ) {
         return bRet;
     }
 
+    const char* pLen = data.data( ) + nTokenSize;
+    quint32 nPackageTotalSize = *( ( quint32* ) pLen ); // MessageSize = ProtocolHeadSize + BodySize
+    nPackageTotalSize = qFromBigEndian< quint32 >( nPackageTotalSize );
 
-    QByteArray byDataLen = data.mid( nToken, nDataSize );
-    const char* pLen = byDataLen.data( );
-    qint32 nTotal = *( ( qint32* ) pLen ); // Message Size Token + DataSize + MessageSize
-    nTotal = qFromBigEndian< quint32 >( nTotal );
-
-    if ( nLen < nTotal ) { // Whole Package
+    if ( nCuurentStreamSize < nPackageTotalSize ) { // Whole Package
         return bRet;
     }
+
+    byPackageData = data.left( nPackageTotalSize );
+    protocolData.ParsePackageData( byPackageData, strParserInfo );
 
     if ( bServerSideParser ) {
-        QByteArray byPackage = data.left( nTotal );
         // Send to Socket Thread Server --> Socket Thread Client
         QCommonLibrary::EventParam uParam;
         uParam.ParamValue.ServerSocketThread.Param.Data.pSocket = pSocket;
-        uParam.ParamValue.ServerSocketThread.Param.Data.pByteArray = new QByteArray( byPackage );
+        uParam.ParamValue.ServerSocketThread.Param.Data.pByteArray = new QByteArray( byPackageData );
         PostThreadEvent( pSocket->thread( ),
                          QCommonLibrary::ThreadSocketServer,
                          QCommonLibrary::EventServerSendData,
                          uParam );
     }
 
-    qint32 nExtraSize = nToken + nDataSize;
+    qint32 nExtraSize = nTokenSize + nDataSize;
     data.remove( 0, nExtraSize );
 
-    qint32 nDataLen = nTotal - nExtraSize;
+    qint32 nDataLen = nPackageTotalSize - nExtraSize;
     //char* pData = new char[ nDataLen + 1 ];
     //memcpy( pData, data.data( ), nDataLen );
     //pData[ nDataLen ] = '\0';

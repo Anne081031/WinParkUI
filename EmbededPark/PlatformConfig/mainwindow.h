@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QSpinBox>
+#include "../CommonLibrary/qcommonlibrary.h"
 
 namespace Ui {
 class MainWindow;
@@ -14,6 +16,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+private:
+    void InitList( );
+    void InitSettings( );
+    void ReadConfig( );
+    void WriteConfig( );
     
 private slots:
     void on_btnOK_clicked();
@@ -22,6 +30,11 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QSettings* pSettings;
+    QTextCodec* pCodec;
+
+    QList< QSpinBox* > lstSpinBox;
+    QList< QLineEdit* > lstLineEdit;
 };
 
 #endif // MAINWINDOW_H

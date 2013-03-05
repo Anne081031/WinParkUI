@@ -8,7 +8,7 @@ QT       += core network sql
 
 MYTARGET = $$quote( NetworkLibrary%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
-MYDESTLIB = $$quote( %1/%2%3.lib )
+MYDESTLIB = $$quote( %1/lib%2%3.a )
 
 Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )

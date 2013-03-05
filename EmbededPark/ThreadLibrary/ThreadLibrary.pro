@@ -9,7 +9,7 @@ QT       += core gui network sql
 DEFINES += _WIN32_WINDOWS=0x0490
 MYTARGET = $$quote( ThreadLibrary%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
-MYDESTLIB = $$quote( %1/%2%3.lib )
+MYDESTLIB = $$quote( %1/lib%2%3.a )
 
 Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )
@@ -17,6 +17,7 @@ Debug {
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "NetworkLibrary", "Debug" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "IniConfigFile", "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "DataProtocol", "Debug" )
 }
 
 Release {
@@ -25,6 +26,7 @@ Release {
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "CommonLibrary", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "NetworkLibrary", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "IniConfigFile", "" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "DataProtocol", "" )
 }
 
 TEMPLATE = lib

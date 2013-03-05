@@ -324,12 +324,18 @@ QTcpSocket* QNetworkLibrary::ProcessServerAttachSocketEvent( QCommonLibrary::Eve
 
 void QNetworkLibrary::ConnectSocketEvent( QTcpSocket *pSocket )
 {
-    bool bRet = connect( pSocket, SIGNAL( ConnectFinished( QTcpSocket*, bool ) ), this, SLOT( HandleConnectFinished( QTcpSocket*, bool ) ) );
-    bRet = connect( pSocket, SIGNAL( DisconnectFinished( QTcpSocket*, bool ) ), this, SLOT( HandleDisconnectFinished( QTcpSocket*, bool ) ) );
+    bool bRet = connect( pSocket, SIGNAL( ConnectFinished( QTcpSocket*, bool ) ),
+                         this, SLOT( HandleConnectFinished( QTcpSocket*, bool ) ) );
+
+    bRet = connect( pSocket, SIGNAL( DisconnectFinished( QTcpSocket*, bool ) ),
+                    this, SLOT( HandleDisconnectFinished( QTcpSocket*, bool ) ) );
+
     bRet = connect( pSocket, SIGNAL( ErrorInfo( qint32, QString ) ),
                     this, SLOT( HandleErrorInfo( qint32, QString ) ) );
+
     bRet = connect( pSocket, SIGNAL( DataIncoming( void*, void* ) ),
                     this, SLOT( HandleDataIncoming( void*, void* ) ) );
+
     bRet = connect( pSocket, SIGNAL( ErrorCode( QTcpSocket* ) ),
                     this, SLOT( HandleErrorCode( QTcpSocket* ) ) );
 }

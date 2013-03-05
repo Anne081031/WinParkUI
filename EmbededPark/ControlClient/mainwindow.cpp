@@ -63,11 +63,11 @@ void MainWindow::on_pushButton_4_clicked()
 
     while ( nConn-- ) {
         QByteArray* pByteArray = new QByteArray( );
-        QString strToken = QCommonLibrary::GetDataToken( );
+        QString& strToken = QCommonLibrary::GetDataToken( );
         QByteArray byToken = QCommonLibrary::GetTextCodec( )->fromUnicode( strToken );
         pByteArray->append( byToken );
         QByteArray byBody = QString( "Test success %1." ).arg( nConn ).toLatin1( );
-        qint32 nPackageLen = byToken.length( ) + sizeof ( quint32 ) + byBody.length( );
+        qint32 nPackageLen = byToken.length( ) + sizeof ( quint32 ) * 3 + byBody.length( );
         nPackageLen = qToBigEndian< qint32 >( nPackageLen );
         pByteArray->append( ( char* ) &nPackageLen, sizeof ( quint32 ) );
         pByteArray->append( byBody );
