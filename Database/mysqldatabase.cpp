@@ -29,12 +29,25 @@ CMySqlDatabase::CMySqlDatabase(QObject *parent) :
     my_bool bReconnect = 1;
     mysql_options( &hConnect, MYSQL_OPT_RECONNECT, &bReconnect );
     pCodec = CCommonFunction::GetTextCodec( );
+    bReconnect = mysql_thread_safe( );
     hStmt = NULL;
 }
 
 bool CMySqlDatabase::PingMysql( )
 {
     return ( 0 ==  mysql_ping( &hConnect ) );
+}
+
+int CMySqlDatabase::MySQLLibraryInit(int argc, char **argv)
+{
+    char** groups = NULL;
+
+    return mysql_library_init( argc, argv, groups );
+}
+
+void CMySqlDatabase::MySQLLibrayEnd( )
+{
+    mysql_library_end( );
 }
 
 void CMySqlDatabase::SetExpiration( bool bExp )
@@ -162,6 +175,7 @@ quint64 CMySqlDatabase::GetRowData( QStringList& lstRows, QString& strError  )
 void CMySqlDatabase::DbDisconnect( )
 {
     mysql_close( &hConnect );
+    mysql_thread_end( );
 }
 
 CMySqlDatabase::~CMySqlDatabase( )

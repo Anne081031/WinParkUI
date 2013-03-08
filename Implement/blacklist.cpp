@@ -70,6 +70,11 @@ void CBlacklist::on_btnDelete_clicked( )
     SaveData( 1 );
 
     CCommonFunction::FreeRow( ui->tableBlacklist, nRow, ui->tableBlacklist->columnCount( ) );
+
+    /////////////////////////////////////////////////////////////////////////////////////////////z
+    //第一次为选中点击删除会提示，第二次便不会，且删掉界面上的，而不是数据库中的。因为ui->lblID标签里有值，是旧的当前选项值，已失效。
+    ui->lblID->setText( "" );// 最后应该置空。
+
 }
 
 void CBlacklist::on_btnModify_clicked( )

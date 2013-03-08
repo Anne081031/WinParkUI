@@ -34,6 +34,9 @@ public:
     quint64 GetRowData( QStringList& lstRows, QString& strError );
     bool PingMysql( );
 
+    static int MySQLLibraryInit( int argc, char** argv );
+    static void MySQLLibrayEnd( );
+
 private:
     void GetErrorMsg( int nErrorCode, QString& strError, bool bMysql, QString& strSql );
 

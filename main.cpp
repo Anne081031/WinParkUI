@@ -11,6 +11,8 @@
 
 int main(int argc, char *argv[])
 {
+    CMySqlDatabase::MySQLLibraryInit( 0, NULL );
+
     QApplication a(argc, argv);
 
     // MBCS(DBCS) UCS
@@ -29,5 +31,8 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.show();
     CCommonFunction::CleanupSplash( &w );
+
+    CMySqlDatabase::MySQLLibrayEnd( );
+
     return a.exec( );
 }
