@@ -1479,12 +1479,18 @@ int CCommonFunction::CalculateFee( QSettings& pSet, QString &strParkName, QStrin
                         nMinDiff = GetTimeDiff( tTmpStart, tStart );
                         nFeeOuter = 0;
                         AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
-                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                        //nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter ); // ÷£√Ù
+                        int nFeeOuterSum = nFeeOuter;  // ÷£√Ù
+
 
                         nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tTmpStart, tStart );
                         nFeeOuter = 0;
                         AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
-                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                        nFeeOuterSum += nFeeOuter;  // ÷£√Ù
+
+                        //nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );  // ÷£√Ù
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuterSum );  // ÷£√Ù
+
                     }
                 }
             }
