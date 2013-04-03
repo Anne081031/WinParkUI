@@ -55,7 +55,7 @@ void MainWindow::InitializeUI( )
     ui->spLightSensitiveFreq->setVisible( false );
 
     controllerCmd = QControllerCmd::GetSingleton( );
-    GetQueryCmd( byQueryCmd );
+    GetQueryCmd( byQueryCmds );
 
     SetQueryTemplate( );
     //SetOldMaxSize( );
@@ -89,7 +89,7 @@ void MainWindow::HandleData( QByteArray data )
 
 void MainWindow::HandleQuery( QString strInfo, qint8 nIndex, QByteArray byData )
 {
-    if ( 1 > nIndex || 15 < nIndex ) {
+    if ( 1 > nIndex || QUERY_CMD_COUNT < nIndex ) {
         return;
     }
 
@@ -397,7 +397,7 @@ void MainWindow::CbCurrentIndexChanged( int index )
     }
 }
 
-void MainWindow::GetQueryCmd( QByteArray &byData )
+void MainWindow::GetQueryCmd( QByteArray *pData )
 {
     #if false
      //Query test cmd
@@ -430,51 +430,51 @@ void MainWindow::GetQueryCmd( QByteArray &byData )
 
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyLightSensitiveIfWork, data, nParam, bQuery, !bMode );
-    byData.append( data );
+    pData[ 0 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyLightSensitiveIfWork, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 1 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdLedTemperature, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 2 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashGearSet, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 3 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdSyncModeDownTrigger, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 4 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, !bMode );
-    byData.append( data );
+    pData[ 5 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyGearWorkTimeSet, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 6 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, !bMode );
-    byData.append( data );
+    pData[ 7 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashFrenquencyIntensityTune, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 8 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdLedFrequency, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 9 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdLedWorkVoltage, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 10 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdLedExternalTriggerSignalState, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 11 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdSyncModeForFlash, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 12 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFrenquencyRadianceChange, data, nParam, bQuery, !bMode );
-    byData.append( data );
+    pData[ 13 ].append( data );
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashRadianceChange, data, nParam, bQuery, bMode );
-    byData.append( data );
+    pData[ 14 ].append( data );
 
-    qDebug( ) << byData.toHex( ).toUpper( ) << endl;
+    //qDebug( ) << byData.toHex( ).toUpper( ) << endl;
 }
 
 void MainWindow::SendCmd( const bool bNewDevice, const LedControll::ECommand eCmd, qint32 nParam )
@@ -960,7 +960,10 @@ void MainWindow::on_cbMode_currentIndexChanged(int index)
 
 void MainWindow::on_btnQuery_clicked()
 {
-    controller.WriteData( byQueryCmd, true );
+    for ( qint8 c = 0; c < QUERY_CMD_COUNT; c++ ) {
+        controller.WriteData( byQueryCmds[ c ], true );
+        Sleep( 500 );
+    }
 }
 
 void MainWindow::on_tabWidget_currentChanged(int index)

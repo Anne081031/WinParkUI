@@ -9,6 +9,8 @@
 #include <QComboBox>
 #include "../ControllerCmd/qcontrollercmd.h"
 
+#define QUERY_CMD_COUNT     ( qint8 ) 15
+
 namespace Ui {
 class MainWindow;
 }
@@ -22,7 +24,7 @@ public:
     ~MainWindow();
 
 private:
-    void GetQueryCmd( QByteArray& byData );
+    void GetQueryCmd( QByteArray* pData );
     void SendCmd( const bool bNewDevice, const LedControll::ECommand eCmd, qint32 nParam );
     qint32 GetRbIndex( QObject* pSender );
     char GetSelectedRbIndex( QHash< char, QRadioButton* >& hash );
@@ -114,8 +116,8 @@ private:
     bool bFlash;
     qint32 nModeIndex;
     QString strState;
-    QString strStateValue[ 15 ];
-    QByteArray byQueryCmd;
+    QString strStateValue[ QUERY_CMD_COUNT ];
+    QByteArray byQueryCmds[ QUERY_CMD_COUNT ];
 };
 
 #endif // MAINWINDOW_H
