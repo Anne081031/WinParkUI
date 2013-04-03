@@ -1130,9 +1130,272 @@ bool CCommonFunction::GetSectionAround( QTime& tSectionBegin, QTime& tSectionEnd
     return bRet;
 }
 
+int CCommonFunction::CalculateFee( QSettings& pSet, QString &strParkName, QString &strCarType,
+                                   QDateTime& dtStart, QDateTime& dtEnd, QStringList& lstText, bool bManual, bool bSect )
+{
+    int nFee = 0;
+
+    if ( dtStart >= dtEnd ) {
+        lstText << "入时间不小于离时间";
+        return nFee;
+    }
+
+    int nMinDiff = ( dtEnd.toTime_t( ) - dtStart.toTime_t( ) ) / 60;
+
+    QString strSection = QString( "%1/%2/" ).arg( strParkName, strCarType );
+
+    strSection += "%1";
+    int nLimit = 0;
+    int nValue = pSet.value( strSection.arg( "LimitTime" ), 0 ).toInt( );
+    nLimit = nValue;
+    if ( nValue >= nMinDiff ) { // 宽限
+        lstText << "在宽限时间内";
+        return nFee;
+    } else {
+       nMinDiff -= nValue;
+    }
+
+    nValue = pSet.value( strSection.arg( "NoFullTime" ), 0 ).toInt( );
+    if ( nValue > nMinDiff ) { // 不足
+        lstText << "在不足时间内";
+        return nFee;
+    }
+
+    // //////////////2013.3.25/////把dtStart修改了，后面就不需要再修改。开始时间加上宽限时间，往后推迟了xx分钟。
+    dtStart = dtStart.addSecs( nLimit * 60 );
+
+    QString strMinInner = "MinInner";
+    QString strMinOut = "MinOuter";
+
+    QString strFootInner = "FootInner";
+    QString strFootOut = "FootOuter";
+
+    pSet.sync( );
+
+    bool bSection = bManual ? bSect : pSet.value( strSection.arg( "Section" ), false ).toBool( ); // 是否分段
+
+    if ( bSection ) { // 分段
+        QTime tStart = pSet.value( strSection.arg( "Section1" ), QTime::currentTime( ) ).toTime( );
+        QTime tEnd = pSet.value( strSection.arg( "Section2" ), QTime::currentTime( ) ).toTime( );
+
+        int nFeeInner = 0;
+        int nFeeOuter = 0;
+
+        int nLimitFootInner = pSet.value( strSection.arg( "LimitFootInner" ), 0 ).toInt( );
+        int nLimitFootOuter = pSet.value( strSection.arg( "LimitFootOuter" ), 0 ).toInt( );
+
+        strSection = strSection.arg( "" );
+        int nTerm = ( dtStart.secsTo( dtEnd ) ) / ( 60 * 24 * 60);
+
+        QTime tTmpStart = dtStart.time( ); // 周期开头部分
+       // tTmpStart = tTmpStart.addSecs( nLimit *60 ); // 宽限时间，所以起始时间就延后了。修改了dtStart时间。
+        QTime tTmpEnd = dtEnd.time( ); // 周期结尾部分
+        QTime t24Hour( 23, 59, 59 );
+        QTime t0Hour( 0, 0, 0 );
+        //bool bTimeEqual = false ;
+
+        if ( 0 != nTerm ) { //  跨完整的一天
+            // 段内
+            nMinDiff = tStart.msecsTo( tEnd ) / 1000;
+            if ( t24Hour == tEnd ) { // 无法设置24：0：0就用23：59：59来代替。
+                nMinDiff++;
+            }
+
+            nMinDiff /= 60;
+            AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+            nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+             // 段外
+            nMinDiff = 24 * 60 - nMinDiff;
+            AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+            nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+            nFee *= nTerm;
+
+            // Precision Minute 乘以-1把秒减掉。
+            tTmpStart.addSecs( tTmpStart.second( ) * -1 );
+            tTmpEnd.addSecs( tTmpEnd.second( ) * -1 );
+            tStart.addSecs( tStart.second( ) * -1 );
+            tEnd.addSecs( tEnd.second( ) * -1 );
+
+          //  if ( tTmpStart == tTmpEnd && ( tTmpStart != tEnd || tTmpStart != tStart ) ) { // 后部分永远为TRUE
+          //      bTimeEqual = true;
+         //   }
+        }
+
+        int nDayDiff = dtStart.date( ).daysTo( dtEnd.date( ) );
+
+        if ( 0 != nDayDiff && tTmpStart >= tTmpEnd ) { //不完整跨天
+            if ( tTmpStart > tTmpEnd ) {
+                if ( tStart <= tTmpStart && tTmpStart <= tEnd ) { //1
+                    if ( tTmpEnd < tStart ) { //13
+                        nMinDiff = GetTimeDiff( tTmpStart, tEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff = 24 * 60 - GetTimeDiff( tTmpEnd, tStart ) -
+                                          GetTimeDiff( tStart, tEnd );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    } else { //14ok
+                        nMinDiff = GetTimeDiff( tTmpStart, tEnd );
+                        //////////////////////2013.3.27////
+                         if( tEnd == t24Hour )
+                         {
+                             nMinDiff++;
+                         }
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        /////////////////////////2013.3.22
+                        int nFeeInnerSum = nFeeInner;
+
+                        nMinDiff = GetTimeDiff( tStart, tTmpEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+
+                        nFeeInnerSum += nFeeInner;
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInnerSum );
+
+                        nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd );
+                        //////////////////////2013.3.27////
+                         if( tEnd == t24Hour )
+                         {
+                             nMinDiff--;
+                         }
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    }
+                } else {
+                    if ( tEnd < tTmpStart && tTmpStart <= t24Hour ) { // 2
+                        if ( tTmpEnd < tStart ) { // 22ok
+                            nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tTmpEnd, tStart ) -
+                                              GetTimeDiff( tEnd, tTmpStart );
+                            nFeeOuter = 0;
+                            AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+                        } else if ( tStart <= tTmpEnd && tTmpEnd <= tEnd ) {//23ok
+                            nMinDiff = GetTimeDiff( tStart, tTmpEnd );
+                            nFeeInner = 0;
+                            AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                            nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tEnd, tTmpStart );
+                            nFeeOuter = 0;
+                            AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+
+                        } else if ( tEnd < tTmpEnd ) {//24
+                            nMinDiff = GetTimeDiff( tStart, tEnd );
+                            nFeeInner = 0;
+                            AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                            //////////////////////////2013.3.27
+                            nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tTmpEnd, tTmpStart ); //直接求
+                            nFeeOuter = 0;
+                            AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                            nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                        }
+                    } else { // tTmpStart > t24Hour && tTmpStart < tStart //34
+                        nMinDiff = GetTimeDiff( tStart, tEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        /////////////////////////////2013.3.27 把后面的合并了，就不必麻烦分两次计算段外。
+                        nMinDiff = 24 * 60 - GetTimeDiff( tStart, tEnd ) - GetTimeDiff( tTmpEnd, tTmpStart );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    }
+                }
+            }
+            ///////////////////2013.3.28因为此种情况无操作，可以不要。时间点重合说明它至少跨了一个完整天。在那部分就计算了。
+           // else if ( tTmpStart == tTmpEnd ) { // 时间点重合，但不与分段时间点重合
+           //     qDebug() << "时间点重合" << endl;
+                ////////////////////2013.3.22不论时间点在哪儿重合，都是计算0-24这一整圈的，其实就是没有零散时间，只有整天，此时nFee的值就是。
+           // }
+         } else { //  tTmpStart < tTmpEnd
+            if ( tStart <= tTmpStart && tTmpStart <= tEnd )  { // 1
+                if ( tTmpEnd <=tEnd  ) { //11 ok
+                    nMinDiff = GetDateTimeDiff( dtStart, dtEnd, nTerm ); // 求取的是除去整天后的零散时间
+                    nFeeInner = 0;
+                    AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                    nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+                } else if ( tTmpEnd <= t24Hour ) { //12 ok
+                    nMinDiff = GetTimeDiff( tTmpStart, tEnd );
+                    nFeeInner = 0;
+                    AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                    nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                    nMinDiff = GetTimeDiff( tEnd, tTmpEnd );
+                    nFeeOuter = 0;
+                    AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                    nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                }
+                /////////////////////2013.3.27根本不会走到这儿来，在tTmpStart >= tTmpEnd的情况下包含了一下情况。
+                //此时tTmpStart < tTmpEnd且tStart <= tTmpStart  <= tEnd反正不会进入下面情况。所以删除了。
+            }
+
+            else { // 大前提：tTmpStart < tTmpEnd
+                if ( tEnd < tTmpStart && tTmpStart <= t24Hour ) { // 2
+                    if ( tTmpEnd <= t24Hour ) { //21 ok
+                        nMinDiff = GetDateTimeDiff( dtStart, dtEnd, nTerm );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    }
+                }
+                else if ( t0Hour  <= tTmpStart && tTmpStart < tStart ) {  // 大前提：tTmpStart < tTmpEnd
+                    if ( tTmpEnd <= tStart ) { //31ok
+                        nMinDiff = GetDateTimeDiff( dtStart, dtEnd, nTerm );//
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    } else if (tStart <= tTmpEnd && tTmpEnd <= tEnd  ) { //32
+                        nMinDiff = GetTimeDiff( tStart, tTmpEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff =GetTimeDiff( tTmpStart, tStart );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuter );
+                    } else if (  tTmpEnd > tEnd && tTmpEnd <= t24Hour  ) { //33 34 ;34不会到此来。所以直接判断33情况。
+                        nMinDiff = GetTimeDiff( tStart, tEnd );
+                        nFeeInner = 0;
+                        AddFee3( strSection, strMinInner, strFootInner, nFeeInner, nMinDiff, pSet, lstText );
+                        nFee += GetQuotaValue( nLimitFootInner, nFeeInner );
+
+                        nMinDiff = GetTimeDiff( tTmpStart, tStart );
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        int nFeeOuterSum = nFeeOuter;
+
+                        nMinDiff = GetTimeDiff( tEnd, tTmpEnd ); // 不能使用+=
+                        nFeeOuter = 0;
+                        AddFee3( strSection, strMinOut, strFootOut, nFeeOuter, nMinDiff, pSet, lstText );
+                        nFeeOuterSum += nFeeOuter;
+                        nFee += GetQuotaValue( nLimitFootOuter, nFeeOuterSum );
+                    }
+                }
+            }
+        }
+    } else { // 不分段
+        AddFee4( strSection, strMinInner, strFootInner, nFee, nMinDiff, pSet, lstText );
+    }
+
+    return nFee / 10;
+}
+
 // Delete content in TariffCfg.ini except [ CarType ]
 // alter table parkadmin.feerate1 add column Section tinyint( 1 ) default 0;
-
+#if false
 int CCommonFunction::CalculateFee( QSettings& pSet, QString &strParkName, QString &strCarType,
                                    QDateTime& dtStart, QDateTime& dtEnd, QStringList& lstText, bool bManual, bool bSect )
 {
@@ -1696,3 +1959,4 @@ int CCommonFunction::CalculateFee( QSettings& pSet, QString &strParkName, QStrin
 
     return nFee / 10;
 }
+#endif

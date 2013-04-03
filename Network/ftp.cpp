@@ -43,6 +43,7 @@ void CFtp::StateChanged( int nState )
     if ( QFtp::Unconnected == nState ) {
         ftpClient.connectToHost( lstFtpServer[ 0 ], lstFtpServer[ 1 ].toUShort( ) );
         ftpClient.login( lstFtpServer[ 2 ], lstFtpServer[ 3 ] );
+        qDebug( ) << ftpClient.errorString( ) << endl;
     }
 }
 
@@ -77,6 +78,7 @@ bool CFtp::SendFile( QStringList& lstParams )
     QString strEncodingFile = "";
     Encoding( strSvrFile, strEncodingFile );
     int nPut = ftpClient.put( *pData, strEncodingFile );
+    qDebug( ) << ftpClient.errorString( ) << endl;
     dataHash.insert( nPut, pData );
 
     return true;

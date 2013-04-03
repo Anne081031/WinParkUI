@@ -10,6 +10,7 @@ CUdpDispatcher::CUdpDispatcher(QObject *parent) :
     connect( &udpServer, SIGNAL( error( QAbstractSocket::SocketError ) ),
                              this, SLOT( UdpError( QAbstractSocket::SocketError ) ) );
 
+    pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     nPeerSize = sizeof ( peerAddr );
 }
 
@@ -58,6 +59,7 @@ void CUdpDispatcher::GetDatagrams( )
                                                      &sender, &senderPort );
         strIP = sender.toString( );
 #if true
+        pSettings->setValue( "ServerInfo/ImageRequest", strIP );
         if ( strIP == "192.168.1.52" ) { //杨全波未改，改了就注释掉
             QByteArray byToken = QString( "FutureInternet" ).toAscii( );
             qint32 nMsgLen = sizeof ( quint32 );

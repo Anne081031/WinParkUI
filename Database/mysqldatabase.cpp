@@ -175,7 +175,7 @@ quint64 CMySqlDatabase::GetRowData( QStringList& lstRows, QString& strError  )
 void CMySqlDatabase::DbDisconnect( )
 {
     mysql_close( &hConnect );
-    mysql_thread_end( );
+    //mysql_thread_end( );
 }
 
 CMySqlDatabase::~CMySqlDatabase( )
@@ -251,7 +251,7 @@ bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &s
     if ( NULL != res && 0 < res->field_count &&
         nData < res->fields[ 0 ].max_length ) {
         nData = res->fields[ 0 ].max_length; // Data Real Length
-        mysql_free_result( res );
+        //mysql_free_result( res );
 
         bind[ 0 ].buffer_length = nData;
         bufData = ( char* ) realloc( bufData, nData );
@@ -259,9 +259,12 @@ bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &s
         bRet = ( 0 == mysql_stmt_bind_result( hStmt, bind ) );
         if ( !bRet ) {
             GetErrorMsg( 0, strError, false, strSql );
+            mysql_free_result( res );
             goto NewHandle;
         }
     }
+
+    mysql_free_result( res );
     ///////////////////////////////////
 
     nRet = mysql_stmt_fetch( hStmt );

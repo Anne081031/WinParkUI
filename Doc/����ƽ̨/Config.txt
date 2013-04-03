@@ -1,0 +1,49 @@
+[Database]
+Host=192.168.1.52 // MySQL
+Schema=parkadmin
+User=test
+Pwd=test
+Port=3306
+
+Server=false // 充当代理 代理配置
+
+Agent=192.168.1.52 // 门岗连接到代理 门岗配置
+TcpPort=6010
+UdpPort=6011
+
+IntervalTime=12
+TcpThreadPool=2
+UdpThreadPool=2
+MaxPendingConn=10
+MsServer=192.168.1.52
+MsDatabase=ParkDB
+MsUser=parkdb
+MsPwd=123456789
+ConnPoolThread=10
+
+[ServerInfo] // 数据接收程序配置
+TcpPort=6000
+MaxPendingConn=100
+UdpPort=6001
+TcpThreadPool=20
+UdpThreadPool=20
+
+
+[CenterServer] // 代理配置
+FtpIP=192.168.1.52
+FtpPort=21
+FtpUser=ftp
+FtpPwd=123456
+HttpIP=192.168.1.24
+HttpPort=80
+TcpIP=192.168.1.52
+TcpPort=6000
+UdpIP=192.168.1.52
+UdpPort=6001
+HeartbeatIPInterval=300000
+HeartbeatNetStateInterval=600000
+HeartbeatImgRequest=3000
+
+/////////////////////
+Socket Table data
+5101070001	192.168.1.52/代理IP	6011	NULL
