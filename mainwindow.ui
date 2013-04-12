@@ -73,6 +73,7 @@
     <addaction name="separator"/>
     <addaction name="actDBMaintenance"/>
     <addaction name="actConnectDb"/>
+    <addaction name="actIPC"/>
     <addaction name="separator"/>
     <addaction name="actVideoService"/>
     <addaction name="actPlateService"/>
@@ -462,6 +463,11 @@
   <action name="actRemoteMgmt">
    <property name="text">
     <string>远程管理</string>
+   </property>
+  </action>
+  <action name="actIPC">
+   <property name="text">
+    <string>连接IPC</string>
    </property>
   </action>
  </widget>

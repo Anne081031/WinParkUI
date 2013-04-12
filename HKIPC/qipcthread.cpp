@@ -116,7 +116,7 @@ void QIPCThread::SendNotify( DWORD dwType, LONG lUserID, LONG lHandle )
         break;
     }
 
-    emit NotifyMessage( strText );
+    EmitMsg( strText, Q_FUNC_INFO );
 }
 
 void QIPCThread::PostIPCEvent( QIPCEvent::IPCEventType evtType )
@@ -264,7 +264,13 @@ void QIPCThread::GetErrorMessage( )
 {
     char* pMsg = NET_DVR_GetErrorMsg( );
     QString strText = pMsg;
-    emit NotifyMessage( strText );
+    EmitMsg( strText, Q_FUNC_INFO );
+}
+
+void QIPCThread::EmitMsg(QString strMsg, QString strFunName)
+{
+    emit NotifyMessage( strMsg );
+    qDebug( ) << strMsg << ":" << strFunName << endl;
 }
 
 void QIPCThread::ProcessIPCStartupEvent( QIPCEvent* pEvent )
@@ -272,7 +278,7 @@ void QIPCThread::ProcessIPCStartupEvent( QIPCEvent* pEvent )
     Q_UNUSED( pEvent )
 
     if( bStarted ) {
-        emit NotifyMessage( "已经初始化了。" );
+        EmitMsg( "已经初始化了。", Q_FUNC_INFO );
         return;
     }
 
@@ -383,7 +389,7 @@ void QIPCThread::ProcessIPCLoginEvent( QIPCEvent* pEvent )
     char* pIP = uParam.EventLogin.cIP;
 
     if ( -1 != lUserID ) {
-        emit NotifyMessage( QString( "已经登录【%1】." ).arg( pIP ) );
+        EmitMsg( QString( "已经登录【%1】." ).arg( pIP ), Q_FUNC_INFO );
         return;
     }
 
@@ -408,12 +414,12 @@ void QIPCThread::ProcessIPCCaptureJPGEvent( QIPCEvent* pEvent )
     char* pFile = uParam.EventCaptureJPG.cFile;
 
     if ( -1 == lUserID ) {
-        emit NotifyMessage( "未登录." );
+        EmitMsg( "未登录.", Q_FUNC_INFO );
         return;
     }
 
     if ( NULL == pFile ) {
-        emit NotifyMessage( "文件未指定." );
+        EmitMsg( "文件未指定.", Q_FUNC_INFO );
         return;
     }
 
@@ -440,7 +446,7 @@ void QIPCThread::ProcessIPCStartRealPlayEvent( QIPCEvent* pEvent )
     LONG lUserID = GetUserID( uParam.EventStartRealPlay.cIP );
 
     if ( - 1 == lUserID ) {
-        emit NotifyMessage( "未登录." );
+        EmitMsg( "未登录.", Q_FUNC_INFO );
         return;
     }
 
@@ -448,7 +454,7 @@ void QIPCThread::ProcessIPCStartRealPlayEvent( QIPCEvent* pEvent )
     LONG lPlayHandle = GetPlayHandle( hPlayWnd );
 
     if ( -1 != lPlayHandle ) {
-        emit NotifyMessage( "窗口正在播放." );
+        EmitMsg( "窗口正在播放.", Q_FUNC_INFO );
         return;
     }
 
@@ -473,7 +479,7 @@ void QIPCThread::ProcessIPCStopRealPlayEvent( QIPCEvent* pEvent )
     LONG lPlayHandle = GetPlayHandle( hPlayWnd );
 
     if ( - 1 == lPlayHandle ) {
-        emit NotifyMessage( "未播放." );
+        EmitMsg( "未播放.", Q_FUNC_INFO );
         return;
     }
 
@@ -493,7 +499,7 @@ void QIPCThread::ProcessIPCLogoutEvent( QIPCEvent* pEvent )
     LONG lUserID = GetUserID( pIP );
 
     if ( - 1 == lUserID ) {
-        emit NotifyMessage( "未登录." );
+        EmitMsg( "未登录.", Q_FUNC_INFO );
         return;
     }
 

@@ -48,6 +48,8 @@ public:
 
     void TimeCardPass( int nAmount, int nHour, int nMin, QByteArray& byData );
     void RecognizePlate( QString strPlate, int nChannel, int nConfidence );
+    int MatchNum( QString &strPlate, const QString &strTest );
+    bool RecognizeFuzzyPlate( CommonDataType::QPlateCardHash& hash, QString& strCarNo, QString& strPlate );
 
     void ParkspaceFull( bool bFull, QString& strInfo, char cCan );
     void CaptureManualGateImage( char cCan, QString& strWhere );
@@ -200,6 +202,7 @@ private:
     QString strCurrentPlate[ 4 ];
     QSettings* pSettings;
     bool bHavePlateRecog;
+    char cPrecision;
     bool bPlateRecognize[ 2 ];
     QHash< QString, QVector< QDateTime > > singleChannelHash;
     int nSameInterval[ 2 ];

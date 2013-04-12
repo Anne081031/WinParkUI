@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'ipcvideoframe.h'
 **
-** Created: Fri Feb 1 12:37:17 2013
+** Created: Fri Apr 12 15:18:46 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,29 +23,34 @@ static const uint qt_meta_data_CIPCVideoFrame[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       7,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      23,   16,   15,   15, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-      22,   16,   15,   15, 0x08,
-      55,   15,   15,   15, 0x08,
-      76,   15,   15,   15, 0x08,
-      98,   15,   15,   15, 0x08,
-     122,   15,   15,   15, 0x08,
+      52,   46,   15,   15, 0x08,
+      85,   15,   15,   15, 0x08,
+     106,   15,   15,   15, 0x08,
+     128,   15,   15,   15, 0x08,
+     152,   15,   15,   15, 0x08,
+     177,   16,   15,   15, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CIPCVideoFrame[] = {
-    "CIPCVideoFrame\0\0index\0"
-    "on_tabWidget_currentChanged(int)\0"
+    "CIPCVideoFrame\0\0strMsg\0NotifyMessage(QString)\0"
+    "index\0on_tabWidget_currentChanged(int)\0"
     "on_btnOpen_clicked()\0on_btnClose_clicked()\0"
     "on_btnOpenAll_clicked()\0"
     "on_btnCloseAll_clicked()\0"
+    "HandleNotifyMessage(QString)\0"
 };
 
 const QMetaObject CIPCVideoFrame::staticMetaObject = {
@@ -77,15 +82,24 @@ int CIPCVideoFrame::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: on_tabWidget_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 1: on_btnOpen_clicked(); break;
-        case 2: on_btnClose_clicked(); break;
-        case 3: on_btnOpenAll_clicked(); break;
-        case 4: on_btnCloseAll_clicked(); break;
+        case 0: NotifyMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 1: on_tabWidget_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: on_btnOpen_clicked(); break;
+        case 3: on_btnClose_clicked(); break;
+        case 4: on_btnOpenAll_clicked(); break;
+        case 5: on_btnCloseAll_clicked(); break;
+        case 6: HandleNotifyMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 5;
+        _id -= 7;
     }
     return _id;
+}
+
+// SIGNAL 0
+void CIPCVideoFrame::NotifyMessage(QString _t1)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

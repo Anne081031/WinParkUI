@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Feb 20 16:35:43 2013
+** Created: Thu Apr 11 18:22:30 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -880,7 +880,7 @@ public:
 
         retranslateUi(MainWindow);
 
-        tabWidgetDevice->setCurrentIndex(1);
+        tabWidgetDevice->setCurrentIndex(0);
         tabWidget->setCurrentIndex(0);
 
 
@@ -898,6 +898,9 @@ public:
         tbnReadSet->setText(QApplication::translate("MainWindow", "\350\257\273\345\217\226\350\256\276\347\275\256", 0, QApplication::UnicodeUTF8));
         label_3->setText(QApplication::translate("MainWindow", "LED\346\231\272\350\203\275\350\241\245\345\205\211\347\201\257", 0, QApplication::UnicodeUTF8));
         lblMode->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        tab->setToolTip(QApplication::translate("MainWindow", "\346\237\245\350\257\242\346\257\224\350\276\203\350\212\261\346\227\266\351\227\264\357\274\214\350\257\267\344\270\215\350\246\201\351\242\221\347\271\201\346\237\245\350\257\242\343\200\202", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         edtState->setPlainText(QApplication::translate("MainWindow", "\347\205\247\345\272\246(\345\205\211\346\225\217\347\224\265\351\230\273) %1\n"
 "\346\270\251\345\272\246 %2\346\221\204\346\260\217\345\272\246\n"
 "\347\201\257\345\267\245\344\275\234\347\212\266\346\200\201 %3\n"
@@ -972,9 +975,9 @@ public:
         );
         label_21->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFreq->setText(QString());
-        label_17->setText(QApplication::translate("MainWindow", "\344\270\212\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        label_17->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
         rbSync08->setText(QString());
-        label_22->setText(QApplication::translate("MainWindow", "\344\270\213\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        label_22->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
         rbSync09->setText(QString());
         label_23->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync10->setText(QString());
@@ -999,9 +1002,9 @@ public:
         );
         label_27->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFlash->setText(QString());
-        label_26->setText(QApplication::translate("MainWindow", "\344\270\212\351\231\215\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        label_26->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
         rbSync04->setText(QString());
-        label_25->setText(QApplication::translate("MainWindow", "\344\270\213\345\215\207\346\262\277\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        label_25->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
         rbSync05->setText(QString());
         label_24->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
         rbSync06->setText(QString());

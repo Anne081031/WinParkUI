@@ -56,6 +56,8 @@ public:
     void StartIPC( );
     void StopIPC( );
 
+    void ManualIPC( );
+
     void IPCVideo( bool bPlayVideo );
 
     void StartAvSdk( );
@@ -96,6 +98,7 @@ private:
     void SetGateImg( bool bOpen, bool bEnter );
     inline void GetImgBasePath( QString& strPath );
     void LoadImg( );
+    void LoadVideoWndBg( qint32 nIndex );
     void InitVideoPlateUI( );
     int GetInsideCard( QStringList& lstRows );
     void GetDefaultParkInfo( );
@@ -200,6 +203,7 @@ private slots:
     void HideCtrl( int nIndex, bool bVisible );
     void ClearPlate( int nPlateChannel );
     void DisplayDbError( QString strMsg );
+    void HandleIPCMsg( QString strMsg );
 
     void on_pushButton_clicked();
 

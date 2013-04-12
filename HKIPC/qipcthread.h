@@ -38,6 +38,7 @@ private:
     inline void PostIPCEvent( QIPCEvent::IPCEventType evtType,
                               QIPCEvent::EventParam& uParam );
     inline void GetErrorMessage( );
+    inline void EmitMsg( QString strMsg, QString strFunName );
 
 protected:
     void run( );

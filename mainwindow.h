@@ -194,6 +194,8 @@ private slots:
 
     void on_actRemoteMgmt_triggered();
 
+    void on_actIPC_triggered();
+
 signals:
     void OnUserChanged( QString& strUser, QString& strID );
     void OnPermission( bool bNormal, int nIndex );

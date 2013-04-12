@@ -18,6 +18,9 @@ CIPCVideoFrame::CIPCVideoFrame(bool bIPC, QWidget *parent) :
         setWindowState( Qt::WindowMaximized );
         QDesktopWidget* pDesktop = QApplication::desktop( );
         recBigSize = pDesktop->screenGeometry( );
+
+        connect( pVideoThread, SIGNAL( NotifyMessage( QString ) ),
+                 this, SLOT( HandleNotifyMessage( QString ) ) );
     } else {
         ui->tabWidget->removeTab( 0 );
         pVideoThread = NULL;
@@ -129,6 +132,11 @@ void CIPCVideoFrame::resizeEvent( QResizeEvent *event )
      ui->tabWidgetVideo->setGeometry( rect );
 }
 
+void CIPCVideoFrame::HandleNotifyMessage( QString strMsg )
+{
+    emit NotifyMessage( strMsg );
+}
+
 void CIPCVideoFrame::closeEvent( QCloseEvent *event )
 {
     Q_UNUSED( event );
@@ -148,6 +156,11 @@ void CIPCVideoFrame::UninitializeIPC( )
 void CIPCVideoFrame::LocalIPCLogout( )
 {
     LogIPC( true, false );
+}
+
+void CIPCVideoFrame::LocalIPCLogin( )
+{
+    LogIPC( true, true );
 }
 
 void CIPCVideoFrame::LocalIPCStartVideo( QString &strIP, HWND hPlayWnd )
@@ -247,11 +260,11 @@ void CIPCVideoFrame::InitializeIPC( )
 
     pVideoThread->PostIPCStartupEvent( );
 
-    uParam.EventConnectTimeout.dwWaitTime = 2000;
+    uParam.EventConnectTimeout.dwWaitTime = 75000;
     uParam.EventConnectTimeout.dwTryTimes = 1;
     pVideoThread->PostIPCSetConnectTimeoutEvent( uParam );
 
-    uParam.EventReconnectTimeout.dwInterval = 10000;
+    uParam.EventReconnectTimeout.dwInterval = 5000;
     uParam.EventReconnectTimeout.bEnableRecon = TRUE;
     pVideoThread->PostIPCSetReconnectTimeEvent( uParam );
 

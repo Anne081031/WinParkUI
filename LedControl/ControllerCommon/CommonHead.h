@@ -65,6 +65,7 @@ const unsigned int  nLOCATION_SIZE = 128;
         CmdSyncModeFollowDownTrigger,
         CmdTestFlashOpen,    // 0x0A
         CmdTestFlashClose,
+        //CmdSyncModeForFreq,
         CmdSyncModeForFlash,
         CmdLedTemperature, // New Device
         CmdLedFrequency,

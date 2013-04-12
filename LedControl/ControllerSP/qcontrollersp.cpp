@@ -3,6 +3,16 @@
 #include "qthreadspwriter.h"
 #include "../ControllerCommon/qcontrollercommon.h"
 
+//http://java-source.net/open-source/charting-and-reporting
+// PDFBox/iText/PDFClown/PDFRenderer/jPod/PDFJet(.net) PDF
+// JFreeChart/Chart JasperReport(iReport UI)/Report
+// JNI/JNA JACOB/Call Windows COM
+// C++ NetworkFramework IOCP/EPoll ACE/ICE/POCO
+// Java NIO NetworkFramework Netty/Vert.x/NodeJS/MINA/Servlet
+// NettyÊÇMINAµÄÇ°±²
+// Java SerialPort RXTX/javax.comm
+//
+
 //
 // Controll serial port
 // Communicate with serial port / write, read data

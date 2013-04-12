@@ -49,7 +49,7 @@ void MainWindow::InitializeUI( )
     ui->cbMode->setVisible( false );
     ui->btnQuery->setVisible( false );
     ui->chkQuery->setVisible( false );
-    ui->tabWidgetDevice->setCurrentIndex( 1 );
+    ui->tabWidgetDevice->setCurrentIndex( 0 );
     ui->tabWidget->setCurrentIndex( 1 );
     ui->spLightSensitiveFlash->setVisible( false );
     ui->spLightSensitiveFreq->setVisible( false );
@@ -821,22 +821,22 @@ void MainWindow::SaveNewDevConfig( LedControll::SNewSysConfig &sConfig )
 void MainWindow::on_btnSaveSet_clicked()
 {
     LedControll::SSysConfig sConfig;
-    //ZeroMemory( &sConfig, sizeof ( sConfig ) );
+    ZeroMemory( &sConfig, sizeof ( sConfig ) );
 
     bool bNewDevice = IsNewDevice( );
     QString strLocation;
 
-    //if ( bNewDevice ) {
+    if ( bNewDevice ) {
         strLocation = ui->edtLocationNew->text( );
         GetLocationDefault( strLocation, bNewDevice );
         SaveNewDevConfig( sConfig.sNewConfig );
         SaveLocationConfig( strLocation, sConfig.sNewConfig.cLocation );
-    //} else {
+    } else {
         strLocation = ui->edtLocation->text( );
         GetLocationDefault( strLocation, bNewDevice );
         SaveOldDevConfig( sConfig );
         SaveLocationConfig( strLocation, sConfig.cLocation );
-    //}
+    }
 
     QControllerCommon::SaveSystemConfig( sConfig );
 
@@ -960,9 +960,12 @@ void MainWindow::on_cbMode_currentIndexChanged(int index)
 
 void MainWindow::on_btnQuery_clicked()
 {
+    //controller.WriteData( byQueryCmds[ 12 ], true );
+    //return;
+    // QUERY_CMD_COUNT
     for ( qint8 c = 0; c < QUERY_CMD_COUNT; c++ ) {
         controller.WriteData( byQueryCmds[ c ], true );
-        Sleep( 500 );
+        Sleep( 250 );
     }
 }
 

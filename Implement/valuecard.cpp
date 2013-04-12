@@ -374,7 +374,7 @@ void CValueCard::CreateContextMenu( QTableWidget *parent )
         pMenu->addAction( "删除", this, SLOT( DeleteRecord( ) ) );
         pMenu->addAction( "续费", this, SLOT( Recharge( ) ) );
         pMenu->addAction( "查找", this, SLOT( Serach( ) ) );
-        pMenu->addAction( "换卡", this, SLOT( ChangeCard( ) ) );
+        //pMenu->addAction( "换卡", this, SLOT( ChangeCard( ) ) );
         pMenu->addAction( "车进场 卡遗失处理", this, SLOT( CardLossProcess( ) ) );
         pMenu->addSeparator( );
         pMenu->addAction( "刷新", this, SLOT( Refresh( ) ) );

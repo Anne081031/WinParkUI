@@ -197,6 +197,13 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     ControlGateButton( );
 
     ipcVideoFrame = new CIPCVideoFrame( bNetworkCamera );
+    connect( ipcVideoFrame, SIGNAL( NotifyMessage( QString ) ),
+             this, SLOT( HandleIPCMsg( QString ) ) );
+}
+
+void CMonitor::HandleIPCMsg( QString strMsg )
+{
+    //ui->lblAlert->setText( strMsg );
 }
 
 void CMonitor::SetFileCount( quint32 nCount )
@@ -266,10 +273,11 @@ void CMonitor::InitVideoPlateUI( )
             rect.setWidth( 410 );
             rect.setHeight( 275 );
             lblVideoWnd[ nIndex ] = new CMyLabel( nIndex, rect, bNetworkCamera, this );
+            QString strKey = QString( "CommonCfg/Video%1" ).arg( nIndex + 1 );
+            QString strCan = pSystem->value( strKey, "0" ).toString( );
 
-            if ( bNetworkCamera ) {
-                QString strKey = QString( "CommonCfg/Video%1" ).arg( nIndex + 1 );
-                QString strCan = pSystem->value( strKey, "0" ).toString( );
+            lblVideoWnd[ nIndex ]->setToolTip( strCan );
+            if ( "0" != strCan && bNetworkCamera ) {
                 QString strSQL = QString( "Select video2ip from roadconerinfo where \
                                           shebeiadr = %1 and video1ip = '%2'" ).arg(
                         strCan, CCommonFunction::GetHostIP( ) );
@@ -1131,6 +1139,17 @@ void CMonitor::DisplayRemoteUI( )
     ipcVideoFrame->show( );
 }
 
+void CMonitor::ManualIPC( )
+{
+    if ( !bNetworkCamera ) {
+        return;
+    }
+
+    StopIPC( );
+    ipcVideoFrame->LocalIPCLogin( );
+    StartIPC( );
+}
+
 void CMonitor::StartIPC( )
 {
     if ( !bNetworkCamera ) {
@@ -1160,10 +1179,15 @@ void CMonitor::IPCVideo( bool bPlayVideo )
         hPlayWnd = lblVideoWnd[ nIndex ]->winId( );
         strIP = lblVideoWnd[ nIndex ]->toolTip( );
 
+        if ( strIP.isEmpty( ) || "0" == strIP || "127.0.0.1" == strIP ) {
+            LoadVideoWndBg( nIndex );
+            continue;
+        }
+
         if ( bPlayVideo ) {
             ipcVideoFrame->LocalIPCStartVideo( strIP, hPlayWnd );
         } else {
-            ipcVideoFrame->LocalIPCStopVideo(  hPlayWnd );
+            ipcVideoFrame->LocalIPCStopVideo( hPlayWnd );
         }
     }
 }
@@ -1233,6 +1257,11 @@ void CMonitor::StartAvSdk( )
 void CMonitor::PlayVideo( int nIndex, QFrame* pVideo )
 {
     if ( nIndex > nEncode || 0 > nIndex || NULL == pMultimedia ) {
+        return;
+    }
+
+    if ( pVideo->toolTip( ) == "0" ) {
+        LoadVideoWndBg( nIndex );
         return;
     }
 
@@ -1510,6 +1539,15 @@ void CMonitor::GetInOutPixmap(QPixmap &bmpEnter, QPixmap &bmpLeave)
     }
 }
 
+void CMonitor::LoadVideoWndBg( qint32 nIndex )
+{
+    QString strInfo = "";
+    GetImgBasePath( strInfo );
+
+    QString strTmp = strInfo + "logo";
+    lblVideoWnd[ nIndex ]->setPixmap( pParent->GetPixmap( strTmp ) );
+}
+
 void CMonitor::LoadImg( )
 {
     QString strInfo = "";
@@ -1517,7 +1555,7 @@ void CMonitor::LoadImg( )
 
     QString strTmp = strInfo + "logo";
     for ( int nIndex = nUsedWay; nIndex < 4; nIndex++ ) {
-        lblVideoWnd[ nIndex ]->setPixmap( pParent->GetPixmap( strTmp ) );
+        LoadVideoWndBg( nIndex );
     }
 
     // Enter

@@ -617,7 +617,7 @@
       <item>
        <widget class="QComboBox" name="cb0">
         <property name="statusTip">
-         <string>cardno = '%1'</string>
+         <string>cardno like '%%1%'</string>
         </property>
         <property name="editable">
          <bool>true</bool>
@@ -633,8 +633,11 @@
       </item>
       <item>
        <widget class="QComboBox" name="cb2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="statusTip">
-         <string>cardselfno = '%1'</string>
+         <string>cardselfno like '%%1%'</string>
         </property>
         <property name="editable">
          <bool>true</bool>
@@ -654,7 +657,7 @@
       <item>
        <widget class="QComboBox" name="cb3">
         <property name="statusTip">
-         <string>inshebeiname = '%1'</string>
+         <string>inshebeiname like '%%1%'</string>
         </property>
         <property name="editable">
          <bool>true</bool>
@@ -674,7 +677,7 @@
       <item>
        <widget class="QComboBox" name="cb4">
         <property name="statusTip">
-         <string>outshebeiname = '%1'</string>
+         <string>outshebeiname like '%%1%'</string>
         </property>
         <property name="editable">
          <bool>true</bool>
@@ -734,7 +737,7 @@
       <item>
        <widget class="QComboBox" name="cb7">
         <property name="statusTip">
-         <string>carcp = '%1'</string>
+         <string>carcp like '%%1%'</string>
         </property>
         <property name="editable">
          <bool>true</bool>
@@ -754,7 +757,7 @@
       <item>
        <widget class="QComboBox" name="cb8">
         <property name="statusTip">
-         <string>carcpout = '%1'</string>
+         <string>carcpout like '%%1%'</string>
         </property>
         <property name="editable">
          <bool>true</bool>

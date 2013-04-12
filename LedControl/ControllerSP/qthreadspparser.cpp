@@ -41,7 +41,7 @@ bool QThreadSPParser::ParseData( )
     // GetFrame ( YiBin )
     //
 
-    const char cAddrValue = ( char ) 0xAA;
+    const char cAddrValue = ( char ) 0x00;//0xAA;
     const char cStartFrame = 0x68;
     const char cEndFrame = 0x16;
 

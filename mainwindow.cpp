@@ -2044,3 +2044,9 @@ void MainWindow::on_actRemoteMgmt_triggered()
     CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
     pMonitor->DisplayRemoteUI( );
 }
+
+void MainWindow::on_actIPC_triggered()
+{
+    CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
+    pMonitor->ManualIPC( );
+}

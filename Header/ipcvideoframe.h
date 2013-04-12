@@ -20,6 +20,7 @@ public:
     void LocalIPCStartVideo( QString& strIP, HWND hPlayWnd );
     void LocalIPCStopVideo( HWND hPlayWnd );
     void LocalIPCLogout( );
+    void LocalIPCLogin( );
 
     void CapturePreviewImage( HWND hPlayWnd, QString& strFileName );
     void CaptureDeviceImage( QString& strIP, QString& strFileName );
@@ -39,6 +40,11 @@ private slots:
     void on_btnOpenAll_clicked();
 
     void on_btnCloseAll_clicked();
+
+    void HandleNotifyMessage( QString strMsg );
+
+signals:
+    void NotifyMessage( QString strMsg );
 
 private:
     typedef QMultiHash< QString, QString > QHostIPCHash;

@@ -92,6 +92,7 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
     nMonthWakeup = pSet->value( "CommonSet/MonthlyWakeup").toInt( );
     bCardConfirm = pSet->value( "CommonSet/CardConfirm", false ).toBool( );
     bHavePlateRecog = pSet->value( "CarLicence/AutoRecognize", false ).toBool( );
+    cPrecision = ( char ) pSet->value( "CarLicence/Precision", 0 ).toInt( );
 
     bSendOnlyOnce = false;
 
@@ -800,6 +801,65 @@ void CProcessData::SendPlate( QString strPlate, int nChannel, int nConfidence )
     emit PlateDelivery( nChannel, lstData, strPlate );
 }
 
+int CProcessData::MatchNum( QString &strPlate, const QString &strTest )
+{
+    int counter = 0;
+    int min = qMin( strPlate.size(), strTest.size() );
+    for( int i = 0; i < min; ++i ) // length 超出范围引发崩溃。
+    {
+        if( strPlate.at( i ) == strTest.at( i ) )
+        {
+            ++counter;
+            continue;
+        }
+    }
+
+    return counter;
+}
+
+bool CProcessData::RecognizeFuzzyPlate( CommonDataType::QPlateCardHash &hash,
+                                        QString &strCarNo,
+                                        QString& strPlate )
+{
+    // typedef QHash< QString / Plate, QString / CardNo > QPlateCardHash;
+    bool bRet = false;
+    if ( 0 == cPrecision ) {
+        return bRet;
+    }
+
+    QList< QString > lstPlates = hash.keys( );
+    lstPlates.removeAll( "未知" );
+
+    // strCarNo
+
+    QMultiHash< int, QString > matchHash;
+    int nMatch = 0;
+
+    foreach ( const QString& strValue, lstPlates ) {
+        nMatch = MatchNum( strPlate, strValue );
+        if( nMatch < strPlate.count( ) - cPrecision )
+        {
+            continue;
+        }
+
+        matchHash.insertMulti( nMatch,  strValue );
+    }
+
+    if( matchHash.isEmpty() )
+    {
+        return bRet;
+    }
+
+    QList< int > lstKeys =  matchHash.keys( );
+    qSort( lstKeys );
+
+    QString strTmpPlate = matchHash.value( lstKeys.at( lstKeys.count(  ) - 1 )  );
+    strCarNo = hash.value( strTmpPlate );
+    bRet = true;
+
+    return bRet;
+}
+
 void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfidence )
 {
     if ( bStartupPlateDilivery ) {
@@ -821,13 +881,16 @@ void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfiden
     strCurrentPlate[ bEnter ] = strPlate;
     CommonDataType::QPlateCardHash& hash = CCommonFunction::GetPlateCardHash( );
     if ( false == hash.contains( strPlate ) ) { // Don't exist to get
-        QString strWhere = QString( " Where carcp = '%1'" ).arg( strPlate );
+        QString strWhere = QString( " and carcp = '%1'" ).arg( strPlate );
         CLogicInterface::GetInterface( )->GetPlateCardInfo( hash, strWhere );
     }
 
     QString strCardNo = hash.value( strPlate );
     if ( strCardNo.isNull( ) || strCardNo.isEmpty( ) ) {
-        return;
+        //加入判断
+        if ( !RecognizeFuzzyPlate( hash, strCardNo, strPlate ) ) {
+            return;
+        }
     }
 
     CommonDataType::QEntityHash& entHash = CCommonFunction::GetCardEntity( );
@@ -1451,7 +1514,7 @@ void CProcessData::GetNewCardInfo( QString &strCardNo )
     QString strTmpWhere = QString( " Where cardno = '%1'" ).arg( strCardNo );
     CLogicInterface::GetInterface( )->GetEntityInfo( CCommonFunction::GetCardEntity( ), strWhere, strTmpWhere );
 
-    strWhere = QString( " Where cardindex = '%1'" ).arg( strCardNo );
+    strWhere = QString( " and cardindex = '%1'" ).arg( strCardNo );
     CLogicInterface::GetInterface( )->GetPlateCardInfo( CCommonFunction::GetPlateCardHash( ), strWhere );
 
 }
