@@ -7,7 +7,7 @@
 // PDFBox/iText/PDFClown/PDFRenderer/jPod/PDFJet(.net) PDF
 // JFreeChart/Chart JasperReport(iReport UI)/Report
 // JNI/JNA JACOB/Call Windows COM
-// C++ NetworkFramework IOCP/EPoll ACE/ICE/POCO
+// C++ NetworkFramework IOCP/EPoll/KQueue ACE/ICE/POCO/libevent
 // Java NIO NetworkFramework Netty/Vert.x/NodeJS/MINA/Servlet
 // NettyÊÇMINAµÄÇ°±²
 // Java SerialPort RXTX/javax.comm
