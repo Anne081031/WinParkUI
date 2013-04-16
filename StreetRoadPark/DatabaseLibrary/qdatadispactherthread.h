@@ -16,6 +16,7 @@ public:
 
     ~QDataDispactherThread( );
     void PostDispatchDataEvent( QTcpSocket* pSocket, qint32 nPackageType, QByteArray& byData );
+    void PostComPortDataEvent( qint32 nPackageType, QByteArray& byData );
 
 protected:
     void run( );

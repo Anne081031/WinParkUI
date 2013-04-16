@@ -10,6 +10,18 @@
 // WinBinder, native window bindings for PHP
 // 脚本语言与跨平台GUI绑定都可实现GUI应用开发 eg. LUA Python etc.
 
+//
+// Windows IOCP / Select.... model
+// Linux EPoll / Process Per Connection( PPC )
+// Thread Per Connection( TPC ) Select Poll model
+// libevent an event notification library
+// POCO library
+// Unix-->select poll
+// Solaris-->/dev/pool
+// BSD-->kqueue
+//
+//
+
 #include "networkcontroller.h"
 
 NetworkController* NetworkController::pController = NULL;
@@ -18,6 +30,7 @@ NetworkController::NetworkController( QObject *parent ) : QObject( parent )
 {
     qRegisterMetaType< qintptr >( "qintptr" );
     pListenerThread = QListenerThread::CreateThread( );
+    pMulticastThread = QMulticastThread::CreateThread( );
 
     connect( pListenerThread, SIGNAL( Log( QString, bool ) ),
              this, SLOT( HandleLog( QString, bool ) ) );
@@ -25,6 +38,7 @@ NetworkController::NetworkController( QObject *parent ) : QObject( parent )
 
 NetworkController::~NetworkController( )
 {
+    pMulticastThread->deleteLater( );
     pListenerThread->deleteLater( );
 }
 
@@ -53,6 +67,11 @@ void NetworkController::StartListen( quint16 nPort, qint32 nMaxConn )
 void NetworkController::StopListen( )
 {
     pListenerThread->PostStopListenEvent( );
+}
+
+void NetworkController::MulticastData( QByteArray& byJson, qint32 nMulticastType )
+{
+    pMulticastThread->PostUDPMultiDataEvent( byJson, nMulticastType );
 }
 
 void NetworkController::HandleLog( QString strLog, bool bStatic )

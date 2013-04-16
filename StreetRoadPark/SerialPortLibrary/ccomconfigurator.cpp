@@ -27,6 +27,23 @@ CComConfigurator* CComConfigurator::GetConfigurator( )
     return pConfig;
 }
 
+bool CComConfigurator::GetDisplayDynamicLog( )
+{
+    pSettings->sync( );
+
+    return pSettings->value( "ComM77R/DisplayDynamicLog", false ).toBool( );
+}
+
+QByteArray CComConfigurator::GetReceiverVerInfo( )
+{
+    return pSettings->value( "ComM77R/ReceiverVer", "M77R_ver1p5b" ).toByteArray( );
+}
+
+QString CComConfigurator::GetComParkID( QString &strComX )
+{
+    return pSettings->value( QString( "Park/%1ParkID" ).arg( strComX ), "5101070001" ).toString( );
+}
+
 QTextCodec* CComConfigurator::GetTextCodec( )
 {
     static QTextCodec* pCodec = NULL;

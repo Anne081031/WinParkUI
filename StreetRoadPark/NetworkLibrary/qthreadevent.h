@@ -12,6 +12,8 @@
 #include <QHostAddress>
 #include "cnetconfigurator.h"
 
+#define DATA_TOKEN      "StreetRoadPark"
+
 class QThreadEvent : public QEvent
 {
 public:
@@ -20,7 +22,8 @@ public:
         ThreadListener,
         ThreadSocket,
         ThreadParser,
-        ThreadDispatcher
+        ThreadDispatcher,
+        ThreadMulticast
     } ThreadType;
 
     typedef enum __EventType {
@@ -34,7 +37,9 @@ public:
         EventServerSendData, // SocketThread
 
         EventTCPData,
-        EventUDPData // ParserThread
+        EventUDPData, // ParserThread
+
+        EventMulticastData
     } EventType;
 
     static QThreadEvent* CreateThreadEvent( ThreadType thrType, EventType evtType );
@@ -54,6 +59,9 @@ public:
     void SetByteArray( const QByteArray& byByteArray );
     QByteArray& GetByteArray( );
 
+    void SetPackageType( qint32 nType );
+    qint32 GetPackageType( );
+
 private:
     QThreadEvent( ThreadType thrType, Type evtType );
     ThreadType typeThread;
@@ -66,6 +74,8 @@ private:
     QTcpSocket* pPeerSocket;
 
     QByteArray byEventByteArray;
+
+    qint32 nPackageType;
 };
 
 #endif // QTHREADEVENT_H

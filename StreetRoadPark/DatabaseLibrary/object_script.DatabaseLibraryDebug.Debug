@@ -7,10 +7,13 @@ INPUT(
 ./debug\qdatabaseprocessor.o
 ./debug\qthreadpooltask.o
 ./debug\qdbdataprocess.o
+./debug\qjson2sqlparser.o
+./debug\Constant.o
 ./debug\moc_databasecontroller.o
 ./debug\moc_mysqldatabase.o
 ./debug\moc_cdbconfigurator.o
 ./debug\moc_qdatadispactherthread.o
 ./debug\moc_qdatabaseprocessor.o
 ./debug\moc_qdbdataprocess.o
+./debug\moc_qjson2sqlparser.o
 );

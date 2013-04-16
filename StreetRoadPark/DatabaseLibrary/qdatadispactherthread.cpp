@@ -87,13 +87,13 @@ void QDataDispactherThread::FreeDbThread( )
 
 QDatabaseProcessor* QDataDispactherThread::CreateOneDbThread( )
 {
-    QDatabaseProcessor* pThread = QDatabaseProcessor::CreateThread( );
+    QDatabaseProcessor* pThread = QDatabaseProcessor::CreateThread( true );
     connect( pThread, SIGNAL( Log( QString, bool ) ),
              this, SLOT( HandleLog( QString, bool ) ) );
     hashProcessor.insertMulti( nDbThreadOperationCount, pThread );
     //pThread->PostDbConnectEvent( );
 
-    sleep( 2 );
+    //sleep( 2 );
 
     return pThread;
 }
@@ -118,8 +118,12 @@ void QDataDispactherThread::CreateDbThread(  )
 // GetProcessor call
 void QDataDispactherThread::ChangeProcessorHash( qint32 nIndex, QDatabaseProcessor *pThread )
 {
-    hashProcessor.remove( nIndex, pThread );
     qint32 nCount = pThread->GetFreeOperationCount( );
+    if ( nCount == nIndex ) {
+        return;
+    }
+
+    hashProcessor.remove( nIndex, pThread );
     hashProcessor.insertMulti( nCount, pThread );
 }
 
@@ -187,6 +191,9 @@ QDatabaseProcessor* QDataDispactherThread::GetProcessor( )
 
     if ( NULL == pThread ) {
         // when pThread is NULL, no processor may be used
+        qDebug( ) << "New Database processor." << endl;
+        QString strLog = "New Database processor.";
+        SendLog( strLog, true );
         pThread = CreateOneDbThread( );
     }
 
@@ -205,6 +212,8 @@ void QDataDispactherThread::ProcessDispatchDataEvent( QDbThreadEvent *pEvent )
     // MySQL Server else ThreadPool
     QDatabaseProcessor* pThread = GetProcessor( );
     pThread->PostDbDataProcessEvent( pSocket, nPackageType, byData );
+
+    //Sleep( 5000 );
 }
 
 void QDataDispactherThread::InitializeSubThread( )
@@ -215,6 +224,16 @@ void QDataDispactherThread::InitializeSubThread( )
 void QDataDispactherThread::PostEvent( QDbThreadEvent *pEvent )
 {
     qApp->postEvent( this, pEvent );
+}
+
+void QDataDispactherThread::PostComPortDataEvent( qint32 nPackageType, QByteArray &byData )
+{
+    QDbThreadEvent* pEvent = QDbThreadEvent::CreateThreadEvent( QDbThreadEvent::ThreadDispatcher, QDbThreadEvent::EventProcessComPortData );
+
+    pEvent->SetDataPackageType( nPackageType );
+    pEvent->SetByteArray( byData );
+
+    PostEvent( pEvent );
 }
 
 void QDataDispactherThread::PostDispatchDataEvent( QTcpSocket* pSocket, qint32 nPackageType, QByteArray &byData )

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'syssetting.ui'
 **
-** Created: Fri Feb 1 10:57:14 2013
+** Created: Mon Apr 15 13:08:50 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -327,6 +327,7 @@ public:
         radioButton_15->setGeometry(QRect(20, 140, 89, 16));
         radioButton_24 = new QRadioButton(groupBox_13);
         radioButton_24->setObjectName(QString::fromUtf8("radioButton_24"));
+        radioButton_24->setEnabled(false);
         radioButton_24->setGeometry(QRect(20, 260, 89, 16));
         btnVichle = new QPushButton(wgVichle);
         btnVichle->setObjectName(QString::fromUtf8("btnVichle"));

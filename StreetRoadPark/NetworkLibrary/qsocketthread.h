@@ -39,6 +39,8 @@ private:
     QDataParserThread* pDataParserThread;
     QThread* pDispatcherThread;
     qint64 nThreadStartSleepTime;
+    QByteArray byTokenData;
+    CNetConfigurator* pConfig;
 
     QSocketQueue attachedSocketQueue;
     QSocketQueue detachedSocketQueue;

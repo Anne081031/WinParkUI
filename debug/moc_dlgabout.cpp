@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgabout.h'
 **
-** Created: Fri Feb 1 11:04:54 2013
+** Created: Mon Apr 15 13:24:26 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

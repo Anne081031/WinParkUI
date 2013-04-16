@@ -7,10 +7,13 @@ INPUT(
 ./release\qdatabaseprocessor.o
 ./release\qthreadpooltask.o
 ./release\qdbdataprocess.o
+./release\qjson2sqlparser.o
+./release\Constant.o
 ./release\moc_databasecontroller.o
 ./release\moc_mysqldatabase.o
 ./release\moc_cdbconfigurator.o
 ./release\moc_qdatadispactherthread.o
 ./release\moc_qdatabaseprocessor.o
 ./release\moc_qdbdataprocess.o
+./release\moc_qjson2sqlparser.o
 );

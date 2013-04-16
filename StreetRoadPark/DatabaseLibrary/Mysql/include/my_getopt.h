@@ -1,4 +1,5 @@
-/* Copyright (C) 2002-2004 MySQL AB
+/*
+   Copyright (c) 2002, 2012, Oracle and/or its affiliates. All rights reserved.
 
    This program is free software; you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -11,7 +12,7 @@
 
    You should have received a copy of the GNU General Public License
    along with this program; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA */
+   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA 02110-1301  USA */
 
 #ifndef _my_getopt_h
 #define _my_getopt_h
@@ -35,6 +36,7 @@ C_MODE_START
 #define GET_SET       13
 #define GET_DOUBLE    14
 #define GET_FLAGSET   15
+#define GET_PASSWORD  16
 
 #define GET_ASK_ADDR	 128
 #define GET_TYPE_MASK	 127
@@ -65,7 +67,11 @@ struct my_option
                                            If an opton needs neither special
                                            treatment in the my_get_one_option()
                                            nor one-letter short equivalent
-                                           use id=0
+                                           use id=0.
+                                           id=-1 is a special case and is used
+                                           to generate deprecation warnings for
+                                           plugin options. It should not be
+                                           used for anything else.
                                          */
   const char *comment;                  /**< option comment, for autom. --help.
                                            if it's NULL the option is not
@@ -78,7 +84,7 @@ struct my_option
   enum get_opt_arg_type arg_type;       /**< e.g. REQUIRED_ARG or OPT_ARG */
   longlong   def_value;                 /**< Default value */
   longlong   min_value;                 /**< Min allowed value (for numbers) */
-  longlong   max_value;                 /**< Max allowed value (for numbers) */
+  ulonglong  max_value;                 /**< Max allowed value (for numbers) */
   longlong   sub_size;                  /**< Unused                          */
   long       block_size;                /**< Value should be a mult. of this (for numbers) */
   void       *app_type;                 /**< To be used by an application */
@@ -86,7 +92,6 @@ struct my_option
 
 
 typedef my_bool (*my_get_one_option)(int, const struct my_option *, char *);
-typedef void (*my_error_reporter)(enum loglevel level, const char *format, ...);
 /**
   Used to retrieve a reference to the object (variable) that holds the value
   for the given option. For example, if var_type is GET_UINT, the function
@@ -104,6 +109,11 @@ extern my_error_reporter my_getopt_error_reporter;
 
 extern int handle_options (int *argc, char ***argv, 
 			   const struct my_option *longopts, my_get_one_option);
+extern int my_handle_options (int *argc, char ***argv,
+                              const struct my_option *longopts,
+                              my_get_one_option,
+                              const char **command_list);
+extern void my_cleanup_options(const struct my_option *options);
 extern void my_cleanup_options(const struct my_option *options);
 extern void my_print_help(const struct my_option *options);
 extern void my_print_variables(const struct my_option *options);
@@ -116,6 +126,7 @@ longlong getopt_ll_limit_value(longlong, const struct my_option *,
 double getopt_double_limit_value(double num, const struct my_option *optp,
                                  my_bool *fix);
 my_bool getopt_compare_strings(const char *s, const char *t, uint length);
+ulonglong max_of_int_range(int var_type);
 
 C_MODE_END
 

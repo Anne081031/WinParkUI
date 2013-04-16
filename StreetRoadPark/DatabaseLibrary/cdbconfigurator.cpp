@@ -1,4 +1,5 @@
 #include "cdbconfigurator.h"
+#include <QDateTime>
 
 #define CONFIG_NAME_DATABASE     "Config.ini"
 
@@ -36,7 +37,7 @@ void CDbConfigurator::WriteDbInfo( QString& strIP, quint16 nPort )
 void CDbConfigurator::ReadDbInfo( QStringList &lstDbInfo )
 {
     //QString& strHost, QString& strUser, QString& strPwd, QString& strDB, quint32 nPort
-
+    pSettings->sync( );
     lstDbInfo << pSettings->value( "Database/ServerIP", "127.0.01" ).toString( )
               << pSettings->value( "Database/User", "test" ).toString( )
               << pSettings->value( "Database/Pwd", "test" ).toString( )
@@ -49,6 +50,11 @@ qint32 CDbConfigurator::GetDbThreadInvalidWaitTime( )
     return pSettings->value( "Database/DbThreadInvalidWaitTime", 1 ).toInt( );
 }
 
+QString CDbConfigurator::GetParkID( )
+{
+    return pSettings->value( "Park/ParkID", "510100" ).toString( );
+}
+
 qint32 CDbConfigurator::GetDbThreadCount( )
 {
     return pSettings->value( "Database/DbThreadCount", 20 ).toInt( );
@@ -57,6 +63,18 @@ qint32 CDbConfigurator::GetDbThreadCount( )
 qint32 CDbConfigurator::GetDbThreadOperationCount( )
 {
     return pSettings->value( "Database/DbThreadOperationCount", 10 ).toInt( );
+}
+
+bool CDbConfigurator::GetDisplayDynamicLog( )
+{
+    pSettings->sync( );
+
+    return pSettings->value( "Database/DisplayDynamicLog", false ).toBool( );
+}
+
+QString CDbConfigurator::GetDateTime( )
+{
+    return QDateTime::currentDateTime( ).toString( "yyyy-MM-dd hh:mm:ss" );
 }
 
 QTextCodec* CDbConfigurator::GetTextCodec( )

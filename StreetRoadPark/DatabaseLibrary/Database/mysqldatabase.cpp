@@ -17,6 +17,7 @@ CMySqlDatabase::CMySqlDatabase(QObject *parent) :
     my_bool bReconnect = 1;
     mysql_options( &hConnect, MYSQL_OPT_RECONNECT, &bReconnect );
     pCodec = CDbConfigurator::GetConfigurator( )->GetTextCodec( );
+    bReconnect = mysql_thread_safe( );
     hStmt = NULL;
     bFirstConnect = true;
 }
@@ -30,9 +31,26 @@ void CMySqlDatabase::SetFirstConnect( bool bFirst )
     bFirstConnect = bFirst;
 }
 
+int CMySqlDatabase::MySQLLibraryInit( int argc, char *argv[] )
+{
+    char** groups = NULL;
+
+    return mysql_library_init( argc, argv, groups );
+}
+
+void CMySqlDatabase::MySQLLibraryEnd( )
+{
+    mysql_library_end( );
+}
+
 bool CMySqlDatabase::GetFirstConnect( )
 {
     return bFirstConnect;
+}
+
+ulong CMySqlDatabase::GetThreadID( )
+{
+    return mysql_thread_id( &hConnect );
 }
 
 bool CMySqlDatabase::PingMysql( )
@@ -59,17 +77,23 @@ bool CMySqlDatabase::DbConnect( const QString& strHost, const QString& strUser,
     // Set Client endpoit character set
     //
     if ( NULL != hConn ) {
-        mysql_set_character_set( &hConnect, "GBK" );
+        mysql_set_character_set( &hConnect, "UTF8" );
     }
     //int nRet = mysql_query( &hConnect, "SET NAMES 'GBK'" );
     QString strError;
-    GetErrorMsg( 0, strError, true, strError );
+    GetErrorMsg( 0, strError, true, strError, "mysql_real_connect" );
 
     return ( NULL != hConn );
 }
 
-void CMySqlDatabase::GetErrorMsg( int nErrorCode, QString &strError, bool bMysql, QString& strSql )
+void CMySqlDatabase::GetErrorMsg( int nErrorCode,
+                                  QString &strError,
+                                  bool bMysql,
+                                  QString& strSql,
+                                  QString  strFunName )
 {
+    qint32 nCode = 0;
+
     switch ( nErrorCode ) {
     case CR_COMMANDS_OUT_OF_SYNC :
         strError = tr( "以不恰当的顺序执行了命令。" );
@@ -93,16 +117,17 @@ void CMySqlDatabase::GetErrorMsg( int nErrorCode, QString &strError, bool bMysql
 
     default :
             strError = bMysql ? mysql_error( &hConnect ) : mysql_stmt_error( hStmt );
+            nCode = bMysql ? mysql_errno( &hConnect ) : mysql_stmt_errno( hStmt );
         break;
     }
 
-    emit NotifyError( strSql, false );
+    //emit NotifyError( strSql, false );
 
     if ( !strError.isEmpty( ) ) {
-        emit NotifyError( objectName( ) + ":" + strError, true );
+        qDebug( ) << Q_FUNC_INFO << strError << endl;
+        emit NotifyError( objectName( ) + ":" + strError + ":" + strFunName + " Error code:" + QString::number( nCode ), true );
     }
     //qDebug( ) << strSql << endl;
-    //qDebug( ) << strError << endl;
 }
 
 bool CMySqlDatabase::DbCrud( QString& strSql, QString& strError )
@@ -117,7 +142,7 @@ bool CMySqlDatabase::DbCrud( QString& strSql, QString& strError )
     const char* pSql = byteSql.data( );
 
     int nRet = mysql_real_query( &hConnect, pSql, nSize );
-    GetErrorMsg( nRet, strError, true, strSql );
+    GetErrorMsg( nRet, strError, true, strSql, "mysql_real_query" );
 
     //mysql_num_rows();
 
@@ -138,7 +163,7 @@ quint64 CMySqlDatabase::GetRowData( QStringList& lstRows, QString& strError  )
          pRowSet = mysql_store_result( &hConnect );
 
         if ( NULL == pRowSet ) {
-            GetErrorMsg( 0, strError, true, strError );
+            GetErrorMsg( 0, strError, true, strError, "mysql_store_result" );
            // return 0;
         } else {
             nRows += mysql_num_rows( pRowSet ); // Row
@@ -161,13 +186,187 @@ quint64 CMySqlDatabase::GetRowData( QStringList& lstRows, QString& strError  )
 
 void CMySqlDatabase::DbDisconnect( )
 {
+    if ( NULL != hStmt ) {
+        mysql_stmt_close( hStmt );
+    }
+
     mysql_close( &hConnect );
+    mysql_thread_end( );
 }
 
 CMySqlDatabase::~CMySqlDatabase( )
 {
     DbDisconnect( );
     //mysql_library_end( );
+}
+
+bool CMySqlDatabase::ExcutePreparedStmt( QByteArray& byBlob, char& nFlag, QString& strSpName )
+{
+    QString strError;
+    QString strCall = QString( "Call %1( ?, ? )" ).arg( strSpName );
+    QByteArray byCallData = pCodec->fromUnicode( strCall );
+
+    qDebug( ) << strCall << endl;
+    MYSQL_BIND bind[ 2 ];
+    int nRet = 0;
+    int nSize = 0;
+    char* bufData = NULL;
+    char* pSql = NULL;
+    ulong nRealData = 0;
+    int nFields = 0;
+
+    if ( NULL == hStmt ) {
+        hStmt = mysql_stmt_init( &hConnect );
+    }
+
+    bool bRet = ( NULL != hStmt );
+    if ( !bRet ) {
+        GetErrorMsg( 0, strError, false, strCall, "mysql_stmt_init" );
+        goto FileHandle;
+    }
+
+    nSize = byCallData.count( ); // Call Statement
+    pSql = byCallData.data( );
+    nRet = 0;
+
+    qDebug( ) << QString( byBlob ) << endl;
+    if ( strPreSpName != strSpName ) {
+        nRet = mysql_stmt_prepare( hStmt, pSql, nSize );
+        strPreSpName = strSpName;
+    }
+
+    bRet = ( 0 == nRet );
+    if ( !bRet ){
+        GetErrorMsg( nRet, strError, false, strCall, "mysql_stmt_prepare" );
+        goto StmtHandle;
+    }
+
+    nSize = byBlob.count( );
+    pSql = byBlob.data( );
+
+    memset( bind, 0, sizeof ( bind ) );
+    bind[ 0 ].buffer_type = MYSQL_TYPE_LONG_BLOB; // txtSql
+    bind[ 0 ].length = 0;
+    bind[ 0 ].is_null = 0; /* Bind the buffers */
+    bind[ 0 ].buffer = pSql;
+    bind[ 0 ].buffer_length = nSize;
+
+    bind[ 1 ].buffer_type = MYSQL_TYPE_TINY;
+    bind[ 1 ].length = 0;
+    bind[ 1 ].is_null = 0; /* Bind the buffers */
+    bind[ 1 ].buffer = &nFlag;
+    bind[ 1 ].buffer_length = sizeof ( nFlag );
+
+    bRet = ( 0 == mysql_stmt_bind_param( hStmt, bind ) );
+    if ( !bRet ) {
+        GetErrorMsg( 0, strError, false, strCall, "mysql_stmt_bind_param" );
+        goto StmtHandle;
+    }
+
+    if ( 0 < nSize ) {
+        nRet = mysql_stmt_send_long_data( hStmt, 0, pSql, nSize );
+        bRet = ( 0 == nRet );
+        if ( !bRet ) {
+            GetErrorMsg( nRet, strError, false, strCall, "mysql_stmt_send_long_data" );
+            goto StmtHandle;
+        }
+    }
+
+    nRet = mysql_stmt_execute( hStmt );
+    bRet = ( 0 == nRet );
+    if ( !bRet ) {
+        GetErrorMsg( nRet, strError, false, strCall, "mysql_stmt_execute" );
+        goto StmtHandle;
+    }
+
+    byBlob.clear( );
+
+    do {
+        nFields = mysql_stmt_field_count( hStmt );
+        if ( 0 < nFields ) {
+            if ( hConnect.server_status & SERVER_PS_OUT_PARAMS ) {
+                // max_allowed_packet 16M
+                // write_timeout 120
+                // Net Buffer 16M
+                //bufData = ( char* ) malloc( nData );
+                memset( bind, 0, sizeof ( bind ) );
+                bind[ 0 ].buffer_type = MYSQL_TYPE_LONG_BLOB;
+                bind[ 0 ].length = &nRealData; // Return Real Data Length
+                bind[ 0 ].is_null = 0; /* Bind the buffers */
+                bind[ 0 ].buffer = 0; // Bind data buffer
+                bind[ 0 ].buffer_length = 0; // Buffer Length
+
+                bind[ 1 ].buffer_type = MYSQL_TYPE_TINY;
+                bind[ 1 ].length = 0;
+                bind[ 1 ].is_null = 0; /* Bind the buffers */
+                bind[ 1 ].buffer = &nFlag;
+                bind[ 1 ].buffer_length = sizeof ( nFlag );
+
+                bRet = ( 0 == mysql_stmt_bind_result( hStmt, bind ) );
+                if ( !bRet ) {
+                    GetErrorMsg( 0, strError, false, strCall, "mysql_stmt_bind_result" );
+                    goto StmtHandle;
+                }
+
+                //bRet = ( 0 == mysql_stmt_attr_set( hStmt, STMT_ATTR_UPDATE_MAX_LENGTH, &bGetMaxLen ) );
+                //bRet = ( 0 == mysql_stmt_store_result( hStmt ) ); // 会引起失败
+                //if ( !bRet ) {
+                //    GetErrorMsg( 0, strError, false, strCall, "mysql_stmt_store_result" );
+                //    goto NewHandle;
+                //}
+
+                while ( true ) {
+                    nRet = mysql_stmt_fetch( hStmt );
+
+                    if ( MYSQL_NO_DATA == nRet ) {
+                        break;
+                    } else if ( 1 == nRet ) {
+                        bRet = ( 0 == nRet );
+                        if ( !bRet ) {
+                            GetErrorMsg( 0, strError, false, strCall, "mysql_stmt_fetch" );
+                            break;
+                        }
+                    }
+
+                    if ( 0 < nRealData ) {
+                        bufData = ( char* ) malloc( nRealData );
+                    } else {
+                        qDebug( ) << Q_FUNC_INFO << nRealData << endl;
+                        continue;
+                    }
+
+                    bind[ 0 ].buffer= bufData;
+                    bind[ 0 ].buffer_length= nRealData;
+                    mysql_stmt_fetch_column( hStmt, bind, 0, 0 );
+
+                    byBlob.append( ( const char* ) bufData, nRealData );
+
+                    if ( NULL != bufData ) {
+                        free( bufData );
+                    }
+                }
+
+
+
+                bRet = ( 0  == mysql_stmt_free_result( hStmt ) );
+                if ( !bRet ) {
+                    GetErrorMsg( 0, strError, false, strCall, "mysql_stmt_free_result" );
+                }
+            }
+        }
+    } while ( 0 == mysql_stmt_next_result( hStmt ) );
+
+    StmtHandle:
+    //bRet = ( 0 == mysql_stmt_close( hStmt ) );
+    //if ( !bRet ) {
+    //    GetErrorMsg( 0, strError, false, strCall, "mysql_stmt_close" );
+    //}
+
+    FileHandle:
+
+    //hStmt = NULL;
+
+    return bRet;
 }
 
 bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &strError )
@@ -188,7 +387,7 @@ bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &s
     hStmt = mysql_stmt_init( &hConnect );
     bRet = ( NULL != hStmt );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_init" );
         goto FileHandle;
     }
 
@@ -198,13 +397,13 @@ bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &s
 
     bRet = ( 0 == mysql_stmt_prepare( hStmt, pSql, nSize ) );
     if ( !bRet ){
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_prepare" );
         goto StmtHandle;
     }
 
     bRet = ( 0 == mysql_stmt_execute( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_execute" );
         goto StmtHandle;
     }
 
@@ -221,14 +420,14 @@ bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &s
 
     bRet = ( 0 == mysql_stmt_bind_result( hStmt, bind ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_bind_result" );
         goto NewHandle;
     }
 
     bRet = ( 0 == mysql_stmt_attr_set( hStmt, STMT_ATTR_UPDATE_MAX_LENGTH, &bGetMaxLen ) );
     bRet = ( 0 == mysql_stmt_store_result( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_store_result" );
         goto NewHandle;
     }
 
@@ -244,7 +443,7 @@ bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &s
         bind[ 0 ].buffer = bufData;
         bRet = ( 0 == mysql_stmt_bind_result( hStmt, bind ) );
         if ( !bRet ) {
-            GetErrorMsg( 0, strError, false, strSql );
+            GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_bind_result" );
             goto NewHandle;
         }
     }
@@ -256,9 +455,9 @@ bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &s
     } else {
         bRet = ( 0 == nRet );
         if ( !bRet ) {
-            GetErrorMsg( 0, strError, false, strSql );
+            GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_fetch" );
             goto NewHandle;
-        }
+        } 
     }
 
     byData.clear( );
@@ -271,13 +470,13 @@ bool CMySqlDatabase::BlobReadDb( QByteArray &byData, QString &strSql, QString &s
 
     bRet = ( 0  == mysql_stmt_free_result( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql,"mysql_stmt_free_result" );
     }
 
     StmtHandle:
     bRet = ( 0 == mysql_stmt_close( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_close" );
     }
 
     FileHandle:
@@ -320,7 +519,7 @@ bool CMySqlDatabase::BlobReadDb( QString &strBlobFile, QString& strSql, QString&
     hStmt = mysql_stmt_init( &hConnect );
     bRet = ( NULL != hStmt );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_init" );
         goto FileHandle;
     }
 
@@ -330,13 +529,13 @@ bool CMySqlDatabase::BlobReadDb( QString &strBlobFile, QString& strSql, QString&
 
     bRet = ( 0 == mysql_stmt_prepare( hStmt, pSql, nSize ) );
     if ( !bRet ){
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_prepare" );
         goto StmtHandle;
     }
 
     bRet = ( 0 == mysql_stmt_execute( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_execute" );
         goto StmtHandle;
     }
 
@@ -353,14 +552,14 @@ bool CMySqlDatabase::BlobReadDb( QString &strBlobFile, QString& strSql, QString&
 
     bRet = ( 0 == mysql_stmt_bind_result( hStmt, bind ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_bind_result" );
         goto NewHandle;
     }
 
     bRet = ( 0 == mysql_stmt_attr_set( hStmt, STMT_ATTR_UPDATE_MAX_LENGTH, &bGetMaxLen ) );
     bRet = ( 0 == mysql_stmt_store_result( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_store_result" );
         goto NewHandle;
     }
 
@@ -376,7 +575,7 @@ bool CMySqlDatabase::BlobReadDb( QString &strBlobFile, QString& strSql, QString&
         bind[ 0 ].buffer = bufData;
         bRet = ( 0 == mysql_stmt_bind_result( hStmt, bind ) );
         if ( !bRet ) {
-            GetErrorMsg( 0, strError, false, strSql );
+            GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_bind_result" );
             goto NewHandle;
         }
     }
@@ -388,7 +587,7 @@ bool CMySqlDatabase::BlobReadDb( QString &strBlobFile, QString& strSql, QString&
     } else {
         bRet = ( 0 == nRet );
         if ( !bRet ) {
-            GetErrorMsg( 0, strError, false, strSql );
+            GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_fetch" );
             goto NewHandle;
         }
     }
@@ -402,13 +601,13 @@ bool CMySqlDatabase::BlobReadDb( QString &strBlobFile, QString& strSql, QString&
 
     bRet = ( 0  == mysql_stmt_free_result( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_free_result" );
     }
 
     StmtHandle:
     bRet = ( 0 == mysql_stmt_close( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_close" );
     }
 
     FileHandle:
@@ -430,7 +629,7 @@ bool CMySqlDatabase::BlobWriteDb( QByteArray &byData, QString &strSql, QString &
     hStmt = mysql_stmt_init( &hConnect );
     bool bRet = ( NULL != hStmt );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_init" );
         goto FileHandle;
     }
 
@@ -440,7 +639,7 @@ bool CMySqlDatabase::BlobWriteDb( QByteArray &byData, QString &strSql, QString &
     nRet = mysql_stmt_prepare( hStmt, pSql, nSize );
     bRet = ( 0 == nRet );
     if ( !bRet ){
-        GetErrorMsg( nRet, strError, false, strSql );
+        GetErrorMsg( nRet, strError, false, strSql, "mysql_stmt_prepare" );
         goto StmtHandle;
     }
 
@@ -453,7 +652,7 @@ bool CMySqlDatabase::BlobWriteDb( QByteArray &byData, QString &strSql, QString &
 
     bRet = ( 0 == mysql_stmt_bind_param( hStmt, bind ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_bind_param" );
         goto StmtHandle;
     }
 
@@ -463,7 +662,7 @@ bool CMySqlDatabase::BlobWriteDb( QByteArray &byData, QString &strSql, QString &
         nRet = mysql_stmt_send_long_data( hStmt, 0, pSql, nSize );
         bRet = ( 0 == nRet );
         if ( !bRet ) {
-            GetErrorMsg( nRet, strError, false, strSql );
+            GetErrorMsg( nRet, strError, false, strSql, "mysql_stmt_send_long_data" );
             goto StmtHandle;
         }
     }
@@ -471,13 +670,13 @@ bool CMySqlDatabase::BlobWriteDb( QByteArray &byData, QString &strSql, QString &
     nRet = mysql_stmt_execute( hStmt );
     bRet = ( 0 == nRet );
     if ( !bRet ) {
-        GetErrorMsg( nRet, strError, false, strSql );
+        GetErrorMsg( nRet, strError, false, strSql, "mysql_stmt_execute" );
     }
 
     StmtHandle:
     bRet = ( 0 == mysql_stmt_close( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_close" );
     }
 
     FileHandle:
@@ -536,7 +735,7 @@ bool CMySqlDatabase::BlobWriteDb( QString &strBlobFile, QString& strSql, QString
 
     bRet = ( 0 == mysql_stmt_bind_param( hStmt, bind ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_bind_param" );
         goto StmtHandle;
     }
 
@@ -547,7 +746,7 @@ bool CMySqlDatabase::BlobWriteDb( QString &strBlobFile, QString& strSql, QString
         nRet = mysql_stmt_send_long_data( hStmt, 0, pSql, nSize );
         bRet = ( 0 == nRet );
         if ( !bRet ) {
-            GetErrorMsg( nRet, strError, false, strSql );
+            GetErrorMsg( nRet, strError, false, strSql, "mysql_stmt_send_long_data" );
             goto StmtHandle;
         }
     }
@@ -555,13 +754,13 @@ bool CMySqlDatabase::BlobWriteDb( QString &strBlobFile, QString& strSql, QString
     nRet = mysql_stmt_execute( hStmt );
     bRet = ( 0 == nRet );
     if ( !bRet ) {
-        GetErrorMsg( nRet, strError, false, strSql );
+        GetErrorMsg( nRet, strError, false, strSql, "mysql_stmt_execute" );
     }
 
     StmtHandle:
     bRet = ( 0 == mysql_stmt_close( hStmt ) );
     if ( !bRet ) {
-        GetErrorMsg( 0, strError, false, strSql );
+        GetErrorMsg( 0, strError, false, strSql, "mysql_stmt_close" );
     }
 
     FileHandle:

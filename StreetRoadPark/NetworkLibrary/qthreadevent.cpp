@@ -63,3 +63,13 @@ QByteArray& QThreadEvent::GetByteArray( )
 {
     return byEventByteArray;
 }
+
+void QThreadEvent::SetPackageType( qint32 nType )
+{
+    nPackageType = nType;
+}
+
+qint32 QThreadEvent::GetPackageType( )
+{
+    return nPackageType;
+}

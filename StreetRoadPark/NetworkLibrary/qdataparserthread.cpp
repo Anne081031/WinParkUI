@@ -1,7 +1,5 @@
 #include "qdataparserthread.h"
 
-#define DATA_TOKEN      "StreetRoadPark"
-
 QDataParserThread::QDataParserThread(QObject *parent) :
     QThread(parent)
 {
@@ -148,6 +146,7 @@ bool QDataParserThread::ParseData( QTcpSocket* pSocket, QByteArray &data )
     quint32 nCuurentStreamSize = data.length( ); // Current Stream Length
 
     if ( -1 == nIndex ) { // No Token
+        qDebug( ) << "No Token" << endl;
         data.clear( );
         return bRet;
     } else if ( 0 < nIndex ) {
@@ -173,7 +172,7 @@ bool QDataParserThread::ParseData( QTcpSocket* pSocket, QByteArray &data )
 
     data.remove( 0, nExtraSize );
     QByteArray byBody = data.left( nDataLen );
-    QString strBody = QString( byBody );
+    //QString strBody = QString( byBody );
     //qDebug( ) << "Received : " << strBody << endl;
 
     DispatchData( pSocket, nPackageType, byBody );

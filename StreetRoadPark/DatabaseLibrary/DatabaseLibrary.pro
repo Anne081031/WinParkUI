@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += sql network
+QT       += sql network xml
 
 DEFINES += _WIN32_WINDOWS=0x0501
 
@@ -18,11 +18,15 @@ LIBS += ./Mysql/lib/liblibmysql.a
 Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
+
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "NetworkLibrary", "Debug" )
 }
 
 Release {
     TARGET = $$sprintf( $$MYTARGET, "" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
+
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "NetworkLibrary", "" )
 }
 
 TEMPLATE = lib
@@ -36,7 +40,9 @@ SOURCES += databasecontroller.cpp \
     qdatadispactherthread.cpp \
     qdatabaseprocessor.cpp \
     qthreadpooltask.cpp \
-    qdbdataprocess.cpp
+    qdbdataprocess.cpp \
+    qjson2sqlparser.cpp \
+    Constant.cpp
 
 HEADERS += databasecontroller.h\
         DatabaseLibrary_global.h \
@@ -46,7 +52,11 @@ HEADERS += databasecontroller.h\
     qdatadispactherthread.h \
     qdatabaseprocessor.h \
     qthreadpooltask.h \
-    qdbdataprocess.h
+    qdbdataprocess.h \
+    qjson2sqlparser.h \
+    qdbcommon.h \
+    qjsonstruct.h \
+    Constant.h
 
 unix:!symbian {
     maemo5 {

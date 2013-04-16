@@ -749,6 +749,9 @@
       </property>
      </widget>
      <widget class="QRadioButton" name="radioButton_24">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>20</x>

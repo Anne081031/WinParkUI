@@ -5,6 +5,7 @@
 #include "ccomthreadevent.h"
 #include "qextserialport/win_qextserialport.h"
 #include "cparserthread.h"
+#include "ccomconfigurator.h"
 
 class CReceiverThread : public QThread
 {
@@ -33,6 +34,7 @@ private:
 
     Win_QextSerialPort* pWinPort;
     CParserThread* pParserThread;
+    CComConfigurator* pConfig;
     
 signals:
     void Log( QString strLog, bool bStatic );

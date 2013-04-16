@@ -6,6 +6,8 @@ QSocketThread::QSocketThread( QObject *parent ) :
 {
     nThreadStartSleepTime = 10;
     pDispatcherThread = NULL;
+    byTokenData = DATA_TOKEN;
+    pConfig = CNetConfigurator::GetConfigurator( );
 
     setObjectName( QString( "[Socket Server Thread ID = %1]" ).arg( qrand( ) ) );
 }
@@ -27,6 +29,10 @@ QSocketThread::~QSocketThread( )
 
 void QSocketThread::SendLog( QString& strLog, bool bStatic )
 {
+    if ( !bStatic && !pConfig->GetDisplayDynamicLog( ) ) {
+        return;
+    }
+
     emit Log( strLog, bStatic );
 }
 
@@ -148,8 +154,25 @@ void QSocketThread::ProcessServerSendDataEvent( QThreadEvent* pEvent )
 {
     QTcpSocket* pSocket = pEvent->GetPeerSocket( );
     QByteArray& byByteArray = pEvent->GetByteArray( );
+    qint32 nType = pEvent->GetPackageType( );
+
+    quint32 nDataSize = sizeof ( quint32 );
+    quint32 nDataLen = byTokenData.length( ) +
+            nDataSize * 3 +
+            byByteArray.length( );
+
+    nType = qToBigEndian< qint32 >( nType );
+    quint32 nReserved = qToBigEndian< quint32 >( 0 );
+    nDataLen = qToBigEndian< quint32 >( nDataLen );
+
+    byByteArray.insert( 0, ( const char* ) &nType, nDataSize );
+    byByteArray.insert( 0, ( const char* ) &nReserved, nDataSize );
+    byByteArray.insert( 0, ( const char* ) &nDataLen, nDataSize );
+    byByteArray.insert( 0, byTokenData );
 
     pSocket->write( byByteArray );
+    pSocket->flush( );
+    pSocket->waitForBytesWritten( );
 }
 
 void QSocketThread::HandleDataIncoming( )
@@ -157,6 +180,7 @@ void QSocketThread::HandleDataIncoming( )
     QTcpSocket* pSocket = ( QTcpSocket* ) sender( );
     QByteArray byData = pSocket->readAll( );
     pDataParserThread->PostTCPDataEvent( pSocket, byData );
+    //qDebug( ) << Q_FUNC_INFO << endl;
 }
 
 void QSocketThread::HandleConnectFinished( )

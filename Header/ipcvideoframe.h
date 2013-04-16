@@ -48,6 +48,7 @@ signals:
 
 private:
     typedef QMultiHash< QString, QString > QHostIPCHash;
+    typedef QMultiHash< int, QString > QHostIPCName;
 
     void InitializeIPC( );
     void UninitializeIPC( );
@@ -69,7 +70,8 @@ private:
     Ui::CIPCVideoFrame *ui;
     QIPCThread* pVideoThread;
     QHostIPCHash hashHostIPC;
-    QHostIPCHash hashIPCName;
+    QHostIPCName hashIPCName;
+    QHostIPCName hashIPCIP;
     bool bNetworkCamera;
     QRect recSmallSize;
     QRect recBigSize;

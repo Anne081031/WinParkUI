@@ -7,6 +7,8 @@ INPUT(
 ./release\qthreadevent.o
 ./release\qmytcpserver.o
 ./release\cnetconfigurator.o
+./release\qudpmulticast.o
+./release\qmulticastthread.o
 ./release\moc_networkcontroller.o
 ./release\moc_qsocketthread.o
 ./release\moc_qsocketdispatcherthread.o
@@ -14,4 +16,6 @@ INPUT(
 ./release\moc_qdataparserthread.o
 ./release\moc_qmytcpserver.o
 ./release\moc_cnetconfigurator.o
+./release\moc_qudpmulticast.o
+./release\moc_qmulticastthread.o
 );

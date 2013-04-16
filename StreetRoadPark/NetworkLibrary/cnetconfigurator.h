@@ -18,8 +18,13 @@ public:
     qint32 GetPaserPeerCount( );
     qint32 GetPeerThreadSleep( );
     qint32 GetDataDispatcherParserCount( );
+    QString GetMulticastIP( );
+    quint16 GetMulticastPort( );
+    bool GetDisplayDynamicLog( );
+    qint32 GetTimeSyncInterval( );
 
     QTextCodec* GetTextCodec( );
+    QString GetDateTime( );
 
 private:
     CNetConfigurator(QObject *parent = 0);

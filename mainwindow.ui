@@ -467,7 +467,7 @@
   </action>
   <action name="actIPC">
    <property name="text">
-    <string>连接IPC</string>
+    <string>连接网络摄像机</string>
    </property>
   </action>
  </widget>

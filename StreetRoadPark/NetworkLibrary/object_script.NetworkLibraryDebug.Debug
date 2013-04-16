@@ -7,6 +7,8 @@ INPUT(
 ./debug\qthreadevent.o
 ./debug\qmytcpserver.o
 ./debug\cnetconfigurator.o
+./debug\qudpmulticast.o
+./debug\qmulticastthread.o
 ./debug\moc_networkcontroller.o
 ./debug\moc_qsocketthread.o
 ./debug\moc_qsocketdispatcherthread.o
@@ -14,4 +16,6 @@ INPUT(
 ./debug\moc_qdataparserthread.o
 ./debug\moc_qmytcpserver.o
 ./debug\moc_cnetconfigurator.o
+./debug\moc_qudpmulticast.o
+./debug\moc_qmulticastthread.o
 );

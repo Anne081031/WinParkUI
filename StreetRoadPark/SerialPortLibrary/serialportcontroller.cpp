@@ -79,6 +79,7 @@ Win_QextSerialPort* SerialPortController::ComObject( const QString &strCOMx )
 
     if ( NULL == pPort ) {
         pPort = new Win_QextSerialPort( );
+        pPort->setObjectName( strCOMx );
         hashCom.insert( strCOMx, pPort );
     }
 
@@ -192,7 +193,8 @@ CReceiverThread* SerialPortController::ReceiverThread( const QString &strCOMx )
     CReceiverThread* pThread = ( CReceiverThread* ) hashReceiver.value( strCOMx, NULL );
 
     if ( NULL == pThread ) {
-        pThread = CReceiverThread::CreateThread( ComObject( strCOMx ) );
+        Win_QextSerialPort* pPort = ComObject( strCOMx );
+        pThread = CReceiverThread::CreateThread( pPort );
         connect( pThread, SIGNAL( Log( QString, bool ) ),
                  this, SLOT( HandleLog( QString, bool ) ) );
         hashReceiver.insert( strCOMx, pThread );

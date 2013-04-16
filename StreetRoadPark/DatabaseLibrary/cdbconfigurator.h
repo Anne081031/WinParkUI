@@ -19,6 +19,9 @@ public:
     qint32 GetDbThreadOperationCount( );
     qint32 GetDbThreadCount( );
     qint32 GetDbThreadInvalidWaitTime( );
+    QString GetParkID( );
+    bool GetDisplayDynamicLog( );
+    QString GetDateTime( );
 
     QTextCodec* GetTextCodec( );
 

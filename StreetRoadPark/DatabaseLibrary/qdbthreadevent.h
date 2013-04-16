@@ -21,6 +21,7 @@ public:
         EventDispatchData = User, // ThreadDispatcher
 
         EventConnectDb,
+        EventProcessComPortData,
         EventProcessDbData // ThreadDbProcessor
     } EventType;
 
@@ -35,6 +36,9 @@ public:
     void SetPeerSocket( QTcpSocket* pSocket );
     QTcpSocket* GetPeerSocket( );
 
+    void SetComParkID( QString& strParkID );
+    QString& GetComParkID( );
+
 private:
     QDbThreadEvent( ThreadType thrType, Type evtType );
     ThreadType typeThread;
@@ -42,6 +46,7 @@ private:
 
     QByteArray byByteArray;
     qint32 nDataPackageType;
+    QString strComParkID;
 
     QTcpSocket* pPeerSocket;
 };

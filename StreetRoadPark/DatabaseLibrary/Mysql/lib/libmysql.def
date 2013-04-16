@@ -1,5 +1,7 @@
 LIBRARY "libmysql.dll"
 EXPORTS
+get_tty_password
+handle_options
 load_defaults
 myodbc_remove_escape@8
 mysql_affected_rows@4

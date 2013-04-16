@@ -29,3 +29,13 @@ QByteArray& CComThreadEvent::GetByteArrayData( )
 {
     return byByteArrayData;
 }
+
+void CComThreadEvent::SetComParkID( QString& strParkID )
+{
+    strComParkID = strParkID;
+}
+
+QString& CComThreadEvent::GetComParkID( )
+{
+    return strComParkID;
+}

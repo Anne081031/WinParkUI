@@ -3,6 +3,7 @@
 CReceiverThread::CReceiverThread( Win_QextSerialPort* pPort, QObject *parent) :
     QThread(parent), pWinPort( pPort )
 {
+    pConfig = CComConfigurator::GetConfigurator( );
     setObjectName( QString( "[Data Receiver Thread ID = %1]" ).arg( qrand( ) ) );
 }
 
@@ -12,6 +13,7 @@ CReceiverThread* CReceiverThread::CreateThread( Win_QextSerialPort* pPort, QObje
 
     pThread->start( );
     pThread->moveToThread( pThread );
+    pPort->moveToThread( pThread );
     return pThread;
 }
 
@@ -22,7 +24,9 @@ void CReceiverThread::HandleLog( QString strLog, bool bStatic )
 
 void CReceiverThread::Initialize( )
 {
-    pParserThread = CParserThread::CreateThread( );
+    QString strParkID = pWinPort->objectName( );
+    strParkID = pConfig->GetComParkID( strParkID );
+    pParserThread = CParserThread::CreateThread( strParkID );
     connect( pWinPort, SIGNAL( readyRead( ) ),
              this, SLOT( ReceiveData( ) ) );
     connect( pParserThread, SIGNAL( Log( QString, bool ) ),
@@ -129,10 +133,11 @@ void CReceiverThread::ReceiveData( )
     Win_QextSerialPort* pPort = ( Win_QextSerialPort* ) sender( );
 
     QByteArray byData = pPort->readAll( );
-    qint32 nLen = byData.length( );
-    qDebug( ) << Q_FUNC_INFO << "Length=" << QString::number( nLen ) << endl
-              << "ASCII: " << QString( byData ) << endl
-              << "Hex: " << QString( byData.toHex( ) ) << endl;
+    //QString strParkID = pPort->objectName( );
+    //qint32 nLen = byData.length( );
+    //qDebug( ) << Q_FUNC_INFO << "Length=" << QString::number( nLen ) << endl
+    //          << "ASCII: " << QString( byData ) << endl
+    //          << "Hex: " << QString( byData.toHex( ) ) << endl;
 
     pParserThread->PostData( byData );
 }

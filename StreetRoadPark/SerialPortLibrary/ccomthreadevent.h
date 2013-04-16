@@ -4,6 +4,7 @@
 #include <QEvent>
 #include <QDebug>
 #include <QGuiApplication>
+#include "ccomconfigurator.h"
 
 class CComThreadEvent : public QEvent
 {
@@ -30,6 +31,9 @@ public:
     void SetByteArrayData( QByteArray& byData );
     QByteArray& GetByteArrayData( );
 
+    void SetComParkID( QString& strParkID );
+    QString& GetComParkID( );
+
 private:
     CComThreadEvent( ThreadType thrType, Type evtType );
     ThreadType typeThread;
@@ -37,6 +41,8 @@ private:
 
     QString strCOM;
     QByteArray byByteArrayData;
+
+    QString strComParkID;
 };
 
 #endif // CCOMTHREADEVENT_H

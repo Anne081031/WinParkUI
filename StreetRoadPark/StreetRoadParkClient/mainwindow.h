@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QTcpSocket>
 #include <QTextCodec>
+#include <QUdpSocket>
 
 namespace Ui {
 class MainWindow;
@@ -19,15 +20,21 @@ public:
 
 private:
     QTextCodec* GetTextCodec( );
+    void ReadFile( QString& strBase64 );
+    bool ParseData( QByteArray& data );
+    quint32 GetUInt32Value( const char *pData );
 
 private:
     typedef QHash< qint32, QTcpSocket* > QIntSocketHash;
 
     QIntSocketHash hashSocket;
+    QUdpSocket udpSocket;
     
 private slots:
     void HandleConnected( );
     void HandleDisconnected( );
+    void IncomingData( );
+    void IncomingUdpData( );
 
     void on_btnConnect_clicked();
 
@@ -35,8 +42,20 @@ private slots:
 
     void on_btnSendData_clicked();
 
+    void on_btnEnter_clicked();
+
+    void on_btnLeave_clicked();
+
+    void on_pushButton_clicked();
+
+    void on_pushButton_2_clicked();
+
+    void on_pushButton_3_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QByteArray byDatagram;
+    QByteArray byTcpStream;
 };
 
 #endif // MAINWINDOW_H

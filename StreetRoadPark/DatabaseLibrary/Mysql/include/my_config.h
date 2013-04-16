@@ -1,4 +1,4 @@
-/* Copyright (c) 2009, 2011, Oracle and/or its affiliates. All rights reserved.
+/* Copyright (c) 2009, 2011, 2012 Oracle and/or its affiliates. All rights reserved.
  
  This program is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -40,7 +40,6 @@
 /* #undef HAVE_FNMATCH_H */
 /* #undef HAVE_FPU_CONTROL_H */
 /* #undef HAVE_GRP_H */
-/* #undef HAVE_EXPLICIT_TEMPLATE_INSTANTIATION */
 /* #undef HAVE_IA64INTRIN_H */
 /* #undef HAVE_IEEEFP_H */
 /* #undef HAVE_INTTYPES_H */
@@ -114,6 +113,7 @@
 /* #undef HAVE_LIBCRYPT */
 /* #undef HAVE_LIBMTMALLOC */
 /* #undef HAVE_LIBWRAP */
+/* #undef HAVE_LIBRESOLV */
 /* Does "struct timespec" have a "sec" and "nsec" field? */
 /* #undef HAVE_TIMESPEC_TS_SEC */
 
@@ -125,20 +125,20 @@
 /* #undef FIONREAD_IN_SYS_IOCTL */
 /* #undef GWINSZ_IN_SYS_IOCTL */
 /* #undef TIOCSTAT_IN_SYS_IOCTL */
+/* #undef FIONREAD_IN_SYS_FILIO */
 
 /* Functions we may want to use. */
+#define HAVE_ALIGNED_MALLOC 1
+#define HAVE_ALIGNED_FREE 1
 /* #undef HAVE_AIOWAIT */
 /* #undef HAVE_ALARM */
 #define HAVE_ALLOCA 1
-/* #undef HAVE_BFILL */
 /* #undef HAVE_BMOVE */
-/* #undef HAVE_BZERO */
 /* #undef HAVE_INDEX */
 /* #undef HAVE_CHOWN */
 /* #undef HAVE_CLOCK_GETTIME */
 /* #undef HAVE_CRYPT */
 /* #undef HAVE_CUSERID */
-#define HAVE_CXX_NEW 1
 /* #undef HAVE_DIRECTIO */
 /* #undef HAVE_DLERROR */
 /* #undef HAVE_DLOPEN */
@@ -157,7 +157,6 @@
 #define HAVE_GETADDRINFO 1
 #define HAVE_GETCWD 1
 /* #undef HAVE_GETHOSTBYADDR_R */
-/* #undef HAVE_GETHOSTBYNAME_R */
 /* #undef HAVE_GETHRTIME */
 /* #undef HAVE_GETLINE */
 /* #undef HAVE_GETNAMEINFO */
@@ -174,6 +173,10 @@
 /* #undef gmtime_r */
 /* #undef HAVE_INITGROUPS */
 /* #undef HAVE_ISSETUGID */
+/* #undef HAVE_GETUID */
+/* #undef HAVE_GETEUID */
+/* #undef HAVE_GETGID */
+/* #undef HAVE_GETEGID */
 #define HAVE_ISNAN 1
 /* #undef HAVE_ISINF */
 /* #undef HAVE_LARGE_PAGE_OPTION */
@@ -202,6 +205,7 @@
 /* #undef HAVE_POLL */
 /* #undef HAVE_PORT_CREATE */
 /* #undef HAVE_POSIX_FALLOCATE */
+/* #undef HAVE_POSIX_MEMALIGN */
 /* #undef HAVE_PREAD */
 /* #undef HAVE_PAUSE_INSTRUCTION */
 /* #undef HAVE_FAKE_PAUSE_INSTRUCTION */
@@ -215,7 +219,6 @@
 /* #undef HAVE_PTHREAD_ATTR_SETSTACKSIZE */
 /* #undef HAVE_PTHREAD_CONDATTR_CREATE */
 /* #undef HAVE_PTHREAD_CONDATTR_SETCLOCK */
-/* #undef HAVE_PTHREAD_INIT */
 /* #undef HAVE_PTHREAD_KEY_DELETE */
 /* #undef HAVE_PTHREAD_KEY_DELETE */
 /* #undef HAVE_PTHREAD_KILL */
@@ -286,7 +289,6 @@
 #define HAVE_TZNAME 1
 /* #undef HAVE_AIO_READ */
 /* Symbols we may use */
-/* #undef HAVE_SYS_ERRLIST */
 /* used by stacktrace functions */
 /* #undef HAVE_BSS_START */
 /* #undef HAVE_BACKTRACE */
@@ -305,6 +307,26 @@
 /* #undef STRUCT_DIRENT_HAS_D_NAMLEN */
 #define SPRINTF_RETURNS_INT 1
 
+/* #undef DNS_USE_CPU_CLOCK_FOR_ID */
+/* #undef HAVE_EPOLL */
+/* #undef HAVE_EPOLL_CTL */
+/* #undef HAVE_EVENT_PORTS */
+/* #undef HAVE_INET_NTOP */
+/* #undef HAVE_KQUEUE */
+/* #undef HAVE_WORKING_KQUEUE */
+#define HAVE_SIGNAL 1
+/* #undef HAVE_TIMERADD */
+/* #undef HAVE_TIMERCLEAR */
+/* #undef HAVE_TIMERCMP */
+/* #undef HAVE_TIMERISSET */
+
+/* #undef HAVE_DEVPOLL */
+#define HAVE_SIGNAL_H 1
+/* #undef HAVE_SYS_DEVPOLL_H */
+/* #undef HAVE_SYS_EPOLL_H */
+/* #undef HAVE_SYS_EVENT_H */
+/* #undef HAVE_SYS_QUEUE_H */
+/* #undef HAVE_TAILQFOREACH */
 #define USE_MB 1
 #define USE_MB_IDENT 1
 
@@ -378,7 +400,7 @@
 
 /* #undef HAVE_MBSTATE_T */
 
-#define MAX_INDEXES 64
+#define MAX_INDEXES 64U
 
 #define QSORT_TYPE_IS_VOID 1
 #define RETQSORTTYPE void
@@ -396,8 +418,9 @@
 /* #undef WORDS_BIGENDIAN */
 #endif
 
-/* Define to `__inline__' or `__inline' if that's what the C compiler calls
-   it, or to nothing if 'inline' is not supported under any name.  */
+/*
+  Define to `__inline__' or `__inline' if that's what the C compiler calls it.
+*/
 /* #undef C_HAS_inline */
 #if !(C_HAS_inline)
 #ifndef __cplusplus
@@ -448,8 +471,6 @@
 
 
 /* #undef HAVE_SOLARIS_STYLE_GETHOST */
-/* #undef HAVE_GETHOSTBYNAME_R_GLIBC2_STYLE */
-/* #undef HAVE_GETHOSTBYNAME_R_RETURN_INT */
 
 /* #undef MY_ATOMIC_MODE_DUMMY */
 /* #undef MY_ATOMIC_MODE_RWLOCKS */
@@ -459,7 +480,7 @@
 /* #undef HAVE_LARGE_PAGES */
 /* #undef HUGETLB_USE_PROC_MEMINFO */
 #define NO_FCNTL_NONBLOCK 1
-#define NO_ALARM 1
+/* #undef NO_ALARM */
 
 /* #undef _LARGE_FILES */
 #define _LARGEFILE_SOURCE 1
@@ -501,9 +522,19 @@
 # define HAVE_SETENV
 #define setenv(a,b,c) _putenv_s(a,b)
 #endif
+/* We don't want the min/max macros */
+#ifdef __WIN__
+#define NOMINMAX
+#endif
 
-
-
+/*
+   Memcached config options
+*/
+/* #undef WITH_INNODB_MEMCACHED */
+/* #undef ENABLE_MEMCACHED_SASL */
+/* #undef ENABLE_MEMCACHED_SASL_PWDB */
+/* #undef HAVE_SASL_SASL_H */
+/* #undef HAVE_HTONLL */
 
 /*
   MySQL features
@@ -513,6 +544,13 @@
 /* #undef EXTRA_DEBUG */
 /* #undef BACKUP_TEST */
 /* #undef CYBOZU */
+#define OPTIMIZER_TRACE 1
+#define USE_SYMDIR 1
+
+/*
+   InnoDB config options
+*/
+#define INNODB_COMPILER_HINTS
 
 /* Character sets and collations */
 #define MYSQL_DEFAULT_CHARSET_NAME "latin1"
@@ -566,7 +604,7 @@
 #define HAVE_CHARSET_utf32 1
 #define HAVE_UCA_COLLATIONS 1
 #define HAVE_COMPRESS 1
-
+/* #undef COMPILE_FLAG_WERROR */
 
 /*
   Stuff that always need to be defined (compile breaks without it)
@@ -591,26 +629,28 @@
 # define HAVE_NDB_BINLOG 1
 #endif
 
-#define DEFAULT_MYSQL_HOME "C:/Program Files/MySQL/MySQL Server 5.5"
+#define DEFAULT_MYSQL_HOME "C:/Program Files/MySQL/MySQL Server 5.6"
 #define SHAREDIR "share"
-#define DEFAULT_BASEDIR "C:/Program Files/MySQL/MySQL Server 5.5"
-#define MYSQL_DATADIR "C:/Program Files/MySQL/MySQL Server 5.5/data"
-#define DEFAULT_CHARSET_HOME "C:/Program Files/MySQL/MySQL Server 5.5"
-#define PLUGINDIR "C:/Program Files/MySQL/MySQL Server 5.5/lib/plugin"
+#define DEFAULT_BASEDIR "C:/Program Files/MySQL/MySQL Server 5.6"
+#define MYSQL_DATADIR "C:/Program Files/MySQL/MySQL Server 5.6/data"
+#define DEFAULT_CHARSET_HOME "C:/Program Files/MySQL/MySQL Server 5.6"
+#define PLUGINDIR "C:/Program Files/MySQL/MySQL Server 5.6/lib/plugin"
 /* #undef DEFAULT_SYSCONFDIR */
 
 /* #undef SO_EXT */
 
-#define MYSQL_MAJOR_VERSION 5
-#define MYSQL_MINOR_VERSION 5
+#define MYSQL_VERSION_MAJOR 5
+#define MYSQL_VERSION_MINOR 6
+#define MYSQL_VERSION_PATCH 10
+#define MYSQL_VERSION_EXTRA ""
 
 #define PACKAGE "mysql"
 #define PACKAGE_BUGREPORT ""
 #define PACKAGE_NAME "MySQL Server"
-#define PACKAGE_STRING "MySQL Server 5.5.11"
+#define PACKAGE_STRING "MySQL Server 5.6.10"
 #define PACKAGE_TARNAME "mysql"
-#define PACKAGE_VERSION "5.5.11"
-#define VERSION "5.5.11"
+#define PACKAGE_VERSION "5.6.10"
+#define VERSION "5.6.10"
 #define PROTOCOL_VERSION 10
 
 
@@ -618,5 +658,9 @@
 
 #define SIZEOF_TIME_T 8
 /* #undef TIME_T_UNSIGNED */
+
+/* CPU information */
+
+#define CPU_LEVEL1_DCACHE_LINESIZE 64
 
 #endif

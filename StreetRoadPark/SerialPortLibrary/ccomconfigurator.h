@@ -13,6 +13,9 @@ public:
     ~CComConfigurator( );
 
     QTextCodec* GetTextCodec( );
+    QByteArray GetReceiverVerInfo( );
+    bool GetDisplayDynamicLog( );
+    QString GetComParkID( QString& strComX );
 
 private:
     CComConfigurator(QObject *parent = 0);

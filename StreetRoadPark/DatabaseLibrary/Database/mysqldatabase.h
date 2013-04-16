@@ -15,6 +15,17 @@
 #include <QTextCodec>
 #include <QFile>
 
+// vvEye ID:80372 Pwd:21cnLemontree
+// 10061
+// my.ini [mysqld] port=3306 bind-address=127.0.0.1
+
+//
+// Bulk Insert
+// Insert Into Table( f1,f2 ) Values(),(),()
+// Insert Into Table( f1, f2 ) Select f1, f2 from table
+// Load data infile
+// SP
+
 class CMySqlDatabase : public QObject
 {
     Q_OBJECT
@@ -36,14 +47,22 @@ public:
     bool GetFirstConnect( );
     void SetFirstConnect( bool bFirst );
 
+    ulong GetThreadID( );
+
+    static int MySQLLibraryInit( int argc, char *argv[] );
+    static void MySQLLibraryEnd( );
+
+    bool ExcutePreparedStmt( QByteArray& byBlob, char& nFlag, QString& strSpName );
+
 private:
-    void GetErrorMsg( int nErrorCode, QString& strError, bool bMysql, QString& strSql );
+    void GetErrorMsg( int nErrorCode, QString& strError, bool bMysql, QString& strSql, QString  strFunName );
 
 private:
     QTextCodec* pCodec;
     MYSQL hConnect;
     MYSQL_STMT* hStmt;
     bool bFirstConnect;
+    QString strPreSpName;
 
 signals:
     void NotifyError( QString strMsg, bool bStatic );

@@ -14,12 +14,17 @@ public:
 
     QDataDispactherThread* CreateDispactherThread( QObject* parent = NULL );
     void PostDispactherData( QDataDispactherThread* pDispatcher, QTcpSocket* pSocket, qint32 nPackageType, QByteArray& byData );
+    void PostComPortData( qint32 nPackageType, QByteArray& byData, QString& strParkID );
+
+    static int MySQLLibraryInit( int argc, char *argv[] );
+    static void MySQLLibraryEnd( );
 
 private:
     DatabaseController( QObject* parent = NULL );
     ~DatabaseController( );
 
     static DatabaseController* pController;
+    QDatabaseProcessor* pComPortDataProcessor;
 
 signals:
     void Log( QString strLog, bool bStatic );

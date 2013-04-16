@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Apr 12 14:56:51 2013
+** Created: Mon Apr 15 13:36:13 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -363,7 +363,7 @@ public:
         actLicense->setText(QApplication::translate("MainWindow", "\346\234\215\345\212\241\345\231\250\345\257\274\345\205\245\346\216\210\346\235\203\346\225\260\346\215\256", 0, QApplication::UnicodeUTF8));
         actStay->setText(QApplication::translate("MainWindow", "\346\273\236\347\225\231\350\275\246\350\276\206", 0, QApplication::UnicodeUTF8));
         actRemoteMgmt->setText(QApplication::translate("MainWindow", "\350\277\234\347\250\213\347\256\241\347\220\206", 0, QApplication::UnicodeUTF8));
-        actIPC->setText(QApplication::translate("MainWindow", "\350\277\236\346\216\245IPC", 0, QApplication::UnicodeUTF8));
+        actIPC->setText(QApplication::translate("MainWindow", "\350\277\236\346\216\245\347\275\221\347\273\234\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
         menuSysMgm->setTitle(QApplication::translate("MainWindow", "\347\263\273\347\273\237\347\256\241\347\220\206", 0, QApplication::UnicodeUTF8));
         actVideoService->setTitle(QApplication::translate("MainWindow", "\350\247\206\351\242\221\346\234\215\345\212\241", 0, QApplication::UnicodeUTF8));
         actPlateService->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\350\257\206\345\210\253\346\234\215\345\212\241", 0, QApplication::UnicodeUTF8));

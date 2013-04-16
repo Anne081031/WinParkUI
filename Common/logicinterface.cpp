@@ -1305,7 +1305,8 @@ bool CLogicInterface::PingMysql( )
 
 void CLogicInterface::GetPlateCardInfo( CommonDataType::QPlateCardHash &plateCardHash, QString& strWhere )
 {
-    QString strSql = "Select carcp, cardindex From carinfo " + strWhere;
+    QString strSql = "Select a.carcp, a.cardindex From carinfo a, monthCard b "
+                     "where a.cardindex = b.cardno and b.cardstate = '∆Ù”√' " + strWhere;
     QStringList lstRows;
 
     int nRows = ExecuteSql( strSql, lstRows );

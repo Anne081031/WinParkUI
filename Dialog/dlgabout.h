@@ -16,6 +16,9 @@ public:
     ~CDlgAbout();
 
 private:
+    void LoadInfo( );
+
+private:
     Ui::CDlgAbout *ui;
 };
 

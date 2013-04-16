@@ -44,3 +44,13 @@ QDbThreadEvent* QDbThreadEvent::CreateThreadEvent( ThreadType thrType, EventType
 {
     return new QDbThreadEvent( thrType, ( Type ) evtType );
 }
+
+void QDbThreadEvent::SetComParkID( QString& strParkID )
+{
+    strComParkID = strParkID;
+}
+
+QString& QDbThreadEvent::GetComParkID( )
+{
+    return strComParkID;
+}

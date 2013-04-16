@@ -3,12 +3,13 @@
 
 #include <QThread>
 #include "ccomthreadevent.h"
+#include "../DatabaseLibrary/databasecontroller.h"
 
 class CParserThread : public QThread
 {
     Q_OBJECT
 public:
-    static CParserThread* CreateThread( QObject* parent = 0 );
+    static CParserThread* CreateThread( QString& strParkID, QObject* parent = 0 );
     void PostData( QByteArray& byData );
 
 protected:
@@ -16,10 +17,11 @@ protected:
     void customEvent( QEvent * pEvent );
 
 private:
-    explicit CParserThread( QObject *parent = 0);
+    explicit CParserThread( QString& strParkID, QObject *parent = 0);
     void Initialize( );
 
     bool ParseData( QByteArray& byData );
+    bool GetVersionInfo( QByteArray& byData );
 
     inline void PostEvent( CComThreadEvent* pEvent );
 
@@ -27,9 +29,13 @@ private:
     inline void SendLog( QString& strLog, bool bStatic );
 
 private:
+    QString strComParkID;
     QByteArray byPortData;
     char cStart;
     QByteArray byEnd;
+    QByteArray byVerInfo;
+    CComConfigurator* pConfig;
+    DatabaseController* pDbController;
     
 signals:
     void Log( QString strLog, bool bStatic );

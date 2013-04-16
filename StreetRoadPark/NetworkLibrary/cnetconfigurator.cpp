@@ -1,4 +1,5 @@
 #include "cnetconfigurator.h"
+#include <QDateTime>
 
 #define CONFIG_NAME_NETWORK     "Config.ini"
 
@@ -50,6 +51,37 @@ qint32 CNetConfigurator::GetDataDispatcherParserCount( )
     QString strKey = "Network/DataDispatcherParserCount";
 
     return pSettings->value( strKey, 2 ).toInt( );
+}
+
+QString CNetConfigurator::GetMulticastIP( )
+{
+    QString strKey = "Network/MulticastIP";
+
+    return pSettings->value( strKey, "239.255.43.21" ).toString( );
+}
+
+quint16 CNetConfigurator::GetMulticastPort( )
+{
+    QString strKey = "Network/MulticastPort";
+
+    return pSettings->value( strKey, 60000 ).toInt( );
+}
+
+bool CNetConfigurator::GetDisplayDynamicLog( )
+{
+    pSettings->sync( );
+
+    return pSettings->value( "Network/DisplayDynamicLog", false ).toBool( );
+}
+
+qint32 CNetConfigurator::GetTimeSyncInterval( )
+{
+    return pSettings->value( "Common/TimeSyncInterval", 60 * 60 ).toInt( );
+}
+
+QString CNetConfigurator::GetDateTime( )
+{
+    return QDateTime::currentDateTime( ).toString( "yyyy-MM-dd hh:mm:ss" );
 }
 
 QTextCodec* CNetConfigurator::GetTextCodec( )

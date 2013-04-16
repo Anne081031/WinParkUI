@@ -4,9 +4,10 @@
 #
 #-------------------------------------------------
 
-#QT       += gui
+QT       += network xml
 
 DEFINES += _WIN32_WINDOWS=0x0501
+INCLUDEPATH += ../DatabaseLibrary/Mysql/include
 
 MYTARGET = $$quote( SerialPortLibrary%1 )
 MYDESTDIR = $$quote( ../LibExeFiles/%1 )
@@ -15,11 +16,13 @@ MYDESTLIB = $$quote( %1/lib%2%3.a )
 Debug {
     TARGET = $$sprintf( $$MYTARGET, "Debug" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Debug" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "DatabaseLibrary", "Debug" )
 }
 
 Release {
     TARGET = $$sprintf( $$MYTARGET, "" )
     DESTDIR = $$sprintf( $$MYDESTDIR, "Release" )
+    LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "DatabaseLibrary", "" )
 }
 
 TEMPLATE = lib

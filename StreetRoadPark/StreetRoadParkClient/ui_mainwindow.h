@@ -13,6 +13,7 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QCheckBox>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
@@ -44,6 +45,16 @@ public:
     QPushButton *btnDisconnect;
     QPlainTextEdit *txtData;
     QPushButton *btnSendData;
+    QPushButton *btnEnter;
+    QPushButton *btnLeave;
+    QLineEdit *edtLength;
+    QPlainTextEdit *txtMulticast;
+    QCheckBox *checkBox;
+    QLineEdit *edtPkType;
+    QLabel *label_4;
+    QPushButton *pushButton;
+    QPushButton *pushButton_2;
+    QPushButton *pushButton_3;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -52,7 +63,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(771, 424);
+        MainWindow->resize(1007, 424);
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         layoutWidget = new QWidget(centralWidget);
@@ -115,10 +126,40 @@ public:
         btnSendData = new QPushButton(centralWidget);
         btnSendData->setObjectName(QStringLiteral("btnSendData"));
         btnSendData->setGeometry(QRect(490, 350, 75, 23));
+        btnEnter = new QPushButton(centralWidget);
+        btnEnter->setObjectName(QStringLiteral("btnEnter"));
+        btnEnter->setGeometry(QRect(620, 30, 75, 23));
+        btnLeave = new QPushButton(centralWidget);
+        btnLeave->setObjectName(QStringLiteral("btnLeave"));
+        btnLeave->setGeometry(QRect(620, 80, 75, 23));
+        edtLength = new QLineEdit(centralWidget);
+        edtLength->setObjectName(QStringLiteral("edtLength"));
+        edtLength->setGeometry(QRect(20, 350, 113, 20));
+        txtMulticast = new QPlainTextEdit(centralWidget);
+        txtMulticast->setObjectName(QStringLiteral("txtMulticast"));
+        txtMulticast->setGeometry(QRect(630, 140, 341, 181));
+        checkBox = new QCheckBox(centralWidget);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+        checkBox->setGeometry(QRect(620, 120, 101, 16));
+        edtPkType = new QLineEdit(centralWidget);
+        edtPkType->setObjectName(QStringLiteral("edtPkType"));
+        edtPkType->setGeometry(QRect(290, 350, 113, 20));
+        label_4 = new QLabel(centralWidget);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(190, 350, 81, 16));
+        pushButton = new QPushButton(centralWidget);
+        pushButton->setObjectName(QStringLiteral("pushButton"));
+        pushButton->setGeometry(QRect(700, 30, 75, 23));
+        pushButton_2 = new QPushButton(centralWidget);
+        pushButton_2->setObjectName(QStringLiteral("pushButton_2"));
+        pushButton_2->setGeometry(QRect(700, 80, 75, 23));
+        pushButton_3 = new QPushButton(centralWidget);
+        pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
+        pushButton_3->setGeometry(QRect(790, 50, 75, 23));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 771, 19));
+        menuBar->setGeometry(QRect(0, 0, 1007, 19));
         MainWindow->setMenuBar(menuBar);
         mainToolBar = new QToolBar(MainWindow);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -142,6 +183,14 @@ public:
         btnConnect->setText(QApplication::translate("MainWindow", "connect", 0));
         btnDisconnect->setText(QApplication::translate("MainWindow", "Disconnect", 0));
         btnSendData->setText(QApplication::translate("MainWindow", "Send Data", 0));
+        btnEnter->setText(QApplication::translate("MainWindow", "Enter", 0));
+        btnLeave->setText(QApplication::translate("MainWindow", "Leave", 0));
+        checkBox->setText(QApplication::translate("MainWindow", "TcpFeedback", 0));
+        edtPkType->setText(QApplication::translate("MainWindow", "0", 0));
+        label_4->setText(QApplication::translate("MainWindow", "PackagetType", 0));
+        pushButton->setText(QApplication::translate("MainWindow", "Manual", 0));
+        pushButton_2->setText(QApplication::translate("MainWindow", "Manual", 0));
+        pushButton_3->setText(QApplication::translate("MainWindow", "Unhandled", 0));
     } // retranslateUi
 
 };

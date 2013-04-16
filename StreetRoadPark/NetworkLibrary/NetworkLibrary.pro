@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += network
+QT       += network xml
 INCLUDEPATH += ../DatabaseLibrary
 INCLUDEPATH += ../DatabaseLibrary/Mysql/include
 
@@ -39,7 +39,9 @@ SOURCES += networkcontroller.cpp \
     qdataparserthread.cpp \
     qthreadevent.cpp \
     qmytcpserver.cpp \
-    cnetconfigurator.cpp
+    cnetconfigurator.cpp \
+    qudpmulticast.cpp \
+    qmulticastthread.cpp
 
 HEADERS += networkcontroller.h\
         NetworkLibrary_global.h \
@@ -49,7 +51,9 @@ HEADERS += networkcontroller.h\
     qdataparserthread.h \
     qthreadevent.h \
     qmytcpserver.h \
-    cnetconfigurator.h
+    cnetconfigurator.h \
+    qudpmulticast.h \
+    qmulticastthread.h
 
 unix:!symbian {
     maemo5 {

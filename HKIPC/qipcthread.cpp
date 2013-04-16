@@ -400,7 +400,7 @@ void QIPCThread::ProcessIPCLoginEvent( QIPCEvent* pEvent )
                                  uParam.EventLogin.cPwd,
                                  &sDevInfo );
 
-    if ( -1 == lUserID ) {
+   if ( -1 == lUserID ) {
         GetErrorMessage( );
     } else {
         SetUserID( pIP, lUserID );

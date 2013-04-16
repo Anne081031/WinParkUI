@@ -4,7 +4,8 @@
 #
 #-------------------------------------------------
 DEFINES += StartupDebug
-QT += network
+#DEFINES += StartupRelease
+QT += network xml
 
 INCLUDEPATH += ../DatabaseLibrary
 INCLUDEPATH += ../NetworkLibrary
@@ -38,6 +39,14 @@ Release {
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "DatabaseLibrary", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "NetworkLibrary", "" )
     LIBS += $$sprintf( $$MYDESTLIB, $$DESTDIR, "SerialPortLibrary", "" )
+
+    contains( DEFINES, StartupRelease ) {
+        DESTDIR = "./Release"
+        TARGET = $$sprintf( $$MYTARGET, "" )
+        system( copy ..\\LibExeFiles\\Release\\DatabaseLibrary.dll .\\Release )
+        system( copy ..\\LibExeFiles\\Release\\NetworkLibrary.dll .\\Release )
+        system( copy ..\\LibExeFiles\\Release\\SerialPortLibrary.dll .\\Release )
+    }
 }
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets

@@ -5,4 +5,5 @@ SUBDIRS += \
     SerialPortLibrary \
     DatabaseLibrary \
     NetworkLibrary \
-    StreetRoadParkClient
+    StreetRoadParkClient \
+    Test

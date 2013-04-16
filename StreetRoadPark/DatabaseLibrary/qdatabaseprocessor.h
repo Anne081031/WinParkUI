@@ -11,7 +11,7 @@ class QDatabaseProcessor : public QThread
 {
     Q_OBJECT
 public:
-    static QDatabaseProcessor* CreateThread( QObject* parent = NULL );
+    static QDatabaseProcessor* CreateThread( bool bPoolThread, QObject* parent = NULL );
     void SetDataDispatcher( QThread* pDispatcher );
 
     void AcquireProcessor( qint32 nResCount );
@@ -21,6 +21,7 @@ public:
     qint32 GetFreeOperationCount( );
     ~QDatabaseProcessor( );
     void PostDbDataProcessEvent( QTcpSocket* pSocket, qint32 nPackageType, QByteArray& byData );
+    void PostComPortDataProcessEvent( qint32 nPackageType, QByteArray& byData, QString& strParkID );
     void PostDbConnectEvent( );
 
 protected:
@@ -30,15 +31,17 @@ protected:
     void InitializeSubThread( );
 
 private:
-    explicit QDatabaseProcessor(QObject *parent = 0);
+    explicit QDatabaseProcessor( bool bPoolThread, QObject *parent = 0);
 
     inline void PostEvent( QDbThreadEvent* pEvent );
     inline void SendLog( QString& strLog, bool bStatic );
 
     void ProcessDatabaseDataEvent( QDbThreadEvent* pEvent );
+    void ProcessComPortDataEvent( QDbThreadEvent* pEvent );
     void ProcessDatabaseConnectEvent( QDbThreadEvent* pEvent );
 
 private:
+    bool bThreadPoolProcessor;
     CMySqlDatabase* pDatabase;
     CDbConfigurator* pConfig;
     QStringList lstDbInfo;

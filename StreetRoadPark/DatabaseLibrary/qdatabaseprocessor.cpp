@@ -1,7 +1,9 @@
 #include "qdatabaseprocessor.h"
+#include "../NetworkLibrary/networkcontroller.h"
+#include "Constant.h"
 
-QDatabaseProcessor::QDatabaseProcessor(QObject *parent) :
-    QThread(parent)
+QDatabaseProcessor::QDatabaseProcessor( bool bPoolThread, QObject *parent) :
+    QThread(parent), bThreadPoolProcessor( bPoolThread )
 {
     setObjectName( QString( "[Database Processor Thread ID = %1]" ).arg( qrand( ) ) );
     pResSemaphore = NULL;
@@ -29,9 +31,9 @@ void QDatabaseProcessor::SetDataDispatcher(QThread *pDispatcher)
     pDataDispatcher = pDispatcher;
 }
 
-QDatabaseProcessor* QDatabaseProcessor::CreateThread( QObject *parent )
+QDatabaseProcessor* QDatabaseProcessor::CreateThread( bool bPoolThread, QObject *parent )
 {
-    QDatabaseProcessor* pThread = new QDatabaseProcessor( parent );
+    QDatabaseProcessor* pThread = new QDatabaseProcessor( bPoolThread, parent );
 
     pThread->start( );
     pThread->moveToThread( pThread );
@@ -41,7 +43,12 @@ QDatabaseProcessor* QDatabaseProcessor::CreateThread( QObject *parent )
 
 qint32 QDatabaseProcessor::GetFreeOperationCount( )
 {
-    qint32 nCount = pResSemaphore->available( );
+    qint32 nCount = 0;
+    if ( !bThreadPoolProcessor ) {
+        return nCount;
+    }
+
+    nCount = pResSemaphore->available( );
     qDebug( ) << Q_FUNC_INFO << objectName( )
               << ":" << QString::number( nCount ) << endl;
     return nCount;
@@ -49,21 +56,44 @@ qint32 QDatabaseProcessor::GetFreeOperationCount( )
 
 void QDatabaseProcessor::AcquireProcessor( qint32 nResCount )
 {
+    if ( !bThreadPoolProcessor ) {
+        return;
+    }
+
     pResSemaphore->acquire( nResCount );
 }
 
 bool QDatabaseProcessor::TryAcquireProcessor( )
 {
+    bool bRet = false;
+    if ( !bThreadPoolProcessor ) {
+        return bRet;
+    }
+
+    bRet = pResSemaphore->tryAcquire( 1 );
     qDebug( ) <<  Q_FUNC_INFO << ":"
-               << objectName( ) << endl;
-    return pResSemaphore->tryAcquire( 1 );
+               << objectName( )
+               << ":" <<
+               ( bRet ? "Success" : "Unsuccess" ) << endl;
+
+    return bRet;
 }
 
 bool QDatabaseProcessor::TryAcquireProcessor( qint32 nTimeout )
 {
+    bool bRet = false;
+    if ( !bThreadPoolProcessor ) {
+        return bRet;
+    }
+
+    bRet = pResSemaphore->tryAcquire( 1, nTimeout * 1000 );
+
     qDebug( ) <<  Q_FUNC_INFO << ":"
-               << objectName( ) << endl;
-    return pResSemaphore->tryAcquire( 1, nTimeout * 1000 );
+               << objectName( )
+               << ":" <<
+               ( bRet ? "Success" : "Unsuccess" ) << endl;
+
+    return  bRet;
 }
 
 void QDatabaseProcessor::HandleLog( QString strLog, bool bStatic )
@@ -73,15 +103,31 @@ void QDatabaseProcessor::HandleLog( QString strLog, bool bStatic )
 
 void QDatabaseProcessor::SendLog( QString &strLog, bool bStatic )
 {
+    if ( !bStatic && !pConfig->GetDisplayDynamicLog( ) ) {
+        return;
+    }
+
     emit Log( strLog, bStatic );
 }
 
 void QDatabaseProcessor::InitializeSubThread( )
 {
     pConfig->ReadDbInfo( lstDbInfo );
-    pResSemaphore = new QSemaphore( nDbOperationCount );
+
+    if ( bThreadPoolProcessor ) {
+        pResSemaphore = new QSemaphore( nDbOperationCount );
+    } else {
+        //dataProcessor.SetNetController( NetworkController::GetController( ) );
+    }
+
+    connect( &dataProcessor, SIGNAL( Log( QString, bool ) ),
+             this, SLOT( HandleLog( QString, bool ) ) );
+
+    QString strObjName = objectName( );
+    dataProcessor.SetNetController( NetworkController::GetController( ) );
+    dataProcessor.setObjectName( strObjName );
     pDatabase = new CMySqlDatabase( );
-    pDatabase->setObjectName( objectName( ) );
+    pDatabase->setObjectName( strObjName );
 
     connect( pDatabase, SIGNAL( NotifyError( QString, bool ) ),
              this, SLOT( HandleLog( QString, bool ) ) );
@@ -108,7 +154,26 @@ void QDatabaseProcessor::customEvent( QEvent *event )
         ProcessDatabaseDataEvent( pEvent );
     } else if ( QDbThreadEvent::EventConnectDb == evtType ) {
         ProcessDatabaseConnectEvent( pEvent );
+    } else if ( QDbThreadEvent::EventProcessComPortData == evtType ) {
+        ProcessComPortDataEvent( pEvent );
     }
+}
+
+void QDatabaseProcessor::ProcessComPortDataEvent( QDbThreadEvent *pEvent )
+{
+    //
+    // SensorEnter-->TabletEneter-->SensorLeave-->TabletLeave finish
+    // Consumer
+    qint32 nPackageType = pEvent->GetDataPackageType( );
+    QByteArray& byData = pEvent->GetByteArray( );
+    QString& strParkID = pEvent->GetComParkID( );
+
+    QString strLog = "Com Port Dispatcher:"
+            + objectName( ) + ":" + QString( byData );
+    SendLog( strLog, false );
+
+    //ProcessDatabaseConnectEvent( NULL );
+    dataProcessor.ProcessComPortData( nPackageType, byData, strParkID );
 }
 
 void QDatabaseProcessor::ProcessDatabaseDataEvent( QDbThreadEvent *pEvent )
@@ -118,24 +183,41 @@ void QDatabaseProcessor::ProcessDatabaseDataEvent( QDbThreadEvent *pEvent )
     qint32 nPackageType = pEvent->GetDataPackageType( );
     QByteArray& byData = pEvent->GetByteArray( );
 
+    QString strData = QString::fromUtf8( byData );
+    if ( Constant::TypeInOutRecordInfo == nPackageType ) {
+        QString strImage = "\"Image\":\"";
+        qint32 nStartIndex = strData.indexOf( strImage );
+        if ( -1 != nStartIndex ) {
+            nStartIndex += strImage.length( );
+            qint32 nEndIndex = strData.indexOf( "\"", nStartIndex );
+            if ( -1 != nEndIndex ) {
+                strData.remove( nStartIndex, nEndIndex - nStartIndex );
+            }
+        }
+    }
+
     QString strLog = pDataDispatcher->objectName( ) + ":"
-            + objectName( ) + ":" + QString( byData );
+            + objectName( ) + ":" + strData;
+
+    //static int nCount = 0;
+    //strLog = QString::number( ++nCount );
     SendLog( strLog, false );
 
-    ProcessDatabaseConnectEvent( NULL );
+    //ProcessDatabaseConnectEvent( NULL );
     dataProcessor.SetPeerSocket( pSocket );
-    dataProcessor.ProcessData( nPackageType, byData );
+    dataProcessor.ProcessSocketData( nPackageType, byData );
     pResSemaphore->release( 1 );
 }
 
 void QDatabaseProcessor::ProcessDatabaseConnectEvent( QDbThreadEvent *pEvent )
 {
+    QString strLog;
     Q_UNUSED( pEvent )
     QStringList lstInfo;
     pConfig->ReadDbInfo( lstInfo );
 
     if ( 5 != lstDbInfo.count( ) || 5 != lstInfo.length( ) ) {
-        QString strLog = "Database argument error.";
+        strLog = "Database argument error.";
         SendLog( strLog, true );
         return;
     }
@@ -152,12 +234,23 @@ void QDatabaseProcessor::ProcessDatabaseConnectEvent( QDbThreadEvent *pEvent )
                                      lstDbInfo.at( 2 ),
                                      lstDbInfo.at( 3 ),
                                      lstDbInfo.at( 4 ).toUInt( ) );
+        strLog = "Firstly Connect Database.";
+        SendLog( strLog, true );
     } else {
         do {
+            ulong lID0 = pDatabase->GetThreadID( );
             bRet = pDatabase->PingMysql( );
+            qDebug( ) << QString::number( lID0 ) <<endl;
 
             if ( !bRet ) {
-                sleep( 1 );
+                sleep( 5 );
+            }
+
+            ulong lID1 = pDatabase->GetThreadID( );
+
+            if ( lID1 != lID0 ) {
+                strLog = "Ping Connect Database.";
+                SendLog( strLog, true );
             }
         } while ( !bRet );
     }
@@ -166,6 +259,17 @@ void QDatabaseProcessor::ProcessDatabaseConnectEvent( QDbThreadEvent *pEvent )
 void QDatabaseProcessor::PostDbConnectEvent( )
 {
     QDbThreadEvent* pEvent = QDbThreadEvent::CreateThreadEvent( QDbThreadEvent::ThreadDbProcessor, QDbThreadEvent::EventConnectDb );
+
+    PostEvent( pEvent );
+}
+
+void QDatabaseProcessor::PostComPortDataProcessEvent( qint32 nPackageType, QByteArray &byData, QString& strParkID )
+{
+    QDbThreadEvent* pEvent = QDbThreadEvent::CreateThreadEvent( QDbThreadEvent::ThreadDbProcessor, QDbThreadEvent::EventProcessComPortData );
+
+    pEvent->SetDataPackageType( nPackageType );
+    pEvent->SetByteArray( byData );
+    pEvent->SetComParkID( strParkID );
 
     PostEvent( pEvent );
 }
