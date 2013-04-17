@@ -21,6 +21,8 @@ MainWindow::MainWindow(QWidget *parent) :
     QControllerCommon::InitApp( );
     controller.ConrollSP( true );
     InitializeUI( );
+
+    nTimerID = startTimer( 1000 * 10 );
 }
 
 void MainWindow::SetQueryTemplate( )
@@ -89,6 +91,11 @@ void MainWindow::HandleData( QByteArray data )
 
 void MainWindow::HandleQuery( QString strInfo, qint8 nIndex, QByteArray byData )
 {
+    if ( 0 == nIndex ) {
+        QString strTitle = objectName( ) + " 与设备连接上。";
+        setWindowTitle( strTitle );
+    }
+
     if ( 1 > nIndex || QUERY_CMD_COUNT < nIndex ) {
         return;
     }
@@ -726,10 +733,28 @@ void MainWindow::DlgConfig( )
 
     QString strTitle = QString( "智能补光灯系统-串口:COM%1" ).arg( ( qint32 ) dlg.GetComName( ) );
     setWindowTitle( strTitle );
+    setObjectName( strTitle );
+}
+
+void MainWindow::timerEvent( QTimerEvent *e )
+{
+    if ( nTimerID != e->timerId( ) ) {
+        return;
+    }
+
+    setWindowTitle( objectName( ) );
+
+    QByteArray byData;
+    controllerCmd->GetNewCmd( LedControll::CmdTestConnect, byData, 0, true, GetFlash( ) );
+    controller.WriteData( byData, 0, true );
 }
 
 MainWindow::~MainWindow()
 {
+    if ( 0 != nTimerID ) {
+        killTimer( nTimerID );
+    }
+
     controller.ConrollSP( false );
     delete ui;
 }
@@ -964,8 +989,7 @@ void MainWindow::on_btnQuery_clicked()
     //return;
     // QUERY_CMD_COUNT
     for ( qint8 c = 0; c < QUERY_CMD_COUNT; c++ ) {
-        controller.WriteData( byQueryCmds[ c ], true );
-        Sleep( 250 );
+        controller.WriteData( byQueryCmds[ c ], QControllerCommon::GetWaitTime( ), true );
     }
 }
 

@@ -17,9 +17,12 @@ public:
 
     void SetData( QByteArray& data );
     QByteArray& GetData( );
+    void SetWaitTime( int nWaitTime );
+    int GetWaitTime( );
 
 private:
     QByteArray byData;
+    int nSleepTime;
 };
 
 #endif // QCTRLEVENT_H

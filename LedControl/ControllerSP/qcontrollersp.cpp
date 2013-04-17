@@ -291,12 +291,12 @@ void QControllerSP::ClosePort( )
     }
 }
 
-qint64 QControllerSP::WriteData( QByteArray& data, const bool bThread )
+qint64 QControllerSP::WriteData( QByteArray& data, int nWaitTime, const bool bThread )
 {
     qint64 nRet = 0;
 
     if ( bThread ) {
-        QThreadSPWriter::GetSingleton( ).SendData( data );
+        QThreadSPWriter::GetSingleton( ).SendData( data, nWaitTime );
         return nRet;
     }
 

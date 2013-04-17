@@ -240,6 +240,10 @@ void QCmdParser::ParseDataDomain( QByteArray &data, QString& strInfo, qint8& nIn
     strInfo = "";
 
     switch ( nDI ) {
+    case 0x04000300 :
+        nIndex = 0;
+        break;
+
     case 0x0400030C : // ∆µ…¡π‚√Ùøÿ÷∆
         GeLedtIlluminance( data, strInfo );
         nIndex = 1;

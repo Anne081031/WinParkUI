@@ -2,6 +2,7 @@
 #define QDLGCONFIG_H
 
 #include <QDialog>
+#include "../ControllerCommon/qcontrollercommon.h"
 
 namespace Ui {
 class QDlgConfig;
@@ -19,6 +20,7 @@ public:
 private:
     void ReadConfig( );
     void WriteConfig( );
+    void GetPorts( );
     
 private slots:
     void on_btnOK_clicked();

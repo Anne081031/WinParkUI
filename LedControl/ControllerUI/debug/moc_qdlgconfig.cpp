@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qdlgconfig.h'
 **
-** Created: Thu Jan 24 13:17:15 2013
+** Created: Wed Apr 17 12:48:58 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
 **
 ** WARNING! All changes made in this file will be lost!

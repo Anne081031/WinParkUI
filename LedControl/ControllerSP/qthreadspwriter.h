@@ -9,7 +9,7 @@ class CONTROLLERSPSHARED_EXPORT QThreadSPWriter : public QThread
     Q_OBJECT
 public:
     void SetController( QControllerSP* pCtrlr );
-    void SendData( QByteArray& data );
+    void SendData( QByteArray& data, int nWaitTime );
     static QThreadSPWriter& GetSingleton(  );
 
 protected:

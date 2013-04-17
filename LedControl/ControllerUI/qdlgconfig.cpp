@@ -1,8 +1,6 @@
 #include "qdlgconfig.h"
 #include "ui_qdlgconfig.h"
 
-#include "../ControllerCommon/qcontrollercommon.h"
-
 QDlgConfig::QDlgConfig(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::QDlgConfig)
@@ -11,11 +9,39 @@ QDlgConfig::QDlgConfig(QWidget *parent) :
 
     QControllerCommon::ControlSysMenu( *this );
     ReadConfig( );
+    GetPorts( );
 }
 
 QDlgConfig::~QDlgConfig()
 {
     delete ui;
+}
+
+void QDlgConfig::GetPorts( )
+{
+    QStringList lstPorts;
+    QControllerCommon::GetPorts( lstPorts );
+
+    if ( 0 == lstPorts.length( ) ) {
+        return;
+    }
+
+    int nUsed = -1;
+
+    for ( int nIndex = 0; nIndex < ui->cbPort->count( ); nIndex++ ) {
+        bool bEnable = lstPorts.contains( ui->cbPort->itemText( nIndex ) );
+
+        if ( bEnable ) {
+            nUsed = nIndex;
+        }
+
+        ui->cbPort->setItemIcon( nIndex, QIcon( bEnable ? ":/Images/Enable.png" :
+                                                          ":/Images/Disable.png" ) );
+    }
+
+    if ( -1 != nUsed ) {
+        ui->cbPort->setCurrentIndex( nUsed );
+    }
 }
 
 void QDlgConfig::on_btnOK_clicked()

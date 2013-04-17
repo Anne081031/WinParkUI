@@ -25,10 +25,11 @@ QThreadSPWriter& QThreadSPWriter::GetSingleton( )
     return *pSingleton;
 }
 
-void QThreadSPWriter::SendData( QByteArray &data )
+void QThreadSPWriter::SendData( QByteArray &data, int nWaitTime )
 {
     QCtrlEvent* pEvent = new QCtrlEvent( ( QCtrlEvent::Type ) QCtrlEvent::SPWrite );
     pEvent->SetData( data );
+    pEvent->SetWaitTime( nWaitTime );
     qApp->postEvent( this, pEvent );
 }
 
@@ -40,8 +41,13 @@ void QThreadSPWriter::run( )
 void QThreadSPWriter::customEvent( QEvent *e )
 {
     QCtrlEvent* pEvent = (  QCtrlEvent* ) e;
+    int nWaitTime = pEvent->GetWaitTime( );
 
     if ( QCtrlEvent::SPWrite == ( QCtrlEvent::CtrlEvent ) pEvent->type( ) && NULL != pController ) {
         pController->WriteData( pEvent->GetData( ) );
+
+        if ( 0 < nWaitTime ) {
+            Sleep( nWaitTime );
+        }
     }
 }

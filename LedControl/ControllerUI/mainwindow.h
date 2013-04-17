@@ -44,6 +44,9 @@ private:
     void SetComboxValue( QComboBox* pCB, qint8 nValue );
     void ClearRadioboxValue( QHash< char, QRadioButton* >& hash, qint8 nKey );
 
+protected:
+    void timerEvent( QTimerEvent * e );
+
 private slots:
     void on_btnSet_clicked();
 
@@ -118,6 +121,7 @@ private:
     QString strState;
     QString strStateValue[ QUERY_CMD_COUNT ];
     QByteArray byQueryCmds[ QUERY_CMD_COUNT ];
+    qint32 nTimerID;
 };
 
 #endif // MAINWINDOW_H

@@ -186,6 +186,11 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
     QByteArray byDataDomain;
 
     switch ( eCmd ) {
+    case LedControll::CmdTestConnect :
+        byData.append( char ( 0 ) );
+        cDataLen += 1;
+        break;
+
     case LedControll::CmdFlashStateAlwaysRadianceChange : // Cmd 0x01
         break;
 

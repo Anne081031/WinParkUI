@@ -38,9 +38,9 @@ void QController::HandleQuery( QString strInfo, qint8 nIndex, QByteArray byData 
     emit Query( strInfo, nIndex, byData );
 }
 
-qint64 QController::WriteData( QByteArray &data, const bool bThread )
+qint64 QController::WriteData( QByteArray &data, int nWaitTime, const bool bThread )
 {
-    return pController->WriteData( data, bThread );
+    return pController->WriteData( data, nWaitTime, bThread );
 }
 
 bool QController::ConrollSP( const bool bOpen )

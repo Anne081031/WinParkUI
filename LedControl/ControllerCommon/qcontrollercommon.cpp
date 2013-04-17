@@ -9,6 +9,8 @@
 // Common data, function, class
 //
 
+int QControllerCommon::nSleepTime = 0;
+
 QControllerCommon::QControllerCommon()
 {
 }
@@ -95,6 +97,34 @@ QSettings& QControllerCommon::GetConfigSettings( )
     return *pSettings;
 }
 
+int QControllerCommon::GetWaitTime( )
+{
+    QSettings &settings = GetConfigSettings( );
+    nSleepTime = settings.value( "SerialPort/WaitTime", 0 ).toInt( );
+
+    return nSleepTime;
+}
+
+void QControllerCommon::GetPorts( QStringList &lstPorts )
+{
+    HKEY hHandle;
+    DWORD dwIndex = 0;
+    wchar_t cName[ 512 ] = { 0 };
+    DWORD dwLen = 512;
+    BYTE byValue[ 512 ] = { 0 };
+
+    LONG lRet = RegOpenKey( HKEY_LOCAL_MACHINE, L"HARDWARE\\DEVICEMAP\\SERIALCOMM", &hHandle );
+    if ( ERROR_SUCCESS != lRet ) {
+        return;
+    }
+
+    while ( ERROR_SUCCESS == RegEnumValue( hHandle, dwIndex++, cName, &dwLen, NULL, NULL, byValue, &dwLen ) ) {
+        lstPorts << QString::fromUtf16( ( const ushort* ) byValue ).toUpper( );
+    }
+
+    lRet = RegCloseKey( hHandle );
+}
+
 void QControllerCommon::SaveSPConfig( const LedControll::SComConfig &sConfig )
 {
     QSettings &settings = GetConfigSettings( );
@@ -105,6 +135,8 @@ void QControllerCommon::SaveSPConfig( const LedControll::SComConfig &sConfig )
     settings.setValue( "SerialPort/Parity", sConfig.nParity );
     settings.setValue( "SerialPort/StopBit", sConfig.nStopBit );
     settings.setValue( "SerialPort/FlowCtrl", sConfig.nFlowCtrl );
+
+    settings.setValue( "SerialPort/WaitTime", nSleepTime );
 }
 
 void QControllerCommon::GetSPConfig( LedControll::SComConfig &sConfig )

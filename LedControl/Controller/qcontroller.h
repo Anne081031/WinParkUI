@@ -14,7 +14,7 @@ public:
     ~QController( );
 
     bool ConrollSP( const bool bOpen );
-    qint64 WriteData( QByteArray& data, const bool bThread = false );
+    qint64 WriteData( QByteArray& data, int nWaitTime = 0, const bool bThread = false );
 
 private:
     QControllerSP* pController;

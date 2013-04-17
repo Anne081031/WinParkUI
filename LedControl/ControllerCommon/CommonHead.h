@@ -72,7 +72,8 @@ const unsigned int  nLOCATION_SIZE = 128;
         CmdLedWorkVoltage,
         CmdLedExternalTriggerSignalState,
         CmdFlashRadianceChange,
-        CmdFrenquencyRadianceChange
+        CmdFrenquencyRadianceChange,
+        CmdTestConnect
     } ECommand;
 }
 

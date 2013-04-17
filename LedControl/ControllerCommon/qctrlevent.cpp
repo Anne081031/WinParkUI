@@ -2,6 +2,7 @@
 
 QCtrlEvent::QCtrlEvent( Type evtType ) : QEvent( evtType )
 {
+    nSleepTime = 0;
 }
 
 void QCtrlEvent::SetData( QByteArray &data )
@@ -12,4 +13,14 @@ void QCtrlEvent::SetData( QByteArray &data )
 QByteArray& QCtrlEvent::GetData( )
 {
     return byData;
+}
+
+void QCtrlEvent::SetWaitTime( int nWaitTime )
+{
+    nSleepTime = nWaitTime;
+}
+
+int QCtrlEvent::GetWaitTime( )
+{
+    return nSleepTime;
 }

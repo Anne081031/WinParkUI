@@ -29,10 +29,10 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    qdlgconfig.cpp
+    qdlgconfig.cpp \
 
 HEADERS  += mainwindow.h \
-    qdlgconfig.h
+    qdlgconfig.h \
 
 FORMS    += mainwindow.ui \
     qdlgconfig.ui

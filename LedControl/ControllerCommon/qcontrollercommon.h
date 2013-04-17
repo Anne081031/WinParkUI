@@ -27,6 +27,8 @@ public:
     static void GetSystemConfig( LedControll::SSysConfig& sConfig, const QString& strFile );
     static void ControlSysMenu( QWidget &wg );
     static int MsgBox( QWidget* pParent, QString strTitle, QString strText, QMessageBox::Icon nType );
+    static void GetPorts( QStringList& lstPorts );
+    static int GetWaitTime( );
 
 private:
     static QSettings& GetConfigSettings(  );
@@ -36,6 +38,8 @@ private:
 
     static void SaveLocation( QSettings& settings, wchar_t* pBuffer, const bool bNewDevice );
     static void GetLocation( QSettings& settings, wchar_t* pBuffer, const bool bNewDevice );
+
+    static int nSleepTime;
 
 protected:
     QControllerCommon();
