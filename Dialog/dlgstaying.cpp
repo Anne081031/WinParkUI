@@ -40,9 +40,10 @@ void CDlgStaying::GetData( )
        FillTable( lstRows, ui->tableWidgetMonth, nRows );
     }
 
-    strSql = "SELECT d.cardno,d.cardselfno, a.carcp, a.inshebeiname, a.intime \
-            FROM stoprd a, tmpcard d \
-            where d.Inside = 1 and a.cardno = d.cardno and a.outtime is null";
+    strSql = "SELECT b.cardno,b.cardselfno, a.carcp, a.inshebeiname, a.intime \
+            FROM stoprd a, tmpcard b \
+            where a.stoprdid = ( select stoprdid from cardstoprdid c \
+                                 where b.cardno = c.cardno and b.Inside = 1 ) and a.outtime is null";
 
     lstRows.clear( );
     nRows = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRows, bHistory );

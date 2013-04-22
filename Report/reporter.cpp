@@ -314,6 +314,7 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         break;
 
     case CommonDataType::ReportPerson :
+        CCommonFunction::DateTime2String( dtTimeEnd, strEnd );
         strSql = "select feeoperator f1, sum( feenumb ) f2 from feerd where feetime between '";
         strSql += strStart;
         strSql += "' and '";
@@ -592,7 +593,6 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
         break;
 
     case CommonDataType::ReportDaily :
-    case CommonDataType::ReportPerson :
     case CommonDataType::ReportChannel :
     case CommonDataType::ReportProvince :
     case CommonDataType::ReportInProvince :
@@ -605,6 +605,7 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
         }
         break;
 
+    case CommonDataType::ReportPerson :
     case CommonDataType::ReportTimeCardDetail :
     {
         QString strStart;

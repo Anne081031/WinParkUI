@@ -210,7 +210,7 @@ void CPictureContrastDlg::Write2UI( QStringList &lstRows, bool bEnter, bool bAut
         ui->edtExpiration->clear( );
         ui->edtSurplus->clear( );
 
-        strTmp = CCommonFunction::GetCarTypeString( lstRows[ lstRows.count( ) - bBuffer ? 2 : 1 ] );
+        strTmp = CCommonFunction::GetCarTypeString( lstRows[ lstRows.count( ) - ( bBuffer ? 2 : 1 ) ] );
         if ( bBuffer ) {
             strCardID = lstRows[ lstRows.count( ) - 1 ];
         }

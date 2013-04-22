@@ -1694,7 +1694,7 @@ bool CProcessData::PictureContrast( QStringList& lstRows, int& nAmount, QByteArr
 
     bool bBuffer = GetTimeCardBuffer( ) ;
     if ( bBuffer ) {
-        lstRows.append( strCardno );
+        lstRows.append( strCardno ); // tmpcardintime ID
     }
     pFeeDlg->InitDlg( lstRows,  bmpEnter, bmpLeave, byData, bBuffer );
 
@@ -2627,10 +2627,12 @@ void CProcessData::ControlVehicleImage( QString &strCardNo, bool bSave2Db, int n
     if ( bFreeCard ) {
         strWhere = QString(  " Where cardno = '%1'" ).arg( bMonth ? strMonth : strCardNo );
     } else {
-        strWhere = QString( " Where cardno = '%1' And intime in ( Select intime From \
-                                  ( Select Max( intime ) As intime \
-                                    From stoprd \
-                                    Where cardno = '%2') tmp ) " ).arg( strCardNo, strCardNo );
+        //strWhere = QString( " Where cardno = '%1' And intime in ( Select intime From \
+        //                          ( Select Max( intime ) As intime \
+        //                            From stoprd \
+        //                            Where cardno = '%2') tmp ) " ).arg( strCardNo, strCardNo );
+
+        strWhere = QString( " Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' )" ).arg( strCardNo );
     }
 
     if ( bSave2Db && !GetDirectDb( ) ) {
@@ -2698,6 +2700,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
                                     ( Select intime From ( Select Max( intime ) As intime \
                                                            From %2 \
                                                            Where cardno = '%3' ) tmp )" ).arg( lstRows[ 0 ], strBufferTable, lstRows[ 0 ] );
+
         //CLogicInterface::GetInterface( )->OperateInOutRecord( lstInOut, CommonDataType::SelectData, strWhere );
         strSql += strWhere;
         CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstInOut );

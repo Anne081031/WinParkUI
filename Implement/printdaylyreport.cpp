@@ -58,7 +58,8 @@ void CPrintDaylyReport::OnRdChkClicked( )
     }
 
     QString strFormat = "yyyy-MM-dd";
-    if ( CommonDataType::ReportTimeCardDetail == nReportType ) {
+    if ( CommonDataType::ReportTimeCardDetail == nReportType ||
+         CommonDataType::ReportPerson == nReportType ) {
         strFormat = "yyyy-MM-dd HH:mm:ss";
         SetDateTimeFormat( strFormat );
         QDateTime dtCurrent = QDateTime::currentDateTime( );
