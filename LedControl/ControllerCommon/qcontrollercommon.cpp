@@ -213,6 +213,7 @@ void QControllerCommon::SaveSystemConfig( LedControll::SSysConfig &sConfig, QSet
     settings.setValue( "System/NewFrequencyActivated", sConfig.sNewConfig.nFrequencyActivated );
     settings.setValue( "System/NewFrequencySwitch", sConfig.sNewConfig.nFrequencySwitch );
     settings.setValue( "System/NewFrequencyMode", sConfig.sNewConfig.nFrequencyMode );
+    settings.setValue( "System/NewFrameFreqMode", sConfig.sNewConfig.nFrameFreqMode );
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     SaveLocation( settings, sConfig.cLocation, false );
@@ -262,6 +263,7 @@ void QControllerCommon::GetSystemConfig( LedControll::SSysConfig &sConfig, QSett
     sConfig.sNewConfig.nFrequencyActivated = settings.value( "System/NewFrequencyActivated", 0 ).toUInt( );
     sConfig.sNewConfig.nFrequencySwitch = settings.value( "System/NewFrequencySwitch", 0 ).toUInt( );
     sConfig.sNewConfig.nFrequencyMode = settings.value( "System/NewFrequencyMode", 1 ).toUInt( );
+    sConfig.sNewConfig.nFrameFreqMode = settings.value( "System/NewFrameFreqMode", 1 ).toUInt( );
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     GetLocation( settings, sConfig.cLocation, false );

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Apr 11 18:22:30 2013
+** Created: Tue Apr 23 12:41:42 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -168,6 +168,10 @@ public:
     QHBoxLayout *horizontalLayout_14;
     QLabel *label_18;
     QLineEdit *edtLocationNew;
+    QWidget *layoutWidget7;
+    QHBoxLayout *horizontalLayout_26;
+    QLabel *label_31;
+    QComboBox *cbLightFrameFreq;
     QSpinBox *spLightSensitiveFlash;
     QSpinBox *spLightSensitiveFreq;
 
@@ -226,7 +230,7 @@ public:
         lblMode->setAlignment(Qt::AlignCenter);
         tabWidgetDevice = new QTabWidget(centralWidget);
         tabWidgetDevice->setObjectName(QString::fromUtf8("tabWidgetDevice"));
-        tabWidgetDevice->setGeometry(QRect(9, 435, 531, 231));
+        tabWidgetDevice->setGeometry(QRect(9, 455, 531, 211));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         edtState = new QPlainTextEdit(tab);
@@ -261,7 +265,7 @@ public:
         tabWidgetDevice->addTab(tab_4, QString());
         tabWidget = new QTabWidget(centralWidget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 100, 531, 331));
+        tabWidget->setGeometry(QRect(10, 100, 531, 351));
         tab_5 = new QWidget();
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
         frame = new QFrame(tab_5);
@@ -522,7 +526,7 @@ public:
         tab_6->setObjectName(QString::fromUtf8("tab_6"));
         frame_2 = new QFrame(tab_6);
         frame_2->setObjectName(QString::fromUtf8("frame_2"));
-        frame_2->setGeometry(QRect(0, 0, 531, 311));
+        frame_2->setGeometry(QRect(0, 0, 531, 331));
         frame_2->setStyleSheet(QString::fromUtf8("background-color: rgb(118, 118, 118);"));
         frame_2->setFrameShape(QFrame::StyledPanel);
         frame_2->setFrameShadow(QFrame::Raised);
@@ -536,7 +540,7 @@ public:
         lblFreq_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         layoutWidget4 = new QWidget(groupBox_4);
         layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(50, 31, 119, 185));
+        layoutWidget4->setGeometry(QRect(50, 31, 120, 185));
         verticalLayout_5 = new QVBoxLayout(layoutWidget4);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
@@ -692,7 +696,7 @@ public:
         lblFlash_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         layoutWidget5 = new QWidget(groupBox_5);
         layoutWidget5->setObjectName(QString::fromUtf8("layoutWidget5"));
-        layoutWidget5->setGeometry(QRect(50, 31, 119, 185));
+        layoutWidget5->setGeometry(QRect(50, 31, 120, 185));
         verticalLayout_6 = new QVBoxLayout(layoutWidget5);
         verticalLayout_6->setSpacing(6);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
@@ -842,7 +846,7 @@ public:
         lblFlash_2->raise();
         groupBox_6 = new QGroupBox(frame_2);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(10, 246, 511, 51));
+        groupBox_6->setGeometry(QRect(10, 270, 511, 51));
         groupBox_6->setStyleSheet(QString::fromUtf8("background-color: rgb(90, 90, 90);"));
         layoutWidget6 = new QWidget(groupBox_6);
         layoutWidget6->setObjectName(QString::fromUtf8("layoutWidget6"));
@@ -864,6 +868,25 @@ public:
 "color: rgb(255, 255, 255);"));
 
         horizontalLayout_14->addWidget(edtLocationNew);
+
+        layoutWidget7 = new QWidget(frame_2);
+        layoutWidget7->setObjectName(QString::fromUtf8("layoutWidget7"));
+        layoutWidget7->setGeometry(QRect(17, 240, 121, 22));
+        horizontalLayout_26 = new QHBoxLayout(layoutWidget7);
+        horizontalLayout_26->setSpacing(6);
+        horizontalLayout_26->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_26->setObjectName(QString::fromUtf8("horizontalLayout_26"));
+        horizontalLayout_26->setContentsMargins(0, 0, 0, 0);
+        label_31 = new QLabel(layoutWidget7);
+        label_31->setObjectName(QString::fromUtf8("label_31"));
+        label_31->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_26->addWidget(label_31);
+
+        cbLightFrameFreq = new QComboBox(layoutWidget7);
+        cbLightFrameFreq->setObjectName(QString::fromUtf8("cbLightFrameFreq"));
+
+        horizontalLayout_26->addWidget(cbLightFrameFreq);
 
         tabWidget->addTab(tab_6, QString());
         spLightSensitiveFlash = new QSpinBox(centralWidget);
@@ -914,7 +937,10 @@ public:
 "\351\242\221\351\227\252\351\242\221\347\216\207 %10Hz\n"
 "LED\347\201\257\345\267\245\344\275\234\347\224\265\345\216\213 %11\344\274\217\n"
 "\345\244\226\351\203\250\350\247\246\345\217\221\344\277\241\345\217\267\347\212\266\346\200\201 %12\n"
-"", 0, QApplication::UnicodeUTF8));
+"\351\242\221\351\227\252\351\242\221\347\216\207 %13Hz\n"
+"LED\347\201\257\345\267\245\344\275\234\347\224\265\345\216\213 %14\344\274\217\n"
+"\345\244\226\351\203\250\350\247\246\345\217\221\344\277\241\345\217\267\347\212\266\346\200\201 %15\n"
+"\345\270\247\351\242\221 %16", 0, QApplication::UnicodeUTF8));
         tabWidgetDevice->setTabText(tabWidgetDevice->indexOf(tab), QApplication::translate("MainWindow", "\346\237\245\350\257\242\347\232\204\347\212\266\346\200\201", 0, QApplication::UnicodeUTF8));
         edtSendCmd->setPlainText(QString());
         tabWidgetDevice->setTabText(tabWidgetDevice->indexOf(tab_2), QApplication::translate("MainWindow", "\345\217\221\351\200\201\347\232\204\345\221\275\344\273\244", 0, QApplication::UnicodeUTF8));
@@ -1013,6 +1039,13 @@ public:
         groupBox_6->setTitle(QString());
         label_18->setText(QApplication::translate("MainWindow", "\344\275\215\347\275\256\344\277\241\346\201\257", 0, QApplication::UnicodeUTF8));
         edtLocationNew->setText(QString());
+        label_31->setText(QApplication::translate("MainWindow", "\345\270\247\351\242\221\351\200\211\346\213\251", 0, QApplication::UnicodeUTF8));
+        cbLightFrameFreq->clear();
+        cbLightFrameFreq->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "\346\225\264\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "\345\215\212\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "14.5\345\270\247", 0, QApplication::UnicodeUTF8)
+        );
         tabWidget->setTabText(tabWidget->indexOf(tab_6), QApplication::translate("MainWindow", "\346\226\260\350\256\276\345\244\207", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

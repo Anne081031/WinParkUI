@@ -32,6 +32,7 @@ private:
     inline void GetIntegerValue( QByteArray& data, QString& strInfo );
     inline void GetTriggerMode( QByteArray& data, QString& strInfo );
     inline void GetThreshold( QByteArray& data, QString& strInfo );
+    inline void GetFrameFreqControl( QByteArray& data, QString& strInfo );
     
 signals:
     

@@ -33,6 +33,7 @@ const unsigned int  nLOCATION_SIZE = 128;
         unsigned char nFrequencyActivated;
         unsigned char nFrequencySwitch;
         unsigned char nFrequencyMode;
+        unsigned char nFrameFreqMode;
         wchar_t cLocation[ nLOCATION_SIZE ];
     } SNewSysConfig;
 
@@ -73,7 +74,8 @@ const unsigned int  nLOCATION_SIZE = 128;
         CmdLedExternalTriggerSignalState,
         CmdFlashRadianceChange,
         CmdFrenquencyRadianceChange,
-        CmdTestConnect
+        CmdTestConnect,
+        CmdFrameFrequency
     } ECommand;
 }
 

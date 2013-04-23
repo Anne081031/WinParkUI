@@ -68,6 +68,27 @@ void QCmdParser::GeLedtIlluminance( QByteArray& data, QString& strInfo )
     qDebug( ) << Q_FUNC_INFO << endl;
 }
 
+void QCmdParser::GetFrameFreqControl( QByteArray &data, QString &strInfo )
+{
+    if ( 1 > data.length( ) ) {
+        return;
+    }
+
+    switch ( data.at( 0 ) ) {
+    case 1 :
+       strInfo = "’˚±∂∆µ";
+       break;
+
+    case 2 :
+       strInfo = "∞Î±∂∆µ";
+       break;
+
+    case 3 :
+       strInfo = "14.5÷°";
+       break;
+    }
+}
+
 void QCmdParser::GetLedTemperature( QByteArray& data, QString& strInfo )
 {
     if ( 3 > data.length( ) ) {
@@ -317,6 +338,11 @@ void QCmdParser::ParseDataDomain( QByteArray &data, QString& strInfo, qint8& nIn
     case 0x0400030D : // …¡π‚π‚√Ùøÿ÷∆
         GeLedtIlluminance( data, strInfo );
         nIndex = 2;
+        break;
+
+    case 0x04000310 : // ÷°∆µøÿ÷∆
+        GetFrameFreqControl( data, strInfo );
+        nIndex = 16;
         break;
     }
 }

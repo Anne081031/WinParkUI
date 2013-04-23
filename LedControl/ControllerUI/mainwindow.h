@@ -9,7 +9,7 @@
 #include <QComboBox>
 #include "../ControllerCmd/qcontrollercmd.h"
 
-#define QUERY_CMD_COUNT     ( qint8 ) 15
+#define QUERY_CMD_COUNT     ( qint8 ) 16
 
 namespace Ui {
 class MainWindow;

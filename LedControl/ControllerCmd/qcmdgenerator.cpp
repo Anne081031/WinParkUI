@@ -77,6 +77,11 @@ void QCmdGenerator::GetTestFlashCmd( const qint8 nTest, QByteArray &body )
     body.append( cCmd, sizeof ( cCmd ) );
 }
 
+void QCmdGenerator::GetFrameFrequencyCmd( const qint8 nFrameFreq, QByteArray &body )
+{
+
+}
+
 void QCmdGenerator::GetFlashGearSet( const qint32 nGear, QByteArray &body )
 {
     char* pValue = ( char* ) &nGear;
@@ -272,6 +277,12 @@ void QCmdGenerator::GetData4NewCmd( QByteArray &body, const LedControll::EComman
 
     case LedControll::CmdFrenquencyRadianceChange :
         nDI |= 0x0000000E;
+        cDataLen += 1;
+        byData.append( ( char ) nParam );
+        break;
+
+    case LedControll::CmdFrameFrequency :
+        nDI |= 0x00000010;
         cDataLen += 1;
         byData.append( ( char ) nParam );
         break;

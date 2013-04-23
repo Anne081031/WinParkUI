@@ -1966,10 +1966,13 @@ bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStri
 
         int nRemainder = strFee.toInt( );
         QStringList lstInOut;
-        QString strWhere = QString( " Where cardno = '%1' And intime in \
-                                    ( Select intime From ( Select Max( intime ) As intime \
-                                                           From stoprd \
-                                                           Where cardno = '%2') tmp )" ).arg( lstRows[ 0 ], lstRows[ 0 ] );
+        //QString strWhere = QString( " Where cardno = '%1' And intime in \
+        //                            ( Select intime From ( Select Max( intime ) As intime \
+        //                                                   From stoprd \
+        //                                                   Where cardno = '%2') tmp )" ).arg( lstRows[ 0 ], lstRows[ 0 ] );
+
+        QString strWhere = QString( " Where stoprdid = ( Select stoprdid From cardstoprdid \
+                                                           Where cardno = '%1' )" ).arg( lstRows[ 0 ] );
         CLogicInterface::GetInterface( )->OperateInOutRecord( lstInOut, CommonDataType::SelectData, strWhere );
         if ( 0 == lstInOut.count( ) ) {
             //qDebug << QString( "Not enter" ) << endl;
@@ -2111,8 +2114,13 @@ void CProcessData::CCDisplayInfo( QByteArray& byData, QByteArray& vData,
 
 void CProcessData::ControlChargeInfo(QString &strCardNumber, QDateTime dtLeave, QString strAmount, QString strRetention)
 {
-    QString strSql = QString( "Select Max( intime ) From %1 Where cardno = '%2' " ).arg(
-                GetTimeCardBuffer( ) ? "tmpcardintime" : "stoprd", strCardNumber );
+    return;
+    //QString strSql = QString( "Select Max( intime ) From %1 Where cardno = '%2' " ).arg(
+    //            GetTimeCardBuffer( ) ? "tmpcardintime" : "stoprd", strCardNumber );
+
+    QString strSql = QString( "Select intime From %1 Where stoprdid = \
+                              ( Select stoprdid from cardstoprdid where cardno = '%2')" ).arg(
+                              GetTimeCardBuffer( ) ? "tmpcardintime" : "stoprd", strCardNumber );
 
     QStringList strInfo;
     CLogicInterface::GetInterface( )->ExecuteSql( strSql, strInfo );
@@ -2487,16 +2495,17 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
                //                   where stoprdid in ( select stoprdid from CardStoprdID where \
                //                   cardno = '%11' ) " );
 
-                strSql = QString( "Update IGNORE stoprd a, ( select stoprdid from CardStoprdID where \
-                                  cardno = '%1' ) b \
-                        Set outshebeiname = '%2', outtime = '%3', carcpout = '%4', \
-                        cardkind = '%5', feefactnum = %6, feenum = %7, \
-                        feetime = '%8', feeoperator = '%9', \
-                        feekind = '%10', feezkyy = '%11'  where a.stoprdid = b.stoprdid " );
+                strSql = QString( "Update IGNORE stoprd \
+                        Set outshebeiname = '%1', outtime = '%2', carcpout = '%3', \
+                        cardkind = '%4', feefactnum = %5, feenum = %6, \
+                        feetime = '%7', feeoperator = '%8', \
+                        feekind = '%9', feezkyy = '%10'  where stoprdid = \
+                        ( select stoprdid from CardStoprdID where cardno = '%11' )" );
             } else {
             strSql = QString( "Update IGNORE stoprd Set outshebeiname = '%1', outtime = '%2', carcpout = '%3', cardkind = '%4', feefactnum = %5, \
                               feenum = %6, feetime = '%7', feeoperator = '%8', feekind = '%9', feezkyy = '%10' \
-                              Where cardno = '%11' And intime in ( select * from ( Select Max( intime ) From stoprd Where cardno = '%12' ) tmp ) " );
+                              Where stoprdid = \
+                    ( select stoprdid from CardStoprdID where cardno = '%11' ) " );
             }
         }
 
@@ -2504,17 +2513,17 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
             strSql = strSql.arg( strChannel, strDateTime, strCardNumber, strPlate, strCardType );
         } else {
             if ( CardTime == cardKind && GetTimeCardBuffer( ) ) {
-                strSql = strSql.arg( strCardNumber, strChannel, strDateTime, strPlate, strCardType, QString::number( nAmount ),
+                strSql = strSql.arg( strChannel, strDateTime, strPlate, strCardType, QString::number( nAmount ),
                                                   QString::number( nRealAmount ), strDateTime, pMainWindow->GetUserName( ) );
                 strSql = strSql.arg( bMonthCard ? "" : pFeeDlg->GetFeeRateType( ),
-                                                  bMonthCard ? "无优惠" : pFeeDlg->GetDiscountType( ) );
+                                                  bMonthCard ? "无优惠" : pFeeDlg->GetDiscountType( ), strCardNumber );
             } else {
                 strSql = strSql.arg( strChannel, strDateTime, strPlate, strCardType, QString::number( nAmount ),
                                                   QString::number( nRealAmount ), strDateTime, pMainWindow->GetUserName( ) );
 
             strSql = strSql.arg( bMonthCard ? "" : pFeeDlg->GetFeeRateType( ),
                                               bMonthCard ? "无优惠" : pFeeDlg->GetDiscountType( ),
-                                              strCardNumber, strCardNumber );
+                                              strCardNumber );
             }
         }
     }
@@ -2524,9 +2533,12 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     } else {
         bool bTimeCard = ( CardTime == cardKind );
         if ( bTimeCard && !bEnter && CCommonFunction::GetHistoryDb( ) ) {
+            //QString strSql = QString( "Update IGNORE stoprd Set MayDelete = 1\
+            //                          Where cardno = '%1' And intime in ( select * from ( Select Max( intime ) \
+            //                           From stoprd Where cardno = '%2' ) tmp ) " ).arg( strCardNumber, strCardNumber );
+
             QString strSql = QString( "Update IGNORE stoprd Set MayDelete = 1\
-                                      Where cardno = '%1' And intime in ( select * from ( Select Max( intime ) \
-                                       From stoprd Where cardno = '%2' ) tmp ) " ).arg( strCardNumber, strCardNumber );
+                                      Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' ) " ).arg( strCardNumber );
             SendDbWriteMessage( CDbEvent::SQLExternal, strSql, false, false );
         }
 
@@ -2696,10 +2708,13 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
         QString strBufferTable = bBuffer ? "tmpcardintime" : "stoprd";
         QStringList lstInOut;
         QString strSql = QString( "select cardno, intime, inshebeiname %1 from %2" ).arg( bBuffer ? ",idtmpcardintime" : "", strBufferTable );
-        QString strWhere = QString( " Where cardno = '%1' And intime in \
-                                    ( Select intime From ( Select Max( intime ) As intime \
-                                                           From %2 \
-                                                           Where cardno = '%3' ) tmp )" ).arg( lstRows[ 0 ], strBufferTable, lstRows[ 0 ] );
+        //QString strWhere = QString( " Where cardno = '%1' And intime in \
+        //                            ( Select intime From ( Select Max( intime ) As intime \
+        //                                                   From %2 \
+        //                                                   Where cardno = '%3' ) tmp )" ).arg( lstRows[ 0 ], strBufferTable, lstRows[ 0 ] );
+
+        QString strWhere = QString( " Where stoprdid = ( Select stoprdid From cardstoprdid \
+                                                           Where cardno = '%1' )" ).arg( lstRows[ 0 ] );
 
         //CLogicInterface::GetInterface( )->OperateInOutRecord( lstInOut, CommonDataType::SelectData, strWhere );
         strSql += strWhere;
@@ -2866,7 +2881,12 @@ void CProcessData::GetCardType2( QString &strCardNo, QStringList &lstRows, ParkC
         lstRows << pInfo->cardStatus;
     } else if ( CardSave == cardKind ) {
         lstRows << pInfo->cardStatus;
-        lstRows << QString::number( pInfo->ValueFees.nSurplus );
+        QString strSql = "Select cardfee from SaveCard where cardno = '%1' ";
+        strSql = strSql.arg( pInfo->strCardNumber );
+        QStringList lstFee;
+        CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstFee );
+
+        lstRows << ( ( lstFee.length( ) > 0 ) ? lstFee.at( 0 ) : "0" );
         lstRows << pInfo->carInfo.value( strKey );
     } else if ( CardTime == cardKind ) {
         lstRows << pInfo->carInfo.value( strKey );

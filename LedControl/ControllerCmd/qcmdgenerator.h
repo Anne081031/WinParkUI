@@ -26,6 +26,7 @@ private:
     inline void GetFlashFrenquencyLightSensitiveIfWork( const qint32 nWork, QByteArray& body );
     inline void GetSyncModeCmd( const qint32 nMode, QByteArray& body );
     inline void GetTestFlashCmd( const qint8 nTest, QByteArray& body );
+    inline void GetFrameFrequencyCmd( const qint8 nFrameFreq, QByteArray& body );
 
     inline void GetNewCmdAddr( QByteArray& body );
     inline void GetCheckSum4NewCmd( QByteArray& body );

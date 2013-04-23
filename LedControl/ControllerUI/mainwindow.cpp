@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     controller.ConrollSP( true );
     InitializeUI( );
 
-    nTimerID = startTimer( 1000 * 10 );
+    //nTimerID = startTimer( 1000 * 10 );
 }
 
 void MainWindow::SetQueryTemplate( )
@@ -44,6 +44,7 @@ void MainWindow::SetQueryTemplate( )
     strState += "频闪频率 %13Hz\n";
     strState += "LED灯工作电压 %14伏\n";
     strState += "外部触发信号状态 %15";
+    strState += "帧频 %16";
 }
 
 void MainWindow::InitializeUI( )
@@ -107,7 +108,7 @@ void MainWindow::HandleQuery( QString strInfo, qint8 nIndex, QByteArray byData )
                                                     strStateValue[ 3 ], strStateValue[ 4 ], strStateValue[ 5 ],
                                                     strStateValue[ 6 ], strStateValue[ 7 ], strStateValue[ 8 ] );
     strText = strText.arg( strStateValue[ 9 ], strStateValue[ 10 ], strStateValue[ 11 ],
-                                      strStateValue[ 12 ], strStateValue[ 13 ], strStateValue[ 14 ] );
+                                      strStateValue[ 12 ], strStateValue[ 13 ], strStateValue[ 14 ], strStateValue[ 15 ] );
     ui->edtState->appendPlainText( strText );
 
     UpdateUI( nIndex - 1, byData );
@@ -161,11 +162,20 @@ void MainWindow::UpdateUI( qint8 nIndex, QByteArray byData )
     case 11 : // 闪光光敏阀值
         SetComboxValue( ui->cbLightSensitiveFlash, nValue );
         break;
+
+    case 15 : // 帧频控制
+        SetComboxValue( ui->cbLightFrameFreq, nValue );
+        break;
     }
 }
 
 void MainWindow::SetComboxValue( QComboBox *pCB, qint8 nValue )
 {
+    if ( pCB == ui->cbLightFrameFreq ) {
+        pCB->setCurrentIndex( nValue - 1 );
+        return;
+    }
+
     for ( qint32 nIndex = 0; nIndex < pCB->count( ); nIndex++ ) {
         if ( ( qint8 ) pCB->itemData( nIndex ).toInt( ) == nValue )  {
             pCB->setCurrentIndex( nIndex );
@@ -227,6 +237,7 @@ void MainWindow::SetComboBoxValue( const LedControll::SSysConfig &sConfig )
 
     ui->cbLightSensitiveFreq->setCurrentIndex( sConfig.sNewConfig.nFrequencyActivated );
     ui->cbLightSensitiveFlash->setCurrentIndex( sConfig.sNewConfig.nFlashActivated );
+    ui->cbLightFrameFreq->setCurrentIndex( sConfig.sNewConfig.nFrameFreqMode );
 }
 
 void MainWindow::SetCheckBoxValue( const LedControll::SSysConfig &sConfig, const bool bNewDev )
@@ -354,6 +365,8 @@ void MainWindow::InitializeSlot( )
 
     connect( ui->cbLightSensitiveFlash, SIGNAL( currentIndexChanged( int ) ), this, SLOT( CbCurrentIndexChanged( int ) ) );
     connect( ui->cbLightSensitiveFreq, SIGNAL( currentIndexChanged( int ) ), this, SLOT( CbCurrentIndexChanged( int ) ) );
+
+    connect( ui->cbLightFrameFreq, SIGNAL( currentIndexChanged( int ) ), this, SLOT( CbCurrentIndexChanged( int ) ) );
 }
 
 void MainWindow::InitializeCB( QComboBox *pCB )
@@ -370,6 +383,11 @@ void MainWindow::InitializeCB( QComboBox *pCB )
 
 quint8 MainWindow::GetCbBCDValue( const QComboBox *pCB )
 {
+
+    if ( pCB == ui->cbLightFrameFreq ) {
+        return pCB->currentIndex( ) + 1;
+    }
+
     quint8 nBCDValue = 0;
     quint8 nBase = 10;
 
@@ -400,6 +418,9 @@ void MainWindow::CbCurrentIndexChanged( int index )
         SendCmd( bNewDevice, eCmd, nValue );
     } else if ( pCB == ui->cbLightSensitiveFreq ) {
         eCmd = LedControll::CmdFrenquencyRadianceChange;
+        SendCmd( bNewDevice, eCmd, nValue );
+    } else if ( pCB == ui->cbLightFrameFreq ) {
+        eCmd = LedControll::CmdFrameFrequency;
         SendCmd( bNewDevice, eCmd, nValue );
     }
 }
@@ -480,6 +501,9 @@ void MainWindow::GetQueryCmd( QByteArray *pData )
 
     controllerCmd->GetNewCmd( LedControll::CmdFlashRadianceChange, data, nParam, bQuery, bMode );
     pData[ 14 ].append( data );
+
+    controllerCmd->GetNewCmd( LedControll::CmdFrameFrequency, data, nParam, bQuery, bMode );
+    pData[ 15 ].append( data );
 
     //qDebug( ) << byData.toHex( ).toUpper( ) << endl;
 }
@@ -840,7 +864,8 @@ void MainWindow::SaveNewDevConfig( LedControll::SNewSysConfig &sConfig )
     sConfig.nFrequencyRadiance = ui->spFreqLightNew->value( );
     sConfig.nFrequencyActivated = ui->cbLightSensitiveFreq->currentIndex( );//ui->spLightSensitiveFreq->value( );
     sConfig.nFrequencySwitch = ui->chkLightSensitiveFreq->isChecked( ) ? 1 : 0;
-    sConfig.nFrequencyMode = GetSelectedRbIndex( hashFreqSync ) ;
+    sConfig.nFrequencyMode = GetSelectedRbIndex( hashFreqSync );
+    sConfig.nFrameFreqMode = ui->cbLightFrameFreq->currentIndex( );
 }
 
 void MainWindow::on_btnSaveSet_clicked()
