@@ -24,6 +24,16 @@ void DatabaseController::MySQLLibraryEnd( )
     CMySqlDatabase::MySQLLibraryEnd( );
 }
 
+void DatabaseController::CreateDbThreadPool( )
+{
+    QDataDispactherThread::CreateDbThread( GetController( ) );
+}
+
+void DatabaseController::PostConnectDbEvent( )
+{
+    QDataDispactherThread::PostConnectDbEvent( );
+}
+
 DatabaseController* DatabaseController::GetController( QObject *parent )
 {
     if ( NULL == pController ) {

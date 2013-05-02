@@ -132,7 +132,7 @@ UserRecord
 	{
 		"UserID":"1",
 		"StartTime":"2013-04-02 12:34:34",
-		"sEndTime":"2013-04-02 18:34:34"
+		"EndTime":"2013-04-02 18:34:34"
 	}
 }
 
@@ -164,3 +164,15 @@ UserRecord
 	}
 }
 
+{
+	"ClientID":"123",
+	"TypeCode":"TabletQueryReportData",
+	"UserID":"1234",
+	"Data": 
+	{
+		"UnitID":"562020897",
+		"ParkID":"5101070002",
+		"PaymentStartTime":"2013-02-02 12:34:34",
+		"PaymentEndTime":"2013-04-02 18:34:34"
+	}
+}

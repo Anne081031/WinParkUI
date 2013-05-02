@@ -49,7 +49,7 @@ void CTimeCard::ControlDataGrid( )
 void CTimeCard::GetDataFromDb( )
 {
     QStringList lstRows;
-    QString strWhere = "";
+    QString strWhere = "order by cardselfno";
     int nRows = CLogicInterface::GetInterface( )->OperateCardInfo( lstRows, CommonDataType::TimeCard,
                                                        CommonDataType::SelectData, strWhere );
 

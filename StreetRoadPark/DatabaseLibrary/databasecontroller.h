@@ -18,6 +18,8 @@ public:
 
     static int MySQLLibraryInit( int argc, char *argv[] );
     static void MySQLLibraryEnd( );
+    static void CreateDbThreadPool( );
+    static void PostConnectDbEvent( );
 
 private:
     DatabaseController( QObject* parent = NULL );

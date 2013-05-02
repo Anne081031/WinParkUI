@@ -236,7 +236,7 @@ void CDlgBulkRegister::AddMonthRow( const QString &strCardID )
 
         case 4 :
         case 7 :
-            AddComboBoxItem( 0, nIndex, 0, ( 6 == nIndex ), ui->tabRecord );
+            AddComboBoxItem( 0, nIndex, 0, ( 7 == nIndex ), ui->tabRecord );
             break;
 
         case 5 :

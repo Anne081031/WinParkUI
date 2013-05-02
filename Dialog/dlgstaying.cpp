@@ -32,7 +32,9 @@ void CDlgStaying::GetData( )
 {
     QString strSql = "SELECT d.cardno,d.cardselfno, b.username, b.userphone, c.carcp, a.inshebeiname, a.intime \
             FROM stoprd a, userinfo b, carinfo c, monthcard d \
-            where d.Inside = 1 and a.cardno = d.cardno and d.cardno = b.cardindex and d.cardno = c.cardindex and a.outtime is null";
+            where a.stoprdid = ( select stoprdid from cardstoprdid c \
+                                 where d.cardno = c.cardno and d.Inside = 1 ) and a.outtime is null \
+                and d.cardno = b.cardindex and d.cardno = c.cardindex ";
 
     QStringList lstRows;
     int nRows = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRows, bHistory );

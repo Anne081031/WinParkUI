@@ -134,7 +134,11 @@ void QDatabaseProcessor::InitializeSubThread( )
 
     dataProcessor.SetDatabase( pDatabase );
 
+    //QDbThreadEvent* pEvent = QDbThreadEvent::CreateThreadEvent( QDbThreadEvent::ThreadDbProcessor,
+    //                                                            QDbThreadEvent::EventConnectDb );
+    //pEvent->SetReconnect( false );
     ProcessDatabaseConnectEvent( NULL );
+    //delete pEvent;
 }
 
 void QDatabaseProcessor::run( )
@@ -225,7 +229,9 @@ void QDatabaseProcessor::ProcessDatabaseConnectEvent( QDbThreadEvent *pEvent )
     bool bRet = ( lstDbInfo.at( 0 ) != lstInfo.at( 0 ) );
 
     if ( !pDatabase->GetFirstConnect( ) && bRet ) {
+        //pDatabase->SetFirstConnect( false );
         pDatabase->SetFirstConnect( bRet );
+        lstDbInfo.replace( 0, lstInfo.at( 0 ) );
     }
 
     if ( pDatabase->GetFirstConnect( ) ) {

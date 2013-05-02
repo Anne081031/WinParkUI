@@ -828,7 +828,7 @@ bool CProcessData::RecognizeFuzzyPlate( CommonDataType::QPlateCardHash &hash,
     }
 
     QList< QString > lstPlates = hash.keys( );
-    lstPlates.removeAll( "δ֪" );
+    //lstPlates.removeAll( "δ֪" );
 
     // strCarNo
 

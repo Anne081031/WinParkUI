@@ -64,7 +64,7 @@ void CValueCard::ControlDataGrid( )
 void CValueCard::GetDataFromDb( )
 {
     QStringList lstRows;
-    QString strWhere = "";
+    QString strWhere = "order by cardselfno";
     int nRows = CLogicInterface::GetInterface( )->OperateCardInfo( lstRows, CommonDataType::ValueCard,
                                                        CommonDataType::SelectData, strWhere );
 

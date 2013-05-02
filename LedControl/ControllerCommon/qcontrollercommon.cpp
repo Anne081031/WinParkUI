@@ -9,7 +9,7 @@
 // Common data, function, class
 //
 
-int QControllerCommon::nSleepTime = 0;
+int QControllerCommon::nSleepTime = 250;
 
 QControllerCommon::QControllerCommon()
 {

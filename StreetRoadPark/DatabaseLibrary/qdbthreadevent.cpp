@@ -3,6 +3,7 @@
 QDbThreadEvent::QDbThreadEvent( ThreadType thrType, Type evtType ) : QEvent( evtType ),
     typeThread( thrType ), typeEvent( ( EventType ) evtType )
 {
+    bReconnect = false;
 }
 
 QDbThreadEvent::~QDbThreadEvent( )
@@ -53,4 +54,14 @@ void QDbThreadEvent::SetComParkID( QString& strParkID )
 QString& QDbThreadEvent::GetComParkID( )
 {
     return strComParkID;
+}
+
+void QDbThreadEvent::SetReconnect( bool bReconn )
+{
+    bReconnect = bReconn;
+}
+
+bool QDbThreadEvent::GetReconnect( )
+{
+    return bReconnect;
 }

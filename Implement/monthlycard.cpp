@@ -67,7 +67,7 @@ void CMonthlyCard::ControlDataGrid( )
 void CMonthlyCard::GetDataFromDb( )
 {
     QStringList lstRows;
-    QString strWhere = "";
+    QString strWhere = "order by cardselfno";
     int nRows = CLogicInterface::GetInterface( )->OperateCardInfo( lstRows, CommonDataType::MonthlyCard,
                                                        CommonDataType::SelectData, strWhere );
 

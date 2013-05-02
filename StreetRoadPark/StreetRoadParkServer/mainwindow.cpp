@@ -253,5 +253,5 @@ void MainWindow::on_btnConnectDb_clicked()
 
     pConfig->WriteIPPort( strIP, nPort );
 
-    //pDbController->PostConnectDatabase( );
+    //pDbController->PostConnectDbEvent( );
 }

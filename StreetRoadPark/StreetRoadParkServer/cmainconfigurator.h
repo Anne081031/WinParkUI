@@ -26,6 +26,8 @@ public:
     void ReadIPPort( QLineEdit& edtIP, QSpinBox& sbPort );
     void WriteIPPort( QString& strIP, quint16 nPort );
 
+    void GetPorts( QStringList &lstPorts );
+
 private:
     CMainConfigurator(QObject *parent = 0);
 

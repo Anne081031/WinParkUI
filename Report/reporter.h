@@ -18,6 +18,7 @@ public:
     void Print( CommonDataType::ReportType rType, QWebView& wvReport );
     void BuildHtmlDoc( QDateTime& dtStart, QDateTime& dtEnd, CommonDataType::ReportType rType, QWebView& wvReport );
     void SetWhere( QStringList& lstWhere );
+    void SetPersonTime( bool bPerson );
 
 private:
     void GetHtml( CommonDataType::ReportType rType, QString& strTitle, QString& strFooter, QString& strTableBody, QStringList& lstData );
@@ -35,7 +36,7 @@ private:
     //QProcess prococess;
     QString strAdobeExe;
     QStringList lstWheres;
-
+    bool bPersonTime;
 signals:
 
 public slots:

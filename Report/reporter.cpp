@@ -10,11 +10,17 @@
 CReporter::CReporter(QObject *parent) :
     QObject(parent)
 {
+    bPersonTime = false;
 }
 
 void CReporter::SetWhere( QStringList &lstWhere )
 {
     lstWheres = lstWhere;
+}
+
+void CReporter::SetPersonTime( bool bPerson )
+{
+    bPersonTime = bPerson;
 }
 
 void CReporter::Print( CommonDataType::ReportType rType, QWebView& wvReport )
@@ -314,7 +320,10 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
         break;
 
     case CommonDataType::ReportPerson :
-        CCommonFunction::DateTime2String( dtTimeEnd, strEnd );
+        if ( bPersonTime ) {
+            CCommonFunction::DateTime2String( dtTimeEnd, strEnd );
+        }
+
         strSql = "select feeoperator f1, sum( feenumb ) f2 from feerd where feetime between '";
         strSql += strStart;
         strSql += "' and '";
@@ -572,6 +581,25 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
     CCommonFunction::Date2String( dEnd, strEnd );
 
     switch ( rType ) {
+    case CommonDataType::ReportPerson :
+        if ( bPersonTime ) {
+            {
+                QString strStart;
+                CCommonFunction::DateTime2String( dtStart, strStart );
+                QString strEnd;
+                CCommonFunction::DateTime2String( dtEnd, strEnd );
+
+                 strTitle = strStart + " 至 " + strEnd;
+            }
+        } else {
+            if ( strStart == strEnd ) {
+                strTitle = strStart + "日";
+            } else {
+                strTitle = strStart + "日 至 " + strEnd + "日";
+            }
+        }
+        break;
+
     case CommonDataType::ReportYearly :
         if ( strSYear == strEYear ) {
             strTitle = strSYear + "年";
@@ -604,8 +632,6 @@ void CReporter::GetTitle( CommonDataType::ReportType rType, QDateTime &dtStart, 
             strTitle = strStart + "日 至 " + strEnd + "日";
         }
         break;
-
-    case CommonDataType::ReportPerson :
     case CommonDataType::ReportTimeCardDetail :
     {
         QString strStart;

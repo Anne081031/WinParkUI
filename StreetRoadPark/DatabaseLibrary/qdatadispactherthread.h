@@ -13,6 +13,8 @@ class QDataDispactherThread : public QThread
     Q_OBJECT
 public:
     static QDataDispactherThread* CreateThread( QObject* parent = NULL );
+    static void CreateDbThread( QObject* pReceiver );
+    static void PostConnectDbEvent( );
 
     ~QDataDispactherThread( );
     void PostDispatchDataEvent( QTcpSocket* pSocket, qint32 nPackageType, QByteArray& byData );
@@ -30,7 +32,7 @@ private:
     explicit QDataDispactherThread(QObject *parent = 0);
 
     void FreeDbThread( );
-    void CreateDbThread( );
+    //void CreateDbThread( );
     QDatabaseProcessor* GetProcessor( );
     void ProcessDispatchDataEvent( QDbThreadEvent* pEvent );
     inline void PostEvent( QDbThreadEvent* pEvent );

@@ -257,6 +257,22 @@ void QJson2SqlParser::GetInOutRecordData( JsonStruct::JsonInOutRecord &sRecord )
         GetStringValue( sRecord.sHead.sValues.jsonData,
                         sRecord.sData.sKeys.strRecordID,
                         sRecord.sData.sValues.strRecordID );
+    } else if ( Constant::TypeCode.strCodeTabletQueryReprotData == sRecord.sHead.sValues.strTypeCode ) {
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strUnitID,
+                        sRecord.sData.sValues.strUnitID );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strParkID,
+                        sRecord.sData.sValues.strParkID );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPaymentStartTime,
+                        sRecord.sData.sValues.strPaymentStartTime );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPaymentEndTime,
+                        sRecord.sData.sValues.strPaymentEndTime );
     }
 }
 
@@ -270,6 +286,8 @@ void QJson2SqlParser::GetSpName( QString &strTypeCode, QString& strSpName )
         strSpName = Constant::SpName.strSpQueryInOutRecord;
     } else if ( Constant::TypeCode.strCodeTabletQueryImageData == strTypeCode ) {
         strSpName = Constant::SpName.strSpQueryImageRecord;
+    } else if ( Constant::TypeCode.strCodeTabletQueryReprotData == strTypeCode ) {
+        strSpName = Constant::SpName.strSpQueryReportRecord;
     } else if ( Constant::TypeCode.strCodeUnhandledSensorData == strTypeCode ) {
         strSpName = Constant::SpName.strSpUnhandledSensorRecord;
     } else if( Constant::TypeCode.strCodeDeviceRegister == strTypeCode ) {
@@ -372,6 +390,13 @@ void QJson2SqlParser::GetInOutXmlData( JsonStruct::JsonInOutRecord &sRecord, QSt
     } else if ( Constant::TypeCode.strCodeTabletQueryImageData == sRecord.sHead.sValues.strTypeCode ) {
         strXml = Constant::SpXmlPattern.strXmlTabletQueryImageRecord.arg(
                              sRecord.sData.sValues.strRecordID,
+                             sRecord.sHead.strLog );
+    }else if ( Constant::TypeCode.strCodeTabletQueryReprotData == sRecord.sHead.sValues.strTypeCode ) {
+        strXml = Constant::SpXmlPattern.strXmlTabletQueryLocationRecord.arg(
+                             sRecord.sData.sValues.strUnitID,
+                             sRecord.sData.sValues.strParkID,
+                             sRecord.sData.sValues.strPaymentStartTime,
+                             sRecord.sData.sValues.strPaymentEndTime,
                              sRecord.sHead.strLog );
     }
 }

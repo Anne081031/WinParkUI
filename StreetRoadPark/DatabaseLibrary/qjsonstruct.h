@@ -152,6 +152,11 @@ public:
                QString strLimit;
                QString strIncludedImage;
 
+               QString strPaymentStartTime;
+               QString strPaymentEndTime;
+               QString strUnitID;
+               QString strParkID;
+
                __Keys( )
                {
                    strRecordID = "RecordID";
@@ -169,6 +174,11 @@ public:
                    strLeaveEndTime = "LeaveEndTime";
                    strLimit = "Limit";
                    strIncludedImage = "IncludedImage";
+
+                   strPaymentStartTime = "PaymentStartTime";
+                   strPaymentEndTime = "PaymentEndTime";
+                   strUnitID = "UnitID";
+                   strParkID = "ParkID";
                }
             } sKeys;
 
@@ -188,6 +198,11 @@ public:
                 QString strLeaveEndTime;
                 QString strLimit;
                 QString strIncludedImage;
+
+                QString strPaymentStartTime;
+                QString strPaymentEndTime;
+                QString strUnitID;
+                QString strParkID;
             } sValues;
         } sData;
     } JsonInOutRecord, *PJsonInOutRecord;

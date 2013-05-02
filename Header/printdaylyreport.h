@@ -24,12 +24,19 @@ protected:
 private:
     inline void SetDateTimeFormat( QString& strFormat );
     inline void SetDateTime( QDateTime& dtStart, QDateTime& dtEnd );
+    void GetParameter( );
+    void SaveParameter( CommonDataType::ReportType nType );
 
 private:
     Ui::CPrintDaylyReport *ui;
     MainWindow* pParent;
     CReporter reporter;
     int nReportType;
+    bool bPersonTime;
+    QTime tPersonStartTime;
+    QTime tPersonEndTime;
+    QTime tTimeCardStartTime;
+    QTime tTimeCardEndTime;
 
 private slots:
     void on_lblClose_linkActivated(QString);

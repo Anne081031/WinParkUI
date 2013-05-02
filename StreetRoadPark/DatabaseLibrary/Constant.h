@@ -44,6 +44,7 @@ public:
         QString strCodeTabletQueryImageData;
         QString strCodeRemoveRecord; // Server=>Tablet
         QString strCodeUnhandledSensorData; // Server=>Tablet
+        QString strCodeTabletQueryReprotData;
 
         // TypeSystem
         QString strCodeDeviceRegister; // Tablet=>Server
@@ -73,6 +74,7 @@ public:
             strCodeTabletQueryImageData = "TabletQueryImageData";
             strCodeRemoveRecord = "RemoveRecord";
             strCodeUnhandledSensorData = "UnhandledSensorData";
+            strCodeTabletQueryReprotData = "TabletQueryReportData";
 
             strCodeDeviceRegister = "DeviceRegister";
             strCodeDeviceUnregister = "DeviceUnregister";
@@ -92,6 +94,7 @@ public:
         QString strDeviceRecord;
         QString strSpUserRecord;
         QString strSpGroupRecord;
+        QString strSpQueryReportRecord;
 
         __SpName( )
         {
@@ -104,6 +107,7 @@ public:
             strDeviceRecord = "DeviceRecord";
             strSpUserRecord = "UserRecord";
             strSpGroupRecord = "GroupRecord";
+            strSpQueryReportRecord = "QueryReportRecord";
         }
     } TSpName;
 
@@ -115,6 +119,7 @@ public:
         QString strXmlTabletQueryLocationRecord;
         QString strXmlTabletQueryImageRecord;
         QString strXmlUnhandledSensorRecord;
+        QString strXmlTabletQueryReportRecord;
         QString strXmlDeviceRecord;
         QString strXmlGroupRecord;
 
@@ -163,6 +168,13 @@ public:
                                                <Limit>%8</Limit> \
                                                <IncludedImage>%9</IncludedImage> \
                                                <Accessor>%10</Accessor></Data>";
+
+            strXmlTabletQueryReportRecord = "<Data><UnitID>%1</UnitID> \
+                                             <ParkID>%2</ParkID> \
+                                             <PaymentStartTime>%3</PaymentStartTime> \
+                                             <PaymentEndTime>%4</PaymentEndTime> \
+                                             <Accessor>%5</Accessor></Data>";
+
             strXmlTabletQueryImageRecord = "<Data><RecordID>%1</RecordID> \
                                             <Accessor>%2</Accessor></Data>";
 

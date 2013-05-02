@@ -1,4 +1,5 @@
 #include "cmainconfigurator.h"
+#include <windows.h>
 
 #define CONFIG_NAME_SERVER     "Config.ini"
 
@@ -75,6 +76,26 @@ void CMainConfigurator::WriteComM77R( qint32 nIndex, qint32 nReceiverID )
                                                              strReceiverID ) );
 }
 
+void CMainConfigurator::GetPorts( QStringList &lstPorts )
+{
+    HKEY hHandle;
+    DWORD dwIndex = 0;
+    wchar_t cName[ 512 ] = { 0 };
+    DWORD dwLen = 512;
+    BYTE byValue[ 512 ] = { 0 };
+
+    LONG lRet = RegOpenKey( HKEY_LOCAL_MACHINE, L"HARDWARE\\DEVICEMAP\\SERIALCOMM", &hHandle );
+    if ( ERROR_SUCCESS != lRet ) {
+        return;
+    }
+
+    while ( ERROR_SUCCESS == RegEnumValue( hHandle, dwIndex++, cName, &dwLen, NULL, NULL, byValue, &dwLen ) ) {
+        lstPorts << QString::fromUtf16( ( const ushort* ) byValue ).toUpper( );
+    }
+
+    lRet = RegCloseKey( hHandle );
+}
+
 void CMainConfigurator::ReadComM77R( QComboBox &comboBox, QStringList& lstCom )
 {
     comboBox.clear( );
@@ -84,6 +105,10 @@ void CMainConfigurator::ReadComM77R( QComboBox &comboBox, QStringList& lstCom )
     QString strSperator = "@";
     QString strKey = "ComM77R/ComM77R%1";
     qint32 nCount = pSettings->value( strKey.arg( "Count" ), 0 ).toInt( );
+
+    QStringList lstPorts;
+    GetPorts( lstPorts );
+    int nItem = 0;
 
     for ( qint32 nIndex = 0; nIndex < nCount; nIndex++ ) {
         strValue = pSettings->value( strKey.arg( nIndex ), "" ).toString( );
@@ -96,6 +121,10 @@ void CMainConfigurator::ReadComM77R( QComboBox &comboBox, QStringList& lstCom )
         strValue = lstValue.at( 0 ).toUpper( );
         lstCom << strValue;
         comboBox.addItem( strValue, lstValue.at( 1 ) );
+
+        comboBox.setItemIcon( nItem++,
+                              QIcon( lstPorts.contains( strValue ) ?
+                                         ":/Images/Enable.png" : ":/Images/Disable.png" ) );
     }
 }
 

@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent) :
     controller.ConrollSP( true );
     InitializeUI( );
 
-    //nTimerID = startTimer( 1000 * 10 );
+    nTimerID = startTimer( 1000 * 10 );
 }
 
 void MainWindow::SetQueryTemplate( )
@@ -518,7 +518,7 @@ void MainWindow::SendCmd( const bool bNewDevice, const LedControll::ECommand eCm
         controllerCmd->GetOldCmd( eCmd, byData, nParam );
     }
 
-    controller.WriteData( byData, true );
+    controller.WriteData( byData, QControllerCommon::GetWaitTime( ), true );
 }
 
 qint32 MainWindow::GetRbIndex( QObject *pSender )
@@ -770,7 +770,7 @@ void MainWindow::timerEvent( QTimerEvent *e )
 
     QByteArray byData;
     controllerCmd->GetNewCmd( LedControll::CmdTestConnect, byData, 0, true, GetFlash( ) );
-    controller.WriteData( byData, 0, true );
+    controller.WriteData( byData, QControllerCommon::GetWaitTime( ), true );
 }
 
 MainWindow::~MainWindow()

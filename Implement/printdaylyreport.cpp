@@ -11,6 +11,8 @@ CPrintDaylyReport::CPrintDaylyReport(QWidget* mainWnd, QWidget *parent) :
     pParent = dynamic_cast< MainWindow* > ( mainWnd );
     CCommonFunction::ConnectCloseButton( ui->lblClose );
 
+    GetParameter( );
+
     ui->lblTitle->setText( windowTitle( ) );
     nReportType = 0;
     QString strName = "rdChx%1";
@@ -26,6 +28,41 @@ CPrintDaylyReport::CPrintDaylyReport(QWidget* mainWnd, QWidget *parent) :
     QDateTime date = QDateTime::currentDateTime( );
     SetDateTime( date, date );
     move( 123, 177 );
+}
+
+void CPrintDaylyReport::GetParameter( )
+{
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+
+    bPersonTime = pSet->value( "Report/PersonTime", false ).toBool( );
+    tPersonStartTime = pSet->value( "Report/PersonStartTime", "00:00:00" ).toTime( );
+    tPersonEndTime = pSet->value( "Report/PersonEndTime", "23:59:59" ).toTime( );
+    tTimeCardStartTime = pSet->value( "Report/TimeCardStartTime", "00:00:00" ).toTime( );
+    tTimeCardEndTime = pSet->value( "Report/TimeCardEndTime", "23:59:59" ).toTime( );
+
+    reporter.SetPersonTime( bPersonTime );
+}
+
+void CPrintDaylyReport::SaveParameter( CommonDataType::ReportType nType)
+{
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+    QString strFormat = "HH:mm:ss";
+
+    if ( CommonDataType::ReportPerson == nType ) {
+        if ( bPersonTime ) {
+            tPersonStartTime = ui->dReportStartDate->time( );
+            tPersonEndTime = ui->dReportEndDate->time( );
+
+            pSet->setValue( "Report/PersonStartTime", tPersonStartTime.toString( strFormat ) );
+            pSet->setValue( "Report/PersonEndTime", tPersonEndTime.toString( strFormat ) );
+        }
+    } else if( CommonDataType::ReportTimeCardDetail == nType ) {
+        tTimeCardStartTime = ui->dReportStartDate->time( );
+        tTimeCardEndTime = ui->dReportEndDate->time( );
+
+        pSet->setValue( "Report/TimeCardStartTime", tTimeCardStartTime.toString( strFormat ) );
+        pSet->setValue( "Report/TimeCardEndTime", tTimeCardEndTime.toString( strFormat ) );
+    }
 }
 
 CPrintDaylyReport::~CPrintDaylyReport()
@@ -58,13 +95,19 @@ void CPrintDaylyReport::OnRdChkClicked( )
     }
 
     QString strFormat = "yyyy-MM-dd";
-    if ( CommonDataType::ReportTimeCardDetail == nReportType ||
-         CommonDataType::ReportPerson == nReportType ) {
+    if ( CommonDataType::ReportTimeCardDetail == nReportType ) {
         strFormat = "yyyy-MM-dd HH:mm:ss";
         SetDateTimeFormat( strFormat );
-        QDateTime dtCurrent = QDateTime::currentDateTime( );
-        QDateTime dtStart( ui->dReportStartDate->date( ), dtCurrent.time( ) );
-        QDateTime dtEnd( ui->dReportEndDate->date( ), dtCurrent.time( ) );
+        //QDateTime dtCurrent = QDateTime::currentDateTime( );
+        QDateTime dtStart( ui->dReportStartDate->date( ), tTimeCardStartTime );
+        QDateTime dtEnd( ui->dReportEndDate->date( ), tTimeCardEndTime );
+        SetDateTime( dtStart, dtEnd );
+    } if ( CommonDataType::ReportPerson == nReportType && bPersonTime ) {
+        strFormat = "yyyy-MM-dd HH:mm:ss";
+        SetDateTimeFormat( strFormat );
+        //QDateTime dtCurrent = QDateTime::currentDateTime( );
+        QDateTime dtStart( ui->dReportStartDate->date( ), tPersonStartTime );
+        QDateTime dtEnd( ui->dReportEndDate->date( ), tPersonEndTime );
         SetDateTime( dtStart, dtEnd );
     } else {
         SetDateTimeFormat( strFormat );
@@ -86,6 +129,8 @@ void CPrintDaylyReport::closeEvent( QCloseEvent *event )
 
 void CPrintDaylyReport::on_btnGenerate_clicked()
 {
+    SaveParameter( ( CommonDataType::ReportType ) nReportType );
+
     QDateTime dtStart = ui->dReportStartDate->dateTime( );
     QDateTime dtEnd = ui->dReportEndDate->dateTime( );
     //QTime time = ui->dReportEndDate->maximumTime( );

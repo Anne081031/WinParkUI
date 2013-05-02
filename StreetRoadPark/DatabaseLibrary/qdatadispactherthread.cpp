@@ -98,7 +98,19 @@ QDatabaseProcessor* QDataDispactherThread::CreateOneDbThread( )
     return pThread;
 }
 
-void QDataDispactherThread::CreateDbThread(  )
+void QDataDispactherThread::PostConnectDbEvent( )
+{
+    int nDbThreadCount = CDbConfigurator::GetConfigurator( )->GetDbThreadOperationCount( );
+
+    for ( int nIndex = nDbThreadCount; nIndex >= 0; nIndex-- ) {
+        foreach ( const QDatabaseProcessor* pThread, hashProcessor.values( nIndex ) ) {
+            ( const_cast< QDatabaseProcessor* > ( pThread ) )->PostDbConnectEvent( );
+            //break;
+        }
+    }
+}
+
+void QDataDispactherThread::CreateDbThread( QObject* pReceiver )
 {
     static bool bCreated = false;
     if ( bCreated ) {
@@ -108,9 +120,15 @@ void QDataDispactherThread::CreateDbThread(  )
     bCreated = true;
     QDatabaseProcessor* pThread = NULL;
 
+    int nDbThreadCount = CDbConfigurator::GetConfigurator( )->GetDbThreadCount( );
     // Hash Key 0 to nDbThreadCount - 1
     for ( qint32 nIndex = 0; nIndex < nDbThreadCount; nIndex ++ ) {
-        pThread = CreateOneDbThread( );
+        //pThread = CreateOneDbThread( );
+
+        QDatabaseProcessor* pThread = QDatabaseProcessor::CreateThread( true );
+        QObject::connect( pThread, SIGNAL( Log( QString, bool ) ),
+                 pReceiver, SLOT( HandleLog( QString, bool ) ) );
+        hashProcessor.insertMulti( CDbConfigurator::GetConfigurator( )->GetDbThreadOperationCount( ), pThread );
     }
     Q_UNUSED( pThread )
 }
@@ -213,12 +231,18 @@ void QDataDispactherThread::ProcessDispatchDataEvent( QDbThreadEvent *pEvent )
     QDatabaseProcessor* pThread = GetProcessor( );
     pThread->PostDbDataProcessEvent( pSocket, nPackageType, byData );
 
+    //static const QMetaMethod log = QMetaMethod::fromSignal( &QDatabaseProcessor::Log );
+    //bool bConncted = isSignalConnected( log );
+    //if ( !bConncted ) {
+    //    connect( pThread, SIGNAL( Log( QString, bool ) ),
+    //             this, SLOT( HandleLog( QString, bool ) ) );
+    //}
     //Sleep( 5000 );
 }
 
 void QDataDispactherThread::InitializeSubThread( )
 {
-    CreateDbThread( );
+    //CreateDbThread( );
 }
 
 void QDataDispactherThread::PostEvent( QDbThreadEvent *pEvent )

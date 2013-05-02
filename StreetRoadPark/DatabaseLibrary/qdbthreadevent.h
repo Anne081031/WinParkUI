@@ -39,6 +39,9 @@ public:
     void SetComParkID( QString& strParkID );
     QString& GetComParkID( );
 
+    void SetReconnect( bool bReconn );
+    bool GetReconnect( );
+
 private:
     QDbThreadEvent( ThreadType thrType, Type evtType );
     ThreadType typeThread;
@@ -49,6 +52,7 @@ private:
     QString strComParkID;
 
     QTcpSocket* pPeerSocket;
+    bool bReconnect;
 };
 
 #endif // QDBTHREADEVENT_H

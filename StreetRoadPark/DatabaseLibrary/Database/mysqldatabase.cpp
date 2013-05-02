@@ -191,12 +191,13 @@ void CMySqlDatabase::DbDisconnect( )
     }
 
     mysql_close( &hConnect );
-    mysql_thread_end( );
+    //mysql_thread_end( );
 }
 
 CMySqlDatabase::~CMySqlDatabase( )
 {
     DbDisconnect( );
+    mysql_thread_end( );
     //mysql_library_end( );
 }
 

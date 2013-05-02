@@ -62,3 +62,6 @@ HEADERS  += mainwindow.h \
     cmainconfigurator.h
 
 FORMS    += mainwindow.ui
+
+RESOURCES += \
+    Images.qrc

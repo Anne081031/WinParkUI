@@ -38,7 +38,7 @@ void CDbConfigurator::ReadDbInfo( QStringList &lstDbInfo )
 {
     //QString& strHost, QString& strUser, QString& strPwd, QString& strDB, quint32 nPort
     pSettings->sync( );
-    lstDbInfo << pSettings->value( "Database/ServerIP", "127.0.01" ).toString( )
+    lstDbInfo << pSettings->value( "Database/ServerIP", "127.0.0.1" ).toString( )
               << pSettings->value( "Database/User", "test" ).toString( )
               << pSettings->value( "Database/Pwd", "test" ).toString( )
               << pSettings->value( "Database/Schema", "ParkAdmin" ).toString( )

@@ -152,6 +152,9 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
             } else if ( Constant::TypeCode.strCodeTabletQueryImageData == sHead.sValues.strTypeCode ) {
                 bMulticast = false;
                 bUnicast = true;
+            } else if ( Constant::TypeCode.strCodeTabletQueryReprotData == sHead.sValues.strTypeCode ) {
+                bMulticast = false;
+                bUnicast = true;
             }
             break;
 
