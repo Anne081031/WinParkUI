@@ -4,7 +4,8 @@
 #include <QFrame>
 #include <QResizeEvent>
 #include <QCloseEvent>
-#include "./HKIPC/qipcthread.h"
+#include "./HKIPC/qhkipcthread.h"
+#include "./JWSIPC/qjwsipcthread.h"
 
 namespace Ui {
 class CIPCVideoFrame;
@@ -23,7 +24,7 @@ public:
     void LocalIPCLogin( );
 
     void CapturePreviewImage( HWND hPlayWnd, QString& strFileName );
-    void CaptureDeviceImage( QString& strIP, QString& strFileName );
+    void CaptureDeviceImage( QString& strIP, QString& strFileName, HWND hPlayWnd );
 
 protected:
     void resizeEvent( QResizeEvent * event );

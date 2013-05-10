@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -75,5 +76,45 @@ void MainWindow::on_pushButton_4_clicked()
     strcpy( tCfg.szPass, "system" );
 
     nRet = TMCC_ConnectStream( hPreview, &tCfg, ui->frame->winId( ) );
+
+    HANDLE hPreview1 = TMCC_Init( TMCC_INITTYPE_REALSTREAM );
+    nRet = TMCC_SetAutoReConnect( hPreview, TRUE );
+
+    tCfg.dwSize = sizeof ( tCfg );
+    tCfg.iPort = 6002;
+    strcpy( tCfg.szAddress, "192.168.1.8" );
+    strcpy( tCfg.szUser, "system" );
+    strcpy( tCfg.szPass, "system" );
+    nRet = TMCC_ConnectStream( hPreview1, &tCfg, ui->frame_2->winId( ) );
     nRet = 0;
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QString strIP = "192.168.1.8";
+    QString strPath = qApp->applicationDirPath( );
+    QString strTmp = strPath + "/Channel" +
+            QString::number( 0 ) + "_" +
+            QString::number( QDateTime::currentMSecsSinceEpoch( ) ) +
+            ".JPG";
+
+
+    pVideoThread->CaptureDeviceImage( strIP, strTmp );
+    return;
+    QJwsIPCEvent::EventParam uParam;
+
+
+    strcpy( uParam.EventCaptureJPG.cIP, "192.168.1.8" );
+
+    for ( int nIndex =0; nIndex < 4; nIndex++ ) {
+        uParam.EventCaptureJPG.nChannel = nIndex;
+        QString strTmp = strPath + "/Channel" +
+                QString::number( nIndex ) + "_" +
+                QString::number( QDateTime::currentMSecsSinceEpoch( ) ) +
+                ".JPG";
+        strcpy( uParam.EventCaptureJPG.cFile,
+                strTmp.toAscii( ).data( ) );
+
+        pVideoThread->PostIPCCaptureJPGEvent( uParam );
+    }
 }

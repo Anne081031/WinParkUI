@@ -5,8 +5,8 @@
 #include <windows.h>
 #endif
 #include <QRect>
-//#include "Sa7134Capture.h"
-#include "sdk3000_7130.h"
+#include "Sa7134Capture.h"
+//#include "sdk3000_7130.h"
 #include "../multimedia.h"
 #include <QFrame>
 
@@ -21,12 +21,13 @@ public:
     virtual ~CTm( );
 
 public:
-    //typedef HRESULT WINAPI ( *VCAInitSdk ) ( HWND hWndMain, DISPLAYTRANSTYPE eDispTransType, BOOL bInitAudDev );
-    typedef HRESULT WINAPI ( *VCAInitSdk ) (  );
+    typedef HRESULT WINAPI ( *VCAInitSdk ) ( HWND hWndMain, DISPLAYTRANSTYPE eDispTransType, BOOL bInitAudDev );
+    //typedef HRESULT WINAPI ( *VCAInitSdk ) (  );
     typedef HRESULT WINAPI ( *VCAUnInitSdk ) (  );
 
-    typedef HRESULT WINAPI ( *VCAGetDevNum ) ( int *pDevNum );
-
+    //typedef HRESULT WINAPI ( *VCAGetDevNum ) ( int *pDevNum );
+    typedef HRESULT WINAPI ( *VCAGetDevNum ) ( );
+#if false
     typedef HRESULT WINAPI ( *VCAConnectDevice ) ( int, BOOL, HWND, SIZE&, VIDEOSOURCE, int, VideoSubType );
     typedef HRESULT WINAPI ( *VCADisConnectDevice )( int );
 
@@ -50,8 +51,8 @@ public:
     typedef HRESULT WINAPI ( *VCASetVideoInfo ) ( int nCards, VIDEOSTREAMINFO* pVSI );
     typedef HRESULT WINAPI ( *VCAIsOverlay )( int nCards, BOOL* bIsOverlay );
     typedef HRESULT WINAPI ( *VCASetWindowPos ) ( int nCards, RECT rc );
+#endif
 
-#if false
     // VC4000
     typedef BOOL  WINAPI ( *VCAOpenDevice ) ( DWORD dwCard, HWND hPreviewWnd );
     typedef BOOL  WINAPI ( *VCACloseDevice ) ( DWORD dwCard );
@@ -63,7 +64,6 @@ public:
     typedef BOOL  WINAPI ( *VCASetVidCapColorFormat ) ( DWORD dwCard, COLOR_FORMAT cfColor );
     typedef BOOL  WINAPI ( *VCAStartVideoCapture ) ( DWORD dwCard, CAPMODEL enCapMode, MP4MODEL enMp4Mode, LPCSTR lpFileName );
     typedef BOOL  WINAPI ( *VCASetVidCapSize ) ( DWORD dwCard, DWORD dwWidth, DWORD dwHeight );
-#endif
 
 public:
     int SystemStartup( HWND hOverlayWnd = NULL );
@@ -93,6 +93,7 @@ private:
     VCAInitSdk MyVCAInitSdk;
     VCAUnInitSdk MyVCAUnInitSdk;
     VCAGetDevNum MyVCAGetDevNum;
+#if false
     VCAConnectDevice MyVCAConnectDevice;
     VCADisConnectDevice MyVCADisConnectDevice;
     VCARun MyVCARun;
@@ -106,8 +107,8 @@ private:
     VCASetVideoInfo MyVCASetVideoInfo;
     VCAIsOverlay MyVCAIsOverlay;
     VCASetWindowPos MyVCASetWindowPos;
+#endif
 
-#if false
     // VC4000
     VCAOpenDevice MyVCAOpenDevice;
     VCACloseDevice MyVCACloseDevice;
@@ -119,8 +120,8 @@ private:
     VCASetVidCapColorFormat MyVCASetVidCapColorFormat;
     VCAStartVideoCapture MyVCAStartVideoCapture;
     VCASetVidCapSize MyVCASetVidCapSize;
-#endif
-    PrcCapSourceStream capVideoStream;
+
+    //PrcCapSourceStream capVideoStream;
 };
 
 #endif // TM_H

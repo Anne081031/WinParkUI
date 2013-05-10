@@ -418,7 +418,7 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
                                    when '宁' then '宁夏回族自治区' \
                                    when '琼' then '海南省' \
                                    else '未知' end  as 车辆所属辖区, \
-                                   feekind as 车型, \
+                                   IFNULL( feekind, '未离开' ) as 车型, \
                                    count( carcp ) as 车辆数 \
                                    from stoprd \
                                    where intime between '"
@@ -457,7 +457,7 @@ void CReporter::GetSQL( QString &strSql, CommonDataType::ReportType rType, QDate
                                    when 'Y' then '巴中市' \
                                    when 'Z' then '眉山市' \
                                    else '未知' end  as 车辆所属辖区,  \
-                                   feekind as 车型, \
+                                   IFNULL( feekind, '未离开' ) as 车型, \
                                    count( carcp ) as 车辆数 \
                                    from stoprd \
                                    where intime between '"

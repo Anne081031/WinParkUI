@@ -1,4 +1,8 @@
+SDL Simple Directmedia Layer http://www.libsdl.org/ libevent libupnp libwww
+
 ACE程序员指南.pdf p69
+
+架构实战：软件架构设计的过程（完整版）.pdf p17
 
 STL
 SGI/STL STLPort 

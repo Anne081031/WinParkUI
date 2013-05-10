@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'syssetting.ui'
 **
-** Created: Mon Apr 15 13:08:50 2013
+** Created: Wed May 8 16:22:20 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

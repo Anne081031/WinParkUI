@@ -27,6 +27,7 @@ LIBS += "./lib/liboleaut32.a"
 LIBS += "./lib/libole32.a"
 LIBS += "./lib/libgdi32.a"
 LIBS += "./lib/libHCNetSDK.a"
+LIBS += "./lib/libtmControlClient.a"
 
 DEFINES += PARK_UI RAW_API COMMON_DB _WIN32_WINNT=0x0501
 
@@ -170,8 +171,11 @@ SOURCES += mainwindow.cpp \
     Database/dbheartbeat.cpp \
     Database/dbheartbeatevent.cpp \
     HKIPC/qipcevent.cpp \
-    HKIPC/qipcthread.cpp \
-    Implement/ipcvideoframe.cpp
+    HKIPC/qhkipcthread.cpp \
+    Implement/ipcvideoframe.cpp \
+    JWSIPC/qjwsipcevent.cpp \
+    JWSIPC/qjwsipcthread.cpp \
+    qipcthread.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -315,9 +319,12 @@ HEADERS  += Header/valuecard.h \
     Network/parserevent.h \
     Database/dbheartbeat.h \
     Database/dbheartbeatevent.h \
-    HKIPC/qipcthread.h \
+    HKIPC/qhkipcthread.h \
     HKIPC/qipcevent.h \
-    Header/ipcvideoframe.h
+    Header/ipcvideoframe.h \
+    JWSIPC/qjwsipcthread.h \
+    JWSIPC/qjwsipcevent.h \
+    qipcthread.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

@@ -14,7 +14,18 @@ CIPCVideoFrame::CIPCVideoFrame(bool bIPC, QWidget *parent) :
 
     if ( bNetworkCamera ) {
         recSmallSize = frameGeometry( );
-        pVideoThread = QIPCThread::GetInstance( );
+
+        QSettings* pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+        QString strType = pSettings->value( "IPC/Type", "HK" ).toString( );
+
+        if ( QString( "HK" ) == strType.toUpper( ) ) {
+            pVideoThread = QHkIPCThread::GetInstance( );
+        } else if ( QString( "JWS" ) == strType.toUpper( ) ) {
+            pVideoThread = QJwsIPCThread::GetInstance( );
+        } else {
+            pVideoThread = QHkIPCThread::GetInstance( );
+        }
+
         setWindowState( Qt::WindowMaximized );
         QDesktopWidget* pDesktop = QApplication::desktop( );
         recBigSize = pDesktop->screenGeometry( );
@@ -106,13 +117,13 @@ void CIPCVideoFrame::CapturePreviewImage( HWND hPlayWnd, QString& strFileName )
     pVideoThread->CapturePreviewImage( hPlayWnd, strFileName );
 }
 
-void CIPCVideoFrame::CaptureDeviceImage( QString& strIP, QString& strFileName )
+void CIPCVideoFrame::CaptureDeviceImage( QString& strIP, QString& strFileName, HWND hPlayWnd )
 {
     if ( NULL == pVideoThread ) {
         return;
     }
 
-    pVideoThread->CaptureDeviceImage( strIP, strFileName );
+    pVideoThread->CaptureDeviceImage( strIP, strFileName, hPlayWnd );
 }
 
 void CIPCVideoFrame::resizeEvent( QResizeEvent *event )

@@ -4,7 +4,8 @@
 #include <QDateTime>
 #include <QTextCodec>
 
-#define TM_CAPTURE_CARD "sdk3000_7130.dll"
+//#define TM_CAPTURE_CARD "sdk3000_7130.dll"
+#define TM_CAPTURE_CARD "Sa7134Capture.dll"
 
 CTm::CTm()
 {
@@ -38,12 +39,12 @@ void CTm::GetFunctionPointer( )
     MyVCAInitSdk = ( VCAInitSdk ) ::GetProcAddress( hDllMod, "VCAInitSdk" );
     MyVCAUnInitSdk = ( VCAUnInitSdk ) ::GetProcAddress( hDllMod, "VCAUnInitSdk" );
     MyVCAGetDevNum = ( VCAGetDevNum ) ::GetProcAddress( hDllMod, "VCAGetDevNum" );
+#if false
     MyVCAConnectDevice = ( VCAConnectDevice ) ::GetProcAddress( hDllMod, "VCAConnectDevice" );
     MyVCADisConnectDevice = ( VCADisConnectDevice ) ::GetProcAddress( hDllMod, "VCADisConnectDevice" );
     MyVCARun = ( VCARun ) ::GetProcAddress( hDllMod, "VCARun" );
     MyVCAPause = ( VCAPause ) ::GetProcAddress( hDllMod, "VCAPause" );
     MyVCAStop = ( VCAStop ) ::GetProcAddress( hDllMod, "VCAStop" );
-    MyVCAGetDevNum = ( VCAGetDevNum ) ::GetProcAddress( hDllMod, "VCAGetDevNum" );
     MyVCAEnableMotionDetect = ( VCAEnableMotionDetect ) GetProcAddress( hDllMod, "VCAEnableMotionDetect" );
     MyVCACapturePicture = ( VCACapturePicture ) GetProcAddress( hDllMod, "VCACapturePicture" );
     MyVCAEnableCapSourceStream = ( VCAEnableCapSourceStream ) GetProcAddress( hDllMod, "VCAEnableCapSourceStream" );
@@ -53,7 +54,7 @@ void CTm::GetFunctionPointer( )
     MyVCAIsOverlay = ( VCAIsOverlay ) GetProcAddress( hDllMod, "VCAIsOverlay" );
     MyVCASetWindowPos = ( VCASetWindowPos ) GetProcAddress( hDllMod, "VCASetWindowPos" );
 
-#if false
+#endif
     // VC4000
     MyVCAOpenDevice = ( VCAOpenDevice ) GetProcAddress( hDllMod, "VCAOpenDevice" );
     MyVCACloseDevice = ( VCACloseDevice ) GetProcAddress( hDllMod, "VCACloseDevice" );
@@ -65,16 +66,15 @@ void CTm::GetFunctionPointer( )
     MyVCASetVidCapColorFormat = ( VCASetVidCapColorFormat ) GetProcAddress( hDllMod, "VCASetVidCapColorFormat" );
     MyVCAStartVideoCapture = ( VCAStartVideoCapture ) GetProcAddress( hDllMod, "VCAStartVideoCapture" );
     MyVCASetVidCapSize = ( VCASetVidCapSize ) GetProcAddress( hDllMod, "VCASetVidCapSize" );
-#endif
 }
 
 int CTm::SystemStartup( HWND hOverlayWnd )
 {
     int nRet = 0;
-    //nRet = MyVCAInitSdk( hOverlayWnd, PCI_MEMORY_VIDEOMEMORY, FALSE );
-    nRet = MyVCAInitSdk( );
+    nRet = MyVCAInitSdk( hOverlayWnd, PCI_OFFSCREEN_VIDEOMEMORY, FALSE );
+    //nRet = MyVCAInitSdk( );
     int nDeviceNum = 0;
-    nRet = MyVCAGetDevNum( &nDeviceNum );
+    nDeviceNum = MyVCAGetDevNum(  );
 
     return nDeviceNum;
 }
@@ -82,7 +82,7 @@ int CTm::SystemStartup( HWND hOverlayWnd )
 int CTm::TmEnablePicMessage( int nCards, BOOL bPicMessage, MyPrcPicMessage pPicMessage )
 {
     int nRet = 0;
-    nRet = MyVCAEnablePicMessage( nCards, bPicMessage, pPicMessage );
+    //nRet = MyVCAEnablePicMessage( nCards, bPicMessage, pPicMessage );
 
     return nRet;
 }
@@ -113,12 +113,16 @@ int CTm::PlayVideo( HANDLE hChannel, HWND hWnd, QRect &rect, int nIndex )
     int nCard = ( int ) hChannel;
     cliSize.cx = VIDEO_WIDTH;//rect.width( );
     cliSize.cy = VIDEO_HEIGHT;//rect.height( );
-#if false
-    nRet = MyVCASetVidCapColorFormat( nCard, RGB888 );
+
+    //HDC hWndDc = GetWindowDC( hWnd );
+    //SetBkColor( hWndDc, RGB( 255, 0, 255 ) );
+    //ReleaseDC( hWnd, hWndDc );
+
+    //nRet = MyVCASetVidCapColorFormat( nCard, RGB888 );
     nRet = MyVCAOpenDevice( nCard, hWnd );
-    nRet = MyVCASetVidCapSize( nCard, 352, 288 );
+    //nRet = MyVCASetVidCapSize( nCard, 352, 288 );
     nRet = MyVCAStartVideoPreview( nCard );
-#endif
+#if false
     RECT rec;
     rec.bottom = rect.bottom( );
     rec.top = rect.top( );
@@ -127,6 +131,8 @@ int CTm::PlayVideo( HANDLE hChannel, HWND hWnd, QRect &rect, int nIndex )
     nRet = MyVCAConnectDevice( nCard, TRUE, hWnd, cliSize, VIDEO_IN_1, nFps[ nIndex ], VideoSubType_YUY2 );
     //nRet = MyVCASetWindowPos( nCard, rec );
     nRet = MyVCARun( nCard );
+#endif
+
     return nRet;
 }
 
@@ -134,10 +140,10 @@ int CTm::StopVideo( HANDLE hChannel )
 {
     int nRet = 0;
     int nCard = ( int ) hChannel;
-    //nRet = MyVCAStopVideoPreview( nCard );
-    //nRet = MyVCACloseDevice( nCard );
-    nRet = MyVCAStop( nCard );
-    nRet = MyVCADisConnectDevice( nCard );
+    nRet = MyVCAStopVideoPreview( nCard );
+    nRet = MyVCACloseDevice( nCard );
+    //nRet = MyVCAStop( nCard );
+    //nRet = MyVCADisConnectDevice( nCard );
     return nRet;
 }
 
@@ -146,8 +152,8 @@ int CTm::CaptureBMP( HANDLE hChannel, QString& strFile )
     int nRet = 0;
     QByteArray byData = pCodec->fromUnicode( strFile );
     char* pFile = byData.data( );
-    //nRet = MyVCASaveAsBmpFile( ( int ) hChannel, pFile );
-    nRet = MyVCACapturePicture( ( int ) hChannel, pFile, IMAGE_BMP, NULL, 90, 1, FALSE );
+    nRet = MyVCASaveAsBmpFile( ( int ) hChannel, pFile );
+    //nRet = MyVCACapturePicture( ( int ) hChannel, pFile, IMAGE_BMP, NULL, 90, 1, FALSE );
 
     return nRet;
 }
@@ -157,8 +163,8 @@ int CTm::CaptureJpeg( HANDLE hChannel, QString& strFile )
     int nRet = 0;
     QByteArray byData = pCodec->fromUnicode( strFile );
     char* pFile = byData.data( );
-    //nRet = MyVCASaveAsJpegFile( ( int ) hChannel, pFile, 80 );
-    nRet = MyVCACapturePicture( ( int ) hChannel, pFile, IMAGE_JPG, NULL, 80, 1, FALSE );
+    nRet = MyVCASaveAsJpegFile( ( int ) hChannel, pFile, 80 );
+    //nRet = MyVCACapturePicture( ( int ) hChannel, pFile, IMAGE_JPG, NULL, 80, 1, FALSE );
     return nRet;
 }
 
@@ -176,7 +182,7 @@ int CTm::RegisterStreamCB( HK_STREAM_CB pCBF, PVOID pContext )
     int nRet = 0;
     pContext = NULL;
     //capVideoStream = ( PrcVidCapCallBack ) pCBF;
-    capVideoStream = ( PrcCapSourceStream ) pCBF;
+    //capVideoStream = ( PrcCapSourceStream ) pCBF;
     return nRet;
 }
 
@@ -187,7 +193,7 @@ int CTm::GetStreamData( HANDLE hChannel, BOOL bStart, quint8 *pData, int nIndex 
     int nCard = ( int ) hChannel;
     //nRet = MyVCARegVidCapCallBack( nCard, capVideoStream );
     //nRet = MyVCAStartVideoCapture( nCard, CAP_ORIGIN_STREAM, MPEG4_AVIFILE_CALLBACK, "" );
-    nRet = MyVCAEnableCapSourceStream( nCard, bStart, ( VideoFieldType ) nIndex, capVideoStream );
+    //nRet = MyVCAEnableCapSourceStream( nCard, bStart, ( VideoFieldType ) nIndex, capVideoStream );
     return nRet;
 }
 
@@ -207,8 +213,8 @@ int CTm::SetupDetection( HANDLE hChannel, HK_MOTION_CB pCBF, int Index , LPVOID 
     int nRows = VIDEO_HEIGHT / 16;
     int nCols = VIDEO_WIDTH / 16;
     memset( rectBlock, nGrade[ Index ], nRows * nCols );
-    nRet = MyVCAEnableMotionDetect( ( int ) hChannel, TRUE, rectBlock, sizeof( rectBlock ) / sizeof ( BYTE ),
-                                    nDelay[ Index ], pContext, ( PrcCbMotionDetect ) pCBF );
+    //nRet = MyVCAEnableMotionDetect( ( int ) hChannel, TRUE, rectBlock, sizeof( rectBlock ) / sizeof ( BYTE ),
+    //                                nDelay[ Index ], pContext, ( PrcCbMotionDetect ) pCBF );
     return nRet;
 }
 

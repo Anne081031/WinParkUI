@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Sun Apr 28 10:34:18 2013
+** Created: Wed May 8 12:01:22 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,6 +38,7 @@ public:
     QFrame *frame3;
     QFrame *frame;
     QPushButton *pushButton_4;
+    QFrame *frame_2;
     QMenuBar *menuBar;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
@@ -86,6 +87,11 @@ public:
         pushButton_4 = new QPushButton(centralWidget);
         pushButton_4->setObjectName(QString::fromUtf8("pushButton_4"));
         pushButton_4->setGeometry(QRect(120, 540, 75, 23));
+        frame_2 = new QFrame(centralWidget);
+        frame_2->setObjectName(QString::fromUtf8("frame_2"));
+        frame_2->setGeometry(QRect(390, 310, 281, 181));
+        frame_2->setFrameShape(QFrame::Panel);
+        frame_2->setFrameShadow(QFrame::Raised);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));

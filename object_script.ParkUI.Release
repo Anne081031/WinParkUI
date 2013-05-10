@@ -139,8 +139,11 @@ INPUT(
 ./release/dbheartbeat.o
 ./release/dbheartbeatevent.o
 ./release/qipcevent.o
-./release/qipcthread.o
+./release/qhkipcthread.o
 ./release/ipcvideoframe.o
+./release/qjwsipcevent.o
+./release/qjwsipcthread.o
+./release/qipcthread.o
 ./release/moc_valuecard.o
 ./release/moc_tolldiscounttypeset.o
 ./release/moc_timecard.o
@@ -261,6 +264,8 @@ INPUT(
 ./release/moc_cdlgquerywhere.o
 ./release/moc_dataparserthread.o
 ./release/moc_dbheartbeat.o
-./release/moc_qipcthread.o
+./release/moc_qhkipcthread.o
 ./release/moc_ipcvideoframe.o
+./release/moc_qjwsipcthread.o
+./release/moc_qipcthread.o
 );

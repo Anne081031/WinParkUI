@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgstaying.ui'
 **
-** Created: Fri Feb 1 10:57:16 2013
+** Created: Wed May 8 16:22:21 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,8 +14,12 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QComboBox>
 #include <QtGui/QDialog>
+#include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
+#include <QtGui/QLabel>
+#include <QtGui/QRadioButton>
 #include <QtGui/QTabWidget>
 #include <QtGui/QTableWidget>
 #include <QtGui/QWidget>
@@ -30,6 +34,17 @@ public:
     QTableWidget *tableWidgetMonth;
     QWidget *tab_2;
     QTableWidget *tableWidgetTime;
+    QWidget *widget;
+    QHBoxLayout *horizontalLayout;
+    QLabel *label;
+    QComboBox *cbSort;
+    QRadioButton *chk0;
+    QRadioButton *chk1;
+    QRadioButton *chk2;
+    QRadioButton *chk3;
+    QRadioButton *chk4;
+    QRadioButton *chk5;
+    QRadioButton *chk6;
 
     void setupUi(QDialog *CDlgStaying)
     {
@@ -38,7 +53,7 @@ public:
         CDlgStaying->resize(885, 587);
         tabWidget = new QTabWidget(CDlgStaying);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(20, 6, 851, 571));
+        tabWidget->setGeometry(QRect(20, 36, 851, 541));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
         tableWidgetMonth = new QTableWidget(tab);
@@ -79,6 +94,58 @@ public:
         tableWidgetTime->setObjectName(QString::fromUtf8("tableWidgetTime"));
         tableWidgetTime->setGeometry(QRect(10, 10, 821, 511));
         tabWidget->addTab(tab_2, QString());
+        widget = new QWidget(CDlgStaying);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(20, 7, 592, 22));
+        horizontalLayout = new QHBoxLayout(widget);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        label = new QLabel(widget);
+        label->setObjectName(QString::fromUtf8("label"));
+
+        horizontalLayout->addWidget(label);
+
+        cbSort = new QComboBox(widget);
+        cbSort->setObjectName(QString::fromUtf8("cbSort"));
+
+        horizontalLayout->addWidget(cbSort);
+
+        chk0 = new QRadioButton(widget);
+        chk0->setObjectName(QString::fromUtf8("chk0"));
+        chk0->setChecked(true);
+
+        horizontalLayout->addWidget(chk0);
+
+        chk1 = new QRadioButton(widget);
+        chk1->setObjectName(QString::fromUtf8("chk1"));
+
+        horizontalLayout->addWidget(chk1);
+
+        chk2 = new QRadioButton(widget);
+        chk2->setObjectName(QString::fromUtf8("chk2"));
+
+        horizontalLayout->addWidget(chk2);
+
+        chk3 = new QRadioButton(widget);
+        chk3->setObjectName(QString::fromUtf8("chk3"));
+
+        horizontalLayout->addWidget(chk3);
+
+        chk4 = new QRadioButton(widget);
+        chk4->setObjectName(QString::fromUtf8("chk4"));
+
+        horizontalLayout->addWidget(chk4);
+
+        chk5 = new QRadioButton(widget);
+        chk5->setObjectName(QString::fromUtf8("chk5"));
+
+        horizontalLayout->addWidget(chk5);
+
+        chk6 = new QRadioButton(widget);
+        chk6->setObjectName(QString::fromUtf8("chk6"));
+
+        horizontalLayout->addWidget(chk6);
+
 
         retranslateUi(CDlgStaying);
 
@@ -123,6 +190,19 @@ public:
         tableWidgetTime->setToolTip(QApplication::translate("CDlgStaying", "\345\215\225\345\207\273\343\200\220\345\215\241\345\217\267\343\200\221\345\215\225\345\205\203\346\240\274\357\274\214\346\237\245\347\234\213\345\257\271\345\272\224\350\275\246\350\276\206\345\233\276\347\211\207\343\200\202", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("CDlgStaying", "\350\256\241\346\227\266\345\215\241\350\275\246\350\276\206", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("CDlgStaying", "\346\216\222\345\272\217\346\235\241\344\273\266\357\274\232", 0, QApplication::UnicodeUTF8));
+        cbSort->clear();
+        cbSort->insertItems(0, QStringList()
+         << QApplication::translate("CDlgStaying", "\345\215\207\345\272\217\346\216\222\345\272\217", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("CDlgStaying", "\351\231\215\345\272\217\346\216\222\345\272\217", 0, QApplication::UnicodeUTF8)
+        );
+        chk0->setText(QApplication::translate("CDlgStaying", "\345\215\241\345\217\267", 0, QApplication::UnicodeUTF8));
+        chk1->setText(QApplication::translate("CDlgStaying", "\350\207\252\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
+        chk2->setText(QApplication::translate("CDlgStaying", "\350\275\246\344\270\273", 0, QApplication::UnicodeUTF8));
+        chk3->setText(QApplication::translate("CDlgStaying", "\350\201\224\347\263\273\347\224\265\350\257\235", 0, QApplication::UnicodeUTF8));
+        chk4->setText(QApplication::translate("CDlgStaying", "\350\275\246\347\211\214", 0, QApplication::UnicodeUTF8));
+        chk5->setText(QApplication::translate("CDlgStaying", "\350\277\233\345\205\245\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
+        chk6->setText(QApplication::translate("CDlgStaying", "\350\277\233\345\205\245\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

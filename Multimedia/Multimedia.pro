@@ -13,6 +13,7 @@ INCLUDEPATH += "../Mysql/include"
 
 LIBS += "../lib/libDs40xxSDK.a"
 LIBS += "../lib/libJVSDK.a"
+LIBS += "../lib/libGdi32.a"
 
 DEFINES += MULTIMEDIA_LIBRARY
 

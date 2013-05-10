@@ -1,6 +1,7 @@
-#include "qjwsipcthread.h"
+#include "QjwsIPCThread.h"
+#include <QApplication>
 
-QJwsIPCThread* QJwsIPCThread::pThreadInstance = NULL;
+QIPCThread* QJwsIPCThread::pThreadInstance = NULL;
 
 BOOL CALLBACK TmccConnectCallback( HANDLE hTmCC, BOOL bConnect, unsigned int dwResult, void *context )
 {
@@ -15,43 +16,37 @@ BOOL CALLBACK TmccConnectCallback( HANDLE hTmCC, BOOL bConnect, unsigned int dwR
 }
 
 QJwsIPCThread::QJwsIPCThread(QObject *parent) :
-    QThread(parent)
+    QIPCThread(parent)
 {
     bStarted = false;
-    //pCodec = CCommonFunction::GetTextCodec( );
+    pCodec = CCommonFunction::GetTextCodec( );
 
     //hTmccCtrl = NULL;
-    hTmccPreview = NULL;
+    //hTmccPreview = NULL;
 }
 
 void QJwsIPCThread::SendNotify( HANDLE hTmCC, BOOL bConnect, unsigned int dwResult )
 {
     Q_UNUSED( dwResult )
 
-    QString strText;
-
-    /*if ( hTmccCtrl == hTmCC ) {
-        strText = "基本控制 %1";
-    } else */if ( hTmccPreview == hTmCC ) {
-        strText = "视频流播放 %1";
-    }
+    QString strText = "视频流播放 %1";
 
     strText = strText.arg( bConnect ? "连接" : "断开" );
 
     EmitMsg( strText, Q_FUNC_INFO );
 }
 
-void QJwsIPCThread::PostIPCEvent( QJwsIPCEvent::IPCEventType evtType )
+void QJwsIPCThread::PostIPCEvent( QIPCEvent::IPCEventType evtType )
 {
-    QJwsIPCEvent* pEvent = QJwsIPCEvent::GetInstance( evtType );
+    QIPCEvent* pEvent = QIPCEvent::GetInstance( evtType );
 
     qApp->postEvent( this, pEvent );
 }
 
-void QJwsIPCThread::PostIPCEvent( QJwsIPCEvent::IPCEventType evtType,
-                               QJwsIPCEvent::EventParam &uParam )
+void QJwsIPCThread::PostIPCEvent( QIPCEvent::IPCEventType evtType,
+                               QIPCEvent::EventParam &uParam )
 {
-    QJwsIPCEvent* pEvent = QJwsIPCEvent::GetInstance( evtType );
+    QIPCEvent* pEvent = QIPCEvent::GetInstance( evtType );
 
     pEvent->SetEventParam( uParam );
     qApp->postEvent( this, pEvent );
@@ -59,53 +54,53 @@ void QJwsIPCThread::PostIPCEvent( QJwsIPCEvent::IPCEventType evtType,
 
 void QJwsIPCThread::PostIPCStartupEvent( )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCStartup );
+    PostIPCEvent( QIPCEvent::IPCStartup );
 }
 
-void QJwsIPCThread::PostIPCSetConnectTimeoutEvent( QJwsIPCEvent::EventParam& uParam )
+void QJwsIPCThread::PostIPCSetConnectTimeoutEvent( QIPCEvent::EventParam& uParam )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCSetConnectTimeout, uParam );
+    PostIPCEvent( QIPCEvent::IPCSetConnectTimeout, uParam );
 }
 
-void QJwsIPCThread::PostIPCSetReconnectTimeEvent( QJwsIPCEvent::EventParam& uParam )
+void QJwsIPCThread::PostIPCSetReconnectTimeEvent( QIPCEvent::EventParam& uParam )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCSetReconnectTime, uParam );
+    PostIPCEvent( QIPCEvent::IPCSetReconnectTime, uParam );
 }
 
-void QJwsIPCThread::PostIPCLoginEvent( QJwsIPCEvent::EventParam& uParam )
+void QJwsIPCThread::PostIPCLoginEvent( QIPCEvent::EventParam& uParam )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCLogin, uParam );
+    PostIPCEvent( QIPCEvent::IPCLogin, uParam );
 }
 
-void QJwsIPCThread::PostIPCCaptureJPGEvent( QJwsIPCEvent::EventParam& uParam )
+void QJwsIPCThread::PostIPCCaptureJPGEvent( QIPCEvent::EventParam& uParam )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCCaptureJPG, uParam );
+    PostIPCEvent( QIPCEvent::IPCCaptureJPG, uParam );
 }
 
-void QJwsIPCThread::PostIPCStartRealPlayEvent( QJwsIPCEvent::EventParam& uParam )
+void QJwsIPCThread::PostIPCStartRealPlayEvent( QIPCEvent::EventParam& uParam )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCStartRealPlay, uParam );
+    PostIPCEvent( QIPCEvent::IPCStartRealPlay, uParam );
 }
 
-void QJwsIPCThread::PostIPCStopRealPlayEvent( QJwsIPCEvent::EventParam& uParam )
+void QJwsIPCThread::PostIPCStopRealPlayEvent( QIPCEvent::EventParam& uParam )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCStopRealPlay, uParam );
+    PostIPCEvent( QIPCEvent::IPCStopRealPlay, uParam );
 }
 
-void QJwsIPCThread::PostIPCLogoutEvent( QJwsIPCEvent::EventParam& uParam )
+void QJwsIPCThread::PostIPCLogoutEvent( QIPCEvent::EventParam& uParam )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCLogout, uParam );
+    PostIPCEvent( QIPCEvent::IPCLogout, uParam );
 }
 
 void QJwsIPCThread::PostIPCCleanupEvent( )
 {
-    PostIPCEvent( QJwsIPCEvent::IPCCleanup );
+    PostIPCEvent( QIPCEvent::IPCCleanup );
 }
 
-QJwsIPCThread* QJwsIPCThread::GetInstance( )
+QIPCThread* QJwsIPCThread::GetInstance( )
 {
     if ( NULL == pThreadInstance ) {
-        QJwsIPCThread* pThread = new QJwsIPCThread( );
+        QIPCThread* pThread = new QJwsIPCThread( );
 
         pThread->InitializeThread( );
         pThread->start( );
@@ -143,9 +138,23 @@ void QJwsIPCThread::CapturePreviewImage( HWND hPlayWnd, QString& strFileName )
 
 }
 
-void QJwsIPCThread::CaptureDeviceImage( QString& strIP, QString& strFileName )
+void QJwsIPCThread::CaptureDeviceImage( QString& strIP, QString& strFileName, HWND hPlayWnd )
 {
+    //CProcessData::CaptureSenseImage
+    QByteArray byData = pCodec->fromUnicode( strIP );
+    byData.append( char( 0 ) );
+    //char* pIP = byData.data( );
+    HANDLE lUserID = GetPlayHandle( hPlayWnd );
 
+    if ( NULL == lUserID ) {
+        return;
+    }
+
+    byData = pCodec->fromUnicode( strFileName );
+    byData.append( char( 0 ) );
+    char* pFile = byData.data( );
+    BOOL bRet = FALSE;
+    bRet = TMCC_CapturePictureToFile( lUserID, pFile, "JPEG" );
 }
 
 void QJwsIPCThread::GetErrorMessage( )
@@ -161,7 +170,7 @@ void QJwsIPCThread::EmitMsg(QString strMsg, QString strFunName)
     qDebug( ) << strMsg << ":" << strFunName << endl;
 }
 
-void QJwsIPCThread::ProcessIPCStartupEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCStartupEvent( QIPCEvent* pEvent )
 {
     Q_UNUSED( pEvent )
 
@@ -179,46 +188,48 @@ void QJwsIPCThread::ProcessIPCStartupEvent( QJwsIPCEvent* pEvent )
 
     //TMCC_RegisterConnectCallBack( hTmccCtrl, TmccConnectCallback, this );
 
-    hTmccPreview = TMCC_Init( TMCC_INITTYPE_REALSTREAM );
-    if ( NULL == hTmccPreview ) {
-        GetErrorMessage( );
-    }
+    //hTmccPreview = TMCC_Init( TMCC_INITTYPE_REALSTREAM );
+    //if ( NULL == hTmccPreview ) {
+    //    GetErrorMessage( );
+    //}
 
     //TMCC_RegisterConnectCallBack( hTmccPreview, TmccConnectCallback, this );
 }
 
-void QJwsIPCThread::ProcessIPCSetConnectTimeoutEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCSetConnectTimeoutEvent( QIPCEvent* pEvent )
 {
+    Q_UNUSED( pEvent )
     // 300,75000 // Reserved
-    QJwsIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
+    //QIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
 
     //int nRet = TMCC_SetTimeOut( hTmccCtrl, uParam.EventConnectTimeout.dwWaitTime );
     //if ( TMCC_ERR_SUCCESS != nRet ) {
     //    GetErrorMessage( );
     //}
 
-    int nRet = TMCC_SetTimeOut( hTmccPreview, uParam.EventConnectTimeout.dwWaitTime );
-    if ( TMCC_ERR_SUCCESS != nRet ) {
-        GetErrorMessage( );
-    }
+    //int nRet = TMCC_SetTimeOut( hTmccPreview, uParam.EventConnectTimeout.dwWaitTime );
+    //if ( TMCC_ERR_SUCCESS != nRet ) {
+    //    GetErrorMessage( );
+    //}
 }
 
-void QJwsIPCThread::ProcessIPCSetReconnectTimeEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCSetReconnectTimeEvent( QIPCEvent* pEvent )
 {
-    QJwsIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
+    Q_UNUSED( pEvent )
+    //QIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
 
     //int nRet = TMCC_SetAutoReConnect( hTmccCtrl, uParam.EventReconnectTimeout.bEnableRecon );
     //if ( TMCC_ERR_SUCCESS != nRet ) {
     //    GetErrorMessage( );
     //}
 
-    int nRet = TMCC_SetAutoReConnect( hTmccPreview, uParam.EventReconnectTimeout.bEnableRecon );
-    if ( TMCC_ERR_SUCCESS != nRet ) {
-        GetErrorMessage( );
-    }
+    //int nRet = TMCC_SetAutoReConnect( hTmccPreview, uParam.EventReconnectTimeout.bEnableRecon );
+    //if ( TMCC_ERR_SUCCESS != nRet ) {
+    //    GetErrorMessage( );
+    //}
 }
 
-void QJwsIPCThread::SetUserID( char *pIP, LONG lUserID )
+void QJwsIPCThread::SetUserID( char *pIP, HANDLE lUserID )
 {
     if ( NULL == pIP ) {
         return;
@@ -227,7 +238,7 @@ void QJwsIPCThread::SetUserID( char *pIP, LONG lUserID )
     hashIP_UserHandle.insert( pIP, lUserID );
 }
 
-void QJwsIPCThread::SetPlayHandle( HWND hPlayWnd, LONG lPlayHandle )
+void QJwsIPCThread::SetPlayHandle( HWND hPlayWnd, HANDLE lPlayHandle )
 {
     if ( INVALID_HANDLE_VALUE == hPlayWnd ) {
         return;
@@ -236,12 +247,12 @@ void QJwsIPCThread::SetPlayHandle( HWND hPlayWnd, LONG lPlayHandle )
     hashWnd_PlayHandle.insert( hPlayWnd, lPlayHandle );
 }
 
-LONG QJwsIPCThread::GetUserID( char *pIP )
+HANDLE QJwsIPCThread::GetUserID( char *pIP )
 {
-    LONG lUserID = -1;
+    HANDLE lUserID = NULL;
 
     if ( NULL != pIP ) {
-        lUserID = hashIP_UserHandle.value( pIP, -1 );
+        lUserID = hashIP_UserHandle.value( pIP, NULL );
     }
 
     return lUserID;
@@ -256,12 +267,12 @@ void QJwsIPCThread::RemoveUserID( char *pIP )
     hashIP_UserHandle.remove( pIP );
 }
 
-LONG QJwsIPCThread::GetPlayHandle( HWND hPlayWnd )
+HANDLE QJwsIPCThread::GetPlayHandle( HWND hPlayWnd )
 {
-    LONG lPlayHandle = -1;
+    HANDLE lPlayHandle = NULL;
 
     if ( INVALID_HANDLE_VALUE != hPlayWnd ) {
-        lPlayHandle = hashWnd_PlayHandle.value( hPlayWnd, -1 );
+        lPlayHandle = hashWnd_PlayHandle.value( hPlayWnd, NULL );
     }
 
     return lPlayHandle;
@@ -276,9 +287,9 @@ void QJwsIPCThread::RemovePlayHandle( HWND hPlayWnd )
     hashWnd_PlayHandle.remove( hPlayWnd );
 }
 
-void QJwsIPCThread::JwsConnect( QJwsIPCEvent* pEvent, HANDLE hCtrl )
+void QJwsIPCThread::JwsConnect( QIPCEvent* pEvent, HANDLE hCtrl )
 {
-    QJwsIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
+    QIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
     char* pIP = uParam.EventLogin.cIP;
 
     if ( TMCC_IsConnect( hCtrl ) ) {
@@ -300,55 +311,81 @@ void QJwsIPCThread::JwsConnect( QJwsIPCEvent* pEvent, HANDLE hCtrl )
     }
 }
 
-void QJwsIPCThread::ProcessIPCLoginEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCLoginEvent( QIPCEvent* pEvent )
 {
     Q_UNUSED( pEvent );
     //JwsConnect( pEvent, hTmccCtrl );
     //JwsConnect( pEvent, hTmccPreview );
-    int nRet = TMCC_SetDisplayShow( hTmccPreview, TRUE );
-    if ( TMCC_ERR_SUCCESS != nRet ) {
-        GetErrorMessage( );
-    }
+    //int nRet = TMCC_SetDisplayShow( hTmccPreview, TRUE );
+    //if ( TMCC_ERR_SUCCESS != nRet ) {
+    //    GetErrorMessage( );
+    //}
 }
 
-void QJwsIPCThread::ProcessIPCCaptureJPGEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCCaptureJPGEvent( QIPCEvent* pEvent )
 {
-
+    Q_UNUSED( pEvent )
 }
 
-void QJwsIPCThread::ProcessIPCStartRealPlayEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCStartRealPlayEvent( QIPCEvent* pEvent )
 {
-    QJwsIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
+    QIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
+    char* pIP = uParam.EventStartRealPlay.cIP;
+    HWND hPlayWnd = uParam.EventStartRealPlay.hPlayWnd;
+
     tmPlayRealStreamCfg_t tPlayInfo = { 0 };
-
     tPlayInfo.dwSize = sizeof ( tmPlayRealStreamCfg_t );
-    strcpy( tPlayInfo.szAddress, uParam.EventStartRealPlay.cIP );
-    //    char		szTurnAddress[32];//转发器地址
-    tPlayInfo.iPort = 6002;		//服务器连接的端口
-    strcpy( tPlayInfo.szUser, "system" );	//登录用户名
-    strcpy( tPlayInfo.szPass, "system" );	//登录用户口令
-     //   unsigned char	byChannel;	//通道
-     //   unsigned char	byStream;	//码流号
-     //   unsigned char	byTranstType;	//传输类型
-     //   unsigned char	byReConnectNum;	//从连次数
-      //  int		iTranstPackSize;//传输包大小
-     //   int		iReConnectTime;	//重连的时间间隔
-   //tPlayInfo.byTransProtocol = 2;//传输协议0-内部自定,1-SONY,2-RTSP
+    strcpy( tPlayInfo.szAddress, pIP );
+    tPlayInfo.iPort = 6002;
+    strcpy( tPlayInfo.szUser, "system" );
+    strcpy( tPlayInfo.szPass, "system" );
 
 
+    HANDLE hPreview = TMCC_Init( TMCC_INITTYPE_REALSTREAM );
+    if ( NULL == hPreview ) {
+        GetErrorMessage( );
+        return;
+    }
 
-    int nRet = TMCC_ConnectStream( hTmccPreview, &tPlayInfo, uParam.EventStartRealPlay.hPlayWnd );
+    //SetUserID( pIP, hPreview );
+    SetPlayHandle( hPlayWnd, hPreview );
+
+    int nRet = TMCC_SetAutoReConnect( hPreview, TRUE );
+    if ( TMCC_ERR_SUCCESS != nRet ) {
+        GetErrorMessage( );
+    }
+
+    nRet = TMCC_ConnectStream( hPreview, &tPlayInfo, hPlayWnd);
     if ( TMCC_ERR_SUCCESS != nRet ) {
         GetErrorMessage( );
     }
 }
 
-void QJwsIPCThread::ProcessIPCStopRealPlayEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCStopRealPlayEvent( QIPCEvent* pEvent )
 {
+    QIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
+    HWND hPlayWnd = uParam.EventStopRealPlay.hPlayWnd;
+    HANDLE hPreview = GetPlayHandle( hPlayWnd );
+    RemovePlayHandle( hPlayWnd );
 
+    if ( NULL == hPreview ) {
+        return;
+    }
+
+    int nRet = TMCC_CloseStream( hPreview );
+    if ( TMCC_ERR_SUCCESS != nRet ) {
+        GetErrorMessage( );
+    }
+
+    nRet = TMCC_DisConnect( hPreview );
+    if ( TMCC_ERR_SUCCESS != nRet ) {
+        GetErrorMessage( );
+    }
+
+    JwsCleanup( hPreview );
 }
 
-void QJwsIPCThread::ProcessIPCLogoutEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCLogoutEvent( QIPCEvent* pEvent )
 {
     Q_UNUSED( pEvent );
 
@@ -357,10 +394,10 @@ void QJwsIPCThread::ProcessIPCLogoutEvent( QJwsIPCEvent* pEvent )
     //    GetErrorMessage( );
     //}
 
-    int nRet = TMCC_DisConnect( hTmccPreview );
-    if ( TMCC_ERR_SUCCESS != nRet ) {
-        GetErrorMessage( );
-    }
+    //int nRet = TMCC_DisConnect( hTmccPreview );
+    //if ( TMCC_ERR_SUCCESS != nRet ) {
+    //    GetErrorMessage( );
+    //}
 }
 
 void QJwsIPCThread::ClearHash( )
@@ -386,12 +423,12 @@ void QJwsIPCThread::JwsCleanup( HANDLE hCtrl )
     }
 }
 
-void QJwsIPCThread::ProcessIPCCleanupEvent( QJwsIPCEvent* pEvent )
+void QJwsIPCThread::ProcessIPCCleanupEvent( QIPCEvent* pEvent )
 {
     Q_UNUSED( pEvent )
 
     //JwsCleanup( hTmccCtrl );
-    JwsCleanup( hTmccPreview );
+    //JwsCleanup( hTmccPreview );
 
     ClearHash( );
     bStarted = false;
@@ -399,43 +436,43 @@ void QJwsIPCThread::ProcessIPCCleanupEvent( QJwsIPCEvent* pEvent )
 
 void QJwsIPCThread::customEvent( QEvent* event )
 {
-    QJwsIPCEvent* pEvent = ( QJwsIPCEvent* ) event;
-    QJwsIPCEvent::IPCEventType evtType = ( QJwsIPCEvent::IPCEventType ) pEvent->type( );
+    QIPCEvent* pEvent = ( QIPCEvent* ) event;
+    QIPCEvent::IPCEventType evtType = ( QIPCEvent::IPCEventType ) pEvent->type( );
 
     switch ( evtType ) {
-    case QJwsIPCEvent::IPCStartup :
+    case QIPCEvent::IPCStartup :
         ProcessIPCStartupEvent( pEvent );
         break;
 
-    case QJwsIPCEvent::IPCSetConnectTimeout :
+    case QIPCEvent::IPCSetConnectTimeout :
         ProcessIPCSetConnectTimeoutEvent( pEvent );
         break;
 
-    case QJwsIPCEvent::IPCSetReconnectTime :
+    case QIPCEvent::IPCSetReconnectTime :
         ProcessIPCSetReconnectTimeEvent( pEvent );
         break;
 
-    case QJwsIPCEvent::IPCLogin :
+    case QIPCEvent::IPCLogin :
         ProcessIPCLoginEvent( pEvent );
         break;
 
-    case QJwsIPCEvent::IPCCaptureJPG :
+    case QIPCEvent::IPCCaptureJPG :
         ProcessIPCCaptureJPGEvent( pEvent );
         break;
 
-    case QJwsIPCEvent::IPCStartRealPlay :
+    case QIPCEvent::IPCStartRealPlay :
         ProcessIPCStartRealPlayEvent( pEvent );
         break;
 
-    case QJwsIPCEvent::IPCStopRealPlay :
+    case QIPCEvent::IPCStopRealPlay :
         ProcessIPCStopRealPlayEvent( pEvent );
         break;
 
-    case QJwsIPCEvent::IPCLogout :
+    case QIPCEvent::IPCLogout :
         ProcessIPCLogoutEvent( pEvent );
         break;
 
-    case QJwsIPCEvent::IPCCleanup :
+    case QIPCEvent::IPCCleanup :
         ProcessIPCCleanupEvent( pEvent );
         break;
 

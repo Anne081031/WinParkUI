@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgstaying.h'
 **
-** Created: Fri Apr 12 15:06:06 2013
+** Created: Wed May 8 17:26:16 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CDlgStaying[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       3,   14, // methods
+      12,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,6 +34,15 @@ static const uint qt_meta_data_CDlgStaying[] = {
       24,   13,   12,   12, 0x08,
       65,   13,   12,   12, 0x08,
      111,  105,   12,   12, 0x08,
+     144,  105,   12,   12, 0x08,
+     187,  179,   12,   12, 0x08,
+     209,  179,   12,   12, 0x08,
+     231,  179,   12,   12, 0x08,
+     253,  179,   12,   12, 0x08,
+     275,  179,   12,   12, 0x08,
+     297,  179,   12,   12, 0x08,
+     319,  179,   12,   12, 0x08,
+     341,  179,   12,   12, 0x08,
 
        0        // eod
 };
@@ -43,6 +52,12 @@ static const char qt_meta_stringdata_CDlgStaying[] = {
     "on_tableWidgetMonth_cellClicked(int,int)\0"
     "on_tableWidgetTime_cellClicked(int,int)\0"
     "index\0on_tabWidget_currentChanged(int)\0"
+    "on_cbSort_currentIndexChanged(int)\0"
+    "checked\0on_chk0_clicked(bool)\0"
+    "on_chk1_clicked(bool)\0on_chk2_clicked(bool)\0"
+    "on_chk3_clicked(bool)\0on_chk4_clicked(bool)\0"
+    "on_chk5_clicked(bool)\0on_chk6_clicked(bool)\0"
+    "on_chk0_toggled(bool)\0"
 };
 
 const QMetaObject CDlgStaying::staticMetaObject = {
@@ -77,9 +92,18 @@ int CDlgStaying::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 0: on_tableWidgetMonth_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 1: on_tableWidgetTime_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 2: on_tabWidget_currentChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 3: on_cbSort_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 4: on_chk0_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 5: on_chk1_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 6: on_chk2_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 7: on_chk3_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 8: on_chk4_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 9: on_chk5_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 10: on_chk6_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 11: on_chk0_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 3;
+        _id -= 12;
     }
     return _id;
 }

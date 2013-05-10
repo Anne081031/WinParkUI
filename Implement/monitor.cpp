@@ -1014,10 +1014,10 @@ void CMonitor::CaptureImage( QString& strFile, int nChannel, CommonDataType::Cap
     }
 
     if ( bNetworkCamera ) {
-        //HWND hPlayWnd = lblVideoWnd[ nChannel ]->winId( );
+        HWND hPlayWnd = lblVideoWnd[ nChannel ]->winId( );
         QString strIP = lblVideoWnd[ nChannel ]->toolTip( );
 
-        ipcVideoFrame->CaptureDeviceImage( strIP, strFile );
+        ipcVideoFrame->CaptureDeviceImage( strIP, strFile, hPlayWnd );
         return;
     }
 
@@ -1207,20 +1207,20 @@ void CMonitor::StartAvSdk( )
 
     StopAvSdk( );
 
-    strCapture = pSystem->value( "CommonCfg/CaptureCard", "海康" ).toString( );
+    strCapture = pSystem->value( "CommonCfg/CaptureCard", "HK" ).toString( ).toUpper( );
     int nCapture = -1;
     //for ( int nStart = CMultimedia::HikSdk; nStart <= CMultimedia::TmSDK; ++nStart ) {
-    if ( "海康" == strCapture ) {
+    if ( "HK" == strCapture ) {
         nCapture = CMultimedia::HikSdk;
-    } else if ( "中维" == strCapture ) {
+    } else if ( "ZW" == strCapture ) {
         nCapture = CMultimedia::JvsSDK;
-    } else if ( "天敏" == strCapture ) {
+    } else if ( "TM" == strCapture ) {
         nCapture = CMultimedia::TmSDK;
     }
 
     if ( -1 != nCapture ) {
         pMultimedia = CMultimedia::CreateInstance( ( CMultimedia::AvSdk ) nCapture );
-        nEncode = pMultimedia->SystemStartup( );
+        nEncode = pMultimedia->SystemStartup( winId( ) );
         if ( 0 >= nEncode ) {
             CMultimedia::DestroyInstance( pMultimedia );
             qDebug( ) << "SystemStartup Failed!( DSPs )" << endl;

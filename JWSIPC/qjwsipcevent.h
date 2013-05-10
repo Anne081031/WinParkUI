@@ -1,8 +1,8 @@
 #ifndef QJWSIPCEVENT_H
 #define QJWSIPCEVENT_H
 
-#define IPC_IP_LEN  ( quint8 ) 15
-#define IPC_CAPTURE_FILE_LEN 511
+#define JWSIPC_IP_LEN  ( quint8 ) 15
+#define JWSIPC_CAPTURE_FILE_LEN 511
 
 #include <QEvent>
 #include <QString>
@@ -40,21 +40,21 @@ public:
         } EventReconnectTimeout;
 
         struct __EventLogin {
-            char cIP[ IPC_IP_LEN + 1 ];
+            char cIP[ JWSIPC_IP_LEN + 1 ];
             WORD wPort;
-            char cUser[NAME_LEN + 1 ];
+            char cUser[ NAME_LEN + 1 ];
             char cPwd[ PASSWD_LEN + 1 ];
         } EventLogin;
 
         struct __EventCaptureJPG {
-            char cIP[ IPC_IP_LEN + 1 ];
-            char cFile[ IPC_CAPTURE_FILE_LEN + 1 ];
+            char cIP[ JWSIPC_IP_LEN + 1 ];
+            char cFile[ JWSIPC_CAPTURE_FILE_LEN + 1 ];
             quint32 nChannel;
         } EventCaptureJPG;
 
         struct __EventStartRealPlay {
             HWND hPlayWnd;
-            char cIP[ IPC_IP_LEN + 1 ];
+            char cIP[ JWSIPC_IP_LEN + 1 ];
         } EventStartRealPlay;
 
         struct __EventStopRealPlay {
@@ -62,7 +62,7 @@ public:
         } EventStopRealPlay;
 
         struct __EventLogout {
-            char cIP[ IPC_IP_LEN + 1 ];
+            char cIP[ JWSIPC_IP_LEN + 1 ];
         } EventLogout;
 
         __EventParam( )

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgsmsphone.h'
 **
-** Created: Fri Feb 1 11:05:36 2013
+** Created: Wed May 8 17:26:45 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
