@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'license.h'
 **
-** Created: Wed May 8 17:23:12 2013
+** Created: Mon May 13 16:58:49 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

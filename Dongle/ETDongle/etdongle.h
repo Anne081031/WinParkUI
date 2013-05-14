@@ -16,6 +16,7 @@ public:
     virtual void Reopen( );
     virtual void GetAllHids( QStringList& lstHids );
     virtual void GetCurrentDate( QDate& dtDate );
+    virtual bool JudgeTime( );
 
 private:
     typedef DWORD WINAPI ( *MyETEnum ) ( OUT ET_CONTEXT *pETContextList, IN OUT DWORD *pdwDeviceCount );
@@ -49,6 +50,8 @@ private:
     bool OpenETDongle( );
     bool VerifyDongle( ET_CONTEXT* pContext );
     bool VerifyDate( ET_CONTEXT *pContext );
+
+    BOOL GetDongleType( CETDongle::DongleType& eType, ET_CONTEXT *pContext );
 
     inline void FillAdminHash( );
     inline bool ContainAdminHID( );

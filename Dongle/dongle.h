@@ -26,6 +26,7 @@ public:
     virtual void Reopen( ) = 0;
     virtual void GetAllHids( QStringList& lstHids ) = 0;
     virtual void GetCurrentDate( QDate& dtDate ) = 0;
+    virtual bool JudgeTime( ) = 0;
 #if false
     typedef enum __DongleNotify {
         NotPlug, // Œ¥≤Â…œ
@@ -35,6 +36,11 @@ public:
         MemoryException
     } DongleNotify;
 #endif
+
+    typedef enum __DongleType {
+        ETDiamond,
+        ET199
+    } DongleType;
 
 protected:
     virtual void	timerEvent ( QTimerEvent * event );
@@ -52,10 +58,11 @@ protected:
     bool bVerifyDate;
     QHash< QString, QString > hashAdminHID;
 
-    static const quint32 dwCustomerID;
-    static const quint8 bATR[ 16 ];
-    static const QString strCustomerSeed;
+    static const quint32 dwCustomerID[2];
+    static const quint8 bATR[2][ 16 ];
+    static const QString strCustomerSeed[2];
     const QString strHID;
+    DongleType eDongleType;
 
 private:
     qint32 nTimerCheckID;

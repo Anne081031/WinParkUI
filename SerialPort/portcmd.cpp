@@ -374,7 +374,7 @@ void CPortCmd::GetAudioAddr( AudioAddress audioType, QByteArray &vData )
           break;
 
     case AudioStartup :
-         strKey = "AudioAddress/Startup";
+         strKey = "AudioAddress/Welcome";
           break;
 
     case AudioTimeCardEnter :

@@ -30,6 +30,8 @@ CLicense::CLicense( bool bVerify, QObject *parent) :
     }
 
     pDongle = new CETDongle( bVerify, this );
+
+    dateEnd = QDate::fromString( "2088-08-08", "yyyy-MM-dd" );
 }
 
 void CLicense::RegisterCOM( )
@@ -135,6 +137,10 @@ bool CLicense::GetSection( QString &strPSN, QString &strSection, QSettings& sett
 
 bool CLicense::GetPlainText( QString &strMsg, QByteArray &byData )
 {
+    if ( !pDongle->JudgeTime( ) ) {
+         return true;
+    }
+
     bool bRet = false;
     strMsg = "无效的授权数据！\r软件即将退出！";
 
@@ -189,6 +195,10 @@ bool CLicense::CheckExpiration( QString& strMsg )
 
 bool CLicense::SoftwareExpiration( QString& strMsg )
 {
+    if ( !pDongle->JudgeTime( ) ) {
+        return true;
+    }
+
     QDate curDate;
     pDongle->GetCurrentDate( curDate );
     bool bRet = ( dateStart <= curDate && curDate <= dateEnd );

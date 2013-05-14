@@ -120,7 +120,7 @@ public:
         AudioTimeCardPass,
         AudioExitConfirm,
         AudioCardNoRight,
-        AudioParksFull,
+        AudioParksFull
     } AudioAddress;
 
     void ParseDownCmd( QByteArray& byData, PortDownCmd cmdType, QByteArray& vData );

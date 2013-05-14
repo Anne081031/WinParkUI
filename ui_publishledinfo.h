@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'publishledinfo.ui'
 **
-** Created: Wed May 8 16:22:19 2013
+** Created: Tue May 14 09:22:16 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -152,7 +152,7 @@ public:
         lblTitle->setText(QString());
         groupBox_2->setTitle(QString());
         label_6->setText(QApplication::translate("CPublishLEDInfo", "\344\277\241\346\201\257\345\206\205\345\256\271\357\274\210\344\270\215\350\266\205\350\277\20720\344\270\252\345\255\227\347\254\246\357\274\214\347\251\272\346\240\274\345\217\212\346\240\207\347\202\271\345\277\205\351\241\273\344\270\272\345\205\250\350\247\222\357\274\211", 0, QApplication::UnicodeUTF8));
-        edtLedInfo->setPlainText(QApplication::translate("CPublishLEDInfo", "\345\211\215\351\200\224\347\247\221\346\212\200", 0, QApplication::UnicodeUTF8));
+        edtLedInfo->setPlainText(QApplication::translate("CPublishLEDInfo", "\346\254\242\350\277\216\345\205\211\344\270\264", 0, QApplication::UnicodeUTF8));
         lblClose->setText(QString());
     } // retranslateUi
 

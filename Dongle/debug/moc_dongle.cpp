@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dongle.h'
 **
-** Created: Fri Mar 23 13:29:45 2012
+** Created: Mon May 13 16:57:35 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

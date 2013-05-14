@@ -1,5 +1,7 @@
 #include "etdongle.h"
 
+// Apple Carbon Cocoa API
+
 CETDongle::CETDongle( bool bVerify, QObject* parent  ) :  CDongle( parent )
 {
     bVerifyDate = bVerify;
@@ -27,6 +29,11 @@ CETDongle::~CETDongle( )
         delete pETContext;
         pETContext = NULL;
     }
+}
+
+bool CETDongle::JudgeTime( )
+{
+    return ( ETDiamond == eDongleType );
 }
 
 void CETDongle::GetAllHids( QStringList& lstHids )
@@ -63,9 +70,13 @@ void CETDongle::GetAllHids( QStringList& lstHids )
             continue;
         }
 
-        if ( dwCustomerID == pContext[ dwItem ].dwCustomer &&
+        if ( !GetDongleType( eDongleType, &pContext[ dwItem ] ) ) {
+            continue;
+        }
+
+        if ( dwCustomerID[ eDongleType ] == pContext[ dwItem ].dwCustomer &&
              QByteArray( ( LPCSTR ) pContext[ dwItem ].bAtr, pContext[ dwItem ].dwAtrLen )  ==
-             QByteArray( ( LPCSTR ) bATR, sizeof ( bATR ) ) ) {
+             QByteArray( ( LPCSTR ) bATR[ eDongleType ], sizeof ( bATR[ eDongleType ] ) ) ) {
              dwRet = DongleControl( &pContext[ dwItem ], ET_GET_SERIAL_NUMBER, NULL, 0, bSN, sizeof ( bSN ), &dwOut);
              bRet = ( ET_S_SUCCESS == dwRet );
              if ( !bRet ) {
@@ -226,9 +237,13 @@ bool CETDongle::OpenETDongle( )
             continue;
         }
 
-        if ( dwCustomerID == pContext[ dwItem ].dwCustomer &&
+        if ( !GetDongleType( eDongleType, &pContext[ dwItem ] ) ) {
+            continue;
+        }
+
+        if ( dwCustomerID[ eDongleType ] == pContext[ dwItem ].dwCustomer &&
              QByteArray( ( LPCSTR ) pContext[ dwItem ].bAtr, pContext[ dwItem ].dwAtrLen )  ==
-             QByteArray( ( LPCSTR ) bATR, sizeof ( bATR ) ) ) {
+             QByteArray( ( LPCSTR ) bATR[ eDongleType ], sizeof ( bATR[ eDongleType ] ) ) ) {
 
             if ( 1 < dwEtCounter ) { // 管理员优先
                 dwRet = DongleControl( &pContext[ dwItem ], ET_GET_SERIAL_NUMBER, NULL, 0, bSN, sizeof ( bSN ), &dwOut);
@@ -330,11 +345,43 @@ bool CETDongle::VerifyDate( ET_CONTEXT *pContext )
   return bRet;
 }
 
+BOOL CETDongle::GetDongleType( DongleType& eType, ET_CONTEXT *pContext )
+{
+    eType = ETDiamond;
+
+    DWORD dwDongleType = 0;
+    DWORD dwOutLen = 0;
+    DWORD dwRet = DongleControl( pContext, ET_GET_CUSTOMER_NAME, NULL, 0, &dwDongleType, sizeof ( dwDongleType ), &dwOutLen );
+    FunctionException( dwRet );
+    BOOL bRet = ( ET_S_SUCCESS == dwRet );
+    QString strMsg = "获取加密狗类型失败。";
+
+    if ( !bRet ) {
+        EmitDongleException( strMsg, true, true );
+        return bRet;
+    }
+
+    if ( dwCustomerID[ 0 ] == dwDongleType ) {
+        eType = ETDiamond;
+    } else if ( dwCustomerID[ 1 ] == dwDongleType ) {
+        eType = ET199;
+    } else {
+        EmitDongleException( strMsg, true, true );
+        return false;
+    }
+
+    return bRet;
+}
+
 bool CETDongle::VerifyDongle( ET_CONTEXT *pContext )
 {
     bool bRet = false;
 
     if ( NULL == pContext ) {
+        return bRet;
+    }
+
+    if ( !GetDongleType( eDongleType, pContext ) ) {
         return bRet;
     }
 
@@ -360,8 +407,8 @@ bool CETDongle::VerifyDongle( ET_CONTEXT *pContext )
     }
 
     LPDWORD lpID = ( LPDWORD ) bCustomer;
-    if ( dwCustomerID != *lpID ||
-         QByteArray( ( LPCSTR ) bAtrValue, sizeof ( bAtrValue ) ) != QByteArray( ( LPCSTR ) bATR, sizeof ( bATR) ) ) {
+    if ( dwCustomerID[ eDongleType ] != *lpID ||
+         QByteArray( ( LPCSTR ) bAtrValue, sizeof ( bAtrValue ) ) != QByteArray( ( LPCSTR ) bATR[ eDongleType ], sizeof ( bATR[ eDongleType ] ) ) ) {
         EmitDongleException( strMsg, true, true );
         return false;
     }

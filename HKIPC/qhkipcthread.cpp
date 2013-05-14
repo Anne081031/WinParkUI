@@ -1,6 +1,10 @@
 ﻿#include "QhkIPCThread.h"
 #include <QApplication>
 
+//DDOS / Distributed Denial of Service
+// Flood SYN ACK UPD TCP Connection Script ICMP PING
+// 僵尸主机(被控制的HOST)==》提供服务的HOST 造成网络阻塞 资源耗尽等
+
 QIPCThread* QHkIPCThread::pThreadInstance = NULL;
 
 void CALLBACK ExceptionCallback( DWORD dwType,
