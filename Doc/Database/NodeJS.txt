@@ -1,0 +1,12 @@
+http://nodejsdb.org/
+
+https://npmjs.org/
+
+pecl
+
+php eio
+libeio
+libev
+libevent
+
+php serial http://www.thebyteworks.com/
