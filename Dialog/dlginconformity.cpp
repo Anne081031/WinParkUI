@@ -49,6 +49,10 @@ void CDlgInconformity::FillCntrl( QStringList &lstRows, bool bCard )
         return;
     }
 
+    if ( 5 < nCount ) {
+        nCount -= ( ( nCount / 5 - 1 ) * 5 );
+    }
+
     for ( int nIndex = 0; nIndex < nCount; nIndex++ ) {
         edtCntrl[ bCard ][ nIndex ]->setText( lstRows[ nIndex ] );
     }

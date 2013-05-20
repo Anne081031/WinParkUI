@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Jun 1 10:30:58 2012
+** Created: Fri May 17 16:23:20 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -24,6 +24,7 @@
 #include <QtGui/QMainWindow>
 #include <QtGui/QMenuBar>
 #include <QtGui/QPushButton>
+#include <QtGui/QRadioButton>
 #include <QtGui/QSpinBox>
 #include <QtGui/QWidget>
 
@@ -58,14 +59,17 @@ public:
     QLabel *label_3;
     QCheckBox *chkVideo;
     QWidget *layoutWidget5;
-    QHBoxLayout *horizontalLayout_4;
-    QLabel *label_4;
-    QCheckBox *chkPlate;
-    QWidget *layoutWidget6;
     QHBoxLayout *horizontalLayout_13;
     QLabel *label_13;
     QCheckBox *chkCarPic;
-    QWidget *layoutWidget7;
+    QComboBox *cbxIPC;
+    QComboBox *cbxCapture;
+    QLabel *label_34;
+    QLabel *label_35;
+    QGroupBox *groupBox_11;
+    QRadioButton *rdbAnlog;
+    QRadioButton *rdbNet;
+    QWidget *layoutWidget6;
     QHBoxLayout *horizontalLayout_7;
     QPushButton *btnOk;
     QPushButton *btnCancel;
@@ -85,7 +89,7 @@ public:
     QLabel *label_11;
     QSpinBox *sp4;
     QLineEdit *edt4;
-    QWidget *layoutWidget8;
+    QWidget *layoutWidget7;
     QHBoxLayout *horizontalLayout_8;
     QLabel *label_8;
     QSpinBox *sp1;
@@ -142,7 +146,7 @@ public:
     QLineEdit *edtParkID;
     QCheckBox *chkBroadcastData;
     QGroupBox *groupBox_9;
-    QWidget *layoutWidget9;
+    QWidget *layoutWidget8;
     QHBoxLayout *horizontalLayout_12;
     QLabel *label_12;
     QCheckBox *chkPlateReal1;
@@ -158,18 +162,26 @@ public:
     QHBoxLayout *horizontalLayout_25;
     QLabel *label_28;
     QCheckBox *chkPlateReal4;
+    QWidget *layoutWidget9;
+    QHBoxLayout *horizontalLayout_4;
+    QLabel *label_4;
+    QCheckBox *chkPlate;
     QGroupBox *groupBox_10;
-    QWidget *widget;
-    QHBoxLayout *horizontalLayout_26;
     QCheckBox *chkPublish;
+    QWidget *layoutWidget10;
+    QHBoxLayout *horizontalLayout_26;
     QLabel *label_30;
     QLineEdit *edtPublishIP;
+    QWidget *layoutWidget11;
+    QHBoxLayout *horizontalLayout_27;
     QLabel *label_31;
     QLineEdit *edtPublishPort;
-    QWidget *widget1;
-    QHBoxLayout *horizontalLayout_27;
+    QWidget *layoutWidget12;
+    QHBoxLayout *horizontalLayout_28;
     QLabel *label_32;
     QLineEdit *edtPublishDevType;
+    QWidget *layoutWidget13;
+    QHBoxLayout *horizontalLayout_29;
     QLabel *label_33;
     QLineEdit *edtPublishDevID;
     QMenuBar *menuBar;
@@ -178,7 +190,7 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(554, 728);
+        MainWindow->resize(554, 776);
         MainWindow->setMinimumSize(QSize(293, 347));
         MainWindow->setMaximumSize(QSize(554, 16777215));
         centralWidget = new QWidget(MainWindow);
@@ -224,7 +236,7 @@ public:
 
         groupBox_2 = new QGroupBox(centralWidget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(30, 320, 231, 75));
+        groupBox_2->setGeometry(QRect(30, 430, 231, 75));
         layoutWidget2 = new QWidget(groupBox_2);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
         layoutWidget2->setGeometry(QRect(10, 43, 164, 22));
@@ -270,10 +282,10 @@ public:
 
         groupBox_3 = new QGroupBox(centralWidget);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(30, 110, 231, 91));
+        groupBox_3->setGeometry(QRect(30, 110, 231, 151));
         layoutWidget4 = new QWidget(groupBox_3);
         layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(10, 20, 153, 15));
+        layoutWidget4->setGeometry(QRect(10, 110, 153, 15));
         horizontalLayout_3 = new QHBoxLayout(layoutWidget4);
         horizontalLayout_3->setSpacing(6);
         horizontalLayout_3->setContentsMargins(11, 11, 11, 11);
@@ -291,61 +303,64 @@ public:
 
         layoutWidget5 = new QWidget(groupBox_3);
         layoutWidget5->setObjectName(QString::fromUtf8("layoutWidget5"));
-        layoutWidget5->setGeometry(QRect(10, 44, 153, 15));
-        horizontalLayout_4 = new QHBoxLayout(layoutWidget5);
-        horizontalLayout_4->setSpacing(6);
-        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
-        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
-        label_4 = new QLabel(layoutWidget5);
-        label_4->setObjectName(QString::fromUtf8("label_4"));
-
-        horizontalLayout_4->addWidget(label_4);
-
-        chkPlate = new QCheckBox(layoutWidget5);
-        chkPlate->setObjectName(QString::fromUtf8("chkPlate"));
-
-        horizontalLayout_4->addWidget(chkPlate);
-
-        layoutWidget6 = new QWidget(groupBox_3);
-        layoutWidget6->setObjectName(QString::fromUtf8("layoutWidget6"));
-        layoutWidget6->setGeometry(QRect(10, 68, 161, 16));
-        horizontalLayout_13 = new QHBoxLayout(layoutWidget6);
+        layoutWidget5->setGeometry(QRect(10, 130, 161, 16));
+        horizontalLayout_13 = new QHBoxLayout(layoutWidget5);
         horizontalLayout_13->setSpacing(6);
         horizontalLayout_13->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_13->setObjectName(QString::fromUtf8("horizontalLayout_13"));
         horizontalLayout_13->setContentsMargins(0, 0, 0, 0);
-        label_13 = new QLabel(layoutWidget6);
+        label_13 = new QLabel(layoutWidget5);
         label_13->setObjectName(QString::fromUtf8("label_13"));
 
         horizontalLayout_13->addWidget(label_13);
 
-        chkCarPic = new QCheckBox(layoutWidget6);
+        chkCarPic = new QCheckBox(layoutWidget5);
         chkCarPic->setObjectName(QString::fromUtf8("chkCarPic"));
 
         horizontalLayout_13->addWidget(chkCarPic);
 
-        layoutWidget7 = new QWidget(centralWidget);
-        layoutWidget7->setObjectName(QString::fromUtf8("layoutWidget7"));
-        layoutWidget7->setGeometry(QRect(200, 660, 158, 25));
-        horizontalLayout_7 = new QHBoxLayout(layoutWidget7);
+        cbxIPC = new QComboBox(groupBox_3);
+        cbxIPC->setObjectName(QString::fromUtf8("cbxIPC"));
+        cbxIPC->setGeometry(QRect(90, 57, 131, 20));
+        cbxCapture = new QComboBox(groupBox_3);
+        cbxCapture->setObjectName(QString::fromUtf8("cbxCapture"));
+        cbxCapture->setGeometry(QRect(90, 85, 131, 20));
+        label_34 = new QLabel(groupBox_3);
+        label_34->setObjectName(QString::fromUtf8("label_34"));
+        label_34->setGeometry(QRect(11, 57, 72, 16));
+        label_35 = new QLabel(groupBox_3);
+        label_35->setObjectName(QString::fromUtf8("label_35"));
+        label_35->setGeometry(QRect(11, 85, 72, 16));
+        groupBox_11 = new QGroupBox(groupBox_3);
+        groupBox_11->setObjectName(QString::fromUtf8("groupBox_11"));
+        groupBox_11->setGeometry(QRect(10, 18, 211, 31));
+        rdbAnlog = new QRadioButton(groupBox_11);
+        rdbAnlog->setObjectName(QString::fromUtf8("rdbAnlog"));
+        rdbAnlog->setGeometry(QRect(107, 10, 81, 16));
+        rdbNet = new QRadioButton(groupBox_11);
+        rdbNet->setObjectName(QString::fromUtf8("rdbNet"));
+        rdbNet->setGeometry(QRect(5, 8, 101, 16));
+        layoutWidget6 = new QWidget(centralWidget);
+        layoutWidget6->setObjectName(QString::fromUtf8("layoutWidget6"));
+        layoutWidget6->setGeometry(QRect(200, 720, 158, 25));
+        horizontalLayout_7 = new QHBoxLayout(layoutWidget6);
         horizontalLayout_7->setSpacing(6);
         horizontalLayout_7->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_7->setObjectName(QString::fromUtf8("horizontalLayout_7"));
         horizontalLayout_7->setContentsMargins(0, 0, 0, 0);
-        btnOk = new QPushButton(layoutWidget7);
+        btnOk = new QPushButton(layoutWidget6);
         btnOk->setObjectName(QString::fromUtf8("btnOk"));
 
         horizontalLayout_7->addWidget(btnOk);
 
-        btnCancel = new QPushButton(layoutWidget7);
+        btnCancel = new QPushButton(layoutWidget6);
         btnCancel->setObjectName(QString::fromUtf8("btnCancel"));
 
         horizontalLayout_7->addWidget(btnCancel);
 
         groupBox_4 = new QGroupBox(centralWidget);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(30, 400, 231, 141));
+        groupBox_4->setGeometry(QRect(30, 510, 231, 141));
         layoutWidget_2 = new QWidget(groupBox_4);
         layoutWidget_2->setObjectName(QString::fromUtf8("layoutWidget_2"));
         layoutWidget_2->setGeometry(QRect(20, 50, 201, 22));
@@ -421,34 +436,34 @@ public:
 
         horizontalLayout_11->addWidget(edt4);
 
-        layoutWidget8 = new QWidget(groupBox_4);
-        layoutWidget8->setObjectName(QString::fromUtf8("layoutWidget8"));
-        layoutWidget8->setGeometry(QRect(20, 20, 201, 22));
-        horizontalLayout_8 = new QHBoxLayout(layoutWidget8);
+        layoutWidget7 = new QWidget(groupBox_4);
+        layoutWidget7->setObjectName(QString::fromUtf8("layoutWidget7"));
+        layoutWidget7->setGeometry(QRect(20, 20, 201, 22));
+        horizontalLayout_8 = new QHBoxLayout(layoutWidget7);
         horizontalLayout_8->setSpacing(6);
         horizontalLayout_8->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_8->setObjectName(QString::fromUtf8("horizontalLayout_8"));
         horizontalLayout_8->setContentsMargins(0, 0, 0, 0);
-        label_8 = new QLabel(layoutWidget8);
+        label_8 = new QLabel(layoutWidget7);
         label_8->setObjectName(QString::fromUtf8("label_8"));
 
         horizontalLayout_8->addWidget(label_8);
 
-        sp1 = new QSpinBox(layoutWidget8);
+        sp1 = new QSpinBox(layoutWidget7);
         sp1->setObjectName(QString::fromUtf8("sp1"));
         sp1->setMinimum(0);
         sp1->setMaximum(63);
 
         horizontalLayout_8->addWidget(sp1);
 
-        edt1 = new QLineEdit(layoutWidget8);
+        edt1 = new QLineEdit(layoutWidget7);
         edt1->setObjectName(QString::fromUtf8("edt1"));
 
         horizontalLayout_8->addWidget(edt1);
 
         groupBox_5 = new QGroupBox(centralWidget);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
-        groupBox_5->setGeometry(QRect(290, 418, 231, 131));
+        groupBox_5->setGeometry(QRect(290, 410, 231, 131));
         layoutWidget_5 = new QWidget(groupBox_5);
         layoutWidget_5->setObjectName(QString::fromUtf8("layoutWidget_5"));
         layoutWidget_5->setGeometry(QRect(10, 20, 211, 22));
@@ -508,7 +523,7 @@ public:
         chkAlert->setGeometry(QRect(10, 110, 201, 16));
         groupBox_6 = new QGroupBox(centralWidget);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(290, 328, 231, 80));
+        groupBox_6->setGeometry(QRect(290, 324, 231, 80));
         layoutWidget_7 = new QWidget(groupBox_6);
         layoutWidget_7->setObjectName(QString::fromUtf8("layoutWidget_7"));
         layoutWidget_7->setGeometry(QRect(10, 20, 211, 22));
@@ -637,13 +652,13 @@ public:
         chkCapture->setGeometry(QRect(10, 60, 211, 16));
         label_24 = new QLabel(groupBox_8);
         label_24->setObjectName(QString::fromUtf8("label_24"));
-        label_24->setGeometry(QRect(150, 79, 24, 20));
+        label_24->setGeometry(QRect(180, 79, 24, 20));
         label_25 = new QLabel(groupBox_8);
         label_25->setObjectName(QString::fromUtf8("label_25"));
-        label_25->setGeometry(QRect(12, 79, 84, 20));
+        label_25->setGeometry(QRect(12, 79, 111, 20));
         spRemoteTime = new QSpinBox(groupBox_8);
         spRemoteTime->setObjectName(QString::fromUtf8("spRemoteTime"));
-        spRemoteTime->setGeometry(QRect(102, 79, 42, 20));
+        spRemoteTime->setGeometry(QRect(132, 79, 42, 20));
         spRemoteTime->setMinimum(0);
         spRemoteTime->setMaximum(10000);
         spRemoteTime->setValue(0);
@@ -658,28 +673,28 @@ public:
         chkBroadcastData->setGeometry(QRect(20, 130, 141, 16));
         groupBox_9 = new QGroupBox(centralWidget);
         groupBox_9->setObjectName(QString::fromUtf8("groupBox_9"));
-        groupBox_9->setGeometry(QRect(30, 210, 230, 101));
-        layoutWidget9 = new QWidget(groupBox_9);
-        layoutWidget9->setObjectName(QString::fromUtf8("layoutWidget9"));
-        layoutWidget9->setGeometry(QRect(10, 10, 153, 16));
-        horizontalLayout_12 = new QHBoxLayout(layoutWidget9);
+        groupBox_9->setGeometry(QRect(30, 270, 230, 151));
+        layoutWidget8 = new QWidget(groupBox_9);
+        layoutWidget8->setObjectName(QString::fromUtf8("layoutWidget8"));
+        layoutWidget8->setGeometry(QRect(10, 50, 177, 16));
+        horizontalLayout_12 = new QHBoxLayout(layoutWidget8);
         horizontalLayout_12->setSpacing(6);
         horizontalLayout_12->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_12->setObjectName(QString::fromUtf8("horizontalLayout_12"));
         horizontalLayout_12->setContentsMargins(0, 0, 0, 0);
-        label_12 = new QLabel(layoutWidget9);
+        label_12 = new QLabel(layoutWidget8);
         label_12->setObjectName(QString::fromUtf8("label_12"));
 
         horizontalLayout_12->addWidget(label_12);
 
-        chkPlateReal1 = new QCheckBox(layoutWidget9);
+        chkPlateReal1 = new QCheckBox(layoutWidget8);
         chkPlateReal1->setObjectName(QString::fromUtf8("chkPlateReal1"));
 
         horizontalLayout_12->addWidget(chkPlateReal1);
 
         layoutWidget_14 = new QWidget(groupBox_9);
         layoutWidget_14->setObjectName(QString::fromUtf8("layoutWidget_14"));
-        layoutWidget_14->setGeometry(QRect(10, 34, 153, 16));
+        layoutWidget_14->setGeometry(QRect(10, 74, 177, 16));
         horizontalLayout_23 = new QHBoxLayout(layoutWidget_14);
         horizontalLayout_23->setSpacing(6);
         horizontalLayout_23->setContentsMargins(11, 11, 11, 11);
@@ -697,7 +712,7 @@ public:
 
         layoutWidget_15 = new QWidget(groupBox_9);
         layoutWidget_15->setObjectName(QString::fromUtf8("layoutWidget_15"));
-        layoutWidget_15->setGeometry(QRect(10, 57, 153, 16));
+        layoutWidget_15->setGeometry(QRect(10, 97, 177, 16));
         horizontalLayout_24 = new QHBoxLayout(layoutWidget_15);
         horizontalLayout_24->setSpacing(6);
         horizontalLayout_24->setContentsMargins(11, 11, 11, 11);
@@ -715,7 +730,7 @@ public:
 
         layoutWidget_16 = new QWidget(groupBox_9);
         layoutWidget_16->setObjectName(QString::fromUtf8("layoutWidget_16"));
-        layoutWidget_16->setGeometry(QRect(10, 80, 153, 16));
+        layoutWidget_16->setGeometry(QRect(10, 120, 177, 16));
         horizontalLayout_25 = new QHBoxLayout(layoutWidget_16);
         horizontalLayout_25->setSpacing(6);
         horizontalLayout_25->setContentsMargins(11, 11, 11, 11);
@@ -731,69 +746,101 @@ public:
 
         horizontalLayout_25->addWidget(chkPlateReal4);
 
+        layoutWidget9 = new QWidget(groupBox_9);
+        layoutWidget9->setObjectName(QString::fromUtf8("layoutWidget9"));
+        layoutWidget9->setGeometry(QRect(10, 20, 153, 15));
+        horizontalLayout_4 = new QHBoxLayout(layoutWidget9);
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        horizontalLayout_4->setContentsMargins(0, 0, 0, 0);
+        label_4 = new QLabel(layoutWidget9);
+        label_4->setObjectName(QString::fromUtf8("label_4"));
+
+        horizontalLayout_4->addWidget(label_4);
+
+        chkPlate = new QCheckBox(layoutWidget9);
+        chkPlate->setObjectName(QString::fromUtf8("chkPlate"));
+
+        horizontalLayout_4->addWidget(chkPlate);
+
         groupBox_10 = new QGroupBox(centralWidget);
         groupBox_10->setObjectName(QString::fromUtf8("groupBox_10"));
-        groupBox_10->setGeometry(QRect(30, 560, 491, 91));
-        widget = new QWidget(groupBox_10);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 20, 461, 22));
-        horizontalLayout_26 = new QHBoxLayout(widget);
+        groupBox_10->setGeometry(QRect(290, 550, 231, 161));
+        chkPublish = new QCheckBox(groupBox_10);
+        chkPublish->setObjectName(QString::fromUtf8("chkPublish"));
+        chkPublish->setGeometry(QRect(11, 20, 95, 16));
+        layoutWidget10 = new QWidget(groupBox_10);
+        layoutWidget10->setObjectName(QString::fromUtf8("layoutWidget10"));
+        layoutWidget10->setGeometry(QRect(10, 40, 201, 22));
+        horizontalLayout_26 = new QHBoxLayout(layoutWidget10);
         horizontalLayout_26->setSpacing(6);
         horizontalLayout_26->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_26->setObjectName(QString::fromUtf8("horizontalLayout_26"));
         horizontalLayout_26->setContentsMargins(0, 0, 0, 0);
-        chkPublish = new QCheckBox(widget);
-        chkPublish->setObjectName(QString::fromUtf8("chkPublish"));
-
-        horizontalLayout_26->addWidget(chkPublish);
-
-        label_30 = new QLabel(widget);
+        label_30 = new QLabel(layoutWidget10);
         label_30->setObjectName(QString::fromUtf8("label_30"));
 
         horizontalLayout_26->addWidget(label_30);
 
-        edtPublishIP = new QLineEdit(widget);
+        edtPublishIP = new QLineEdit(layoutWidget10);
         edtPublishIP->setObjectName(QString::fromUtf8("edtPublishIP"));
 
         horizontalLayout_26->addWidget(edtPublishIP);
 
-        label_31 = new QLabel(widget);
-        label_31->setObjectName(QString::fromUtf8("label_31"));
-
-        horizontalLayout_26->addWidget(label_31);
-
-        edtPublishPort = new QLineEdit(widget);
-        edtPublishPort->setObjectName(QString::fromUtf8("edtPublishPort"));
-
-        horizontalLayout_26->addWidget(edtPublishPort);
-
-        widget1 = new QWidget(groupBox_10);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(10, 50, 461, 22));
-        horizontalLayout_27 = new QHBoxLayout(widget1);
+        layoutWidget11 = new QWidget(groupBox_10);
+        layoutWidget11->setObjectName(QString::fromUtf8("layoutWidget11"));
+        layoutWidget11->setGeometry(QRect(10, 70, 201, 22));
+        horizontalLayout_27 = new QHBoxLayout(layoutWidget11);
         horizontalLayout_27->setSpacing(6);
         horizontalLayout_27->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_27->setObjectName(QString::fromUtf8("horizontalLayout_27"));
         horizontalLayout_27->setContentsMargins(0, 0, 0, 0);
-        label_32 = new QLabel(widget1);
+        label_31 = new QLabel(layoutWidget11);
+        label_31->setObjectName(QString::fromUtf8("label_31"));
+
+        horizontalLayout_27->addWidget(label_31);
+
+        edtPublishPort = new QLineEdit(layoutWidget11);
+        edtPublishPort->setObjectName(QString::fromUtf8("edtPublishPort"));
+
+        horizontalLayout_27->addWidget(edtPublishPort);
+
+        layoutWidget12 = new QWidget(groupBox_10);
+        layoutWidget12->setObjectName(QString::fromUtf8("layoutWidget12"));
+        layoutWidget12->setGeometry(QRect(11, 100, 201, 22));
+        horizontalLayout_28 = new QHBoxLayout(layoutWidget12);
+        horizontalLayout_28->setSpacing(6);
+        horizontalLayout_28->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_28->setObjectName(QString::fromUtf8("horizontalLayout_28"));
+        horizontalLayout_28->setContentsMargins(0, 0, 0, 0);
+        label_32 = new QLabel(layoutWidget12);
         label_32->setObjectName(QString::fromUtf8("label_32"));
 
-        horizontalLayout_27->addWidget(label_32);
+        horizontalLayout_28->addWidget(label_32);
 
-        edtPublishDevType = new QLineEdit(widget1);
+        edtPublishDevType = new QLineEdit(layoutWidget12);
         edtPublishDevType->setObjectName(QString::fromUtf8("edtPublishDevType"));
 
-        horizontalLayout_27->addWidget(edtPublishDevType);
+        horizontalLayout_28->addWidget(edtPublishDevType);
 
-        label_33 = new QLabel(widget1);
+        layoutWidget13 = new QWidget(groupBox_10);
+        layoutWidget13->setObjectName(QString::fromUtf8("layoutWidget13"));
+        layoutWidget13->setGeometry(QRect(10, 130, 201, 22));
+        horizontalLayout_29 = new QHBoxLayout(layoutWidget13);
+        horizontalLayout_29->setSpacing(6);
+        horizontalLayout_29->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_29->setObjectName(QString::fromUtf8("horizontalLayout_29"));
+        horizontalLayout_29->setContentsMargins(0, 0, 0, 0);
+        label_33 = new QLabel(layoutWidget13);
         label_33->setObjectName(QString::fromUtf8("label_33"));
 
-        horizontalLayout_27->addWidget(label_33);
+        horizontalLayout_29->addWidget(label_33);
 
-        edtPublishDevID = new QLineEdit(widget1);
+        edtPublishDevID = new QLineEdit(layoutWidget13);
         edtPublishDevID->setObjectName(QString::fromUtf8("edtPublishDevID"));
 
-        horizontalLayout_27->addWidget(edtPublishDevID);
+        horizontalLayout_29->addWidget(edtPublishDevID);
 
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
@@ -817,13 +864,26 @@ public:
         label_6->setText(QApplication::translate("MainWindow", "\345\260\217\346\227\266", 0, QApplication::UnicodeUTF8));
         label_7->setText(QApplication::translate("MainWindow", "\345\205\205\345\275\223\346\234\215\345\212\241\345\231\250\343\200\200\357\274\232", 0, QApplication::UnicodeUTF8));
         chkServer->setText(QString());
-        groupBox_3->setTitle(QApplication::translate("MainWindow", "\350\247\206\351\242\221\343\200\201\350\275\246\347\211\214\350\257\206\345\210\253\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
-        label_3->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\351\273\230\350\256\244\345\274\200\345\220\257\350\247\206\351\242\221\343\200\200\343\200\200\357\274\232", 0, QApplication::UnicodeUTF8));
+        groupBox_3->setTitle(QApplication::translate("MainWindow", "\350\247\206\351\242\221\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\345\274\200\345\220\257\350\247\206\351\242\221\343\200\200    \343\200\200\357\274\232", 0, QApplication::UnicodeUTF8));
         chkVideo->setText(QString());
-        label_4->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\351\273\230\350\256\244\345\274\200\345\220\257\350\275\246\347\211\214\350\257\206\345\210\253\357\274\232", 0, QApplication::UnicodeUTF8));
-        chkPlate->setText(QString());
         label_13->setText(QApplication::translate("MainWindow", "\350\275\246\350\276\206\345\233\276\347\211\207\346\230\257\345\220\246\345\256\236\346\227\266\344\277\235\345\255\230\357\274\232", 0, QApplication::UnicodeUTF8));
         chkCarPic->setText(QString());
+        cbxIPC->clear();
+        cbxIPC->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "\346\265\267\345\272\267DS-2CD864F-E", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "\346\215\267\345\250\201\346\200\235NV-C130BE", 0, QApplication::UnicodeUTF8)
+        );
+        cbxCapture->clear();
+        cbxCapture->insertItems(0, QStringList()
+         << QApplication::translate("MainWindow", "\346\265\267\345\272\267DS-4004HC", 0, QApplication::UnicodeUTF8)
+         << QApplication::translate("MainWindow", "\345\244\251\346\225\217VC4000", 0, QApplication::UnicodeUTF8)
+        );
+        label_34->setText(QApplication::translate("MainWindow", "\347\275\221\347\273\234\347\233\270\346\234\272\347\261\273\345\236\213", 0, QApplication::UnicodeUTF8));
+        label_35->setText(QApplication::translate("MainWindow", "\351\207\207\351\233\206\345\215\241\347\261\273\345\236\213\343\200\200", 0, QApplication::UnicodeUTF8));
+        groupBox_11->setTitle(QString());
+        rdbAnlog->setText(QApplication::translate("MainWindow", "\350\247\206\351\242\221\351\207\207\351\233\206\345\215\241", 0, QApplication::UnicodeUTF8));
+        rdbNet->setText(QApplication::translate("MainWindow", "\347\275\221\347\273\234\347\233\270\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
         btnOk->setText(QApplication::translate("MainWindow", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
         btnCancel->setText(QApplication::translate("MainWindow", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));
         groupBox_4->setTitle(QApplication::translate("MainWindow", "\350\256\276\347\275\256\351\200\232\351\201\223\346\216\247\345\210\266\345\231\250\345\234\260\345\235\200\344\270\216\345\220\215\347\247\260", 0, QApplication::UnicodeUTF8));
@@ -881,15 +941,17 @@ public:
         label_25->setText(QApplication::translate("MainWindow", "\350\277\234\350\267\235\347\246\273\345\215\241\350\257\206\345\210\253\351\227\264\351\232\224\357\274\232", 0, QApplication::UnicodeUTF8));
         label_29->setText(QApplication::translate("MainWindow", "\345\201\234\350\275\246\345\234\272ID", 0, QApplication::UnicodeUTF8));
         chkBroadcastData->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\345\271\277\346\222\255\350\277\233\345\207\272\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
-        groupBox_9->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\345\256\236\346\227\266\346\230\276\347\244\272", 0, QApplication::UnicodeUTF8));
-        label_12->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\200\350\267\257\357\274\232", 0, QApplication::UnicodeUTF8));
+        groupBox_9->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\350\257\206\345\210\253\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
+        label_12->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\200\350\267\257\350\247\206\351\242\221\346\265\201\350\257\206\345\210\253\345\256\236\346\227\266\346\230\276\347\244\272\357\274\232", 0, QApplication::UnicodeUTF8));
         chkPlateReal1->setText(QString());
-        label_26->setText(QApplication::translate("MainWindow", "\347\254\254\344\272\214\350\267\257\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_26->setText(QApplication::translate("MainWindow", "\347\254\254\344\272\214\350\267\257\350\247\206\351\242\221\346\265\201\350\257\206\345\210\253\345\256\236\346\227\266\346\230\276\347\244\272\357\274\232", 0, QApplication::UnicodeUTF8));
         chkPlateReal2->setText(QString());
-        label_27->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\211\350\267\257\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_27->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\211\350\267\257\350\247\206\351\242\221\346\265\201\350\257\206\345\210\253\345\256\236\346\227\266\346\230\276\347\244\272\357\274\232", 0, QApplication::UnicodeUTF8));
         chkPlateReal3->setText(QString());
-        label_28->setText(QApplication::translate("MainWindow", "\347\254\254\345\233\233\350\267\257\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_28->setText(QApplication::translate("MainWindow", "\347\254\254\345\233\233\350\267\257\350\247\206\351\242\221\346\265\201\350\257\206\345\210\253\345\256\236\346\227\266\346\230\276\347\244\272\357\274\232", 0, QApplication::UnicodeUTF8));
         chkPlateReal4->setText(QString());
+        label_4->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\345\274\200\345\220\257\350\275\246\347\211\214\350\257\206\345\210\253\357\274\232  ", 0, QApplication::UnicodeUTF8));
+        chkPlate->setText(QString());
         groupBox_10->setTitle(QApplication::translate("MainWindow", "\350\275\246\344\275\215\344\277\241\346\201\257\344\270\212\344\274\240\350\256\276\347\275\256", 0, QApplication::UnicodeUTF8));
         chkPublish->setText(QApplication::translate("MainWindow", "\345\220\257\347\224\250\344\270\212\344\274\240\345\212\237\350\203\275", 0, QApplication::UnicodeUTF8));
         label_30->setText(QApplication::translate("MainWindow", "\346\266\210\346\201\257\344\270\255\345\277\203IP\357\274\232", 0, QApplication::UnicodeUTF8));

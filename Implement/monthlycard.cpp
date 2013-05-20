@@ -124,7 +124,7 @@ void CMonthlyCard::SaveCarInfo( )
    QString strTmp;
    QStringList lstRows;
    QLineEdit* pEdit = NULL;
-   //QString strExistSql = "Select carid from carinfo where carcp ='%1' and cardindex ='%2'";
+   QString strExistSql = "Select cardindex from carinfo where carcp ='%1' and cardindex <> '%2'";
    QString strInsertSql = "Insert IGNORE Into carinfo( carcp, carmodel, cardindex, carhaoma ) values( '%1','%2','%3', '%4' )";
    QString strUpdateSql = "Update IGNORE carinfo set carcp = '%1', carmodel = '%2', carhaoma = '%3' where carid = %4";
    QString strDeleteSql = "Delete IGNORE From carinfo where carid = %1";
@@ -141,6 +141,13 @@ void CMonthlyCard::SaveCarInfo( )
                 CLogicInterface::GetInterface( )->ExecuteSql( strTmp, lstRows );
            }
            continue;
+       }
+
+       strTmp = strExistSql.arg( pEdit->text( ), ui->lblCardNo->text( ) );
+       if ( "未知" != pEdit->text( ) && 0 < CLogicInterface::GetInterface( )->ExecuteSql( strTmp, lstRows ) ) {
+           strTmp = QString( "车牌【%1】已与卡号【%2】绑定。" ).arg( pEdit->text( ), lstRows.join( "," ) );
+           CCommonFunction::MsgBox( NULL, QString( "提示" ), strTmp, QMessageBox::Information );
+           return;
        }
 
        //strTmp = strExistSql.arg( pEdit->text( ), ui->lblCardNo->text( ) );

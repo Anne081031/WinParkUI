@@ -8,8 +8,17 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    connect( ui->rdbNet, SIGNAL( clicked( ) ), this, SLOT( OnRbxClick( ) ) );
+    connect( ui->rdbAnlog, SIGNAL( clicked( ) ), this, SLOT( OnRbxClick( ) ) );
+
     pSystemCfg = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     pSysSetCfg = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
+
+    ui->cbxIPC->setItemData( 0, "HK" );
+    ui->cbxIPC->setItemData( 1, "JWS" );
+
+    ui->cbxCapture->setItemData( 0, "HK" );
+    ui->cbxCapture->setItemData( 1, "TM" );
 
     ReadFile( );
     //QRegExp exp( "\\d+\\.\\d+\\.\\d+\\.\\d+" );
@@ -18,6 +27,24 @@ MainWindow::MainWindow(QWidget *parent) :
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::OnRbxClick( )
+{
+    QRadioButton* pRbx = ( QRadioButton* ) sender( );
+
+    if ( ui->rdbNet == pRbx ) {
+        InitCtrl( true );
+    } else if ( ui->rdbAnlog == pRbx ) {
+        InitCtrl( false );
+    }
+}
+
+void MainWindow::InitCtrl( bool bEnabled )
+{
+    ui->cbxCapture->setEnabled( !bEnabled );
+    ui->cbxIPC->setEnabled( bEnabled );
+    ui->chkVideo->setEnabled( !bEnabled );
 }
 
 void MainWindow::ReadFile( )
@@ -77,6 +104,26 @@ void MainWindow::ReadFile( )
     ui->edtPublishPort->setText( pSystemCfg->value( "ThirdParty/ScuMsgCenterPort", "32009" ).toString( ) );
     ui->edtPublishDevType->setText( pSystemCfg->value( "ThirdParty/DeviceType", "100" ).toString( ) );
     ui->edtPublishDevID->setText( pSystemCfg->value( "ThirdParty/DeviceID", "0000000001" ).toString( ) );
+
+    bool bNetIPC = pSystemCfg->value( "CommonCfg/NetworkCamera", true ).toBool( );
+    InitCtrl( bNetIPC );
+    if ( bNetIPC ) {
+        ui->rdbNet->setChecked( true );
+        QString strType = pSystemCfg->value( "IPC/Type", "HK" ).toString( ).toUpper( );
+        if ( strType == "HK" ) {
+            ui->cbxIPC->setCurrentIndex( 0 );
+        } else if ( strType == "JWS" ) {
+            ui->cbxIPC->setCurrentIndex( 1 );
+        }
+    } else if ( ui->rdbAnlog->isChecked( ) ) {
+        ui->rdbAnlog->setChecked( true );
+        QString strType = pSystemCfg->value( "CommonCfg/CaptureCard", "HK" ).toString( ).toUpper( );
+        if ( strType == "HK" ) {
+            ui->cbxCapture->setCurrentIndex( 0 );
+        } else if ( strType == "TM" ) {
+            ui->cbxCapture->setCurrentIndex( 1 );
+        }
+    }
 }
 
 void MainWindow::WriteFile( )
@@ -138,6 +185,16 @@ void MainWindow::WriteFile( )
     pSystemCfg->setValue( "ThirdParty/ScuMsgCenterPort", ui->edtPublishPort->text( ) );
     pSystemCfg->setValue( "ThirdParty/DeviceType", ui->edtPublishDevType->text( ) );
     pSystemCfg->setValue( "ThirdParty/DeviceID", ui->edtPublishDevID->text( ) );
+
+    if ( ui->rdbNet->isChecked( ) ) {
+        pSystemCfg->setValue( "CommonCfg/NetworkCamera", true );
+        pSystemCfg->setValue( "IPC/Type",
+                              ui->cbxIPC->itemData( ui->cbxIPC->currentIndex( ) ) );
+    } else if ( ui->rdbAnlog->isChecked( ) ) {
+        pSystemCfg->setValue( "CommonCfg/NetworkCamera", false );
+        pSystemCfg->setValue( "CommonCfg/CaptureCard",
+                              ui->cbxCapture->itemData( ui->cbxCapture->currentIndex( ) ) );
+    }
 }
 
 void MainWindow::on_btnOk_clicked()

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>554</width>
-    <height>728</height>
+    <height>776</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -87,7 +87,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>320</y>
+      <y>430</y>
       <width>231</width>
       <height>75</height>
      </rect>
@@ -164,17 +164,17 @@
       <x>30</x>
       <y>110</y>
       <width>231</width>
-      <height>91</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
-     <string>视频、车牌识别配置</string>
+     <string>视频配置</string>
     </property>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>110</y>
        <width>153</width>
        <height>15</height>
       </rect>
@@ -183,7 +183,7 @@
       <item>
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>是否默认开启视频　　：</string>
+         <string>是否开启视频　    　：</string>
         </property>
        </widget>
       </item>
@@ -200,33 +200,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>44</y>
-       <width>153</width>
-       <height>15</height>
-      </rect>
-     </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
-       <widget class="QLabel" name="label_4">
-        <property name="text">
-         <string>是否默认开启车牌识别：</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="chkPlate">
-        <property name="text">
-         <string/>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </widget>
-    <widget class="QWidget" name="layoutWidget">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>68</y>
+       <y>130</y>
        <width>161</width>
        <height>16</height>
       </rect>
@@ -248,12 +222,117 @@
       </item>
      </layout>
     </widget>
+    <widget class="QComboBox" name="cbxIPC">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>57</y>
+       <width>131</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>海康DS-2CD864F-E</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>捷威思NV-C130BE</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QComboBox" name="cbxCapture">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>85</y>
+       <width>131</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>海康DS-4004HC</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>天敏VC4000</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_34">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>57</y>
+       <width>72</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>网络相机类型</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_35">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>85</y>
+       <width>72</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>采集卡类型　</string>
+     </property>
+    </widget>
+    <widget class="QGroupBox" name="groupBox_11">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>18</y>
+       <width>211</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <widget class="QRadioButton" name="rdbAnlog">
+      <property name="geometry">
+       <rect>
+        <x>107</x>
+        <y>10</y>
+        <width>81</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>视频采集卡</string>
+      </property>
+     </widget>
+     <widget class="QRadioButton" name="rdbNet">
+      <property name="geometry">
+       <rect>
+        <x>5</x>
+        <y>8</y>
+        <width>101</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>网络相摄像机</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>200</x>
-      <y>660</y>
+      <y>720</y>
       <width>158</width>
       <height>25</height>
      </rect>
@@ -279,7 +358,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>400</y>
+      <y>510</y>
       <width>231</width>
       <height>141</height>
      </rect>
@@ -436,7 +515,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>418</y>
+      <y>410</y>
       <width>231</width>
       <height>131</height>
      </rect>
@@ -528,7 +607,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>328</y>
+      <y>324</y>
       <width>231</width>
       <height>80</height>
      </rect>
@@ -798,7 +877,7 @@
     <widget class="QLabel" name="label_24">
      <property name="geometry">
       <rect>
-       <x>150</x>
+       <x>180</x>
        <y>79</y>
        <width>24</width>
        <height>20</height>
@@ -813,7 +892,7 @@
       <rect>
        <x>12</x>
        <y>79</y>
-       <width>84</width>
+       <width>111</width>
        <height>20</height>
       </rect>
      </property>
@@ -824,7 +903,7 @@
     <widget class="QSpinBox" name="spRemoteTime">
      <property name="geometry">
       <rect>
-       <x>102</x>
+       <x>132</x>
        <y>79</y>
        <width>42</width>
        <height>20</height>
@@ -881,20 +960,20 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>210</y>
+      <y>270</y>
       <width>230</width>
-      <height>101</height>
+      <height>151</height>
      </rect>
     </property>
     <property name="title">
-     <string>车牌实时显示</string>
+     <string>车牌识别配置</string>
     </property>
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
-       <width>153</width>
+       <y>50</y>
+       <width>177</width>
        <height>16</height>
       </rect>
      </property>
@@ -902,7 +981,7 @@
       <item>
        <widget class="QLabel" name="label_12">
         <property name="text">
-         <string>第一路：</string>
+         <string>第一路视频流识别实时显示：</string>
         </property>
        </widget>
       </item>
@@ -919,8 +998,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>34</y>
-       <width>153</width>
+       <y>74</y>
+       <width>177</width>
        <height>16</height>
       </rect>
      </property>
@@ -928,7 +1007,7 @@
       <item>
        <widget class="QLabel" name="label_26">
         <property name="text">
-         <string>第二路：</string>
+         <string>第二路视频流识别实时显示：</string>
         </property>
        </widget>
       </item>
@@ -945,8 +1024,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>57</y>
-       <width>153</width>
+       <y>97</y>
+       <width>177</width>
        <height>16</height>
       </rect>
      </property>
@@ -954,7 +1033,7 @@
       <item>
        <widget class="QLabel" name="label_27">
         <property name="text">
-         <string>第三路：</string>
+         <string>第三路视频流识别实时显示：</string>
         </property>
        </widget>
       </item>
@@ -971,8 +1050,8 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>80</y>
-       <width>153</width>
+       <y>120</y>
+       <width>177</width>
        <height>16</height>
       </rect>
      </property>
@@ -980,7 +1059,7 @@
       <item>
        <widget class="QLabel" name="label_28">
         <property name="text">
-         <string>第四路：</string>
+         <string>第四路视频流识别实时显示：</string>
         </property>
        </widget>
       </item>
@@ -993,36 +1072,68 @@
       </item>
      </layout>
     </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>20</y>
+       <width>153</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>是否开启车牌识别：  </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chkPlate">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_10">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>560</y>
-      <width>491</width>
-      <height>91</height>
+      <x>290</x>
+      <y>550</y>
+      <width>231</width>
+      <height>161</height>
      </rect>
     </property>
     <property name="title">
      <string>车位信息上传设置</string>
     </property>
-    <widget class="QWidget" name="">
+    <widget class="QCheckBox" name="chkPublish">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>20</y>
+       <width>95</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>启用上传功能</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
-       <width>461</width>
+       <y>40</y>
+       <width>201</width>
        <height>22</height>
       </rect>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_26">
-      <item>
-       <widget class="QCheckBox" name="chkPublish">
-        <property name="text">
-         <string>启用上传功能</string>
-        </property>
-       </widget>
-      </item>
       <item>
        <widget class="QLabel" name="label_30">
         <property name="text">
@@ -1033,6 +1144,18 @@
       <item>
        <widget class="QLineEdit" name="edtPublishIP"/>
       </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>70</y>
+       <width>201</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_27">
       <item>
        <widget class="QLabel" name="label_31">
         <property name="text">
@@ -1045,16 +1168,16 @@
       </item>
      </layout>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>10</x>
-       <y>50</y>
-       <width>461</width>
+       <x>11</x>
+       <y>100</y>
+       <width>201</width>
        <height>22</height>
       </rect>
      </property>
-     <layout class="QHBoxLayout" name="horizontalLayout_27">
+     <layout class="QHBoxLayout" name="horizontalLayout_28">
       <item>
        <widget class="QLabel" name="label_32">
         <property name="text">
@@ -1065,6 +1188,18 @@
       <item>
        <widget class="QLineEdit" name="edtPublishDevType"/>
       </item>
+     </layout>
+    </widget>
+    <widget class="QWidget" name="layoutWidget">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>130</y>
+       <width>201</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_29">
       <item>
        <widget class="QLabel" name="label_33">
         <property name="text">

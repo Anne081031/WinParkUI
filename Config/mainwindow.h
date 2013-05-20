@@ -20,6 +20,8 @@ private:
     void ReadFile( );
     void WriteFile( );
 
+    void InitCtrl( bool bEnabled );
+
 private:
     Ui::MainWindow *ui;
     QSettings* pSystemCfg;
@@ -28,6 +30,7 @@ private:
 private slots:
     void on_btnCancel_clicked();
     void on_btnOk_clicked();
+    void OnRbxClick( );
 };
 
 #endif // MAINWINDOW_CFG_H
