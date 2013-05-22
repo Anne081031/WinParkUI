@@ -55,63 +55,69 @@ void QJson2SqlParser::GetJsonObject( QByteArray& byJson, JsonStruct::JsonHead& s
 
 void QJson2SqlParser::GetDeviceRecordData( JsonStruct::JsonDeviceRecord& sRecord )
 {
-    QJsonValue aryValue = sRecord.sHead.sValues.jsonData.value( sRecord.sData.sKeys.strList );
-    if ( !aryValue.isArray( ) ) {
-        return;
-    }
-
-    if ( Constant::TypeCode.strCodeDeviceRegister == sRecord.sHead.sValues.strTypeCode ) {
-        sRecord.sHead.nFlag = Constant::TTypeCode::EDeviceRegister;
-        sRecord.sData.bRegister = true;
-    } else if ( Constant::TypeCode.strCodeDeviceUnregister == sRecord.sHead.sValues.strTypeCode ) {
-        sRecord.sHead.nFlag = Constant::TTypeCode::EDeviceUnregister;
-        sRecord.sData.bRegister = false;
-    }
-
-    QJsonArray lstValue = aryValue.toArray( );
-    qint32 nItems = lstValue.count( );
-
-    QJsonObject objValue;
-    QString strValue;
-    QString strItems;
-
-    for ( qint32 nItem = 0; nItem < nItems; nItem++ ) {
-        aryValue = lstValue.at( nItem );
-
-        if ( !aryValue.isObject( ) ) {
-            continue;
+    if ( Constant::TypeCode.strCodeConfigInfo == sRecord.sHead.sValues.strTypeCode ) {
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strDeviceID,
+                        sRecord.sData.sValues.strDeviceID );
+    } else {
+        QJsonValue aryValue = sRecord.sHead.sValues.jsonData.value( sRecord.sData.sKeys.strList );
+        if ( !aryValue.isArray( ) ) {
+            return;
         }
 
-        objValue = aryValue.toObject( );
-
-        strItems = sRecord.sData.sFormat.strLeftBracket;
-
-        GetStringValue( objValue, sRecord.sData.sKeys.strDeviceID, strValue );
-        strItems += sRecord.sData.sFormat.strFormat.arg( strValue );
-
-        if ( sRecord.sData.bRegister ) {
-            GetStringValue( objValue, sRecord.sData.sKeys.strStartTime, strValue );
-            strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
-
-            GetStringValue( objValue, sRecord.sData.sKeys.strEndTime, strValue );
-            strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
-
-            GetStringValue( objValue, sRecord.sData.sKeys.strSN, strValue );
-            strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
-
-            GetStringValue( objValue, sRecord.sData.sKeys.strComments, strValue );
-            strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
-
-            GetStringValue( objValue, sRecord.sData.sKeys.strUnitID, strValue );
-            strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
+        if ( Constant::TypeCode.strCodeDeviceRegister == sRecord.sHead.sValues.strTypeCode ) {
+            sRecord.sHead.nFlag = Constant::TTypeCode::EDeviceRegister;
+            sRecord.sData.bRegister = true;
+        } else if ( Constant::TypeCode.strCodeDeviceUnregister == sRecord.sHead.sValues.strTypeCode ) {
+            sRecord.sHead.nFlag = Constant::TTypeCode::EDeviceUnregister;
+            sRecord.sData.bRegister = false;
         }
 
-        GetStringValue( objValue, sRecord.sData.sKeys.strOperator, strValue );
-        strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
+        QJsonArray lstValue = aryValue.toArray( );
+        qint32 nItems = lstValue.count( );
 
-        strItems += sRecord.sData.sFormat.strRightBracket;
+        QJsonObject objValue;
+        QString strValue;
+        QString strItems;
 
-        sRecord.sData.lstValues << strItems;
+        for ( qint32 nItem = 0; nItem < nItems; nItem++ ) {
+            aryValue = lstValue.at( nItem );
+
+            if ( !aryValue.isObject( ) ) {
+                continue;
+            }
+
+            objValue = aryValue.toObject( );
+
+            strItems = sRecord.sData.sFormat.strLeftBracket;
+
+            GetStringValue( objValue, sRecord.sData.sKeys.strDeviceID, strValue );
+            strItems += sRecord.sData.sFormat.strFormat.arg( strValue );
+
+            if ( sRecord.sData.bRegister ) {
+                GetStringValue( objValue, sRecord.sData.sKeys.strStartTime, strValue );
+                strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
+
+                GetStringValue( objValue, sRecord.sData.sKeys.strEndTime, strValue );
+                strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
+
+                GetStringValue( objValue, sRecord.sData.sKeys.strSN, strValue );
+                strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
+
+                GetStringValue( objValue, sRecord.sData.sKeys.strComments, strValue );
+                strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
+
+                GetStringValue( objValue, sRecord.sData.sKeys.strUnitID, strValue );
+                strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
+            }
+
+            GetStringValue( objValue, sRecord.sData.sKeys.strOperator, strValue );
+            strItems += sRecord.sData.sFormat.strCommasFormat.arg( strValue );
+
+            strItems += sRecord.sData.sFormat.strRightBracket;
+
+            sRecord.sData.lstValues << strItems;
+        }
     }
 }
 
@@ -306,6 +312,8 @@ void QJson2SqlParser::GetSpName( QString &strTypeCode, QString& strSpName )
         strSpName = Constant::SpName.strSpUserRecord;
     } else if ( Constant::TypeCode.strCodeUserFee == strTypeCode ) {
         strSpName = Constant::SpName.strSpUserRecord;
+    } else if ( Constant::TypeCode.strCodeConfigInfo == strTypeCode ) {
+        strSpName = Constant::SpName.strSpQueryConfigRecord;
     }
 }
 
@@ -326,8 +334,14 @@ void QJson2SqlParser::ParseSystemJson( QByteArray &byJson, JsonStruct::JsonHead 
 
 void QJson2SqlParser::GetDeviceXmlData( JsonStruct::JsonDeviceRecord &sRecord, QString &strXml )
 {
-    QString strValue = sRecord.sData.lstValues.join( sRecord.sData.sFormat.strCommas );
-    strXml = Constant::SpXmlPattern.strXmlDeviceRecord.arg( strValue, sRecord.sHead.strLog );
+    if ( Constant::TypeCode.strCodeConfigInfo == sRecord.sHead.sValues.strTypeCode ) {
+        strXml = Constant::SpXmlPattern.strXmlConfigRecord.arg(
+                             sRecord.sData.sValues.strDeviceID,
+                             sRecord.sHead.strLog );
+    } else {
+        QString strValue = sRecord.sData.lstValues.join( sRecord.sData.sFormat.strCommas );
+        strXml = Constant::SpXmlPattern.strXmlDeviceRecord.arg( strValue, sRecord.sHead.strLog );
+    }
 }
 
 void QJson2SqlParser::ParseInOutRecordJson( QByteArray& byJson, JsonStruct::JsonHead& sHead )

@@ -42,6 +42,10 @@ void QDbDataProcess::PostData2PeerThread( QTcpSocket *pSocket, QByteArray &byDat
     strLog = objectName( ) + ":" + strLog;
     SendLog( strLog, false );
 
+    //byData.append( "\r\n" );
+    byData.append( char ( '\r' ) );
+    byData.append( char ( '\n' ) );
+
     pEvent->SetPeerSocket( pSocket );
     pEvent->SetByteArray( byData );
     pEvent->SetPackageType( nPkType );
@@ -167,6 +171,8 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
                 bFromDbMsg = true;
             } else if ( Constant::TypeCode.strCodeDeviceUnregister == sHead.sValues.strTypeCode ) {
                 bFromDbMsg = true;
+            } else if ( Constant::TypeCode.strCodeConfigInfo == sHead.sValues.strTypeCode ) {
+                bUnicast = true;
             }
 
             break;
@@ -218,6 +224,9 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
             // After a tablet does process a record,
             // server does notify tablets
             NetworkController* pController = ( NetworkController* ) pNetController;
+
+            byData.append( char ( '\r' ) );
+            byData.append( char ( '\n' ) );
             pController->MulticastData( byData, nPkType );
         }
     }
@@ -241,14 +250,16 @@ void QDbDataProcess::FeedbackData( JsonStruct::JsonHead &sHead,
 {
     QString strFormat = "{\"ClientID\":\"%1\","
                         "\"StateCode\":\"%2\","
-                        "\"TypeCode\":\"%3\""
-                        ",Data:%4}";
+                        "\"TypeCode\":\"%3\","
+                        "\"UserID\":\"%4\""
+                        ",Data:%5}";
 
     QString strJson;
     strJson = strFormat.arg(
                 sHead.sValues.strClientID,
                 QString::number( bSuccess ),
                 sHead.sValues.strTypeCode,
+                sHead.sValues.strUserID,
                 strMessage );
 
     QByteArray byJson = strJson.toUtf8( );

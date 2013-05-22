@@ -108,7 +108,7 @@ UserRecord
 	"Data": 
 	{
 		"UserID":"1",
-		"UserName":"уехЩ",
+		"UserName":"Test",
 		"UserPwd":"MTIzdGVzdA==",
 		"PwdMD5":"abe45d28281cfa2a4201c9b90a143095"
 	}
@@ -174,5 +174,15 @@ UserRecord
 		"ParkID":"5101070002",
 		"PaymentStartTime":"2013-02-02 12:34:34",
 		"PaymentEndTime":"2013-04-02 18:34:34"
+	}
+}
+
+{
+	"ClientID":"12345", 
+	"TypeCode":"ConfigInfo",
+	"UserID":"1",
+	"Data":	
+	{
+		"DeviceID":"12345"
 	}
 }

@@ -236,7 +236,6 @@ public:
             } sKeys;
 
             QStringList lstValues;
-#if false
             struct __Values {
                 QString strDeviceID;
                 QString strStarTime;
@@ -246,7 +245,6 @@ public:
                 QString strUnitID;
                 QString strSN;
             } sValues;
-#endif
         } sData;
     } JsonDeviceRecord, *PJsonDeviceRecord;
 };

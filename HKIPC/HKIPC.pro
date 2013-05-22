@@ -16,11 +16,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    qipcthread.cpp \
+    qhkipcthread.cpp \
     qipcevent.cpp
 
 HEADERS  += mainwindow.h \
-    qipcthread.h \
+    qhkipcthread.h \
     qipcevent.h
 
 FORMS    += mainwindow.ui

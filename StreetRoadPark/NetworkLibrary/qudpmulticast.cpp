@@ -19,7 +19,8 @@ QUdpMulticast::QUdpMulticast(QObject *parent) :
     pConfig = CNetConfigurator::GetConfigurator( );
     byTokenData = DATA_TOKEN;
     strMultiIP = pConfig->GetMulticastIP( );
-    multiIP.setAddress( strMultiIP );
+    //multiIP.setAddress( strMultiIP );
+    multiIP = QHostAddress::Broadcast;
     nMulticastPort = pConfig->GetMulticastPort( );
     pCodec = pConfig->GetTextCodec( );
     //setSocketOption( );

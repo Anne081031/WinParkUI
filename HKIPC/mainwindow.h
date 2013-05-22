@@ -3,7 +3,7 @@
 
 #include <QMainWindow>
 #include <QFrame>
-#include "qipcthread.h"
+#include "qhkipcthread.h"
 
 namespace Ui {
 class MainWindow;

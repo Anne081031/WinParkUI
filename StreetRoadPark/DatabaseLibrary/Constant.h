@@ -56,6 +56,7 @@ public:
         };
 
         QString strCodeTimeSync; // Server=>Tablet
+        QString strCodeConfigInfo;
 
         QString strCodeSensorData; // Server=>Tablet
 
@@ -79,6 +80,7 @@ public:
             strCodeDeviceRegister = "DeviceRegister";
             strCodeDeviceUnregister = "DeviceUnregister";
             strCodeTimeSync = "TimeSync";
+            strCodeConfigInfo = "ConfigInfo";
 
             strCodeSensorData = "SensorData";
         }
@@ -95,6 +97,7 @@ public:
         QString strSpUserRecord;
         QString strSpGroupRecord;
         QString strSpQueryReportRecord;
+        QString strSpQueryConfigRecord;
 
         __SpName( )
         {
@@ -108,6 +111,7 @@ public:
             strSpUserRecord = "UserRecord";
             strSpGroupRecord = "GroupRecord";
             strSpQueryReportRecord = "QueryReportRecord";
+            strSpQueryConfigRecord = "QueryConfigRecord";
         }
     } TSpName;
 
@@ -128,6 +132,8 @@ public:
         QString strXmlUserLoginRecord;
         QString strXmlUserLogoutRecord;
         QString strXmlUserFeeRecord;
+
+        QString strXmlConfigRecord;
 
         __SpXmlPattern( )
         {
@@ -203,6 +209,7 @@ public:
                                     <Accessor>%4</Accessor></Data>";
 
             strXmlGroupRecord = "<Data><UnitID>%1</UnitID><Accessor>%2</Accessor></Data>";
+            strXmlConfigRecord = "<Data><DeviceID>%1</DeviceID><Accessor>%2</Accessor></Data>";;
         }
     } TSpXmlPattern;
 

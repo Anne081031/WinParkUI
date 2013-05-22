@@ -1,3 +1,8 @@
+////////////// WinTone Android SN
+XRYQVURUVZQY5TIYY1JFYY6BE
+XRSD9URRDLPY64TYY2NJYY9KG
+///////////////////////////////////////
+
 Wine, MinGW GCC/MSYS, Cygwin GCC, POSIX
 
 ACE ICE POCO 
