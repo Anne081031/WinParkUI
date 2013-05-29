@@ -157,6 +157,9 @@ public:
                QString strUnitID;
                QString strParkID;
 
+               QString strSrcLocationID;
+               QString strDstLocationID;
+
                __Keys( )
                {
                    strRecordID = "RecordID";
@@ -179,6 +182,8 @@ public:
                    strPaymentEndTime = "PaymentEndTime";
                    strUnitID = "UnitID";
                    strParkID = "ParkID";
+                   strSrcLocationID = "SrcLocationID";
+                   strDstLocationID = "DstLocationID";
                }
             } sKeys;
 
@@ -203,6 +208,8 @@ public:
                 QString strPaymentEndTime;
                 QString strUnitID;
                 QString strParkID;
+                QString strSrcLocationID;
+                QString strDstLocationID;
             } sValues;
         } sData;
     } JsonInOutRecord, *PJsonInOutRecord;
@@ -247,6 +254,24 @@ public:
             } sValues;
         } sData;
     } JsonDeviceRecord, *PJsonDeviceRecord;
+
+    typedef struct __JsonDataRecord {
+        JsonHead sHead;
+        struct __JsonData {
+            struct __Keys {
+               QString strDataType;
+
+               __Keys( )
+               {
+                   strDataType = "DataType";
+               }
+            } sKeys;
+
+            struct __Values {
+                QString strDataType;
+            } sValues;
+        } sData;
+    } JsonDataRecord, *PJsonDataRecord;
 };
 
 #endif // QJSONSTRUCT_H

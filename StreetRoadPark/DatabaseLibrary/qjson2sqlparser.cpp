@@ -53,6 +53,15 @@ void QJson2SqlParser::GetJsonObject( QByteArray& byJson, JsonStruct::JsonHead& s
                    sHead.sValues.strUserID );
 }
 
+void QJson2SqlParser::GetDataRecordData( JsonStruct::JsonDataRecord& sRecord )
+{
+    if ( Constant::TypeCode.strCodeDataInfo == sRecord.sHead.sValues.strTypeCode ) {
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strDataType,
+                        sRecord.sData.sValues.strDataType );
+    }
+}
+
 void QJson2SqlParser::GetDeviceRecordData( JsonStruct::JsonDeviceRecord& sRecord )
 {
     if ( Constant::TypeCode.strCodeConfigInfo == sRecord.sHead.sValues.strTypeCode ) {
@@ -279,6 +288,14 @@ void QJson2SqlParser::GetInOutRecordData( JsonStruct::JsonInOutRecord &sRecord )
         GetStringValue( sRecord.sHead.sValues.jsonData,
                         sRecord.sData.sKeys.strPaymentEndTime,
                         sRecord.sData.sValues.strPaymentEndTime );
+    } else if ( Constant::TypeCode.strCodeTabletVehicleShiftRequest == sRecord.sHead.sValues.strTypeCode ) {
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strSrcLocationID,
+                        sRecord.sData.sValues.strSrcLocationID );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strDstLocationID,
+                        sRecord.sData.sValues.strDstLocationID );
     }
 }
 
@@ -314,7 +331,26 @@ void QJson2SqlParser::GetSpName( QString &strTypeCode, QString& strSpName )
         strSpName = Constant::SpName.strSpUserRecord;
     } else if ( Constant::TypeCode.strCodeConfigInfo == strTypeCode ) {
         strSpName = Constant::SpName.strSpQueryConfigRecord;
+    } else if ( Constant::TypeCode.strCodeTabletVehicleShiftRequest == strTypeCode ) {
+        strSpName = Constant::SpName.strSpVehicleShiftRecord;
+    } else if ( Constant::TypeCode.strCodeDataInfo == strTypeCode ) {
+        strSpName = Constant::SpName.strSpQueryCommonRecord;
     }
+}
+
+void QJson2SqlParser::ParseDataJson( QByteArray &byJson, JsonStruct::JsonHead &sHead )
+{
+    JsonStruct::JsonDataRecord sRecordRequest;
+
+    GetJsonObject( byJson, sRecordRequest.sHead );
+    GetSpName( sRecordRequest.sHead.sValues.strTypeCode, sRecordRequest.sHead.strSpName );
+    GetDataRecordData( sRecordRequest );
+
+    QString strXml;
+    GetDataXmlData( sRecordRequest, strXml );
+    byJson.append( strXml );
+
+    sHead = sRecordRequest.sHead;
 }
 
 void QJson2SqlParser::ParseSystemJson( QByteArray &byJson, JsonStruct::JsonHead &sHead )
@@ -330,6 +366,15 @@ void QJson2SqlParser::ParseSystemJson( QByteArray &byJson, JsonStruct::JsonHead 
     byJson.append( strXml );
 
     sHead = sRecordRequest.sHead;
+}
+
+void QJson2SqlParser::GetDataXmlData( JsonStruct::JsonDataRecord &sRecord, QString &strXml )
+{
+    if ( Constant::TypeCode.strCodeDataInfo == sRecord.sHead.sValues.strTypeCode ) {
+        strXml = Constant::SpXmlPattern.strXmlDataInfo.arg(
+                             sRecord.sData.sValues.strDataType,
+                             sRecord.sHead.strLog );
+    }
 }
 
 void QJson2SqlParser::GetDeviceXmlData( JsonStruct::JsonDeviceRecord &sRecord, QString &strXml )
@@ -405,12 +450,17 @@ void QJson2SqlParser::GetInOutXmlData( JsonStruct::JsonInOutRecord &sRecord, QSt
         strXml = Constant::SpXmlPattern.strXmlTabletQueryImageRecord.arg(
                              sRecord.sData.sValues.strRecordID,
                              sRecord.sHead.strLog );
-    }else if ( Constant::TypeCode.strCodeTabletQueryReprotData == sRecord.sHead.sValues.strTypeCode ) {
+    } else if ( Constant::TypeCode.strCodeTabletQueryReprotData == sRecord.sHead.sValues.strTypeCode ) {
         strXml = Constant::SpXmlPattern.strXmlTabletQueryLocationRecord.arg(
                              sRecord.sData.sValues.strUnitID,
                              sRecord.sData.sValues.strParkID,
                              sRecord.sData.sValues.strPaymentStartTime,
                              sRecord.sData.sValues.strPaymentEndTime,
+                             sRecord.sHead.strLog );
+    } else if ( Constant::TypeCode.strCodeTabletVehicleShiftRequest == sRecord.sHead.sValues.strTypeCode ) {
+        strXml = Constant::SpXmlPattern.strXmlTabletVehicleShiftRecord.arg(
+                             sRecord.sData.sValues.strSrcLocationID,
+                             sRecord.sData.sValues.strDstLocationID,
                              sRecord.sHead.strLog );
     }
 }

@@ -186,3 +186,24 @@ UserRecord
 		"DeviceID":"12345"
 	}
 }
+
+{
+	"ClientID":"12345", 
+	"TypeCode":"DataInfo",
+	"UserID":"1",
+	"Data":	
+	{
+		"DataType":"UnitInfo"
+	}
+}
+
+{
+	"ClientID":"12345", 
+	"TypeCode":"TabletVehicleShiftRequest",
+	"UserID":"1",
+	"Data":	
+	{
+		"SrcLocationID":"5101070001001006",
+		"DstLocationID":"5101070001001007"
+	}
+}

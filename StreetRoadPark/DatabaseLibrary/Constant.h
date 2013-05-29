@@ -10,6 +10,7 @@ public:
         TypeUserInfo,
         TypeInOutRecordInfo,
         TypeSystemInfo,
+        TypeDataInfo,
         TypeSensorInfo
     } DataPackageType;
 
@@ -45,6 +46,7 @@ public:
         QString strCodeRemoveRecord; // Server=>Tablet
         QString strCodeUnhandledSensorData; // Server=>Tablet
         QString strCodeTabletQueryReprotData;
+        QString strCodeTabletVehicleShiftRequest;
 
         // TypeSystem
         QString strCodeDeviceRegister; // Tablet=>Server
@@ -57,6 +59,9 @@ public:
 
         QString strCodeTimeSync; // Server=>Tablet
         QString strCodeConfigInfo;
+
+        //TypeDataInfo
+        QString strCodeDataInfo;
 
         QString strCodeSensorData; // Server=>Tablet
 
@@ -76,11 +81,14 @@ public:
             strCodeRemoveRecord = "RemoveRecord";
             strCodeUnhandledSensorData = "UnhandledSensorData";
             strCodeTabletQueryReprotData = "TabletQueryReportData";
+            strCodeTabletVehicleShiftRequest = "TabletVehicleShiftRequest";
 
             strCodeDeviceRegister = "DeviceRegister";
             strCodeDeviceUnregister = "DeviceUnregister";
             strCodeTimeSync = "TimeSync";
             strCodeConfigInfo = "ConfigInfo";
+
+            strCodeDataInfo = "DataInfo";
 
             strCodeSensorData = "SensorData";
         }
@@ -98,6 +106,8 @@ public:
         QString strSpGroupRecord;
         QString strSpQueryReportRecord;
         QString strSpQueryConfigRecord;
+        QString strSpQueryCommonRecord;
+        QString strSpVehicleShiftRecord;
 
         __SpName( )
         {
@@ -112,6 +122,8 @@ public:
             strSpGroupRecord = "GroupRecord";
             strSpQueryReportRecord = "QueryReportRecord";
             strSpQueryConfigRecord = "QueryConfigRecord";
+            strSpQueryCommonRecord = "QueryCommonRecord";
+            strSpVehicleShiftRecord = "VehicleShiftRecord";
         }
     } TSpName;
 
@@ -124,6 +136,7 @@ public:
         QString strXmlTabletQueryImageRecord;
         QString strXmlUnhandledSensorRecord;
         QString strXmlTabletQueryReportRecord;
+        QString strXmlTabletVehicleShiftRecord;
         QString strXmlDeviceRecord;
         QString strXmlGroupRecord;
 
@@ -134,6 +147,7 @@ public:
         QString strXmlUserFeeRecord;
 
         QString strXmlConfigRecord;
+        QString strXmlDataInfo;
 
         __SpXmlPattern( )
         {
@@ -209,7 +223,9 @@ public:
                                     <Accessor>%4</Accessor></Data>";
 
             strXmlGroupRecord = "<Data><UnitID>%1</UnitID><Accessor>%2</Accessor></Data>";
-            strXmlConfigRecord = "<Data><DeviceID>%1</DeviceID><Accessor>%2</Accessor></Data>";;
+            strXmlConfigRecord = "<Data><DeviceID>%1</DeviceID><Accessor>%2</Accessor></Data>";
+            strXmlDataInfo = "<Data><DataType>%1</DataType><Accessor>%2</Accessor></Data>";
+            strXmlTabletVehicleShiftRecord = "<Data><SrcLocationID>%1</SrcLocationID><DstLocationID>%2</DstLocationID><Accessor>%3</Accessor></Data>";
         }
     } TSpXmlPattern;
 

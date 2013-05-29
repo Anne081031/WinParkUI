@@ -1,0 +1,71 @@
+Managed
+Unmanaged
+
+.NET Framework
+
+SideBySide( SxS) The side-by-side support built into the .NET Framework allows multiple versions of the Framework to be installed on a single system. 
+
+CLR(Memory GC)/CTS(IL Type,各语言编译后都转换为该类型)/DLR
+
+Interface
+
+Attribute
+MetaData
+IL
+Namsespace
+
+Assembly/Assemblies are the fundamental unit of deployment, version control, code reuse, activation scoping, and security permissions in the .NET Framework
+AppDomain/an intra-process isolation boundary for apps(Multiapp in a process)
+
+Delegate/A delegate is a class that holds a reference to a method.  It is comparable to a function pointer in unmanaged code.
+
+Event/Events in the .NET Framework are based on the delegate model. The delegate model follows the observer design pattern, which enables a subscriber to register with, and receive notifications from, a provider. An event sender pushes a notification that an event has happened, and an event receiver receives that notification and defines a response to it. This article describes the major components of the delegate model, how to consume events in applications, and how to implement events in your code.
+
+An event is a message sent by an object to signal the occurrence of an action. 
+
+Property
+
+ValueType
+ReferenceType
+
+Marshal
+Unmarshal
+
+Resource
+Config
+
+Remoting
+
+Locale/Culture
+
+WCF WPF WWF WIF EF/ORM LINQ Lambda Silverlight ASP.net WebService(WSDL UD) XML
+
+CLI 包含 CTS( Common Type System ) Metadata VES( Virtual Execution System ) CLS( Common Langauge Specification ) CIL( Common Intermediate Language ) Framework
+CLI实现 Microsoft .NET Framework / Microsoft Silverligh / .NET Compact Framework / .NET Micro Framework / Microsoft XNA / Rotor / Mono / dotGNU
+
+CLS/CTS Multilanguage / CIL / CLI  Common Language Infrastructure( ECMA Sepecification ) / CLR ( Sepecification Implementation ) / Boxing( Value->Reference ) Unboxing ( Reference->Vaute )
+MSIL->NavtiveCode JIT Install-time run-time
+Attribute->Metadata
+
+Dispose / Releasing Memory for Unmanaged Resources
+
+The managed heap is divided into three generations: 0, 1, and 2.最新对象在0代，其他较老对象晋升到1、2代，当0代满了，进行GC
+ the application's roots, Object Graph
+
+The runtime host loads the runtime into a process, creates the application domains within the process, and loads user code into the application domains. Bootstrapping CLR
+
+Application domains  provide isolation between applications in a process. Historically, process boundaries have been used to isolate applications running on the same computer.Apartment
+
+You can run several application domains in a single process.The ability to run multiple applications within a single process dramatically increases server scalability.
+
+Objects in different application domains communicate either by transporting copies of objects across application domain boundaries, or by using a proxy to exchange messages. MarshalByRefObject
+
+LoadLibrary / An assembly is said to be domain-neutral when its code can be shared by all domains in the process. Access to static data or methods is slower because of the need to isolate applications. Each application domain that accesses the assembly must have a separate copy of the static data or method, to prevent references to objects in static variables from crossing domain boundaries. 
+
+Proecess 安全隔离边界 资源分配单位
+Threads are free to cross application domain boundaries 调度 执行 时间片分配单位  There is not a one-to-one correlation between application domains and threads. 
+
+Application domains form an isolation, unloading, and security boundary for managed code. 
+
+Runtime hosts
+Unmanaged hosting code is used to configure the common language runtime, load it in the process, and transition the program into managed code. The managed portion of the hosting code creates the application domains in which user code will run and dispatches user requests to the created application domains.

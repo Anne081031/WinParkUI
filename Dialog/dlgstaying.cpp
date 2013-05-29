@@ -175,7 +175,7 @@ void CDlgStaying::SortData( int nChk, int nCb, bool bCb )
 
     GetMonthData( strOrder );
 
-    if ( 2 != nChk || 3 != nChk ) {
+    if ( 2 != nChk && 3 != nChk ) {
         GetTimeData( strOrder );
     }
 
@@ -234,7 +234,7 @@ void CDlgStaying::GetOrderByClause( QString& strOrder, int nChk, int nCb )
         break;
 
     case 3 :
-        strOrder = strOrder.arg( "userphone" );
+        strOrder = strOrder.arg( "b.userphone" );
         break;
 
     case 4 :

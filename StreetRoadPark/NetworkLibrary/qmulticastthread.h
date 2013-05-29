@@ -25,6 +25,8 @@ private:
     inline void PostEvent( QThreadEvent* pEvent );
     void ProcessMultiDataEvent( QThreadEvent* pEvent );
 
+    void PrintIntervalTime( );
+
 private:
     QMulticastThread(QObject *parent = 0);
 

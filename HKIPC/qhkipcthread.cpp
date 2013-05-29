@@ -5,6 +5,40 @@
 // Flood SYN ACK UPD TCP Connection Script ICMP PING
 // 僵尸主机(被控制的HOST)==》提供服务的HOST 造成网络阻塞 资源耗尽等
 
+// ARM / Keil / uVision MDK-ARM / ( C51 C166 C251 ARM etc. )
+// TI CCS Code Composer Studio 是用于 TI DSP、微处理器和应用处理器的集成开发环境 / 基于Eclipse
+// VxWorks Tornado
+// WinCE / Windows / Windows Phone
+// BSP Board Surport Packet
+
+// 医学影像信息系统简称PACS(Picture Archiving and Communication Systems)，
+// 与临床信息系统（Clinical Information System, CIS）、
+// 放射学信息系统(Radiology Information System, RIS)、
+// 医院信息系统(Hospital Information System, HIS)、
+// 实验室信息系统（Laboratory Information System, LIS）同属医院信息系统。
+// DICOM 协议 Digital Imaging and Communications in Medicine ，医学数字成像和通信标准
+
+// TMN Telecomunictions Management Networking
+// BOSS Business Operation Surport System
+// 计费及结算系统 营业、账务系统 客户服务系统 决策支持系统
+// BSS OSS
+// OSS包含用于运行和监控网络的所有系统，如报告或计费系统。
+// BSS系统的设计目标包括客户关系管理（CRM）、业务供应链管理（SCM），经营决策支持系统（DSS）
+
+// SCADA (Supervisory Control And Data Acquisition) 电力、冶金、石油、化工等领域
+
+// Enterprise->ERP
+
+// Bank->IOS (Integrated Operation System)
+
+// Super computer 超级计算机是计算机中功能最强、运算速度最快、存储容量最大的一类计算机，多用于国家高科技领域和尖端技术研究
+// Mainframe computer 大型机 金融 电信 / COBOL( COmmon Business Oriented Language )
+// Minicomputer 小型机
+// Microcomputer 微型机 PC
+
+// SOA EDA MDA POA CEP EB ESB
+// Pull/Push Publish/Subscription Store/Forward Request/Response Signal/Slot
+
 QIPCThread* QHkIPCThread::pThreadInstance = NULL;
 
 void CALLBACK ExceptionCallback( DWORD dwType,

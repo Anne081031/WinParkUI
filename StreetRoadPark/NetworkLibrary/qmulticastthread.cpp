@@ -46,12 +46,19 @@ void QMulticastThread::run( )
     exec() ;
 }
 
+void QMulticastThread::PrintIntervalTime( )
+{
+    QString strTime = QTime::currentTime( ).toString( "hh:mm:ss" );
+    qDebug( ) << Q_FUNC_INFO << strTime << endl;
+}
+
 void QMulticastThread::timerEvent( QTimerEvent *event )
 {
     if ( nTimeSyncTimerID != event->timerId( ) ) {
         return;
     }
 
+    PrintIntervalTime( );
     QByteArray byJson = strTimeSyncJson.arg( pConfig->GetDateTime( ) ).toUtf8( );
     pMulticast->MulticastData( byJson, Constant::TypeSystemInfo );
 }

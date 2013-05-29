@@ -1,4 +1,5 @@
 #include "qudpmulticast.h"
+#include "../DatabaseLibrary/Constant.h"
 //组播协议分为主机-路由器之间的组成员关系协议和
 //路由器-路由器之间的组播路由协议。
 //组成员关系协议包括IGMP（互连网组管理协议）。
@@ -49,7 +50,8 @@ void QUdpMulticast::MulticastData( QByteArray &byJson, qint32 nMulticastType  )
 
     byJson.insert( 0, byTokenData );
 
-    writeDatagram( byJson, multiIP, nMulticastPort );
+    bool bTimeSync = ( Constant::TypeSystemInfo == nMulticastType );
+    writeDatagram( byJson, multiIP, nMulticastPort + ( bTimeSync ? 1 : 0 ));
     flush( );
     waitForBytesWritten( );
     qDebug( ) << Q_FUNC_INFO << errorString( ) << endl;

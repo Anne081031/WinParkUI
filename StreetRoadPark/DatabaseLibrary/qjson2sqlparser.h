@@ -22,6 +22,7 @@ public:
     void ParseUserJson( QByteArray& byJson, JsonStruct::JsonHead& sHead );
     void ParseInOutRecordJson( QByteArray& byJson, JsonStruct::JsonHead& sHead );
     void ParseSystemJson( QByteArray& byJson, JsonStruct::JsonHead& sHead );
+    void ParseDataJson( QByteArray& byJson, JsonStruct::JsonHead& sHead );
 
 private:
     inline void GetJsonHead( QJsonObject& objJson, JsonStruct::JsonHead& sHead );
@@ -38,6 +39,9 @@ private:
 
     void GetDeviceRecordData( JsonStruct::JsonDeviceRecord& sRecord );
     void GetDeviceXmlData( JsonStruct::JsonDeviceRecord& sRecord, QString& strXml );
+
+    void GetDataRecordData( JsonStruct::JsonDataRecord& sRecord );
+    void GetDataXmlData( JsonStruct::JsonDataRecord& sRecord, QString& strXml );
 
     void GetSpName( QString& strTypeCode, QString& strSpName );
     inline void GetJsonObject( QByteArray& byJson, JsonStruct::JsonHead& sHead );

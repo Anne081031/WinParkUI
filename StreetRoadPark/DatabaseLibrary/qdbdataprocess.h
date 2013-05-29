@@ -29,6 +29,7 @@ private:
     inline QString GetDateTime( );
     void CallSP( QByteArray& byData, JsonStruct::JsonHead& sHead, int nPkType );
     void FeedbackData( JsonStruct::JsonHead& sHead, QString& strMessage, qint32 nPackageType, bool bSuccess );
+    void PrintPackageType( qint32 nPackageType );
 private:
     CMySqlDatabase* pDatabase;
     QTcpSocket* pPeerSocket;

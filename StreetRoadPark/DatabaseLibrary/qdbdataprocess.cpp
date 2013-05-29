@@ -159,6 +159,9 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
             } else if ( Constant::TypeCode.strCodeTabletQueryReprotData == sHead.sValues.strTypeCode ) {
                 bMulticast = false;
                 bUnicast = true;
+            } else if ( Constant::TypeCode.strCodeTabletVehicleShiftRequest == sHead.sValues.strTypeCode ) {
+                bMulticast = true;
+                bUnicast = false;
             }
             break;
 
@@ -174,7 +177,12 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
             } else if ( Constant::TypeCode.strCodeConfigInfo == sHead.sValues.strTypeCode ) {
                 bUnicast = true;
             }
+            break;
 
+        case Constant::TypeDataInfo :
+            bMulticast = false;
+            bFeedback = false;
+            bUnicast = true;
             break;
 
         case Constant::TypeSensorInfo :
@@ -288,9 +296,46 @@ void QDbDataProcess::ProcessSocketData( qint32 nPackageType, QByteArray &byJson 
     case Constant::TypeSystemInfo :
         parserJson2Sql.ParseSystemJson( byJson, sHead );
         break;
+
+    case Constant::TypeDataInfo :
+        parserJson2Sql.ParseDataJson(byJson, sHead );
+        break;
     }
 
-    //Sleep( 5000 );
+    PrintPackageType( nPackageType );
     CallSP( byJson, sHead, nPackageType );
     //Sleep( 2000 );
+}
+
+void QDbDataProcess::PrintPackageType( qint32 nPackageType )
+{
+    QString strMsg = "未知包类型。";
+
+    switch ( nPackageType ) {
+    case Constant::TypeGroupInfo :
+        strMsg = "Constant::TypeGroupInfo";
+        break;
+
+    case Constant::TypeUserInfo :
+        strMsg = "Constant::TypeUserInfo";
+        break;
+
+    case Constant::TypeInOutRecordInfo :
+        strMsg = "Constant::TypeInOutRecordInfo";
+        break;
+
+    case Constant::TypeSystemInfo :
+        strMsg = "Constant::TypeSystemInfo";
+        break;
+
+    case Constant::TypeDataInfo :
+        strMsg = "Constant::TypeDataInfo";
+        break;
+
+    default :
+        strMsg = "Unknown";
+        break;
+    }
+
+    qDebug( ) << Q_FUNC_INFO << strMsg << endl;
 }
