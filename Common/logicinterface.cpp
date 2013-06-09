@@ -51,7 +51,10 @@ int CLogicInterface::DbDeleteRd( int nIndex, QString& strDate )
         break;
 
     case 2 :
-        strSql = QString( "Delete From Stoprd Where ( Date( InTime ) < '%1' ) and ( cardno like '%(%)%' Or outtime is not null )" ).arg( strDate );
+        strSql = QString( "Delete From Stoprd
+                          Where ( ( Date( InTime ) < '%1' )
+                          and ( cardno like '%(%)%' Or outtime is not null ) )
+                          OR ( cardno like '%(%)%' and ( Date( OutTime ) < '%2' ) ) " ).arg( strDate, strDate );
         break;
 
     case 3 :
@@ -59,7 +62,9 @@ int CLogicInterface::DbDeleteRd( int nIndex, QString& strDate )
         break;
 
     case 4 :
-        strSql = QString( "Update Stoprd Set invideo1 = null, outvideo1 = null Where ( Date( InTime ) < '%1' ) and ( cardno like '%(%)%' Or outtime is not null )" ).arg( strDate );
+        strSql = QString( "Update Stoprd Set invideo1 = null, outvideo1 = null Where ( ( Date( InTime ) < '%1' )
+                          and ( cardno like '%(%)%' Or outtime is not null ) )
+                          OR ( cardno like '%(%)%' and ( Date( OutTime ) < '%2' ) ) " ).arg( strDate, strDate );
         break;
     }  
 #endif
@@ -70,7 +75,9 @@ int CLogicInterface::DbDeleteRd( int nIndex, QString& strDate )
         break;
 
         case 2 :
-        strSql = QString( "Select stoprdid From stoprd Where ( Date( InTime ) < '%1' ) and ( cardno like '%(%)%' Or outtime is not null )" ).arg( strDate );
+        strSql = QString( "Select stoprdid From stoprd Where ( ( Date( InTime ) < '%1' ) \
+                          and ( cardno like '%(%)%' Or outtime is not null ) ) \
+                          OR ( cardno like '%(%)%' and ( Date( OutTime ) < '%2' ) ) " ).arg( strDate, strDate );
         strDelete = "Delete From stoprd where stoprdid in ( %1 )";
         strDeleteGarage = "Delete From GarageInGarage Where CardID IN ( Select Distinct Cardno From stoprd where stoprdid In( %1 ) ) and DateTime < '%2'";
         break;
@@ -81,7 +88,9 @@ int CLogicInterface::DbDeleteRd( int nIndex, QString& strDate )
         break;
 
         case 4 :
-        strSql = QString( "Select stoprdid From stoprd Where ( Date( InTime ) < '%1' ) and ( cardno like '%(%)%' Or outtime is not null )" ).arg( strDate );
+        strSql = QString( "Select stoprdid From stoprd Where ( ( Date( InTime ) < '%1' ) \
+                          and ( cardno like '%(%)%' Or outtime is not null ) ) \
+                          OR ( cardno like '%(%)%' and ( Date( OutTime ) < '%2' ) ) " ).arg( strDate, strDate );
         strDelete = "Update stoprd as a  Set a.invideo1 = null, a.invideo2 = null, a.invideo3 = null, a.invideo4 = null, a.outvideo1 = null,\
                              a.outvideo2 = null, a.outvideo3 = null, a.outvideo4 = null where a.stoprdid in( %1 )";
         break;

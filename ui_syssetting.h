@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'syssetting.ui'
 **
-** Created: Wed May 8 16:22:20 2013
+** Created: Wed Jun 5 09:48:39 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -285,6 +285,7 @@ public:
         new QListWidgetItem(listWidget);
         new QListWidgetItem(listWidget);
         listWidget->setObjectName(QString::fromUtf8("listWidget"));
+        listWidget->setEnabled(false);
         listWidget->setGeometry(QRect(180, 20, 201, 151));
         chkStartVideo = new QCheckBox(wgVideo);
         chkStartVideo->setObjectName(QString::fromUtf8("chkStartVideo"));
@@ -375,7 +376,7 @@ public:
 
         retranslateUi(CSysSetting);
 
-        CSysSetting->setCurrentIndex(0);
+        CSysSetting->setCurrentIndex(2);
 
 
         QMetaObject::connectSlotsByName(CSysSetting);

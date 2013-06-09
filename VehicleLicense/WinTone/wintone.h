@@ -35,6 +35,7 @@ private:
     void SetDefault( QStringList& lstData );
     int CalculateDirection( TH_RECT& recDirect, int& nChannel );
     void RecordFrame( bool bSuccess, TH_PlateResult* pResult );
+    void WriteLog( bool bSuccess, TH_PlateResult* pResult );
 
 protected:
     void GetParameters( );

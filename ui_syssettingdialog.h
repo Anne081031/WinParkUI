@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'syssettingdialog.ui'
 **
-** Created: Wed May 8 16:22:20 2013
+** Created: Wed Jun 5 09:52:09 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -330,6 +330,7 @@ public:
         new QListWidgetItem(lsResolution);
         new QListWidgetItem(lsResolution);
         lsResolution->setObjectName(QString::fromUtf8("lsResolution"));
+        lsResolution->setEnabled(false);
         lsResolution->setGeometry(QRect(180, 20, 201, 151));
         lsResolution->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lsResolution->setEditTriggers(QAbstractItemView::NoEditTriggers);

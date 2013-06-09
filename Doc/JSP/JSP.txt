@@ -12,3 +12,10 @@ JSP语法，内置对象
 基于Action框架 Struts
 
 基于Component框架 JSF Tapestry WebPart AJAX
+
+
+IOC Dependency Injection ( Interface Implementation )
+www.castleproject.org / Castle ActiveRecord MonoRail Windsor
+Ext.net
+ASP.Net MVC / Unity / EF ( LINQ)
+ASP MVC / Spring.net / NHibernate

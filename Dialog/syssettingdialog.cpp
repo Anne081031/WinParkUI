@@ -10,6 +10,8 @@ CSysSettingDialog::CSysSettingDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
+    ui->lsResolution->setVisible( false );
+
     CCommonFunction::ConnectCloseButton( ui->lblClose );
     pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
     ReadFile( );

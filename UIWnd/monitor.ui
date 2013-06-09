@@ -1193,14 +1193,14 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnShift">
    <property name="geometry">
     <rect>
-     <x>176</x>
-     <y>56</y>
+     <x>177</x>
+     <y>57</y>
      <width>97</width>
      <height>97</height>
     </rect>
    </property>
    <property name="toolTip">
-    <string>注销可以重新获取卡相关信息。</string>
+    <string/>
    </property>
    <property name="styleSheet">
     <string notr="true">background-image:url();

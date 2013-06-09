@@ -137,8 +137,14 @@ void CValueCard::SaveCarInfo( )
 
        if ( pEdit->text( ).isEmpty( ) ) {
            if ( !pEdit->statusTip( ).isEmpty( ) ) {
-                strTmp = strDeleteSql.arg( pEdit->statusTip( ) );
-                CLogicInterface::GetInterface( )->ExecuteSql( strTmp, lstRows );
+               if ( 0 == nIndex ) {
+                   strTmp = strUpdateSql.arg( "δ֪", ui->cbxCarType->currentText( ),
+                                              ui->edtDriveID->text( ), pEdit->statusTip( ) );
+                   CLogicInterface::GetInterface( )->ExecuteSql( strTmp, lstRows );
+               } else {
+                    strTmp = strDeleteSql.arg( pEdit->statusTip( ) );
+                    CLogicInterface::GetInterface( )->ExecuteSql( strTmp, lstRows );
+               }
            }
            continue;
        }

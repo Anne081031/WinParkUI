@@ -24,7 +24,7 @@ CDBMaintenance::CDBMaintenance(QWidget* mainWnd, QWidget *parent) :
     connect( ui->btnClear3, SIGNAL( clicked( ) ), this, SLOT( ClearData( ) ) );
     connect( ui->btnClear4, SIGNAL( clicked( ) ), this, SLOT( ClearData( ) ) );
 
-    QDate date = QDate::currentDate( );
+    QDate date = QDate::currentDate( ).addDays( -60 );
     ui->date1->setDate( date );
     ui->date2->setDate( date );
     ui->date3->setDate( date );

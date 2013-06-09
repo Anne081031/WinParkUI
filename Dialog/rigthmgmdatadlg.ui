@@ -199,7 +199,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>启动视频：</string>
+    <string>远程管理：</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="chxStartPlate">
@@ -225,7 +225,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>启动车牌：</string>
+    <string>连网络相机：</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="chxConnectDB">
@@ -569,10 +569,10 @@
   <widget class="QLabel" name="label_26">
    <property name="geometry">
     <rect>
-     <x>62</x>
-     <y>350</y>
-     <width>60</width>
-     <height>16</height>
+     <x>164</x>
+     <y>371</y>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
    <property name="text">
@@ -580,6 +580,32 @@
    </property>
   </widget>
   <widget class="QCheckBox" name="chxDiscountReport">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>371</y>
+     <width>0</width>
+     <height>0</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_27">
+   <property name="geometry">
+    <rect>
+     <x>62</x>
+     <y>350</y>
+     <width>48</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>打印表：</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="chxDailyReport">
    <property name="geometry">
     <rect>
      <x>128</x>
@@ -592,7 +618,7 @@
     <string/>
    </property>
   </widget>
-  <widget class="QLabel" name="label_27">
+  <widget class="QLabel" name="label_28">
    <property name="geometry">
     <rect>
      <x>164</x>
@@ -602,39 +628,13 @@
     </rect>
    </property>
    <property name="text">
-    <string>日报表：</string>
-   </property>
-  </widget>
-  <widget class="QCheckBox" name="chxDailyReport">
-   <property name="geometry">
-    <rect>
-     <x>230</x>
-     <y>350</y>
-     <width>16</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string/>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_28">
-   <property name="geometry">
-    <rect>
-     <x>274</x>
-     <y>350</y>
-     <width>48</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>月报表：</string>
+    <string>滞留车辆：</string>
    </property>
   </widget>
   <widget class="QCheckBox" name="chxMonthlyReport">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>230</x>
      <y>350</y>
      <width>16</width>
      <height>16</height>
@@ -649,8 +649,8 @@
     <rect>
      <x>62</x>
      <y>370</y>
-     <width>48</width>
-     <height>16</height>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
    <property name="text">
@@ -662,8 +662,8 @@
     <rect>
      <x>128</x>
      <y>370</y>
-     <width>16</width>
-     <height>16</height>
+     <width>0</width>
+     <height>0</height>
     </rect>
    </property>
    <property name="text">
@@ -829,8 +829,8 @@
   <widget class="QCheckBox" name="chkBlacklist">
    <property name="geometry">
     <rect>
-     <x>230</x>
-     <y>370</y>
+     <x>340</x>
+     <y>350</y>
      <width>16</width>
      <height>16</height>
     </rect>
@@ -842,8 +842,8 @@
   <widget class="QLabel" name="label_31">
    <property name="geometry">
     <rect>
-     <x>164</x>
-     <y>370</y>
+     <x>274</x>
+     <y>350</y>
      <width>48</width>
      <height>16</height>
     </rect>

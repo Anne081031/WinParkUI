@@ -668,6 +668,9 @@ background-image:url(D:/WinParkUI/debug/Image/NewIcon/SysMiddleSet.jpg);</string
       </widget>
      </widget>
      <widget class="QListWidget" name="lsResolution">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>180</x>

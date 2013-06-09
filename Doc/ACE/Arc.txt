@@ -1,0 +1,43 @@
+CMS Content Management System /网站内容管理系统 开源CMS
+CDN Content Dilivery Network 是构建在数据网络上的一种分布式的内容分发网 网络影视 网站内容同步/复制
+Web Farm / Web Garden
+
+WAMP LAMP / Web Components Polymer http://www.polymer-project.org
+Memcached
+
+WCF SOA
+
+ServiceContract
+OperationContract
+DataContract
+DataMemberContract
+
+Endpoint
+
+WinRT XAML
+
+BPM BPEL( XML ) (IDS Scheer / ARIS 一流流程管理)
+ActiveBPEL
+
+Arc Pattern
+MVC
+CS BS SOA EDA MDA
+
+Requirement( Functional 安全性 / Nonfunctional 可靠性 稳定性 性能 容错性 可维护性 可升级性 )->Architecture( Logic / Physical)->Development(Logic detail / Physical detail)
+
+System Subsystem Component Tier Layer
+
+组件 低耦合 高内聚 粒度适中
+
+软件工程 硬件工程 信息 人 / 系统工程
+
+前置条件(操作执行前要满足的条件) 后置条件(操作执行后满足的条件)
+
+需求-》解决方案
+
+功能模型 部署模型
+
+术语
+Request / Requirement 要求(用户想要系统中有什么的表述) 与 需求的区别
+不同的需求会影响 成本 进度 质量
+p179

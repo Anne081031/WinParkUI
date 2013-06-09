@@ -37,6 +37,7 @@ void CMonitor::PictureRegconize( QString &strFile, int nChannel )
     if ( bPlateVideo ) {
         return;
     }
+
     int nPlateNumber = RECOG_RES;
     //strFile = "d:/1.jpg";
     ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) * RECOG_RES );
@@ -1411,6 +1412,7 @@ int CMonitor::GetInsideCard( QStringList &lstRows )
 
 void CMonitor::StartSpaceTimer( )
 {
+    //return;
     static QTimer timer;
     connect( &timer,SIGNAL( timeout( ) ), this, SLOT( SpaceInfo( ) ) );
 

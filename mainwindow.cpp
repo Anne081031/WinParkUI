@@ -385,9 +385,11 @@ void MainWindow::Permission( )
 
     bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
     ui->actVideoService->setEnabled( bEnabled );
+    ui->actRemoteMgmt->setEnabled( bEnabled );
 
     bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
     ui->actPlateService->setEnabled( bEnabled );
+    ui->actIPC->setEnabled( bEnabled );
 
     bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
     ui->actConnectDb->setEnabled( bEnabled );
@@ -443,15 +445,17 @@ void MainWindow::Permission( )
 
     bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
     ui->actDiscountSummaryReport->setEnabled( bEnabled );
+    //ui->actSerialPort->setEnabled( bEnabled );
 
     bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
     ui->actPrintDaylyReport->setEnabled( bEnabled );
 
-    bEnabled |= ( 0 != lstRows[ nField++ ].compare( strFalse ) );
-    ui->actPrintDaylyReport->setEnabled( bEnabled );
+    bEnabled = ( 0 != lstRows[ nField++ ].compare( strFalse ) );
+    //ui->actPrintDaylyReport->setEnabled( bEnabled );
+    ui->actStay->setEnabled( bEnabled );
 
     bEnabled |= ( 0 != lstRows[ nField++ ].compare( strFalse ) );
-    ui->actPrintDaylyReport->setEnabled( bEnabled );
+    //ui->actPrintDaylyReport->setEnabled( bEnabled );
 
     bEnabled = ( 0 != lstRows[ 4 ].compare( strFalse ) );
     ui->mainTB->actions( )[ 2 ]->setEnabled( bEnabled );

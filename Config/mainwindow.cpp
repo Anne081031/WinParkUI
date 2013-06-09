@@ -44,7 +44,7 @@ void MainWindow::InitCtrl( bool bEnabled )
 {
     ui->cbxCapture->setEnabled( !bEnabled );
     ui->cbxIPC->setEnabled( bEnabled );
-    ui->chkVideo->setEnabled( !bEnabled );
+    //ui->chkVideo->setEnabled( !bEnabled );
 }
 
 void MainWindow::ReadFile( )
@@ -115,7 +115,7 @@ void MainWindow::ReadFile( )
         } else if ( strType == "JWS" ) {
             ui->cbxIPC->setCurrentIndex( 1 );
         }
-    } else if ( ui->rdbAnlog->isChecked( ) ) {
+    } else {
         ui->rdbAnlog->setChecked( true );
         QString strType = pSystemCfg->value( "CommonCfg/CaptureCard", "HK" ).toString( ).toUpper( );
         if ( strType == "HK" ) {

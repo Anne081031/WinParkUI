@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'vehiclelicense.h'
 **
-** Created: Mon May 20 15:40:07 2013
+** Created: Sat Jun 8 10:00:11 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

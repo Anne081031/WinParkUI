@@ -411,8 +411,22 @@ bool CWinTone::RecognizeFile( QString& strFilePath, TH_PlateResult* pResult, int
     bRet = LPR_FileEx( pFile, pPath, pResult, nPlateNumber, &rect, ++nChannel );
     ASSERT_VEHICLE( "LPR_FileEx" );
     OUTPUT_STRING( "CWinTone::RecognizeFile( )" );
+    //WriteLog( bRet, pResult );
 
     return bRet;
+}
+
+void CWinTone::WriteLog( bool bSuccess, TH_PlateResult *pResult )
+{
+    static QFile file( "d:/test.txt");
+    if ( !file.isOpen( ) ) {
+        file.open( QFile::ReadWrite | QFile::Truncate );
+    }
+
+    static QTextStream stream( &file );
+
+    stream << QDateTime::currentDateTime( ).toString( "yyyy-MM-dd HH:mm:ss" )
+           <<" " << ( bSuccess ? QString( pResult->license ) : "Failed" ) << "\r\n";
 }
 
 bool CWinTone::RecognizeVideo( quint8* pImgData, int nWidth, int nHeight,

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'monitor.ui'
 **
-** Created: Wed May 8 16:22:20 2013
+** Created: Tue Jun 4 17:14:29 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -518,7 +518,7 @@ public:
 "border-style: outset; "));
         btnShift = new QPushButton(CMonitor);
         btnShift->setObjectName(QString::fromUtf8("btnShift"));
-        btnShift->setGeometry(QRect(176, 56, 97, 97));
+        btnShift->setGeometry(QRect(177, 57, 97, 97));
         btnShift->setStyleSheet(QString::fromUtf8("background-image:url();\n"
 "border-style: outset; "));
         btnMonthCard = new QPushButton(CMonitor);
@@ -1163,7 +1163,7 @@ public:
         btnReport->setText(QString());
         btnHelp->setText(QString());
 #ifndef QT_NO_TOOLTIP
-        btnShift->setToolTip(QApplication::translate("CMonitor", "\346\263\250\351\224\200\345\217\257\344\273\245\351\207\215\346\226\260\350\216\267\345\217\226\345\215\241\347\233\270\345\205\263\344\277\241\346\201\257\343\200\202", 0, QApplication::UnicodeUTF8));
+        btnShift->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
         btnShift->setText(QString());
         btnMonthCard->setText(QString());

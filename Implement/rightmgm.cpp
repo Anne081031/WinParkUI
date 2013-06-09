@@ -19,6 +19,8 @@ CRightMgm::CRightMgm(QWidget* mainWnd, QWidget *parent) :
     CCommonFunction::ConnectCloseButton( ui->lblClose );
 
     ui->tableRight->horizontalHeader( )->hideSection( ui->tableRight->columnCount( ) - 1 );
+    ui->tableRight->horizontalHeader( )->hideSection( 29 );
+
     ui->lblTitle->setText( windowTitle( ) );
 }
 

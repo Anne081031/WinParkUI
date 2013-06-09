@@ -96,12 +96,12 @@
     </column>
     <column>
      <property name="text">
-      <string>视频服务</string>
+      <string>远程管理</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>车牌服务</string>
+      <string>连接网络摄像机</string>
      </property>
     </column>
     <column>
@@ -191,12 +191,12 @@
     </column>
     <column>
      <property name="text">
-      <string>打印日报表</string>
+      <string>打印报表</string>
      </property>
     </column>
     <column>
      <property name="text">
-      <string>打印月报表</string>
+      <string>滞留车辆</string>
      </property>
     </column>
     <column>

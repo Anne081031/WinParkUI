@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'rigthmgmdatadlg.ui'
 **
-** Created: Wed May 8 16:22:20 2013
+** Created: Tue Jun 4 13:30:06 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -321,28 +321,28 @@ public:
         chxFeeRecord->setGeometry(QRect(340, 330, 16, 16));
         label_26 = new QLabel(CRigthMgmDataDlg);
         label_26->setObjectName(QString::fromUtf8("label_26"));
-        label_26->setGeometry(QRect(62, 350, 60, 16));
+        label_26->setGeometry(QRect(164, 371, 0, 0));
         chxDiscountReport = new QCheckBox(CRigthMgmDataDlg);
         chxDiscountReport->setObjectName(QString::fromUtf8("chxDiscountReport"));
-        chxDiscountReport->setGeometry(QRect(128, 350, 16, 16));
+        chxDiscountReport->setGeometry(QRect(230, 371, 0, 0));
         label_27 = new QLabel(CRigthMgmDataDlg);
         label_27->setObjectName(QString::fromUtf8("label_27"));
-        label_27->setGeometry(QRect(164, 350, 48, 16));
+        label_27->setGeometry(QRect(62, 350, 48, 16));
         chxDailyReport = new QCheckBox(CRigthMgmDataDlg);
         chxDailyReport->setObjectName(QString::fromUtf8("chxDailyReport"));
-        chxDailyReport->setGeometry(QRect(230, 350, 16, 16));
+        chxDailyReport->setGeometry(QRect(128, 350, 16, 16));
         label_28 = new QLabel(CRigthMgmDataDlg);
         label_28->setObjectName(QString::fromUtf8("label_28"));
-        label_28->setGeometry(QRect(274, 350, 48, 16));
+        label_28->setGeometry(QRect(164, 350, 48, 16));
         chxMonthlyReport = new QCheckBox(CRigthMgmDataDlg);
         chxMonthlyReport->setObjectName(QString::fromUtf8("chxMonthlyReport"));
-        chxMonthlyReport->setGeometry(QRect(340, 350, 16, 16));
+        chxMonthlyReport->setGeometry(QRect(230, 350, 16, 16));
         label_29 = new QLabel(CRigthMgmDataDlg);
         label_29->setObjectName(QString::fromUtf8("label_29"));
-        label_29->setGeometry(QRect(62, 370, 48, 16));
+        label_29->setGeometry(QRect(62, 370, 0, 0));
         chxYearlyReport = new QCheckBox(CRigthMgmDataDlg);
         chxYearlyReport->setObjectName(QString::fromUtf8("chxYearlyReport"));
-        chxYearlyReport->setGeometry(QRect(128, 370, 16, 16));
+        chxYearlyReport->setGeometry(QRect(128, 370, 0, 0));
         chxRMgm = new QCheckBox(CRigthMgmDataDlg);
         chxRMgm->setObjectName(QString::fromUtf8("chxRMgm"));
         chxRMgm->setGeometry(QRect(128, 172, 16, 16));
@@ -381,10 +381,10 @@ public:
         label_30->setGeometry(QRect(62, 330, 60, 16));
         chkBlacklist = new QCheckBox(CRigthMgmDataDlg);
         chkBlacklist->setObjectName(QString::fromUtf8("chkBlacklist"));
-        chkBlacklist->setGeometry(QRect(230, 370, 16, 16));
+        chkBlacklist->setGeometry(QRect(340, 350, 16, 16));
         label_31 = new QLabel(CRigthMgmDataDlg);
         label_31->setObjectName(QString::fromUtf8("label_31"));
-        label_31->setGeometry(QRect(164, 370, 48, 16));
+        label_31->setGeometry(QRect(274, 350, 48, 16));
 
         retranslateUi(CRigthMgmDataDlg);
 
@@ -416,9 +416,9 @@ public:
         btnOk->setText(QApplication::translate("CRigthMgmDataDlg", "\347\241\256\345\256\232", 0, QApplication::UnicodeUTF8));
         btnCancel->setText(QApplication::translate("CRigthMgmDataDlg", "\345\217\226\346\266\210", 0, QApplication::UnicodeUTF8));
         chxStartVideo->setText(QString());
-        label_14->setText(QApplication::translate("CRigthMgmDataDlg", "\345\220\257\345\212\250\350\247\206\351\242\221\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_14->setText(QApplication::translate("CRigthMgmDataDlg", "\350\277\234\347\250\213\347\256\241\347\220\206\357\274\232", 0, QApplication::UnicodeUTF8));
         chxStartPlate->setText(QString());
-        label_15->setText(QApplication::translate("CRigthMgmDataDlg", "\345\220\257\345\212\250\350\275\246\347\211\214\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_15->setText(QApplication::translate("CRigthMgmDataDlg", "\350\277\236\347\275\221\347\273\234\347\233\270\346\234\272\357\274\232", 0, QApplication::UnicodeUTF8));
         chxConnectDB->setText(QString());
         label_16->setText(QApplication::translate("CRigthMgmDataDlg", "\350\277\236\346\225\260\346\215\256\345\272\223\357\274\232", 0, QApplication::UnicodeUTF8));
         chxExit->setText(QString());
@@ -447,9 +447,9 @@ public:
         chxFeeRecord->setText(QString());
         label_26->setText(QApplication::translate("CRigthMgmDataDlg", "\346\212\230\346\211\243\346\212\245\350\241\250\357\274\232", 0, QApplication::UnicodeUTF8));
         chxDiscountReport->setText(QString());
-        label_27->setText(QApplication::translate("CRigthMgmDataDlg", "\346\227\245\346\212\245\350\241\250\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_27->setText(QApplication::translate("CRigthMgmDataDlg", "\346\211\223\345\215\260\350\241\250\357\274\232", 0, QApplication::UnicodeUTF8));
         chxDailyReport->setText(QString());
-        label_28->setText(QApplication::translate("CRigthMgmDataDlg", "\346\234\210\346\212\245\350\241\250\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_28->setText(QApplication::translate("CRigthMgmDataDlg", "\346\273\236\347\225\231\350\275\246\350\276\206\357\274\232", 0, QApplication::UnicodeUTF8));
         chxMonthlyReport->setText(QString());
         label_29->setText(QApplication::translate("CRigthMgmDataDlg", "\345\271\264\346\212\245\350\241\250\357\274\232", 0, QApplication::UnicodeUTF8));
         chxYearlyReport->setText(QString());

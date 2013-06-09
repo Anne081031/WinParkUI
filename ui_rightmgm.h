@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'rightmgm.ui'
 **
-** Created: Wed May 8 16:22:19 2013
+** Created: Tue Jun 4 11:41:46 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -284,9 +284,9 @@ public:
         QTableWidgetItem *___qtablewidgetitem7 = tableRight->horizontalHeaderItem(7);
         ___qtablewidgetitem7->setText(QApplication::translate("CRightMgm", "\347\263\273\347\273\237\346\227\245\345\277\227", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem8 = tableRight->horizontalHeaderItem(8);
-        ___qtablewidgetitem8->setText(QApplication::translate("CRightMgm", "\350\247\206\351\242\221\346\234\215\345\212\241", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem8->setText(QApplication::translate("CRightMgm", "\350\277\234\347\250\213\347\256\241\347\220\206", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem9 = tableRight->horizontalHeaderItem(9);
-        ___qtablewidgetitem9->setText(QApplication::translate("CRightMgm", "\350\275\246\347\211\214\346\234\215\345\212\241", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem9->setText(QApplication::translate("CRightMgm", "\350\277\236\346\216\245\347\275\221\347\273\234\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem10 = tableRight->horizontalHeaderItem(10);
         ___qtablewidgetitem10->setText(QApplication::translate("CRightMgm", "\350\277\236\346\225\260\346\215\256\345\272\223", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem11 = tableRight->horizontalHeaderItem(11);
@@ -322,9 +322,9 @@ public:
         QTableWidgetItem *___qtablewidgetitem26 = tableRight->horizontalHeaderItem(26);
         ___qtablewidgetitem26->setText(QApplication::translate("CRightMgm", "\346\212\230\346\211\243\346\261\207\346\200\273\346\212\245\350\241\250", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem27 = tableRight->horizontalHeaderItem(27);
-        ___qtablewidgetitem27->setText(QApplication::translate("CRightMgm", "\346\211\223\345\215\260\346\227\245\346\212\245\350\241\250", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem27->setText(QApplication::translate("CRightMgm", "\346\211\223\345\215\260\346\212\245\350\241\250", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem28 = tableRight->horizontalHeaderItem(28);
-        ___qtablewidgetitem28->setText(QApplication::translate("CRightMgm", "\346\211\223\345\215\260\346\234\210\346\212\245\350\241\250", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem28->setText(QApplication::translate("CRightMgm", "\346\273\236\347\225\231\350\275\246\350\276\206", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem29 = tableRight->horizontalHeaderItem(29);
         ___qtablewidgetitem29->setText(QApplication::translate("CRightMgm", "\346\211\223\345\215\260\345\271\264\346\212\245\350\241\250", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem30 = tableRight->horizontalHeaderItem(30);

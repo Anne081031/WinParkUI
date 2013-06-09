@@ -14,7 +14,7 @@
    <string>系统配置</string>
   </property>
   <property name="currentIndex">
-   <number>0</number>
+   <number>2</number>
   </property>
   <widget class="QWidget" name="tabCommonSetting">
    <attribute name="title">
@@ -562,6 +562,9 @@
      </widget>
     </widget>
     <widget class="QListWidget" name="listWidget">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
      <property name="geometry">
       <rect>
        <x>180</x>
