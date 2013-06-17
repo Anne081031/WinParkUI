@@ -207,3 +207,69 @@ UserRecord
 		"DstLocationID":"5101070001001007"
 	}
 }
+
+{
+	"ClientID":"123",
+	"TypeCode":"TabletUploadInOutRecord",
+	"UserID":"234",
+	"Data": 
+	{
+		"List":
+			[
+				{	
+					"LocationID": "5101070001001007",								
+					"State": "0",
+					"EnterTime": "2013-06-05 10:12:23",
+					"LeaveTime": "2013-06-06 10:12:23",
+					"Prepayment": "12345",
+					"Payment": "12346",
+					"EnterPlate": "川A12345",
+					"LeavePlate": "川A12346",
+					"PrepaymentOperator": "张三",
+					"PaymentOperator": "李四",
+					"EnterImage": "MTIzNDc=",
+					"LeaveImage": "MTIzNDg=",
+					"PrepaymentTime": "2013-06-05 10:12:25",
+					"PaymentTime": "2013-06-05 10:12:28",
+					"PrepaymentUserID": "567",
+					"PaymentUserID": "789"
+				},
+				{	
+					"LocationID": "5101070001001006",								
+					"State": "1",
+					"EnterTime": "2013-06-05 10:12:23",
+					"LeaveTime": "2013-06-06 10:12:23",
+					"Prepayment": "12345",
+					"Payment": "12346",
+					"EnterPlate": "川A12345",
+					"LeavePlate": "川A12346",
+					"PrepaymentOperator": "张三",
+					"PaymentOperator": "李四",
+					"EnterImage": "MTIzNDc=",
+					"LeaveImage": "MTIzNDg=",
+					"PrepaymentTime": "2013-06-05 10:12:25",
+					"PaymentTime": "2013-06-05 10:12:28",
+					"PrepaymentUserID": "567",
+					"PaymentUserID": "789"
+				},
+				{	
+					"LocationID": "5101070001001007",								
+					"State": "2",
+					"EnterTime": "2013-06-05 10:12:23",
+					"LeaveTime": "2013-06-06 10:12:23",
+					"Prepayment": "12345",
+					"Payment": "12346",
+					"EnterPlate": "川A12345",
+					"LeavePlate": "川A12346",
+					"PrepaymentOperator": "张三",
+					"PaymentOperator": "李四",
+					"EnterImage": "MTIzNDc=",
+					"LeaveImage": "MTIzNDg=",
+					"PrepaymentTime": "2013-06-05 10:12:25",
+					"PaymentTime": "2013-06-05 10:12:28",
+					"PrepaymentUserID": "567",
+					"PaymentUserID": "789"
+				}
+			]
+	}
+}

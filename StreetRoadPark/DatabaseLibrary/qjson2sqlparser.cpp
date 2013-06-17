@@ -296,6 +296,74 @@ void QJson2SqlParser::GetInOutRecordData( JsonStruct::JsonInOutRecord &sRecord )
         GetStringValue( sRecord.sHead.sValues.jsonData,
                         sRecord.sData.sKeys.strDstLocationID,
                         sRecord.sData.sValues.strDstLocationID );
+    } else if ( Constant::TypeCode.strCodeTabletUploadInOutRecord == sRecord.sHead.sValues.strTypeCode ) {
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strLocationID,
+                        sRecord.sData.sValues.strLocationID );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strState,
+                        sRecord.sData.sValues.strState );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strRecordID,
+                        sRecord.sData.sValues.strRecordID );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strEnterTime,
+                        sRecord.sData.sValues.strEnterTime );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strLeaveTime,
+                        sRecord.sData.sValues.strLeaveTime );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPrepayment,
+                        sRecord.sData.sValues.strPrepayment );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPayment,
+                        sRecord.sData.sValues.strPayment );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strEnterPlate,
+                        sRecord.sData.sValues.strEnterPlate );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strLeavePlate,
+                        sRecord.sData.sValues.strLeavePlate );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPrepaymentOperator,
+                        sRecord.sData.sValues.strPrepaymentOperator );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPaymentOperator,
+                        sRecord.sData.sValues.strPaymentOperator );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strEnterImage,
+                        sRecord.sData.sValues.strEnterImage );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strLeaveImage,
+                        sRecord.sData.sValues.strLeaveImage );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPrepaymentTime,
+                        sRecord.sData.sValues.strPrepaymentTime );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPaymentTime,
+                        sRecord.sData.sValues.strPaymentTime );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPrepaymentUserID,
+                        sRecord.sData.sValues.strPrepaymentUserID );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strPaymentUserID,
+                        sRecord.sData.sValues.strPaymentUserID );
     }
 }
 
@@ -335,6 +403,8 @@ void QJson2SqlParser::GetSpName( QString &strTypeCode, QString& strSpName )
         strSpName = Constant::SpName.strSpVehicleShiftRecord;
     } else if ( Constant::TypeCode.strCodeDataInfo == strTypeCode ) {
         strSpName = Constant::SpName.strSpQueryCommonRecord;
+    } else if ( Constant::TypeCode.strCodeTabletUploadInOutRecord == strTypeCode ) {
+        strSpName = Constant::SpName.strSpUploadInOutRecord;
     }
 }
 
@@ -392,14 +462,19 @@ void QJson2SqlParser::GetDeviceXmlData( JsonStruct::JsonDeviceRecord &sRecord, Q
 void QJson2SqlParser::ParseInOutRecordJson( QByteArray& byJson, JsonStruct::JsonHead& sHead )
 {
     char nFlag = 0;
+    QString strXml;
     JsonStruct::JsonInOutRecord sRecordRequest;
 
     GetJsonObject( byJson, sRecordRequest.sHead );
     GetSpName( sRecordRequest.sHead.sValues.strTypeCode, sRecordRequest.sHead.strSpName );
-    GetInOutRecordData( sRecordRequest );
 
-    QString strXml;
-    GetInOutXmlData( sRecordRequest, strXml );
+    if ( Constant::TypeCode.strCodeTabletUploadInOutRecord == sRecordRequest.sHead.sValues.strTypeCode ) {
+        GetUploadInOutXmlData( sRecordRequest, strXml );
+    } else {
+        GetInOutRecordData( sRecordRequest );
+        GetInOutXmlData( sRecordRequest, strXml );
+    }
+
     byJson.append( strXml );
     nFlag = sRecordRequest.sData.sValues.strState.toShort( );
 
@@ -462,7 +537,61 @@ void QJson2SqlParser::GetInOutXmlData( JsonStruct::JsonInOutRecord &sRecord, QSt
                              sRecord.sData.sValues.strSrcLocationID,
                              sRecord.sData.sValues.strDstLocationID,
                              sRecord.sHead.strLog );
+    } else if ( Constant::TypeCode.strCodeTabletUploadInOutRecord == sRecord.sHead.sValues.strTypeCode ) {
+        strXml = Constant::SpXmlPattern.strXmlTabletUploadInOutRecord.arg(
+                             sRecord.sData.sValues.strLocationID,
+                             sRecord.sData.sValues.strState,
+                             sRecord.sData.sValues.strRecordID,
+                             sRecord.sData.sValues.strEnterTime,
+                             sRecord.sData.sValues.strLeaveTime,
+                             sRecord.sData.sValues.strPrepayment,
+                             sRecord.sData.sValues.strPayment,
+                             sRecord.sData.sValues.strEnterPlate,
+                             sRecord.sData.sValues.strLeavePlate );
+
+        strXml = strXml.arg( sRecord.sData.sValues.strPrepaymentOperator,
+                             sRecord.sData.sValues.strPaymentOperator,
+                             sRecord.sData.sValues.strEnterImage,
+                             sRecord.sData.sValues.strLeaveImage,
+                             sRecord.sData.sValues.strPrepaymentTime,
+                             sRecord.sData.sValues.strPaymentTime,
+                             sRecord.sData.sValues.strPrepaymentUserID,
+                             sRecord.sData.sValues.strPaymentUserID );
     }
+}
+
+void QJson2SqlParser::GetUploadInOutXmlData( JsonStruct::JsonInOutRecord &sRecord, QString &strXml )
+{
+    QJsonValue aryValue = sRecord.sHead.sValues.jsonData.value( sRecord.sData.sKeys.strList );
+    if ( !aryValue.isArray( ) ) {
+        return;
+    }
+
+    QJsonArray lstValue = aryValue.toArray( );
+    qint32 nItems = lstValue.count( );
+    JsonStruct::JsonInOutRecord sTmpRecord;
+    QString strTmpXml;
+
+    for ( qint32 nItem = 0; nItem < nItems; nItem++ ) {
+        aryValue = lstValue.at( nItem );
+
+        if ( !aryValue.isObject( ) ) {
+            continue;
+        }
+
+        sTmpRecord.sHead.sValues.strTypeCode = sRecord.sHead.sValues.strTypeCode;
+        sTmpRecord.sHead.sValues.jsonData = aryValue.toObject( );
+
+        GetInOutRecordData( sTmpRecord );
+        GetInOutXmlData( sTmpRecord, strTmpXml );
+        strXml.append( strTmpXml );
+    }
+
+    strXml.insert( 0, "<Data>" );
+    strXml.append( "<Accessor>" );
+    strXml.append( sRecord.sHead.strLog );
+    strXml.append( "</Accessor>" );
+    strXml.append( "</Data>" );
 }
 
 void QJson2SqlParser::ParseGroupJson( QByteArray &byJson, JsonStruct::JsonHead &sHead )

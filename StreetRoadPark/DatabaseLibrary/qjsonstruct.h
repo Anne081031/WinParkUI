@@ -139,11 +139,23 @@ public:
                QString strRecordID;
                QString strLocationID;
                QString strPlate;
+               QString strEnterPlate;
+               QString strLeavePlate;
                QString strPayment;
+               QString strPrepayment;
                QString strOperator;
+               QString strPaymentOperator;
+               QString strPrepaymentOperator;
                QString strPaymentTime;
+               QString strPrepaymentTime;
                QString strImage;
+               QString strEnterImage;
+               QString strLeaveImage;
                QString strState;
+               QString strEnterTime;
+               QString strLeaveTime;
+               QString strPrepaymentUserID;
+               QString strPaymentUserID;
 
                QString strEnterStartTime;
                QString strEnterEndTime;
@@ -160,15 +172,25 @@ public:
                QString strSrcLocationID;
                QString strDstLocationID;
 
+               QString strList;
+
                __Keys( )
                {
                    strRecordID = "RecordID";
                    strLocationID = "LocationID";
                    strPlate = "Plate";
+                   strEnterPlate = "EnterPlate";
+                   strLeavePlate = "LeavePlate";
                    strPayment = "Payment";
+                   strPrepayment = "Prepayment";
                    strOperator = "Operator";
+                   strOperator = "PrepaymentOperator";
+                   strOperator = "PaymentOperator";
                    strPaymentTime = "PaymentTime";
+                   strPrepaymentTime = "PrepaymentTime";
                    strImage = "Image";
+                   strEnterImage = "EnterImage";
+                   strLeaveImage = "LeaveImage";
                    strState = "State";
 
                    strEnterStartTime = "EnterStartTime";
@@ -184,6 +206,12 @@ public:
                    strParkID = "ParkID";
                    strSrcLocationID = "SrcLocationID";
                    strDstLocationID = "DstLocationID";
+                   strList = "List";
+
+                   strEnterTime = "EnterTime";
+                   strLeaveTime = "LeaveTime";
+                   strPrepaymentUserID = "PrepaymentUserID";
+                   strPaymentUserID = "PaymentUserID";
                }
             } sKeys;
 
@@ -191,11 +219,23 @@ public:
                 QString strRecordID;
                 QString strLocationID;
                 QString strPlate;
+                QString strEnterPlate;
+                QString strLeavePlate;
                 QString strPayment;
+                QString strPrepayment;
                 QString strOperator;
+                QString strPaymentOperator;
+                QString strPrepaymentOperator;
                 QString strPaymentTime;
+                QString strPrepaymentTime;
                 QString strImage;
+                QString strEnterImage;
+                QString strLeaveImage;
                 QString strState;
+                QString strEnterTime;
+                QString strLeaveTime;
+                QString strPrepaymentUserID;
+                QString strPaymentUserID;
 
                 QString strEnterStartTime;
                 QString strEnterEndTime;
@@ -208,8 +248,11 @@ public:
                 QString strPaymentEndTime;
                 QString strUnitID;
                 QString strParkID;
+
                 QString strSrcLocationID;
                 QString strDstLocationID;
+
+                QString strList;
             } sValues;
         } sData;
     } JsonInOutRecord, *PJsonInOutRecord;

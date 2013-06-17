@@ -1,2 +1,4 @@
+Napster eMule eDonkey Thunder BitTorrent 文件共享 / PPLive 流媒体 / Skype 语音通信
+虚拟网络 面向应用 
 [P2P技术揭秘.P2P网络技术原理与典型系统开发.pdf
-p10
+p41

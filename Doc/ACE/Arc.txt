@@ -40,4 +40,14 @@ System Subsystem Component Tier Layer
 术语
 Request / Requirement 要求(用户想要系统中有什么的表述) 与 需求的区别
 不同的需求会影响 成本 进度 质量
-p179
+
+角色 Role 职责 Responsibilty 用户 User
+
+MDA
+CIM(Computer Independent Model) PIM(Platform Independent Model) PSM( Pltaform Specific Model)
+
+
+分布式开发 分布式管理 集成使用
+复杂系统-》子系统(子系统)-》模块
+
+p207

@@ -47,6 +47,7 @@ public:
         QString strCodeUnhandledSensorData; // Server=>Tablet
         QString strCodeTabletQueryReprotData;
         QString strCodeTabletVehicleShiftRequest;
+        QString strCodeTabletUploadInOutRecord;
 
         // TypeSystem
         QString strCodeDeviceRegister; // Tablet=>Server
@@ -82,6 +83,7 @@ public:
             strCodeUnhandledSensorData = "UnhandledSensorData";
             strCodeTabletQueryReprotData = "TabletQueryReportData";
             strCodeTabletVehicleShiftRequest = "TabletVehicleShiftRequest";
+            strCodeTabletUploadInOutRecord = "TabletUploadInOutRecord";
 
             strCodeDeviceRegister = "DeviceRegister";
             strCodeDeviceUnregister = "DeviceUnregister";
@@ -108,6 +110,7 @@ public:
         QString strSpQueryConfigRecord;
         QString strSpQueryCommonRecord;
         QString strSpVehicleShiftRecord;
+        QString strSpUploadInOutRecord;
 
         __SpName( )
         {
@@ -124,6 +127,7 @@ public:
             strSpQueryConfigRecord = "QueryConfigRecord";
             strSpQueryCommonRecord = "QueryCommonRecord";
             strSpVehicleShiftRecord = "VehicleShiftRecord";
+            strSpUploadInOutRecord = "UploadInOutRecord";
         }
     } TSpName;
 
@@ -137,6 +141,7 @@ public:
         QString strXmlUnhandledSensorRecord;
         QString strXmlTabletQueryReportRecord;
         QString strXmlTabletVehicleShiftRecord;
+        QString strXmlTabletUploadInOutRecord;
         QString strXmlDeviceRecord;
         QString strXmlGroupRecord;
 
@@ -226,6 +231,23 @@ public:
             strXmlConfigRecord = "<Data><DeviceID>%1</DeviceID><Accessor>%2</Accessor></Data>";
             strXmlDataInfo = "<Data><DataType>%1</DataType><Accessor>%2</Accessor></Data>";
             strXmlTabletVehicleShiftRecord = "<Data><SrcLocationID>%1</SrcLocationID><DstLocationID>%2</DstLocationID><Accessor>%3</Accessor></Data>";
+            strXmlTabletUploadInOutRecord = "<Row><LocationID>%1</LocationID> \
+                                             <State>%2</State> \
+                                             <RecordID>%3</RecordID> \
+                                             <EnterTime>%4</EnterTime> \
+                                             <LeaveTime>%5</LeaveTime> \
+                                             <Prepayment>%6</Prepayment> \
+                                             <Payment>%7</Payment> \
+                                             <EnterPlate>%8</EnterPlate> \
+                                             <LeavePlate>%9</LeavePlate> \
+                                             <PrepaymentOperator>%10</PrepaymentOperator> \
+                                             <PaymentOperator>%11</PaymentOperator> \
+                                             <EnterImage>%12</EnterImage> \
+                                             <LeaveImage>%13</LeaveImage> \
+                                             <PrepaymentTime>%14</PrepaymentTime> \
+                                             <PaymentTime>%15</PaymentTime> \
+                                             <PrepaymentUserID>%16</PrepaymentUserID> \
+                                             <PaymentUserID>%17</PaymentUserID></Row>";
         }
     } TSpXmlPattern;
 

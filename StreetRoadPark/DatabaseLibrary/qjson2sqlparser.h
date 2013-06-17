@@ -36,6 +36,7 @@ private:
 
     void GetInOutRecordData( JsonStruct::JsonInOutRecord& sRecord );
     void GetInOutXmlData( JsonStruct::JsonInOutRecord& sRecord, QString& strXml );
+    void GetUploadInOutXmlData( JsonStruct::JsonInOutRecord& sRecord, QString& strXml );
 
     void GetDeviceRecordData( JsonStruct::JsonDeviceRecord& sRecord );
     void GetDeviceXmlData( JsonStruct::JsonDeviceRecord& sRecord, QString& strXml );

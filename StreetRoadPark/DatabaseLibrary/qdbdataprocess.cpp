@@ -162,6 +162,10 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
             } else if ( Constant::TypeCode.strCodeTabletVehicleShiftRequest == sHead.sValues.strTypeCode ) {
                 bMulticast = true;
                 bUnicast = false;
+            } else if ( Constant::TypeCode.strCodeTabletUploadInOutRecord == sHead.sValues.strTypeCode ) {
+                bMulticast = false;
+                bUnicast = false;
+                bFeedback = true;
             }
             break;
 
