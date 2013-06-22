@@ -1,0 +1,4 @@
+Jabber/XMPP/Jingle
+http://www.jabbercn.org/ http://www.jabber.org/ http://xmpp.org/ http://xmpp.net/
+
+jingle(p2p) libjingle (STUN TURN ICE )
