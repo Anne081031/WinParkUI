@@ -1,5 +1,6 @@
 #include "qanalogcamerathread.h"
 
+//采集卡线程，完成图片抓取，视频流截取
 QAnalogCameraThread* QAnalogCameraThread::pThreadInstance = NULL;
 
 QAnalogCameraThread::QAnalogCameraThread(QObject *parent) :

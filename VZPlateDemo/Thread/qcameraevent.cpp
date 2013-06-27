@@ -2,7 +2,7 @@
 
 QCameraEvent::QCameraEvent(Type evtType) : QEvent(evtType)
 {
-    hVideoWnd = INVALID_HANDLE_VALUE;
+    //hVideoWnd = INVALID_HANDLE_VALUE;
     nChannelNumber = -1;
 }
 

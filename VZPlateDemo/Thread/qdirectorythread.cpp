@@ -3,6 +3,7 @@
 #include <QApplication>
 #include <QDir>
 
+//文件识别时目录遍历线程
 QDirectoryThread* QDirectoryThread::pThreadInstance = NULL;
 
 QDirectoryThread::QDirectoryThread(QObject *parent) :

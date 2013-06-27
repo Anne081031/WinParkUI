@@ -1,5 +1,6 @@
 #include "qfilecamerathread.h"
 
+//视频文件，完成视频流识别
 QFileCameraThread* QFileCameraThread::pThreadInstance = NULL;
 
 QFileCameraThread::QFileCameraThread(QObject *parent) :

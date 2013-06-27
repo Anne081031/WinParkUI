@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QFileInfo>
 
+//完成车牌识别
 QPlateThread* QPlateThread::pThreadInstance = NULL;
 
 QPlateThread::QPlateThread(QObject *parent) :
