@@ -27,7 +27,11 @@ SOURCES += main.cpp\
     Thread/qfilecamerathread.cpp \
     Thread/qdirectorythread.cpp \
     qcommon.cpp \
-    Thread/qdirectoryevent.cpp
+    Thread/qdirectoryevent.cpp \
+    Thread/qhkcapturecardthread.cpp \
+    Thread/qtmcapturecardthread.cpp \
+    Thread/qhkipcthread.cpp \
+    Thread/qjvsipcthread.cpp
 
 HEADERS  += mainwindow.h \
     Thread/qplatethread.h \
@@ -38,7 +42,11 @@ HEADERS  += mainwindow.h \
     Thread/qfilecamerathread.h \
     Thread/qdirectorythread.h \
     qcommon.h \
-    Thread/qdirectoryevent.h
+    Thread/qdirectoryevent.h \
+    Thread/qhkcapturecardthread.h \
+    Thread/qtmcapturecardthread.h \
+    Thread/qhkipcthread.h \
+    Thread/qjvsipcthread.h
 
 FORMS    += mainwindow.ui
 

@@ -319,7 +319,7 @@ void MainWindow::InitializeSlot( )
     hashFreqSync.insert( 1, ui->rbSync08 );
     hashFreqSync.insert( 2, ui->rbSync09 );
     hashFreqSync.insert( 3, ui->rbSync10 );
-    hashFreqSync.insert( 4, ui->rbSync11 );
+    //hashFreqSync.insert( 4, ui->rbSync11 );
 
     lstFlashCtrl.append( ui->rbSync04 );
     lstFlashCtrl.append( ui->rbSync05 );
@@ -349,7 +349,7 @@ void MainWindow::InitializeSlot( )
     connect( ui->rbSync08, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
     connect( ui->rbSync09, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
     connect( ui->rbSync10, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
-    connect( ui->rbSync11, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
+    //connect( ui->rbSync11, SIGNAL( clicked( ) ), this, SLOT( OnRbSyncXClicked( ) ) );
 
     connect( ui->spFlashLight, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );
     connect( ui->spFlashTime, SIGNAL( valueChanged( int ) ), this, SLOT( OnSpXValueChanged( int ) ) );

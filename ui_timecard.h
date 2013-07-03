@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'timecard.ui'
 **
-** Created: Wed May 8 16:22:19 2013
+** Created: Wed Jul 3 15:20:56 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -85,8 +85,8 @@ public:
         tab_7 = new QWidget();
         tab_7->setObjectName(QString::fromUtf8("tab_7"));
         tableAccess = new QTableWidget(tab_7);
-        if (tableAccess->columnCount() < 4)
-            tableAccess->setColumnCount(4);
+        if (tableAccess->columnCount() < 5)
+            tableAccess->setColumnCount(5);
         QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
         tableAccess->setHorizontalHeaderItem(0, __qtablewidgetitem5);
         QTableWidgetItem *__qtablewidgetitem6 = new QTableWidgetItem();
@@ -95,6 +95,8 @@ public:
         tableAccess->setHorizontalHeaderItem(2, __qtablewidgetitem7);
         QTableWidgetItem *__qtablewidgetitem8 = new QTableWidgetItem();
         tableAccess->setHorizontalHeaderItem(3, __qtablewidgetitem8);
+        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
+        tableAccess->setHorizontalHeaderItem(4, __qtablewidgetitem9);
         tableAccess->setObjectName(QString::fromUtf8("tableAccess"));
         tableAccess->setGeometry(QRect(10, 10, 841, 411));
         tableAccess->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
@@ -155,14 +157,14 @@ public:
         tableEntranceRight = new QTableWidget(tab_8);
         if (tableEntranceRight->columnCount() < 4)
             tableEntranceRight->setColumnCount(4);
-        QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(0, __qtablewidgetitem9);
         QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(1, __qtablewidgetitem10);
+        tableEntranceRight->setHorizontalHeaderItem(0, __qtablewidgetitem10);
         QTableWidgetItem *__qtablewidgetitem11 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(2, __qtablewidgetitem11);
+        tableEntranceRight->setHorizontalHeaderItem(1, __qtablewidgetitem11);
         QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(3, __qtablewidgetitem12);
+        tableEntranceRight->setHorizontalHeaderItem(2, __qtablewidgetitem12);
+        QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
+        tableEntranceRight->setHorizontalHeaderItem(3, __qtablewidgetitem13);
         tableEntranceRight->setObjectName(QString::fromUtf8("tableEntranceRight"));
         tableEntranceRight->setGeometry(QRect(10, 10, 1271, 371));
         lblCardNo = new QLabel(tab_8);
@@ -215,6 +217,8 @@ public:
         ___qtablewidgetitem7->setText(QApplication::translate("CTimeCard", "\347\246\273\345\274\200\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem8 = tableAccess->horizontalHeaderItem(3);
         ___qtablewidgetitem8->setText(QApplication::translate("CTimeCard", "\347\246\273\345\274\200\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem9 = tableAccess->horizontalHeaderItem(4);
+        ___qtablewidgetitem9->setText(QApplication::translate("CTimeCard", "\350\256\260\345\275\225ID", 0, QApplication::UnicodeUTF8));
         groupBox_8->setTitle(QApplication::translate("CTimeCard", "\345\233\276\345\203\2171", 0, QApplication::UnicodeUTF8));
         lblImg1->setText(QString());
         groupBox_14->setTitle(QApplication::translate("CTimeCard", "\345\233\276\345\203\2172", 0, QApplication::UnicodeUTF8));
@@ -225,14 +229,14 @@ public:
         lblImg4->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_7), QApplication::translate("CTimeCard", "\346\234\200\350\277\221\350\277\233\345\207\272\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
         pushButton_8->setText(QApplication::translate("CTimeCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem9 = tableEntranceRight->horizontalHeaderItem(0);
-        ___qtablewidgetitem9->setText(QApplication::translate("CTimeCard", "\351\200\232\351\201\223\345\220\215\347\247\260", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem10 = tableEntranceRight->horizontalHeaderItem(1);
-        ___qtablewidgetitem10->setText(QApplication::translate("CTimeCard", "\350\277\233\345\205\245\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem11 = tableEntranceRight->horizontalHeaderItem(2);
-        ___qtablewidgetitem11->setText(QApplication::translate("CTimeCard", "\347\246\273\345\274\200\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem12 = tableEntranceRight->horizontalHeaderItem(3);
-        ___qtablewidgetitem12->setText(QApplication::translate("CTimeCard", "ID", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem10 = tableEntranceRight->horizontalHeaderItem(0);
+        ___qtablewidgetitem10->setText(QApplication::translate("CTimeCard", "\351\200\232\351\201\223\345\220\215\347\247\260", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem11 = tableEntranceRight->horizontalHeaderItem(1);
+        ___qtablewidgetitem11->setText(QApplication::translate("CTimeCard", "\350\277\233\345\205\245\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem12 = tableEntranceRight->horizontalHeaderItem(2);
+        ___qtablewidgetitem12->setText(QApplication::translate("CTimeCard", "\347\246\273\345\274\200\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem13 = tableEntranceRight->horizontalHeaderItem(3);
+        ___qtablewidgetitem13->setText(QApplication::translate("CTimeCard", "ID", 0, QApplication::UnicodeUTF8));
         lblCardNo->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_8), QApplication::translate("CTimeCard", "\345\207\272\345\205\245\346\235\203\351\231\220", 0, QApplication::UnicodeUTF8));
         btnMinimalize->setText(QApplication::translate("CTimeCard", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));

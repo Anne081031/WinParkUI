@@ -1,87 +1,77 @@
 #include "qanalogcamerathread.h"
 
 //采集卡线程，完成图片抓取，视频流截取
-QAnalogCameraThread* QAnalogCameraThread::pThreadInstance = NULL;
 
 QAnalogCameraThread::QAnalogCameraThread(QObject *parent) :
     QThread(parent)
 {
-    hChannel = INVALID_HANDLE_VALUE;
 }
 
-QAnalogCameraThread* QAnalogCameraThread::GetInstance( )
+void QAnalogCameraThread::PostEvent( QCameraEvent *pEvent )
 {
-    if ( NULL == pThreadInstance ) {
-        pThreadInstance = new QAnalogCameraThread( );
-        pThreadInstance->moveToThread( pThreadInstance );
-        pThreadInstance->start( );
-    }
-
-    return pThreadInstance;
+    qApp->postEvent( this, pEvent );
 }
 
-void QAnalogCameraThread::InitHikSDK( int nChannel, HWND hVideo )
+void QAnalogCameraThread::PostInitCaptureSDKEvent( HWND hParentVideo )
 {
-    int nDsp = InitDSPs( );
-
-    if ( 0 >= nDsp ) {
-        return;
-    }
-
-    hChannel = ChannelOpen( nChannel );
-
-    if ( INVALID_HANDLE_VALUE == hChannel ) {
-        DeInitDSPs( );
-        return;
-    }
-
-    int nRet = StartVideoCapture( hChannel );
-    if ( 0 != nRet ) {
-        ChannelClose( hChannel );
-        DeInitDSPs( );
-        hChannel = INVALID_HANDLE_VALUE;
-    }
-
-    RECT rcClient;
-    ::GetWindowRect( hVideo, &rcClient );
-    nRet = StartVideoPreview( hChannel, hVideo, &rcClient, TRUE, 0, 25 );
-
-    if ( 0 != nRet ) {
-        StopVideoCapture( hChannel );
-        ChannelClose( hChannel );
-        DeInitDSPs( );
-        hChannel = INVALID_HANDLE_VALUE;
-    }
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraInit );
+    pEvent->SetParentWndHandle( hParentVideo );
+    PostEvent( pEvent );
 }
 
-void QAnalogCameraThread::UninitHikSDK( )
+void QAnalogCameraThread::PostUninitCaptureSDKEvent( )
 {
-    BOOL bRet = FALSE;
-    int nRet = 0;
-
-    if ( INVALID_HANDLE_VALUE != hChannel ) {
-        nRet = StopVideoPreview( hChannel );
-        nRet = StopVideoCapture( hChannel );
-        nRet = ChannelClose( hChannel );
-        bRet = DeInitDSPs( );
-    }
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraUninit );
+    PostEvent( pEvent );
 }
 
-void QAnalogCameraThread::run( )
+void QAnalogCameraThread::PostOpenChannelEvent( int nChannel )
 {
-    exec( );
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraOpenChannel );
+    pEvent->SetChannel( nChannel );
+    PostEvent( pEvent );
 }
 
-void QAnalogCameraThread::customEvent( QEvent *e )
+void QAnalogCameraThread::PostCloseChannelEvent( int nChannel )
 {
-    QCameraEvent* pEvent = ( QCameraEvent* ) e;
-    QCameraEvent::CameraEventType evtType = ( QCameraEvent::CameraEventType ) pEvent->type( );
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraCloseChannel );
+    pEvent->SetChannel( nChannel );
+    PostEvent( pEvent );
+}
 
-    switch ( evtType ) {
-    case QCameraEvent::CameraFileRecognize :
-        break;
+void QAnalogCameraThread::PostStartCaptureEvent( int nChannel )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStartCapture );
+    pEvent->SetChannel( nChannel );
+    PostEvent( pEvent );
+}
 
-    case QCameraEvent::CameraVideoRecognize :
-        break;
-    }
+void QAnalogCameraThread::PostStopCaptureEvent( int nChannel )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStopCapture );
+    pEvent->SetChannel( nChannel );
+    PostEvent( pEvent );
+}
+
+void QAnalogCameraThread::PostPlayVideoEvent( int nChannel, HWND hVideo )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStartPreview );
+    pEvent->SetChannel( nChannel );
+    pEvent->SetVideoWndHandle( hVideo );
+    PostEvent( pEvent );
+}
+
+void QAnalogCameraThread::PostStopVideoEvent( int nChannel )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStopPreview );
+    pEvent->SetChannel( nChannel );
+    PostEvent( pEvent );
+}
+
+void QAnalogCameraThread::PostCaptrueImageEvent( int nChannel, QString& strFile )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraCaptureImage );
+    pEvent->SetChannel( nChannel );
+    pEvent->SetImgFile( strFile );
+    PostEvent( pEvent );
 }

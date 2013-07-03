@@ -2264,12 +2264,12 @@ bool CProcessData::MonthCardWorkMode( QString& strCardNo )
     QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
     bool bRet = pSet->value( "CommonSet/MonthlyWorkMode", false ).toBool( );
 
-    if ( !bRet ) {
+    //if ( !bRet ) {
         CommonDataType::PEntityInfo pInfo = CCommonFunction::GetCardEntity( ).value( strCardNo );
         if ( NULL != pInfo ) {
-            bRet = pInfo->bMIMO;
+            bRet &= pInfo->bMIMO;
         }
-    }
+    //}
 
     return bRet;
 }
@@ -2376,7 +2376,9 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     bool bMonthMultipleCard = bMonthCard && MonthCardWorkMode( strCardNumber );
     QString strMonthMultipleCardNo = "%1(%2)";
     if ( bMonthMultipleCard ) {
-        strMonthMultipleCardNo = strMonthMultipleCardNo.arg( strCardNumber, QString::number( dtCurrent.toMSecsSinceEpoch( ) ) );
+        // 多进多出 自编卡号
+        //strMonthMultipleCardNo = strMonthMultipleCardNo.arg( strCardNumber, QString::number( dtCurrent.toMSecsSinceEpoch( ) ) );
+        strMonthMultipleCardNo = strCardNumber;
     }
 
     if ( 1 != cLevel ) {  
@@ -2473,16 +2475,61 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
 
     if ( bMonthMultipleCard ) {
         BroadcastRecord( strMonthMultipleCardNo, dtCurrent, 10, strPlate, strCardType, strChannel, cCan );
+        //BroadcastRecord( strCardNumber, dtCurrent, cardKind, strPlate, strCardType, strChannel, cCan );
     } else {
         BroadcastRecord( strCardNumber, dtCurrent, cardKind, strPlate, strCardType, strChannel, cCan );
     }
     /////////////////////////////////
     if ( bMonthMultipleCard ) {
+        // MIMO 记录分开写
         QString strIn = bEnter ? "in" : "out";
         QString strOut = bEnter ? "": "out";
-        strSql = QString( "Insert IGNORE Into stoprd ( %1shebeiname, %2time, cardno, carcp%3, cardkind ) Values (  \
-                          '%4', '%5', '%6', '%7', '%8' ) " );
+        strSql = QString( "Insert IGNORE Into stoprd ( %1shebeiname, %2time, cardno, carcp%3, cardkind, childrdindx ) Values (  \
+                          '%4', '%5', '%6', '%7', '%8', 1 ) " );
         strSql = strSql.arg( strIn, strIn, strOut, strChannel, strDateTime, strMonthMultipleCardNo, strPlate, strCardType );
+#if false // 合成一条
+        if ( bEnter ) {
+            strSql = QString( "select a.stoprdid from CardStoprdID a, stoprd b \
+                              where a.cardno = '%1' and a.stoprdid = b.stoprdid \
+                              and intime is not null and outtime is null and cardkind = '月租卡'" ).arg( strMonthMultipleCardNo );
+            QStringList lstRow;
+            CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
+
+            if ( 0 == lstRow.count( ) ) {
+                strSql = QString( "Insert IGNORE Into stoprd ( inshebeiname, intime, cardno, carcp, cardkind ) Values ( '%1', '%2', '%3', '%4', '%5' ) " );
+                strSql = strSql.arg( strChannel, strDateTime, strCardNumber, strPlate, strCardType );
+            }
+            else {
+                strSql = QString( "UPDATE IGNORE stoprd set inshebeiname = '%1', intime = '%2', cardno = '%3', carcp = '%4', cardkind = '%5'\
+                                  where stoprdid = %6" );
+                strSql = strSql.arg( strChannel, strDateTime, strCardNumber, strPlate, strCardType, lstRow.at( 0 ) );
+            }
+        } else {
+            strSql = QString( "select a.stoprdid from CardStoprdID a, stoprd b \
+                              where a.cardno = '%1' and a.stoprdid = b.stoprdid AND \
+                              cardkind = '月租卡'" ).arg( strMonthMultipleCardNo );
+            QStringList lstRow;
+            CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
+
+            if ( 0 == lstRow.count( ) ) {
+                strSql = QString( "Insert IGNORE Into stoprd ( outshebeiname, outtime, cardno, carcpout, cardkind ) Values (  \
+                              '%1', '%2', '%3', '%4', '%5' ) " );
+                strSql = strSql.arg( strChannel, strDateTime, strMonthMultipleCardNo, strPlate, strCardType );
+            } else {
+                strSql = QString( "Update IGNORE stoprd Set outshebeiname = '%1', outtime = '%2', carcpout = '%3', cardkind = '%4', feefactnum = %5, \
+                                  feenum = %6, feetime = '%7', feeoperator = '%8', feekind = '%9', feezkyy = '%10' \
+                                  Where stoprdid = \
+                        ( select stoprdid from CardStoprdID where cardno = '%11' ) " );
+                strSql = strSql.arg( strChannel, strDateTime, strPlate, strCardType, QString::number( nAmount ),
+                                                  QString::number( nRealAmount ), strDateTime, pMainWindow->GetUserName( ) );
+
+                strSql = strSql.arg( bMonthCard ? "" : pFeeDlg->GetFeeRateType( ),
+                                              bMonthCard ? "无优惠" : pFeeDlg->GetDiscountType( ),
+                                              strCardNumber );
+            }
+
+        }
+#endif
     } else {
         if ( bEnter ) {
             strSql = QString( "Insert IGNORE Into stoprd ( inshebeiname, intime, cardno, carcp, cardkind ) Values ( '%1', '%2', '%3', '%4', '%5' ) " );
@@ -2554,6 +2601,7 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     if ( bMonthMultipleCard ) {
         ControlVehicleImage( strCardNumber, true, nChannel, cLevel, bMonthMultipleCard,
                              bMonthMultipleCard, strMonthMultipleCardNo );
+        //ControlVehicleImage( strCardNumber, true, nChannel );
     } else {
         ControlVehicleImage( strCardNumber, true, nChannel );
     }
@@ -2637,7 +2685,7 @@ void CProcessData::ControlVehicleImage( QString &strCardNo, bool bSave2Db, int n
 
     QString strWhere;
     if ( bFreeCard ) {
-        strWhere = QString(  " Where cardno = '%1'" ).arg( bMonth ? strMonth : strCardNo );
+        strWhere = QString(  " Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' )" ).arg( bMonth ? strMonth : strCardNo );
     } else {
         //strWhere = QString( " Where cardno = '%1' And intime in ( Select intime From \
         //                          ( Select Max( intime ) As intime \

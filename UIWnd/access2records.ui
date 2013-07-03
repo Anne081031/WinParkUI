@@ -121,6 +121,11 @@
       <string>离开车牌</string>
      </property>
     </column>
+    <column>
+     <property name="text">
+      <string>记录ID</string>
+     </property>
+    </column>
    </widget>
    <widget class="QTabWidget" name="tabWidget">
     <property name="geometry">

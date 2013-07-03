@@ -10,6 +10,10 @@ INPUT(
 ./debug/qdirectorythread.o
 ./debug/qcommon.o
 ./debug/qdirectoryevent.o
+./debug/qhkcapturecardthread.o
+./debug/qtmcapturecardthread.o
+./debug/qhkipcthread.o
+./debug/qjvsipcthread.o
 ./debug/moc_mainwindow.o
 ./debug/moc_qplatethread.o
 ./debug/moc_qanalogcamerathread.o
@@ -17,5 +21,9 @@ INPUT(
 ./debug/moc_qfilecamerathread.o
 ./debug/moc_qdirectorythread.o
 ./debug/moc_qcommon.o
+./debug/moc_qhkcapturecardthread.o
+./debug/moc_qtmcapturecardthread.o
+./debug/moc_qhkipcthread.o
+./debug/moc_qjvsipcthread.o
 ./debug/qrc_Resource.o
 );

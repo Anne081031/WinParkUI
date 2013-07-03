@@ -4,6 +4,11 @@
 #include <QMainWindow>
 #include <QLabel>
 
+#include "Thread/qdirectorythread.h"
+#include "Thread/qhkcapturecardthread.h"
+#include "Thread/qtmcapturecardthread.h"
+#include "Thread/qplatethread.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -18,6 +23,9 @@ public:
 
 private:
     void LoadImg( QLabel* lblCtrlLeft, QLabel* lblCtrlRight, QLabel* lblCtrlDown, int nRow );
+
+private:
+    QAnalogCameraThread* pAnalogCamera;
 
 private slots:
     void HandlePlateResult( QStringList lstResult );
@@ -35,8 +43,15 @@ private slots:
 
     void on_btnVideoFile_clicked();
 
+    void on_btnAnalogCaptureFile_clicked();
+
+    void on_btnIPCCaptureFile_clicked();
+
+    void on_btnStopVideoRecognize_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QString strPlateDir;
 };
 
 #endif // MAINWINDOW_H

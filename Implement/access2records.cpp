@@ -80,6 +80,7 @@ void CAccess2Records::ControlDataGrid( )
     pHeader->resizeSection( nIndex, pHeader->sectionSize( nIndex ) * 2 );
     nIndex = 9;
     pHeader->resizeSection( nIndex, pHeader->sectionSize( nIndex ) * 2 );
+    pHeader->hideSection( ui->tableAccessRecord->columnCount( ) - 1 );
 }
 
 void CAccess2Records::closeEvent( QCloseEvent *event )
@@ -92,11 +93,11 @@ void CAccess2Records::FillTable( QString& strWhere )
     CCommonFunction::FreeAllRows( ui->tableAccessRecord );
 
     QStringList lstData;
-    int nCols = 13;
+    int nCols = 14;
     int nRows; // = CLogicInterface::GetInterface( )->OperateOutInInfo( lstData, CommonDataType::SelectData, strWhere );
 
     QString strSql = QString( "select a.cardno, a.cardkind, a.feenum, a.feefactnum, a.feezkyy, a.cardselfno, \
-            a.inshebeiname, a.intime, a.outshebeiname, a.outtime, a.carkind, a.carcp, a.carcpout from stoprd a %1" ).arg( strWhere );
+            a.inshebeiname, a.intime, a.outshebeiname, a.outtime, a.carkind, a.carcp, a.carcpout, a.stoprdid from stoprd a %1" ).arg( strWhere );
 
     strSql += " order by a.cardno, a.cardselfno, a.intime";
 
@@ -236,21 +237,10 @@ void CAccess2Records::GetImage( CommonDataType::BlobType blob, int nRow, bool bE
     if ( bSenseOpenGate ) {
         strWhere = QString( " Where cardno = '%1'" ).arg( ui->tableAccessRecord->item( nRow, 0 )->text( ) );
     } else {
-        QString strCardno = ui->tableAccessRecord->item( nRow, 0 )->text( );
+        QString strCardno = ui->tableAccessRecord->item( nRow, ui->tableAccessRecord->columnCount( ) - 1 )->text( );
 
-        if ( strCardno.contains( "(" ) ) {
-            strWhere = QString( " Where cardno = '%1' and %2shebeiname = '%3' and %4time = '%5'" ).arg(
-                                    strCardno,
-                                    bEnter ? "in" : "out",
-                                    ui->tableAccessRecord->item( nRow, bEnter ? 6 : 8 )->text( ),
-                                    bEnter ? "in" : "out",
-                                    ui->tableAccessRecord->item( nRow, bEnter ? 7 : 9 )->text( ) );
-        } else {
-            strWhere = QString( " Where cardno = '%1' and inshebeiname = '%2' and intime = '%3'" ).arg(
-                                    strCardno,
-                                    ui->tableAccessRecord->item( nRow, 6 )->text( ),
-                                    ui->tableAccessRecord->item( nRow, 7 )->text( ) );
-        }
+        strWhere = QString( " Where stoprdid = '%1'" ).arg(
+                                strCardno );
     }
 
     QLabel* pLbl = lblScaleImage[ blob ];

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'access2records.ui'
 **
-** Created: Wed May 8 16:22:20 2013
+** Created: Wed Jul 3 15:00:28 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -100,8 +100,8 @@ public:
         widget->setGeometry(QRect(40, 60, 1301, 731));
         widget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableAccessRecord = new QTableWidget(widget);
-        if (tableAccessRecord->columnCount() < 13)
-            tableAccessRecord->setColumnCount(13);
+        if (tableAccessRecord->columnCount() < 14)
+            tableAccessRecord->setColumnCount(14);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         tableAccessRecord->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
@@ -128,6 +128,8 @@ public:
         tableAccessRecord->setHorizontalHeaderItem(11, __qtablewidgetitem11);
         QTableWidgetItem *__qtablewidgetitem12 = new QTableWidgetItem();
         tableAccessRecord->setHorizontalHeaderItem(12, __qtablewidgetitem12);
+        QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
+        tableAccessRecord->setHorizontalHeaderItem(13, __qtablewidgetitem13);
         tableAccessRecord->setObjectName(QString::fromUtf8("tableAccessRecord"));
         tableAccessRecord->setGeometry(QRect(0, 40, 1301, 311));
         tableAccessRecord->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
@@ -437,6 +439,8 @@ public:
         ___qtablewidgetitem11->setText(QApplication::translate("CAccess2Records", "\350\277\233\345\205\245\350\275\246\347\211\214", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem12 = tableAccessRecord->horizontalHeaderItem(12);
         ___qtablewidgetitem12->setText(QApplication::translate("CAccess2Records", "\347\246\273\345\274\200\350\275\246\347\211\214", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem13 = tableAccessRecord->horizontalHeaderItem(13);
+        ___qtablewidgetitem13->setText(QApplication::translate("CAccess2Records", "\350\256\260\345\275\225ID", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         tableAccessRecord->setToolTip(QApplication::translate("CAccess2Records", "\345\215\225\345\207\273\343\200\220\345\215\241\345\217\267\345\210\227\343\200\221\346\237\245\347\234\213\350\277\233\345\207\272\345\233\276\347\211\207\343\200\202\n"
 "\345\217\214\345\207\273\345\215\225\345\205\203\346\240\274\346\237\245\347\234\213\345\272\223\344\270\255\345\272\223\350\256\260\345\275\225\343\200\202", 0, QApplication::UnicodeUTF8));

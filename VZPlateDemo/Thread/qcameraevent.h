@@ -3,6 +3,7 @@
 
 #include <QEvent>
 #include <windows.h>
+#include <QString>
 
 class QCameraEvent : public QEvent
 {
@@ -10,8 +11,15 @@ public:
     typedef enum __CameraEventType {
         CameraVideoRecognize = User,
         CameraFileRecognize,
-        CameraStartPreview,
-        CaeramStopPreview
+        CameraInit, //初始化
+        CameraUninit,
+        CameraOpenChannel, //连接采集卡
+        CameraCloseChannel,
+        CameraStartCapture, //开始录像
+        CameraStopCapture,
+        CameraStartPreview, //开始预览
+        CameraStopPreview,
+        CameraCaptureImage //抓图
     } CameraEventType;
 
 public:
@@ -20,12 +28,20 @@ public:
     void SetChannel( int nChannel );
     int GetChannel( );
 
-    void SetWndHandle( HWND hWnd );
-    HWND GetWndHandle( );
+    void SetVideoWndHandle( HWND hWnd );
+    HWND GetVideoWndHandle( );
+
+    void SetParentWndHandle( HWND hWnd );
+    HWND GetParentWndHandle( );
+
+    void SetImgFile( QString& strFile );
+    QString& GetImgFile( );
 
 private:
     int nChannelNumber;
     HWND hVideoWnd;
+    HWND hParentWnd;
+    QString strImgFile;
 };
 
 #endif // QCAMERAEVENT_H

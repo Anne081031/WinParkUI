@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'valuecard.ui'
 **
-** Created: Wed May 8 16:22:19 2013
+** Created: Wed Jul 3 15:20:56 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -385,8 +385,8 @@ public:
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
         tableAccess = new QTableWidget(tab_3);
-        if (tableAccess->columnCount() < 4)
-            tableAccess->setColumnCount(4);
+        if (tableAccess->columnCount() < 5)
+            tableAccess->setColumnCount(5);
         QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
         tableAccess->setHorizontalHeaderItem(0, __qtablewidgetitem15);
         QTableWidgetItem *__qtablewidgetitem16 = new QTableWidgetItem();
@@ -395,6 +395,8 @@ public:
         tableAccess->setHorizontalHeaderItem(2, __qtablewidgetitem17);
         QTableWidgetItem *__qtablewidgetitem18 = new QTableWidgetItem();
         tableAccess->setHorizontalHeaderItem(3, __qtablewidgetitem18);
+        QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
+        tableAccess->setHorizontalHeaderItem(4, __qtablewidgetitem19);
         tableAccess->setObjectName(QString::fromUtf8("tableAccess"));
         tableAccess->setGeometry(QRect(10, 10, 841, 411));
         groupBox_5 = new QGroupBox(tab_3);
@@ -450,14 +452,14 @@ public:
         tableEntranceRight = new QTableWidget(tab_4);
         if (tableEntranceRight->columnCount() < 4)
             tableEntranceRight->setColumnCount(4);
-        QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(0, __qtablewidgetitem19);
         QTableWidgetItem *__qtablewidgetitem20 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(1, __qtablewidgetitem20);
+        tableEntranceRight->setHorizontalHeaderItem(0, __qtablewidgetitem20);
         QTableWidgetItem *__qtablewidgetitem21 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(2, __qtablewidgetitem21);
+        tableEntranceRight->setHorizontalHeaderItem(1, __qtablewidgetitem21);
         QTableWidgetItem *__qtablewidgetitem22 = new QTableWidgetItem();
-        tableEntranceRight->setHorizontalHeaderItem(3, __qtablewidgetitem22);
+        tableEntranceRight->setHorizontalHeaderItem(2, __qtablewidgetitem22);
+        QTableWidgetItem *__qtablewidgetitem23 = new QTableWidgetItem();
+        tableEntranceRight->setHorizontalHeaderItem(3, __qtablewidgetitem23);
         tableEntranceRight->setObjectName(QString::fromUtf8("tableEntranceRight"));
         tableEntranceRight->setGeometry(QRect(10, 10, 1281, 371));
         btnEntranceSave = new QPushButton(tab_4);
@@ -567,6 +569,8 @@ public:
         ___qtablewidgetitem17->setText(QApplication::translate("CValueCard", "\347\246\273\345\274\200\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem18 = tableAccess->horizontalHeaderItem(3);
         ___qtablewidgetitem18->setText(QApplication::translate("CValueCard", "\347\246\273\345\274\200\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem19 = tableAccess->horizontalHeaderItem(4);
+        ___qtablewidgetitem19->setText(QApplication::translate("CValueCard", "\350\256\260\345\275\225ID", 0, QApplication::UnicodeUTF8));
         groupBox_5->setTitle(QApplication::translate("CValueCard", "\345\233\276\345\203\2171", 0, QApplication::UnicodeUTF8));
         lblImg1->setText(QString());
         groupBox_6->setTitle(QApplication::translate("CValueCard", "\345\233\276\345\203\2172", 0, QApplication::UnicodeUTF8));
@@ -577,14 +581,14 @@ public:
         lblImg4->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("CValueCard", "\346\234\200\350\277\221\350\277\233\345\207\272\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
         pushButton_4->setText(QApplication::translate("CValueCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem19 = tableEntranceRight->horizontalHeaderItem(0);
-        ___qtablewidgetitem19->setText(QApplication::translate("CValueCard", "\351\200\232\351\201\223\345\220\215\347\247\260", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem20 = tableEntranceRight->horizontalHeaderItem(1);
-        ___qtablewidgetitem20->setText(QApplication::translate("CValueCard", "\350\265\267\345\247\213\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem21 = tableEntranceRight->horizontalHeaderItem(2);
-        ___qtablewidgetitem21->setText(QApplication::translate("CValueCard", "\347\273\223\346\235\237\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
-        QTableWidgetItem *___qtablewidgetitem22 = tableEntranceRight->horizontalHeaderItem(3);
-        ___qtablewidgetitem22->setText(QApplication::translate("CValueCard", "ID", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem20 = tableEntranceRight->horizontalHeaderItem(0);
+        ___qtablewidgetitem20->setText(QApplication::translate("CValueCard", "\351\200\232\351\201\223\345\220\215\347\247\260", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem21 = tableEntranceRight->horizontalHeaderItem(1);
+        ___qtablewidgetitem21->setText(QApplication::translate("CValueCard", "\350\265\267\345\247\213\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem22 = tableEntranceRight->horizontalHeaderItem(2);
+        ___qtablewidgetitem22->setText(QApplication::translate("CValueCard", "\347\273\223\346\235\237\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem23 = tableEntranceRight->horizontalHeaderItem(3);
+        ___qtablewidgetitem23->setText(QApplication::translate("CValueCard", "ID", 0, QApplication::UnicodeUTF8));
         btnEntranceSave->setText(QApplication::translate("CValueCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
         btnSaveRight->setText(QApplication::translate("CValueCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab_4), QApplication::translate("CValueCard", "\345\207\272\345\205\245\346\235\203\351\231\220", 0, QApplication::UnicodeUTF8));

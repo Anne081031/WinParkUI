@@ -795,6 +795,11 @@
         <string>离开时间</string>
        </property>
       </column>
+      <column>
+       <property name="text">
+        <string>记录ID</string>
+       </property>
+      </column>
      </widget>
      <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">

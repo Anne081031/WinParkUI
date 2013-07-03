@@ -1,8 +1,8 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Dec 19 10:07:01 2012
-**      by: Qt User Interface Compiler version 4.8.1
+** Created: Tue Jul 2 17:05:29 2013
+**      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -32,13 +32,16 @@ public:
     QLabel *lblPlatePic;
     QTableWidget *tabResult;
     QLabel *lblVideo;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *btnFile;
     QPushButton *btnClear;
     QPushButton *btnAnalogCamera;
+    QPushButton *btnAnalogCaptureFile;
     QPushButton *btnDigitalCamera;
+    QPushButton *btnIPCCaptureFile;
     QPushButton *btnVideoFile;
+    QPushButton *btnStopVideoRecognize;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -96,38 +99,53 @@ public:
         lblVideo->setWordWrap(false);
         lblVideo->setOpenExternalLinks(false);
         lblVideo->setTextInteractionFlags(Qt::NoTextInteraction);
-        widget = new QWidget(centralWidget);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(10, 730, 401, 25));
-        horizontalLayout = new QHBoxLayout(widget);
+        layoutWidget = new QWidget(centralWidget);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(10, 730, 649, 25));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        btnFile = new QPushButton(widget);
+        btnFile = new QPushButton(layoutWidget);
         btnFile->setObjectName(QString::fromUtf8("btnFile"));
 
         horizontalLayout->addWidget(btnFile);
 
-        btnClear = new QPushButton(widget);
+        btnClear = new QPushButton(layoutWidget);
         btnClear->setObjectName(QString::fromUtf8("btnClear"));
 
         horizontalLayout->addWidget(btnClear);
 
-        btnAnalogCamera = new QPushButton(widget);
+        btnAnalogCamera = new QPushButton(layoutWidget);
         btnAnalogCamera->setObjectName(QString::fromUtf8("btnAnalogCamera"));
 
         horizontalLayout->addWidget(btnAnalogCamera);
 
-        btnDigitalCamera = new QPushButton(widget);
+        btnAnalogCaptureFile = new QPushButton(layoutWidget);
+        btnAnalogCaptureFile->setObjectName(QString::fromUtf8("btnAnalogCaptureFile"));
+
+        horizontalLayout->addWidget(btnAnalogCaptureFile);
+
+        btnDigitalCamera = new QPushButton(layoutWidget);
         btnDigitalCamera->setObjectName(QString::fromUtf8("btnDigitalCamera"));
 
         horizontalLayout->addWidget(btnDigitalCamera);
 
-        btnVideoFile = new QPushButton(widget);
+        btnIPCCaptureFile = new QPushButton(layoutWidget);
+        btnIPCCaptureFile->setObjectName(QString::fromUtf8("btnIPCCaptureFile"));
+
+        horizontalLayout->addWidget(btnIPCCaptureFile);
+
+        btnVideoFile = new QPushButton(layoutWidget);
         btnVideoFile->setObjectName(QString::fromUtf8("btnVideoFile"));
 
         horizontalLayout->addWidget(btnVideoFile);
+
+        btnStopVideoRecognize = new QPushButton(layoutWidget);
+        btnStopVideoRecognize->setObjectName(QString::fromUtf8("btnStopVideoRecognize"));
+
+        horizontalLayout->addWidget(btnStopVideoRecognize);
 
         MainWindow->setCentralWidget(centralWidget);
 
@@ -157,8 +175,11 @@ public:
         btnFile->setText(QApplication::translate("MainWindow", "\350\257\206\345\210\253\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
         btnClear->setText(QApplication::translate("MainWindow", "\346\270\205\351\231\244\346\211\200\346\234\211", 0, QApplication::UnicodeUTF8));
         btnAnalogCamera->setText(QApplication::translate("MainWindow", "\346\250\241\346\213\237\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
+        btnAnalogCaptureFile->setText(QApplication::translate("MainWindow", "\346\250\241\346\213\237\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
         btnDigitalCamera->setText(QApplication::translate("MainWindow", "\346\225\260\345\255\227\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
+        btnIPCCaptureFile->setText(QApplication::translate("MainWindow", "\346\225\260\345\255\227\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
         btnVideoFile->setText(QApplication::translate("MainWindow", "\350\247\206\351\242\221\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
+        btnStopVideoRecognize->setText(QApplication::translate("MainWindow", "\345\201\234\346\255\242\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

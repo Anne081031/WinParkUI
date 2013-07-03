@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Tue Apr 23 12:41:42 2013
+** Created: Mon Jul 1 11:11:40 2013
 **      by: Qt User Interface Compiler version 4.8.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -114,27 +114,16 @@ public:
     QHBoxLayout *horizontalLayout_8;
     QLabel *label_13;
     QSpinBox *spFreqTimeNew;
-    QHBoxLayout *horizontalLayout_9;
-    QLabel *label_14;
-    QSpinBox *spFreqLightNew;
     QHBoxLayout *horizontalLayout_10;
     QLabel *label_19;
     QComboBox *cbLightSensitiveFreq;
     QHBoxLayout *horizontalLayout_11;
     QLabel *label_21;
     QCheckBox *chkLightSensitiveFreq;
-    QHBoxLayout *horizontalLayout_12;
-    QLabel *label_17;
-    QRadioButton *rbSync08;
+    QWidget *widget;
     QHBoxLayout *horizontalLayout_13;
     QLabel *label_22;
     QRadioButton *rbSync09;
-    QHBoxLayout *horizontalLayout_15;
-    QLabel *label_23;
-    QRadioButton *rbSync10;
-    QHBoxLayout *horizontalLayout_23;
-    QLabel *label_28;
-    QRadioButton *rbSync11;
     QGroupBox *groupBox_5;
     QLabel *lblFlash_2;
     QWidget *layoutWidget5;
@@ -142,27 +131,12 @@ public:
     QHBoxLayout *horizontalLayout_20;
     QLabel *label_15;
     QSpinBox *spFlashTimeNew;
-    QHBoxLayout *horizontalLayout_21;
-    QLabel *label_16;
-    QSpinBox *spFlashLightNew;
     QHBoxLayout *horizontalLayout_22;
     QLabel *label_20;
     QComboBox *cbLightSensitiveFlash;
     QHBoxLayout *horizontalLayout_16;
     QLabel *label_27;
     QCheckBox *chkLightSensitiveFlash;
-    QHBoxLayout *horizontalLayout_17;
-    QLabel *label_26;
-    QRadioButton *rbSync04;
-    QHBoxLayout *horizontalLayout_18;
-    QLabel *label_25;
-    QRadioButton *rbSync05;
-    QHBoxLayout *horizontalLayout_19;
-    QLabel *label_24;
-    QRadioButton *rbSync06;
-    QHBoxLayout *horizontalLayout_24;
-    QLabel *label_29;
-    QRadioButton *rbSync07;
     QGroupBox *groupBox_6;
     QWidget *layoutWidget6;
     QHBoxLayout *horizontalLayout_14;
@@ -172,8 +146,40 @@ public:
     QHBoxLayout *horizontalLayout_26;
     QLabel *label_31;
     QComboBox *cbLightFrameFreq;
+    QWidget *widget1;
+    QHBoxLayout *horizontalLayout_9;
+    QLabel *label_14;
+    QSpinBox *spFreqLightNew;
+    QWidget *widget2;
+    QHBoxLayout *horizontalLayout_21;
+    QLabel *label_16;
+    QSpinBox *spFlashLightNew;
+    QWidget *widget3;
+    QHBoxLayout *horizontalLayout_15;
+    QLabel *label_23;
+    QRadioButton *rbSync10;
+    QWidget *widget4;
+    QHBoxLayout *horizontalLayout_17;
+    QLabel *label_26;
+    QRadioButton *rbSync04;
+    QWidget *widget5;
+    QHBoxLayout *horizontalLayout_18;
+    QLabel *label_25;
+    QRadioButton *rbSync05;
+    QWidget *widget6;
+    QHBoxLayout *horizontalLayout_19;
+    QLabel *label_24;
+    QRadioButton *rbSync06;
+    QWidget *widget7;
+    QHBoxLayout *horizontalLayout_24;
+    QLabel *label_29;
+    QRadioButton *rbSync07;
     QSpinBox *spLightSensitiveFlash;
     QSpinBox *spLightSensitiveFreq;
+    QWidget *widget8;
+    QHBoxLayout *horizontalLayout_12;
+    QLabel *label_17;
+    QRadioButton *rbSync08;
 
     void setupUi(QMainWindow *MainWindow)
     {
@@ -532,7 +538,7 @@ public:
         frame_2->setFrameShadow(QFrame::Raised);
         groupBox_4 = new QGroupBox(frame_2);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(20, 10, 211, 221));
+        groupBox_4->setGeometry(QRect(20, 10, 211, 181));
         groupBox_4->setStyleSheet(QString::fromUtf8("background-color: rgb(90, 90, 90);"));
         lblFreq_2 = new QLabel(groupBox_4);
         lblFreq_2->setObjectName(QString::fromUtf8("lblFreq_2"));
@@ -540,7 +546,7 @@ public:
         lblFreq_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         layoutWidget4 = new QWidget(groupBox_4);
         layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(50, 31, 120, 185));
+        layoutWidget4->setGeometry(QRect(50, 31, 120, 101));
         verticalLayout_5 = new QVBoxLayout(layoutWidget4);
         verticalLayout_5->setSpacing(6);
         verticalLayout_5->setContentsMargins(11, 11, 11, 11);
@@ -564,25 +570,6 @@ public:
 
 
         verticalLayout_5->addLayout(horizontalLayout_8);
-
-        horizontalLayout_9 = new QHBoxLayout();
-        horizontalLayout_9->setSpacing(6);
-        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
-        label_14 = new QLabel(layoutWidget4);
-        label_14->setObjectName(QString::fromUtf8("label_14"));
-        label_14->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_9->addWidget(label_14);
-
-        spFreqLightNew = new QSpinBox(layoutWidget4);
-        spFreqLightNew->setObjectName(QString::fromUtf8("spFreqLightNew"));
-        spFreqLightNew->setMinimum(1);
-        spFreqLightNew->setMaximum(100);
-
-        horizontalLayout_9->addWidget(spFreqLightNew);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_9);
 
         horizontalLayout_10 = new QHBoxLayout();
         horizontalLayout_10->setSpacing(6);
@@ -618,77 +605,28 @@ public:
 
         verticalLayout_5->addLayout(horizontalLayout_11);
 
-        horizontalLayout_12 = new QHBoxLayout();
-        horizontalLayout_12->setSpacing(6);
-        horizontalLayout_12->setObjectName(QString::fromUtf8("horizontalLayout_12"));
-        label_17 = new QLabel(layoutWidget4);
-        label_17->setObjectName(QString::fromUtf8("label_17"));
-        label_17->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_12->addWidget(label_17);
-
-        rbSync08 = new QRadioButton(layoutWidget4);
-        rbSync08->setObjectName(QString::fromUtf8("rbSync08"));
-
-        horizontalLayout_12->addWidget(rbSync08);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_12);
-
-        horizontalLayout_13 = new QHBoxLayout();
+        widget = new QWidget(groupBox_4);
+        widget->setObjectName(QString::fromUtf8("widget"));
+        widget->setGeometry(QRect(-170, 110, 118, 25));
+        horizontalLayout_13 = new QHBoxLayout(widget);
         horizontalLayout_13->setSpacing(6);
+        horizontalLayout_13->setContentsMargins(11, 11, 11, 11);
         horizontalLayout_13->setObjectName(QString::fromUtf8("horizontalLayout_13"));
-        label_22 = new QLabel(layoutWidget4);
+        horizontalLayout_13->setContentsMargins(0, 0, 0, 0);
+        label_22 = new QLabel(widget);
         label_22->setObjectName(QString::fromUtf8("label_22"));
         label_22->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
 
         horizontalLayout_13->addWidget(label_22);
 
-        rbSync09 = new QRadioButton(layoutWidget4);
+        rbSync09 = new QRadioButton(widget);
         rbSync09->setObjectName(QString::fromUtf8("rbSync09"));
 
         horizontalLayout_13->addWidget(rbSync09);
 
-
-        verticalLayout_5->addLayout(horizontalLayout_13);
-
-        horizontalLayout_15 = new QHBoxLayout();
-        horizontalLayout_15->setSpacing(6);
-        horizontalLayout_15->setObjectName(QString::fromUtf8("horizontalLayout_15"));
-        label_23 = new QLabel(layoutWidget4);
-        label_23->setObjectName(QString::fromUtf8("label_23"));
-        label_23->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_15->addWidget(label_23);
-
-        rbSync10 = new QRadioButton(layoutWidget4);
-        rbSync10->setObjectName(QString::fromUtf8("rbSync10"));
-
-        horizontalLayout_15->addWidget(rbSync10);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_15);
-
-        horizontalLayout_23 = new QHBoxLayout();
-        horizontalLayout_23->setSpacing(6);
-        horizontalLayout_23->setObjectName(QString::fromUtf8("horizontalLayout_23"));
-        label_28 = new QLabel(layoutWidget4);
-        label_28->setObjectName(QString::fromUtf8("label_28"));
-        label_28->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_23->addWidget(label_28);
-
-        rbSync11 = new QRadioButton(layoutWidget4);
-        rbSync11->setObjectName(QString::fromUtf8("rbSync11"));
-
-        horizontalLayout_23->addWidget(rbSync11);
-
-
-        verticalLayout_5->addLayout(horizontalLayout_23);
-
         groupBox_5 = new QGroupBox(frame_2);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
-        groupBox_5->setGeometry(QRect(300, 10, 211, 221));
+        groupBox_5->setGeometry(QRect(300, 10, 211, 181));
         groupBox_5->setStyleSheet(QString::fromUtf8("background-color: rgb(90, 90, 90);"));
         lblFlash_2 = new QLabel(groupBox_5);
         lblFlash_2->setObjectName(QString::fromUtf8("lblFlash_2"));
@@ -696,7 +634,7 @@ public:
         lblFlash_2->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
         layoutWidget5 = new QWidget(groupBox_5);
         layoutWidget5->setObjectName(QString::fromUtf8("layoutWidget5"));
-        layoutWidget5->setGeometry(QRect(50, 31, 120, 185));
+        layoutWidget5->setGeometry(QRect(50, 31, 120, 101));
         verticalLayout_6 = new QVBoxLayout(layoutWidget5);
         verticalLayout_6->setSpacing(6);
         verticalLayout_6->setContentsMargins(11, 11, 11, 11);
@@ -720,25 +658,6 @@ public:
 
 
         verticalLayout_6->addLayout(horizontalLayout_20);
-
-        horizontalLayout_21 = new QHBoxLayout();
-        horizontalLayout_21->setSpacing(6);
-        horizontalLayout_21->setObjectName(QString::fromUtf8("horizontalLayout_21"));
-        label_16 = new QLabel(layoutWidget5);
-        label_16->setObjectName(QString::fromUtf8("label_16"));
-        label_16->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_21->addWidget(label_16);
-
-        spFlashLightNew = new QSpinBox(layoutWidget5);
-        spFlashLightNew->setObjectName(QString::fromUtf8("spFlashLightNew"));
-        spFlashLightNew->setMinimum(1);
-        spFlashLightNew->setMaximum(100);
-
-        horizontalLayout_21->addWidget(spFlashLightNew);
-
-
-        verticalLayout_6->addLayout(horizontalLayout_21);
 
         horizontalLayout_22 = new QHBoxLayout();
         horizontalLayout_22->setSpacing(6);
@@ -774,74 +693,6 @@ public:
 
         verticalLayout_6->addLayout(horizontalLayout_16);
 
-        horizontalLayout_17 = new QHBoxLayout();
-        horizontalLayout_17->setSpacing(6);
-        horizontalLayout_17->setObjectName(QString::fromUtf8("horizontalLayout_17"));
-        label_26 = new QLabel(layoutWidget5);
-        label_26->setObjectName(QString::fromUtf8("label_26"));
-        label_26->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_17->addWidget(label_26);
-
-        rbSync04 = new QRadioButton(layoutWidget5);
-        rbSync04->setObjectName(QString::fromUtf8("rbSync04"));
-
-        horizontalLayout_17->addWidget(rbSync04);
-
-
-        verticalLayout_6->addLayout(horizontalLayout_17);
-
-        horizontalLayout_18 = new QHBoxLayout();
-        horizontalLayout_18->setSpacing(6);
-        horizontalLayout_18->setObjectName(QString::fromUtf8("horizontalLayout_18"));
-        label_25 = new QLabel(layoutWidget5);
-        label_25->setObjectName(QString::fromUtf8("label_25"));
-        label_25->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_18->addWidget(label_25);
-
-        rbSync05 = new QRadioButton(layoutWidget5);
-        rbSync05->setObjectName(QString::fromUtf8("rbSync05"));
-
-        horizontalLayout_18->addWidget(rbSync05);
-
-
-        verticalLayout_6->addLayout(horizontalLayout_18);
-
-        horizontalLayout_19 = new QHBoxLayout();
-        horizontalLayout_19->setSpacing(6);
-        horizontalLayout_19->setObjectName(QString::fromUtf8("horizontalLayout_19"));
-        label_24 = new QLabel(layoutWidget5);
-        label_24->setObjectName(QString::fromUtf8("label_24"));
-        label_24->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_19->addWidget(label_24);
-
-        rbSync06 = new QRadioButton(layoutWidget5);
-        rbSync06->setObjectName(QString::fromUtf8("rbSync06"));
-
-        horizontalLayout_19->addWidget(rbSync06);
-
-
-        verticalLayout_6->addLayout(horizontalLayout_19);
-
-        horizontalLayout_24 = new QHBoxLayout();
-        horizontalLayout_24->setSpacing(6);
-        horizontalLayout_24->setObjectName(QString::fromUtf8("horizontalLayout_24"));
-        label_29 = new QLabel(layoutWidget5);
-        label_29->setObjectName(QString::fromUtf8("label_29"));
-        label_29->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
-
-        horizontalLayout_24->addWidget(label_29);
-
-        rbSync07 = new QRadioButton(layoutWidget5);
-        rbSync07->setObjectName(QString::fromUtf8("rbSync07"));
-
-        horizontalLayout_24->addWidget(rbSync07);
-
-
-        verticalLayout_6->addLayout(horizontalLayout_24);
-
         layoutWidget->raise();
         lblFlash_2->raise();
         groupBox_6 = new QGroupBox(frame_2);
@@ -871,7 +722,7 @@ public:
 
         layoutWidget7 = new QWidget(frame_2);
         layoutWidget7->setObjectName(QString::fromUtf8("layoutWidget7"));
-        layoutWidget7->setGeometry(QRect(17, 240, 121, 22));
+        layoutWidget7->setGeometry(QRect(17, 200, 121, 22));
         horizontalLayout_26 = new QHBoxLayout(layoutWidget7);
         horizontalLayout_26->setSpacing(6);
         horizontalLayout_26->setContentsMargins(11, 11, 11, 11);
@@ -888,6 +739,147 @@ public:
 
         horizontalLayout_26->addWidget(cbLightFrameFreq);
 
+        widget1 = new QWidget(frame_2);
+        widget1->setObjectName(QString::fromUtf8("widget1"));
+        widget1->setGeometry(QRect(-160, 240, 118, 22));
+        horizontalLayout_9 = new QHBoxLayout(widget1);
+        horizontalLayout_9->setSpacing(6);
+        horizontalLayout_9->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_9->setObjectName(QString::fromUtf8("horizontalLayout_9"));
+        horizontalLayout_9->setContentsMargins(0, 0, 0, 0);
+        label_14 = new QLabel(widget1);
+        label_14->setObjectName(QString::fromUtf8("label_14"));
+        label_14->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_9->addWidget(label_14);
+
+        spFreqLightNew = new QSpinBox(widget1);
+        spFreqLightNew->setObjectName(QString::fromUtf8("spFreqLightNew"));
+        spFreqLightNew->setMinimum(1);
+        spFreqLightNew->setMaximum(100);
+
+        horizontalLayout_9->addWidget(spFreqLightNew);
+
+        widget2 = new QWidget(frame_2);
+        widget2->setObjectName(QString::fromUtf8("widget2"));
+        widget2->setGeometry(QRect(550, 240, 118, 22));
+        horizontalLayout_21 = new QHBoxLayout(widget2);
+        horizontalLayout_21->setSpacing(6);
+        horizontalLayout_21->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_21->setObjectName(QString::fromUtf8("horizontalLayout_21"));
+        horizontalLayout_21->setContentsMargins(0, 0, 0, 0);
+        label_16 = new QLabel(widget2);
+        label_16->setObjectName(QString::fromUtf8("label_16"));
+        label_16->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_21->addWidget(label_16);
+
+        spFlashLightNew = new QSpinBox(widget2);
+        spFlashLightNew->setObjectName(QString::fromUtf8("spFlashLightNew"));
+        spFlashLightNew->setMinimum(1);
+        spFlashLightNew->setMaximum(100);
+
+        horizontalLayout_21->addWidget(spFlashLightNew);
+
+        widget3 = new QWidget(frame_2);
+        widget3->setObjectName(QString::fromUtf8("widget3"));
+        widget3->setGeometry(QRect(-210, 160, 118, 32));
+        horizontalLayout_15 = new QHBoxLayout(widget3);
+        horizontalLayout_15->setSpacing(6);
+        horizontalLayout_15->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_15->setObjectName(QString::fromUtf8("horizontalLayout_15"));
+        horizontalLayout_15->setContentsMargins(0, 0, 0, 0);
+        label_23 = new QLabel(widget3);
+        label_23->setObjectName(QString::fromUtf8("label_23"));
+        label_23->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_15->addWidget(label_23);
+
+        rbSync10 = new QRadioButton(widget3);
+        rbSync10->setObjectName(QString::fromUtf8("rbSync10"));
+
+        horizontalLayout_15->addWidget(rbSync10);
+
+        widget4 = new QWidget(frame_2);
+        widget4->setObjectName(QString::fromUtf8("widget4"));
+        widget4->setGeometry(QRect(610, 120, 118, 20));
+        horizontalLayout_17 = new QHBoxLayout(widget4);
+        horizontalLayout_17->setSpacing(6);
+        horizontalLayout_17->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_17->setObjectName(QString::fromUtf8("horizontalLayout_17"));
+        horizontalLayout_17->setContentsMargins(0, 0, 0, 0);
+        label_26 = new QLabel(widget4);
+        label_26->setObjectName(QString::fromUtf8("label_26"));
+        label_26->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_17->addWidget(label_26);
+
+        rbSync04 = new QRadioButton(widget4);
+        rbSync04->setObjectName(QString::fromUtf8("rbSync04"));
+
+        horizontalLayout_17->addWidget(rbSync04);
+
+        widget5 = new QWidget(frame_2);
+        widget5->setObjectName(QString::fromUtf8("widget5"));
+        widget5->setGeometry(QRect(630, 130, 118, 25));
+        horizontalLayout_18 = new QHBoxLayout(widget5);
+        horizontalLayout_18->setSpacing(6);
+        horizontalLayout_18->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_18->setObjectName(QString::fromUtf8("horizontalLayout_18"));
+        horizontalLayout_18->setContentsMargins(0, 0, 0, 0);
+        label_25 = new QLabel(widget5);
+        label_25->setObjectName(QString::fromUtf8("label_25"));
+        label_25->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_18->addWidget(label_25);
+
+        rbSync05 = new QRadioButton(widget5);
+        rbSync05->setObjectName(QString::fromUtf8("rbSync05"));
+
+        horizontalLayout_18->addWidget(rbSync05);
+
+        widget6 = new QWidget(frame_2);
+        widget6->setObjectName(QString::fromUtf8("widget6"));
+        widget6->setGeometry(QRect(610, 150, 118, 32));
+        horizontalLayout_19 = new QHBoxLayout(widget6);
+        horizontalLayout_19->setSpacing(6);
+        horizontalLayout_19->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_19->setObjectName(QString::fromUtf8("horizontalLayout_19"));
+        horizontalLayout_19->setContentsMargins(0, 0, 0, 0);
+        label_24 = new QLabel(widget6);
+        label_24->setObjectName(QString::fromUtf8("label_24"));
+        label_24->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_19->addWidget(label_24);
+
+        rbSync06 = new QRadioButton(widget6);
+        rbSync06->setObjectName(QString::fromUtf8("rbSync06"));
+
+        horizontalLayout_19->addWidget(rbSync06);
+
+        widget7 = new QWidget(frame_2);
+        widget7->setObjectName(QString::fromUtf8("widget7"));
+        widget7->setGeometry(QRect(590, 170, 118, 41));
+        horizontalLayout_24 = new QHBoxLayout(widget7);
+        horizontalLayout_24->setSpacing(6);
+        horizontalLayout_24->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_24->setObjectName(QString::fromUtf8("horizontalLayout_24"));
+        horizontalLayout_24->setContentsMargins(0, 0, 0, 0);
+        label_29 = new QLabel(widget7);
+        label_29->setObjectName(QString::fromUtf8("label_29"));
+        label_29->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_24->addWidget(label_29);
+
+        rbSync07 = new QRadioButton(widget7);
+        rbSync07->setObjectName(QString::fromUtf8("rbSync07"));
+
+        horizontalLayout_24->addWidget(rbSync07);
+
+        groupBox_4->raise();
+        groupBox_5->raise();
+        groupBox_6->raise();
+        layoutWidget->raise();
         tabWidget->addTab(tab_6, QString());
         spLightSensitiveFlash = new QSpinBox(centralWidget);
         spLightSensitiveFlash->setObjectName(QString::fromUtf8("spLightSensitiveFlash"));
@@ -899,6 +891,25 @@ public:
         spLightSensitiveFreq->setGeometry(QRect(230, 80, 42, 20));
         spLightSensitiveFreq->setMinimum(1);
         spLightSensitiveFreq->setMaximum(100);
+        widget8 = new QWidget(centralWidget);
+        widget8->setObjectName(QString::fromUtf8("widget8"));
+        widget8->setGeometry(QRect(-170, 220, 118, 20));
+        horizontalLayout_12 = new QHBoxLayout(widget8);
+        horizontalLayout_12->setSpacing(6);
+        horizontalLayout_12->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout_12->setObjectName(QString::fromUtf8("horizontalLayout_12"));
+        horizontalLayout_12->setContentsMargins(0, 0, 0, 0);
+        label_17 = new QLabel(widget8);
+        label_17->setObjectName(QString::fromUtf8("label_17"));
+        label_17->setStyleSheet(QString::fromUtf8("color: rgb(255, 255, 255);"));
+
+        horizontalLayout_12->addWidget(label_17);
+
+        rbSync08 = new QRadioButton(widget8);
+        rbSync08->setObjectName(QString::fromUtf8("rbSync08"));
+
+        horizontalLayout_12->addWidget(rbSync08);
+
         MainWindow->setCentralWidget(centralWidget);
 
         retranslateUi(MainWindow);
@@ -985,7 +996,6 @@ public:
         groupBox_4->setTitle(QString());
         lblFreq_2->setText(QApplication::translate("MainWindow", "\351\242\221\351\227\252\346\250\241\345\274\217", 0, QApplication::UnicodeUTF8));
         label_13->setText(QApplication::translate("MainWindow", "\346\227\266\351\227\264\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
-        label_14->setText(QApplication::translate("MainWindow", "\344\272\256\345\272\246\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
         label_19->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
         cbLightSensitiveFreq->clear();
         cbLightSensitiveFreq->insertItems(0, QStringList()
@@ -1001,18 +1011,11 @@ public:
         );
         label_21->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFreq->setText(QString());
-        label_17->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
-        rbSync08->setText(QString());
         label_22->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
         rbSync09->setText(QString());
-        label_23->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
-        rbSync10->setText(QString());
-        label_28->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
-        rbSync11->setText(QString());
         groupBox_5->setTitle(QString());
         lblFlash_2->setText(QApplication::translate("MainWindow", "\351\227\252\345\205\211\347\201\257\346\250\241\345\274\217", 0, QApplication::UnicodeUTF8));
         label_15->setText(QApplication::translate("MainWindow", "\346\227\266\351\227\264\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
-        label_16->setText(QApplication::translate("MainWindow", "\344\272\256\345\272\246\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
         label_20->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
         cbLightSensitiveFlash->clear();
         cbLightSensitiveFlash->insertItems(0, QStringList()
@@ -1028,14 +1031,6 @@ public:
         );
         label_27->setText(QApplication::translate("MainWindow", "\345\205\211\346\225\217\346\216\247\345\210\266", 0, QApplication::UnicodeUTF8));
         chkLightSensitiveFlash->setText(QString());
-        label_26->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
-        rbSync04->setText(QString());
-        label_25->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
-        rbSync05->setText(QString());
-        label_24->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
-        rbSync06->setText(QString());
-        label_29->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
-        rbSync07->setText(QString());
         groupBox_6->setTitle(QString());
         label_18->setText(QApplication::translate("MainWindow", "\344\275\215\347\275\256\344\277\241\346\201\257", 0, QApplication::UnicodeUTF8));
         edtLocationNew->setText(QString());
@@ -1046,7 +1041,21 @@ public:
          << QApplication::translate("MainWindow", "\345\215\212\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8)
          << QApplication::translate("MainWindow", "14.5\345\270\247", 0, QApplication::UnicodeUTF8)
         );
+        label_14->setText(QApplication::translate("MainWindow", "\344\272\256\345\272\246\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
+        label_16->setText(QApplication::translate("MainWindow", "\344\272\256\345\272\246\350\260\203\350\212\202", 0, QApplication::UnicodeUTF8));
+        label_23->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        rbSync10->setText(QString());
+        label_26->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
+        rbSync04->setText(QString());
+        label_25->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
+        rbSync05->setText(QString());
+        label_24->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        rbSync06->setText(QString());
+        label_29->setText(QApplication::translate("MainWindow", "\344\270\213\351\231\215\346\262\277\350\267\237\351\232\217\350\247\246\345\217\221", 0, QApplication::UnicodeUTF8));
+        rbSync07->setText(QString());
         tabWidget->setTabText(tabWidget->indexOf(tab_6), QApplication::translate("MainWindow", "\346\226\260\350\256\276\345\244\207", 0, QApplication::UnicodeUTF8));
+        label_17->setText(QApplication::translate("MainWindow", "\344\270\212\345\215\207\346\262\277\350\247\246\345\217\221\345\200\215\351\242\221", 0, QApplication::UnicodeUTF8));
+        rbSync08->setText(QString());
     } // retranslateUi
 
 };

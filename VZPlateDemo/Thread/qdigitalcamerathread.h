@@ -12,11 +12,12 @@ public:
     static QDigitalCameraThread* GetInstance( );
 
 protected:
+    explicit QDigitalCameraThread(QObject *parent = 0);
+
     void run( );
     void customEvent( QEvent *e );
 
 private:
-    explicit QDigitalCameraThread(QObject *parent = 0);
 
 private:
     static QDigitalCameraThread* pThreadInstance;

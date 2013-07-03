@@ -1,8 +1,8 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Wed Dec 19 10:27:07 2012
-**      by: The Qt Meta Object Compiler version 63 (Qt 4.8.1)
+** Created: Tue Jul 2 17:05:39 2013
+**      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -10,8 +10,8 @@
 #include "../mainwindow.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'mainwindow.h' doesn't include <QObject>."
-#elif Q_MOC_OUTPUT_REVISION != 63
-#error "This file was generated using the moc from 4.8.1. It"
+#elif Q_MOC_OUTPUT_REVISION != 62
+#error "This file was generated using the moc from 4.7.4. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -20,10 +20,10 @@ QT_BEGIN_MOC_NAMESPACE
 static const uint qt_meta_data_MainWindow[] = {
 
  // content:
-       6,       // revision
+       5,       // revision
        0,       // classname
        0,    0, // classinfo
-       7,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -38,6 +38,9 @@ static const uint qt_meta_data_MainWindow[] = {
      141,   11,   11,   11, 0x08,
      170,   11,   11,   11, 0x08,
      200,   11,   11,   11, 0x08,
+     226,   11,   11,   11, 0x08,
+     260,   11,   11,   11, 0x08,
+     291,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -51,33 +54,14 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "on_btnAnalogCamera_clicked()\0"
     "on_btnDigitalCamera_clicked()\0"
     "on_btnVideoFile_clicked()\0"
-};
-
-void MainWindow::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
-{
-    if (_c == QMetaObject::InvokeMetaMethod) {
-        Q_ASSERT(staticMetaObject.cast(_o));
-        MainWindow *_t = static_cast<MainWindow *>(_o);
-        switch (_id) {
-        case 0: _t->HandlePlateResult((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
-        case 1: _t->on_btnFile_clicked(); break;
-        case 2: _t->on_tabResult_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 3: _t->on_btnClear_clicked(); break;
-        case 4: _t->on_btnAnalogCamera_clicked(); break;
-        case 5: _t->on_btnDigitalCamera_clicked(); break;
-        case 6: _t->on_btnVideoFile_clicked(); break;
-        default: ;
-        }
-    }
-}
-
-const QMetaObjectExtraData MainWindow::staticMetaObjectExtraData = {
-    0,  qt_static_metacall 
+    "on_btnAnalogCaptureFile_clicked()\0"
+    "on_btnIPCCaptureFile_clicked()\0"
+    "on_btnStopVideoRecognize_clicked()\0"
 };
 
 const QMetaObject MainWindow::staticMetaObject = {
     { &QMainWindow::staticMetaObject, qt_meta_stringdata_MainWindow,
-      qt_meta_data_MainWindow, &staticMetaObjectExtraData }
+      qt_meta_data_MainWindow, 0 }
 };
 
 #ifdef Q_NO_DATA_RELOCATION
@@ -103,9 +87,20 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 7)
-            qt_static_metacall(this, _c, _id, _a);
-        _id -= 7;
+        switch (_id) {
+        case 0: HandlePlateResult((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 1: on_btnFile_clicked(); break;
+        case 2: on_tabResult_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 3: on_btnClear_clicked(); break;
+        case 4: on_btnAnalogCamera_clicked(); break;
+        case 5: on_btnDigitalCamera_clicked(); break;
+        case 6: on_btnVideoFile_clicked(); break;
+        case 7: on_btnAnalogCaptureFile_clicked(); break;
+        case 8: on_btnIPCCaptureFile_clicked(); break;
+        case 9: on_btnStopVideoRecognize_clicked(); break;
+        default: ;
+        }
+        _id -= 10;
     }
     return _id;
 }

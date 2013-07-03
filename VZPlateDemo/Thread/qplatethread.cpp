@@ -11,6 +11,7 @@ QPlateThread::QPlateThread(QObject *parent) :
 {
     pCodec = QCommon::GetTextCodec( );
     QCommon::GetPlatePicPath( strPlatePath );
+    bStopRecognize = false;
 }
 
 QPlateThread* QPlateThread::GetInstance( )
@@ -24,9 +25,15 @@ QPlateThread* QPlateThread::GetInstance( )
     return pThreadInstance;
 }
 
+bool QPlateThread::SetRecognizeFlag( )
+{
+    bStopRecognize = !bStopRecognize;
+
+    return bStopRecognize;
+}
+
 void QPlateThread::run( )
 {
-    InitVZSDK( 1 );
     exec( );
 }
 
@@ -42,6 +49,14 @@ void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateVideoRecognize );
     pEvent->SetVideoFrame( byVideo );
+
+    PostEvent( pEvent );
+}
+
+void QPlateThread::PostPlateInitEvent( int nFormat )
+{
+    QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateInit );
+    pEvent->SetImageFormat( nFormat );
 
     PostEvent( pEvent );
 }
@@ -126,13 +141,47 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
 
 void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
 {
+    if ( bStopRecognize ) {
+        return;
+    }
+
     QByteArray& byVideo = pEvent->GetVideoFrame( );
+    int nNum = 0;
+    TH_RECT rcRange = { 0 };
+
+    TH_PlateResult	result[ 6 ];
+    ZeroMemory( result, sizeof ( result ) );
+    QString strFile;
+
+    BOOL bRet = LPR_RGB888Ex( ( PBYTE ) byVideo.data( ), 704, 576, result, nNum, &rcRange, 1 );
+    QStringList lstResult;
+
+    if ( !bRet ) {
+        nNum = 1;
+    }
+
+    GetResultInfo( lstResult, strFile, bRet, nNum, result );
+    emit PlateResult( lstResult );
 }
 
-BOOL QPlateThread::InitVZSDK( qint32 nChannel )
+void QPlateThread::InitSDK( QPlateEvent* pEvent )
+{
+    int nChannel = pEvent->GetChannel( );
+    int nFormat = pEvent->GetImageFormat( );
+    InitVZSDK( nFormat, nChannel );
+}
+
+void QPlateThread::UninitSDK( QPlateEvent *pEvent )
+{
+    int nChannel = pEvent->GetChannel( );
+    UninitVZSDK( nChannel );
+}
+
+BOOL QPlateThread::InitVZSDK( int nFormat, qint32 nChannel )
 {
     // nChannel 1 2 3 4
-    BOOL bRet = LPR_SetImageFormat ( FALSE, FALSE, ImageFormatBGR,
+    //ImageFormatYUV420COMPASS : ImageFormatBGR
+    BOOL bRet = LPR_SetImageFormat ( FALSE, FALSE, nFormat,
                                                                     FALSE, 60, 400, TRUE, FALSE, FALSE, nChannel );
     if ( !bRet ) {
         return bRet;
@@ -172,6 +221,14 @@ void QPlateThread::customEvent( QEvent *e )
 
     case QPlateEvent::PlateVideoRecognize :
         VideoRecognize( pEvent );
+        break;
+
+    case QPlateEvent::PlateInit :
+        InitSDK( pEvent );
+        break;
+
+    case QPlateEvent::PlateUninit :
+        UninitSDK( pEvent );
         break;
     }
 }

@@ -36,6 +36,9 @@ CMonthlyCard::CMonthlyCard(QWidget* mainWnd, QWidget *parent) :
 
     ui->cbxCarType->setVisible( false );
     ui->lblTitle->setText( windowTitle( ) );
+
+    QHeaderView* pHeader = ui->tableAccess->horizontalHeader( );
+    pHeader->hideSection( ui->tableAccess->columnCount( ) - 1 );
 }
 
 void CMonthlyCard::ControlDataGrid( )
@@ -501,7 +504,7 @@ void CMonthlyCard::on_tableMonthly_cellClicked(int row, int column)
     CCommonFunction::FillTable( ui->tableRecharge, nRows, lstRows );
 
     ///////////////////////////////////////////////////////////////////
-    QString strSql = QString ( "Select inshebeiname, intime, outshebeiname, outtime From stoprd %1" ).arg( strWhere );
+    QString strSql = QString ( "Select inshebeiname, intime, outshebeiname, outtime, stoprdid From stoprd %1" ).arg( strWhere );
     //nRows = CLogicInterface::GetInterface( )->OperateInOutRecord( lstRows,
     //                                                   CommonDataType::SelectData, strWhere );
     nRows = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRows, CCommonFunction::GetHistoryDb( ) );
@@ -574,10 +577,8 @@ void CMonthlyCard::on_tableAccess_cellClicked(int row, int column)
         return;
     }
 
-    QString strWhere = QString( " Where cardno = '%1' and inshebeiname = '%2' and intime = '%3'" ).arg(
-                                ui->lblCardNo->text( ),
-                                ui->tableAccess->item( row, 0 )->text( ),
-                                ui->tableAccess->item( row, 1 )->text( ) );
+    QString strWhere = QString( " Where stoprdid = '%1'" ).arg(
+                                ui->tableAccess->item( row, ui->tableAccess->columnCount( ) - 1 )->text( ) );
 
     QLabel* lblImg[ ] = { ui->lblImg1, ui->lblImg2, ui->lblImg3, ui->lblImg4 };
     for ( int nIndex = 0; nIndex < 4; nIndex++ ) {

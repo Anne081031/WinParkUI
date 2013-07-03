@@ -2,7 +2,8 @@
 
 QCameraEvent::QCameraEvent(Type evtType) : QEvent(evtType)
 {
-    //hVideoWnd = INVALID_HANDLE_VALUE;
+    hVideoWnd = NULL;
+    hParentWnd = NULL;
     nChannelNumber = -1;
 }
 
@@ -16,12 +17,32 @@ int QCameraEvent::GetChannel( )
     return nChannelNumber;
 }
 
-void QCameraEvent::SetWndHandle( HWND hWnd )
+void QCameraEvent::SetVideoWndHandle( HWND hWnd )
 {
     hVideoWnd = hWnd;
 }
 
-HWND QCameraEvent::GetWndHandle( )
+HWND QCameraEvent::GetVideoWndHandle( )
 {
     return hVideoWnd;
+}
+
+void QCameraEvent::SetParentWndHandle( HWND hWnd )
+{
+    hParentWnd = hWnd;
+}
+
+HWND QCameraEvent::GetParentWndHandle( )
+{
+    return hParentWnd;
+}
+
+void QCameraEvent::SetImgFile( QString& strFile )
+{
+    strImgFile = strFile;
+}
+
+QString& QCameraEvent::GetImgFile( )
+{
+    return strImgFile;
 }

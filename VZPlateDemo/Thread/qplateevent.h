@@ -10,7 +10,9 @@ class QPlateEvent : public QEvent
 public:
     typedef enum __PlateEventType {
         PlateVideoRecognize = User,
-        PlateFileRecognize
+        PlateFileRecognize,
+        PlateInit,
+        PlateUninit
     } PlateEventType;
 
 public:
@@ -22,9 +24,16 @@ public:
     void SetVideoFrame( QByteArray& byVideo );
     QByteArray& GetVideoFrame( );
 
+    void SetImageFormat( int nFormat );
+    int GetImageFormat( );
+
+    void SetChannel( int nChannel );
+    int GetChannel( );
 private:
     QString strPicFile;
     QByteArray byVideoFrame;
+    int nImageFormat;
+    int nInOutChannel;
 };
 
 #endif // QPLATEEVENT_H

@@ -4,29 +4,38 @@
 #include <QThread>
 #include "qcameraevent.h"
 #include <windows.h>
-#include "HikVisionSdk.h"
+#include <QApplication>
+#include <QFile>
+#include "qcommon.h"
+#include "qplatethread.h"
 
 class QAnalogCameraThread : public QThread
 {
     Q_OBJECT
 
 public:
-    static QAnalogCameraThread* GetInstance( );
+    virtual void PostInitCaptureSDKEvent( HWND hParentVideo = NULL );
+    virtual void PostUninitCaptureSDKEvent( );
+
+    virtual void PostOpenChannelEvent( int nChannel );
+    virtual void PostCloseChannelEvent( int nChannel );
+
+    virtual void PostStartCaptureEvent( int nChannel );
+    virtual void PostStopCaptureEvent( int nChannel );
+
+    virtual void PostPlayVideoEvent( int nChannel, HWND hVideo );
+    virtual void PostStopVideoEvent( int nChannel );
+
+    virtual void PostCaptrueImageEvent( int nChannel, QString& strFile );
 
 protected:
-    void run( );
-    void customEvent( QEvent *e );
-
-private:
     explicit QAnalogCameraThread(QObject *parent = 0);
 
-    void InitHikSDK( int nChannel, HWND hVideo );
-    void UninitHikSDK( );
+private:
+    inline void PostEvent( QCameraEvent* pEvent );
 
 private:
-    static QAnalogCameraThread* pThreadInstance;
-    HANDLE hChannel;
-    
+
 signals:
     
 public slots:

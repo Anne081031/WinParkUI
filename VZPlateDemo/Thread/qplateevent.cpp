@@ -23,3 +23,23 @@ QByteArray& QPlateEvent::GetVideoFrame( )
 {
     return byVideoFrame;
 }
+
+void QPlateEvent::SetImageFormat( int nFormat )
+{
+   nImageFormat = nFormat;
+}
+
+int QPlateEvent::GetImageFormat( )
+{
+    return nImageFormat;
+}
+
+void QPlateEvent::SetChannel( int nChannel )
+{
+    nInOutChannel = nChannel;
+}
+
+int QPlateEvent::GetChannel( )
+{
+    return nInOutChannel;
+}

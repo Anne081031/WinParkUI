@@ -15,6 +15,8 @@ public:
     static QPlateThread* GetInstance( );
     void PostPlateFileRecognize( QString& strFile );
     void PostPlateVideoRecognize( QByteArray& byVideo );
+    void PostPlateInitEvent( int nFormat );
+    bool SetRecognizeFlag( );
 
 protected:
     void run( );
@@ -26,8 +28,10 @@ private:
 
     void FileRecognize( QPlateEvent* pEvent );
     void VideoRecognize( QPlateEvent* pEvent );
+    void InitSDK( QPlateEvent* pEvent );
+    void UninitSDK( QPlateEvent* pEvent );
 
-    BOOL InitVZSDK( qint32 nChannel  );
+    BOOL InitVZSDK( int nFormat, qint32 nChannel  );
     void UninitVZSDK( qint32 nChannel  );
 
     QString GetPlateColor( qint32 nColor );
@@ -37,6 +41,7 @@ private:
     static QPlateThread* pThreadInstance;
     QTextCodec* pCodec;
     QString strPlatePath;
+    bool bStopRecognize;
     
 signals:
     void PlateResult( QStringList lstPlateParam );

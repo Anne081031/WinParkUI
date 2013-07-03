@@ -2,17 +2,20 @@
 #include "ui_mainwindow.h"
 #include <QFileDialog>
 #include <QDir>
-#include "Thread/qdirectorythread.h"
-#include "Thread/qplatethread.h"
 #include <QDebug>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-
+    pAnalogCamera = NULL;
     connect( QPlateThread::GetInstance( ), SIGNAL( PlateResult( QStringList ) ), this, SLOT( HandlePlateResult( QStringList ) ) );
+    QCommon::GetPlatePicPath( strPlateDir );
+
+    //ImageFormatYUV420COMPASS : ImageFormatBGR
+    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatYUV420COMPASS );
 }
 
 MainWindow::~MainWindow()
@@ -90,7 +93,16 @@ void MainWindow::on_btnClear_clicked()
 
 void MainWindow::on_btnAnalogCamera_clicked()
 {
+    if ( NULL != pAnalogCamera ) {
+        return;
+    }
 
+    int nChannel = 0;
+    pAnalogCamera = QTmCaptureCardThread::GetInstance( );
+
+    pAnalogCamera->PostInitCaptureSDKEvent( winId( ) );
+    pAnalogCamera->PostPlayVideoEvent( nChannel, ui->lblVideo->winId( ) );
+    pAnalogCamera->PostStartCaptureEvent( nChannel );
 }
 
 void MainWindow::on_btnDigitalCamera_clicked()
@@ -101,4 +113,28 @@ void MainWindow::on_btnDigitalCamera_clicked()
 void MainWindow::on_btnVideoFile_clicked()
 {
 
+}
+
+void MainWindow::on_btnAnalogCaptureFile_clicked()
+{
+    if ( NULL == pAnalogCamera ) {
+        return;
+    }
+
+    int nChannel = 0;
+
+    QString strFile = strPlateDir + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".JPG";
+    pAnalogCamera->PostCaptrueImageEvent( nChannel, strFile );
+}
+
+void MainWindow::on_btnIPCCaptureFile_clicked()
+{
+
+}
+
+void MainWindow::on_btnStopVideoRecognize_clicked()
+{
+    bool bFlag = QPlateThread::GetInstance( )->SetRecognizeFlag( );
+
+    ui->btnStopVideoRecognize->setText( bFlag ? "启动视频识别" : "停止视频识别" );
 }
