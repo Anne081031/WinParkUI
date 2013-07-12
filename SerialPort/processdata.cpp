@@ -1078,11 +1078,12 @@ bool CProcessData::GetCCCardCanAddr( QString& strCardno, char& cCan, bool& bEnte
 {
     bool  bRet = false;
 
-    QString strSql = "select Inside from monthcard where cardno = '%1' union ";
-    strSql += "select Inside from savecard where cardno = '%2' union ";
-    strSql += "select Inside from tmpcard where cardno = '%3'";
+    //QString strSql = "select Inside from monthcard where cardno = '%1' union ";
+    //strSql += "select Inside from savecard where cardno = '%2' union ";
+    //strSql += "select Inside from tmpcard where cardno = '%3'";
+    QString strSql = " select CenterController( '%1' ) ";
 
-    strSql = strSql.arg( strCardno, strCardno, strCardno );
+    strSql = strSql.arg( strCardno );//, strCardno, strCardno );
     QStringList lstRow;
     int nRet = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
     if ( 0 == nRet ) {
@@ -1456,7 +1457,8 @@ bool CProcessData::CarInsideOutside( bool bEnter, QString& strCardNumber, QStrin
     }
 #if 1
     QStringList lstRows;
-    QString strSql = QString( " Select Inside From %1 Where cardno = '%2'" ).arg( strTable, strCardNumber );
+    //QString strSql = QString( " Select Inside From %1 Where cardno = '%2'" ).arg( strTable, strCardNumber );
+    QString strSql = QString( " Select CarInSide( '%1', '%2' )" ).arg( strTable, strCardNumber );
     int nRet = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRows );
     if ( 0 == nRet ) {
         return bRet;

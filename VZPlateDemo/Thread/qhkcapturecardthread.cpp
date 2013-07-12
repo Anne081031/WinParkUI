@@ -117,7 +117,9 @@ void QHkCaptureCardThread::ProcessStartPreviewEvent( QCameraEvent* pEvent )
     int nChannel = pEvent->GetChannel( );
     RECT rcClient;
     HWND hVideo = pEvent->GetVideoWndHandle( );
-    ::GetWindowRect( hVideo, &rcClient );
+    //::GetWindowRect( hVideo, &rcClient );
+    ::GetClientRect( hVideo, &rcClient );
+
     int nRet = StartVideoPreview( hChannels[ nChannel ], hVideo, &rcClient, TRUE, 0, 25 );
     Q_UNUSED( nRet )
 }
@@ -151,5 +153,5 @@ void QHkCaptureCardThread::ProcessCaptureImageEvent( QCameraEvent* pEvent )
 
     delete [ ] pImgBuff;
 
-    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile );
+    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, nChannel );
 }

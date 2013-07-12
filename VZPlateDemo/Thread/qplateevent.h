@@ -29,11 +29,19 @@ public:
 
     void SetChannel( int nChannel );
     int GetChannel( );
+
+    void SetVideoWidth( int nWidth );
+    int GetVideoWidth( );
+
+    void SetVideoHeight( int nHeight );
+    int GetVideoHeight( );
 private:
     QString strPicFile;
     QByteArray byVideoFrame;
     int nImageFormat;
     int nInOutChannel;
+    int nVideoWidth;
+    int nVideoHeight;
 };
 
 #endif // QPLATEEVENT_H

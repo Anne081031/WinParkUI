@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Tue Jul 2 17:05:39 2013
+** Created: Fri Jul 12 11:14:41 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,23 +31,23 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      22,   12,   11,   11, 0x08,
-      53,   11,   11,   11, 0x08,
-      85,   74,   11,   11, 0x08,
-     119,   11,   11,   11, 0x08,
-     141,   11,   11,   11, 0x08,
-     170,   11,   11,   11, 0x08,
-     200,   11,   11,   11, 0x08,
-     226,   11,   11,   11, 0x08,
-     260,   11,   11,   11, 0x08,
-     291,   11,   11,   11, 0x08,
+      38,   12,   11,   11, 0x08,
+      78,   11,   11,   11, 0x08,
+     110,   99,   11,   11, 0x08,
+     144,   11,   11,   11, 0x08,
+     166,   11,   11,   11, 0x08,
+     195,   11,   11,   11, 0x08,
+     225,   11,   11,   11, 0x08,
+     251,   11,   11,   11, 0x08,
+     285,   11,   11,   11, 0x08,
+     316,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0lstResult\0"
-    "HandlePlateResult(QStringList)\0"
+    "MainWindow\0\0lstResult,nChannel,bVideo\0"
+    "HandlePlateResult(QStringList,int,bool)\0"
     "on_btnFile_clicked()\0row,column\0"
     "on_tabResult_cellClicked(int,int)\0"
     "on_btnClear_clicked()\0"
@@ -88,7 +88,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: HandlePlateResult((*reinterpret_cast< QStringList(*)>(_a[1]))); break;
+        case 0: HandlePlateResult((*reinterpret_cast< QStringList(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
         case 1: on_btnFile_clicked(); break;
         case 2: on_tabResult_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 3: on_btnClear_clicked(); break;

@@ -114,7 +114,8 @@ private:
     static void ImageStreamCallback( UINT nChannel, PVOID pContent );
 
     //static void MyPrcCbMotionDetect( long lnCardID, BOOL bMove, LPVOID lpContext );
-    static void PrcCapSourceStream( long lnCardID, long pBuf, long lnWidth, long lnHeight, long lnBiCount );
+    //static void PrcCapSourceStream( long lnCardID, long pBuf, long lnWidth, long lnHeight, long lnBiCount );
+    static void PrcCapSourceStream( DWORD dwCard, BYTE *pbuff, DWORD dwSize );
 
     void GetCanParkIndexNum( );
 
@@ -135,6 +136,7 @@ private:
     QLabel* lblStatistics[ 6 ];
     int nCurrentTotal[ 6 ];
     QString strCapture;
+    int nCapture;
 
     //bool bPlateFilter[ VIDEO_USEDWAY ];
     //bool bSuccession[ VIDEO_USEDWAY ];

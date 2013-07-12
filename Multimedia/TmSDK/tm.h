@@ -27,6 +27,11 @@ public:
 
     //typedef HRESULT WINAPI ( *VCAGetDevNum ) ( int *pDevNum );
     typedef HRESULT WINAPI ( *VCAGetDevNum ) ( );
+    typedef HRESULT WINAPI ( *VCAEnableMotionDetect ) ( int nCards, BOOL bEnaDetect, BYTE *pAreaMap,
+                                                        LONG nSizeOfMap, LONG nPersistTime, INT nFrameRateReduce,
+                                                        LPVOID lpContext,
+                                                        PrcCbMotionDetect OnObjectMove );
+
 #if false
     typedef HRESULT WINAPI ( *VCAConnectDevice ) ( int, BOOL, HWND, SIZE&, VIDEOSOURCE, int, VideoSubType );
     typedef HRESULT WINAPI ( *VCADisConnectDevice )( int );
@@ -35,9 +40,7 @@ public:
     typedef HRESULT WINAPI ( *VCAPause ) ( int nCards );
     typedef HRESULT WINAPI ( *VCAStop ) ( int nCards );
 
-    typedef HRESULT WINAPI ( *VCAEnableMotionDetect ) ( int nCards, BOOL bEnaDetect, BYTE *pAreaMap,
-                                                        LONG nSizeOfMap, LONG nPersistTime, LPVOID lpContext,
-                                                        PrcCbMotionDetect OnObjectMove );
+
 
     typedef HRESULT WINAPI ( *VCACapturePicture ) ( int nCards, LPCSTR szFileName, enImageType enImgType,
                                                     RECT* rcImg, long nQuality, long nCapCount, BOOL bCapFast  );
@@ -64,6 +67,9 @@ public:
     typedef BOOL  WINAPI ( *VCASetVidCapColorFormat ) ( DWORD dwCard, COLOR_FORMAT cfColor );
     typedef BOOL  WINAPI ( *VCAStartVideoCapture ) ( DWORD dwCard, CAPMODEL enCapMode, MP4MODEL enMp4Mode, LPCSTR lpFileName );
     typedef BOOL  WINAPI ( *VCASetVidCapSize ) ( DWORD dwCard, DWORD dwWidth, DWORD dwHeight );
+    typedef BOOL  WINAPI ( *VCAStartVideoCaptureEx ) ( DWORD dwCard );
+    typedef BOOL  WINAPI ( *VCAStopVideoCaptureEx ) ( DWORD dwCard );
+
 
 public:
     int SystemStartup( HWND hOverlayWnd = NULL );
@@ -99,7 +105,7 @@ private:
     VCARun MyVCARun;
     VCAPause MyVCAPause;
     VCAStop MyVCAStop;
-    VCAEnableMotionDetect MyVCAEnableMotionDetect;
+
     VCACapturePicture MyVCACapturePicture;
     VCAEnableCapSourceStream MyVCAEnableCapSourceStream;
     VCAEnablePicMessage MyVCAEnablePicMessage;
@@ -120,8 +126,12 @@ private:
     VCASetVidCapColorFormat MyVCASetVidCapColorFormat;
     VCAStartVideoCapture MyVCAStartVideoCapture;
     VCASetVidCapSize MyVCASetVidCapSize;
+    VCAEnableMotionDetect MyVCAEnableMotionDetect;
+    VCAStartVideoCaptureEx MyVCAStartVideoCaptureEx;
+    VCAStopVideoCaptureEx MyVCAStopVideoCaptureEx;
 
-    //PrcCapSourceStream capVideoStream;
+    //typedef void (CALLBACK *PrcVidCapCallBack)( DWORD dwCard, BYTE *pbuff, DWORD dwSize );
+    PrcVidCapCallBack capVideoStream;//PrcCapSourceStream
 };
 
 #endif // TM_H

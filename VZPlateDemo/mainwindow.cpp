@@ -11,11 +11,19 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     pAnalogCamera = NULL;
-    connect( QPlateThread::GetInstance( ), SIGNAL( PlateResult( QStringList ) ), this, SLOT( HandlePlateResult( QStringList ) ) );
+    connect( QPlateThread::GetInstance( ), SIGNAL( PlateResult( QStringList, int, bool ) ),
+             this, SLOT( HandlePlateResult( QStringList, int, bool ) ) );
     QCommon::GetPlatePicPath( strPlateDir );
 
+    aLables[ 0 ] = ui->lblVideo0;
+    aLables[ 1 ] = ui->lblVideo1;
+    aLables[ 2 ] = ui->lblVideo2;
+    aLables[ 3 ] = ui->lblVideo3;
     //ImageFormatYUV420COMPASS : ImageFormatBGR
-    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatYUV420COMPASS );
+    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 0 );
+    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 1 );
+    //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 2 );
+    //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 3 );
 }
 
 MainWindow::~MainWindow()
@@ -23,11 +31,12 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::HandlePlateResult( QStringList lstResult )
+void MainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool bVideo )
 {
     ui->tabResult->insertRow( 0 );
     qint32 nCol = 0;
     QTableWidgetItem* pItem;
+    lstResult << QString::number( nChannel ) << ( bVideo ? "ÊÇ" : "·ñ" );
 
     foreach ( const QString& str, lstResult ) {
         pItem = new QTableWidgetItem( str );
@@ -35,7 +44,9 @@ void MainWindow::HandlePlateResult( QStringList lstResult )
         ui->tabResult->setItem( 0, nCol++, pItem );
     }
 
-    LoadImg( ui->lblVideo, ui->lblPicture, ui->lblPlatePic, 0 );
+    if ( !bVideo ) {
+        LoadImg( ui->lblVideo0, ui->lblPicture, ui->lblPlatePic, 0 );
+    }
      //qDebug( ) << Q_FUNC_INFO << ":" << lstResult.join( "," ) << endl;
 }
 
@@ -58,7 +69,9 @@ void MainWindow::on_btnFile_clicked()
 void MainWindow::on_tabResult_cellClicked(int row, int column)
 {
     column = 0;
-    LoadImg( ui->lblVideo, ui->lblPicture, ui->lblPlatePic, row );
+    if ( QString( "·ñ" ) == ui->tabResult->item( row, ui->tabResult->columnCount( ) - 1 )->text() ) {
+        LoadImg( ui->lblVideo0, ui->lblPicture, ui->lblPlatePic, row );
+    }
 }
 
 void MainWindow::LoadImg( QLabel *lblCtrlLeft, QLabel *lblCtrlRight, QLabel* lblCtrlDown, int nRow )
@@ -88,7 +101,7 @@ void MainWindow::on_btnClear_clicked()
 
     ui->lblPicture->clear( );
     ui->lblPlatePic->clear( );
-    ui->lblVideo->clear( );
+    ui->lblVideo0->clear( );
 }
 
 void MainWindow::on_btnAnalogCamera_clicked()
@@ -97,12 +110,16 @@ void MainWindow::on_btnAnalogCamera_clicked()
         return;
     }
 
-    int nChannel = 0;
-    pAnalogCamera = QTmCaptureCardThread::GetInstance( );
 
+    //pAnalogCamera = QTmCaptureCardThread::GetInstance( );
+    pAnalogCamera = QHkCaptureCardThread::GetInstance( );
     pAnalogCamera->PostInitCaptureSDKEvent( winId( ) );
-    pAnalogCamera->PostPlayVideoEvent( nChannel, ui->lblVideo->winId( ) );
-    pAnalogCamera->PostStartCaptureEvent( nChannel );
+
+    for ( int nChannel = 0; nChannel < CHANNEL_WAY; nChannel++ ) {
+        pAnalogCamera->PostOpenChannelEvent( nChannel );
+        pAnalogCamera->PostPlayVideoEvent( nChannel, aLables[ nChannel ]->winId( ) );
+        pAnalogCamera->PostStartCaptureEvent( nChannel );
+    }
 }
 
 void MainWindow::on_btnDigitalCamera_clicked()

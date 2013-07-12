@@ -3,6 +3,11 @@
 
 #include <QObject>
 #include <QTextCodec>
+#include <QDebug>
+
+#define CHANNEL_WAY ( int ) 4
+#define VIDEO_WIDTH   ( int ) ( 720 )
+#define VIDEO_HEIGHT  ( int ) ( 576 )
 
 class QCommon : public QObject
 {

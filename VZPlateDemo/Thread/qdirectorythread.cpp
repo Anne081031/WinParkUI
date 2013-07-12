@@ -61,7 +61,7 @@ void QDirectoryThread::Traverse( QString &strDir )
         strFile = item.absoluteFilePath( );
 
         if ( item.isFile( ) ) {
-            QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile );
+            QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
         } else if ( item.isDir( ) ) {
             Traverse( strFile );
         }

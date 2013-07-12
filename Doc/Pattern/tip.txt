@@ -1,0 +1,23 @@
+模式(Pattern) 是对重复出现问题的解决办法的经验总结 相似或相同的问题可用以往的经验办法处理 硬件架构模式 网络架构模式 软件架构模式 设计模式(实现时采用的重复出现的问题的解决办法) 
+(Context Problem Resolution) 
+架构模式/Architetural Pattern 
+
+Layers(严格分层) 自顶向下(Request) 自底向上(Response) 复用/去复用 协议栈 变种(松散分层 层间交互可以跨层-性能、灵活性好，维护难 通过继承分层-基类作为低层) /层实例 虚拟机(JVM CLR) API OS
+好处是重用、标准化、局部依赖、可替换， 树型接构、线型结构
+
+Pipes and Filters 处理数据流的系统(流水线) 主动对象-具有线程功能/被动对象-不具线程功能 Push/Pull Publish/Subscribe Sender/Receiver
+DataSource-->流水线(Pipeline)上处理单元(Filter，Process/Thread)--管道(Pipe)--处理单元(Filter，Function/Procedure)-->DataSink
+
+Blackboard
+Broker
+Model-View-Controller
+Presentation-Abstraction-Control
+MicroKernel
+Reflection
+
+设计模式/Design Pattern 子系统 组件等 独立于语言 设计阶段 观察者 推拉 发布预订 事件
+惯用法/Idiom 最低层模式 与特定语言相关 实现阶段 Java .Net模式 计数器 工厂 单实例
+
+Pattern System / Pattern Catalog
+
+面向模式的软件体系结构+卷1-模式系统.pdf 36 37/297

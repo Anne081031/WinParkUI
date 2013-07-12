@@ -46,6 +46,7 @@ void QTmCaptureCardThread::GetFunctionPointer( )
     MyVCAGetDevNum = ( VCAGetDevNum ) ::GetProcAddress( hDllMod, "VCAGetDevNum" );
 
     // VC4000
+    MyVCAEnableMotionDetect = ( VCAEnableMotionDetect ) GetProcAddress( hDllMod, "VCAEnableMotionDetect" );
     MyVCAOpenDevice = ( VCAOpenDevice ) GetProcAddress( hDllMod, "VCAOpenDevice" );
     MyVCACloseDevice = ( VCACloseDevice ) GetProcAddress( hDllMod, "VCACloseDevice" );
     MyVCAStartVideoPreview = ( VCAStartVideoPreview ) GetProcAddress( hDllMod, "VCAStartVideoPreview" );
@@ -159,8 +160,19 @@ void QTmCaptureCardThread::VidCapCallBack( DWORD dwCard, BYTE *pbuff, DWORD dwSi
 
     QByteArray byVideo;
     byVideo.append( ( const char* ) pbuff, dwSize );
-    Q_UNUSED( dwCard )
-    QPlateThread::GetInstance( )->PostPlateVideoRecognize( byVideo );
+
+    QPlateThread::GetInstance( )->PostPlateVideoRecognize( byVideo, 352, 288, dwCard );
+}
+
+void QTmCaptureCardThread::MotionDelect( DWORD dwCard, BOOL bMove, BYTE *pbuff, DWORD dwSize, LPVOID lpContext )
+{
+
+}
+
+void CALLBACK MyPrcCbMotionDetect( DWORD dwCard, BOOL bMove, BYTE *pbuff, DWORD dwSize, LPVOID lpContext )
+{
+    DWORD lnCardID = dwCard;
+    qDebug( ) << "MyPrcCbMotionDetect " << endl;
 }
 
 void QTmCaptureCardThread::ProcessStartPreviewEvent( QCameraEvent* pEvent )
@@ -172,9 +184,42 @@ void QTmCaptureCardThread::ProcessStartPreviewEvent( QCameraEvent* pEvent )
     cliSize.cy = VIDEO_HEIGHT;
     HWND hVideoWnd = pEvent->GetVideoWndHandle( );
 
+    nRet = MyVCASetVidCapColorFormat( nChannel, RGB888 );
     nRet = MyVCARegVidCapCallBack( nChannel, VidCapCallBack );
     nRet = MyVCAOpenDevice( nChannel, hVideoWnd );
     nRet = MyVCAStartVideoPreview( nChannel );
+
+    DWORD ulCapWidth = 352;
+    DWORD ulCapHeight = 288;
+    DWORD ulWidth  = (ulCapWidth  / 16);
+    DWORD ulHeight = (ulCapHeight / 16);
+    DWORD dwAreaMapSize  = ulWidth * ulHeight;
+    int   nDetectPrecision = 10;//动态检测的精度,默认值为10
+    BYTE *pAreaMap = new BYTE[dwAreaMapSize];  //检测区域
+    if (NULL==pAreaMap)
+        return;
+
+    for (UINT i=0;i<ulHeight;i++)
+    {
+        for (UINT j=0;j<ulWidth;j++)
+            pAreaMap[i*ulWidth+j] = nDetectPrecision;
+    }
+
+    nRet = MyVCAEnableMotionDetect( nChannel,    //动态检测的通道号
+        TRUE,                            //是否允许动态检测
+        pAreaMap,                        //运动检测地图
+        dwAreaMapSize,                   //pAreaMap尺寸,以BYTE为单位
+        4,                               //物体持续nPersistTime秒不动则认为停止 1-30s ,如果nPersistTime = －1;则回调运动检测地图。取消（开始、停止）回调。
+        2,                               //降低采样比较倍数
+        this,                            //监测上下文
+        MyPrcCbMotionDetect             //运动/停止回调函数
+        );
+
+    if (NULL != pAreaMap)
+    {
+        delete [] pAreaMap;
+        pAreaMap = NULL;
+    }
 }
 
 void QTmCaptureCardThread::ProcessStopPreviewEvent( QCameraEvent* pEvent )
@@ -194,5 +239,5 @@ void QTmCaptureCardThread::ProcessCaptureImageEvent( QCameraEvent* pEvent )
     char* pFile = byData.data( );
     nRet = MyVCASaveAsJpegFile( nChannel, pFile, 80 );
 
-    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile );
+    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, nChannel );
 }

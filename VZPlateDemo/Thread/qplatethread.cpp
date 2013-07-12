@@ -37,26 +37,39 @@ void QPlateThread::run( )
     exec( );
 }
 
-void QPlateThread::PostPlateFileRecognize( QString &strFile )
+void QPlateThread::PostPlateFileRecognize( QString &strFile, int nChannel )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
     pEvent->SetFilePath( strFile );
+    pEvent->SetChannel( nChannel );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo )
+void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int nHeight, int nChannel )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateVideoRecognize );
     pEvent->SetVideoFrame( byVideo );
+    pEvent->SetChannel( nChannel );
+    pEvent->SetVideoWidth( nWidth );
+    pEvent->SetVideoHeight( nHeight );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateInitEvent( int nFormat )
+void QPlateThread::PostPlateInitEvent( int nFormat, int nChannel )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateInit );
     pEvent->SetImageFormat( nFormat );
+    pEvent->SetChannel( ++nChannel );
+
+    PostEvent( pEvent );
+}
+
+void QPlateThread::PostPlateUninitEvent( int nChannel )
+{
+    QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateUninit );
+    pEvent->SetChannel( ++nChannel );
 
     PostEvent( pEvent );
 }
@@ -64,6 +77,42 @@ void QPlateThread::PostPlateInitEvent( int nFormat )
 void QPlateThread::PostEvent( QPlateEvent *pEvent )
 {
     qApp->postEvent( this, pEvent );
+}
+
+QString QPlateThread::GetPlateMoveDirection( int nDirection )
+{
+    QString strDirection = "";
+
+    switch ( nDirection ) {
+    case DIRECTION_LEFT :
+        strDirection = "вС";
+        break;
+
+    case DIRECTION_RIGHT :
+        strDirection = "ср";
+        break;
+
+    case DIRECTION_UP :
+        strDirection = "ио";
+        break;
+
+    case DIRECTION_DOWN :
+        strDirection = "об";
+        break;
+    default :
+        strDirection = "нч";
+        break;
+    }
+
+    return strDirection;
+}
+
+QString QPlateThread::GetWidthHeight( TH_PlateResult *pResult )
+{
+    int nWidth = pResult->rcLocation.right - pResult->rcLocation.left;
+    int nHeigth = pResult->rcLocation.bottom - pResult->rcLocation.top;
+
+    return QString::number( nWidth ) + "*" + QString::number( nHeigth );
 }
 
 QString QPlateThread::GetPlateColor( qint32 nColor )
@@ -108,6 +157,8 @@ void QPlateThread::GetResultInfo( QStringList &lstResult, QString &strFile, bool
         lstResult << ( bSuccess ? QString::number( pResult[ nIndex ].nTime )  : "" );
         lstResult << ( bSuccess ? QString::number( pResult[ nIndex ].nConfidence ) : "" );
         lstResult << ( bSuccess ? GetPlateColor( pResult[ nIndex ].nColor ) : "" );
+        lstResult << ( bSuccess ? GetWidthHeight( &pResult[ nIndex ] ) : "" );
+        lstResult << ( bSuccess ? GetPlateMoveDirection( pResult[ nIndex ].nDirection ) : "" );
         lstResult << ( bSuccess ? ( strPlatePath + info.baseName( ) + QString::number( nIndex )+ ".bmp" ) : "" );
         lstResult << strFile;
     }
@@ -116,6 +167,7 @@ void QPlateThread::GetResultInfo( QStringList &lstResult, QString &strFile, bool
 void QPlateThread::FileRecognize( QPlateEvent *pEvent )
 {
     QString& strFile = pEvent->GetFilePath( );
+    int nChannel = pEvent->GetChannel( );
     int nNum = 0;
     TH_RECT rcRange = { 0 };
 
@@ -128,7 +180,7 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
     QByteArray byPath = pCodec->fromUnicode( strPlatePath );
     char* pPath = byPath.data( );
 
-    BOOL bRet = LPR_FileEx( pFile, pPath, result, nNum, &rcRange, 1 );
+    BOOL bRet = LPR_FileEx( pFile, pPath, result, nNum, &rcRange, nChannel + 1 );
     QStringList lstResult;
 
     if ( !bRet ) {
@@ -136,7 +188,7 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
     }
 
     GetResultInfo( lstResult, strFile, bRet, nNum, result );
-    emit PlateResult( lstResult );
+    emit PlateResult( lstResult, nChannel, bRet, false );
 }
 
 void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
@@ -146,6 +198,10 @@ void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
     }
 
     QByteArray& byVideo = pEvent->GetVideoFrame( );
+    int nChannel = pEvent->GetChannel( );
+    int nWidth = pEvent->GetVideoWidth( );
+    int nHeight = pEvent->GetVideoHeight( );
+
     int nNum = 0;
     TH_RECT rcRange = { 0 };
 
@@ -153,7 +209,7 @@ void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
     ZeroMemory( result, sizeof ( result ) );
     QString strFile;
 
-    BOOL bRet = LPR_RGB888Ex( ( PBYTE ) byVideo.data( ), 704, 576, result, nNum, &rcRange, 1 );
+    BOOL bRet = LPR_RGB888Ex( ( PBYTE ) byVideo.data( ), nWidth, nHeight, result, nNum, &rcRange, nChannel + 1 );
     QStringList lstResult;
 
     if ( !bRet ) {
@@ -161,7 +217,7 @@ void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
     }
 
     GetResultInfo( lstResult, strFile, bRet, nNum, result );
-    emit PlateResult( lstResult );
+    emit PlateResult( lstResult, nChannel, bRet, true );
 }
 
 void QPlateThread::InitSDK( QPlateEvent* pEvent )
@@ -182,7 +238,7 @@ BOOL QPlateThread::InitVZSDK( int nFormat, qint32 nChannel )
     // nChannel 1 2 3 4
     //ImageFormatYUV420COMPASS : ImageFormatBGR
     BOOL bRet = LPR_SetImageFormat ( FALSE, FALSE, nFormat,
-                                                                    FALSE, 60, 400, TRUE, FALSE, FALSE, nChannel );
+                                     FALSE, 60, 400, TRUE, FALSE, FALSE, nChannel );
     if ( !bRet ) {
         return bRet;
     }

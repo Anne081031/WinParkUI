@@ -2,6 +2,10 @@
 
 QPlateEvent::QPlateEvent( Type evtType ) : QEvent( evtType )
 {
+    nImageFormat = 0;
+    nInOutChannel = 0;
+    nVideoWidth = 0;
+    nVideoHeight = 0;
 }
 
 void QPlateEvent::SetFilePath( QString &strFile )
@@ -42,4 +46,24 @@ void QPlateEvent::SetChannel( int nChannel )
 int QPlateEvent::GetChannel( )
 {
     return nInOutChannel;
+}
+
+void QPlateEvent::SetVideoWidth( int nWidth )
+{
+    nVideoWidth = nWidth;
+}
+
+int QPlateEvent::GetVideoWidth( )
+{
+    return nVideoWidth;
+}
+
+void QPlateEvent::SetVideoHeight( int nHeight )
+{
+    nVideoWidth = nHeight;
+}
+
+int QPlateEvent::GetVideoHeight( )
+{
+    return nVideoHeight;
 }

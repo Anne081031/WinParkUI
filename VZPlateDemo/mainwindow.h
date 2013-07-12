@@ -28,7 +28,7 @@ private:
     QAnalogCameraThread* pAnalogCamera;
 
 private slots:
-    void HandlePlateResult( QStringList lstResult );
+    void HandlePlateResult( QStringList lstResult, int nChannel, bool bVideo );
     
 private slots:
     void on_btnFile_clicked();
@@ -52,6 +52,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     QString strPlateDir;
+    QLabel* aLables[ CHANNEL_WAY ];
 };
 
 #endif // MAINWINDOW_H

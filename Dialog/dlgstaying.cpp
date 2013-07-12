@@ -20,6 +20,12 @@ CDlgStaying::CDlgStaying(QWidget *parent) :
 
     pFrmDisplayPic->move( geometry( ).width( ) - pFrmDisplayPic->width( ),
                           geometry( ).height( ) - pFrmDisplayPic->height( ) );
+
+    QHeaderView* pView = ui->tableWidgetMonth->horizontalHeader( );
+    pView->hideSection( ui->tableWidgetMonth->columnCount( ) - 1 );
+
+    pView = ui->tableWidgetTime->horizontalHeader( );
+    pView->hideSection( ui->tableWidgetTime->columnCount( ) - 1 );
 }
 
 void CDlgStaying::SetFrameVisble( bool bVisible )
@@ -51,7 +57,7 @@ CDlgStaying::~CDlgStaying()
 
 void CDlgStaying::GetMonthData( QString &strOrder )
 {
-    QString strSql = "SELECT d.cardno,d.cardselfno, b.username, b.userphone, c.carcp, a.inshebeiname, a.intime \
+    QString strSql = "SELECT d.cardno,d.cardselfno, b.username, b.userphone, c.carcp, a.inshebeiname, a.intime, a.stoprdid \
             FROM stoprd a, userinfo b, carinfo c, monthcard d \
             where a.stoprdid = ( select stoprdid from cardstoprdid c \
                                  where d.cardno = c.cardno and d.Inside = 1 ) and a.outtime is null \
@@ -67,7 +73,7 @@ void CDlgStaying::GetMonthData( QString &strOrder )
 void CDlgStaying::GetTimeData( QString &strOrder )
 {
     QStringList lstRows;
-    QString strSql = "SELECT b.cardno,b.cardselfno, a.carcp, a.inshebeiname, a.intime \
+    QString strSql = "SELECT b.cardno,b.cardselfno, a.carcp, a.inshebeiname, a.intime, a.stoprdid\
             FROM stoprd a, tmpcard b \
             where a.stoprdid = ( select stoprdid from cardstoprdid c \
                                  where b.cardno = c.cardno and b.Inside = 1 ) and a.outtime is null" + strOrder;
@@ -130,8 +136,8 @@ void CDlgStaying::DisplayPic( QTableWidget* pWidget, int nRow, int nCol )
 
     if ( bZeroCol ) {
         QString strFile;
-        QString strWhere = QString( " Where cardno ='%1' and intime = '%2' " ).arg(
-                    pWidget->item( nRow, nCol )->text( ), pWidget->item( nRow, pWidget->columnCount( ) - 1 )->text( ) );
+        QString strWhere = QString( " Where stoprdid =%1 " ).arg(
+                    pWidget->item( nRow, pWidget->columnCount( ) - 1 )->text( ) );
         CCommonFunction::GetPath( strFile, CommonDataType::PathSnapshot );
         strFile += "Staying.jpg";
         CLogicInterface::GetInterface( )->OperateBlob( strFile, false, CommonDataType::BlobVehicleIn1, strWhere, bHistory );

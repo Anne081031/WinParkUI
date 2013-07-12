@@ -76,6 +76,11 @@
        <string>进入时间</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>ID</string>
+      </property>
+     </column>
     </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
@@ -119,15 +124,20 @@
        <string>进入时间</string>
       </property>
      </column>
+     <column>
+      <property name="text">
+       <string>ID</string>
+      </property>
+     </column>
     </widget>
    </widget>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>20</x>
      <y>7</y>
-     <width>592</width>
+     <width>597</width>
      <height>22</height>
     </rect>
    </property>

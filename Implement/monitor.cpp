@@ -730,9 +730,9 @@ void CALLBACK PrcPicMessage( long lnCardID, long pBuf, long lnWidth, long lnHeig
 
 }
 
-void CMonitor::PrcCapSourceStream( long lnCardID, long pBuf, long lnWidth, long lnHeight, long lnBiCount )
+void CMonitor::PrcCapSourceStream(DWORD dwCard, BYTE *pbuff, DWORD dwSize)
 {
-    lnCardID -= 1;
+    DWORD lnCardID = dwCard;
     bool bMoving = pMainWnd->bStartRecognization[ lnCardID ];
     emit pMainWnd->OnDirectionIndicator( lnCardID, bMoving );
 
@@ -750,17 +750,18 @@ void CMonitor::PrcCapSourceStream( long lnCardID, long pBuf, long lnWidth, long 
 
     qDebug( ) << "CardID : " << QString::number( lnCardID ) << endl;
     nResult = RECOG_RES;
-    bool bRet = pVehicle->RecognizeVideo( ( quint8* ) pBuf, lnWidth,
-                                          lnHeight, recogResult[ lnCardID ], nResult, lnCardID );
+    bool bRet = pVehicle->RecognizeVideo( ( quint8* ) pbuff, 352,
+                                          288, recogResult[ lnCardID ], nResult, lnCardID );
 
     if ( bRet ) { // Display Plate
         pMainWnd->DisplayPlate( lnCardID );
     }
 }
 
-void CALLBACK MyPrcCbMotionDetect( long lnCardID, BOOL bMove, LPVOID lpContext )
+//( DWORD dwCard, BOOL bMove, BYTE *pbuff, DWORD dwSize, LPVOID lpContext )
+void CALLBACK MyPrcCbMotionDetect( DWORD dwCard, BOOL bMove, BYTE *pbuff, DWORD dwSize, LPVOID lpContext )
 {
-    lnCardID -= 1;
+    DWORD lnCardID = dwCard;
     CMonitor::bStartRecognization[ lnCardID ] = bMove;
     qDebug( ) << "MyPrcCbMotionDetect " << endl;
 }
@@ -1065,7 +1066,22 @@ void CMonitor::StartPlateRecog( )
         }
 
         lstParam.clear( );
-        lstParam << QString::number( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR ) << QString::number( nIndex ); // Format / Channel
+
+        if ( bNetworkCamera ) {
+           lstParam << QString::number( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR ) << QString::number( nIndex ); // Format / Channel
+        } else {
+            switch ( nCapture ) {
+            case CMultimedia::HikSdk :
+               lstParam << QString::number( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR ) << QString::number( nIndex );
+               break;
+
+            case CMultimedia::TmSDK :
+               lstParam << QString::number( ImageFormatRGB ) << QString::number( nIndex );
+               break;
+            }
+        }
+
+        //lstParam << QString::number( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR ) << QString::number( nIndex ); // Format / Channel
         pVehicle->RecognizedImageFormat( lstParam );
         bool bRet = pVehicle->Initialize( nIndex );
         if (  false == bRet ) {
@@ -1209,7 +1225,7 @@ void CMonitor::StartAvSdk( )
     StopAvSdk( );
 
     strCapture = pSystem->value( "CommonCfg/CaptureCard", "HK" ).toString( ).toUpper( );
-    int nCapture = -1;
+    nCapture = -1;
     //for ( int nStart = CMultimedia::HikSdk; nStart <= CMultimedia::TmSDK; ++nStart ) {
     if ( "HK" == strCapture ) {
         nCapture = CMultimedia::HikSdk;
@@ -1235,7 +1251,17 @@ void CMonitor::StartAvSdk( )
 
     int nRet = 0;
     if ( bPlateVideo ) { // Plate Video Mode
-        bool bRet = pMultimedia->RegisterStreamCB( ImageStreamCallback, this ); // GetVideoData
+        bool bRet = false;
+        switch ( nCapture ) {
+        case CMultimedia::HikSdk :
+            bRet = pMultimedia->RegisterStreamCB( ImageStreamCallback, this ); // GetVideoData
+            break;
+
+        case CMultimedia::TmSDK :
+            bRet = pMultimedia->RegisterStreamCB( ( HK_STREAM_CB ) PrcCapSourceStream, this ); // GetVideoData
+            break;
+        }
+
     }
     //int nRet = pMultimedia->RegisterStreamCB( ( HK_STREAM_CB ) PrcCapSourceStream, this ); // GetVideoData
 
@@ -1245,8 +1271,16 @@ void CMonitor::StartAvSdk( )
 
     if ( bPlateVideo ) {
         for ( int nIndex = 0; nIndex < nUsedWay; nIndex++ ) { // Detection
-            nRet = pMultimedia->SetupDetection( hChannelHandle[ nIndex ], MotionDetection, nIndex, this );
-            //nRet = pMultimedia->SetupDetection( hChannelHandle[ nIndex ], ( HK_MOTION_CB ) MyPrcCbMotionDetect, nIndex, this );
+            switch ( nCapture ) {
+            case CMultimedia::HikSdk :
+                nRet = pMultimedia->SetupDetection( hChannelHandle[ nIndex ], MotionDetection, nIndex, this );
+                break;
+
+            case CMultimedia::TmSDK :
+                nRet = pMultimedia->SetupDetection( hChannelHandle[ nIndex ], ( HK_MOTION_CB ) MyPrcCbMotionDetect, nIndex, this );
+                break;
+            }
+
             nRet = pMultimedia->MotionDetection( hChannelHandle[ nIndex ], true );
             nRet = pMultimedia->TmEnablePicMessage( ( int ) hChannelHandle[ nIndex ], TRUE, PrcPicMessage );
 
@@ -1975,6 +2009,9 @@ void CMonitor::on_tabRecord_cellDoubleClicked(int row, int column)
         bool bFreeCard = ( 10 == nType  );
         QString strWhere = QString( " Where cardno = '%1' and %2 = '%3' and %4 = '%5'" ).arg(
                                     strCardNo, strChannelField, strChannel, strTimeField, strDateTime );
+
+        //QString strWhere = QString( " Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' )" ).arg(
+        //                            strCardNo );
 
         CLogicInterface logInterf;
         CMySqlDatabase& mySql = logInterf.GetMysqlDb( );

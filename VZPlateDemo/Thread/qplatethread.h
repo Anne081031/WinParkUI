@@ -13,9 +13,10 @@ class QPlateThread : public QThread
     Q_OBJECT
 public:
     static QPlateThread* GetInstance( );
-    void PostPlateFileRecognize( QString& strFile );
-    void PostPlateVideoRecognize( QByteArray& byVideo );
-    void PostPlateInitEvent( int nFormat );
+    void PostPlateFileRecognize( QString& strFile, int nChannel );
+    void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, int nChannel );
+    void PostPlateInitEvent( int nFormat, int nChannel );
+    void PostPlateUninitEvent( int nChannel );
     bool SetRecognizeFlag( );
 
 protected:
@@ -34,6 +35,8 @@ private:
     BOOL InitVZSDK( int nFormat, qint32 nChannel  );
     void UninitVZSDK( qint32 nChannel  );
 
+    QString GetPlateMoveDirection( int nDirection );
+    QString GetWidthHeight( TH_PlateResult* pResult );
     QString GetPlateColor( qint32 nColor );
     void GetResultInfo( QStringList& lstResult, QString& strFile, bool bSuccess, qint32 nNum, TH_PlateResult* pResult );
 
@@ -44,7 +47,7 @@ private:
     bool bStopRecognize;
     
 signals:
-    void PlateResult( QStringList lstPlateParam );
+    void PlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );
     
 public slots:
     

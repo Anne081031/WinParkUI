@@ -4,9 +4,6 @@
 #include "QAnalogCameraThread.h"
 #include "Sa7134Capture.h"
 
-#define VIDEO_WIDTH   ( int ) ( 720 )
-#define VIDEO_HEIGHT  ( int ) ( 576 )
-
 class QTmCaptureCardThread : public QAnalogCameraThread
 {
     Q_OBJECT
@@ -19,11 +16,17 @@ public:
 private:
     explicit QTmCaptureCardThread(QObject *parent = 0);
 
+    static void MotionDelect( DWORD dwCard, BOOL bMove, BYTE *pbuff, DWORD dwSize, LPVOID lpContext );
+
     typedef HRESULT WINAPI ( *VCAInitSdk ) ( HWND hWndMain, DISPLAYTRANSTYPE eDispTransType, BOOL bInitAudDev );
     typedef HRESULT WINAPI ( *VCAUnInitSdk ) ( );
     typedef HRESULT WINAPI ( *VCAGetDevNum ) ( );
 
     // VC4000
+    typedef HRESULT WINAPI ( *VCAEnableMotionDetect ) ( int nCards, BOOL bEnaDetect, BYTE *pAreaMap,
+                                                        LONG nSizeOfMap, LONG nPersistTime, INT nFrameRateReduce,
+                                                        LPVOID lpContext,
+                                                        PrcCbMotionDetect OnObjectMove );
     typedef BOOL  WINAPI ( *VCAOpenDevice ) ( DWORD dwCard, HWND hPreviewWnd );
     typedef BOOL  WINAPI ( *VCACloseDevice ) ( DWORD dwCard );
     typedef BOOL  WINAPI ( *VCAStartVideoPreview ) ( DWORD dwCard );
@@ -48,6 +51,7 @@ private:
     VCAGetDevNum MyVCAGetDevNum;
 
     // VC4000
+    VCAEnableMotionDetect MyVCAEnableMotionDetect;
     VCAOpenDevice MyVCAOpenDevice;
     VCACloseDevice MyVCACloseDevice;
     VCAStartVideoPreview MyVCAStartVideoPreview;

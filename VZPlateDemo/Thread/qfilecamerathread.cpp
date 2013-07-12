@@ -28,12 +28,4 @@ void QFileCameraThread::customEvent( QEvent *e )
 {
     QCameraEvent* pEvent = ( QCameraEvent* ) e;
     QCameraEvent::CameraEventType evtType = ( QCameraEvent::CameraEventType ) pEvent->type( );
-
-    switch ( evtType ) {
-    case QCameraEvent::CameraFileRecognize :
-        break;
-
-    case QCameraEvent::CameraVideoRecognize :
-        break;
-    }
 }

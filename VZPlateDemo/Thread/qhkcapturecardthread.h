@@ -33,7 +33,7 @@ private:
     void ProcessCaptureImageEvent( QCameraEvent* pEvent );
 
     static QAnalogCameraThread* pThreadInstance;
-    HANDLE hChannels[ 4 ];
+    HANDLE hChannels[ CHANNEL_WAY ];
     
 signals:
     

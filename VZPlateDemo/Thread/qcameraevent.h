@@ -9,9 +9,9 @@ class QCameraEvent : public QEvent
 {
 public:
     typedef enum __CameraEventType {
-        CameraVideoRecognize = User,
-        CameraFileRecognize,
-        CameraInit, //初始化
+        //CameraVideoRecognize = User,
+        //CameraFileRecognize,
+        CameraInit = User, //初始化
         CameraUninit,
         CameraOpenChannel, //连接采集卡
         CameraCloseChannel,
