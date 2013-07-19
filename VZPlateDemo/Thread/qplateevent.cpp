@@ -60,7 +60,7 @@ int QPlateEvent::GetVideoWidth( )
 
 void QPlateEvent::SetVideoHeight( int nHeight )
 {
-    nVideoWidth = nHeight;
+    nVideoHeight = nHeight;
 }
 
 int QPlateEvent::GetVideoHeight( )

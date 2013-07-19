@@ -76,6 +76,7 @@ private:
     bool bNetworkCamera;
     QRect recSmallSize;
     QRect recBigSize;
+    QSettings* pSettings;
 };
 
 #endif // IPCVIDEOFRAME_H

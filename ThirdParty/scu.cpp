@@ -1,4 +1,5 @@
 #include "ThirdParty\scu.h"
+#include <windows.h>
 
 CScu::CScu(QObject *parent) :
     QObject(parent)
@@ -92,6 +93,19 @@ void CScu::HttpSendData( QStringList &lstData )
 
 void CScu::SendDatagram( )
 {
+    //::gethostbyaddr( ) 据IP获取对应主机信息
+    // getnameinfo
+
+    //::getaddrinfo 据域名获取对应主机信息
+    hostent* pHost = ::gethostbyname( "www.google.com.hk" );
+    int i = 0;
+    struct in_addr addr;
+    while ( NULL != pHost && pHost->h_addr_list[ i ] != 0
+            && AF_INET == pHost->h_addrtype ) {
+        addr.s_addr = *( u_long* ) pHost->h_addr_list[ i++ ];
+        qDebug( ) << inet_ntoa( addr ) << endl;
+    }
+
     if ( QAbstractSocket::ConnectedState != udpClient.state( ) ) {
         QString strIP = pSystemSet->value( "ThirdParty/ScuMsgCenterIP", "127.0.0.1" ).toString( );
         QString strPort = pSystemSet->value( "ThirdParty/ScuMsgCenterPort", "32009" ).toString( );

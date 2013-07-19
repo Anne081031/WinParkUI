@@ -26,10 +26,26 @@ public:
     virtual void PostPlayVideoEvent( int nChannel, HWND hVideo );
     virtual void PostStopVideoEvent( int nChannel );
 
-    virtual void PostCaptrueImageEvent( int nChannel, QString& strFile );
+    virtual void PostCaptrueImageEvent( int nChannel, QString& strFile, bool bRecognize );
+
+    virtual void PostStartMotionDetectEvent( int nChannel );
+    virtual void PostStopMotionDetectEvent( int nChannel );
+
+    virtual void PostStartSourceStreamEvent( int nChannel, bool bRegister );
+    virtual void PostStopSourceStreamEvent( int nChannel );
+
+    void SendDetectInfo( int nChannel, bool bMotion );
+    void SetMotionDetect( bool bMotion, int nChannel );
+    bool GetMotionDetect( int nChannel );
+
+    virtual void CaptureStaticImage( QString& strFile, int nChannel );
 
 protected:
     explicit QAnalogCameraThread(QObject *parent = 0);
+    void SendCaptureImage( QString& strFile, int nChannel );
+    void SendNotifyMessage( QString& strMsg, bool bSuccess );
+
+    bool bMotionDetects[ CHANNEL_WAY ];
 
 private:
     inline void PostEvent( QCameraEvent* pEvent );
@@ -37,6 +53,9 @@ private:
 private:
 
 signals:
+    void CaptureImage( QString strFile, int nChannel );
+    void NotifyMessage( QString strMsg, bool bSuccess );
+    void DetectInfo( int nChannel, bool bMotion );
     
 public slots:
     

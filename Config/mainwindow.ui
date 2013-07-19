@@ -30,7 +30,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>20</y>
+      <y>10</y>
       <width>231</width>
       <height>80</height>
      </rect>
@@ -87,7 +87,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>430</y>
+      <y>480</y>
       <width>231</width>
       <height>75</height>
      </rect>
@@ -162,9 +162,9 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>110</y>
+      <y>100</y>
       <width>231</width>
-      <height>151</height>
+      <height>181</height>
      </rect>
     </property>
     <property name="title">
@@ -174,7 +174,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>110</y>
+       <y>136</y>
        <width>153</width>
        <height>15</height>
       </rect>
@@ -200,7 +200,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>130</y>
+       <y>156</y>
        <width>161</width>
        <height>16</height>
       </rect>
@@ -246,7 +246,7 @@
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>85</y>
+       <y>108</y>
        <width>131</width>
        <height>20</height>
       </rect>
@@ -279,7 +279,7 @@
      <property name="geometry">
       <rect>
        <x>11</x>
-       <y>85</y>
+       <y>108</y>
        <width>72</width>
        <height>16</height>
       </rect>
@@ -327,6 +327,39 @@
       </property>
      </widget>
     </widget>
+    <widget class="QComboBox" name="cbxStream">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>81</y>
+       <width>131</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>主码流</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>子码流</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_36">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>81</y>
+       <width>72</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>码流类型</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
@@ -358,7 +391,7 @@
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>510</y>
+      <y>570</y>
       <width>231</width>
       <height>141</height>
      </rect>
@@ -515,7 +548,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>410</y>
+      <y>413</y>
       <width>231</width>
       <height>131</height>
      </rect>
@@ -607,7 +640,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>324</y>
+      <y>328</y>
       <width>231</width>
       <height>80</height>
      </rect>
@@ -668,7 +701,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>178</y>
+      <y>181</y>
       <width>231</width>
       <height>141</height>
      </rect>
@@ -865,7 +898,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>60</y>
+       <y>74</y>
        <width>211</width>
        <height>16</height>
       </rect>
@@ -878,7 +911,7 @@
      <property name="geometry">
       <rect>
        <x>180</x>
-       <y>79</y>
+       <y>92</y>
        <width>24</width>
        <height>20</height>
       </rect>
@@ -891,7 +924,7 @@
      <property name="geometry">
       <rect>
        <x>12</x>
-       <y>79</y>
+       <y>92</y>
        <width>111</width>
        <height>20</height>
       </rect>
@@ -904,7 +937,7 @@
      <property name="geometry">
       <rect>
        <x>132</x>
-       <y>79</y>
+       <y>92</y>
        <width>42</width>
        <height>20</height>
       </rect>
@@ -922,8 +955,8 @@
     <widget class="QLabel" name="label_29">
      <property name="geometry">
       <rect>
-       <x>13</x>
-       <y>108</y>
+       <x>11</x>
+       <y>120</y>
        <width>54</width>
        <height>12</height>
       </rect>
@@ -935,8 +968,8 @@
     <widget class="QLineEdit" name="edtParkID">
      <property name="geometry">
       <rect>
-       <x>78</x>
-       <y>105</y>
+       <x>76</x>
+       <y>117</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -945,8 +978,8 @@
     <widget class="QCheckBox" name="chkBroadcastData">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>130</y>
+       <x>13</x>
+       <y>140</y>
        <width>141</width>
        <height>16</height>
       </rect>
@@ -955,14 +988,27 @@
       <string>是否广播进出记录</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="chkNoCard">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>59</y>
+       <width>211</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>无卡工作模式</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_9">
     <property name="geometry">
      <rect>
       <x>30</x>
-      <y>270</y>
+      <y>290</y>
       <width>230</width>
-      <height>151</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="title">
@@ -1097,6 +1143,39 @@
        </widget>
       </item>
      </layout>
+    </widget>
+    <widget class="QComboBox" name="cbxPlate">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>143</y>
+       <width>101</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <item>
+      <property name="text">
+       <string>抓图识别</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>视频识别</string>
+      </property>
+     </item>
+    </widget>
+    <widget class="QLabel" name="label_37">
+     <property name="geometry">
+      <rect>
+       <x>11</x>
+       <y>143</y>
+       <width>72</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>车牌识别类型</string>
+     </property>
     </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_10">

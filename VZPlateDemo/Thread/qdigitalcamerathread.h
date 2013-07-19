@@ -9,19 +9,12 @@ class QDigitalCameraThread : public QThread
     Q_OBJECT
 
 public:
-    static QDigitalCameraThread* GetInstance( );
 
 protected:
     explicit QDigitalCameraThread(QObject *parent = 0);
 
-    void run( );
-    void customEvent( QEvent *e );
-
 private:
 
-private:
-    static QDigitalCameraThread* pThreadInstance;
-    
 signals:
     
 public slots:

@@ -5,6 +5,7 @@ QCameraEvent::QCameraEvent(Type evtType) : QEvent(evtType)
     hVideoWnd = NULL;
     hParentWnd = NULL;
     nChannelNumber = -1;
+    bRecognize = false;
 }
 
 void QCameraEvent::SetChannel( int nChannel )
@@ -45,4 +46,14 @@ void QCameraEvent::SetImgFile( QString& strFile )
 QString& QCameraEvent::GetImgFile( )
 {
     return strImgFile;
+}
+
+void QCameraEvent::SetRecognize( bool bRecog )
+{
+    bRecognize = bRecog;
+}
+
+bool QCameraEvent::GetRecognize( )
+{
+    return bRecognize;
 }

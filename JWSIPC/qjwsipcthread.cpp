@@ -332,6 +332,7 @@ void QJwsIPCThread::ProcessIPCStartRealPlayEvent( QIPCEvent* pEvent )
     QIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
     char* pIP = uParam.EventStartRealPlay.cIP;
     HWND hPlayWnd = uParam.EventStartRealPlay.hPlayWnd;
+    bool bMainStream = uParam.EventStartRealPlay.bMainStream;
 
     tmPlayRealStreamCfg_t tPlayInfo = { 0 };
     tPlayInfo.dwSize = sizeof ( tmPlayRealStreamCfg_t );
@@ -339,7 +340,7 @@ void QJwsIPCThread::ProcessIPCStartRealPlayEvent( QIPCEvent* pEvent )
     tPlayInfo.iPort = 6002;
     strcpy( tPlayInfo.szUser, "system" );
     strcpy( tPlayInfo.szPass, "system" );
-
+    tPlayInfo.byStream = bMainStream ? 0 : 1;
 
     HANDLE hPreview = TMCC_Init( TMCC_INITTYPE_REALSTREAM );
     if ( NULL == hPreview ) {

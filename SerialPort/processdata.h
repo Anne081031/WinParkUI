@@ -54,8 +54,8 @@ public:
     void ParkspaceFull( bool bFull, QString& strInfo, char cCan );
     void CaptureManualGateImage( char cCan, QString& strWhere );
 
-    void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard );
-    void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, CommonDataType::BlobType blob, QByteArray &byData );
+    void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, bool bSelect );
+    void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, bool bSelect, CommonDataType::BlobType blob, QByteArray &byData );
 
     bool WriteData( QByteArray& byData );
 
@@ -90,8 +90,8 @@ private:
                                CPortCmd::LedInfo led, CPortCmd::AudioAddress audio );
 
     inline void GetPlayDisplayList( QByteArray& byData, QByteArray& vDataLed, QByteArray& vDataAudio,
-                                    CPortCmd::LedInfo led, CPortCmd::AudioAddress audio, bool bEnter );
-    void ProcessPlayDisplayList( bool bEnter );
+                                    CPortCmd::LedInfo led, CPortCmd::AudioAddress audio, int nChannel );
+    void ProcessPlayDisplayList( int nChannel );
     void ComposePlayDisplayData( QList< QByteArray >& listData, int nHeader, int nTail, bool bAudio );
 
     inline void PlayAudio( QByteArray &byData, QByteArray &vData, CPortCmd::AudioAddress audio );
@@ -114,7 +114,8 @@ private:
     void ComposeDigitalAudio( QByteArray& vData, QString& strDigital );
     void WriteInOutRecord( bool bEnter, QString& strCardNumber, QString& strTable,
                            QString& strCardType, QString strPlate, char cCan, ParkCardType& cardKind, int nAmount = 0 );
-    void WriteInOutRecord( QByteArray& byData );
+    bool WriteInOutRecord( QByteArray& byData );
+    bool NoCardWork( );
     inline void GetChannelName( bool bEnter, char cCan, QString& strChannel );
     void GetHourMin( int nMins, int& nHour, int& nMin );
     void WriteFeeData( QString& strCardType, QString& strCardNo, int nAmount, QString& strDateTime );
@@ -135,7 +136,7 @@ private:
     QString GetFeeStd( QString& strCardNo );
 
     void QueryGateControllerState( char cAddr );
-    void ControlVehicleImage( QString& strCardNo, bool bSave2Db, int nChannel, char cLevel = 1, bool bFreeCard = false, bool bMonth = false, QString strMonth = QString( ) );
+    void ControlVehicleImage( QString& strCardNo, bool bSave2Db, int nChannel, char cLevel = 1, bool bFreeCard = false, bool bMonth = false, QString strMonth = QString( ), bool bGarage = false );
 
     void CarInsideOutsideHash( QString& strInside, QString& strCardNo, bool bGet );
 
@@ -167,6 +168,7 @@ private:
     void SendIndependentLedInfo( QString& strInfo, char cCan );
     void SenseOpenGate( QByteArray& byRawData );
     inline bool IfSenseOpenGate( );
+    inline bool NoCardWork( );
 
     void SpaceChange( bool bEnter, char cCan );
     void GetCan2Channel( QString& strWhere );
@@ -174,14 +176,17 @@ private:
                                         QString strPlate, QString& strCardType, QString& strChannel, char cCan );
 
     bool ExcludeRemoteCardDuplication( quint32 nCardID, ParkCardType& cardKind );
-    void ClearListContent( bool bEnter );
+    void ClearListContent( int nChannel );
 
-    inline bool MonthCardWorkMode( QString& strCardNo  );
+    inline bool MonthCardWorkMode( QString& strCardNo );
+    inline bool MonthNoCardWorkMode( );
     //void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard );
     //void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, CommonDataType::BlobType blob, QByteArray &byData );
     inline bool GetDirectDb( );
     inline bool GetTimeCardBuffer( );
     void CreateBufferTable( );
+    inline bool GetEntranceFlag( int nChannel );
+    inline int GetChannelIndex( int nChannel );
 
     void SendPlate( QString strPlate, int nChannel, int nConfidence );
     QString GetCardStatus( QString& strCardNo, ParkCardType cardType );
@@ -192,7 +197,7 @@ private:
     CPortCmd portCmd;
     MainWindow* pMainWindow;
     CPictureContrastDlg* pFeeDlg;
-    CDlgInconformity* pConfirm[ 2 ];
+    CDlgInconformity* pConfirm[ 4 ];
     //ParkCardType cardType[ 2 ];
     //QString strCardNumber;
     bool bQueryGateControllerState;
@@ -203,9 +208,9 @@ private:
     QSettings* pSettings;
     bool bHavePlateRecog;
     char cPrecision;
-    bool bPlateRecognize[ 2 ];
+    bool bPlateRecognize[ 4 ];
     QHash< QString, QVector< QDateTime > > singleChannelHash;
-    int nSameInterval[ 2 ];
+    int nSameInterval[ 4 ];
     char cCanVideo[ 4 ];
     bool bPlateClear[ 4 ][ 2 ]; // true : gate / false : Sense
     bool bCardCapture[ 4 ];
@@ -224,8 +229,8 @@ private:
     QStack< QString > imgStack[ 4 ];
     QHash< char, QString > hashCanChannel;
     QHash< quint32, quint64 > hashCardTime;
-    QList< QByteArray > audioList[ 2 ];
-    QList< QByteArray > ledList[ 2 ];
+    QList< QByteArray > audioList[ 4 ];
+    QList< QByteArray > ledList[ 4 ];
     bool bStartupPlateDilivery;
 
 signals:

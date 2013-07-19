@@ -19,6 +19,10 @@ public:
         CameraStopCapture,
         CameraStartPreview, //开始预览
         CameraStopPreview,
+        CameraStartMotionDetect, // 移动侦测
+        CameraStopMotionDetect,
+        CameraStartSourceStream, // 视频流
+        CameraStopSourceStream,
         CameraCaptureImage //抓图
     } CameraEventType;
 
@@ -37,11 +41,15 @@ public:
     void SetImgFile( QString& strFile );
     QString& GetImgFile( );
 
+    void SetRecognize( bool bRecog );
+    bool GetRecognize( );
+
 private:
     int nChannelNumber;
     HWND hVideoWnd;
     HWND hParentWnd;
     QString strImgFile;
+    bool bRecognize;
 };
 
 #endif // QCAMERAEVENT_H

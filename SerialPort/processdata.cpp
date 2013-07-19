@@ -52,8 +52,12 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
     //cardType[ 1 ] = CardNone;
     strCurrentPlate[ 0 ] = "";
     strCurrentPlate[ 1 ] = "";
+    strCurrentPlate[ 2 ] = "";
+    strCurrentPlate[ 3 ] = "";
     bPlateRecognize[ 0 ] = false;
     bPlateRecognize[ 1 ] = false;
+    bPlateRecognize[ 2 ] = false;
+    bPlateRecognize[ 3 ] = false;
     bParkspaceFull = false;
 
     pFeeDlg = new CPictureContrastDlg( NULL );
@@ -98,6 +102,8 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
 
     pConfirm[ 0 ] = new CDlgInconformity( NULL );
     pConfirm[ 1 ] = new CDlgInconformity( NULL );
+    pConfirm[ 2 ] = new CDlgInconformity( NULL );
+    pConfirm[ 3 ] = new CDlgInconformity( NULL );
 
     QString strPath;
     CCommonFunction::GetPath( strPath, CommonDataType::PathUIImage );
@@ -140,17 +146,17 @@ bool CProcessData::GetTimeCardBuffer( )
     return pSettings->value( "CommonCfg/TimeCardBuffer", false ).toBool( );
 }
 
-void CProcessData::SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard )
+void CProcessData::SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, bool bSelect )
 {
     CDbEvent* pEvent = new CDbEvent( ( CDbEvent::Type ) event );
-    pEvent->SetParameter( strSql, bHistory, bTimerCard );
+    pEvent->SetParameter( strSql, bHistory, bTimerCard, bSelect );
     QApplication::postEvent(  &g_dbThread, pEvent );
 }
 
-void CProcessData::SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, CommonDataType::BlobType blob, QByteArray &byData )
+void CProcessData::SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, bool bSelect, CommonDataType::BlobType blob, QByteArray &byData )
 {
     CDbEvent* pEvent = new CDbEvent( ( CDbEvent::Type ) event );
-    pEvent->SetParameter( strSql, bHistory, bTimerCard, blob, byData );
+    pEvent->SetParameter( strSql, bHistory, bTimerCard, bSelect, blob, byData );
     QApplication::postEvent(  &g_dbThread, pEvent );
 }
 
@@ -860,6 +866,27 @@ bool CProcessData::RecognizeFuzzyPlate( CommonDataType::QPlateCardHash &hash,
     return bRet;
 }
 
+bool CProcessData::GetEntranceFlag( int nChannel )
+{
+    return ( 0 != ( nChannel % 2 ) );
+}
+
+int CProcessData::GetChannelIndex( int nChannel )
+{
+    // 1 2 3 4
+    // 0 1 2 3
+    // 5 6 7 8
+    // 4 5 6 7
+    // 9 10 11 12
+    // 8 9 10 11
+    // 33 34 35 36
+    // 37 38 39 40
+
+    int nIndex = ( nChannel - 1 ) % 4;
+
+    return nIndex;
+}
+
 void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfidence )
 {
     if ( bStartupPlateDilivery ) {
@@ -868,17 +895,17 @@ void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfiden
     }
 
     bool bEnter = ( 0 == nChannel % 2 );
-    bPlateRecognize[ bEnter ] = true;
+    bPlateRecognize[ nChannel ] = true;
 
     if ( IfSenseOpenGate( ) ) {
         //plateQueue[ nChannel ].enqueue( strPlate );
-        strCurrentPlate[ bEnter ] = strPlate;
+        strCurrentPlate[ nChannel ] = strPlate;
         return;
     }
 
     TestCaptureImage( strPlate, nChannel );
     // nChannel 0 1 2 3
-    strCurrentPlate[ bEnter ] = strPlate;
+    strCurrentPlate[ nChannel ] = strPlate;
     CommonDataType::QPlateCardHash& hash = CCommonFunction::GetPlateCardHash( );
     if ( false == hash.contains( strPlate ) ) { // Don't exist to get
         QString strWhere = QString( " and carcp = '%1'" ).arg( strPlate );
@@ -947,7 +974,7 @@ void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfiden
         ShuaCard( byData, vData );
     }
 
-    bPlateRecognize[ bEnter ] = bMust;
+    bPlateRecognize[ nChannel ] = bMust;
 }
 
 bool CProcessData::MustCard( bool bEnter, QString &strCardID )
@@ -979,20 +1006,21 @@ bool CProcessData::PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumb
 {
     QByteArray vData;
     bool bEnter = ( 0 != byData[ 5 ] % 2 );
+    int nChannel = GetChannelByCan( byData[ 5 ] );
 
-    if ( pConfirm[ bEnter ]->isVisible( ) ) {
+    if ( pConfirm[ nChannel ]->isVisible( ) ) {
         PlayAudioDisplayInfo( byData, vData, CPortCmd::LedExitConfirm, CPortCmd::AudioExitConfirm );
         return false;
     }
 
-    bool bRet = pConfirm[ bEnter ]->GetInfomation( bEnter, strPlate,  strCardNumber, byData[ 5 ] );
+    bool bRet = pConfirm[ nChannel ]->GetInfomation( bEnter, strPlate,  strCardNumber, byData[ 5 ] );
 
     if ( bRet && ( CardTime == cardKind ) ) {
         return bRet;
     }
 
     PlayAudioDisplayInfo( byData, vData, CPortCmd::LedExitConfirm, CPortCmd::AudioExitConfirm );
-    bRet = ( CDlgInconformity::Accepted == pConfirm[ bEnter ]->exec( ) );
+    bRet = ( CDlgInconformity::Accepted == pConfirm[ nChannel ]->exec( ) );
 
     return bRet;
 }
@@ -1000,12 +1028,13 @@ bool CProcessData::PlateCardComfirmDlg( QByteArray& byData, QString& strCardNumb
 bool CProcessData::PlateCardComfirm( QString &strCardNumber, QByteArray& byData, QString strPlate, ParkCardType& cardKind )
 {
     bool bEnter = ( 0 != byData[ 5 ] % 2 );
+    int nChannel = GetChannelByCan( byData[ 5 ] );
     bool bRet = ( cardKind != CardTime );
 
     if ( !bRet) {
         bRet = true;
         // TmpCard
-        if ( bPlateRecognize[ bEnter ] ) {
+        if ( bPlateRecognize[ nChannel ] ) {
             bRet = PlateCardComfirmDlg( byData, strCardNumber, strPlate, cardKind );
             //bPlateRecognize[ bEnter ] = false;
         }
@@ -1038,12 +1067,12 @@ bool CProcessData::PlateCardComfirm( QString &strCardNumber, QByteArray& byData,
         }
     }
 
-    if ( !bPlateRecognize[ bEnter ] && !bRet ) { // No Plate Recognization
+    if ( !bPlateRecognize[ nChannel ] && !bRet ) { // No Plate Recognization
         return true;
     }
 
     bRet = MustCard( bEnter, strCardNumber );
-    if ( bPlateRecognize[ bEnter ] && bRet ) {
+    if ( bPlateRecognize[ nChannel ] && bRet ) {
         bRet = PlateCardComfirmDlg( byData, strCardNumber, strPlate, cardKind );
         //bPlateRecognize[ bEnter ] = false;
     } else {
@@ -1173,7 +1202,8 @@ void CProcessData::PlateCardComfirmPass( QString strCardNo, char cCan, QString s
     ParkCardType cardKind = CardNone;
     GetCardType2( strCardNo, lstRows, cardKind );
 
-    bPlateRecognize[ bEnter ] = false;
+    int nChannel = GetChannelByCan( cCan );
+    bPlateRecognize[ nChannel ] = false;
 
     if ( !CheckCardRight( strCardNo, bEnter, byData, cardKind ) ) { // Check
         return;
@@ -1219,6 +1249,8 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
             //byte5 = cCan;
         }
 
+        int nChannel = GetChannelByCan( ( char ) byData[ 5 ] );
+
         bEnter = CCommonFunction::ContainAddress( char ( byData[ 5 ] ), true );
         if ( strCurPlate.isEmpty( ) ) {
             //QString strPlate = "";
@@ -1230,10 +1262,10 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
             //    strCurPlate = strCurrentPlate[ bEnter ];
            // }
 
-            strCurPlate = strCurrentPlate[ bEnter ];//识别到的车牌
+            strCurPlate = strCurrentPlate[ nChannel ];//识别到的车牌
         }
 
-        strCurrentPlate[ bEnter ].clear( );
+        strCurrentPlate[ nChannel ].clear( );
 
         if ( !bPlate && ( 0x80 != byte5 ) && ( 0x00 == byte4 ) ) {//!bPlateRecognize[ bEnter ]
             QString strEnter = "UserRequest/NoCarCardValidedEntrance";
@@ -1258,7 +1290,6 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
             return;
         }
 
-        int nChannel = GetChannelByCan( ( char ) byData[ 5 ] );
         CaptureImage( strCardNumber, nChannel, CommonDataType::CaptureJPG );
 
         qDebug( ) << " Card No. : " << strCardNumber << endl;
@@ -1310,7 +1341,7 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
         }
 
         if ( !bPlate ) {
-            bPlateRecognize[ bEnter ] = false;
+            bPlateRecognize[ nChannel ] = false;
         }
 
         if ( !CheckCardRight( strCardNumber, bEnter, byData, cardKind ) ) { // Check
@@ -1320,8 +1351,8 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
         }
         /////////////////////
 
-        if ( pConfirm[ bEnter ]->isVisible( ) ) {
-            pConfirm[ bEnter ]->close( );
+        if ( pConfirm[ nChannel ]->isVisible( ) ) {
+            pConfirm[ nChannel ]->close( );
         }
 
         const QString strText = "P:" + strCardNumber;
@@ -1577,6 +1608,7 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
     // 该卡有效期剩余xx天
     // 该卡已过有效期
     quint8 byte5 = byData[ 5 ]; // 3E Enetr Park 3F Leave Park
+    int nChannel = GetChannelByCan( byte5 );
     bool bEnter = CCommonFunction::ContainAddress( char ( byte5 ), true );
     bool bLeave = !bEnter;
     bool bRet = false;
@@ -1622,7 +1654,7 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
     }
     // Open Gate
     QString strCardType = "月租卡";
-    ClearListContent( bEnter );
+    ClearListContent( nChannel );
     ControlGate( bEnter, byData, vData, cardKind ); //第一次：通行
 
     int nDay = CCommonFunction::GetDateTimeDiff( true, 24 * 60 * 60, dtCurrent, dtEndTime );
@@ -1636,7 +1668,7 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
         CardRemainder( byData, vData, strDays, CPortCmd::LedMonthlyRemainder, CPortCmd::AudioMonthlyRemainder, bEnter );
     }
 
-    ProcessPlayDisplayList(  bEnter );
+    ProcessPlayDisplayList(  nChannel );
 
     WriteInOutRecord( bEnter, lstRows[ 0 ], strTable, strCardType, strPlate, byte5, cardKind );
 
@@ -1647,10 +1679,10 @@ bool CProcessData::ProcessMonthlyCard( QByteArray& byData, QByteArray& vData, QS
     return bRet;
 }
 
-void CProcessData::ClearListContent( bool bEnter )
+void CProcessData::ClearListContent( int nChannel )
 {
-    audioList[ bEnter ].clear( );
-    ledList[ bEnter ].clear( );
+    audioList[ nChannel ].clear( );
+    ledList[ nChannel ].clear( );
 }
 
 void CProcessData::TimeCardPass( int nAmount, int nHour, int nMin, QByteArray& byData )
@@ -1713,6 +1745,14 @@ bool CProcessData::IfSenseOpenGate( )
 {
     pSettings->sync( );
     bool bRet = pSettings->value( "CommonCfg/SenseOpenGate", false ).toBool( );
+
+    return bRet;
+}
+
+bool CProcessData::NoCardWork( )
+{
+    pSettings->sync( );
+    bool bRet = pSettings->value( "CommonCfg/NoCardWork", false ).toBool( );
 
     return bRet;
 }
@@ -1787,7 +1827,7 @@ void CProcessData::ControlGate( bool bEnter, QByteArray &byData, QByteArray &vDa
     QByteArray vAudio( cAudio, 2 );
 
     //PlayAudioDisplayInfo( byData,  vData, vAudio, CPortCmd::LedPass, CPortCmd::AudioPass );
-    GetPlayDisplayList( byData,  vData, vAudio, CPortCmd::LedPass, CPortCmd::AudioPass, bEnter );
+    GetPlayDisplayList( byData,  vData, vAudio, CPortCmd::LedPass, CPortCmd::AudioPass, nChannel );
 }
 
 void CProcessData::ShuaCard( QByteArray &byData, QByteArray &vData )
@@ -1935,6 +1975,7 @@ bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStri
     // 该卡剩余xx元
     // 该卡金额余额不足
     quint8 byte5 = byData[ 5 ]; // 3E Enetr Park 3F Leave Park
+    int nChannel = GetChannelByCan( byte5 );
     bool bEnter = CCommonFunction::ContainAddress( char ( byte5 ), true );
     bool bLeave = !bEnter;
 
@@ -1957,7 +1998,7 @@ bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStri
     }
 
     QString strFee = lstRows[ 3 ];
-    ClearListContent( bEnter );
+    ClearListContent( nChannel );
 
     if ( bEnter ) {
         // Open Gate
@@ -2015,7 +2056,7 @@ bool CProcessData::ProcessSaveCard( QByteArray& byData, QByteArray& vData, QStri
         ControlChargeInfo( lstRows[ 0 ], QDateTime::currentDateTime( ), QString::number( nAmount ), "0" );
     }
 
-    ProcessPlayDisplayList( bEnter );
+    ProcessPlayDisplayList( nChannel );
     QString strCardType = "储值卡";
     WriteInOutRecord( bEnter, lstRows[ 0 ], strTable, strCardType, strPlate, byte5, cardKind, nAmount );
 
@@ -2028,13 +2069,15 @@ void CProcessData::CardRemainder( QByteArray &byData, QByteArray &vData, QString
     QByteArray byDataLed = strFee.toAscii( );
     ComposeDigitalAudio( vData, strFee );
     //PlayAudioDisplayInfo( byData, byDataLed, vData, led, audio );
-    GetPlayDisplayList( byData, byDataLed, vData, led, audio, bEnter );
+    int nChannel = GetChannelByCan( byData[ 5 ] );
+    GetPlayDisplayList( byData, byDataLed, vData, led, audio, nChannel );
 }
 
 void CProcessData::CardExitInfo( QByteArray &byData, QByteArray &vData, bool bSave,
                                  int nMin, int nHour, int nAmount, int nRemainder, bool bEnter )
 {
     char cLevel = GetCanLevel( byData[ 5 ] );
+    int nChannel = GetChannelByCan( byData[ 5 ] );
     if ( 1 != cLevel ) {
         return;
     }
@@ -2051,7 +2094,7 @@ void CProcessData::CardExitInfo( QByteArray &byData, QByteArray &vData, bool bSa
     if ( !bSave ) {
         WriteData( byData );
     } else {
-        ledList[ bEnter ].append( byData );
+        ledList[ nChannel ].append( byData );
     }
 
     QByteArray byAmount;
@@ -2068,7 +2111,7 @@ void CProcessData::CardExitInfo( QByteArray &byData, QByteArray &vData, bool bSa
     if ( !bSave ) {
         WriteData( byData );
     } else {
-        audioList[ bEnter ].append( byData );
+        audioList[ nChannel ].append( byData );
     }
 }
 
@@ -2261,6 +2304,14 @@ void CProcessData::SpaceChange( bool bEnter, char cCan )
     ParkspaceFull( bFull, strInfo, cCan );
 }
 
+bool CProcessData::MonthNoCardWorkMode( )
+{
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
+    bool bRet = pSet->value( "CommonCfg/NoCardWork", false ).toBool( );
+
+    return bRet;
+}
+
 bool CProcessData::MonthCardWorkMode( QString& strCardNo )
 {
     QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
@@ -2276,23 +2327,32 @@ bool CProcessData::MonthCardWorkMode( QString& strCardNo )
     return bRet;
 }
 
-void CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
+bool CProcessData::NoCardWork()
 {
+    bool bRet = true;
+
+    return bRet;
+}
+
+bool CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
+{
+    bool bRet = false;
+
     if ( !IfSenseOpenGate( ) ) {
-        return;
+        return bRet;
     }
 
     int nIndex = 5;
     if ( nIndex >= byData.count( ) ) {
-        return;
+        return bRet;
     }
 
     char cCan = byData[ nIndex ];
     bool bEnter = ( 0 != (  cCan % 2 ) );
-    QString strPlate = strCurrentPlate[ bEnter ];
-    strCurrentPlate[ bEnter ].clear( );
-    char cLevel = GetCanLevel( cCan );
     int nChannel = GetChannelByCan( cCan );
+    QString strPlate = strCurrentPlate[ nChannel ];
+    strCurrentPlate[ nChannel ].clear( );
+    char cLevel = GetCanLevel( cCan );
 
     if ( !hashCanChannel.keys( ).contains( cCan ) ) {
         QString strWhere = QString( "And shebeiadr = %1" ).arg( ( short ) cCan );
@@ -2312,7 +2372,9 @@ void CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
         strPlate = "未知";
     }
 
-    if ( 1 == cLevel ) {
+    bool bGarage = ( 1 < cLevel );
+
+    if ( 1 == cLevel ) { //最外层车库
         QString strIn = bEnter ? "in" : "out";
         QString strOut = bEnter ? "": "out";
         strSql = QString( "Insert Into stoprd ( %1shebeiname, %2time, cardno, carcp%3, cardkind ) Values (  \
@@ -2320,22 +2382,49 @@ void CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
         strSql = strSql.arg( strIn, strIn, strOut, strChannel, strDateTime, strCardNumber, strPlate, strCardType );
 
         //SpaceChange( bEnter, cCan );
-    } else {
+    } else { //库中库
         strSql = QString( "Insert Into GarageInGarage( CardID, ChannelName, Level, DateTime, \
-                                                               InOutFlag ) VALUES( '%1', '%2', %3, '%4', %5 )" ).arg( strCardNumber,
+                          InOutFlag, PlateID ) VALUES( '%1', '%2', %3, '%4', %5, '%6' )" ).arg( strCardNumber,
                                                                                                                      strChannel, QString::number( cLevel ),
-                                                                                                                     strDateTime, bEnter ? "1" : "0" );
+                                                                                                                     strDateTime, bEnter ? "1" : "0", strPlate );
     }
 
-    SpaceChange( bEnter, cCan );
-    BroadcastRecord( strCardNumber, dtCurrent, 10, strPlate, strCardType, strChannel, cCan );
+    if ( !bGarage ) {
+        if ( !NoCardWork( ) ) {
+            return bRet;
+        }
+
+        SpaceChange( bEnter, cCan );
+        BroadcastRecord( strCardNumber, dtCurrent, 10, strPlate, strCardType, strChannel, cCan );
+    }
 
     if ( !strSql.isEmpty( ) ) {
-        CLogicInterface::GetInterface( )->ExecuteSql( strSql );
+        QString strPath = "";
+        GetCaptureFile( strPath, strCardNumber, nChannel, CommonDataType::CaptureJPG );
         CaptureImage( strCardNumber, nChannel, CommonDataType::CaptureJPG );
-        ControlVehicleImage( strCardNumber, true, nChannel,  cLevel, true );
-        DeleteCapturedFile( strCardNumber, nChannel,bEnter,  dtCurrent, strPlate );
+        QFile file( strPath );
+        QByteArray byImage;
+        if ( file.open( QFile::ReadWrite ) ) {
+          byImage = file.readAll( );
+          file.close( );
+        }
+
+        QString strHex( byImage.toHex( ) );
+        strSql = "Select InsertFreeCardData( '%1', '%2', '%3', '%4', '%5', %6, %7 )";
+        strSql = strSql.arg( strCardNumber, strDateTime, strChannel,
+                             strPlate, strHex,
+                             QString::number( cLevel ), QString::number( bEnter ) );
+
+        //CLogicInterface::GetInterface( )->ExecuteSql( strSql );
+        SendDbWriteMessage( CDbEvent::SQLInternal, strSql, CCommonFunction::GetHistoryDb( ), false, true );
+        /////////////////////////////
+        //CLogicInterface::GetInterface( )->ExecuteSql( strSql );
+        //CaptureImage( strCardNumber, nChannel, CommonDataType::CaptureJPG );
+        //ControlVehicleImage( strCardNumber, true, nChannel,  cLevel, true, false, "", bGarage );
+        DeleteCapturedFile( strCardNumber, nChannel, bEnter, dtCurrent, strPlate );
     }
+
+    return !bRet;
 }
 
 void CProcessData::GetCan2Channel( QString &strWhere )
@@ -2385,17 +2474,17 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
 
     if ( 1 != cLevel ) {  
         strSql = QString( "Insert IGNORE Into GarageInGarage( CardID, ChannelName, Level, DateTime, \
-                                                               InOutFlag ) VALUES( '%1', '%2', %3, '%4', %5 )" ).arg(
+                          InOutFlag, PlateID ) VALUES( '%1', '%2', %3, '%4', %5, '%6' )" ).arg(
                 bMonthMultipleCard ? strMonthMultipleCardNo : strCardNumber,
-                                                                                                                     strChannel, QString::number( cLevel ),
-                                                                                                                     strDateTime, bEnter ? "1" : "0" );
+                 strChannel, QString::number( cLevel ),
+                 strDateTime, bEnter ? "1" : "0", strPlate );
         if ( GetDirectDb( ) ) {
             CLogicInterface::GetInterface( )->ExecuteSql( strSql );
         } else {
-            SendDbWriteMessage( CDbEvent::SQLInternal, strSql, CCommonFunction::GetHistoryDb( ), false );
+            SendDbWriteMessage( CDbEvent::SQLInternal, strSql, CCommonFunction::GetHistoryDb( ), false, false );
         }
         ControlVehicleImage( strCardNumber, true, nChannel, cLevel, bMonthMultipleCard,
-                             bMonthMultipleCard, strMonthMultipleCardNo );
+                             bMonthMultipleCard, strMonthMultipleCardNo, true );
         DeleteCapturedFile( strCardNumber, nChannel,bEnter,  dtCurrent, strPlate );
         return;
     }
@@ -2588,10 +2677,10 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
 
             QString strSql = QString( "Update IGNORE stoprd Set MayDelete = 1\
                                       Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' ) " ).arg( strCardNumber );
-            SendDbWriteMessage( CDbEvent::SQLExternal, strSql, false, false );
+            SendDbWriteMessage( CDbEvent::SQLExternal, strSql, false, false, false );
         }
 
-        SendDbWriteMessage( CDbEvent::SQLExternal, strSql, CCommonFunction::GetHistoryDb( ), bTimeCard && bEnter );
+        SendDbWriteMessage( CDbEvent::SQLExternal, strSql, CCommonFunction::GetHistoryDb( ), bTimeCard && bEnter, false );
     }
 
     //if ( !bMonthCard || !MonthCardWorkMode( ) ) {
@@ -2659,7 +2748,7 @@ void CProcessData::CaptureManualGateImage( char cCan, QString &strWhere )
 }
 
 void CProcessData::ControlVehicleImage( QString &strCardNo, bool bSave2Db, int nChannel,
-                                        char cLevel, bool bFreeCard, bool bMonth, QString strMonth )
+                                        char cLevel, bool bFreeCard, bool bMonth, QString strMonth, bool bGarage )
 {
     QString strPath = "";
     GetCaptureFile( strPath, strCardNo, nChannel, CommonDataType::CaptureJPG );
@@ -2667,34 +2756,46 @@ void CProcessData::ControlVehicleImage( QString &strCardNo, bool bSave2Db, int n
 
     CommonDataType::BlobType blob = CommonDataType::BlobOwner;
 
-    switch ( cLevel ) {
-    case 1 :
-        blob = bEnter ? CommonDataType::BlobVehicleIn1 : CommonDataType::BlobVehicleOut1;
-        break;
+    if ( !bGarage ) {
+        switch ( cLevel ) {
+        case 1 :
+            blob = bEnter ? CommonDataType::BlobVehicleIn1 : CommonDataType::BlobVehicleOut1;
+            break;
 
-    case 2 :
-        blob = bEnter ? CommonDataType::BlobVehicleIn2 : CommonDataType::BlobVehicleOut2;
-        break;
+        case 2 :
+            blob = bEnter ? CommonDataType::BlobVehicleIn2 : CommonDataType::BlobVehicleOut2;
+            break;
 
-    case 3 :
-        blob = bEnter ? CommonDataType::BlobVehicleIn3 : CommonDataType::BlobVehicleOut3;
-        break;
+        case 3 :
+            blob = bEnter ? CommonDataType::BlobVehicleIn3 : CommonDataType::BlobVehicleOut3;
+            break;
 
-    case 4 :
-        blob = bEnter ? CommonDataType::BlobVehicleIn4 : CommonDataType::BlobVehicleOut4;
-        break;
+        case 4 :
+            blob = bEnter ? CommonDataType::BlobVehicleIn4 : CommonDataType::BlobVehicleOut4;
+            break;
+        }
+    } else {
+        blob = CommonDataType::BlobGarageImg;
     }
 
     QString strWhere;
-    if ( bFreeCard ) {
-        strWhere = QString(  " Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' )" ).arg( bMonth ? strMonth : strCardNo );
-    } else {
+    if ( bFreeCard ) { // 无卡号
+        if ( bGarage ) {
+
+        } else {
+            strWhere = QString(  " Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' )" ).arg( bMonth ? strMonth : strCardNo );
+        }
+    } else { // 有卡号
         //strWhere = QString( " Where cardno = '%1' And intime in ( Select intime From \
         //                          ( Select Max( intime ) As intime \
         //                            From stoprd \
         //                            Where cardno = '%2') tmp ) " ).arg( strCardNo, strCardNo );
 
-        strWhere = QString( " Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' )" ).arg( strCardNo );
+        if ( bGarage ) {
+            strWhere = QString( " Where id = ( select stoprdid from Garagestoprdid where cardno = '%1' )" ).arg( strCardNo );
+        } else {
+            strWhere = QString( " Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' )" ).arg( strCardNo );
+        }
     }
 
     if ( bSave2Db && !GetDirectDb( ) ) {
@@ -2710,7 +2811,7 @@ void CProcessData::ControlVehicleImage( QString &strCardNo, bool bSave2Db, int n
         QStringList lstRows;
         GetCardType2( strCardNo, lstRows, cardKind );
         SendDbWriteMessage( CDbEvent::ImgExternal, strWhere, CCommonFunction::GetHistoryDb( ),
-                            bEnter && ( CardTime == cardKind ), blob, byData );
+                            bEnter && ( CardTime == cardKind ), false, blob, byData );
     } else {
         CLogicInterface::GetInterface( )->OperateBlob( strPath, bSave2Db, blob, strWhere );
     }
@@ -3003,15 +3104,15 @@ void CProcessData::PlayAudioDisplayInfo( QByteArray &byData, QByteArray& vDataLe
 }
 
 void CProcessData::GetPlayDisplayList( QByteArray &byData, QByteArray &vDataLed, QByteArray &vDataAudio,
-                                       CPortCmd::LedInfo led, CPortCmd::AudioAddress audio, bool bEnter )
+                                       CPortCmd::LedInfo led, CPortCmd::AudioAddress audio, int nChannel )
 {
         portCmd.GetLedInfo( led, vDataLed );
         portCmd.ParseDownCmd( byData, CPortCmd::DownLED, vDataLed );
-        ledList[ bEnter ].append( byData );
+        ledList[ nChannel ].append( byData );
 
         portCmd.GetAudioAddr( audio, vDataAudio );
         portCmd.ParseDownCmd( byData, CPortCmd::DownPlayAudio, vDataAudio );
-        audioList[ bEnter ].append( byData );
+        audioList[ nChannel ].append( byData );
 }
 
 void CProcessData::ComposePlayDisplayData( QList<QByteArray> &listData, int nHeader, int nTail, bool bAudio )
@@ -3059,17 +3160,17 @@ void CProcessData::ComposePlayDisplayData( QList<QByteArray> &listData, int nHea
     WriteData( byData );
 }
 
-void CProcessData::ProcessPlayDisplayList( bool bEnter )
+void CProcessData::ProcessPlayDisplayList( int nChannel )
 {
     //"aa 14 00 44 00 05 1a 1b  header
     // d4 c2 d7 e2 bf a8 c7 eb cd a8 d0 d0  data
     // 01 1c 1d 01 55"  tail
-    ComposePlayDisplayData( ledList[ bEnter ], 8, 5, false );
+    ComposePlayDisplayData( ledList[ nChannel ], 8, 5, false );
 
     //"aa 0900 50 03 05
     // 4c00 1f01 1401
     // 01 55"
-    ComposePlayDisplayData( audioList[ bEnter ], 6, 2, true );
+    ComposePlayDisplayData( audioList[ nChannel ], 6, 2, true );
 }
 
 void CProcessData::PlayAudio( QByteArray &byData, QByteArray &vData, CPortCmd::AudioAddress audio )
@@ -3192,8 +3293,9 @@ void CProcessData::ProcessCmd( QByteArray &byData, CPortCmd::PortUpCmd cmdType )
         bSendOnlyOnce = true;
         BallotSense( byData, vData, bEnter, true );
         CaptureSenseImage( byData, CommonDataType::CaptureJPG );
-        SenseOpenGate( byData );
-        WriteInOutRecord( byData );
+        if ( WriteInOutRecord( byData ) ) {
+            SenseOpenGate( byData );
+        }
         break;
     case CPortCmd::UpInBallotSenseVehcleLeave :
         bSendOnlyOnce = false;
@@ -3203,8 +3305,9 @@ void CProcessData::ProcessCmd( QByteArray &byData, CPortCmd::PortUpCmd cmdType )
     case CPortCmd::UpOutBallotSenseVehcleEnter : // Vehcle Enter
         BallotSense( byData, vData, bEnter, true );
         CaptureSenseImage( byData, CommonDataType::CaptureJPG );
-        SenseOpenGate( byData );
-        WriteInOutRecord( byData );
+        if ( WriteInOutRecord( byData ) ) {
+            SenseOpenGate( byData );
+        }
         break;
     case CPortCmd::UpOutBallotSenseVehcleLeave :
         BallotSense( byData, vData, bEnter, false );
@@ -3320,9 +3423,9 @@ void CProcessData::BallotSense( QByteArray &byData, QByteArray &vData, bool bEnt
     int nChannel = GetChannelByCan( byData[ 5 ] );
 
     if ( !bEnterBallot ) {
-        bool bEnter = ( 0 == nChannel % 2 );
-        bPlateRecognize[ bEnter ] = false;
-        strCurrentPlate[ bEnter ].clear( );
+        //bool bEnter = ( 0 == nChannel % 2 );
+        bPlateRecognize[ nChannel ] = false;
+        strCurrentPlate[ nChannel ].clear( );
     }
 
     if ( !bEnterBallot && !bPlateClear[ nChannel ][ 0 ] ) {

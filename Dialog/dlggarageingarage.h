@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QResizeEvent>
+#include "../Header/printyearlyreport.h"
 
 namespace Ui {
     class CDlgGarageInGarage;
@@ -22,10 +23,16 @@ protected:
     void resizeEvent(QResizeEvent *);
 
 private:
+    void SetFrameVisble( bool bVisible );
+    void DisplayPic( QTableWidget* pWidget, int nRow, int nCol );
+
+private:
     Ui::CDlgGarageInGarage *ui;
+    CPrintYearlyReport* pFrmDisplayPic;
 
 private slots:
     void on_lblClose_linkActivated(QString );
+    void on_tabRecord_cellClicked(int row, int column);
 };
 
 #endif // DLGGARAGEINGARAGE_H

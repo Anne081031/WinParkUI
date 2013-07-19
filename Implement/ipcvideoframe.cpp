@@ -12,10 +12,10 @@ CIPCVideoFrame::CIPCVideoFrame(bool bIPC, QWidget *parent) :
     ui->setupUi(this);
     bNetworkCamera = bIPC;
 
+    pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+
     if ( bNetworkCamera ) {
         recSmallSize = frameGeometry( );
-
-        QSettings* pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
         QString strType = pSettings->value( "IPC/Type", "HK" ).toString( );
 
         if ( QString( "HK" ) == strType.toUpper( ) ) {
@@ -383,6 +383,8 @@ void CIPCVideoFrame::StartPlayIPC( const QString &strIP, HWND hPlayWnd )
 
      strcpy( uParam.EventStartRealPlay.cIP, pIP );
      uParam.EventStartRealPlay.hPlayWnd = hPlayWnd;
+     bool bMainStream = pSettings->value( "IPC/MainStream", true ).toBool( );
+     uParam.EventStartRealPlay.bMainStream = bMainStream;
 
      pVideoThread->PostIPCStartRealPlayEvent( uParam );
 }

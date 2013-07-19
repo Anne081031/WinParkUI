@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Fri Jul 12 11:14:41 2013
+** Created: Tue Jul 16 13:33:31 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_MainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,23 +31,29 @@ static const uint qt_meta_data_MainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      38,   12,   11,   11, 0x08,
-      78,   11,   11,   11, 0x08,
-     110,   99,   11,   11, 0x08,
-     144,   11,   11,   11, 0x08,
-     166,   11,   11,   11, 0x08,
-     195,   11,   11,   11, 0x08,
-     225,   11,   11,   11, 0x08,
-     251,   11,   11,   11, 0x08,
-     285,   11,   11,   11, 0x08,
-     316,   11,   11,   11, 0x08,
+      47,   12,   11,   11, 0x08,
+     109,   92,   11,   11, 0x08,
+     157,  141,   11,   11, 0x08,
+     208,  191,   11,   11, 0x08,
+     235,   11,   11,   11, 0x08,
+     267,  256,   11,   11, 0x08,
+     301,   11,   11,   11, 0x08,
+     323,   11,   11,   11, 0x08,
+     352,   11,   11,   11, 0x08,
+     382,   11,   11,   11, 0x08,
+     408,   11,   11,   11, 0x08,
+     442,   11,   11,   11, 0x08,
+     473,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_MainWindow[] = {
-    "MainWindow\0\0lstResult,nChannel,bVideo\0"
-    "HandlePlateResult(QStringList,int,bool)\0"
+    "MainWindow\0\0lstResult,nChannel,bSuccess,bVideo\0"
+    "HandlePlateResult(QStringList,int,bool,bool)\0"
+    "strFile,nChannel\0HandleCaptureImage(QString,int)\0"
+    "strMsg,bSuccess\0HandleNotifyMessage(QString,bool)\0"
+    "nChannel,bMotion\0HandleDetectInfo(int,bool)\0"
     "on_btnFile_clicked()\0row,column\0"
     "on_tabResult_cellClicked(int,int)\0"
     "on_btnClear_clicked()\0"
@@ -88,19 +94,22 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: HandlePlateResult((*reinterpret_cast< QStringList(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
-        case 1: on_btnFile_clicked(); break;
-        case 2: on_tabResult_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
-        case 3: on_btnClear_clicked(); break;
-        case 4: on_btnAnalogCamera_clicked(); break;
-        case 5: on_btnDigitalCamera_clicked(); break;
-        case 6: on_btnVideoFile_clicked(); break;
-        case 7: on_btnAnalogCaptureFile_clicked(); break;
-        case 8: on_btnIPCCaptureFile_clicked(); break;
-        case 9: on_btnStopVideoRecognize_clicked(); break;
+        case 0: HandlePlateResult((*reinterpret_cast< QStringList(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
+        case 1: HandleCaptureImage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 2: HandleNotifyMessage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 3: HandleDetectInfo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
+        case 4: on_btnFile_clicked(); break;
+        case 5: on_tabResult_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 6: on_btnClear_clicked(); break;
+        case 7: on_btnAnalogCamera_clicked(); break;
+        case 8: on_btnDigitalCamera_clicked(); break;
+        case 9: on_btnVideoFile_clicked(); break;
+        case 10: on_btnAnalogCaptureFile_clicked(); break;
+        case 11: on_btnIPCCaptureFile_clicked(); break;
+        case 12: on_btnStopVideoRecognize_clicked(); break;
         default: ;
         }
-        _id -= 10;
+        _id -= 13;
     }
     return _id;
 }

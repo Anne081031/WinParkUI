@@ -22,10 +22,11 @@ public:
         QByteArray byData;
         bool bDbHistory;
         bool bTimeCard;
+        bool bSelect;
     } WriteParameter;
 
-    void SetParameter( QString&  strSql, bool bHistory, bool bTimeCard );
-    void SetParameter( QString&  strSql, bool bHistory, bool bTimeCard, CommonDataType::BlobType blob, QByteArray& byData );
+    void SetParameter( QString&  strSql, bool bHistory, bool bTimeCard, bool bSelect );
+    void SetParameter( QString&  strSql, bool bHistory, bool bTimeCard, bool bSelect, CommonDataType::BlobType blob, QByteArray& byData );
     WriteParameter& GetParameter( );
 
 private:

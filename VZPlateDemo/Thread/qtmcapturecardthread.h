@@ -11,12 +11,14 @@ public:
     static QAnalogCameraThread* GetInstance( );
     ~QTmCaptureCardThread( );
 
+    void CaptureStaticImage( QString &strFile, int nChannel );
+
     static void CALLBACK VidCapCallBack( DWORD dwCard, BYTE *pbuff, DWORD dwSize );
 
 private:
     explicit QTmCaptureCardThread(QObject *parent = 0);
 
-    static void MotionDelect( DWORD dwCard, BOOL bMove, BYTE *pbuff, DWORD dwSize, LPVOID lpContext );
+    static void CALLBACK MotionDelectCB( DWORD dwCard, BOOL bMove, BYTE *pbuff, DWORD dwSize, LPVOID lpContext );
 
     typedef HRESULT WINAPI ( *VCAInitSdk ) ( HWND hWndMain, DISPLAYTRANSTYPE eDispTransType, BOOL bInitAudDev );
     typedef HRESULT WINAPI ( *VCAUnInitSdk ) ( );
@@ -40,6 +42,7 @@ private:
     typedef BOOL  WINAPI ( *VCAStartVideoCaptureEx ) ( DWORD dwCard );
     typedef BOOL  WINAPI ( *VCAStopVideoCaptureEx ) ( DWORD dwCard );
     typedef BOOL  WINAPI ( *VCASetVidCapSize ) ( DWORD dwCard, DWORD dwWidth, DWORD dwHeight );
+    typedef BOOL  WINAPI ( *VCASetVidPreviewSize ) ( DWORD dwCard, DWORD dwWidth, DWORD dwHeight );
     void GetFunctionPointer( );
 
     HMODULE hDllMod;
@@ -67,6 +70,7 @@ private:
     VCAStopVideoCaptureEx MyVCAStopVideoCaptureEx;
 
     VCASetVidCapSize MyVCASetVidCapSize;
+    VCASetVidPreviewSize MyVCASetVidPreviewSize;
 
 protected:
     void run( );
@@ -84,6 +88,12 @@ private:
 
     void ProcessStartPreviewEvent( QCameraEvent* pEvent );
     void ProcessStopPreviewEvent( QCameraEvent* pEvent );
+
+    void ProcessStartMotionDetectEvent( QCameraEvent* pEvent );
+    void ProcessStopMotionDetectEvent( QCameraEvent* pEvent );
+
+    void ProcessStartSourceStreamEvent( QCameraEvent* pEvent );
+    void ProcessStopSourceStreamEvent( QCameraEvent* pEvent );
 
     void ProcessCaptureImageEvent( QCameraEvent* pEvent );
 

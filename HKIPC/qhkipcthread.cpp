@@ -483,6 +483,7 @@ void QHkIPCThread::ProcessIPCStartRealPlayEvent( QIPCEvent* pEvent )
 {
     QIPCEvent::EventParam& uParam = pEvent->GetEventParam( );
     LONG lUserID = GetUserID( uParam.EventStartRealPlay.cIP );
+    bool bMainStream = uParam.EventStartRealPlay.bMainStream;
 
     if ( - 1 == lUserID ) {
         EmitMsg( "未登录.", Q_FUNC_INFO );
@@ -499,7 +500,7 @@ void QHkIPCThread::ProcessIPCStartRealPlayEvent( QIPCEvent* pEvent )
 
     NET_DVR_CLIENTINFO sClientInfo = { 0 };
     sClientInfo.lChannel = 1;
-    sClientInfo.lLinkMode  = 0;
+    sClientInfo.lLinkMode  = bMainStream ? 0x00000000 : 0x80000000;
     sClientInfo.hPlayWnd = hPlayWnd;
 
     lPlayHandle = NET_DVR_RealPlay_V30( lUserID, &sClientInfo, NULL );

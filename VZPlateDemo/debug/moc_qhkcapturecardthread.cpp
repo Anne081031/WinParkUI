@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qhkcapturecardthread.h'
 **
-** Created: Fri Jul 12 11:14:48 2013
+** Created: Mon Jul 15 15:20:52 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

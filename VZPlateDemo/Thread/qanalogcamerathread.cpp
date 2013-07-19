@@ -5,6 +5,9 @@
 QAnalogCameraThread::QAnalogCameraThread(QObject *parent) :
     QThread(parent)
 {
+    for ( int nIndex = 0; nIndex < CHANNEL_WAY; nIndex++ ) {
+        SendDetectInfo( nIndex, false );
+    }
 }
 
 void QAnalogCameraThread::PostEvent( QCameraEvent *pEvent )
@@ -17,6 +20,38 @@ void QAnalogCameraThread::PostInitCaptureSDKEvent( HWND hParentVideo )
     QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraInit );
     pEvent->SetParentWndHandle( hParentVideo );
     PostEvent( pEvent );
+}
+
+void QAnalogCameraThread::SendCaptureImage( QString& strFile, int nChannel )
+{
+    emit CaptureImage( strFile, nChannel );
+}
+
+void QAnalogCameraThread::SendNotifyMessage( QString& strMsg, bool bSuccess )
+{
+    emit NotifyMessage( strMsg, bSuccess );
+}
+
+void QAnalogCameraThread::SendDetectInfo( int nChannel, bool bMotion )
+{
+    bMotionDetects[ nChannel ] = bMotion;
+    emit DetectInfo( nChannel, bMotion );
+}
+
+void QAnalogCameraThread::SetMotionDetect( bool bMotion, int nChannel )
+{
+    bMotionDetects[ nChannel ] = bMotion;
+}
+
+void QAnalogCameraThread::CaptureStaticImage( QString &strFile, int nChannel )
+{
+    Q_UNUSED( strFile )
+    Q_UNUSED( nChannel )
+}
+
+bool QAnalogCameraThread::GetMotionDetect( int nChannel )
+{
+    return bMotionDetects[ nChannel ];
 }
 
 void QAnalogCameraThread::PostUninitCaptureSDKEvent( )
@@ -68,10 +103,41 @@ void QAnalogCameraThread::PostStopVideoEvent( int nChannel )
     PostEvent( pEvent );
 }
 
-void QAnalogCameraThread::PostCaptrueImageEvent( int nChannel, QString& strFile )
+void QAnalogCameraThread::PostCaptrueImageEvent( int nChannel, QString& strFile, bool bRecognize )
 {
     QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraCaptureImage );
     pEvent->SetChannel( nChannel );
     pEvent->SetImgFile( strFile );
+    pEvent->SetRecognize( bRecognize );
+    PostEvent( pEvent );
+}
+
+void QAnalogCameraThread::PostStartMotionDetectEvent( int nChannel )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStartMotionDetect );
+    pEvent->SetChannel( nChannel );
+    PostEvent( pEvent );
+}
+
+void QAnalogCameraThread::PostStopMotionDetectEvent( int nChannel )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStopMotionDetect );
+    pEvent->SetChannel( nChannel );
+    PostEvent( pEvent );
+
+}
+
+void QAnalogCameraThread::PostStartSourceStreamEvent( int nChannel, bool bRegister )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStartSourceStream );
+    pEvent->SetChannel( nChannel );
+    pEvent->SetRecognize( bRegister );
+    PostEvent( pEvent );
+}
+
+void QAnalogCameraThread::PostStopSourceStreamEvent( int nChannel )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStopSourceStream );
+    pEvent->SetChannel( nChannel );
     PostEvent( pEvent );
 }

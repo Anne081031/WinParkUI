@@ -52,6 +52,7 @@ public:
         struct __EventStartRealPlay {
             HWND hPlayWnd;
             char cIP[ IPC_IP_LEN + 1 ];
+            bool bMainStream;
         } EventStartRealPlay;
 
         struct __EventStopRealPlay {

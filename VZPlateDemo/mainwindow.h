@@ -28,7 +28,10 @@ private:
     QAnalogCameraThread* pAnalogCamera;
 
 private slots:
-    void HandlePlateResult( QStringList lstResult, int nChannel, bool bVideo );
+    void HandlePlateResult( QStringList lstResult, int nChannel, bool bSuccess, bool bVideo );
+    void HandleCaptureImage( QString strFile, int nChannel );
+    void HandleNotifyMessage( QString strMsg, bool bSuccess );
+    void HandleDetectInfo( int nChannel, bool bMotion );
     
 private slots:
     void on_btnFile_clicked();

@@ -1552,14 +1552,14 @@ void CMonitor::GetImgBasePath(QString &strPath)
 
 void CMonitor::LoadCapturedImg( QString& strPath, int nChannel )
 {
-    if ( ( VIDEO_USEDWAY / 2 != nUsedWay ) || ( 1 < nChannel ) ) {
-        return;
-    }
+    //if ( ( VIDEO_USEDWAY / 2 != nUsedWay ) || ( 1 < nChannel ) ) {
+    //    return;
+    //}
 
     QPixmap bmp = QPixmap( strPath );
 
     // nChannel 0 1 2 3
-    lblVideoWnd[ nChannel + 2 ]->setPixmap( bmp );
+    lblVideoWnd[ nChannel % 2 + 2 ]->setPixmap( bmp );
 }
 
 void CMonitor::GetInOutPixmap(QPixmap &bmpEnter, QPixmap &bmpLeave)
@@ -2126,13 +2126,13 @@ void CMonitor::on_pushButton_clicked()
 
         if ( 0 == nIndex % 3000 ) {
             QString strTmp = strSql.arg( lstValue.join( "," ) );
-            CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::SQLExternal, strTmp, false, true );
+            CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::SQLExternal, strTmp, false, true, false );
             lstValue.clear( );
 
             Sleep( 10 );
             foreach ( const QString str, lstCardno ) {
                 strTmp =  QString( " where cardno = '%1'" ).arg( str );
-                CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::ImgExternal, strTmp, false, false,
+                CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::ImgExternal, strTmp, false, false, false,
                                                                    CommonDataType::BlobVehicleIn1, byData );
 
                 //CProcessData::GetProcessor( )->SendDbWriteMessage( CDbEvent::ImgExternal, strTmp, false, false,

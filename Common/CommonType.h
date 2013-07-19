@@ -118,7 +118,8 @@ namespace CommonDataType {
         BlobManualGate2,
         BlobManualGate3,
         BlobManualGate4,
-        BlobTimeInImg
+        BlobTimeInImg,
+        BlobGarageImg
     } BlobType;
 
     typedef enum __AppInfoType {

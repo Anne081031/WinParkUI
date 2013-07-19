@@ -64,6 +64,9 @@ color: rgb(85, 0, 0);</string>
      <height>600</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>单击卡号列显示图像</string>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-image: url(none);</string>
    </property>
@@ -90,6 +93,11 @@ color: rgb(85, 0, 0);</string>
    <column>
     <property name="text">
      <string>子库级别</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
+     <string>ID</string>
     </property>
    </column>
   </widget>

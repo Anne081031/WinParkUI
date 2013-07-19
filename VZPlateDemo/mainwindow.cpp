@@ -11,8 +11,8 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     pAnalogCamera = NULL;
-    connect( QPlateThread::GetInstance( ), SIGNAL( PlateResult( QStringList, int, bool ) ),
-             this, SLOT( HandlePlateResult( QStringList, int, bool ) ) );
+    connect( QPlateThread::GetInstance( ), SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
+             this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
     QCommon::GetPlatePicPath( strPlateDir );
 
     aLables[ 0 ] = ui->lblVideo0;
@@ -20,8 +20,11 @@ MainWindow::MainWindow(QWidget *parent) :
     aLables[ 2 ] = ui->lblVideo2;
     aLables[ 3 ] = ui->lblVideo3;
     //ImageFormatYUV420COMPASS : ImageFormatBGR
-    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 0 );
-    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 1 );
+    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatYUV420COMPASS, 0 ); // HK
+    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatYUV420COMPASS, 1 );
+
+    //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 0 ); //TM
+    //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 1 );
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 2 );
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 3 );
 }
@@ -31,7 +34,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool bVideo )
+void MainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool bSuccess, bool bVideo )
 {
     ui->tabResult->insertRow( 0 );
     qint32 nCol = 0;
@@ -48,6 +51,21 @@ void MainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool bV
         LoadImg( ui->lblVideo0, ui->lblPicture, ui->lblPlatePic, 0 );
     }
      //qDebug( ) << Q_FUNC_INFO << ":" << lstResult.join( "," ) << endl;
+}
+
+void MainWindow::HandleCaptureImage( QString strFile, int nChannel )
+{
+
+}
+
+void MainWindow::HandleNotifyMessage( QString strMsg, bool bSuccess )
+{
+
+}
+
+void MainWindow::HandleDetectInfo( int nChannel, bool bMotion )
+{
+
 }
 
 void MainWindow::on_btnFile_clicked()
@@ -110,15 +128,24 @@ void MainWindow::on_btnAnalogCamera_clicked()
         return;
     }
 
-
     //pAnalogCamera = QTmCaptureCardThread::GetInstance( );
     pAnalogCamera = QHkCaptureCardThread::GetInstance( );
+
+    connect( pAnalogCamera, SIGNAL( CaptureImage( QString, int ) ),
+             this, SLOT( HandleCaptureImage( QString, int ) ) );
+    connect( pAnalogCamera, SIGNAL( NotifyMessage( QString, bool ) ),
+             this, SLOT( HandleNotifyMessage( QString, bool ) ) );
+    connect( pAnalogCamera, SIGNAL( DetectInfo( int, bool ) ),
+             this, SLOT( HandleDetectInfo( int, bool ) ) );
+
     pAnalogCamera->PostInitCaptureSDKEvent( winId( ) );
 
-    for ( int nChannel = 0; nChannel < CHANNEL_WAY; nChannel++ ) {
+    for ( int nChannel = 0; nChannel < CHANNEL_WAY - 2; nChannel++ ) {
         pAnalogCamera->PostOpenChannelEvent( nChannel );
         pAnalogCamera->PostPlayVideoEvent( nChannel, aLables[ nChannel ]->winId( ) );
         pAnalogCamera->PostStartCaptureEvent( nChannel );
+        pAnalogCamera->PostStartMotionDetectEvent( nChannel );
+        pAnalogCamera->PostStartSourceStreamEvent( nChannel, 0 == nChannel );
     }
 }
 
@@ -141,7 +168,7 @@ void MainWindow::on_btnAnalogCaptureFile_clicked()
     int nChannel = 0;
 
     QString strFile = strPlateDir + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".JPG";
-    pAnalogCamera->PostCaptrueImageEvent( nChannel, strFile );
+    pAnalogCamera->PostCaptrueImageEvent( nChannel, strFile, true );
 }
 
 void MainWindow::on_btnIPCCaptureFile_clicked()

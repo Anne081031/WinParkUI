@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlggarageingarage.ui'
 **
-** Created: Wed Jul 10 12:02:42 2013
+** Created: Thu Jul 18 15:06:07 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -50,8 +50,8 @@ public:
         lblTitle->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "color: rgb(85, 0, 0);"));
         tabRecord = new QTableWidget(CDlgGarageInGarage);
-        if (tabRecord->columnCount() < 5)
-            tabRecord->setColumnCount(5);
+        if (tabRecord->columnCount() < 6)
+            tabRecord->setColumnCount(6);
         QTableWidgetItem *__qtablewidgetitem = new QTableWidgetItem();
         tabRecord->setHorizontalHeaderItem(0, __qtablewidgetitem);
         QTableWidgetItem *__qtablewidgetitem1 = new QTableWidgetItem();
@@ -62,6 +62,8 @@ public:
         tabRecord->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
         tabRecord->setHorizontalHeaderItem(4, __qtablewidgetitem4);
+        QTableWidgetItem *__qtablewidgetitem5 = new QTableWidgetItem();
+        tabRecord->setHorizontalHeaderItem(5, __qtablewidgetitem5);
         tabRecord->setObjectName(QString::fromUtf8("tabRecord"));
         tabRecord->setGeometry(QRect(42, 56, 641, 600));
         tabRecord->setStyleSheet(QString::fromUtf8("background-image: url(none);"));
@@ -86,6 +88,11 @@ public:
         ___qtablewidgetitem3->setText(QApplication::translate("CDlgGarageInGarage", "\350\277\233\346\210\226\345\207\272", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem4 = tabRecord->horizontalHeaderItem(4);
         ___qtablewidgetitem4->setText(QApplication::translate("CDlgGarageInGarage", "\345\255\220\345\272\223\347\272\247\345\210\253", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem5 = tabRecord->horizontalHeaderItem(5);
+        ___qtablewidgetitem5->setText(QApplication::translate("CDlgGarageInGarage", "ID", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        tabRecord->setToolTip(QApplication::translate("CDlgGarageInGarage", "\345\215\225\345\207\273\345\215\241\345\217\267\345\210\227\346\230\276\347\244\272\345\233\276\345\203\217", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
     } // retranslateUi
 
 };

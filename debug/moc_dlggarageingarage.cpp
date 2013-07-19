@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlggarageingarage.h'
 **
-** Created: Wed Jul 10 12:22:00 2013
+** Created: Thu Jul 18 15:24:06 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CDlgGarageInGarage[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       1,   14, // methods
+       2,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -32,6 +32,7 @@ static const uint qt_meta_data_CDlgGarageInGarage[] = {
 
  // slots: signature, parameters, type, tag, flags
       20,   19,   19,   19, 0x08,
+      66,   55,   19,   19, 0x08,
 
        0        // eod
 };
@@ -39,6 +40,7 @@ static const uint qt_meta_data_CDlgGarageInGarage[] = {
 static const char qt_meta_stringdata_CDlgGarageInGarage[] = {
     "CDlgGarageInGarage\0\0"
     "on_lblClose_linkActivated(QString)\0"
+    "row,column\0on_tabRecord_cellClicked(int,int)\0"
 };
 
 const QMetaObject CDlgGarageInGarage::staticMetaObject = {
@@ -71,9 +73,10 @@ int CDlgGarageInGarage::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
         case 0: on_lblClose_linkActivated((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 1: on_tabRecord_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
-        _id -= 1;
+        _id -= 2;
     }
     return _id;
 }

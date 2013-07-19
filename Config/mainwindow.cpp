@@ -44,7 +44,7 @@ void MainWindow::InitCtrl( bool bEnabled )
 {
     ui->cbxCapture->setEnabled( !bEnabled );
     ui->cbxIPC->setEnabled( bEnabled );
-    //ui->chkVideo->setEnabled( !bEnabled );
+    ui->cbxStream->setEnabled( bEnabled );
 }
 
 void MainWindow::ReadFile( )
@@ -65,6 +65,7 @@ void MainWindow::ReadFile( )
     ui->chkAlert->setChecked( pSystemCfg->value( "CommonCfg/Alert", false ).toBool( ) );
     ui->edtLedCan->setText( pSystemCfg->value( "CommonCfg/IndependentLedCan").toString( ) );
     ui->chkOpenGate->setChecked( pSystemCfg->value( "CommonCfg/SenseOpenGate", false ).toBool( ) );
+    ui->chkNoCard->setChecked( pSystemCfg->value( "CommonCfg/NoCardWork", false ).toBool( ) );
     ui->chkCapture->setChecked( pSystemCfg->value( "CommonCfg/SenseGetImg", true ).toBool( ) );
     ui->edtParkID->setText( pSystemCfg->value( "CommonCfg/ParkID", "5101070001" ).toString( ) );
 
@@ -105,6 +106,12 @@ void MainWindow::ReadFile( )
     ui->edtPublishDevType->setText( pSystemCfg->value( "ThirdParty/DeviceType", "100" ).toString( ) );
     ui->edtPublishDevID->setText( pSystemCfg->value( "ThirdParty/DeviceID", "0000000001" ).toString( ) );
 
+    bool bPlateVideo = pSystemCfg->value( "CommonCfg/PlateVideo", false ).toBool( );
+    ui->cbxPlate->setCurrentIndex( bPlateVideo ? 1 : 0 );
+
+    bool bMainStream = pSystemCfg->value( "IPC/MainStream", true ).toBool( );
+    ui->cbxStream->setCurrentIndex( bMainStream ? 0 : 1 );
+
     bool bNetIPC = pSystemCfg->value( "CommonCfg/NetworkCamera", true ).toBool( );
     InitCtrl( bNetIPC );
     if ( bNetIPC ) {
@@ -143,6 +150,7 @@ void MainWindow::WriteFile( )
     pSystemCfg->setValue( "CommonCfg/Alert", ui->chkAlert->isChecked( ) );
     pSystemCfg->setValue( "CommonCfg/IndependentLedCan", ui->edtLedCan->text( ) );
     pSystemCfg->setValue( "CommonCfg/SenseOpenGate", ui->chkOpenGate->isChecked( ) );
+    pSystemCfg->setValue( "CommonCfg/NoCardWork", ui->chkNoCard->isChecked( ) );
     pSystemCfg->setValue( "CommonCfg/SenseGetImg", ui->chkCapture->isChecked( ) );
     pSystemCfg->setValue( "CommonCfg/ParkID", ui->edtParkID->text( ) );
     pSystemCfg->setValue( "CommonCfg/BroadCastData", ui->chkBroadcastData->isChecked( ) );
@@ -186,10 +194,13 @@ void MainWindow::WriteFile( )
     pSystemCfg->setValue( "ThirdParty/DeviceType", ui->edtPublishDevType->text( ) );
     pSystemCfg->setValue( "ThirdParty/DeviceID", ui->edtPublishDevID->text( ) );
 
+    pSystemCfg->setValue( "CommonCfg/PlateVideo",  1 == ui->cbxPlate->currentIndex( ) );
+
     if ( ui->rdbNet->isChecked( ) ) {
         pSystemCfg->setValue( "CommonCfg/NetworkCamera", true );
         pSystemCfg->setValue( "IPC/Type",
                               ui->cbxIPC->itemData( ui->cbxIPC->currentIndex( ) ) );
+        pSystemCfg->setValue( "IPC/MainStream", 0 == ui->cbxStream->currentIndex( ) );
     } else if ( ui->rdbAnlog->isChecked( ) ) {
         pSystemCfg->setValue( "CommonCfg/NetworkCamera", false );
         pSystemCfg->setValue( "CommonCfg/CaptureCard",

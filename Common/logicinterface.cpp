@@ -1554,6 +1554,8 @@ void CLogicInterface::GetBlobSql( QString &strSql, bool bSave2Db, CommonDataType
     QString strCarSql = bSave2Db ? QString( "Update IGNORE carinfo Set carpic = ? %1" ) :
                         QString( "Select carpic From carinfo %1" );
     QString strMGate = bSave2Db ? "Update IGNORE sysinfo Set %1 = ? %2" : "Select %1 From sysinfo %2";
+    QString strGarageSql = bSave2Db ? QString( "Update IGNORE garageingarage Set Image = ? %1" ) :
+                        QString( "Select Image From garageingarage %1" );
 
     QString strTimeInImg = "Select invideo1 from tmpcardIntime %1";
 
@@ -1617,6 +1619,10 @@ void CLogicInterface::GetBlobSql( QString &strSql, bool bSave2Db, CommonDataType
    case CommonDataType::BlobTimeInImg :
         strSql = strTimeInImg.arg( strWhere );
         break;
+
+    case CommonDataType::BlobGarageImg :
+         strSql = strGarageSql.arg( strWhere );
+         break;
     }
 
     strSql += " LIMIT 1";

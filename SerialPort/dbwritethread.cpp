@@ -25,7 +25,12 @@ void CDbWriteThread::run( )
 void CDbWriteThread::ExcuteSQL( CLogicInterface& intf, bool bSQL, CDbEvent::WriteParameter &paramter )
 {
     if ( bSQL ) {
-        intf.ExecuteSql( paramter.strSql );
+        if ( paramter.bSelect ) {
+            QStringList lstRow;
+            intf.ExecuteSql( paramter.strSql, lstRow );
+        } else {
+            intf.ExecuteSql( paramter.strSql );
+        }
     } else {
         intf.OperateBlob( paramter.byData, true, paramter.blob, paramter.strSql );
     }
