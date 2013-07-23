@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qjvsipcthread.h'
 **
-** Created: Tue Jul 16 12:24:26 2013
+** Created: Mon Jul 22 11:15:58 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

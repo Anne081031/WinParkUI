@@ -1358,7 +1358,7 @@ void CProcessData::ProcessCardInfo( QByteArray &byData, bool bPlate, QString str
         const QString strText = "P:" + strCardNumber;
         pMainWindow->SetAlertMsg( strText );
 
-        bool bRet = AssertCard( byData, vData, lstRows, strCurPlate,cardKind );
+        bool bRet = AssertCard( byData, vData, lstRows, strCurPlate, cardKind );
         bRet = vData.contains( 0x32 );
         if ( false == bRet ) {
             return;
@@ -1887,7 +1887,7 @@ void CProcessData::GetHourMin( int nMins, int& nHour, int& nMin )
 QString CProcessData::GetFeeStd( QString &strCardNo )
 {
     CommonDataType::QEntityHash& ent = CCommonFunction::GetCardEntity( );
-    QString strFeeStd = "";
+    QString strFeeStd = "2";
 
     if ( ent.contains( strCardNo ) ) {
         CommonDataType::PEntityInfo pInfo = ent[ strCardNo ];
@@ -2306,7 +2306,7 @@ void CProcessData::SpaceChange( bool bEnter, char cCan )
 
 bool CProcessData::MonthNoCardWorkMode( )
 {
-    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     bool bRet = pSet->value( "CommonCfg/NoCardWork", false ).toBool( );
 
     return bRet;
@@ -2327,9 +2327,106 @@ bool CProcessData::MonthCardWorkMode( QString& strCardNo )
     return bRet;
 }
 
-bool CProcessData::NoCardWork()
+bool CProcessData::GateNoCardWork( QByteArray& byData, QString& strPlate,
+                                   char cCan, QString& strCardNo,
+                                   QString& strType, QString& strChannel )
 {
-    bool bRet = true;
+    bool bRet = MonthNoCardWorkMode( );
+
+    if ( !bRet ) { // 纯地感开闸，不收费
+        return true;
+    }
+
+    QString strSql = QString( "Select NoCardWork( '%1', %2 )" ).arg( strPlate, QString::number( cCan ) );
+    QStringList lstRow;
+    CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
+    if ( 0 == lstRow.count( ) || lstRow.at( 0 ).isEmpty( ) ) {
+        return false;
+    }
+
+    // month,expire,day
+    // time,enter,unknown,tmpid,stoprdid,intime,inchannel,outchannel
+    lstRow = lstRow.at( 0 ).split( "," );
+    const QString& strCardType= lstRow.at( 0 );
+
+    QByteArray vData;
+    strType = "无卡工作";
+
+    if ( "month" == strCardType ) {
+        if ( "1" == lstRow.at( 1 ) ) {
+            PlayAudioDisplayInfo( byData, vData, CPortCmd::LedMonthlyExceed, CPortCmd::AudioMonthlyExceed );
+            return false;
+        }
+    } else if ( "time" == strCardType ) {
+        if ( "0" == lstRow.at( 1 ) ) { // leave
+            if ( "1" == lstRow.at( 2 ) ) { // 未知
+                return false;
+            }
+
+            if ( pFeeDlg->isVisible( ) ) {
+                return false; // Only let one car pass
+            }
+
+            QString strTmpID = lstRow[ 3 ];
+            QDateTime dtEnd = QDateTime::currentDateTime( );
+            QDateTime dtStart = CCommonFunction::String2DateTime( lstRow[ 5 ] );
+            int nMins = CCommonFunction::GetDateTimeDiff( false, 60, dtStart, dtEnd );
+
+            if ( 0 > nMins ) {
+                CCommonFunction::MsgBox( NULL, "提示", "进入时间大于离开时间", QMessageBox::Information );
+                return false;
+            }
+
+            int nHour;
+            int nMin;
+            char byte5 = byData[ 5 ];
+            GetHourMin( nMins, nHour, nMin );
+
+            QString strTable;
+            CCommonFunction::GetTableName( CommonDataType::TimeCard, strTable );
+
+            int nAmount = CalculateFee( dtStart, dtEnd, strCardNo, byte5 );
+            pFeeDlg->SetParams( byData, vData, nMin, nHour, nAmount, false );
+
+            //////////////////////////////////
+
+            QStringList lstInit;
+            QString strParkName = "";
+            pMainWindow->GetParkName( strParkName, byData[ 5 ], 0 );
+            //QString strChannel = "未知";
+            //GetChannelName( false, byte5, strChannel );
+
+            //CCommonFunction::GetAllChannels( lstChan, strParkName, bEnter );
+            //cardno, intime, inshebeiname, idtmpcardintime
+            QString strEnd = dtEnd.toString( "yyyy-MM-dd HH:mm:ss" );
+            lstInit << strCardNo << strType;
+            lstInit << lstRow[ 6 ] << lstRow[ 5 ];
+            lstInit << strChannel << strEnd;
+            lstInit << QString::number( nHour ) << QString::number( nMin);
+            lstInit << QString::number( nAmount );
+            lstInit << strTable << strParkName;
+            lstInit << lstRow[ 5 ] << strEnd << strPlate;
+            lstInit << GetFeeStd( strCardNo );
+
+            bool bGate = PictureContrast( lstInit, nAmount, byData, strTmpID );
+            if ( bGate ) {
+                pMainWindow->UpdateStatistics( nAmount, 2 );
+                pMainWindow->UpdateStatistics( pFeeDlg->GetAmount( ) - nAmount, 5 );
+
+                //ControlGate( false, byData, vData, cardKind );
+            } else {
+                return bRet;
+            }
+
+            QString strDateTime;
+            CCommonFunction::DateTime2String( dtEnd, strDateTime );
+            WriteFeeData( strType, strCardNo, nAmount, strDateTime );
+            // Confirm to pass
+            //ControlChargeInfo( strCardNo, QDateTime::currentDateTime( ), QString::number( nAmount ), "1" );
+        }
+    } else {
+        bRet = false;
+    }
 
     return bRet;
 }
@@ -2390,7 +2487,7 @@ bool CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
     }
 
     if ( !bGarage ) {
-        if ( !NoCardWork( ) ) {
+        if ( !GateNoCardWork( byData, strPlate, cCan, strCardNumber, strCardType, strChannel ) ) {
             return bRet;
         }
 
@@ -2410,10 +2507,10 @@ bool CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
         }
 
         QString strHex( byImage.toHex( ) );
-        strSql = "Select InsertFreeCardData( '%1', '%2', '%3', '%4', '%5', %6, %7 )";
+        strSql = "Select InsertFreeCardData( '%1', '%2', '%3', '%4', '%5', %6, %7, '%8' )";
         strSql = strSql.arg( strCardNumber, strDateTime, strChannel,
                              strPlate, strHex,
-                             QString::number( cLevel ), QString::number( bEnter ) );
+                             QString::number( cLevel ), QString::number( bEnter ), strCardType );
 
         //CLogicInterface::GetInterface( )->ExecuteSql( strSql );
         SendDbWriteMessage( CDbEvent::SQLInternal, strSql, CCommonFunction::GetHistoryDb( ), false, true );
@@ -2946,6 +3043,7 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
 
  void CProcessData::SendTimeCardInfo( QByteArray &byData, QByteArray &vData, int nMin, int nHour, int nAmount, bool bEnter )
  {
+     Sleep( 1500 );
      pSettings->sync( );
 
      if ( pSettings->value( "UserRequest/IfDisplayFeeInfo", false ).toBool( ) ) {

@@ -115,7 +115,8 @@ private:
     void WriteInOutRecord( bool bEnter, QString& strCardNumber, QString& strTable,
                            QString& strCardType, QString strPlate, char cCan, ParkCardType& cardKind, int nAmount = 0 );
     bool WriteInOutRecord( QByteArray& byData );
-    bool NoCardWork( );
+    bool GateNoCardWork( QByteArray& byData, QString& strPlate,
+                         char cCan, QString& strCardno, QString& strType, QString& strChannel );
     inline void GetChannelName( bool bEnter, char cCan, QString& strChannel );
     void GetHourMin( int nMins, int& nHour, int& nMin );
     void WriteFeeData( QString& strCardType, QString& strCardNo, int nAmount, QString& strDateTime );
