@@ -20,8 +20,8 @@ MainWindow::MainWindow(QWidget *parent) :
     aLables[ 2 ] = ui->lblVideo2;
     aLables[ 3 ] = ui->lblVideo3;
     //ImageFormatYUV420COMPASS : ImageFormatBGR
-    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatYUV420COMPASS, 0 ); // HK
-    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatYUV420COMPASS, 1 );
+    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatBGR, 0 ); // HK
+    //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatBGR, 1 );
 
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 0 ); //TM
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 1 );
@@ -96,7 +96,7 @@ void MainWindow::LoadImg( QLabel *lblCtrlLeft, QLabel *lblCtrlRight, QLabel* lbl
 {
     QTableWidget* tabWid = ui->tabResult;
     int nCol = tabWid->columnCount( ) - 1;
-    QString strFile = tabWid->item( nRow, nCol )->text( );
+    QString strFile = tabWid->item( nRow, nCol - 2 )->text( );
 
     if ( strFile.isEmpty( ) ) {
         return;

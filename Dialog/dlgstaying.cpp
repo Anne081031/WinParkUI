@@ -26,6 +26,12 @@ CDlgStaying::CDlgStaying(QWidget *parent) :
 
     pView = ui->tableWidgetTime->horizontalHeader( );
     pView->hideSection( ui->tableWidgetTime->columnCount( ) - 1 );
+
+    pView = ui->tableWidgetNoCard->horizontalHeader( );
+    pView->hideSection( ui->tableWidgetNoCard->columnCount( ) - 1 );
+
+    bool bNocard = pSystem->value( "CommonCfg/NoCardWork", false ).toBool( );
+    ui->tab_3->setVisible( bNocard );
 }
 
 void CDlgStaying::SetFrameVisble( bool bVisible )
@@ -85,6 +91,19 @@ void CDlgStaying::GetTimeData( QString &strOrder )
     }
 }
 
+void CDlgStaying::GetNocardData( QString &strOrder )
+{
+    QStringList lstRows;
+    QString strSql = "SELECT cardno, '', cardno, inshebeiname, intime, stoprdid\
+            FROM tmpcardintime where type = 1 " + strOrder;
+
+    lstRows.clear( );
+    int nRows = CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRows, bHistory );
+    if ( 0 < nRows ) {
+      FillTable( lstRows, ui->tableWidgetNoCard, nRows );
+    }
+}
+
 void CDlgStaying::GetData( )
 {
     int nIndex = ui->tableWidgetMonth->columnCount( ) - 1;
@@ -108,6 +127,7 @@ void CDlgStaying::GetData( )
     GetOrderByClause( strOrder, nChk, nCb );
     GetMonthData( strOrder );
     GetTimeData( strOrder );
+    GetNocardData( strOrder );
 }
 
 void CDlgStaying::FillTable( QStringList &lstData, QTableWidget *pTable, int nRows )
@@ -133,6 +153,7 @@ void CDlgStaying::DisplayPic( QTableWidget* pWidget, int nRow, int nCol )
 {
     bool bZeroCol = ( 0 == nCol );
     bool bExist = false;
+    bool bNocard = ( ui->tab_3 == pWidget );
 
     if ( bZeroCol ) {
         QString strFile;
@@ -140,7 +161,8 @@ void CDlgStaying::DisplayPic( QTableWidget* pWidget, int nRow, int nCol )
                     pWidget->item( nRow, pWidget->columnCount( ) - 1 )->text( ) );
         CCommonFunction::GetPath( strFile, CommonDataType::PathSnapshot );
         strFile += "Staying.jpg";
-        CLogicInterface::GetInterface( )->OperateBlob( strFile, false, CommonDataType::BlobVehicleIn1, strWhere, bHistory );
+        CLogicInterface::GetInterface( )->OperateBlob( strFile, false,
+                                                       bNocard ? CommonDataType::BlobTimeInImg : CommonDataType::BlobVehicleIn1, strWhere, bHistory );
 
         bExist = QFile::exists( strFile );
         if ( bExist ) {
@@ -161,6 +183,10 @@ void CDlgStaying::on_tabWidget_currentChanged(int index)
     bool bMonth = ( 0 == index );
     ui->chk2->setEnabled( bMonth );
     ui->chk3->setEnabled( bMonth );
+
+    bool bNocard = ( 2 == index );
+    ui->chk1->setEnabled( !bNocard );
+    ui->chk4->setEnabled( !bNocard );
 }
 
 void CDlgStaying::SetChkClikedArray( bool bInit )
@@ -185,6 +211,10 @@ void CDlgStaying::SortData( int nChk, int nCb, bool bCb )
         GetTimeData( strOrder );
     }
 
+    if ( 1 != nChk && 2 != nChk && 3 != nChk ) {
+        GetNocardData( strOrder );
+    }
+
     return;
 
     switch ( ui->tabWidget->currentIndex( ) ) {
@@ -194,6 +224,10 @@ void CDlgStaying::SortData( int nChk, int nCb, bool bCb )
 
     case 1 :
         GetTimeData( strOrder );
+        break;
+
+    case 2 :
+        GetNocardData( strOrder );
         break;
     }
 }
@@ -318,4 +352,9 @@ void CDlgStaying::on_chk6_clicked(bool checked)
 void CDlgStaying::on_chk0_toggled(bool checked)
 {
 
+}
+
+void CDlgStaying::on_tableWidgetNoCard_cellClicked(int row, int column)
+{
+    DisplayPic( ( QTableWidget* ) sender( ), row, column );
 }

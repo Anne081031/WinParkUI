@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'dlgstaying.h'
 **
-** Created: Thu Jul 18 15:25:22 2013
+** Created: Thu Jul 25 16:26:42 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CDlgStaying[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      13,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -43,6 +43,7 @@ static const uint qt_meta_data_CDlgStaying[] = {
      297,  179,   12,   12, 0x08,
      319,  179,   12,   12, 0x08,
      341,  179,   12,   12, 0x08,
+     363,   13,   12,   12, 0x08,
 
        0        // eod
 };
@@ -58,6 +59,7 @@ static const char qt_meta_stringdata_CDlgStaying[] = {
     "on_chk3_clicked(bool)\0on_chk4_clicked(bool)\0"
     "on_chk5_clicked(bool)\0on_chk6_clicked(bool)\0"
     "on_chk0_toggled(bool)\0"
+    "on_tableWidgetNoCard_cellClicked(int,int)\0"
 };
 
 const QMetaObject CDlgStaying::staticMetaObject = {
@@ -101,9 +103,10 @@ int CDlgStaying::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 9: on_chk5_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 10: on_chk6_clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 11: on_chk0_toggled((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 12: on_tableWidgetNoCard_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         default: ;
         }
-        _id -= 12;
+        _id -= 13;
     }
     return _id;
 }

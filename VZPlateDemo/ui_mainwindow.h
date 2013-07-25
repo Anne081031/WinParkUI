@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Mon Jul 15 12:39:10 2013
+** Created: Wed Jul 24 17:12:19 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -130,31 +130,37 @@ public:
 
         btnAnalogCamera = new QPushButton(layoutWidget);
         btnAnalogCamera->setObjectName(QString::fromUtf8("btnAnalogCamera"));
+        btnAnalogCamera->setEnabled(false);
 
         horizontalLayout->addWidget(btnAnalogCamera);
 
         btnAnalogCaptureFile = new QPushButton(layoutWidget);
         btnAnalogCaptureFile->setObjectName(QString::fromUtf8("btnAnalogCaptureFile"));
+        btnAnalogCaptureFile->setEnabled(false);
 
         horizontalLayout->addWidget(btnAnalogCaptureFile);
 
         btnDigitalCamera = new QPushButton(layoutWidget);
         btnDigitalCamera->setObjectName(QString::fromUtf8("btnDigitalCamera"));
+        btnDigitalCamera->setEnabled(false);
 
         horizontalLayout->addWidget(btnDigitalCamera);
 
         btnIPCCaptureFile = new QPushButton(layoutWidget);
         btnIPCCaptureFile->setObjectName(QString::fromUtf8("btnIPCCaptureFile"));
+        btnIPCCaptureFile->setEnabled(false);
 
         horizontalLayout->addWidget(btnIPCCaptureFile);
 
         btnVideoFile = new QPushButton(layoutWidget);
         btnVideoFile->setObjectName(QString::fromUtf8("btnVideoFile"));
+        btnVideoFile->setEnabled(false);
 
         horizontalLayout->addWidget(btnVideoFile);
 
         btnStopVideoRecognize = new QPushButton(layoutWidget);
         btnStopVideoRecognize->setObjectName(QString::fromUtf8("btnStopVideoRecognize"));
+        btnStopVideoRecognize->setEnabled(false);
 
         horizontalLayout->addWidget(btnStopVideoRecognize);
 

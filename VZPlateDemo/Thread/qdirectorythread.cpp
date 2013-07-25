@@ -9,6 +9,7 @@ QDirectoryThread* QDirectoryThread::pThreadInstance = NULL;
 QDirectoryThread::QDirectoryThread(QObject *parent) :
     QThread(parent)
 {
+    lstFileType << "BMP" << "JPG" << "JPEG" << "PNG" << "TIF";
 }
 
 QDirectoryThread* QDirectoryThread::GetInstance( )
@@ -56,11 +57,13 @@ void QDirectoryThread::Traverse( QString &strDir )
     QDir dir( strDir );
     QFileInfoList lstFiles = dir.entryInfoList( QDir::Files | QDir::NoDotAndDotDot | QDir::Dirs );
     QString strFile;
+    QString strExt;
 
     foreach ( const QFileInfo& item, lstFiles ) {
         strFile = item.absoluteFilePath( );
 
-        if ( item.isFile( ) ) {
+        strExt = item.suffix( );
+        if ( item.isFile( ) && lstFileType.contains( strExt, Qt::CaseInsensitive ) ) {
             QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
         } else if ( item.isDir( ) ) {
             Traverse( strFile );

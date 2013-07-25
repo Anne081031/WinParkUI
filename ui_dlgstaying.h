@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'dlgstaying.ui'
 **
-** Created: Thu Jul 18 15:06:07 2013
+** Created: Thu Jul 25 17:06:03 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -34,6 +34,8 @@ public:
     QTableWidget *tableWidgetMonth;
     QWidget *tab_2;
     QTableWidget *tableWidgetTime;
+    QWidget *tab_3;
+    QTableWidget *tableWidgetNoCard;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
@@ -98,6 +100,26 @@ public:
         tableWidgetTime->setObjectName(QString::fromUtf8("tableWidgetTime"));
         tableWidgetTime->setGeometry(QRect(10, 10, 821, 511));
         tabWidget->addTab(tab_2, QString());
+        tab_3 = new QWidget();
+        tab_3->setObjectName(QString::fromUtf8("tab_3"));
+        tableWidgetNoCard = new QTableWidget(tab_3);
+        if (tableWidgetNoCard->columnCount() < 6)
+            tableWidgetNoCard->setColumnCount(6);
+        QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
+        tableWidgetNoCard->setHorizontalHeaderItem(0, __qtablewidgetitem14);
+        QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
+        tableWidgetNoCard->setHorizontalHeaderItem(1, __qtablewidgetitem15);
+        QTableWidgetItem *__qtablewidgetitem16 = new QTableWidgetItem();
+        tableWidgetNoCard->setHorizontalHeaderItem(2, __qtablewidgetitem16);
+        QTableWidgetItem *__qtablewidgetitem17 = new QTableWidgetItem();
+        tableWidgetNoCard->setHorizontalHeaderItem(3, __qtablewidgetitem17);
+        QTableWidgetItem *__qtablewidgetitem18 = new QTableWidgetItem();
+        tableWidgetNoCard->setHorizontalHeaderItem(4, __qtablewidgetitem18);
+        QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
+        tableWidgetNoCard->setHorizontalHeaderItem(5, __qtablewidgetitem19);
+        tableWidgetNoCard->setObjectName(QString::fromUtf8("tableWidgetNoCard"));
+        tableWidgetNoCard->setGeometry(QRect(10, 10, 821, 511));
+        tabWidget->addTab(tab_3, QString());
         layoutWidget = new QWidget(CDlgStaying);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(20, 7, 597, 22));
@@ -198,6 +220,22 @@ public:
         tableWidgetTime->setToolTip(QApplication::translate("CDlgStaying", "\345\215\225\345\207\273\343\200\220\345\215\241\345\217\267\343\200\221\345\215\225\345\205\203\346\240\274\357\274\214\346\237\245\347\234\213\345\257\271\345\272\224\350\275\246\350\276\206\345\233\276\347\211\207\343\200\202", 0, QApplication::UnicodeUTF8));
 #endif // QT_NO_TOOLTIP
         tabWidget->setTabText(tabWidget->indexOf(tab_2), QApplication::translate("CDlgStaying", "\350\256\241\346\227\266\345\215\241\350\275\246\350\276\206", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem14 = tableWidgetNoCard->horizontalHeaderItem(0);
+        ___qtablewidgetitem14->setText(QApplication::translate("CDlgStaying", "\345\215\241\345\217\267", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem15 = tableWidgetNoCard->horizontalHeaderItem(1);
+        ___qtablewidgetitem15->setText(QApplication::translate("CDlgStaying", "\350\207\252\347\274\226\345\217\267", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem16 = tableWidgetNoCard->horizontalHeaderItem(2);
+        ___qtablewidgetitem16->setText(QApplication::translate("CDlgStaying", "\350\275\246\347\211\214", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem17 = tableWidgetNoCard->horizontalHeaderItem(3);
+        ___qtablewidgetitem17->setText(QApplication::translate("CDlgStaying", "\350\277\233\345\205\245\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem18 = tableWidgetNoCard->horizontalHeaderItem(4);
+        ___qtablewidgetitem18->setText(QApplication::translate("CDlgStaying", "\350\277\233\345\205\245\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        QTableWidgetItem *___qtablewidgetitem19 = tableWidgetNoCard->horizontalHeaderItem(5);
+        ___qtablewidgetitem19->setText(QApplication::translate("CDlgStaying", "ID", 0, QApplication::UnicodeUTF8));
+#ifndef QT_NO_TOOLTIP
+        tableWidgetNoCard->setToolTip(QApplication::translate("CDlgStaying", "\345\215\225\345\207\273\343\200\220\345\215\241\345\217\267\343\200\221\345\215\225\345\205\203\346\240\274\357\274\214\346\237\245\347\234\213\345\257\271\345\272\224\350\275\246\350\276\206\345\233\276\347\211\207\343\200\202", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
+        tabWidget->setTabText(tabWidget->indexOf(tab_3), QApplication::translate("CDlgStaying", "\346\227\240\345\215\241\346\250\241\345\274\217\350\275\246\350\276\206", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("CDlgStaying", "\346\216\222\345\272\217\346\235\241\344\273\266\357\274\232", 0, QApplication::UnicodeUTF8));
         cbSort->clear();
         cbSort->insertItems(0, QStringList()

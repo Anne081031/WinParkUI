@@ -45,6 +45,8 @@ private slots:
 
     void on_chk0_toggled(bool checked);
 
+    void on_tableWidgetNoCard_cellClicked(int row, int column);
+
 private:
     void GetData( );
     void FillTable( QStringList& lstData, QTableWidget* pTable, int nRows );
@@ -56,6 +58,7 @@ private:
     int GetChkIndex( );
     void GetMonthData( QString& strOrder );
     void GetTimeData( QString& strOrder );
+    void GetNocardData( QString& strOrder );
     bool GetClicked( int nChk );
     void SetChkClikedArray( bool bInit );
     

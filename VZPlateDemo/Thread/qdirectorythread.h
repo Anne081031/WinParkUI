@@ -3,6 +3,7 @@
 
 #include <QThread>
 #include "qdirectoryevent.h"
+#include <QStringList>
 
 class QDirectoryThread : public QThread
 {
@@ -23,6 +24,7 @@ private:
 
 private:
     static QDirectoryThread* pThreadInstance;
+    QStringList lstFileType;
     
 signals:
     

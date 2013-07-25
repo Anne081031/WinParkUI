@@ -8,9 +8,11 @@ Layers(严格分层) 自顶向下(Request) 自底向上(Response) 复用/去复用 协议栈 变种(松
 Pipes and Filters 处理数据流的系统(流水线) 主动对象-具有线程功能/被动对象-不具线程功能 Push/Pull Publish/Subscribe Sender/Receiver
 DataSource-->流水线(Pipeline)上处理单元(Filter，Process/Thread)--管道(Pipe)--处理单元(Filter，Function/Procedure)-->DataSink
 
-Blackboard
-Broker
-Model-View-Controller
+Blackboard 黑板模式的应用场景是要解决的任务可以分为多个子任务 利用数据库/利用发布—订阅模式 做黑板  知识共享(知识源) 智能分析 模糊识别 智能算法
+Broker 代理组件负责协调通信(海康API就是代理 CORBA RPC) 包含六种组件 Client(接口使用者)<-->ClientEndProxy<-->BrokerA<-->BridgeA(Broker互通)<-->BridgeB<-->BrokerB<-->ServerEndProxy<-->Server(接口实现者)
+A协议(客户与BrokerA)<-->通用协议(桥间协议)<->B协议(服务器与BrokerB)
+
+Model-View-Controller M封装了内核功能和数据 V展示M的数据 每个V都有一个C C接收输入(调度、派发)
 Presentation-Abstraction-Control
 MicroKernel
 Reflection
@@ -20,4 +22,10 @@ Reflection
 
 Pattern System / Pattern Catalog
 
-面向模式的软件体系结构+卷1-模式系统.pdf 46 37/297
+面向模式的软件体系结构+卷1-模式系统.pdf 83 37/297
+
+Unity3D Delta3D
+
+Win32Asm
+RadAsm WinAsm IDE
+http://www.masm32.com/
