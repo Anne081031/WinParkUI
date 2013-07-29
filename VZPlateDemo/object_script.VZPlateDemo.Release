@@ -1,6 +1,6 @@
 INPUT(
 ./release/main.o
-./release/mainwindow.o
+./release/VZMainWindow.o
 ./release/qplatethread.o
 ./release/qplateevent.o
 ./release/qanalogcamerathread.o
@@ -12,9 +12,9 @@ INPUT(
 ./release/qdirectoryevent.o
 ./release/qhkcapturecardthread.o
 ./release/qtmcapturecardthread.o
-./release/qhkipcthread.o
+./release/qdhkipcthread.o
 ./release/qjvsipcthread.o
-./release/moc_mainwindow.o
+./release/moc_VZMainWindow.o
 ./release/moc_qplatethread.o
 ./release/moc_qanalogcamerathread.o
 ./release/moc_qdigitalcamerathread.o
@@ -23,7 +23,7 @@ INPUT(
 ./release/moc_qcommon.o
 ./release/moc_qhkcapturecardthread.o
 ./release/moc_qtmcapturecardthread.o
-./release/moc_qhkipcthread.o
+./release/moc_qdhkipcthread.o
 ./release/moc_qjvsipcthread.o
 ./release/qrc_Resource.o
 );

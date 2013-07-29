@@ -1,5 +1,5 @@
 #include <QtGui/QApplication>
-#include "mainwindow.h"
+#include "vzmainwindow.h"
 #include "qcommon.h"
 
 int main(int argc, char *argv[])
@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForTr( pCodec );
 
     QApplication a(argc, argv);
-    MainWindow w;
+    VZMainWindow w;
     w.show();
     
     return a.exec();

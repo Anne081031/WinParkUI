@@ -24,13 +24,129 @@
 #include "ui_monitor.h"
 
 quint8 CMonitor::imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ] = { { 0 } };
-TH_PlateIDResult CMonitor::recogResult[ VIDEO_USEDWAY ][ RECOG_RES ] = { { 0 } };
+TH_PlateResult CMonitor::recogResult[ VIDEO_USEDWAY ][ RECOG_RES ] = { { 0 } };
 bool CMonitor::bStartRecognization[ VIDEO_USEDWAY ] = { false, false };
 //bool CMonitor::bPlateFilter = false;
 //bool CMonitor::bSuccession = false;
-TH_PlateIDResult CMonitor::structPlates[ VIDEO_USEDWAY ] = { { 0 } };
+TH_PlateResult CMonitor::structPlates[ VIDEO_USEDWAY ] = { { 0 } };
 CMonitor* pMainWnd = NULL;
 QString CMonitor::strPlates[ VIDEO_USEDWAY ] = { "" };
+
+void CMonitor::CaptureNewImage( QString& strFile, int nChannel, CommonDataType::CaptureImageType capType )
+{
+    if ( QFile::exists( strFile ) ) {
+        QFile::remove( strFile );
+    }
+
+    if ( bNetworkCamera ) {
+        HWND hPlayWnd = lblVideoWnd[ nChannel ]->winId( );
+        QString strIP = lblVideoWnd[ nChannel ]->toolTip( );
+
+        ipcVideoFrame->CaptureDeviceImage( strIP, strFile, hPlayWnd );
+        return;
+    }
+
+    if ( "中维" == strCapture ) {
+        capType = CommonDataType::CaptureBMP;
+        strFile.remove( ".JPG" );
+        strFile += ".BMP";
+    }
+
+    pNewAnalogVideo->CaptureStaticImage( strFile, nChannel );
+}
+
+void CMonitor::HandleDetectInfo( int nChannel, bool bMotion )
+{
+    static QString strStyle = "background-image: url( );background-color: rgb(255, 0, 0);";
+    static QString strBackImage = "background-image: url( );";
+
+    if ( 0 > nChannel || 4 <= nChannel ) {
+        return;
+    }
+
+    QLabel* pLbl = lblMoving[ nChannel ];
+    if ( NULL == pLbl ) {
+        return;
+    }
+
+    pLbl->setStyleSheet(  bMotion ? strStyle : strBackImage );
+}
+
+void CMonitor::HandleUIPlateResult( QString strPlate, int nChannel,
+                                    bool bSuccess, bool bVideo, int nWidth,
+                                    int nHeight, int nConfidence,
+                                    QString strDirection )
+{
+    if ( !bSuccess || strPlate.isEmpty( ) ) {
+        return;
+    }
+
+    //SetBallotSense( false, nChannel );
+
+    QString strWindth = QString( "%1/%2 " ).arg( QString::number( nWidth ),
+                                                QString::number( nHeight ) );
+    lblDirection[ nChannel ]->setText( strWindth + strDirection );
+    bool bSuccession = pSystem->value( "CommonCfg/Succession", false ).toBool( );
+
+    if ( !bVideo || bSuccession ) { // File
+        CCommonFunction::DisplayPlateChar( lblLicense[ nChannel ], nChannel, strPlate );
+        emit OnRecognizePlate( strPlate, nChannel, nConfidence ); //自动开闸
+    } else { // Video
+        if ( bBallotSense[ nChannel ] ) { // 车压地感了
+            return;
+        }
+
+        PlateSort( plateResult[ nChannel ], strPlate );
+    }
+}
+
+void CMonitor::PlateSort( QHash< QString, int > hash[ ], QString &strPlate )
+{
+    QString strKey;
+
+    for( int nIndex = 0; nIndex < strPlate.count( ); nIndex++ )  {
+        strKey = QString( strPlate.at( nIndex ) );
+        if ( !hash[ nIndex ].contains( strKey ) ) {
+            hash[ nIndex ].insert( strKey, 0 );
+        }
+
+        hash[ nIndex ][ strKey ]++;
+    }
+}
+
+void CMonitor::SetNewBallotSense( bool bSense, int nChannel )
+{
+    bBallotSense[ nChannel ] = bSense;
+    QLabel* pLabel = NULL;
+    QString strPlate;
+
+    if ( bSense ) {
+        for ( int nIndex = 0; nIndex < 8; nIndex ++ ) {
+            pLabel = lblLicense[ nChannel ][ nIndex ];
+            QList<int > lstValue = plateResult[ nChannel ][ nIndex ].values( );
+            if ( 0 == lstValue.count( ) ) {
+                continue;
+            }
+
+            qSort( lstValue );
+            const QString strKey = plateResult[ nChannel ][ nIndex ].key( lstValue.at( lstValue.count( ) - 1 ), " " );
+
+            if ( NULL != pLabel ) {
+                pLabel->setText( strKey );
+            }
+
+            strPlate.append( strKey );
+        }
+
+        emit OnRecognizePlate( strPlate, nChannel, 0 ); //自动开闸
+    } else {
+        for ( int nIndex = 0; nIndex < 8; nIndex ++ ) {
+            plateResult[ nChannel ][ nIndex ].clear( );
+        }
+
+        ClearPlate( nChannel );
+    }
+}
 
 void CMonitor::PictureRegconize( QString &strFile, int nChannel )
 {
@@ -38,10 +154,15 @@ void CMonitor::PictureRegconize( QString &strFile, int nChannel )
         return;
     }
 
+    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, nChannel );
+    SavePicture( strFile );
+    Sleep( 1000 );
+    return;
+
     int nPlateNumber = RECOG_RES;
     //strFile = "d:/1.jpg";
-    ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) * RECOG_RES );
-    bool bRet = pVehicle->RecognizeFile( strFile, recogResult[ nChannel ], nPlateNumber, nChannel );
+    ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateResult ) * RECOG_RES );
+    bool bRet;// = pVehicle->RecognizeFile( strFile, recogResult[ nChannel ], nPlateNumber, nChannel );
 
     if ( bRet ) { // Display Plate
         DisplayPlate( nChannel );
@@ -164,6 +285,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     bPlateVideo = pSystem->value( "CommonCfg/PlateVideo", true ).toBool( );
     bSavePicture = pSystem->value( "CommonCfg/SavePicture", false ).toBool( );
     bNetworkCamera = pSystem->value( "CommonCfg/NetworkCamera", false ).toBool( );
+    pNewAnalogVideo = NULL;
 
     InitChannelHandle( );
 
@@ -171,7 +293,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     //ui->lblLicence19->setText( strLink );
     //ui->lblLicence29->setText( strLink );
     CCommonFunction::ControlSysMenu( *this );
-    pVehicle = NULL;
+    //pVehicle = NULL;
     ControlDataGrid( *ui->tabRecord );
     bool bRet = connect( pParent, SIGNAL( OnUserChanged( QString&, QString& ) ), this, SLOT( ChangeUser( QString&, QString& ) ) );
     bRet = connect( this, SIGNAL( OnRecognizePlate( QString, int, int )), pParent, SLOT( RecognizePlate( QString, int, int ) ) );
@@ -741,17 +863,17 @@ void CMonitor::PrcCapSourceStream(DWORD dwCard, BYTE *pbuff, DWORD dwSize)
     }
 
     int nResult = 0;
-    CVehicleLicense* pVehicle = pMainWnd->GetPlateRecognization( );
-    if ( NULL == pVehicle ) {
-        return;
-    }
+    //CVehicleLicense* pVehicle = pMainWnd->GetPlateRecognization( );
+    //if ( NULL == pVehicle ) {
+     //   return;
+    //}
 
     //memcpy( imgData[ lnCardID ], ( void* ) pBuf, lnWidth * lnHeight * lnBiCount );
 
     qDebug( ) << "CardID : " << QString::number( lnCardID ) << endl;
     nResult = RECOG_RES;
-    bool bRet = pVehicle->RecognizeVideo( ( quint8* ) pbuff, 352,
-                                          288, recogResult[ lnCardID ], nResult, lnCardID );
+    bool bRet;// = pVehicle->RecognizeVideo( ( quint8* ) pbuff, 352,
+               //                           288, recogResult[ lnCardID ], nResult, lnCardID );
 
     if ( bRet ) { // Display Plate
         pMainWnd->DisplayPlate( lnCardID );
@@ -810,16 +932,16 @@ void CMonitor::ImageStreamCallback( UINT nChannel, PVOID pContent )
 
     int nResult = 0;
 
-    CVehicleLicense* pVehicle = pMainWnd->GetPlateRecognization( );
-    if ( NULL == pVehicle ) {
-        return;
-    }
+    //CVehicleLicense* pVehicle = pMainWnd->GetPlateRecognization( );
+    //if ( NULL == pVehicle ) {
+    //    return;
+    //}
 
     //qDebug( ) << "Time1 " << QDateTime::currentDateTime( ).toMSecsSinceEpoch( ) << endl;
     nResult = RECOG_RES;
     quint8* pData = new quint8[ VIDEO_BUF ];
     memcpy( pData, imgData[ nChannel ], VIDEO_BUF );//imgData[ nChannel ]
-    bool bRet = pVehicle->RecognizeVideo( pData, 704, 576, recogResult[ nChannel ], nResult, nChannel );
+    bool bRet;// = pVehicle->RecognizeVideo( pData, 704, 576, recogResult[ nChannel ], nResult, nChannel );
     strInfo += "RecognizeVideo\r\n";
 
     //qDebug( ) << "Time2 " << QDateTime::currentDateTime( ).toMSecsSinceEpoch( ) << endl;
@@ -856,6 +978,9 @@ void CMonitor::WriteFrameInfo( QString &strInfo )
 
 void CMonitor::SetBallotSense( bool bSense, int nChannel )
 {
+    SetNewBallotSense( bSense, nChannel );
+    return;
+
     bBallotSense[ nChannel ] = bSense;
     bool bPlateFilter = GetPlateSuccession( true, nChannel + 1 );
 
@@ -864,11 +989,11 @@ void CMonitor::SetBallotSense( bool bSense, int nChannel )
     }
 
     if ( !bSense ) {
-        ZeroMemory( &structPlates[ nChannel ], sizeof ( TH_PlateIDResult ) );
-        ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateIDResult ) * RECOG_RES );
+        ZeroMemory( &structPlates[ nChannel ], sizeof ( TH_PlateResult ) );
+        ZeroMemory( &recogResult[ nChannel ], sizeof ( TH_PlateResult ) * RECOG_RES );
         ClearPlate( nChannel );
     } else if ( !bPlateFilter ){ // PlateFilter2
-        DisplayPlate( nChannel );
+        //DisplayPlate( nChannel );
     }
 }
 
@@ -882,7 +1007,7 @@ bool CMonitor::GetPlateSuccession( bool bFilter, int nIndex  )
     return bRet;
 }
 
-bool CMonitor::PlateFilter( int nChannel, TH_PlateIDResult*& pResult )
+bool CMonitor::PlateFilter( int nChannel, TH_PlateResult*& pResult )
 {
     bool bRet = false;
     bool bSuccession = GetPlateSuccession( false, nChannel + 1 );
@@ -919,7 +1044,7 @@ void CMonitor::PlateFilter2( int nChannel )
 void CMonitor::DisplayPlate( int nChannel )
 {
     try {
-        TH_PlateIDResult* pResult = &recogResult[ nChannel ][ 0 ];
+        TH_PlateResult* pResult = &recogResult[ nChannel ][ 0 ];
     // Picture 关闭连续识别
         //if ( bPlateVideo ) {
             bool bPlateFilter = GetPlateSuccession( true, nChannel + 1 );
@@ -950,7 +1075,7 @@ void CMonitor::DisplayPlate( int nChannel )
     }
     //ui->lblTmp->setText( strPlate );
     QString strDirection;
-    pVehicle->GetPlateMoveDirection( strDirection, pResult->nDirection );
+    //pVehicle->GetPlateMoveDirection( strDirection, pResult->nDirection );
 
     int nWidth  = pResult->rcLocation.right - pResult->rcLocation.left;
     int nHeight  = pResult->rcLocation.bottom - pResult->rcLocation.top;
@@ -972,10 +1097,10 @@ void CMonitor::DisplayPlate( int nChannel )
     }
 }
 
-CVehicleLicense* CMonitor::GetPlateRecognization( )
-{
-    return pVehicle;
-}
+//CVehicleLicense* CMonitor::GetPlateRecognization( )
+//{
+//    return pVehicle;
+//}
 
 void CMonitor::GetFileName( QString& strFileName, QString strExt )
 {
@@ -1011,6 +1136,9 @@ CMonitor::~CMonitor()
 
 void CMonitor::CaptureImage( QString& strFile, int nChannel, CommonDataType::CaptureImageType capType )
 {
+    CaptureNewImage( strFile, nChannel, capType );
+    return;
+
     if ( QFile::exists( strFile ) ) {
         QFile::remove( strFile );
     }
@@ -1044,6 +1172,34 @@ void CMonitor::ControlDetection( int nChannel, bool bStart )
     pMultimedia->MotionDetection( hChannelHandle[ nChannel ], bStart );
 }
 
+void CMonitor::StartNewPlateRecog( )
+{
+    QStringList lstParam;
+
+    for ( int nIndex = 0; nIndex < nUsedWay; nIndex++ ) {
+        if ( !bPlateStart[ nIndex ] ) {
+            continue;
+        }
+
+        if ( bNetworkCamera ) {
+           lstParam << QString::number( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR ) << QString::number( nIndex ); // Format / Channel
+        } else {
+            switch ( nCapture ) {
+            case CMultimedia::HikSdk :
+                QPlateThread::GetInstance( )->PostPlateInitEvent( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR, nIndex ); // HK
+               break;
+
+            case CMultimedia::TmSDK :
+               QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, nIndex ); //TM
+               break;
+            }
+        }
+    }
+
+    connect( QPlateThread::GetInstance( ), SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString ) ),
+             this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString ) ) );
+}
+
 void CMonitor::StartPlateRecog( )
 {
     QString strKey = "CarLicence/AutoRecognize";
@@ -1052,12 +1208,15 @@ void CMonitor::StartPlateRecog( )
         return;
     }
 
+    StartNewPlateRecog( );
+    return;
+
     //StopPlateRecog( );
 
-    pVehicle = CVehicleLicense::CreateInstance( CVehicleLicense::WinToneSdk );
-    if ( NULL == pVehicle ) {
-        return;
-    }
+    //pVehicle = CVehicleLicense::CreateInstance( CVehicleLicense::WinToneSdk );
+    //if ( NULL == pVehicle ) {
+    //    return;
+    //}
 
     QStringList lstParam;
     for ( int nIndex = 0; nIndex < nUsedWay; nIndex++ ) {
@@ -1082,40 +1241,40 @@ void CMonitor::StartPlateRecog( )
         }
 
         //lstParam << QString::number( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR ) << QString::number( nIndex ); // Format / Channel
-        pVehicle->RecognizedImageFormat( lstParam );
-        bool bRet = pVehicle->Initialize( nIndex );
+        //pVehicle->RecognizedImageFormat( lstParam );
+        bool bRet;// = pVehicle->Initialize( nIndex );
         if (  false == bRet ) {
             CCommonFunction::MsgBox( NULL, CCommonFunction::GetMsgTitle( QMessageBox::Information ),
                                      "请检查车牌识别加密狗是否插好！", QMessageBox::Information, "background-image: url( );" );
-            CVehicleLicense::DestroyInstance( pVehicle );
-            pVehicle =  NULL;
+            //CVehicleLicense::DestroyInstance( pVehicle );
+            //pVehicle =  NULL;
             break;
         }
     }
 
-    if ( NULL != pVehicle ) {
-        pVehicle->SetStop( false );
-    }
+    //if ( NULL != pVehicle ) {
+     //   pVehicle->SetStop( false );
+    //}
 }
 
 void CMonitor::StopPlateRecog( )
 {
-    if ( NULL == pVehicle ) {
-        return;
-    }
+    //if ( NULL == pVehicle ) {
+     //   return;
+    //}
 
-    pVehicle->SetStop( true );
+    //pVehicle->SetStop( true );
 
     for ( int nIndex = 0; nIndex < nUsedWay ; nIndex++ ) {
         if ( !bPlateStart[ nIndex ] ) {
             continue;
         }
 
-        pVehicle->Uninitialize( nIndex );
+        //pVehicle->Uninitialize( nIndex );
     }
 
-    pVehicle->DestroyInstance( pVehicle );
-    pVehicle = NULL;
+    //pVehicle->DestroyInstance( pVehicle );
+    //pVehicle = NULL;
 }
 
 void CMonitor::StopAvSdk( )
@@ -1209,6 +1368,41 @@ void CMonitor::IPCVideo( bool bPlayVideo )
     }
 }
 
+void CMonitor::StartNewAvSdk( )
+{
+    strCapture = pSystem->value( "CommonCfg/CaptureCard", "HK" ).toString( ).toUpper( );
+    nCapture = -1;
+    //for ( int nStart = CMultimedia::HikSdk; nStart <= CMultimedia::TmSDK; ++nStart ) {
+    if ( "HK" == strCapture ) {
+        nCapture = CMultimedia::HikSdk;
+        pNewAnalogVideo = QHkCaptureCardThread::GetInstance( );
+    } else if ( "ZW" == strCapture ) {
+        nCapture = CMultimedia::JvsSDK;
+    } else if ( "TM" == strCapture ) {
+        nCapture = CMultimedia::TmSDK;
+        pNewAnalogVideo = QTmCaptureCardThread::GetInstance( );
+    }
+
+    pNewAnalogVideo->PostInitCaptureSDKEvent( winId( ) );
+
+    for ( int nChannel = 0; nChannel < nUsedWay; nChannel++ ) {
+        pNewAnalogVideo->PostOpenChannelEvent( nChannel );
+        pNewAnalogVideo->PostPlayVideoEvent( nChannel, lblVideoWnd[ nChannel ]->winId( ) );
+
+        if ( bPlateVideo ) {
+            pNewAnalogVideo->PostStartCaptureEvent( nChannel );
+            pNewAnalogVideo->PostStartMotionDetectEvent( nChannel );
+            pNewAnalogVideo->PostStartSourceStreamEvent( nChannel, 0 == nChannel );
+        }
+
+        CMyLabel* pLbl = qobject_cast< CMyLabel* >( lblVideoWnd[ nChannel ] );
+        pLbl->SetParams( nChannel, pNewAnalogVideo );
+    }
+
+    connect( pNewAnalogVideo, SIGNAL( DetectInfo( int, bool ) ),
+             this, SLOT( HandleDetectInfo( int, bool ) ) );
+}
+
 void CMonitor::StartAvSdk( )
 {
     if ( bNetworkCamera ) {
@@ -1221,6 +1415,11 @@ void CMonitor::StartAvSdk( )
     if ( !bAuto ) {
         return;
     }
+
+    /////////////////////////////
+    StartNewAvSdk( ); // new video
+    return;
+    /////////////////////////////
 
     StopAvSdk( );
 

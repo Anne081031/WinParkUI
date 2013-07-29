@@ -6,6 +6,8 @@
 #include <QResizeEvent>
 #include "mainwindow.h"
 #include <QMenu>
+#include <QLineEdit>
+#include <QTableWidget>
 
 namespace Ui {
     class CValueCard;

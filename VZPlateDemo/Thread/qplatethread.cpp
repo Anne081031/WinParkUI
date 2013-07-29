@@ -110,9 +110,9 @@ QString QPlateThread::GetPlateMoveDirection( int nDirection )
 QString QPlateThread::GetWidthHeight( TH_PlateResult *pResult )
 {
     int nWidth = pResult->rcLocation.right - pResult->rcLocation.left;
-    int nHeigth = pResult->rcLocation.bottom - pResult->rcLocation.top;
+    int nHeight = pResult->rcLocation.bottom - pResult->rcLocation.top;
 
-    return QString::number( nWidth ) + "*" + QString::number( nHeigth );
+    return QString::number( nWidth ) + "*" + QString::number( nHeight );
 }
 
 QString QPlateThread::GetPlateColor( qint32 nColor )
@@ -146,6 +146,24 @@ QString QPlateThread::GetPlateColor( qint32 nColor )
     }
 
     return strDescript;
+}
+
+void QPlateThread::SendUIResult( int nChannel, bool bSuccess, qint32 nNum, TH_PlateResult *pResult, bool bVideo )
+{
+    QString strPlate;
+    int nWidth = 0;
+    int nHeight = 0;
+
+    for ( int nIndex = 0; nIndex < nNum; nIndex++ ) {
+        strPlate = QString( pResult[ nIndex ].license );
+        nWidth = pResult[ nIndex ].rcLocation.right - pResult[ nIndex ].rcLocation.left;
+        nHeight = pResult[ nIndex ].rcLocation.bottom - pResult[ nIndex ].rcLocation.top;
+        emit UIPlateResult( strPlate, nChannel, bSuccess, bVideo, nWidth, nHeight,
+                            pResult[ nIndex ].nConfidence,
+                            GetPlateMoveDirection( pResult[ nIndex ].nDirection ) );
+    }
+
+    qDebug( ) << Q_FUNC_INFO << strPlate;
 }
 
 void QPlateThread::GetResultInfo( QStringList &lstResult, QString &strFile, bool bSuccess, qint32 nNum, TH_PlateResult *pResult )
@@ -189,6 +207,7 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
 
     GetResultInfo( lstResult, strFile, bRet, nNum, result );
     emit PlateResult( lstResult, nChannel, bRet, false );
+    SendUIResult( nChannel, bRet, nNum, result, false );
 }
 
 void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
@@ -218,6 +237,7 @@ void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
 
     GetResultInfo( lstResult, strFile, bRet, nNum, result );
     emit PlateResult( lstResult, nChannel, bRet, true );
+    SendUIResult( nChannel, bRet, nNum, result, true );
 }
 
 void QPlateThread::InitSDK( QPlateEvent* pEvent )

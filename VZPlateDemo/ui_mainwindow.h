@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Wed Jul 24 17:12:19 2013
+** Created: Fri Jul 26 14:04:15 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -24,7 +24,7 @@
 
 QT_BEGIN_NAMESPACE
 
-class Ui_MainWindow
+class Ui_VZMainWindow
 {
 public:
     QWidget *centralWidget;
@@ -46,17 +46,17 @@ public:
     QLabel *lblVideo2;
     QLabel *lblVideo3;
 
-    void setupUi(QMainWindow *MainWindow)
+    void setupUi(QMainWindow *VZMainWindow)
     {
-        if (MainWindow->objectName().isEmpty())
-            MainWindow->setObjectName(QString::fromUtf8("MainWindow"));
-        MainWindow->resize(1221, 762);
-        MainWindow->setMinimumSize(QSize(1221, 762));
-        MainWindow->setMaximumSize(QSize(1221, 762));
+        if (VZMainWindow->objectName().isEmpty())
+            VZMainWindow->setObjectName(QString::fromUtf8("VZMainWindow"));
+        VZMainWindow->resize(1221, 762);
+        VZMainWindow->setMinimumSize(QSize(1221, 762));
+        VZMainWindow->setMaximumSize(QSize(1221, 762));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/Imgs/logo.jpg"), QSize(), QIcon::Normal, QIcon::Off);
-        MainWindow->setWindowIcon(icon);
-        centralWidget = new QWidget(MainWindow);
+        VZMainWindow->setWindowIcon(icon);
+        centralWidget = new QWidget(VZMainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         lblPicture = new QLabel(centralWidget);
         lblPicture->setObjectName(QString::fromUtf8("lblPicture"));
@@ -200,47 +200,47 @@ public:
         lblVideo3->setWordWrap(false);
         lblVideo3->setOpenExternalLinks(false);
         lblVideo3->setTextInteractionFlags(Qt::NoTextInteraction);
-        MainWindow->setCentralWidget(centralWidget);
+        VZMainWindow->setCentralWidget(centralWidget);
 
-        retranslateUi(MainWindow);
+        retranslateUi(VZMainWindow);
 
-        QMetaObject::connectSlotsByName(MainWindow);
+        QMetaObject::connectSlotsByName(VZMainWindow);
     } // setupUi
 
-    void retranslateUi(QMainWindow *MainWindow)
+    void retranslateUi(QMainWindow *VZMainWindow)
     {
-        MainWindow->setWindowTitle(QApplication::translate("MainWindow", "\345\233\233\345\267\235\345\211\215\351\200\224\347\247\221\346\212\200\350\275\246\347\211\214\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
+        VZMainWindow->setWindowTitle(QApplication::translate("VZMainWindow", "\345\233\233\345\267\235\345\211\215\351\200\224\347\247\221\346\212\200\350\275\246\347\211\214\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
         lblPicture->setText(QString());
         lblPlatePic->setText(QString());
         QTableWidgetItem *___qtablewidgetitem = tabResult->horizontalHeaderItem(0);
-        ___qtablewidgetitem->setText(QApplication::translate("MainWindow", "\350\275\246\347\211\214", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem->setText(QApplication::translate("VZMainWindow", "\350\275\246\347\211\214", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem1 = tabResult->horizontalHeaderItem(1);
-        ___qtablewidgetitem1->setText(QApplication::translate("MainWindow", "\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem1->setText(QApplication::translate("VZMainWindow", "\346\227\266\351\227\264", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem2 = tabResult->horizontalHeaderItem(2);
-        ___qtablewidgetitem2->setText(QApplication::translate("MainWindow", "\345\217\257\344\277\241\345\272\246", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem2->setText(QApplication::translate("VZMainWindow", "\345\217\257\344\277\241\345\272\246", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem3 = tabResult->horizontalHeaderItem(3);
-        ___qtablewidgetitem3->setText(QApplication::translate("MainWindow", "\351\242\234\350\211\262", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem3->setText(QApplication::translate("VZMainWindow", "\351\242\234\350\211\262", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem4 = tabResult->horizontalHeaderItem(4);
-        ___qtablewidgetitem4->setText(QApplication::translate("MainWindow", "\345\256\275\351\253\230", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem4->setText(QApplication::translate("VZMainWindow", "\345\256\275\351\253\230", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem5 = tabResult->horizontalHeaderItem(5);
-        ___qtablewidgetitem5->setText(QApplication::translate("MainWindow", "\346\226\271\345\220\221", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem5->setText(QApplication::translate("VZMainWindow", "\346\226\271\345\220\221", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem6 = tabResult->horizontalHeaderItem(6);
-        ___qtablewidgetitem6->setText(QApplication::translate("MainWindow", "\350\275\246\347\211\214\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem6->setText(QApplication::translate("VZMainWindow", "\350\275\246\347\211\214\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem7 = tabResult->horizontalHeaderItem(7);
-        ___qtablewidgetitem7->setText(QApplication::translate("MainWindow", "\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem7->setText(QApplication::translate("VZMainWindow", "\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem8 = tabResult->horizontalHeaderItem(8);
-        ___qtablewidgetitem8->setText(QApplication::translate("MainWindow", "\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem8->setText(QApplication::translate("VZMainWindow", "\351\200\232\351\201\223", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem9 = tabResult->horizontalHeaderItem(9);
-        ___qtablewidgetitem9->setText(QApplication::translate("MainWindow", "\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
+        ___qtablewidgetitem9->setText(QApplication::translate("VZMainWindow", "\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
         lblVideo0->setText(QString());
-        btnFile->setText(QApplication::translate("MainWindow", "\350\257\206\345\210\253\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
-        btnClear->setText(QApplication::translate("MainWindow", "\346\270\205\351\231\244\346\211\200\346\234\211", 0, QApplication::UnicodeUTF8));
-        btnAnalogCamera->setText(QApplication::translate("MainWindow", "\346\250\241\346\213\237\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
-        btnAnalogCaptureFile->setText(QApplication::translate("MainWindow", "\346\250\241\346\213\237\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
-        btnDigitalCamera->setText(QApplication::translate("MainWindow", "\346\225\260\345\255\227\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
-        btnIPCCaptureFile->setText(QApplication::translate("MainWindow", "\346\225\260\345\255\227\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
-        btnVideoFile->setText(QApplication::translate("MainWindow", "\350\247\206\351\242\221\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
-        btnStopVideoRecognize->setText(QApplication::translate("MainWindow", "\345\201\234\346\255\242\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
+        btnFile->setText(QApplication::translate("VZMainWindow", "\350\257\206\345\210\253\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
+        btnClear->setText(QApplication::translate("VZMainWindow", "\346\270\205\351\231\244\346\211\200\346\234\211", 0, QApplication::UnicodeUTF8));
+        btnAnalogCamera->setText(QApplication::translate("VZMainWindow", "\346\250\241\346\213\237\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
+        btnAnalogCaptureFile->setText(QApplication::translate("VZMainWindow", "\346\250\241\346\213\237\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
+        btnDigitalCamera->setText(QApplication::translate("VZMainWindow", "\346\225\260\345\255\227\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
+        btnIPCCaptureFile->setText(QApplication::translate("VZMainWindow", "\346\225\260\345\255\227\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
+        btnVideoFile->setText(QApplication::translate("VZMainWindow", "\350\247\206\351\242\221\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
+        btnStopVideoRecognize->setText(QApplication::translate("VZMainWindow", "\345\201\234\346\255\242\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
         lblVideo1->setText(QString());
         lblVideo2->setText(QString());
         lblVideo3->setText(QString());
@@ -249,7 +249,7 @@ public:
 };
 
 namespace Ui {
-    class MainWindow: public Ui_MainWindow {};
+    class VZMainWindow: public Ui_VZMainWindow {};
 } // namespace Ui
 
 QT_END_NAMESPACE

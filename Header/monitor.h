@@ -11,10 +11,16 @@
 #include <QGraphicsView>
 #include <QListView>
 #include "Common/CommonType.h"
-#include "VehicleLicense/vehiclelicense.h"
 #include "Header/mylabel.h"
 #include "Dialog/dlgalert.h"
 #include "ipcvideoframe.h"
+#include <QHash>
+
+#include "Thread/qhkcapturecardthread.h"
+#include "Thread/qtmcapturecardthread.h"
+#include "Thread/qplatethread.h"
+
+//#include "VehicleLicense/vehiclelicense.h"
 
 #define ENCODECHANNEL ( int ) ( 4 )
 #define VIDEO_USEDWAY ( int ) ( 4 )
@@ -44,11 +50,13 @@ public:
     void GetParkName( QString& strName, char cCan, int nIndex );
     void LoadCapturedImg( QString& strPath, int nChannel );
     void CaptureImage( QString& strFile, int nChannel, CommonDataType::CaptureImageType capType );
+    void CaptureNewImage( QString& strFile, int nChannel, CommonDataType::CaptureImageType capType );
     void GetInOutPixmap( QPixmap& bmpEnter, QPixmap& bmpLeave );
     void UpdateStatistics( int nNumber, int nIndex, bool bInit = false );
 
     void DisplayPlate( int nChannel );
     void SetBallotSense( bool bSense, int nChannel );
+    void SetNewBallotSense( bool bSense, int nChannel );
     void SetMenu( QList< QMenu* >& lstMenu );
 
     void ControlDetection( int nChannel, bool bStart );
@@ -63,8 +71,14 @@ public:
     void StartAvSdk( );
     void StopAvSdk( );
 
+    void StartNewAvSdk( );
+    void StopNewAvSdk( );
+
     void StartPlateRecog( );
     void StopPlateRecog( );
+
+    void StartNewPlateRecog( );
+    void StopNewPlateRecog( );
 
     QLabel* GetDateTimeCtrl( );
     void FillDataGrid( QStringList& lstData );
@@ -105,9 +119,9 @@ private:
     void LoadUIImage( );
     void SwitchImage( QPushButton* pBtn, bool bDown, bool bPermission = true );
     void LoadDigital( int nGroup/*1-4*/, int nDigital/*0000-9999*/, char cColor/*r,g,b*/ );
-    bool PlateFilter( int nChannel, TH_PlateIDResult*& pResult );
+    bool PlateFilter( int nChannel, TH_PlateResult*& pResult );
 
-    CVehicleLicense* GetPlateRecognization( );
+    //CVehicleLicense* GetPlateRecognization( );
     void InitStatistics( );
 
     static void MotionDetection( ULONG nChannel, BOOL bMotionDetected, void *context );
@@ -123,12 +137,13 @@ private:
 
 private:
     static quint8 imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ];
-    static TH_PlateIDResult recogResult[ VIDEO_USEDWAY ][ RECOG_RES ];
-    static TH_PlateIDResult structPlates[ VIDEO_USEDWAY ];
+    static TH_PlateResult recogResult[ VIDEO_USEDWAY ][ RECOG_RES ];
+    static TH_PlateResult structPlates[ VIDEO_USEDWAY ];
     QLabel* lblDirection[ VIDEO_USEDWAY ];
     QLabel* lblMoving[ VIDEO_USEDWAY ];
     QLabel* lblVideoWnd[ VIDEO_USEDWAY ];
     QLabel* lblLicense[ VIDEO_USEDWAY ][ 8 ];
+    QHash< QString, int > plateResult[ 4 ][ 8 ];
 
     bool bPlateStart[ VIDEO_USEDWAY ];
     bool bBallotSense[ ENCODECHANNEL ];
@@ -142,6 +157,7 @@ private:
     //bool bSuccession[ VIDEO_USEDWAY ];
 
     CIPCVideoFrame* ipcVideoFrame;
+    QAnalogCameraThread* pNewAnalogVideo;
     CDlgAlert* pDlgAlert;
     bool bDisplayAlert;
     int nRefreshParkspaceTime;
@@ -154,7 +170,7 @@ private:
     QStringList lstRows;
     HANDLE hChannelHandle[ ENCODECHANNEL ];
     CMultimedia* pMultimedia;
-    CVehicleLicense* pVehicle;
+    //CVehicleLicense* pVehicle;
     QString strImagePath;
     QString strRegPicPath;
     QString strButtonStyle;
@@ -173,6 +189,7 @@ private:
     void StartSpaceTimer( );
 
     void VerifyClecked( int nChannel );
+    void PlateSort( QHash< QString, int > hash[ ], QString& strPlate );
 
 private slots:
     void on_tabRecord_cellDoubleClicked(int row, int column);
@@ -206,6 +223,10 @@ private slots:
     void ClearPlate( int nPlateChannel );
     void DisplayDbError( QString strMsg );
     void HandleIPCMsg( QString strMsg );
+    void HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
+                              bool bVideo, int nWidth, int nHeight, int nConfidence,
+                              QString strDirection );
+    void HandleDetectInfo( int nChannel, bool bMotion );
 
     void on_pushButton_clicked();
 

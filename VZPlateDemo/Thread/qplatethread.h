@@ -39,6 +39,7 @@ private:
     QString GetWidthHeight( TH_PlateResult* pResult );
     QString GetPlateColor( qint32 nColor );
     void GetResultInfo( QStringList& lstResult, QString& strFile, bool bSuccess, qint32 nNum, TH_PlateResult* pResult );
+    void SendUIResult( int nChannel, bool bSuccess, qint32 nNum, TH_PlateResult* pResult, bool bVideo );
 
 private:
     static QPlateThread* pThreadInstance;
@@ -48,6 +49,9 @@ private:
     
 signals:
     void PlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );
+    void UIPlateResult( QString strPlate, int nChannel, bool bSuccess,
+                        bool bVideo, int nWidth, int nHeight, int nConfidence,
+                        QString strDirection );
     
 public slots:
     

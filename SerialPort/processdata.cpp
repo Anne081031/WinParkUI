@@ -3043,8 +3043,11 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
 
  void CProcessData::SendTimeCardInfo( QByteArray &byData, QByteArray &vData, int nMin, int nHour, int nAmount, bool bEnter )
  {
-     Sleep( 1500 );
      pSettings->sync( );
+
+     if ( pSettings->value( "CommonCfg/NoCardWork", false ).toBool( ) ) {
+        Sleep( 1500 );
+     }
 
      if ( pSettings->value( "UserRequest/IfDisplayFeeInfo", false ).toBool( ) ) {
          CardExitInfo( byData, vData, false, nMin, nHour, nAmount ); // 2011 12 18

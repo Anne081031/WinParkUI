@@ -13,6 +13,10 @@ TEMPLATE = app
 CONFIG += qaxcontainer
 
 INCLUDEPATH += "./Mysql/include"
+INCLUDEPATH += ./VZPlateDemo
+INCLUDEPATH += ./VehicleLicense/WinTone
+INCLUDEPATH += ./Multimedia/HikSDK
+INCLUDEPATH += ./Multimedia/TmSDK
 
 LIBS += "./lib/libmysqlclient.a"
 LIBS += "./lib/libmysql.a"
@@ -28,6 +32,8 @@ LIBS += "./lib/libole32.a"
 LIBS += "./lib/libgdi32.a"
 LIBS += "./lib/libHCNetSDK.a"
 LIBS += "./lib/libtmControlClient.a"
+LIBS += ./lib/libLPKernelEx.a
+LIBS += ./lib/libDs40xxSDK.a
 
 DEFINES += PARK_UI RAW_API COMMON_DB _WIN32_WINNT=0x0501
 
@@ -175,7 +181,20 @@ SOURCES += mainwindow.cpp \
     Implement/ipcvideoframe.cpp \
     JWSIPC/qjwsipcevent.cpp \
     JWSIPC/qjwsipcthread.cpp \
-    qipcthread.cpp
+    qipcthread.cpp \
+    VZPlateDemo/qcommon.cpp \
+    VZPlateDemo/Thread/qtmcapturecardthread.cpp \
+    VZPlateDemo/Thread/qhkcapturecardthread.cpp \
+    VZPlateDemo/Thread/qplatethread.cpp \
+    VZPlateDemo/Thread/qanalogcamerathread.cpp \
+    VZPlateDemo/Thread/qdirectorythread.cpp \
+    VZPlateDemo/Thread/qplateevent.cpp \
+    VZPlateDemo/Thread/qcameraevent.cpp \
+    VZPlateDemo/Thread/qjvsipcthread.cpp \
+    VZPlateDemo/Thread/qdhkipcthread.cpp \
+    VZPlateDemo/Thread/qfilecamerathread.cpp \
+    VZPlateDemo/Thread/qdirectoryevent.cpp \
+    VZPlateDemo/Thread/qdigitalcamerathread.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -324,7 +343,20 @@ HEADERS  += Header/valuecard.h \
     Header/ipcvideoframe.h \
     JWSIPC/qjwsipcthread.h \
     JWSIPC/qjwsipcevent.h \
-    qipcthread.h
+    qipcthread.h \
+    VZPlateDemo/qcommon.h \
+    VZPlateDemo/Thread/qtmcapturecardthread.h \
+    VZPlateDemo/Thread/qanalogcamerathread.h \
+    VZPlateDemo/Thread/qhkcapturecardthread.h \
+    VZPlateDemo/Thread/qplatethread.h \
+    VZPlateDemo/Thread/qcameraevent.h \
+    VZPlateDemo/Thread/qplateevent.h \
+    VZPlateDemo/Thread/qdirectorythread.h \
+    VZPlateDemo/Thread/qfilecamerathread.h \
+    VZPlateDemo/Thread/qjvsipcthread.h \
+    VZPlateDemo/Thread/qdhkipcthread.h \
+    VZPlateDemo/Thread/qdirectoryevent.h \
+    VZPlateDemo/Thread/qdigitalcamerathread.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

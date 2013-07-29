@@ -18,7 +18,7 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
+        VZMainWindow.cpp \
     Thread/qplatethread.cpp \
     Thread/qplateevent.cpp \
     Thread/qanalogcamerathread.cpp \
@@ -30,10 +30,10 @@ SOURCES += main.cpp\
     Thread/qdirectoryevent.cpp \
     Thread/qhkcapturecardthread.cpp \
     Thread/qtmcapturecardthread.cpp \
-    Thread/qhkipcthread.cpp \
+    Thread/qdhkipcthread.cpp \
     Thread/qjvsipcthread.cpp
 
-HEADERS  += mainwindow.h \
+HEADERS  += VZMainWindow.h \
     Thread/qplatethread.h \
     Thread/qplateevent.h \
     Thread/qanalogcamerathread.h \
@@ -45,10 +45,10 @@ HEADERS  += mainwindow.h \
     Thread/qdirectoryevent.h \
     Thread/qhkcapturecardthread.h \
     Thread/qtmcapturecardthread.h \
-    Thread/qhkipcthread.h \
+    Thread/qdhkipcthread.h \
     Thread/qjvsipcthread.h
 
-FORMS    += mainwindow.ui
+FORMS    += vzmainwindow.ui
 
 RESOURCES += \
     Resource.qrc

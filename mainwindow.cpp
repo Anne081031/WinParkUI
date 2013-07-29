@@ -21,7 +21,6 @@
 #include "Header/printmonthlyreport.h"
 #include "Header/printyearlyreport.h"
 #include "Header/handheldicprocess.h"
-#include "Header/monitor.h"
 #include "Header/ipcvideoframe.h"
 #include "Header/picturecontrast.h"
 #include "Dialog/pwddialog.h"
@@ -61,6 +60,8 @@
 #include "CenterMgmt/mgmtthread.h"
 #include "Dialog/dlgstaying.h"
 #include "Timer/timerthread.h"
+
+#include "Header/monitor.h"
 
 CHeartbeatThread* g_pHeartbeatThread = NULL;
 CLocalCltCommunication* g_pLocalCltComm = NULL;

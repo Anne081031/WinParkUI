@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Resource object code
 **
-** Created: Tue Jul 16 12:24:27 2013
+** Created: Fri Jul 26 14:05:40 2013
 **      by: The Resource Compiler for Qt version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost!
@@ -10,7 +10,7 @@
 #include <QtCore/qglobal.h>
 
 static const unsigned char qt_resource_data[] = {
-  // D:/WinParkUI/VZPlateDemo/logo.jpg
+  // D:/WinParkUI1/VZPlateDemo/logo.jpg
   0x0,0x2,0x21,0xc6,
   0xff,
   0xd8,0xff,0xe0,0x0,0x10,0x4a,0x46,0x49,0x46,0x0,0x1,0x2,0x1,0x1,0x5e,0x1,
