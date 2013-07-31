@@ -75,7 +75,7 @@ void CMonitor::HandleDetectInfo( int nChannel, bool bMotion )
 void CMonitor::HandleUIPlateResult( QString strPlate, int nChannel,
                                     bool bSuccess, bool bVideo, int nWidth,
                                     int nHeight, int nConfidence,
-                                    QString strDirection )
+                                    QString strDirection, QByteArray byData )
 {
     if ( !bSuccess || strPlate.isEmpty( ) ) {
         return;
@@ -90,7 +90,7 @@ void CMonitor::HandleUIPlateResult( QString strPlate, int nChannel,
 
     if ( !bVideo || bSuccession ) { // File
         CCommonFunction::DisplayPlateChar( lblLicense[ nChannel ], nChannel, strPlate );
-        emit OnRecognizePlate( strPlate, nChannel, nConfidence ); //自动开闸
+        emit OnRecognizePlate( strPlate, nChannel, nConfidence, bNocardwork, byData ); //自动开闸
     } else { // Video
         if ( bBallotSense[ nChannel ] ) { // 车压地感了
             return;
@@ -114,13 +114,13 @@ void CMonitor::PlateSort( QHash< QString, int > hash[ ], QString &strPlate )
     }
 }
 
-void CMonitor::SetNewBallotSense( bool bSense, int nChannel )
+void CMonitor::SetNewBallotSense( bool bSense, int nChannel, QByteArray& byData )
 {
     bBallotSense[ nChannel ] = bSense;
     QLabel* pLabel = NULL;
     QString strPlate;
 
-    if ( bSense ) {
+    if ( bSense && bPlateVideo ) {
         for ( int nIndex = 0; nIndex < 8; nIndex ++ ) {
             pLabel = lblLicense[ nChannel ][ nIndex ];
             QList<int > lstValue = plateResult[ nChannel ][ nIndex ].values( );
@@ -138,9 +138,9 @@ void CMonitor::SetNewBallotSense( bool bSense, int nChannel )
             strPlate.append( strKey );
         }
 
-        emit OnRecognizePlate( strPlate, nChannel, 0 ); //自动开闸
+        emit OnRecognizePlate( strPlate, nChannel, 0, bNocardwork, byData ); //自动开闸
     } else {
-        for ( int nIndex = 0; nIndex < 8; nIndex ++ ) {
+        for ( int nIndex = 0; nIndex < 8; nIndex++ ) {
             plateResult[ nChannel ][ nIndex ].clear( );
         }
 
@@ -148,15 +148,17 @@ void CMonitor::SetNewBallotSense( bool bSense, int nChannel )
     }
 }
 
-void CMonitor::PictureRegconize( QString &strFile, int nChannel )
+void CMonitor::PictureRegconize( QString &strFile, int nChannel, QByteArray& byData )
 {
     if ( bPlateVideo ) {
         return;
     }
 
-    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, nChannel );
+    QPlateThread::GetInstance( )->PostPlateFileRecognize( byData, strFile, nChannel );
     SavePicture( strFile );
-    Sleep( 1000 );
+
+    //bool bNoCard = pSystem->value( "CommonCfg/NoCardWork", false ).toBool( );
+    //Sleep( bNoCard ? 0 : 500 );
     return;
 
     int nPlateNumber = RECOG_RES;
@@ -286,6 +288,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     bSavePicture = pSystem->value( "CommonCfg/SavePicture", false ).toBool( );
     bNetworkCamera = pSystem->value( "CommonCfg/NetworkCamera", false ).toBool( );
     pNewAnalogVideo = NULL;
+    bNocardwork = pSystem->value( "CommonCfg/NoCardWork", false ).toBool( );
 
     InitChannelHandle( );
 
@@ -296,7 +299,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     //pVehicle = NULL;
     ControlDataGrid( *ui->tabRecord );
     bool bRet = connect( pParent, SIGNAL( OnUserChanged( QString&, QString& ) ), this, SLOT( ChangeUser( QString&, QString& ) ) );
-    bRet = connect( this, SIGNAL( OnRecognizePlate( QString, int, int )), pParent, SLOT( RecognizePlate( QString, int, int ) ) );
+    bRet = connect( this, SIGNAL( OnRecognizePlate( QString, int, int, bool, QByteArray )), pParent, SLOT( RecognizePlate( QString, int, int, bool, QByteArray ) ) );
     bRet = connect( this, SIGNAL( OnDirectionIndicator( int, bool ) ), this, SLOT( DirectionIndicator( int, bool ) ) );
 
     CCommonFunction::GetPath( strImagePath, CommonDataType::PathUIImage );
@@ -976,9 +979,9 @@ void CMonitor::WriteFrameInfo( QString &strInfo )
 }
 
 
-void CMonitor::SetBallotSense( bool bSense, int nChannel )
+void CMonitor::SetBallotSense( bool bSense, int nChannel, QByteArray& byData )
 {
-    SetNewBallotSense( bSense, nChannel );
+    SetNewBallotSense( bSense, nChannel, byData );
     return;
 
     bBallotSense[ nChannel ] = bSense;
@@ -1082,7 +1085,8 @@ void CMonitor::DisplayPlate( int nChannel )
 
     int nConfidence = pResult->nConfidence;
     //ui->lblConfidence->setText( QString::number( nConfidence ) );
-    SetBallotSense( false, nChannel );
+    QByteArray byData;
+    SetBallotSense( false, nChannel, byData );
 
     QString strWindth = QString( "%1/%2 " ).arg( QString::number( nWidth ),
                                                 QString::number( nHeight ) );
@@ -1091,7 +1095,7 @@ void CMonitor::DisplayPlate( int nChannel )
     CCommonFunction::DisplayPlateChar( lblLicense[ nChannel ], nChannel, strPlate );
     //Sleep( 500 );
 
-    emit OnRecognizePlate( strPlate, nChannel, nConfidence );
+    emit OnRecognizePlate( strPlate, nChannel, nConfidence, false, QByteArray( ) );
     } catch ( ... ) {
         qDebug( ) << " Display Exception" << endl;
     }
@@ -1196,8 +1200,8 @@ void CMonitor::StartNewPlateRecog( )
         }
     }
 
-    connect( QPlateThread::GetInstance( ), SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString ) ),
-             this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString ) ) );
+    connect( QPlateThread::GetInstance( ), SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ),
+             this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ) );
 }
 
 void CMonitor::StartPlateRecog( )

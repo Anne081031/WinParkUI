@@ -42,7 +42,7 @@ public:
     void DisplayRemoteUI( );
 
     void SetFileCount( quint32 nCount );
-    void PictureRegconize( QString& strFile, int nChannel );
+    void PictureRegconize( QString& strFile, int nChannel, QByteArray& byData );
 
     void ClearStatistics( );
     void ControlSelf( );
@@ -55,8 +55,8 @@ public:
     void UpdateStatistics( int nNumber, int nIndex, bool bInit = false );
 
     void DisplayPlate( int nChannel );
-    void SetBallotSense( bool bSense, int nChannel );
-    void SetNewBallotSense( bool bSense, int nChannel );
+    void SetBallotSense( bool bSense, int nChannel, QByteArray& byData );
+    void SetNewBallotSense( bool bSense, int nChannel, QByteArray& byData );
     void SetMenu( QList< QMenu* >& lstMenu );
 
     void ControlDetection( int nChannel, bool bStart );
@@ -96,6 +96,7 @@ public:
     //static bool bSuccession[ VIDEO_USEDWAY ];
     static bool GetPlateSuccession( bool bFilter, int nIndex );
     static QString strPlates[ VIDEO_USEDWAY ];
+    bool bNocardwork;
 
 protected:
     void closeEvent ( QCloseEvent * event );
@@ -225,7 +226,7 @@ private slots:
     void HandleIPCMsg( QString strMsg );
     void HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
                               bool bVideo, int nWidth, int nHeight, int nConfidence,
-                              QString strDirection );
+                              QString strDirection, QByteArray byData );
     void HandleDetectInfo( int nChannel, bool bMotion );
 
     void on_pushButton_clicked();
@@ -234,7 +235,7 @@ private slots:
 
 public:
 signals:
-    void OnRecognizePlate( QString strPlate, int nChannel, int nConfidence );
+    void OnRecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray byData );
     void OnDirectionIndicator( int nChannel, bool bMoving );
 };
 

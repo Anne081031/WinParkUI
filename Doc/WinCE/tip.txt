@@ -1,0 +1,10 @@
+http://www.denx.de/ 很多嵌入式知识
+U-boot the Universal Boot Loader 可以搭载多个处理器、多个操作系统
+
+POST->BIOS->MBR/U-Boot(Boot loader)-->NTLDR/GNU CRUB-->System Kernel->User
+
+https://code.google.com/p/udptunnel/
+udptunnel tcptunnel httptunnel iptunnel/ openssl tls/ libevent libupnp openvpn/ wireshark sniffer libpcap winpcap/ VNC(RealVNC、VNC tight、UltraVNC) RDP TeamViewer/ Xen VMWare Hyper-V VirtualBox /OpenSSH
+
+soapcpp
+jsoncpp解析json Boost property_tree解析json

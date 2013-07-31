@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mainwindow.h'
 **
-** Created: Mon Jul 29 16:20:24 2013
+** Created: Wed Jul 31 15:58:06 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -79,13 +79,13 @@ static const uint qt_meta_data_MainWindow[] = {
     1360,   11,   11,   11, 0x08,
     1378,   11,   11,   11, 0x08,
     1392,   11,   11,   11, 0x08,
-    1442, 1412,   11,   11, 0x08,
-    1474,   11,   11,   11, 0x08,
-    1511, 1485,   11,   11, 0x08,
-    1541,   11,   11,   11, 0x08,
-    1567,   11,   11,   11, 0x08,
-    1590,   11,   11,   11, 0x08,
-    1619,   11,   11,   11, 0x08,
+    1457, 1412,   11,   11, 0x08,
+    1505,   11,   11,   11, 0x08,
+    1542, 1516,   11,   11, 0x08,
+    1572,   11,   11,   11, 0x08,
+    1598,   11,   11,   11, 0x08,
+    1621,   11,   11,   11, 0x08,
+    1650,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -135,8 +135,9 @@ static const char qt_meta_stringdata_MainWindow[] = {
     "nType,lstData\0"
     "ProcessMonitorMsg(CommonDataType::DatagramType,QStringList&)\0"
     "UpdateLableText()\0SendStateHB()\0"
-    "ReconnectDatabase()\0strPlate,nChannel,nConfidence\0"
-    "RecognizePlate(QString,int,int)\0"
+    "ReconnectDatabase()\0"
+    "strPlate,nChannel,nConfidence,bNocard,byData\0"
+    "RecognizePlate(QString,int,int,bool,QByteArray)\0"
     "SendTime()\0strMsg,bExpiration,bRetry\0"
     "Expiration(QString,bool,bool)\0"
     "on_actLicense_triggered()\0"
@@ -220,7 +221,7 @@ int MainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 43: UpdateLableText(); break;
         case 44: SendStateHB(); break;
         case 45: ReconnectDatabase(); break;
-        case 46: RecognizePlate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 46: RecognizePlate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< QByteArray(*)>(_a[5]))); break;
         case 47: SendTime(); break;
         case 48: Expiration((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3]))); break;
         case 49: on_actLicense_triggered(); break;

@@ -67,3 +67,13 @@ int QPlateEvent::GetVideoHeight( )
 {
     return nVideoHeight;
 }
+
+void QPlateEvent::SetByData( QByteArray& byData )
+{
+    bySerialData = byData;
+}
+
+QByteArray& QPlateEvent::GetByData( )
+{
+    return bySerialData;
+}

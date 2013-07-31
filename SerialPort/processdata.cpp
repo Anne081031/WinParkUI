@@ -38,6 +38,7 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
 
     pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     bStartupPlateDilivery = pSettings->value( "PlateDilivery/StartupDilivery", false ).toBool( );
+    bNocardwork = pSettings->value( "CommonCfg/NoCardWork", false ).toBool( );
 
     if ( !GetDirectDb( ) ) {
         g_dbThread.start( );
@@ -584,17 +585,20 @@ void CProcessData::CaptureSenseImage( QByteArray &byData, CommonDataType::Captur
     LoadCapturedImg( strFileName, nChannel );
 
     if ( bHavePlateRecog ) {
+        pMainWindow->PictureRegconize( strFileName, nChannel, byData );
+#if false
         QString strTmp;
         CCommonFunction::GetPath( strTmp, CommonDataType::PathSnapshot );
         strTmp += "sense.jpg";
 
-        if ( QFile::copy( strFileName, strTmp ) ) {
-            pMainWindow->PictureRegconize( strTmp, nChannel );
-        }
-
         if ( QFile::exists( strTmp ) ) {
             QFile::remove( strTmp );
         }
+
+        if ( QFile::copy( strFileName, strTmp ) ) {
+            pMainWindow->PictureRegconize( strTmp, nChannel );
+        }
+#endif
     }
 
     //imgQueue[ nChannel ].enqueue( strFileName );
@@ -769,6 +773,8 @@ void CProcessData::HandleCapture( quint8 nChannel )
     pMainWindow->CaptureImage( strFileName, nChannel, CommonDataType::CaptureJPG  );
 
     if ( true ) {
+        //pMainWindow->PictureRegconize( strFileName, nChannel,  );
+#if false
         QString strTmp;
         CCommonFunction::GetPath( strTmp, CommonDataType::PathSnapshot );
         strTmp += "sense.jpg";
@@ -780,6 +786,7 @@ void CProcessData::HandleCapture( quint8 nChannel )
         if ( QFile::exists( strTmp ) ) {
             QFile::remove( strTmp );
         }
+#endif
     }
 }
 
@@ -887,8 +894,18 @@ int CProcessData::GetChannelIndex( int nChannel )
     return nIndex;
 }
 
-void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfidence )
+void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray bySerialData )
 {
+    if ( bNocard ) {
+        strCurrentPlate[ nChannel ] = strPlate;
+
+        if ( WriteInOutRecord( bySerialData ) ) {
+            //SenseOpenGate( bySerialData );
+        }
+
+        return;
+    }
+
     if ( bStartupPlateDilivery ) {
         SendPlate( strPlate, nChannel, nConfidence );
         return;
@@ -1763,6 +1780,11 @@ void CProcessData::SenseOpenGate( QByteArray &byRawData )
         return;
     }
 
+    if ( NoCardWork( ) ) {
+        QByteArray vData;
+        portCmd.ParseDownCmd( byRawData, CPortCmd::DownOpenGate, vData );
+    }
+
     ControlGate( true, byRawData[ 5 ] );
 }
 
@@ -1786,15 +1808,17 @@ void CProcessData::ControlGate( bool bOpen, char cCan ) // Manual
     ///////////////////////////////////////////////////////////////////////////
     int nChannel = GetChannelByCan( cCan );
     if ( bPlateClear[ nChannel ][ 1 ] ) {
-        pMainWindow->SetBallotSense( false, nChannel );
+        pMainWindow->SetBallotSense( false, nChannel, byData );
     }
     //////////////////////////////////////////////////////////////////////////
 }
 
 void CProcessData::ControlGate( bool bEnter, QByteArray &byData, QByteArray &vData, ParkCardType& cardKind ) // Auto
 {
-    if ( IfSenseOpenGate( ) ) {
-        return;
+    if ( !NoCardWork( ) ) {
+        if ( IfSenseOpenGate( ) ) {
+            return;
+        }
     }
 
     vData.clear( );
@@ -1805,7 +1829,7 @@ void CProcessData::ControlGate( bool bEnter, QByteArray &byData, QByteArray &vDa
     ///////////////////////////////////////////////////////////////////////////
     int nChannel = GetChannelByCan( byData[ 5 ] );
     if ( bPlateClear[ nChannel ][ 1 ] ) {
-        pMainWindow->SetBallotSense( false, nChannel );
+        pMainWindow->SetBallotSense( false, nChannel, byData );
     }
     //////////////////////////////////////////////////////////////////////////
 
@@ -2327,9 +2351,20 @@ bool CProcessData::MonthCardWorkMode( QString& strCardNo )
     return bRet;
 }
 
+int CProcessData::GetMinFee( char cCan )
+{
+    QString strName;
+    pMainWindow->GetParkName( strName, cCan, 0 );
+
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgTariff );
+    int nMinFee = pSet->value( QString( "%1/2/rule1FootInner" ).arg( strName ), 0 ).toInt( );
+
+    return nMinFee;
+}
+
 bool CProcessData::GateNoCardWork( QByteArray& byData, QString& strPlate,
                                    char cCan, QString& strCardNo,
-                                   QString& strType, QString& strChannel )
+                                   QString& strType, QString& strChannel, int& nFee )
 {
     bool bRet = MonthNoCardWorkMode( );
 
@@ -2344,23 +2379,48 @@ bool CProcessData::GateNoCardWork( QByteArray& byData, QString& strPlate,
         return false;
     }
 
-    // month,expire,day
+    // month,expire,day,enter
     // time,enter,unknown,tmpid,stoprdid,intime,inchannel,outchannel
     lstRow = lstRow.at( 0 ).split( "," );
     const QString& strCardType= lstRow.at( 0 );
 
     QByteArray vData;
     strType = "无卡工作";
+    bool bEnter = true;
+    ParkCardType cardType = CardNone;
+    int nChannel = GetChannelByCan( byData[ 5 ] );
 
     if ( "month" == strCardType ) {
         if ( "1" == lstRow.at( 1 ) ) {
             PlayAudioDisplayInfo( byData, vData, CPortCmd::LedMonthlyExceed, CPortCmd::AudioMonthlyExceed );
             return false;
         }
+
+        cardType = CardMonthly;
+        ClearListContent( nChannel );
+        bEnter = ( "1" == lstRow.at( 3 ) );
+        QString strDays = lstRow.at( 2 );
+        int nDay = strDays.toInt( );
+        if ( nMonthWakeup >= nDay ) {
+            int nMaxDay = 999;
+            if ( nMaxDay < nDay ) {
+                nDay = nMaxDay;
+            }
+
+            CardRemainder( byData, vData, strDays, CPortCmd::LedMonthlyRemainder, CPortCmd::AudioMonthlyRemainder, bEnter );
+        }
+
+        //ProcessPlayDisplayList( nChannel );
     } else if ( "time" == strCardType ) {
-        if ( "0" == lstRow.at( 1 ) ) { // leave
+        bEnter = ( "1" == lstRow.at( 1 ) );
+        cardType = CardTime;
+
+        if ( !bEnter ) { // leave
+            bool bUnknown = false;
             if ( "1" == lstRow.at( 2 ) ) { // 未知
-                return false;
+                //return false;
+                bUnknown = true;
+                lstRow << "0" << "0" << "" << "";
             }
 
             if ( pFeeDlg->isVisible( ) ) {
@@ -2369,8 +2429,13 @@ bool CProcessData::GateNoCardWork( QByteArray& byData, QString& strPlate,
 
             QString strTmpID = lstRow[ 3 ];
             QDateTime dtEnd = QDateTime::currentDateTime( );
-            QDateTime dtStart = CCommonFunction::String2DateTime( lstRow[ 5 ] );
-            int nMins = CCommonFunction::GetDateTimeDiff( false, 60, dtStart, dtEnd );
+            QDateTime dtStart;// = CCommonFunction::String2DateTime( lstRow[ 5 ] );
+            int nMins = 0;// = CCommonFunction::GetDateTimeDiff( false, 60, dtStart, dtEnd );
+
+            if ( !bUnknown ) {
+                dtStart = CCommonFunction::String2DateTime( lstRow[ 5 ] );
+                nMins = CCommonFunction::GetDateTimeDiff( false, 60, dtStart, dtEnd );
+            }
 
             if ( 0 > nMins ) {
                 CCommonFunction::MsgBox( NULL, "提示", "进入时间大于离开时间", QMessageBox::Information );
@@ -2385,7 +2450,15 @@ bool CProcessData::GateNoCardWork( QByteArray& byData, QString& strPlate,
             QString strTable;
             CCommonFunction::GetTableName( CommonDataType::TimeCard, strTable );
 
-            int nAmount = CalculateFee( dtStart, dtEnd, strCardNo, byte5 );
+            int nAmount = 0;//CalculateFee( dtStart, dtEnd, strCardNo, byte5 );
+            if ( !bUnknown ) {
+                nAmount = CalculateFee( dtStart, dtEnd, strCardNo, byte5 );
+            } else {
+                nAmount = GetMinFee( byData[ 5 ] );
+            }
+
+            nFee = nAmount;
+
             pFeeDlg->SetParams( byData, vData, nMin, nHour, nAmount, false );
 
             //////////////////////////////////
@@ -2423,9 +2496,22 @@ bool CProcessData::GateNoCardWork( QByteArray& byData, QString& strPlate,
             WriteFeeData( strType, strCardNo, nAmount, strDateTime );
             // Confirm to pass
             //ControlChargeInfo( strCardNo, QDateTime::currentDateTime( ), QString::number( nAmount ), "1" );
+        } else {
+            //ControlGate( bEnter, byData, vData, cardKind );
+            //PlayAudioDisplayInfo( byData, vData, CPortCmd::LedTimeCardEnter, CPortCmd::AudioTimeCardEnter );
         }
     } else {
         bRet = false;
+    }
+
+    if ( bRet ) {
+        ControlGate( bEnter, byData, vData, cardType );
+    }
+
+    if ( CardMonthly == cardType ) {
+        ProcessPlayDisplayList(  nChannel );
+    } else if ( CardTime == cardType && bEnter ) {
+        PlayAudioDisplayInfo( byData, vData, CPortCmd::LedTimeCardEnter, CPortCmd::AudioTimeCardEnter );
     }
 
     return bRet;
@@ -2486,8 +2572,11 @@ bool CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
                                                                                                                      strDateTime, bEnter ? "1" : "0", strPlate );
     }
 
+    int nFee = 0;
+
     if ( !bGarage ) {
-        if ( !GateNoCardWork( byData, strPlate, cCan, strCardNumber, strCardType, strChannel ) ) {
+        bRet = GateNoCardWork( byData, strPlate, cCan, strCardNumber, strCardType, strChannel, nFee );
+        if ( !bRet ) {
             return bRet;
         }
 
@@ -2507,10 +2596,10 @@ bool CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
         }
 
         QString strHex( byImage.toHex( ) );
-        strSql = "Select InsertFreeCardData( '%1', '%2', '%3', '%4', '%5', %6, %7, '%8' )";
+        strSql = "Select InsertFreeCardData( '%1', '%2', '%3', '%4', '%5', %6, %7, '%8', %9 )";
         strSql = strSql.arg( strCardNumber, strDateTime, strChannel,
                              strPlate, strHex,
-                             QString::number( cLevel ), QString::number( bEnter ), strCardType );
+                             QString::number( cLevel ), QString::number( bEnter ), strCardType, QString::number( nFee ) );
 
         //CLogicInterface::GetInterface( )->ExecuteSql( strSql );
         SendDbWriteMessage( CDbEvent::SQLInternal, strSql, CCommonFunction::GetHistoryDb( ), false, true );
@@ -3266,11 +3355,16 @@ void CProcessData::ProcessPlayDisplayList( int nChannel )
     //"aa 14 00 44 00 05 1a 1b  header
     // d4 c2 d7 e2 bf a8 c7 eb cd a8 d0 d0  data
     // 01 1c 1d 01 55"  tail
+    if ( NoCardWork( ) ) {
+        Sleep( 1000 );
+    }
+
     ComposePlayDisplayData( ledList[ nChannel ], 8, 5, false );
 
     //"aa 0900 50 03 05
     // 4c00 1f01 1401
     // 01 55"
+
     ComposePlayDisplayData( audioList[ nChannel ], 6, 2, true );
 }
 
@@ -3347,6 +3441,10 @@ void CProcessData::PlayAudioDisplayInfo( QByteArray &byData, QByteArray &vData,
     //    return;
     //}
 
+    if ( NoCardWork( ) ) {
+        Sleep( 1500 );
+    }
+
     DisplayInfo( byData, vData, led );
     PlayAudio( byData, vData, audio );
 }
@@ -3394,7 +3492,8 @@ void CProcessData::ProcessCmd( QByteArray &byData, CPortCmd::PortUpCmd cmdType )
         bSendOnlyOnce = true;
         BallotSense( byData, vData, bEnter, true );
         CaptureSenseImage( byData, CommonDataType::CaptureJPG );
-        if ( WriteInOutRecord( byData ) ) {
+        //Sleep( 1000 );
+        if ( !MonthNoCardWorkMode( ) && WriteInOutRecord( byData ) ) {
             SenseOpenGate( byData );
         }
         break;
@@ -3406,7 +3505,8 @@ void CProcessData::ProcessCmd( QByteArray &byData, CPortCmd::PortUpCmd cmdType )
     case CPortCmd::UpOutBallotSenseVehcleEnter : // Vehcle Enter
         BallotSense( byData, vData, bEnter, true );
         CaptureSenseImage( byData, CommonDataType::CaptureJPG );
-        if ( WriteInOutRecord( byData ) ) {
+        //Sleep( 1000 );
+        if ( !MonthNoCardWorkMode( ) && WriteInOutRecord( byData ) ) {
             SenseOpenGate( byData );
         }
         break;
@@ -3533,7 +3633,7 @@ void CProcessData::BallotSense( QByteArray &byData, QByteArray &vData, bool bEnt
         return;
     }
 
-    pMainWindow->SetBallotSense( bEnterBallot, nChannel );
+    pMainWindow->SetBallotSense( bEnterBallot, nChannel, byData );
 
     //bool bEnter = ( 0 != byData[ 5 ] % 2 );
 

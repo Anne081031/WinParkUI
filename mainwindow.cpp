@@ -73,10 +73,10 @@ void MainWindow::SetFileCount( quint32 nCount )
     pMonitor->SetFileCount( nCount );
 }
 
-void MainWindow::PictureRegconize( QString &strFile, int nChannel )
+void MainWindow::PictureRegconize( QString &strFile, int nChannel, QByteArray& byData )
 {
     CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
-    pMonitor->PictureRegconize( strFile, nChannel );
+    pMonitor->PictureRegconize( strFile, nChannel, byData );
 }
 
 bool MainWindow::ShiftDlgISVisible( )
@@ -261,7 +261,7 @@ void MainWindow::Singleton( )
     CheckResolution( );
 }
 
-void MainWindow::RecognizePlate( QString strPlate, int nChannel, int nConfidence )
+void MainWindow::RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray byData )
 {
     CProcessData* pProcessor = CProcessData::GetProcessor( pSerialPort, this );
 
@@ -269,7 +269,7 @@ void MainWindow::RecognizePlate( QString strPlate, int nChannel, int nConfidence
         return;
     }
 
-    pProcessor->RecognizePlate( strPlate, nChannel, nConfidence );
+    pProcessor->RecognizePlate( strPlate, nChannel, nConfidence, bNocard, byData );
 }
 
 void MainWindow::GetParkName( QString &strName, char cCan, int nIndex )
@@ -942,10 +942,10 @@ void MainWindow::ServerFunction( )
     netServer->StartupUdpServer( false );
 }
 
-void MainWindow::SetBallotSense( bool bSense, int nChannel )
+void MainWindow::SetBallotSense( bool bSense, int nChannel, QByteArray& byData )
 {
     CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
-    pMonitor->SetBallotSense( bSense, nChannel );
+    pMonitor->SetBallotSense( bSense, nChannel, byData );
 }
 
 void MainWindow::InitPMS( )

@@ -47,7 +47,7 @@ public:
     void CheckCenterContronller( bool bEnter, QDateTime& dtDateTime );
 
     void TimeCardPass( int nAmount, int nHour, int nMin, QByteArray& byData );
-    void RecognizePlate( QString strPlate, int nChannel, int nConfidence );
+    void RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray bySerialData );
     int MatchNum( QString &strPlate, const QString &strTest );
     bool RecognizeFuzzyPlate( CommonDataType::QPlateCardHash& hash, QString& strCarNo, QString& strPlate );
 
@@ -116,7 +116,7 @@ private:
                            QString& strCardType, QString strPlate, char cCan, ParkCardType& cardKind, int nAmount = 0 );
     bool WriteInOutRecord( QByteArray& byData );
     bool GateNoCardWork( QByteArray& byData, QString& strPlate,
-                         char cCan, QString& strCardno, QString& strType, QString& strChannel );
+                         char cCan, QString& strCardno, QString& strType, QString& strChannel, int& nFee );
     inline void GetChannelName( bool bEnter, char cCan, QString& strChannel );
     void GetHourMin( int nMins, int& nHour, int& nMin );
     void WriteFeeData( QString& strCardType, QString& strCardNo, int nAmount, QString& strDateTime );
@@ -189,6 +189,8 @@ private:
     inline bool GetEntranceFlag( int nChannel );
     inline int GetChannelIndex( int nChannel );
 
+    int GetMinFee( char cCan );
+
     void SendPlate( QString strPlate, int nChannel, int nConfidence );
     QString GetCardStatus( QString& strCardNo, ParkCardType cardType );
 
@@ -216,6 +218,7 @@ private:
     bool bPlateClear[ 4 ][ 2 ]; // true : gate / false : Sense
     bool bCardCapture[ 4 ];
     bool bSendOnlyOnce;
+    bool bNocardwork;
     QString strVideoChannelName[ 4 ];
     //int nDiffInterval[ 2 ];
     bool bSingleChannel;

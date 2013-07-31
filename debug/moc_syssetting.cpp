@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'syssetting.h'
 **
-** Created: Mon Jul 29 16:21:27 2013
+** Created: Wed Jul 31 15:58:58 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

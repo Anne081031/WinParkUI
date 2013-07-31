@@ -38,7 +38,7 @@ public:
     ~MainWindow();
 
     void SetFileCount( quint32 nCount );
-    void PictureRegconize( QString &strFile, int nChannel );
+    void PictureRegconize( QString &strFile, int nChannel, QByteArray& byData );
     void ControlChild( QCloseEvent* event, QWidget* child );
     void ControlMonitor( bool bShow );
     CLogicInterface* GetLogicInterface( );
@@ -60,7 +60,7 @@ public:
     void EmployeeCard( QString& strCardno );
     QString GetCurrentUserID( );
 
-    void SetBallotSense( bool bSense, int nChannel );
+    void SetBallotSense( bool bSense, int nChannel, QByteArray& byData );
     void SendInOutImg( QString& strFile, bool bEnter, QDateTime& dtCurrent, QString& strPlate, QString& strCardNo );
     void SetAlertMsg( const QString& strText );
     bool ShiftDlgISVisible( );
@@ -184,7 +184,7 @@ private slots:
     void UpdateLableText(  );
     void SendStateHB( );
     void ReconnectDatabase( );
-    void RecognizePlate( QString strPlate, int nChannel, int nConfidence );
+    void RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray byData );
     void SendTime( );
     void Expiration( QString strMsg, bool bExpiration, bool bRetry );
 

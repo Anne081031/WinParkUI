@@ -35,6 +35,10 @@ public:
 
     void SetVideoHeight( int nHeight );
     int GetVideoHeight( );
+
+    void SetByData( QByteArray& byData );
+    QByteArray& GetByData( );
+
 private:
     QString strPicFile;
     QByteArray byVideoFrame;
@@ -42,6 +46,7 @@ private:
     int nInOutChannel;
     int nVideoWidth;
     int nVideoHeight;
+    QByteArray bySerialData;
 };
 
 #endif // QPLATEEVENT_H
