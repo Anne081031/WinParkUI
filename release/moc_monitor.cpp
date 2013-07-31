@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'monitor.h'
 **
-** Created: Mon Jul 29 16:43:35 2013
+** Created: Wed Jul 31 17:16:47 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,51 +31,51 @@ static const uint qt_meta_data_CMonitor[] = {
        2,       // signalCount
 
  // signals: signature, parameters, type, tag, flags
-      40,   10,    9,    9, 0x05,
-      91,   74,    9,    9, 0x05,
+      55,   10,    9,    9, 0x05,
+     122,  105,    9,    9, 0x05,
 
  // slots: signature, parameters, type, tag, flags
-     133,  122,    9,    9, 0x08,
-     173,    9,    9,    9, 0x08,
-     196,    9,    9,    9, 0x08,
-     220,    9,    9,    9, 0x08,
-     246,  241,    9,    9, 0x08,
-     271,    9,    9,    9, 0x08,
-     303,    9,    9,    9, 0x08,
-     327,    9,    9,    9, 0x08,
+     164,  153,    9,    9, 0x08,
+     204,    9,    9,    9, 0x08,
+     227,    9,    9,    9, 0x08,
+     251,    9,    9,    9, 0x08,
+     277,  272,    9,    9, 0x08,
+     302,    9,    9,    9, 0x08,
+     334,    9,    9,    9, 0x08,
      358,    9,    9,    9, 0x08,
-     387,    9,    9,    9, 0x08,
-     416,    9,    9,    9, 0x08,
-     445,    9,    9,    9, 0x08,
+     389,    9,    9,    9, 0x08,
+     418,    9,    9,    9, 0x08,
+     447,    9,    9,    9, 0x08,
      476,    9,    9,    9, 0x08,
-     489,    9,    9,    9, 0x08,
-     501,    9,    9,    9, 0x08,
-     514,    9,    9,    9, 0x08,
-     540,  526,    9,    9, 0x08,
-     570,    9,    9,    9, 0x08,
-     583,    9,    9,    9, 0x08,
-     612,  597,    9,    9, 0x08,
-     636,   74,    9,    9, 0x08,
-     665,    9,    9,    9, 0x08,
-     685,    9,    9,    9, 0x08,
-     721,  697,    9,    9, 0x08,
-     758,  749,    9,    9, 0x08,
-     802,  784,    9,    9, 0x08,
-     852,  836,    9,    9, 0x08,
-     885,  871,    9,    9, 0x08,
-     908,  901,    9,    9, 0x08,
-     932,  901,    9,    9, 0x08,
-    1028,  954,    9,    9, 0x08,
-    1108, 1091,    9,    9, 0x08,
-    1135,    9,    9,    9, 0x08,
-    1159,    9,    9,    9, 0x08,
+     507,    9,    9,    9, 0x08,
+     520,    9,    9,    9, 0x08,
+     532,    9,    9,    9, 0x08,
+     545,    9,    9,    9, 0x08,
+     571,  557,    9,    9, 0x08,
+     601,    9,    9,    9, 0x08,
+     614,    9,    9,    9, 0x08,
+     643,  628,    9,    9, 0x08,
+     667,  105,    9,    9, 0x08,
+     696,    9,    9,    9, 0x08,
+     716,    9,    9,    9, 0x08,
+     752,  728,    9,    9, 0x08,
+     789,  780,    9,    9, 0x08,
+     833,  815,    9,    9, 0x08,
+     883,  867,    9,    9, 0x08,
+     916,  902,    9,    9, 0x08,
+     939,  932,    9,    9, 0x08,
+     963,  932,    9,    9, 0x08,
+    1066,  985,    9,    9, 0x08,
+    1157, 1140,    9,    9, 0x08,
+    1184,    9,    9,    9, 0x08,
+    1208,    9,    9,    9, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CMonitor[] = {
-    "CMonitor\0\0strPlate,nChannel,nConfidence\0"
-    "OnRecognizePlate(QString,int,int)\0"
+    "CMonitor\0\0strPlate,nChannel,nConfidence,bNocard,byData\0"
+    "OnRecognizePlate(QString,int,int,bool,QByteArray)\0"
     "nChannel,bMoving\0OnDirectionIndicator(int,bool)\0"
     "row,column\0on_tabRecord_cellDoubleClicked(int,int)\0"
     "onBtnVerifyInClicked()\0onBtnVerifyOutClicked()\0"
@@ -103,8 +103,9 @@ static const char qt_meta_stringdata_CMonitor[] = {
     "nPlateChannel\0ClearPlate(int)\0strMsg\0"
     "DisplayDbError(QString)\0HandleIPCMsg(QString)\0"
     "strPlate,nChannel,bSuccess,bVideo,nWidth,nHeight,nConfidence,strDirect"
-    "ion\0"
-    "HandleUIPlateResult(QString,int,bool,bool,int,int,int,QString)\0"
+    "ion,byData\0"
+    "HandleUIPlateResult(QString,int,bool,bool,int,int,int,QString,QByteArr"
+    "ay)\0"
     "nChannel,bMotion\0HandleDetectInfo(int,bool)\0"
     "on_pushButton_clicked()\0"
     "on_pushButton_2_clicked()\0"
@@ -139,7 +140,7 @@ int CMonitor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: OnRecognizePlate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3]))); break;
+        case 0: OnRecognizePlate((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< int(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< QByteArray(*)>(_a[5]))); break;
         case 1: OnDirectionIndicator((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 2: on_tabRecord_cellDoubleClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 3: onBtnVerifyInClicked(); break;
@@ -171,7 +172,7 @@ int CMonitor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 29: ClearPlate((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 30: DisplayDbError((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 31: HandleIPCMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 32: HandleUIPlateResult((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< QString(*)>(_a[8]))); break;
+        case 32: HandleUIPlateResult((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< QString(*)>(_a[8])),(*reinterpret_cast< QByteArray(*)>(_a[9]))); break;
         case 33: HandleDetectInfo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 34: on_pushButton_clicked(); break;
         case 35: on_pushButton_2_clicked(); break;
@@ -183,9 +184,9 @@ int CMonitor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void CMonitor::OnRecognizePlate(QString _t1, int _t2, int _t3)
+void CMonitor::OnRecognizePlate(QString _t1, int _t2, int _t3, bool _t4, QByteArray _t5)
 {
-    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)) };
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)), const_cast<void*>(reinterpret_cast<const void*>(&_t3)), const_cast<void*>(reinterpret_cast<const void*>(&_t4)), const_cast<void*>(reinterpret_cast<const void*>(&_t5)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
