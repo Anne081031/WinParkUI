@@ -181,7 +181,7 @@ void QPlateThread::SendUIResult( int nChannel, bool bSuccess, qint32 nNum, TH_Pl
                             GetPlateMoveDirection( pResult[ nIndex ].nDirection ), byData );
     }
 
-    qDebug( ) << Q_FUNC_INFO << strPlate << ( bVideo ? " Video" : " File" );
+    //qDebug( ) << Q_FUNC_INFO << strPlate << ( bVideo ? " Video" : " File" );
 }
 
 void QPlateThread::GetResultInfo( QStringList &lstResult, QString &strFile, bool bSuccess, qint32 nNum, TH_PlateResult *pResult )

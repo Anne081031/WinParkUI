@@ -2359,7 +2359,7 @@ int CProcessData::GetMinFee( char cCan )
     QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgTariff );
     int nMinFee = pSet->value( QString( "%1/2/rule1FootInner" ).arg( strName ), 0 ).toInt( );
 
-    return nMinFee;
+    return nMinFee / 10;
 }
 
 bool CProcessData::GateNoCardWork( QByteArray& byData, QString& strPlate,
@@ -2424,7 +2424,9 @@ bool CProcessData::GateNoCardWork( QByteArray& byData, QString& strPlate,
             }
 
             if ( pFeeDlg->isVisible( ) ) {
-                return false; // Only let one car pass
+                //return false; // Only let one car pass
+                pFeeDlg->DefaultClicked( );
+                Sleep( 1000 );
             }
 
             QString strTmpID = lstRow[ 3 ];
@@ -3134,9 +3136,9 @@ bool CProcessData::ProcessTimeCard( QByteArray& byData, QByteArray& vData, QStri
  {
      pSettings->sync( );
 
-     if ( pSettings->value( "CommonCfg/NoCardWork", false ).toBool( ) ) {
-        Sleep( 1500 );
-     }
+     //if ( pSettings->value( "CommonCfg/NoCardWork", false ).toBool( ) ) {
+     //   Sleep( 1500 );
+     //}
 
      if ( pSettings->value( "UserRequest/IfDisplayFeeInfo", false ).toBool( ) ) {
          CardExitInfo( byData, vData, false, nMin, nHour, nAmount ); // 2011 12 18
@@ -3355,9 +3357,9 @@ void CProcessData::ProcessPlayDisplayList( int nChannel )
     //"aa 14 00 44 00 05 1a 1b  header
     // d4 c2 d7 e2 bf a8 c7 eb cd a8 d0 d0  data
     // 01 1c 1d 01 55"  tail
-    if ( NoCardWork( ) ) {
-        Sleep( 1000 );
-    }
+    //if ( NoCardWork( ) ) {
+    //    Sleep( 1000 );
+    //}
 
     ComposePlayDisplayData( ledList[ nChannel ], 8, 5, false );
 
@@ -3441,9 +3443,9 @@ void CProcessData::PlayAudioDisplayInfo( QByteArray &byData, QByteArray &vData,
     //    return;
     //}
 
-    if ( NoCardWork( ) ) {
-        Sleep( 1500 );
-    }
+    //if ( NoCardWork( ) ) {
+    //    Sleep( 1500 );
+    //}
 
     DisplayInfo( byData, vData, led );
     PlayAudio( byData, vData, audio );

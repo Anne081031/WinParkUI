@@ -87,8 +87,13 @@ void CMonitor::HandleUIPlateResult( QString strPlate, int nChannel,
                                                 QString::number( nHeight ) );
     lblDirection[ nChannel ]->setText( strWindth + strDirection );
     bool bSuccession = pSystem->value( "CommonCfg/Succession", false ).toBool( );
+    if ( bSuccession && bPlateVideo && !bNocardwork ) {
+        CCommonFunction::DisplayPlateChar( lblLicense[ nChannel ], nChannel, strPlate );
+        emit OnRecognizePlate( strPlate, nChannel, nConfidence, bNocardwork, byData ); //自动开闸
+        return;
+    }
 
-    if ( !bVideo || bSuccession ) { // File
+    if ( !bVideo ) { // File
         CCommonFunction::DisplayPlateChar( lblLicense[ nChannel ], nChannel, strPlate );
         emit OnRecognizePlate( strPlate, nChannel, nConfidence, bNocardwork, byData ); //自动开闸
     } else { // Video

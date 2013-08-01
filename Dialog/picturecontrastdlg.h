@@ -53,11 +53,11 @@ private:
     void SwitchImage( QPushButton *pBtn, bool bDown );
     void Write2UI( QStringList& lstRows, bool bEnter , bool bAuto = true, bool bBuffer = false );
     void FillDiscount(  );
-    void CaculateAndPlay( QRadioButton& rbtn );
+    void CaculateAndPlay( QRadioButton& rbtn, bool bCalculate = true );
     int GetDiscount( int nPrevValue );
     QRadioButton& SetCarType( QString& strType );
     void SetCurrentRadioBox( QRadioButton* pRbx );
-    void AnalogClicked( QRadioButton* pBtn );
+    void AnalogClicked( QRadioButton* pBtn, bool bCalculate = true );
     void ClearPlate( );
     QLabel* lblLicense[ 4 ][ 8 ];
 
@@ -74,6 +74,7 @@ private slots:
 private:
     Ui::CPictureContrastDlg *ui;
     int nAmount;
+    int nStandardFee;
     int nFeeNum;
     QString strTabName;
     QString strParkName;

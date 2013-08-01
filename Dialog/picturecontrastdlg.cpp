@@ -19,6 +19,14 @@ void CPictureContrastDlg::keyPressEvent( QKeyEvent *event )
         return;
     }
 
+    bool bCalculate = !ui->edtEnterTime->text( ).isEmpty( );
+
+    if ( !bCalculate &&
+         ( Qt::Key_F7 != event->key( ) &&
+           Qt::Key_F8 != event->key( ) ) ) {
+        return;
+    }
+
     switch ( event->key( ) ) {
     case Qt::Key_F5 :
         AnalogClicked( ui->rdx1 );
@@ -29,7 +37,8 @@ void CPictureContrastDlg::keyPressEvent( QKeyEvent *event )
         break;
 
     case Qt::Key_F7 :
-        AnalogClicked( ui->rdx2 );
+        nAmount = nStandardFee;
+        AnalogClicked( ui->rdx2, bCalculate );
         break;
 
     case Qt::Key_F8 :
@@ -48,6 +57,7 @@ CPictureContrastDlg::CPictureContrastDlg( QWidget *parent ) :
 
     nAmount = 0;
     nFeeNum = 0;
+    nStandardFee = 0;
 
     strButtonStyle = "background-image:url(%1NewIcon/%2-%3.JPG);\nborder-style: outset; ";
     CCommonFunction::GetPath( strImagePath, CommonDataType::PathUIImage );
@@ -388,6 +398,7 @@ void CPictureContrastDlg::SetParams( QByteArray &byData, QByteArray &vData, int 
     nFeeNum = nAmount;
     ui->edtAmount->setText( QString::number( nAmount ) );
     this->bEnter1 = bEnter;
+    nStandardFee = nAmount;
 }
 
 void CPictureContrastDlg::FillDiscount( )
@@ -501,9 +512,14 @@ void CPictureContrastDlg::SetCurrentRadioBox( QRadioButton *pRbx )
     strFeeRateType = pRbx->text( );
 }
 
-void CPictureContrastDlg::CaculateAndPlay( QRadioButton &rbtn )
+void CPictureContrastDlg::CaculateAndPlay( QRadioButton &rbtn, bool bCalculate )
 {
-    Calculate( rbtn );
+    if ( bCalculate ) {
+        Calculate( rbtn );
+    } else {
+        ui->edtAmount->setText( QString::number( nAmount ) );
+    }
+
     int nDiscount = GetDiscount( nAmount );
     CProcessData::GetProcessor()->TimeCardPass( nDiscount, nHour, nMin, byData );
 }
@@ -516,11 +532,11 @@ void CPictureContrastDlg::RbtnClicked( )
     }
 }
 
-void CPictureContrastDlg::AnalogClicked( QRadioButton* pBtn )
+void CPictureContrastDlg::AnalogClicked( QRadioButton* pBtn, bool bCalculate )
 {
     pBtn->setChecked( true );
     SetCurrentRadioBox( pBtn );
-    CaculateAndPlay( *pBtn );
+    CaculateAndPlay( *pBtn, bCalculate );
 }
 
 int CPictureContrastDlg::GetAmount( )
