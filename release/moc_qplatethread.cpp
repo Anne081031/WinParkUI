@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qplatethread.h'
 **
-** Created: Wed Jul 31 17:18:08 2013
+** Created: Fri Aug 2 11:05:05 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

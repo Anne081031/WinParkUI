@@ -77,7 +77,7 @@ void CMonitor::HandleUIPlateResult( QString strPlate, int nChannel,
                                     int nHeight, int nConfidence,
                                     QString strDirection, QByteArray byData )
 {
-    if ( !bSuccess || strPlate.isEmpty( ) ) {
+    if ( bVideo && ( !bSuccess || strPlate.isEmpty( ) ) ) {
         return;
     }
 
@@ -1183,15 +1183,13 @@ void CMonitor::ControlDetection( int nChannel, bool bStart )
 
 void CMonitor::StartNewPlateRecog( )
 {
-    QStringList lstParam;
-
     for ( int nIndex = 0; nIndex < nUsedWay; nIndex++ ) {
         if ( !bPlateStart[ nIndex ] ) {
             continue;
         }
 
         if ( bNetworkCamera ) {
-           lstParam << QString::number( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR ) << QString::number( nIndex ); // Format / Channel
+           QPlateThread::GetInstance( )->PostPlateInitEvent( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR, nIndex ); // Format / Channel
         } else {
             switch ( nCapture ) {
             case CMultimedia::HikSdk :

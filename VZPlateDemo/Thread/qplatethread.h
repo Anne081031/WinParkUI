@@ -51,7 +51,6 @@ private:
     QTextCodec* pCodec;
     QString strPlatePath;
     bool bStopRecognize;
-    HANDLE hMutex;
     
 signals:
     void PlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );

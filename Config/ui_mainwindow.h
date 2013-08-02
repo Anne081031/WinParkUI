@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Thu Jul 18 13:42:49 2013
+** Created: Fri Aug 2 12:50:16 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -703,6 +703,7 @@ public:
 
         chkPlateReal1 = new QCheckBox(layoutWidget8);
         chkPlateReal1->setObjectName(QString::fromUtf8("chkPlateReal1"));
+        chkPlateReal1->setEnabled(false);
 
         horizontalLayout_12->addWidget(chkPlateReal1);
 
@@ -721,6 +722,7 @@ public:
 
         chkPlateReal2 = new QCheckBox(layoutWidget_14);
         chkPlateReal2->setObjectName(QString::fromUtf8("chkPlateReal2"));
+        chkPlateReal2->setEnabled(false);
 
         horizontalLayout_23->addWidget(chkPlateReal2);
 
@@ -739,6 +741,7 @@ public:
 
         chkPlateReal3 = new QCheckBox(layoutWidget_15);
         chkPlateReal3->setObjectName(QString::fromUtf8("chkPlateReal3"));
+        chkPlateReal3->setEnabled(false);
 
         horizontalLayout_24->addWidget(chkPlateReal3);
 
@@ -757,6 +760,7 @@ public:
 
         chkPlateReal4 = new QCheckBox(layoutWidget_16);
         chkPlateReal4->setObjectName(QString::fromUtf8("chkPlateReal4"));
+        chkPlateReal4->setEnabled(false);
 
         horizontalLayout_25->addWidget(chkPlateReal4);
 
@@ -956,7 +960,7 @@ public:
          << QApplication::translate("MainWindow", "\345\210\267\345\215\241", 0, QApplication::UnicodeUTF8)
         );
         groupBox_8->setTitle(QApplication::translate("MainWindow", "\345\205\266\344\273\226", 0, QApplication::UnicodeUTF8));
-        chkOpenGate->setText(QApplication::translate("MainWindow", "\345\234\260\346\204\237\345\274\200\351\227\270", 0, QApplication::UnicodeUTF8));
+        chkOpenGate->setText(QApplication::translate("MainWindow", "\345\216\213\345\234\260\346\204\237\345\274\200\351\227\270", 0, QApplication::UnicodeUTF8));
 #ifndef QT_NO_TOOLTIP
         edtLedCan->setToolTip(QApplication::translate("MainWindow", "\347\254\254\344\270\200\344\270\252CAN\345\234\260\345\235\200\344\270\272\346\200\273\347\251\272\351\227\262LED\357\274\214\n"
 "\350\275\246\344\275\215\345\244\232\344\270\252CAN\345\234\260\345\235\200\347\224\250\351\200\227\345\217\267\345\210\206\351\232\224\345\274\200\345\215\263\345\217\257\343\200\202", 0, QApplication::UnicodeUTF8));
@@ -967,7 +971,7 @@ public:
         label_25->setText(QApplication::translate("MainWindow", "\350\277\234\350\267\235\347\246\273\345\215\241\350\257\206\345\210\253\351\227\264\351\232\224\357\274\232", 0, QApplication::UnicodeUTF8));
         label_29->setText(QApplication::translate("MainWindow", "\345\201\234\350\275\246\345\234\272ID", 0, QApplication::UnicodeUTF8));
         chkBroadcastData->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\345\271\277\346\222\255\350\277\233\345\207\272\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
-        chkNoCard->setText(QApplication::translate("MainWindow", "\346\227\240\345\215\241\345\267\245\344\275\234\346\250\241\345\274\217", 0, QApplication::UnicodeUTF8));
+        chkNoCard->setText(QApplication::translate("MainWindow", "\346\227\240\345\215\241\345\267\245\344\275\234\346\250\241\345\274\217 \351\235\236\346\234\210\347\247\237\350\275\246\346\224\266\350\264\271", 0, QApplication::UnicodeUTF8));
         groupBox_9->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\350\257\206\345\210\253\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
         label_12->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\200\350\267\257\350\247\206\351\242\221\346\265\201\350\257\206\345\210\253\345\256\236\346\227\266\346\230\276\347\244\272\357\274\232", 0, QApplication::UnicodeUTF8));
         chkPlateReal1->setText(QString());

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qanalogcamerathread.h'
 **
-** Created: Tue Jul 30 11:17:42 2013
+** Created: Fri Aug 2 10:01:35 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -41,6 +41,7 @@ int CLogicInterface::DbDeleteRd( int nIndex, QString& strDate )
     QString strSql ="";
     QString strDelete = "";
     QString strDeleteGarage = "";
+    QString strTmpDelete = "";
 #ifndef QT_NO_DEBUG
    qDebug( ) << "Delete Start " << QTime::currentTime( ).toString( ) << endl;
 #endif
@@ -80,6 +81,7 @@ int CLogicInterface::DbDeleteRd( int nIndex, QString& strDate )
                           OR ( Date( OutTime ) < '%2' ) " ).arg( strDate, strDate );
         strDelete = "Delete From stoprd where stoprdid in ( %1 )";
         strDeleteGarage = "Delete From GarageInGarage Where CardID IN ( Select Distinct Cardno From stoprd where stoprdid In( %1 ) ) and DateTime < '%2'";
+        strTmpDelete = "Delete From tmpcardintime where type = 1 and stoprdid in( %1 ) and intime < '%2'";
         break;
 
         case 3 :
@@ -133,6 +135,9 @@ int CLogicInterface::DbDeleteRd( int nIndex, QString& strDate )
 
         if ( 0 < nCounts && 2 == nIndex ) {
             strSql = strDeleteGarage.arg( strWhere, strDate );
+            ExecuteSql( strSql );
+
+            strSql = strTmpDelete.arg( strWhere, strDate );
             ExecuteSql( strSql );
         }
 

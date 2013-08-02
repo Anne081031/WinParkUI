@@ -864,7 +864,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>地感开闸</string>
+      <string>压地感开闸</string>
      </property>
     </widget>
     <widget class="QLineEdit" name="edtLedCan">
@@ -998,7 +998,7 @@
       </rect>
      </property>
      <property name="text">
-      <string>无卡工作模式</string>
+      <string>无卡工作模式 非月租车收费</string>
      </property>
     </widget>
    </widget>
@@ -1033,6 +1033,9 @@
       </item>
       <item>
        <widget class="QCheckBox" name="chkPlateReal1">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -1059,6 +1062,9 @@
       </item>
       <item>
        <widget class="QCheckBox" name="chkPlateReal2">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -1085,6 +1091,9 @@
       </item>
       <item>
        <widget class="QCheckBox" name="chkPlateReal3">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string/>
         </property>
@@ -1111,6 +1120,9 @@
       </item>
       <item>
        <widget class="QCheckBox" name="chkPlateReal4">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string/>
         </property>

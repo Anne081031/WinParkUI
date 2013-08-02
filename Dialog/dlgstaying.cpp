@@ -45,9 +45,9 @@ void CDlgStaying::closeEvent(QCloseEvent *)
 
     for ( int n = 0; n < 7; n++ ) {
         if ( bChkCliked[ n ] ) {
-            if ( 2 == n || 2 == n ) {
-                n = 0;
-            }
+            //if ( 2 == n || 3 == n ) {
+            //    n = 0;
+            //}
 
             pSystem->setValue( "Staying/Column", n );
             break;
@@ -124,9 +124,13 @@ void CDlgStaying::GetData( )
         pBtn->setChecked( true );
     }
 
-    GetOrderByClause( strOrder, nChk, nCb );
+    GetOrderByClause( strOrder, nChk, nCb, 0 );
     GetMonthData( strOrder );
+
+    GetOrderByClause( strOrder, nChk, nCb, 1 );
     GetTimeData( strOrder );
+
+    GetOrderByClause( strOrder, nChk, nCb, 2 );
     GetNocardData( strOrder );
 }
 
@@ -203,7 +207,7 @@ void CDlgStaying::SortData( int nChk, int nCb, bool bCb )
     }
 
     QString strOrder;
-    GetOrderByClause( strOrder, nChk, nCb );
+    GetOrderByClause( strOrder, nChk, nCb, ui->tabWidget->currentIndex( ) );
 
     GetMonthData( strOrder );
 
@@ -211,7 +215,7 @@ void CDlgStaying::SortData( int nChk, int nCb, bool bCb )
         GetTimeData( strOrder );
     }
 
-    if ( 1 != nChk && 2 != nChk && 3 != nChk ) {
+    if ( 1 != nChk && 2 != nChk && 3 != nChk && 4 != nChk) {
         GetNocardData( strOrder );
     }
 
@@ -255,7 +259,7 @@ int CDlgStaying::GetChkIndex( )
     return nIndex;
 }
 
-void CDlgStaying::GetOrderByClause( QString& strOrder, int nChk, int nCb )
+void CDlgStaying::GetOrderByClause( QString& strOrder, int nChk, int nCb, int nCardType )
 {
     QString strAsc = ( 0 == nCb ) ? " ASC " : " DESC ";
     strOrder = " Order by %1 ";
@@ -267,18 +271,34 @@ void CDlgStaying::GetOrderByClause( QString& strOrder, int nChk, int nCb )
 
     case 1 :
         strOrder = strOrder.arg( "cardselfno" );
+
+        if ( 2 == nCardType ) {
+            strOrder.clear( );
+        }
         break;
 
     case 2 :
         strOrder = strOrder.arg( "username" );
+
+        if ( 1 == nCardType || 2 == nCardType ) {
+            strOrder.clear( );
+        }
         break;
 
     case 3 :
         strOrder = strOrder.arg( "b.userphone" );
+
+        if ( 1 == nCardType || 2 == nCardType ) {
+            strOrder.clear( );
+        }
         break;
 
     case 4 :
         strOrder = strOrder.arg( "carcp" );
+
+        if ( 2 == nCardType ) {
+            strOrder.clear( );
+        }
         break;
 
     case 5 :
@@ -293,7 +313,9 @@ void CDlgStaying::GetOrderByClause( QString& strOrder, int nChk, int nCb )
         break;
     }
 
-    strOrder += strAsc;
+    if ( !strOrder.isEmpty( ) ) {
+        strOrder += strAsc;
+    }
 }
 
 void CDlgStaying::on_cbSort_currentIndexChanged(int index)

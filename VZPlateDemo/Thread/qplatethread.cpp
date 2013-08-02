@@ -12,14 +12,10 @@ QPlateThread::QPlateThread(QObject *parent) :
     pCodec = QCommon::GetTextCodec( );
     QCommon::GetPlatePicPath( strPlatePath );
     bStopRecognize = false;
-    hMutex = NULL;//CreateMutex( NULL, TRUE, NULL ); // 初始取得Mutex对象
 }
 
 QPlateThread::~QPlateThread( )
 {
-    if ( NULL != hMutex ) {
-        CloseHandle( hMutex );
-    }
 }
 
 QPlateThread* QPlateThread::GetInstance( )

@@ -53,7 +53,7 @@ private:
     void DisplayPic( QTableWidget* pWidget, int nRow, int nCol );
     void SetFrameVisble( bool bVisible );
 
-    void GetOrderByClause( QString& strOrder, int nChk, int nCb );
+    void GetOrderByClause( QString& strOrder, int nChk, int nCb, int nCardType/*0 1 2*/ );
     void SortData( int nChk, int nCb, bool bCb = false );
     int GetChkIndex( );
     void GetMonthData( QString& strOrder );
