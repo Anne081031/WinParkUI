@@ -1,3 +1,7 @@
+P42
+
+http://www.onvif.org/onvif/ver10/schema/onvif.xsd
+
 /////////////////////////////
 市场 / 中矿 www.shchinamine.com
 Android
@@ -5,11 +9,19 @@ Android
 系统架构
 /////////////////////////////
 
+odm ONVIF Device Manager
+http://sourceforge.net/p/onvifdm/code/HEAD/tree/branches/
+
 目前全球三大网络视频标准ONVIF、PSIA与HDcctv仍旧是壁垒分明，分别在网络与闭路高清中扮演重要的角色。
 网络高清(ONVIF、PSIA)或者闭路高清(HDcctv)
 
 ONVIF，全称Open Network Video Interface Forum，即开放性网络视频接口论坛 网络视频监控行业标准 http://www.onvif.org/
 ONVIF 规范可确保基于 IP 的不同物理安全产品（无论其品牌为何）之间的互操作性。设计和构建网络视频系统。
+ONVIF Device Types: NVT(Network Video Transmitter) NVD(Network Video Decoder) NVS(Network Video Storage) NVA(Network Video Analytics)
+
+IP网络实时传输视频音频元数据
+RTP(Real-time Transport Protocol) RTCP( RTP CO\ontrol Protocol) RTSP( Real Time Streaming Protocol) RSVP(Resource reServation QoS) SDP SIP HTTP HTTPS TCP UDP TLS SSL IP PPP
+
 
 PSIA：(Physical Security Interoperability Alliance)实体安防互通联盟 http://www.psialliance.org
 
