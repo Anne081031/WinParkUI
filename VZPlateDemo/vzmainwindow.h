@@ -23,6 +23,7 @@ public:
 
 private:
     void LoadImg( QLabel* lblCtrlLeft, QLabel* lblCtrlRight, QLabel* lblCtrlDown, int nRow );
+    void LoadLogoTitle( );
 
 private:
     QAnalogCameraThread* pAnalogCamera;

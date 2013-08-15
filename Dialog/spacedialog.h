@@ -15,6 +15,7 @@ public:
     explicit CSpaceDialog(QWidget *parent = 0);
     ~CSpaceDialog();
     void SpaceNumber( int& nSpace, bool bGet );
+    void SpaceNocardNumber( int& nSpace, bool bGet );
     void ParkName( QString& strName, bool bGet );
 
 private:

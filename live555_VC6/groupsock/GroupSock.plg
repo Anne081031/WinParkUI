@@ -1,0 +1,39 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: GroupSock - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4B3.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /I ".\include" /I "..\UsageEnvironment\include" /I "..\BasicUsageEnvironment\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /Fp"Release/GroupSock.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"F:\live\groupsock\NetInterface.cpp"
+"F:\live\groupsock\inet.c"
+"F:\live\groupsock\GroupEId.cpp"
+"F:\live\groupsock\Groupsock.cpp"
+"F:\live\groupsock\GroupsockHelper.cpp"
+"F:\live\groupsock\IOHandlers.cpp"
+"F:\live\groupsock\NetAddress.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4B3.tmp" 
+Creating command line "link.exe -lib /nologo /out:"..\lib\Release\GroupSock.lib"  .\Release\NetInterface.obj .\Release\inet.obj .\Release\GroupEId.obj .\Release\Groupsock.obj .\Release\GroupsockHelper.obj .\Release\IOHandlers.obj .\Release\NetAddress.obj "
+<h3>Output Window</h3>
+Compiling...
+NetInterface.cpp
+inet.c
+GroupEId.cpp
+Groupsock.cpp
+GroupsockHelper.cpp
+IOHandlers.cpp
+NetAddress.cpp
+Creating library...
+
+
+
+<h3>Results</h3>
+GroupSock.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

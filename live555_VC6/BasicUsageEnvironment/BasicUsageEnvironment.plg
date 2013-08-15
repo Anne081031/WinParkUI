@@ -1,0 +1,47 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: BasicUsageEnvironment - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4B1.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /I ".\include" /I "..\UsageEnvironment\include" /I "..\groupsock\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /Fp"Release/BasicUsageEnvironment.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"F:\live\BasicUsageEnvironment\BasicHashTable.cpp"
+"F:\live\BasicUsageEnvironment\BasicTaskScheduler.cpp"
+"F:\live\BasicUsageEnvironment\BasicTaskScheduler0.cpp"
+"F:\live\BasicUsageEnvironment\BasicUsageEnvironment.cpp"
+"F:\live\BasicUsageEnvironment\BasicUsageEnvironment0.cpp"
+"F:\live\BasicUsageEnvironment\DelayQueue.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4B1.tmp" 
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4B2.tmp" with contents
+[
+/nologo /out:"..\lib\Release\BasicUsageEnvironment.lib" 
+.\Release\BasicHashTable.obj
+.\Release\BasicTaskScheduler.obj
+.\Release\BasicTaskScheduler0.obj
+.\Release\BasicUsageEnvironment.obj
+.\Release\BasicUsageEnvironment0.obj
+.\Release\DelayQueue.obj
+]
+Creating command line "link.exe -lib @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4B2.tmp"
+<h3>Output Window</h3>
+Compiling...
+BasicHashTable.cpp
+BasicTaskScheduler.cpp
+BasicTaskScheduler0.cpp
+BasicUsageEnvironment.cpp
+BasicUsageEnvironment0.cpp
+DelayQueue.cpp
+Creating library...
+
+
+
+<h3>Results</h3>
+BasicUsageEnvironment.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

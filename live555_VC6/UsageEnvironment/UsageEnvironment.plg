@@ -1,0 +1,31 @@
+<html>
+<body>
+<pre>
+<h1>Build Log</h1>
+<h3>
+--------------------Configuration: UsageEnvironment - Win32 Release--------------------
+</h3>
+<h3>Command Lines</h3>
+Creating temporary file "C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4B4.tmp" with contents
+[
+/nologo /ML /W3 /GX /O2 /I ".\include" /I "..\groupsock\include" /I "..\BasicUsageEnvironment\include" /D "WIN32" /D "NDEBUG" /D "_MBCS" /D "_LIB" /Fp"Release/UsageEnvironment.pch" /YX /Fo"Release/" /Fd"Release/" /FD /c 
+"F:\live\UsageEnvironment\UsageEnvironment.cpp"
+"F:\live\UsageEnvironment\strDup.cpp"
+"F:\live\UsageEnvironment\HashTable.cpp"
+]
+Creating command line "cl.exe @C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\RSP4B4.tmp" 
+Creating command line "link.exe -lib /nologo /out:"..\lib\Release\UsageEnvironment.lib"  .\Release\UsageEnvironment.obj .\Release\strDup.obj .\Release\HashTable.obj "
+<h3>Output Window</h3>
+Compiling...
+UsageEnvironment.cpp
+strDup.cpp
+HashTable.cpp
+Creating library...
+
+
+
+<h3>Results</h3>
+UsageEnvironment.lib - 0 error(s), 0 warning(s)
+</pre>
+</body>
+</html>

@@ -581,13 +581,13 @@ void MainWindow::OnRbSyncXClicked( )
     LedControll::ECommand eCmd;
 
     switch ( nIndex ) {
-    case 1 :
+    case 2 :
     case 4 :
     case 7 :
         eCmd = LedControll::CmdSyncModeDownTrigger;
         break;
 
-    case 2 :
+    case 1 :
     case 5 :
     case 8 :
         eCmd = LedControll::CmdSyncModeUpTrigger;

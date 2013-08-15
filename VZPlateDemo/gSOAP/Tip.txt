@@ -1,0 +1,15 @@
+ws-discovery的组播地址和端口就是为239.255.255.250和3702
+
+wsdl2h.exe -s -t WS-typemap.dat -o Media.h http://www.onvif.org/onvif/ver10/media/wsdl/media.wsdl http://www.w3.org/2006/03/addressing/ws-addr.xsd
+soapcpp2.exe -2 -L -x -C Media.h -dcode -Iimport
+
+wsdl2h -s -t WS-typemap.dat -o onvif.h http://www.onvif.org/onvif/ver10/device/wsdl/devicemgmt.wsdl http://www.onvif.org/onvif/ver10/event/wsdl/event.wsdl http://www.onvif.org/onvif/ver10/display.wsdl http://www.onvif.org/onvif/ver10/deviceio.wsdl http://www.onvif.org/onvif/ver20/imaging/wsdl/imaging.wsdl http://www.onvif.org/onvif/ver10/media/wsdl/media.wsdl http://www.onvif.org/onvif/ver20/ptz/wsdl/ptz.wsdl  http://www.onvif.org/onvif/ver10/receiver.wsdl http://www.onvif.org/onvif/ver10/recording.wsdl  http://www.onvif.org/onvif/ver10/search.wsdl http://www.onvif.org/onvif/ver10/network/wsdl/remotediscovery.wsdl http://www.onvif.org/onvif/ver10/replay.wsdl http://www.onvif.org/onvif/ver20/analytics/wsdl/analytics.wsdl http://www.onvif.org/onvif/ver10/analyticsdevice.wsdl
+
+soapcpp2.exe -2 -L -x -C onvif.h -dcode -Iimport
+
+
+Doxygen
+wsdl2h -o outfile.h infile.wsdl
+wsdl2h -o XMethodsQuery.h http://www.xmethods.net/wsdl/query.wsdl
+
+wsdl2h.exe   -t WS-typemap.dat -o onvif.h      devicemgmt.wsdl event.wsdl display.wsdl deviceio.wsdl imaging.wsdl media.wsdl ptz.wsdl receiver.wsdl recording.wsdl search.wsdl remotediscovery.wsdl replay.wsdl analytics.wsdl analyticsdevice.wsdl

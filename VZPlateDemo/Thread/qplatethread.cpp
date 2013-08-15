@@ -215,8 +215,12 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
     BOOL bRet = LPR_FileEx( pFile, pPath, result, nNum, &rcRange, nChannel + 1 );
     QStringList lstResult;
 
-    if ( !bRet ) {
+    if ( !bRet || 0 == nNum ) {
         nNum = 1;
+
+        if ( 0 == nNum ) {
+            bRet = false;
+        }
     }
 
     GetResultInfo( lstResult, strFile, bRet, nNum, result );

@@ -23,6 +23,10 @@ CDeviceConfig::CDeviceConfig(QWidget* mainWnd, QWidget *parent) :
     pCurItem = NULL;
     pMenu = NULL;
 
+    pSetting = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+    bNocardMode = pSetting->value( "CommonCfg/SenseOpenGate", false ).toBool( ) &&
+            pSetting->value( "CommonCfg/NoCardWork", false ).toBool( );
+
     pSetting = CCommonFunction::GetSettings( CommonDataType::CfgDevice );
     //ReadFile( );
 
@@ -78,8 +82,13 @@ void CDeviceConfig::SaveTree( CommonDataType::DatabaseOperation operate, QTreeWi
         // tcc update parkinfo
         // kzp update roadconerinfo
         if ( TCC == data.strDevType ) {
-            strSql = QString( "Update parkinfo Set parkname = '%1', parknum = %2 Where shebeiid = %3" ).arg(
-                               data.strDevName, data.strParkNum, data.strDevID );
+            if ( data.bNocardMode ) {
+                strSql = QString( "Update parkinfo Set parkname = '%1', parknum = %2, usedSpace = %3 Where shebeiid = %4" ).arg(
+                                   data.strDevName, data.strParkNum, data.strParkNocardNum, data.strDevID );
+            } else {
+                strSql = QString( "Update parkinfo Set parkname = '%1', parknum = %2 Where shebeiid = %3" ).arg(
+                                   data.strDevName, data.strParkNum, data.strDevID );
+            }
         } else if ( KZQ == data.strDevType ) {
             strSql = QString( "Update roadconerinfo Set shebeiname = '%1', shebeiadr = %2, \
                               video1ip = '%3', video2ip = '%4' Where shebeiid = %5" ).arg(
@@ -108,18 +117,18 @@ void CDeviceConfig::BuildTree( int nID, QTreeWidgetItem& tvNode )
     // select distinct level from treeview
     // Select parkname,parkindex, parknum,shebeiid From parkinfo
     static const char* pszFormat = "Select shebeiname, shebeiid, parentid, \
-                                   shebeikind, parknum, parkname, tmp \
-            From ( select a.shebeiname, a.shebeiid, a.parentid, A.shebeikind, b.parknum, b.parkname, 'tmp' \
+                                   shebeikind, parknum, parkname, tmp, usedSpace \
+            From ( select a.shebeiname, a.shebeiid, a.parentid, A.shebeikind, b.parknum, b.parkname, 'tmp', usedSpace \
                                           from treeview as a, parkinfo as b \
                                           where a.shebeiid = b.shebeiid And a.shebeikind = 'tcc' \
                                           union \
                                           select a.shebeiname, a.shebeiid, a.parentid, a.shebeikind, \
-                                          b.shebeiadr as parknum, b.video1ip as parkname, b.video2ip as tmp \
+                   b.shebeiadr as parknum, b.video1ip as parkname, b.video2ip as tmp, '0' as usedSpace \
                                           from treeview a, roadconerinfo b \
                                           where a.shebeiid = b.shebeiid And a.shebeikind = 'kzq' ) as tmpTbale \
                                    Where tmpTbale.parentid = %d"; //1 Begin
 
-    static const int nCols = 7;
+    static const int nCols = 8;
 
     QStringList lstNodes;
     QString strSqlNodes;
@@ -151,6 +160,7 @@ void CDeviceConfig::BuildTree( int nID, QTreeWidgetItem& tvNode )
         pData->strParkNum = lstNodes[ nField++ ];
         pData->strHostIP = lstNodes[ nField++ ];
         pData->strIPCIP = lstNodes[ nField++ ];
+        pData->strParkNocardNum = lstNodes[ nField++ ];
 
         pChild->setData( 0, Qt::ToolTipRole, pData->strParkNum );
         pChild->setText( 0, strText );
@@ -260,11 +270,23 @@ void CDeviceConfig::ModifyAttribute( )
         dlg.SpaceNumber( nSpace, bGet );
         dlg.ParkName( data.strDevName, bGet );
 
+        if ( bNocardMode ) {
+            nSpace = data.strParkNocardNum.toInt( );
+            dlg.SpaceNocardNumber( nSpace, bGet );
+        }
+
         if ( CSpaceDialog::Accepted == dlg.exec( ) ) {
             bGet = true;
             dlg.SpaceNumber( nSpace, bGet );
             data.strParkNum = QString::number( nSpace );
             dlg.ParkName( data.strDevName, bGet );
+
+            if ( bNocardMode ) {
+                data.bNocardMode = bNocardMode;
+                dlg.SpaceNocardNumber( nSpace, bGet );
+                data.strParkNocardNum = QString::number( nSpace );
+            }
+
             bSave = true;
         }
     } else if ( Controller == type ) {

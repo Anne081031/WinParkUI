@@ -1,5 +1,25 @@
 P42
 
+ES--Elementary  Streams  (原始流)是直接从编码器出来的数据流
+PES--Packetized  Elementary Streams  (分组的ES)，ES形成的分组称为PES分组，是用来传递ES的一种数据结构。
+PS 和TS流 ProgramStream包结构是可变长度 TransportStream固定长度的包结构
+LIBRTP、 JRTPLIB、Live555 JVIOPLIB JTHREAD.RTP/RTCP RTSP SDP SIP HTTP SRTP & SRTCP
+
+http://www.ffmpeg.org/ FFmpeg是一个开源免费跨平台的视频和音频流方案
+libsdl 
+
+IEEE 802.11系列 无线通信协议
+Wi-Fi AP(Access Point 热点 接入点) SSID(Service Set Identifier 热点名) 无线路由器为例 Wi-Fi是终端以无线方式互相连接的技术，改善基于IEEE802.11标准的无线网路产品之间的互通性
+SADP 
+Hello Bye Message, DP
+
+ONVIF CLinet---Local Proxy---Remote Proxy---ONVIF Server
+Commands:
+GetWsdlUrl GetCapabilities GetServices GetServiceCapabilities GetHostname SetHostname SetHostnameFromDHCP GetDNS SetDNS GetNTP SetNTP GetDynamicDNS SetDynamicDNS GetNetworkInterfaces SetNetworkInterfaces GetNetworkProtocols SetNetworkProtocols GetNetworkDefaultGateway SetNetworkDefaultGateway GetZeroConfiguration SetZeroConfiguration GetIPAddressFilter SetIPAddressFilter AddIPAddressFilter  RemoveIPAddressFilter GetDeviceInformation GetSystemUris GetSystemBackup RestoreSystem StartSystemRestore GetSystemDateAndTime SetSystemDateAndTime SetSystemFactoryDefault UpgradeSystemFirmware StartFirmwareUpgrade GetSystemLog GetSystemSupportInformation SystemReboot GetScopes SetScopes AddScopes RemoveScopes GetDiscoveryMode SetDiscoveryMode GetRemoteDiscoveryMode SetRemoteDiscoveryMode GetDPAddresses SetDPAddresses GetAccessPolicy SetAccessPolicy GetUsers CreateUsers DeleteUsers SetUser GetRemoteUser SetRemoteUser GetEndpointReference GetRelayOutputs SetRelayOutputSettings SetRelayOutputState 
+
+RTSP流
+GetProfiles GetStreamUri  
+
 http://www.onvif.org/onvif/ver10/schema/onvif.xsd
 
 /////////////////////////////
@@ -49,5 +69,7 @@ The device is a service provider.
 The client is a service requester.
 
 //////////////////
+Get WSDL File --->gSOAP Compiler--->C++ .h .cpp file--->Bussiness Implementation-->Publish
+
 WebService XML XSD WSDL UDDI SOAP HTTP gSOAP
 http://www.cs.fsu.edu/~engelen/soap.html gSOAP c/c++ 开发WebService利器

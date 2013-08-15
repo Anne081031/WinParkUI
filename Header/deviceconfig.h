@@ -45,6 +45,7 @@ private:
     QTreeWidgetItem* pCurItem;
     QList< QAction* > actMenu;
     QSettings* pSetting;
+    bool bNocardMode;
 
 public:
     typedef enum __ItemType {
@@ -61,6 +62,8 @@ public:
         QString strParkNum;
         QString strHostIP;
         QString strIPCIP;
+        QString strParkNocardNum;
+        bool bNocardMode;
 
         __NodeData( bool bPark = true )
         {
@@ -69,8 +72,10 @@ public:
             strParentID = "0";
             strDevType = "tcc";
             strParkNum = bPark ? "88" : "0";
+            strParkNocardNum = "0";
             strHostIP = CCommonFunction::GetHostIP( );
             strIPCIP = CCommonFunction::GetHostIP( );
+            bNocardMode = false;
         }
     } NodeData, *PNodeData;
 

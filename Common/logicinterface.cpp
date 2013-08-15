@@ -594,6 +594,10 @@ int CLogicInterface::ExecuteSql(QString &strSql, bool bHistory )
 
 int CLogicInterface::ExecuteSql( QString &strSql, QStringList &lstRow, bool bHistory )
 {
+    if( strSql.isEmpty( ) ) {
+        return 0;
+    }
+
     return InnerExcuteSql( strSql, true, &lstRow, bHistory );
 }
 

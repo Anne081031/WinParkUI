@@ -10,6 +10,7 @@ CSpaceDialog::CSpaceDialog(QWidget *parent) :
 
     CCommonFunction::ControlSysMenu( *this );
     CCommonFunction::SetWindowIcon( this );
+    ui->spNocardSpace->setEnabled( false );
 }
 
 CSpaceDialog::~CSpaceDialog()
@@ -23,6 +24,16 @@ void CSpaceDialog::SpaceNumber( int &nSpace, bool bGet )
         nSpace = ui->spSpace->value( );
     } else {
         ui->spSpace->setValue( nSpace );
+    }
+}
+
+void CSpaceDialog::SpaceNocardNumber( int &nSpace, bool bGet )
+{
+    if ( bGet ) {
+        nSpace = ui->spNocardSpace->value( );
+    } else {
+        ui->spNocardSpace->setEnabled( true );
+        ui->spNocardSpace->setValue( nSpace );
     }
 }
 

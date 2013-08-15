@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'spacedialog.ui'
 **
-** Created: Mon Jul 29 16:02:10 2013
+** Created: Mon Aug 12 12:04:16 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -29,54 +29,57 @@ QT_BEGIN_NAMESPACE
 class Ui_CSpaceDialog
 {
 public:
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *btnOK;
     QPushButton *pushButton_2;
-    QWidget *widget1;
+    QWidget *layoutWidget1;
     QVBoxLayout *verticalLayout;
     QHBoxLayout *horizontalLayout_2;
     QLabel *label_2;
     QLineEdit *edtName;
+    QHBoxLayout *horizontalLayout_4;
+    QLabel *label_3;
+    QSpinBox *spSpace;
     QHBoxLayout *horizontalLayout_3;
     QLabel *label;
-    QSpinBox *spSpace;
+    QSpinBox *spNocardSpace;
 
     void setupUi(QDialog *CSpaceDialog)
     {
         if (CSpaceDialog->objectName().isEmpty())
             CSpaceDialog->setObjectName(QString::fromUtf8("CSpaceDialog"));
-        CSpaceDialog->resize(183, 115);
-        widget = new QWidget(CSpaceDialog);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(12, 78, 158, 25));
-        horizontalLayout = new QHBoxLayout(widget);
+        CSpaceDialog->resize(215, 134);
+        layoutWidget = new QWidget(CSpaceDialog);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(12, 100, 158, 25));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        btnOK = new QPushButton(widget);
+        btnOK = new QPushButton(layoutWidget);
         btnOK->setObjectName(QString::fromUtf8("btnOK"));
 
         horizontalLayout->addWidget(btnOK);
 
-        pushButton_2 = new QPushButton(widget);
+        pushButton_2 = new QPushButton(layoutWidget);
         pushButton_2->setObjectName(QString::fromUtf8("pushButton_2"));
 
         horizontalLayout->addWidget(pushButton_2);
 
-        widget1 = new QWidget(CSpaceDialog);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(10, 10, 161, 52));
-        verticalLayout = new QVBoxLayout(widget1);
+        layoutWidget1 = new QWidget(CSpaceDialog);
+        layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
+        layoutWidget1->setGeometry(QRect(10, 10, 196, 80));
+        verticalLayout = new QVBoxLayout(layoutWidget1);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
         horizontalLayout_2 = new QHBoxLayout();
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
-        label_2 = new QLabel(widget1);
+        label_2 = new QLabel(layoutWidget1);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         horizontalLayout_2->addWidget(label_2);
 
-        edtName = new QLineEdit(widget1);
+        edtName = new QLineEdit(layoutWidget1);
         edtName->setObjectName(QString::fromUtf8("edtName"));
 
         horizontalLayout_2->addWidget(edtName);
@@ -84,18 +87,35 @@ public:
 
         verticalLayout->addLayout(horizontalLayout_2);
 
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setObjectName(QString::fromUtf8("horizontalLayout_4"));
+        label_3 = new QLabel(layoutWidget1);
+        label_3->setObjectName(QString::fromUtf8("label_3"));
+
+        horizontalLayout_4->addWidget(label_3);
+
+        spSpace = new QSpinBox(layoutWidget1);
+        spSpace->setObjectName(QString::fromUtf8("spSpace"));
+        spSpace->setMaximum(999999999);
+
+        horizontalLayout_4->addWidget(spSpace);
+
+
+        verticalLayout->addLayout(horizontalLayout_4);
+
         horizontalLayout_3 = new QHBoxLayout();
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
-        label = new QLabel(widget1);
+        label = new QLabel(layoutWidget1);
         label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout_3->addWidget(label);
 
-        spSpace = new QSpinBox(widget1);
-        spSpace->setObjectName(QString::fromUtf8("spSpace"));
-        spSpace->setMaximum(999999999);
+        spNocardSpace = new QSpinBox(layoutWidget1);
+        spNocardSpace->setObjectName(QString::fromUtf8("spNocardSpace"));
+        spNocardSpace->setEnabled(false);
+        spNocardSpace->setMaximum(999999999);
 
-        horizontalLayout_3->addWidget(spSpace);
+        horizontalLayout_3->addWidget(spNocardSpace);
 
 
         verticalLayout->addLayout(horizontalLayout_3);
@@ -112,7 +132,8 @@ public:
         btnOK->setText(QApplication::translate("CSpaceDialog", "\347\241\256\345\256\232", 0, QApplication::UnicodeUTF8));
         pushButton_2->setText(QApplication::translate("CSpaceDialog", "\345\217\226\346\266\210", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("CSpaceDialog", "\345\220\215\347\247\260\357\274\232", 0, QApplication::UnicodeUTF8));
-        label->setText(QApplication::translate("CSpaceDialog", "\350\275\246\344\275\215\357\274\232", 0, QApplication::UnicodeUTF8));
+        label_3->setText(QApplication::translate("CSpaceDialog", "\346\200\273\350\275\246\344\275\215\357\274\232", 0, QApplication::UnicodeUTF8));
+        label->setText(QApplication::translate("CSpaceDialog", "\346\227\240\345\215\241\346\250\241\345\274\217\345\267\262\347\224\250\350\275\246\344\275\215\357\274\232", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

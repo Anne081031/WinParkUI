@@ -14,6 +14,7 @@ VZMainWindow::VZMainWindow(QWidget *parent) :
     connect( QPlateThread::GetInstance( ), SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
              this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
     QCommon::GetPlatePicPath( strPlateDir );
+    LoadLogoTitle( );
 
     aLables[ 0 ] = ui->lblVideo0;
     aLables[ 1 ] = ui->lblVideo1;
@@ -32,6 +33,32 @@ VZMainWindow::VZMainWindow(QWidget *parent) :
 VZMainWindow::~VZMainWindow()
 {
     delete ui;
+}
+
+void VZMainWindow::LoadLogoTitle( )
+{
+    QString strPath;
+    QString strNameFilter = "logo_*.*";
+    QDir dir( strPath, strNameFilter, QDir::Unsorted, QDir::NoDotAndDotDot | QDir::Files );
+
+    QFileInfoList lstFiles = dir.entryInfoList( );
+
+    if ( 0 == lstFiles.count( ) ) {
+        return;
+    }
+
+    const QFileInfo& fileInfo = lstFiles.at( 0 );
+    QString strFile = fileInfo.absoluteFilePath( );
+
+    QIcon winIcon( strFile );
+    setWindowIcon( winIcon );
+
+    QPixmap lblPic( strFile );
+    ui->lblPicture->setPixmap( lblPic );
+
+    QString strSuffix = "." + fileInfo.suffix( ).toLower( );
+    strSuffix = fileInfo.baseName( ).toLower( ).remove( "logo_" ).remove( strSuffix );
+    setWindowTitle( strSuffix );
 }
 
 void VZMainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool bSuccess, bool bVideo )
@@ -96,7 +123,13 @@ void VZMainWindow::LoadImg( QLabel *lblCtrlLeft, QLabel *lblCtrlRight, QLabel* l
 {
     QTableWidget* tabWid = ui->tabResult;
     int nCol = tabWid->columnCount( ) - 1;
-    QString strFile = tabWid->item( nRow, nCol - 2 )->text( );
+    QTableWidgetItem* pItem = tabWid->item( nRow, nCol - 2 );
+
+    if ( NULL == pItem ) {
+        return;
+    }
+
+    QString strFile = pItem->text( );
 
     if ( strFile.isEmpty( ) ) {
         return;

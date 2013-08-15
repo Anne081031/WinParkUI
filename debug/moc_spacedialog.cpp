@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'spacedialog.h'
 **
-** Created: Mon Jul 29 16:22:55 2013
+** Created: Mon Aug 12 12:05:04 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

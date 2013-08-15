@@ -3680,7 +3680,7 @@ bool CProcessData::WriteData( QByteArray &byData )
         QString strData( byData.toHex( ) );
         qDebug( ) << "Write Serial Port Cmd : " << strData << endl;
 #endif
-       Sleep( 700 );
+       Sleep( 500 );
     }
 #endif
 

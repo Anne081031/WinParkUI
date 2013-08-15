@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'vzmainwindow.ui'
 **
-** Created: Fri Jul 26 14:04:43 2013
+** Created: Mon Aug 12 10:23:28 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -50,8 +50,8 @@ public:
     {
         if (VZMainWindow->objectName().isEmpty())
             VZMainWindow->setObjectName(QString::fromUtf8("VZMainWindow"));
-        VZMainWindow->resize(1221, 762);
-        VZMainWindow->setMinimumSize(QSize(1221, 762));
+        VZMainWindow->resize(1221, 662);
+        VZMainWindow->setMinimumSize(QSize(1221, 662));
         VZMainWindow->setMaximumSize(QSize(1221, 762));
         QIcon icon;
         icon.addFile(QString::fromUtf8(":/Imgs/logo.jpg"), QSize(), QIcon::Normal, QIcon::Off);
@@ -97,10 +97,10 @@ public:
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
         tabResult->setHorizontalHeaderItem(9, __qtablewidgetitem9);
         tabResult->setObjectName(QString::fromUtf8("tabResult"));
-        tabResult->setGeometry(QRect(870, 340, 341, 411));
+        tabResult->setGeometry(QRect(870, 340, 341, 281));
         lblVideo0 = new QLabel(centralWidget);
         lblVideo0->setObjectName(QString::fromUtf8("lblVideo0"));
-        lblVideo0->setGeometry(QRect(10, 10, 421, 341));
+        lblVideo0->setGeometry(QRect(10, 10, 421, 300));
         lblVideo0->setAutoFillBackground(true);
         lblVideo0->setFrameShape(QFrame::Panel);
         lblVideo0->setFrameShadow(QFrame::Sunken);
@@ -112,7 +112,7 @@ public:
         lblVideo0->setTextInteractionFlags(Qt::NoTextInteraction);
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 730, 649, 25));
+        layoutWidget->setGeometry(QRect(10, 630, 649, 25));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -166,7 +166,7 @@ public:
 
         lblVideo1 = new QLabel(centralWidget);
         lblVideo1->setObjectName(QString::fromUtf8("lblVideo1"));
-        lblVideo1->setGeometry(QRect(440, 10, 421, 341));
+        lblVideo1->setGeometry(QRect(440, 10, 421, 300));
         lblVideo1->setAutoFillBackground(true);
         lblVideo1->setFrameShape(QFrame::Panel);
         lblVideo1->setFrameShadow(QFrame::Sunken);
@@ -178,7 +178,7 @@ public:
         lblVideo1->setTextInteractionFlags(Qt::NoTextInteraction);
         lblVideo2 = new QLabel(centralWidget);
         lblVideo2->setObjectName(QString::fromUtf8("lblVideo2"));
-        lblVideo2->setGeometry(QRect(10, 360, 421, 341));
+        lblVideo2->setGeometry(QRect(10, 320, 421, 300));
         lblVideo2->setAutoFillBackground(true);
         lblVideo2->setFrameShape(QFrame::Panel);
         lblVideo2->setFrameShadow(QFrame::Sunken);
@@ -190,7 +190,7 @@ public:
         lblVideo2->setTextInteractionFlags(Qt::NoTextInteraction);
         lblVideo3 = new QLabel(centralWidget);
         lblVideo3->setObjectName(QString::fromUtf8("lblVideo3"));
-        lblVideo3->setGeometry(QRect(440, 360, 421, 341));
+        lblVideo3->setGeometry(QRect(440, 320, 421, 300));
         lblVideo3->setAutoFillBackground(true);
         lblVideo3->setFrameShape(QFrame::Panel);
         lblVideo3->setFrameShadow(QFrame::Sunken);
