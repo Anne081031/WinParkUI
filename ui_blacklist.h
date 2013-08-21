@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'blacklist.ui'
 **
-** Created: Mon Aug 19 11:18:48 2013
+** Created: Wed Aug 21 16:56:36 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -39,6 +39,7 @@ public:
     QPushButton *btnOk;
     QPushButton *btnCancel;
     QPushButton *btnLocation;
+    QPushButton *btnRefresh;
     QPushButton *btnMinimalize;
     QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_2;
@@ -123,6 +124,11 @@ public:
         btnLocation->setObjectName(QString::fromUtf8("btnLocation"));
 
         horizontalLayout->addWidget(btnLocation);
+
+        btnRefresh = new QPushButton(layoutWidget);
+        btnRefresh->setObjectName(QString::fromUtf8("btnRefresh"));
+
+        horizontalLayout->addWidget(btnRefresh);
 
         btnMinimalize = new QPushButton(layoutWidget);
         btnMinimalize->setObjectName(QString::fromUtf8("btnMinimalize"));
@@ -211,6 +217,7 @@ public:
         btnOk->setText(QApplication::translate("CBlacklist", "\347\241\256\350\256\244", 0, QApplication::UnicodeUTF8));
         btnCancel->setText(QApplication::translate("CBlacklist", "\345\217\226\346\266\210", 0, QApplication::UnicodeUTF8));
         btnLocation->setText(QApplication::translate("CBlacklist", "\346\237\245\346\211\276", 0, QApplication::UnicodeUTF8));
+        btnRefresh->setText(QApplication::translate("CBlacklist", "\345\210\267\346\226\260", 0, QApplication::UnicodeUTF8));
         btnMinimalize->setText(QApplication::translate("CBlacklist", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("CBlacklist", "\350\275\246\347\211\214\357\274\232", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("CBlacklist", "\350\275\246\345\236\213\357\274\232", 0, QApplication::UnicodeUTF8));

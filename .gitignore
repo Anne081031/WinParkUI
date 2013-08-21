@@ -5,6 +5,7 @@
 
 # Compiled Dynamic libraries
 *.so
+ParkUI.exe
 
 # Compiled Static libraries
 *.lai

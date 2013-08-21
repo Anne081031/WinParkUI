@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'blacklist.h'
 **
-** Created: Mon Aug 19 11:42:02 2013
+** Created: Wed Aug 21 16:57:12 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CBlacklist[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      10,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -41,6 +41,7 @@ static const uint qt_meta_data_CBlacklist[] = {
      192,   11,   11,   11, 0x08,
      226,  215,   11,   11, 0x08,
      265,   11,   11,   11, 0x08,
+     290,   11,   11,   11, 0x08,
 
        0        // eod
 };
@@ -54,6 +55,7 @@ static const char qt_meta_stringdata_CBlacklist[] = {
     "on_btnCancel_clicked()\0row,column\0"
     "on_tableBlacklist_cellClicked(int,int)\0"
     "on_btnLocation_clicked()\0"
+    "on_btnRefresh_clicked()\0"
 };
 
 const QMetaObject CBlacklist::staticMetaObject = {
@@ -95,9 +97,10 @@ int CBlacklist::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 7: on_btnCancel_clicked(); break;
         case 8: on_tableBlacklist_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 9: on_btnLocation_clicked(); break;
+        case 10: on_btnRefresh_clicked(); break;
         default: ;
         }
-        _id -= 10;
+        _id -= 11;
     }
     return _id;
 }
