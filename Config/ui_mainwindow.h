@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created: Fri Aug 2 12:50:16 2013
+** Created: Fri Aug 16 11:18:12 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -148,6 +148,7 @@ public:
     QLineEdit *edtParkID;
     QCheckBox *chkBroadcastData;
     QCheckBox *chkNoCard;
+    QCheckBox *chkBlacklist;
     QGroupBox *groupBox_9;
     QWidget *layoutWidget8;
     QHBoxLayout *horizontalLayout_12;
@@ -651,40 +652,43 @@ public:
         groupBox_8->setGeometry(QRect(290, 10, 231, 161));
         chkOpenGate = new QCheckBox(groupBox_8);
         chkOpenGate->setObjectName(QString::fromUtf8("chkOpenGate"));
-        chkOpenGate->setGeometry(QRect(10, 43, 211, 16));
+        chkOpenGate->setGeometry(QRect(10, 31, 211, 16));
         edtLedCan = new QLineEdit(groupBox_8);
         edtLedCan->setObjectName(QString::fromUtf8("edtLedCan"));
-        edtLedCan->setGeometry(QRect(140, 20, 81, 20));
+        edtLedCan->setGeometry(QRect(140, 10, 81, 20));
         label_19 = new QLabel(groupBox_8);
         label_19->setObjectName(QString::fromUtf8("label_19"));
-        label_19->setGeometry(QRect(10, 20, 121, 20));
+        label_19->setGeometry(QRect(10, 10, 121, 20));
         chkCapture = new QCheckBox(groupBox_8);
         chkCapture->setObjectName(QString::fromUtf8("chkCapture"));
-        chkCapture->setGeometry(QRect(10, 74, 211, 16));
+        chkCapture->setGeometry(QRect(10, 62, 211, 16));
         label_24 = new QLabel(groupBox_8);
         label_24->setObjectName(QString::fromUtf8("label_24"));
-        label_24->setGeometry(QRect(180, 92, 24, 20));
+        label_24->setGeometry(QRect(180, 80, 24, 20));
         label_25 = new QLabel(groupBox_8);
         label_25->setObjectName(QString::fromUtf8("label_25"));
-        label_25->setGeometry(QRect(12, 92, 111, 20));
+        label_25->setGeometry(QRect(12, 80, 111, 20));
         spRemoteTime = new QSpinBox(groupBox_8);
         spRemoteTime->setObjectName(QString::fromUtf8("spRemoteTime"));
-        spRemoteTime->setGeometry(QRect(132, 92, 42, 20));
+        spRemoteTime->setGeometry(QRect(132, 80, 42, 20));
         spRemoteTime->setMinimum(0);
         spRemoteTime->setMaximum(10000);
         spRemoteTime->setValue(0);
         label_29 = new QLabel(groupBox_8);
         label_29->setObjectName(QString::fromUtf8("label_29"));
-        label_29->setGeometry(QRect(11, 120, 54, 12));
+        label_29->setGeometry(QRect(11, 105, 54, 12));
         edtParkID = new QLineEdit(groupBox_8);
         edtParkID->setObjectName(QString::fromUtf8("edtParkID"));
-        edtParkID->setGeometry(QRect(76, 117, 141, 20));
+        edtParkID->setGeometry(QRect(76, 102, 141, 20));
         chkBroadcastData = new QCheckBox(groupBox_8);
         chkBroadcastData->setObjectName(QString::fromUtf8("chkBroadcastData"));
-        chkBroadcastData->setGeometry(QRect(13, 140, 141, 16));
+        chkBroadcastData->setGeometry(QRect(13, 123, 141, 16));
         chkNoCard = new QCheckBox(groupBox_8);
         chkNoCard->setObjectName(QString::fromUtf8("chkNoCard"));
-        chkNoCard->setGeometry(QRect(10, 59, 211, 16));
+        chkNoCard->setGeometry(QRect(10, 47, 211, 16));
+        chkBlacklist = new QCheckBox(groupBox_8);
+        chkBlacklist->setObjectName(QString::fromUtf8("chkBlacklist"));
+        chkBlacklist->setGeometry(QRect(13, 140, 151, 16));
         groupBox_9 = new QGroupBox(centralWidget);
         groupBox_9->setObjectName(QString::fromUtf8("groupBox_9"));
         groupBox_9->setGeometry(QRect(30, 290, 230, 171));
@@ -972,6 +976,7 @@ public:
         label_29->setText(QApplication::translate("MainWindow", "\345\201\234\350\275\246\345\234\272ID", 0, QApplication::UnicodeUTF8));
         chkBroadcastData->setText(QApplication::translate("MainWindow", "\346\230\257\345\220\246\345\271\277\346\222\255\350\277\233\345\207\272\350\256\260\345\275\225", 0, QApplication::UnicodeUTF8));
         chkNoCard->setText(QApplication::translate("MainWindow", "\346\227\240\345\215\241\345\267\245\344\275\234\346\250\241\345\274\217 \351\235\236\346\234\210\347\247\237\350\275\246\346\224\266\350\264\271", 0, QApplication::UnicodeUTF8));
+        chkBlacklist->setText(QApplication::translate("MainWindow", "\345\274\200\345\220\257\351\273\221\345\220\215\345\215\225\346\243\200\346\237\245", 0, QApplication::UnicodeUTF8));
         groupBox_9->setTitle(QApplication::translate("MainWindow", "\350\275\246\347\211\214\350\257\206\345\210\253\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
         label_12->setText(QApplication::translate("MainWindow", "\347\254\254\344\270\200\350\267\257\350\247\206\351\242\221\346\265\201\350\257\206\345\210\253\345\256\236\346\227\266\346\230\276\347\244\272\357\274\232", 0, QApplication::UnicodeUTF8));
         chkPlateReal1->setText(QString());

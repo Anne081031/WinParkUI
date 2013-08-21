@@ -4,14 +4,18 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui phonon
 
 INCLUDEPATH += ../VehicleLicense/WinTone
 INCLUDEPATH += ../Multimedia/HikSDK
 INCLUDEPATH += ../Multimedia/TmSDK
+INCLUDEPATH += ../HKIPC/inc
+INCLUDEPATH += ../JWSIPC/inc
 
 LIBS += ../lib/libLPKernelEx.a
 LIBS += ../lib/libDs40xxSDK.a
+LIBS += ../HKIPC/lib/libHCNetSDK.a
+LIBS += ../JWSIPC/lib/libtmControlClient.a
 
 TARGET = VZPlateDemo
 TEMPLATE = app
@@ -31,7 +35,12 @@ SOURCES += main.cpp\
     Thread/qhkcapturecardthread.cpp \
     Thread/qtmcapturecardthread.cpp \
     Thread/qdhkipcthread.cpp \
-    Thread/qjvsipcthread.cpp
+    Thread/qjvsipcthread.cpp \
+    Thread/qonvifthread.cpp \
+    blacklistmainwindow.cpp \
+    cconfigurator.cpp \
+    cdlgblacklist.cpp \
+    cdlgconfig.cpp
 
 HEADERS  += VZMainWindow.h \
     Thread/qplatethread.h \
@@ -46,9 +55,16 @@ HEADERS  += VZMainWindow.h \
     Thread/qhkcapturecardthread.h \
     Thread/qtmcapturecardthread.h \
     Thread/qdhkipcthread.h \
-    Thread/qjvsipcthread.h
+    Thread/qjvsipcthread.h \
+    Thread/qonvifthread.h \
+    blacklistmainwindow.h \
+    cconfigurator.h \
+    cdlgblacklist.h \
+    cdlgconfig.h
 
-FORMS    += vzmainwindow.ui
+FORMS    += vzmainwindow.ui \
+    blacklistmainwindow.ui \
+    cdlgblacklist.ui \
+    cdlgconfig.ui
 
-RESOURCES += \
-    Resource.qrc
+RESOURCES +=

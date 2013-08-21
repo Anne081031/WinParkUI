@@ -26,6 +26,18 @@ public:
         CameraCaptureImage //ץͼ
     } CameraEventType;
 
+    typedef enum __IPCEventType {
+        IPCStartup = User,
+        IPCSetConnectTimeout,
+        IPCSetReconnectTime,
+        IPCLogin,
+        IPCCaptureJPG,
+        IPCStartRealPlay,
+        IPCStopRealPlay,
+        IPCLogout,
+        IPCCleanup
+    } IPCEventType;
+
 public:
     explicit QCameraEvent( Type evtType );
 
@@ -41,8 +53,14 @@ public:
     void SetImgFile( QString& strFile );
     QString& GetImgFile( );
 
+    void SetIpcIp( QString& strIP );
+    QString& GetIpcIp( );
+
     void SetRecognize( bool bRecog );
     bool GetRecognize( );
+
+    void SetMainStream( bool bMain );
+    bool GetMainStream( );
 
 private:
     int nChannelNumber;
@@ -50,6 +68,8 @@ private:
     HWND hParentWnd;
     QString strImgFile;
     bool bRecognize;
+    bool bMainStream;
+    QString strIPCIP;
 };
 
 #endif // QCAMERAEVENT_H

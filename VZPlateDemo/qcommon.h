@@ -4,6 +4,8 @@
 #include <QObject>
 #include <QTextCodec>
 #include <QDebug>
+#include <QMessageBox>
+#include <phonon/phonon>
 
 #define CHANNEL_WAY ( int ) 4
 #define VIDEO_WIDTH   ( int ) ( 720 )
@@ -15,6 +17,8 @@ class QCommon : public QObject
 public:
     static QTextCodec* GetTextCodec( );
     static void GetPlatePicPath( QString& strPath );
+    static void GetCurrentDateTime( QString& strDateTime );
+    static void PlayMusic( QString& strName, bool bStop );
 
 private:
     QCommon(QObject *parent = 0);

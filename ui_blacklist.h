@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'blacklist.ui'
 **
-** Created: Mon Jul 29 16:02:10 2013
+** Created: Mon Aug 19 11:18:48 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -38,6 +38,7 @@ public:
     QPushButton *btnModify;
     QPushButton *btnOk;
     QPushButton *btnCancel;
+    QPushButton *btnLocation;
     QPushButton *btnMinimalize;
     QWidget *layoutWidget1;
     QHBoxLayout *horizontalLayout_2;
@@ -83,7 +84,7 @@ public:
         widget_2->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         layoutWidget = new QWidget(widget_2);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(30, 70, 631, 25));
+        layoutWidget->setGeometry(QRect(10, 70, 701, 25));
         layoutWidget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -117,6 +118,11 @@ public:
         btnCancel->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
 
         horizontalLayout->addWidget(btnCancel);
+
+        btnLocation = new QPushButton(layoutWidget);
+        btnLocation->setObjectName(QString::fromUtf8("btnLocation"));
+
+        horizontalLayout->addWidget(btnLocation);
 
         btnMinimalize = new QPushButton(layoutWidget);
         btnMinimalize->setObjectName(QString::fromUtf8("btnMinimalize"));
@@ -204,6 +210,7 @@ public:
         btnModify->setText(QApplication::translate("CBlacklist", "\344\277\256\346\224\271", 0, QApplication::UnicodeUTF8));
         btnOk->setText(QApplication::translate("CBlacklist", "\347\241\256\350\256\244", 0, QApplication::UnicodeUTF8));
         btnCancel->setText(QApplication::translate("CBlacklist", "\345\217\226\346\266\210", 0, QApplication::UnicodeUTF8));
+        btnLocation->setText(QApplication::translate("CBlacklist", "\346\237\245\346\211\276", 0, QApplication::UnicodeUTF8));
         btnMinimalize->setText(QApplication::translate("CBlacklist", "\345\205\263\351\227\255", 0, QApplication::UnicodeUTF8));
         label->setText(QApplication::translate("CBlacklist", "\350\275\246\347\211\214\357\274\232", 0, QApplication::UnicodeUTF8));
         label_2->setText(QApplication::translate("CBlacklist", "\350\275\246\345\236\213\357\274\232", 0, QApplication::UnicodeUTF8));

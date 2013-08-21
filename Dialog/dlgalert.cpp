@@ -78,7 +78,7 @@ void CDlgAlert::GetImage( QString &strAlert )
     bool bEnter =  ( strTrue == lstParams[ 3 ] );
     QString& strPlate = lstParams[ 2 ];
 
-    QString strWhere = QString( "Where %1 = '%2' and %3time = '%4'" ).arg( bPlate ? "carcp" : "cardno",
+    QString strWhere = QString( "Where %1 = '%2' and %3time = '%4'" ).arg( bPlate ? QString( "carcp%1" ).arg( bEnter ? "" : "out" ) : "cardno",
                                                 strPlate, bEnter ? "in" : "out",  lstParams[ 4 ] );
     CommonDataType::BlobType blob = bEnter ? CommonDataType::BlobVehicleIn1: CommonDataType::BlobVehicleOut1;
     DisplayImage( ui->lblInOut, blob, strWhere );

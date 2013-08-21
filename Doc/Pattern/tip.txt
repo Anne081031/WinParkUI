@@ -13,16 +13,21 @@ Broker ´úÀí×é¼ş¸ºÔğĞ­µ÷Í¨ĞÅ(º£¿µAPI¾ÍÊÇ´úÀí CORBA RPC) °üº¬ÁùÖÖ×é¼ş Client(½Ó¿ÚÊ
 AĞ­Òé(¿Í»§ÓëBrokerA)<-->Í¨ÓÃĞ­Òé(ÇÅ¼äĞ­Òé)<->BĞ­Òé(·şÎñÆ÷ÓëBrokerB)
 
 Model-View-Controller M·â×°ÁËÄÚºË¹¦ÄÜºÍÊı¾İ VÕ¹Ê¾MµÄÊı¾İ Ã¿¸öV¶¼ÓĞÒ»¸öC C½ÓÊÕÊäÈë(µ÷¶È¡¢ÅÉ·¢)
-Presentation-Abstraction-Control
+Presentation-Abstraction-Control AgentTree
 MicroKernel
 Reflection
+
+Ö÷¶¯ Ê¹ÓÃProcess ThreadÊµÏÖ ±»¶¯ Ê¹ÓÃ¹²Ïí¿â ÆÕÍ¨º¯ÊıÊµÏÖ
+ÊÊÓ¦ĞÔÏµÍ³
+Microkernel(Client---Adapter---Eeternal server---Microkernel---Internal server)
+Reflection(Meta data / Meta object protocol)
 
 Éè¼ÆÄ£Ê½/Design Pattern ×ÓÏµÍ³ ×é¼şµÈ ¶ÀÁ¢ÓÚÓïÑÔ Éè¼Æ½×¶Î ¹Û²ìÕß ÍÆÀ­ ·¢²¼Ô¤¶© ÊÂ¼ş
 ¹ßÓÃ·¨/Idiom ×îµÍ²ãÄ£Ê½ ÓëÌØ¶¨ÓïÑÔÏà¹Ø ÊµÏÖ½×¶Î Java .NetÄ£Ê½ ¼ÆÊıÆ÷ ¹¤³§ µ¥ÊµÀı
 
 Pattern System / Pattern Catalog
 
-ÃæÏòÄ£Ê½µÄÈí¼şÌåÏµ½á¹¹+¾í1-Ä£Ê½ÏµÍ³.pdf 83 37/297
+ÃæÏòÄ£Ê½µÄÈí¼şÌåÏµ½á¹¹+¾í1-Ä£Ê½ÏµÍ³.pdf 112/297
 
 Unity3D Delta3D
 

@@ -6,6 +6,7 @@ QCameraEvent::QCameraEvent(Type evtType) : QEvent(evtType)
     hParentWnd = NULL;
     nChannelNumber = -1;
     bRecognize = false;
+    bMainStream = false;
 }
 
 void QCameraEvent::SetChannel( int nChannel )
@@ -48,6 +49,16 @@ QString& QCameraEvent::GetImgFile( )
     return strImgFile;
 }
 
+void QCameraEvent::SetIpcIp( QString& strIP )
+{
+    strIPCIP = strIP;
+}
+
+QString& QCameraEvent::GetIpcIp( )
+{
+    return strIPCIP;
+}
+
 void QCameraEvent::SetRecognize( bool bRecog )
 {
     bRecognize = bRecog;
@@ -56,4 +67,14 @@ void QCameraEvent::SetRecognize( bool bRecog )
 bool QCameraEvent::GetRecognize( )
 {
     return bRecognize;
+}
+
+void QCameraEvent::SetMainStream( bool bMain )
+{
+    bMainStream = bMain;
+}
+
+bool QCameraEvent::GetMainStream( )
+{
+    return bMainStream;
 }

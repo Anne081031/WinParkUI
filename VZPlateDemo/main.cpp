@@ -1,6 +1,7 @@
 #include <QtGui/QApplication>
 #include "vzmainwindow.h"
-#include "qcommon.h"
+#include "blacklistmainwindow.h"
+#include "cconfigurator.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,9 +11,35 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings( pCodec );
     QTextCodec::setCodecForTr( pCodec );
 
+    int nRet = -1;
     QApplication a(argc, argv);
-    VZMainWindow w;
-    w.show();
+
+    CConfigurator* pConfig = CConfigurator::CreateInstance( );
+    QString strType;
+    pConfig->ReadAppMainWindow( strType );
+
+    QMainWindow* pMainWindow = NULL;
+
+    if ( "DEMO" == strType ) {
+        pMainWindow = new VZMainWindow( );
+    }else if ( "BLACKLIST" == strType ) {
+        pMainWindow = new BlacklistMainWindow( );
+    }
+
+    if ( NULL == pMainWindow ) {
+        QString strInfo = QString( "¡¾Config.ini¡¿ÖÐ¡¾AppMainWindow¡¿ÅäÖÃ´íÎó¡£\nTypeÖµÎª¡¾Demo¡¢Blacklist¡¿Ö®Ò»¡£" );
+        QMessageBox::critical( NULL, "ÖÂÃü´íÎó", strInfo );
+        return nRet;
+    }
+
+    pMainWindow->show( );
     
-    return a.exec();
+    nRet = a.exec();
+
+    if ( NULL != pMainWindow ) {
+        delete pMainWindow;
+        pMainWindow = NULL;
+    }
+
+    return nRet;
 }

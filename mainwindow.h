@@ -64,6 +64,7 @@ public:
     void SendInOutImg( QString& strFile, bool bEnter, QDateTime& dtCurrent, QString& strPlate, QString& strCardNo );
     void SetAlertMsg( const QString& strText );
     bool ShiftDlgISVisible( );
+    void DisplayAlert( QStringList& lstData );
 
 private:
     void ClearAllFiles( );

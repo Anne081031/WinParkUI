@@ -17,6 +17,8 @@ INCLUDEPATH += ./VZPlateDemo
 INCLUDEPATH += ./VehicleLicense/WinTone
 INCLUDEPATH += ./Multimedia/HikSDK
 INCLUDEPATH += ./Multimedia/TmSDK
+INCLUDEPATH += ./HKIPC/inc
+INCLUDEPATH += ./JWSIPC/inc
 
 LIBS += "./lib/libmysqlclient.a"
 LIBS += "./lib/libmysql.a"
@@ -34,6 +36,8 @@ LIBS += "./lib/libHCNetSDK.a"
 LIBS += "./lib/libtmControlClient.a"
 LIBS += ./lib/libLPKernelEx.a
 LIBS += ./lib/libDs40xxSDK.a
+LIBS += ./HKIPC/lib/libHCNetSDK.a
+LIBS += ./JWSIPC/lib/libtmControlClient.a
 
 DEFINES += PARK_UI RAW_API COMMON_DB _WIN32_WINNT=0x0501
 
@@ -194,7 +198,8 @@ SOURCES += mainwindow.cpp \
     VZPlateDemo/Thread/qdhkipcthread.cpp \
     VZPlateDemo/Thread/qfilecamerathread.cpp \
     VZPlateDemo/Thread/qdirectoryevent.cpp \
-    VZPlateDemo/Thread/qdigitalcamerathread.cpp
+    VZPlateDemo/Thread/qdigitalcamerathread.cpp \
+    Dialog/dlgblacklistlocation.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -356,7 +361,8 @@ HEADERS  += Header/valuecard.h \
     VZPlateDemo/Thread/qjvsipcthread.h \
     VZPlateDemo/Thread/qdhkipcthread.h \
     VZPlateDemo/Thread/qdirectoryevent.h \
-    VZPlateDemo/Thread/qdigitalcamerathread.h
+    VZPlateDemo/Thread/qdigitalcamerathread.h \
+    Dialog/dlgblacklistlocation.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \
@@ -424,7 +430,8 @@ FORMS    += UIWnd/valuecard.ui \
     Dialog/dlgcardloss.ui \
     Dialog/dlgsmsphone.ui \
     Dialog/cdlgquerywhere.ui \
-    UIWnd/ipcvideoframe.ui
+    UIWnd/ipcvideoframe.ui \
+    Dialog/dlgblacklistlocation.ui
 
 OTHER_FILES += \
     Doc/LedProtocol.doc \

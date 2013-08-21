@@ -1,6 +1,7 @@
 #include "Header/blacklist.h"
 #include "ui_blacklist.h"
 #include "Common/commonfunction.h"
+#include "Dialog/dlgblacklistlocation.h"
 
 CBlacklist::CBlacklist(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
@@ -63,6 +64,10 @@ void CBlacklist::on_btnDelete_clicked( )
     if ( -1 == nRow || ui->lblID->text( ).isEmpty( ) ) {
         CCommonFunction::MsgBox( NULL, CCommonFunction::GetMsgTitle( QMessageBox::Information ),
                                  QString( "请选择要删除的行！" ), QMessageBox::Information );
+        return;
+    }
+
+    if ( QMessageBox::Cancel == CCommonFunction::MsgBox( NULL, "提示", "确定要删除记录吗？", QMessageBox::Question ) ) {
         return;
     }
 
@@ -163,9 +168,36 @@ void CBlacklist::on_tableBlacklist_cellClicked ( int row, int column )
     AssignValue( false, row );
 }
 
+bool CBlacklist::DataExist()
+{
+    bool bRet = false;
+
+    if ( 1 == nOperate ) {
+        return bRet;
+    }
+
+    QString strPlate = ui->edtName->text( );
+    int nRow = ui->tableBlacklist->rowCount( );
+
+    for ( int nIndex = 0; nIndex < nRow; nIndex++ ) {
+        if ( ui->tableBlacklist->item( nIndex, 0 )->text( ) == strPlate ) {
+            ui->tableBlacklist->selectRow( nIndex );
+            CCommonFunction::MsgBox( NULL, QString( "提示" ), QString( "【%1】已存在！" ).arg( strPlate ), QMessageBox::Information );
+            bRet = true;
+            break;
+        }
+    }
+
+    return bRet;
+}
+
 void CBlacklist::on_btnOk_clicked( )
 {
     if ( -1 == nOperate ) {
+        return;
+    }
+
+    if ( DataExist( ) ) {
         return;
     }
 
@@ -234,4 +266,29 @@ void CBlacklist::on_btnMinimalize_clicked()
 void CBlacklist::on_lblClose_linkActivated(QString)
 {
     close( );
+}
+
+void CBlacklist::HandleLocation( QString strPlate )
+{
+    int nRow = ui->tableBlacklist->rowCount( );
+
+    for ( int nIndex = 0; nIndex < nRow; nIndex++ ) {
+        if ( ui->tableBlacklist->item( nIndex, 0 )->text( ) == strPlate ) {
+            ui->tableBlacklist->selectRow( nIndex );
+            break;
+        }
+    }
+}
+
+void CBlacklist::on_btnLocation_clicked()
+{
+    CDlgBlacklistLocation dlg;
+    connect( &dlg, SIGNAL( Location( QString ) ),
+             this, SLOT( HandleLocation( QString ) ) );
+    dlg.exec( );
+}
+
+void CBlacklist::on_btnRefresh_clicked()
+{
+    FillTable( );
 }

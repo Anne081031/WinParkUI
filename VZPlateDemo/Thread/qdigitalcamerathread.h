@@ -3,15 +3,30 @@
 
 #include <QThread>
 #include "qcameraevent.h"
+#include <QApplication>
 
 class QDigitalCameraThread : public QThread
 {
     Q_OBJECT
 
 public:
+    virtual void PostIPCStartupEvent( );
+    virtual void PostIPCSetConnectTimeoutEvent( );
+    virtual void PostIPCSetReconnectTimeEvent( );
+    virtual void PostIPCLoginEvent( );
+    virtual void PostIPCCaptureJPGEvent( );
+    virtual void PostIPCStartRealPlayEvent( );
+    virtual void PostIPCStopRealPlayEvent( );
+    virtual void PostIPCLogoutEvent( );
+    virtual void PostIPCCleanupEvent( );
+
+    virtual void CaptureStaticImage( QString& strFile, int nChannel );
 
 protected:
     explicit QDigitalCameraThread(QObject *parent = 0);
+
+private:
+    inline void PostEvent( QCameraEvent* pEvent );
 
 private:
 

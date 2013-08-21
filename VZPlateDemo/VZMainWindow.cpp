@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QDateTime>
+#include "CDlgConfig.h"
 
 VZMainWindow::VZMainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -16,6 +17,7 @@ VZMainWindow::VZMainWindow(QWidget *parent) :
     QCommon::GetPlatePicPath( strPlateDir );
     LoadLogoTitle( );
 
+    nFileIndex = 0;
     aLables[ 0 ] = ui->lblVideo0;
     aLables[ 1 ] = ui->lblVideo1;
     aLables[ 2 ] = ui->lblVideo2;
@@ -95,10 +97,15 @@ void VZMainWindow::HandleDetectInfo( int nChannel, bool bMotion )
 
 }
 
+QString VZMainWindow::GetSelectedFile( )
+{
+    return QFileDialog::getOpenFileName( this, "选择要识别的文件", qApp->applicationDirPath( ),
+                                                    "Image Files (*.BMP *.JPG *.JPEG *.PNG *.TIF);;All Files(*.*)" );
+}
+
 void VZMainWindow::on_btnFile_clicked()
 {
-    QFileDialog dlg;
-    QString strFile = dlg.getOpenFileName( );
+    QString strFile = GetSelectedFile( );
 
     if ( strFile.isEmpty( ) ) {
         return;
@@ -111,9 +118,79 @@ void VZMainWindow::on_btnFile_clicked()
     QDirectoryThread::GetInstance( )->PostDirectoryTraverse( strFile );
 }
 
+void VZMainWindow::ButtonEnable( bool bPreEnable, bool bNextEnable )
+{
+    ui->btnPreFile->setEnabled( bPreEnable );
+    ui->btnNextFile->setEnabled( bNextEnable );
+}
+
+void VZMainWindow::on_btnSingleFile_clicked()
+{
+    QString strFile = GetSelectedFile( );
+
+    if ( strFile.isEmpty( ) ) {
+        return;
+    }
+
+    ButtonEnable( false, false );
+    nFileIndex = 0;
+
+    QDir dir( strFile );
+    dir.cdUp( );
+
+    QStringList lstFilter;
+    lstFilter << "*.BMP" << "*.JPG" << "*.JPEG" << "*.PNG" << "*.TIF";
+    dir.setNameFilters( lstFilter );
+
+    lstFiles = dir.entryInfoList( );
+    int nCount = lstFiles.count( );
+    if ( 0 == nCount ) {
+        return;
+    } else if ( 1 < nCount ) {
+        ButtonEnable( false, true );
+    }
+
+    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
+}
+
+void VZMainWindow::SingleFileRecognize( bool bPreFile )
+{
+    int nCount = lstFiles.count( ) - 1;
+
+    if ( bPreFile ) {
+        if ( 0 < nFileIndex ) {
+            nFileIndex--;
+        }
+
+        ButtonEnable( 0 != nFileIndex, true );
+    } else {
+        if ( nCount > nFileIndex ) {
+            nFileIndex++;
+        }
+
+        ButtonEnable( true, nCount != nFileIndex );
+    }
+
+    QString strFile = lstFiles.at( nFileIndex ).absoluteFilePath( );
+    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
+}
+
+void VZMainWindow::on_btnPreFile_clicked()
+{
+    SingleFileRecognize( true );
+}
+
+void VZMainWindow::on_btnNextFile_clicked()
+{
+    SingleFileRecognize( false );
+}
+
 void VZMainWindow::on_tabResult_cellClicked(int row, int column)
 {
-    column = 0;
+    if ( 0 != column ) {
+        return;
+    }
+
     if ( QString( "否" ) == ui->tabResult->item( row, ui->tabResult->columnCount( ) - 1 )->text() ) {
         LoadImg( ui->lblVideo0, ui->lblPicture, ui->lblPlatePic, row );
     }
@@ -214,4 +291,10 @@ void VZMainWindow::on_btnStopVideoRecognize_clicked()
     bool bFlag = QPlateThread::GetInstance( )->SetRecognizeFlag( );
 
     ui->btnStopVideoRecognize->setText( bFlag ? "启动视频识别" : "停止视频识别" );
+}
+
+void VZMainWindow::on_actParameter_triggered()
+{
+    CDlgConfig dlg;
+    dlg.exec( );
 }

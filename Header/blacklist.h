@@ -30,6 +30,7 @@ private:
     void EnableControl( bool bEnabled );
     void FillTable( );
     void SaveData( int nType );
+    bool DataExist( );
 
 private:
     Ui::CBlacklist *ui;
@@ -37,6 +38,7 @@ private:
     int nOperate; // 0 Add , 1 Delete , 2 Modify
 
 private slots:
+    void HandleLocation( QString strPlate );
     void on_lblClose_linkActivated(QString);
     void on_btnMinimalize_clicked();
     void on_btnAdd_clicked( );
@@ -45,6 +47,8 @@ private slots:
     void on_btnOk_clicked( );
     void on_btnCancel_clicked( );
     void on_tableBlacklist_cellClicked ( int row, int column );
+    void on_btnLocation_clicked();
+    void on_btnRefresh_clicked();
 };
 
 #endif // BLACKLIST_H

@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'blacklist.h'
 **
-** Created: Wed Jul 31 17:17:02 2013
+** Created: Mon Aug 19 11:52:23 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CBlacklist[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       8,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -31,25 +31,29 @@ static const uint qt_meta_data_CBlacklist[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      12,   11,   11,   11, 0x08,
-      47,   11,   11,   11, 0x08,
-      74,   11,   11,   11, 0x08,
-      94,   11,   11,   11, 0x08,
-     117,   11,   11,   11, 0x08,
-     140,   11,   11,   11, 0x08,
-     159,   11,   11,   11, 0x08,
-     193,  182,   11,   11, 0x08,
+      21,   12,   11,   11, 0x08,
+      45,   11,   11,   11, 0x08,
+      80,   11,   11,   11, 0x08,
+     107,   11,   11,   11, 0x08,
+     127,   11,   11,   11, 0x08,
+     150,   11,   11,   11, 0x08,
+     173,   11,   11,   11, 0x08,
+     192,   11,   11,   11, 0x08,
+     226,  215,   11,   11, 0x08,
+     265,   11,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CBlacklist[] = {
-    "CBlacklist\0\0on_lblClose_linkActivated(QString)\0"
+    "CBlacklist\0\0strPlate\0HandleLocation(QString)\0"
+    "on_lblClose_linkActivated(QString)\0"
     "on_btnMinimalize_clicked()\0"
     "on_btnAdd_clicked()\0on_btnDelete_clicked()\0"
     "on_btnModify_clicked()\0on_btnOk_clicked()\0"
     "on_btnCancel_clicked()\0row,column\0"
     "on_tableBlacklist_cellClicked(int,int)\0"
+    "on_btnLocation_clicked()\0"
 };
 
 const QMetaObject CBlacklist::staticMetaObject = {
@@ -81,17 +85,19 @@ int CBlacklist::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: on_lblClose_linkActivated((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 1: on_btnMinimalize_clicked(); break;
-        case 2: on_btnAdd_clicked(); break;
-        case 3: on_btnDelete_clicked(); break;
-        case 4: on_btnModify_clicked(); break;
-        case 5: on_btnOk_clicked(); break;
-        case 6: on_btnCancel_clicked(); break;
-        case 7: on_tableBlacklist_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 0: HandleLocation((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 1: on_lblClose_linkActivated((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 2: on_btnMinimalize_clicked(); break;
+        case 3: on_btnAdd_clicked(); break;
+        case 4: on_btnDelete_clicked(); break;
+        case 5: on_btnModify_clicked(); break;
+        case 6: on_btnOk_clicked(); break;
+        case 7: on_btnCancel_clicked(); break;
+        case 8: on_tableBlacklist_cellClicked((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
+        case 9: on_btnLocation_clicked(); break;
         default: ;
         }
-        _id -= 8;
+        _id -= 10;
     }
     return _id;
 }

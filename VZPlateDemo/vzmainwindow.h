@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QLabel>
+#include <QPushButton>
+#include <QFileInfoList>
 
 #include "Thread/qdirectorythread.h"
 #include "Thread/qhkcapturecardthread.h"
@@ -24,6 +26,9 @@ public:
 private:
     void LoadImg( QLabel* lblCtrlLeft, QLabel* lblCtrlRight, QLabel* lblCtrlDown, int nRow );
     void LoadLogoTitle( );
+    inline QString GetSelectedFile( );
+    inline void ButtonEnable( bool bPreEnable, bool bNextEnable );
+    void SingleFileRecognize( bool bPreFile );
 
 private:
     QAnalogCameraThread* pAnalogCamera;
@@ -36,6 +41,12 @@ private slots:
     
 private slots:
     void on_btnFile_clicked();
+
+    void on_btnSingleFile_clicked();
+
+    void on_btnPreFile_clicked();
+
+    void on_btnNextFile_clicked();
 
     void on_tabResult_cellClicked(int row, int column);
 
@@ -53,10 +64,14 @@ private slots:
 
     void on_btnStopVideoRecognize_clicked();
 
+    void on_actParameter_triggered();
+
 private:
     Ui::VZMainWindow *ui;
     QString strPlateDir;
     QLabel* aLables[ CHANNEL_WAY ];
+    int nFileIndex;
+    QFileInfoList lstFiles;
 };
 
 #endif // MAINWINDOW_H

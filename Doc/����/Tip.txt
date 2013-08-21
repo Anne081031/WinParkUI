@@ -6,7 +6,7 @@ PS 和TS流 ProgramStream包结构是可变长度 TransportStream固定长度的包结构
 LIBRTP、 JRTPLIB、Live555 JVIOPLIB JTHREAD.RTP/RTCP RTSP SDP SIP HTTP SRTP & SRTCP
 
 http://www.ffmpeg.org/ FFmpeg是一个开源免费跨平台的视频和音频流方案
-libsdl 
+libsdl GStreamer CodecEngine
 
 IEEE 802.11系列 无线通信协议
 Wi-Fi AP(Access Point 热点 接入点) SSID(Service Set Identifier 热点名) 无线路由器为例 Wi-Fi是终端以无线方式互相连接的技术，改善基于IEEE802.11标准的无线网路产品之间的互通性

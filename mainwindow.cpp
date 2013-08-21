@@ -1216,6 +1216,12 @@ void MainWindow::ProcessMonitorMsg( CommonDataType::DatagramType nType, QStringL
     }
 }
 
+void MainWindow::DisplayAlert(QStringList &lstData)
+{
+    CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
+    pMonitor->DisplayAlert( lstData );
+}
+
 void MainWindow::DataMayRead()
 {
     //Sleep( 10 );

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1221</width>
-    <height>662</height>
+    <height>682</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -19,15 +19,11 @@
   <property name="maximumSize">
    <size>
     <width>1221</width>
-    <height>762</height>
+    <height>682</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>四川前途科技车牌识别</string>
-  </property>
-  <property name="windowIcon">
-   <iconset>
-    <normaloff>:/Imgs/logo.jpg</normaloff>:/Imgs/logo.jpg</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <widget class="QLabel" name="lblPicture">
@@ -47,9 +43,6 @@
     </property>
     <property name="text">
      <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>:/Imgs/logo.jpg</pixmap>
     </property>
     <property name="scaledContents">
      <bool>true</bool>
@@ -188,7 +181,7 @@
      <rect>
       <x>10</x>
       <y>630</y>
-      <width>649</width>
+      <width>902</width>
       <height>25</height>
      </rect>
     </property>
@@ -196,7 +189,34 @@
      <item>
       <widget class="QPushButton" name="btnFile">
        <property name="text">
-        <string>识别文件</string>
+        <string>识别所有文件</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnSingleFile">
+       <property name="text">
+        <string>识别单一文件</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnPreFile">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>上一文件</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="btnNextFile">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="text">
+        <string>下一文件</string>
        </property>
       </widget>
      </item>
@@ -390,6 +410,28 @@
     </property>
    </widget>
   </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1221</width>
+     <height>19</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>系统配置</string>
+    </property>
+    <addaction name="actParameter"/>
+   </widget>
+   <addaction name="menu"/>
+  </widget>
+  <action name="actParameter">
+   <property name="text">
+    <string>参数配置</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>

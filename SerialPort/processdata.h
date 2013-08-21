@@ -48,6 +48,7 @@ public:
 
     void TimeCardPass( int nAmount, int nHour, int nMin, QByteArray& byData );
     void RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray bySerialData );
+    void CheckBlacklist( QStringList& lstData );
     int MatchNum( QString &strPlate, const QString &strTest );
     bool RecognizeFuzzyPlate( CommonDataType::QPlateCardHash& hash, QString& strCarNo, QString& strPlate );
 
@@ -236,6 +237,7 @@ private:
     QList< QByteArray > audioList[ 4 ];
     QList< QByteArray > ledList[ 4 ];
     bool bStartupPlateDilivery;
+    bool bBlacklistCheck;
 
 signals:
     void OnResponseUserRequest( QByteArray& byData, int nMinor );

@@ -858,7 +858,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>43</y>
+       <y>31</y>
        <width>211</width>
        <height>16</height>
       </rect>
@@ -871,7 +871,7 @@
      <property name="geometry">
       <rect>
        <x>140</x>
-       <y>20</y>
+       <y>10</y>
        <width>81</width>
        <height>20</height>
       </rect>
@@ -885,7 +885,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>20</y>
+       <y>10</y>
        <width>121</width>
        <height>20</height>
       </rect>
@@ -898,7 +898,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>74</y>
+       <y>62</y>
        <width>211</width>
        <height>16</height>
       </rect>
@@ -911,7 +911,7 @@
      <property name="geometry">
       <rect>
        <x>180</x>
-       <y>92</y>
+       <y>80</y>
        <width>24</width>
        <height>20</height>
       </rect>
@@ -924,7 +924,7 @@
      <property name="geometry">
       <rect>
        <x>12</x>
-       <y>92</y>
+       <y>80</y>
        <width>111</width>
        <height>20</height>
       </rect>
@@ -937,7 +937,7 @@
      <property name="geometry">
       <rect>
        <x>132</x>
-       <y>92</y>
+       <y>80</y>
        <width>42</width>
        <height>20</height>
       </rect>
@@ -956,7 +956,7 @@
      <property name="geometry">
       <rect>
        <x>11</x>
-       <y>120</y>
+       <y>105</y>
        <width>54</width>
        <height>12</height>
       </rect>
@@ -969,7 +969,7 @@
      <property name="geometry">
       <rect>
        <x>76</x>
-       <y>117</y>
+       <y>102</y>
        <width>141</width>
        <height>20</height>
       </rect>
@@ -979,7 +979,7 @@
      <property name="geometry">
       <rect>
        <x>13</x>
-       <y>140</y>
+       <y>123</y>
        <width>141</width>
        <height>16</height>
       </rect>
@@ -992,13 +992,26 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>59</y>
+       <y>47</y>
        <width>211</width>
        <height>16</height>
       </rect>
      </property>
      <property name="text">
       <string>无卡工作模式 非月租车收费</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="chkBlacklist">
+     <property name="geometry">
+      <rect>
+       <x>13</x>
+       <y>140</y>
+       <width>151</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>开启黑名单检查</string>
      </property>
     </widget>
    </widget>

@@ -2,6 +2,8 @@
 #define QJVSIPCTHREAD_H
 
 #include "QDigitalCameraThread.h"
+#include "tmTransDefine.h"
+#include "tmControlClient.h"
 
 class QJvsIPCThread : public QDigitalCameraThread
 {
@@ -15,6 +17,19 @@ protected:
 
 private:
     explicit QJvsIPCThread(QObject *parent = 0);
+
+    void ProcessIPCStartupEvent( QCameraEvent* pEvent );
+    void ProcessIPCSetConnectTimeoutEvent( QCameraEvent* pEvent );
+    void ProcessIPCSetReconnectTimeEvent( QCameraEvent* pEvent );
+    void ProcessIPCLoginEvent( QCameraEvent* pEvent );
+    void ProcessIPCCaptureJPGEvent( QCameraEvent* pEvent );
+    void ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent );
+    void ProcessIPCStopRealPlayEvent( QCameraEvent* pEvent );
+    void ProcessIPCLogoutEvent( QCameraEvent* pEvent );
+    void ProcessIPCCleanupEvent( QCameraEvent* pEvent );
+
+    inline void JwsCleanup( HANDLE hCtrl );
+    void JwsConnect( QCameraEvent* pEvent, HANDLE hCtrl );
 
 private:
     static QDigitalCameraThread* pThreadInstance;

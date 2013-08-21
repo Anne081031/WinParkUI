@@ -14,6 +14,11 @@ INPUT(
 ./release/qtmcapturecardthread.o
 ./release/qdhkipcthread.o
 ./release/qjvsipcthread.o
+./release/qonvifthread.o
+./release/blacklistmainwindow.o
+./release/cconfigurator.o
+./release/cdlgblacklist.o
+./release/cdlgconfig.o
 ./release/moc_VZMainWindow.o
 ./release/moc_qplatethread.o
 ./release/moc_qanalogcamerathread.o
@@ -25,5 +30,9 @@ INPUT(
 ./release/moc_qtmcapturecardthread.o
 ./release/moc_qdhkipcthread.o
 ./release/moc_qjvsipcthread.o
-./release/qrc_Resource.o
+./release/moc_qonvifthread.o
+./release/moc_blacklistmainwindow.o
+./release/moc_cconfigurator.o
+./release/moc_cdlgblacklist.o
+./release/moc_cdlgconfig.o
 );

@@ -82,9 +82,9 @@
     <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
-       <x>30</x>
+       <x>10</x>
        <y>70</y>
-       <width>631</width>
+       <width>701</width>
        <height>25</height>
       </rect>
      </property>
@@ -139,6 +139,20 @@
         </property>
         <property name="text">
          <string>取消</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnLocation">
+        <property name="text">
+         <string>查找</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnRefresh">
+        <property name="text">
+         <string>刷新</string>
         </property>
        </widget>
       </item>

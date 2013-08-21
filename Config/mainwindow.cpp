@@ -68,6 +68,7 @@ void MainWindow::ReadFile( )
     ui->chkNoCard->setChecked( pSystemCfg->value( "CommonCfg/NoCardWork", false ).toBool( ) );
     ui->chkCapture->setChecked( pSystemCfg->value( "CommonCfg/SenseGetImg", true ).toBool( ) );
     ui->edtParkID->setText( pSystemCfg->value( "CommonCfg/ParkID", "5101070001" ).toString( ) );
+    ui->chkBlacklist->setChecked( pSystemCfg->value( "Blacklist/Start", false ).toBool( ) );
 
     QString strKey = "CommonCfg/Video%1";
     QString strChannelKey = "CommonCfg/Name%1";
@@ -154,6 +155,8 @@ void MainWindow::WriteFile( )
     pSystemCfg->setValue( "CommonCfg/SenseGetImg", ui->chkCapture->isChecked( ) );
     pSystemCfg->setValue( "CommonCfg/ParkID", ui->edtParkID->text( ) );
     pSystemCfg->setValue( "CommonCfg/BroadCastData", ui->chkBroadcastData->isChecked( ) );
+
+    pSystemCfg->setValue( "Blacklist/Start", ui->chkBlacklist->isChecked( ) );
 
     QString strKey = "CommonCfg/Video%1";
     QString strChannelKey = "CommonCfg/Name%1";

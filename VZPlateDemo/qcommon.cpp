@@ -2,6 +2,7 @@
 #include <QApplication>
 #include <QDir>
 #include <QDebug>
+#include <QDateTime>
 
 QCommon::QCommon(QObject *parent) :
     QObject(parent)
@@ -49,4 +50,35 @@ void QCommon::GetPlatePicPath( QString &strPath )
     if ( !dir.exists( ) ) {
         dir.mkpath( strPath );
     }
+}
+
+void QCommon::GetCurrentDateTime( QString &strDateTime )
+{
+    strDateTime = QDateTime::currentDateTime( ).toString( "yyyy-MM-dd hh:mm:ss" );
+}
+
+void QCommon::PlayMusic( QString& strName, bool bStop )
+{
+    static Phonon::MediaObject* pMediaObj = NULL;
+
+    if ( bStop ) {
+        if ( NULL != pMediaObj ) {
+            pMediaObj->clear( );
+            delete pMediaObj;
+        }
+
+        return;
+    }
+
+    if ( NULL == pMediaObj ) {
+        pMediaObj = Phonon::createPlayer( Phonon::MusicCategory );
+    }
+
+    pMediaObj->clear( );
+
+    QString strPath = qApp->applicationDirPath( ) + "/" + strName + ".wav";
+    Phonon::MediaSource mediaSrc( strPath );
+    //pMediaObj->setCurrentSource( mediaSrc );
+    pMediaObj->enqueue( mediaSrc );
+    pMediaObj->play( );
 }

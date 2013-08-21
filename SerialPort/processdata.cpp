@@ -39,6 +39,7 @@ CProcessData::CProcessData( CWinSerialPort* pWinPort, MainWindow* pWindow, QObje
     pSettings = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
     bStartupPlateDilivery = pSettings->value( "PlateDilivery/StartupDilivery", false ).toBool( );
     bNocardwork = pSettings->value( "CommonCfg/NoCardWork", false ).toBool( );
+    bBlacklistCheck = pSettings->value( "Blacklist/Start", false ).toBool( );
 
     if ( !GetDirectDb( ) ) {
         g_dbThread.start( );
@@ -892,6 +893,28 @@ int CProcessData::GetChannelIndex( int nChannel )
     int nIndex = ( nChannel - 1 ) % 4;
 
     return nIndex;
+}
+
+void CProcessData::CheckBlacklist( QStringList& lstData )
+{
+    if ( !bBlacklistCheck || 7 > lstData.count( ) ) {
+        return;
+    }
+
+    const QString& strPlate = lstData.at( 3 );
+    if ( strPlate.isEmpty( ) || "未知" == strPlate ) {
+        return;
+    }
+
+    QString strSql = QString( "Select plate from blacklist where upper( plate ) = '%1'" ).arg( strPlate.toUpper( ) );
+    QStringList lstRow;
+    CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRow );
+
+    if ( 0 == lstRow.count( ) ) {
+        return;
+    }
+
+    pMainWindow->DisplayAlert( lstData );
 }
 
 void CProcessData::RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray bySerialData )
@@ -2612,6 +2635,10 @@ bool CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
         DeleteCapturedFile( strCardNumber, nChannel, bEnter, dtCurrent, strPlate );
     }
 
+    QStringList lstData;
+    lstData << "" << CCommonFunction::GetParkID( ) << "1" << strPlate << ( bEnter ? "1" : "0" ) << strDateTime << "2";
+    CheckBlacklist( lstData );
+
     return !bRet;
 }
 
@@ -2897,6 +2924,10 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
     }
 
     SpaceChange( bEnter, cCan );
+
+    QStringList lstData;
+    lstData << "" << CCommonFunction::GetParkID( ) << "1" << strPlate << ( bEnter ? "1" : "0" ) << strDateTime << "2";
+    CheckBlacklist( lstData );
 }
 
 int CProcessData::GetChannelByCan( char cCan )
