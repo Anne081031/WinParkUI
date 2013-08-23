@@ -11,7 +11,8 @@ QPlateThread::QPlateThread(QObject *parent) :
 {
     pCodec = QCommon::GetTextCodec( );
     QCommon::GetPlatePicPath( strPlatePath );
-    bStopRecognize = false;
+    bStopRecognize = true;
+    nPlateWay = 1;
 }
 
 QPlateThread::~QPlateThread( )
@@ -34,6 +35,11 @@ bool QPlateThread::SetRecognizeFlag( )
     bStopRecognize = !bStopRecognize;
 
     return bStopRecognize;
+}
+
+void QPlateThread::SetPlateWay( int nWay )
+{
+    nPlateWay = nWay;
 }
 
 void QPlateThread::run( )
@@ -200,6 +206,11 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
 {
     QString& strFile = pEvent->GetFilePath( );
     int nChannel = pEvent->GetChannel( );
+
+    if ( nChannel >= nPlateWay ) {
+        return;
+    }
+
     int nNum = 0;
     TH_RECT rcRange = { 0 };
 
@@ -236,6 +247,11 @@ void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
 
     QByteArray& byVideo = pEvent->GetVideoFrame( );
     int nChannel = pEvent->GetChannel( );
+
+    if ( nChannel >= nPlateWay ) {
+        return;
+    }
+
     int nWidth = pEvent->GetVideoWidth( );
     int nHeight = pEvent->GetVideoHeight( );
 

@@ -11,6 +11,14 @@
 #include "Thread/qtmcapturecardthread.h"
 #include "Thread/qplatethread.h"
 
+#include "Thread/qdhkipcthread.h"
+#include "Thread/qjvsipcthread.h"
+#include "Thread/qonvifthread.h"
+
+#include "Thread/qfilecamerathread.h"
+
+#include "CDlgConfig.h"
+
 namespace Ui {
 class VZMainWindow;
 }
@@ -30,12 +38,23 @@ private:
     inline void ButtonEnable( bool bPreEnable, bool bNextEnable );
     void SingleFileRecognize( bool bPreFile );
 
+    void Initialize( );
+    void StartVideo( );
+    void CaptureImage( );
+    void EnableButton( QString& strVideoType );
+    void FileButton( bool bEnable );
+    void VideoButton( bool bEnable );
+
 private:
     QAnalogCameraThread* pAnalogCamera;
+    QDigitalCameraThread* pDigitalCamera;
+    QFileCameraThread* pFileCamera;
+    QPlateThread* pPlateThread;
 
 private slots:
     void HandlePlateResult( QStringList lstResult, int nChannel, bool bSuccess, bool bVideo );
     void HandleCaptureImage( QString strFile, int nChannel );
+    void HandleCaptureImage( QString strFile, QString strIP );
     void HandleNotifyMessage( QString strMsg, bool bSuccess );
     void HandleDetectInfo( int nChannel, bool bMotion );
     
@@ -52,15 +71,11 @@ private slots:
 
     void on_btnClear_clicked();
 
-    void on_btnAnalogCamera_clicked();
-
-    void on_btnDigitalCamera_clicked();
+    void on_btnCamera_clicked();
 
     void on_btnVideoFile_clicked();
 
-    void on_btnAnalogCaptureFile_clicked();
-
-    void on_btnIPCCaptureFile_clicked();
+    void on_btnCaptureFile_clicked();
 
     void on_btnStopVideoRecognize_clicked();
 
@@ -72,6 +87,9 @@ private:
     QLabel* aLables[ CHANNEL_WAY ];
     int nFileIndex;
     QFileInfoList lstFiles;
+    QString strIpcIP;
+    int nPlateWay;
+    CConfigurator* pConfig;
 };
 
 #endif // MAINWINDOW_H

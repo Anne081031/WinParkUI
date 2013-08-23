@@ -20,9 +20,9 @@ int main(int argc, char *argv[])
 
     QMainWindow* pMainWindow = NULL;
 
-    if ( "DEMO" == strType ) {
+    if ( "Demo" == strType ) {
         pMainWindow = new VZMainWindow( );
-    }else if ( "BLACKLIST" == strType ) {
+    }else if ( "Blacklist" == strType ) {
         pMainWindow = new BlacklistMainWindow( );
     }
 

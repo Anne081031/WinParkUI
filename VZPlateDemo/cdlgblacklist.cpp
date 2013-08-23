@@ -18,7 +18,7 @@ void CDlgBlacklist::on_btnAdd_clicked()
 {
     QString strPlate = ui->edtPlate->text( );
     if ( strPlate.isEmpty( ) ) {
-        QMessageBox::information( NULL, "提示", "请选输入车牌。" );
+        QMessageBox::information( this, "提示", "请选输入车牌。" );
         return;
     }
 
@@ -30,7 +30,7 @@ void CDlgBlacklist::on_btnAdd_clicked()
 void CDlgBlacklist::AddRow( const QString &strPlate )
 {
     if ( 0 < ui->tableWidget->findItems( strPlate, Qt::MatchFixedString ).count( ) ) {
-        QMessageBox::information( NULL, "提示", QString( "车牌【%1】已存在。" ).arg( strPlate ) );
+        QMessageBox::information( this, "提示", QString( "车牌【%1】已存在。" ).arg( strPlate ) );
         return;
     }
 
@@ -87,13 +87,13 @@ void CDlgBlacklist::on_btnDelete_clicked()
     int nRow = ui->tableWidget->currentRow( );
 
     if ( -1 == nRow ) {
-        QMessageBox::information( NULL, "提示", "请选择要删除行。" );
+        QMessageBox::information( this, "提示", "请选择要删除行。" );
         return;
     }
 
     QTableWidgetItem* pItem = ui->tableWidget->item( nRow, 0 );
 
-    if ( QMessageBox::No == QMessageBox::question( NULL, "提示", QString( "确定要删除车牌【%1】吗？" ).arg( pItem->text( ) ), QMessageBox::Yes | QMessageBox::No ) ) {
+    if ( QMessageBox::No == QMessageBox::question( this, "提示", QString( "确定要删除车牌【%1】吗？" ).arg( pItem->text( ) ), QMessageBox::Yes | QMessageBox::No ) ) {
         return;
     }
 

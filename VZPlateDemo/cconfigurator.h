@@ -16,6 +16,18 @@ public:
     void ReadAppMainWindow( QString& strType );
     void WriteAppMainWindow( QString& strType );
 
+    void ReadVideoType( QString& strType );
+    void WriteVideoType( QString& strType );
+
+    void ReadIpcIP( QString& strIP );
+    void WriteIpcIP( QString& strIP );
+
+    int ReadPlateWay( );
+    void WritePlateWay( int nWay );
+
+    bool ReadMainStream( );
+    void WriteMainStream( bool bStream );
+
     void ReadBlacklistPlate( QStringList& lstPlates );
     void WriteBlacklistPlate( QStringList& lstPlates );
 

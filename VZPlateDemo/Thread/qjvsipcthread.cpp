@@ -45,12 +45,48 @@ void QJvsIPCThread::ProcessIPCLoginEvent( QCameraEvent* pEvent )
 
 void QJvsIPCThread::ProcessIPCCaptureJPGEvent( QCameraEvent* pEvent )
 {
-    Q_UNUSED( pEvent )
+    QString& strIP = pEvent->GetIpcIp( );
+    QString& strFile = pEvent->GetImgFile( );
+    HWND hPlayWnd = pEvent->GetVideoWndHandle( );
+    bool bRecognize = pEvent->GetRecognize( );
+
+    CapturePicture( strFile, hPlayWnd );
+    SendCaptureImage( strFile, strIP );
+
+    if ( bRecognize ) {
+        QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
+    }
+}
+
+void QJvsIPCThread::CapturePicture( QString &strFileName, HWND hPlayWnd )
+{
+    HANDLE lUserID = ( HANDLE ) GetPlayHandle( hPlayWnd );
+
+    if ( NULL == lUserID || INVALID_HANDLE_VALUE == lUserID ) {
+        return;
+    }
+
+    QByteArray byData = pCodec->fromUnicode( strFileName );
+    byData.append( char( 0 ) );
+    char* pFile = byData.data( );
+    BOOL bRet = FALSE;
+    bRet = TMCC_CapturePictureToFile( lUserID, pFile, "JPEG" );
+}
+
+void QJvsIPCThread::CaptureStaticImage( QString& strIP, QString& strFileName, HWND hPlayWnd )
+{
+    //CProcessData::CaptureSenseImage
+    Q_UNUSED( strIP )
+    CapturePicture( strFileName, hPlayWnd );
 }
 
 void QJvsIPCThread::ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent )
 {
-    char* pIP;
+    QString& strIP = pEvent->GetIpcIp( );
+    QByteArray byData = strIP.toAscii( );
+    byData.append( char( 0 ) );
+    char* pIP = byData.data( );
+
     HWND hPlayWnd = pEvent->GetVideoWndHandle( );
     bool bMainStream = pEvent->GetMainStream( );
 
@@ -67,13 +103,16 @@ void QJvsIPCThread::ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent )
         return;
     }
 
+    SetPlayHandle( hPlayWnd, ( LONG ) hPreview );
     int nRet = TMCC_SetAutoReConnect( hPreview, TRUE );
-    nRet = TMCC_ConnectStream( hPreview, &tPlayInfo, hPlayWnd);
+    nRet = TMCC_ConnectStream( hPreview, &tPlayInfo, hPlayWnd );
 }
 
 void QJvsIPCThread::ProcessIPCStopRealPlayEvent( QCameraEvent* pEvent )
 {
-    HANDLE hPreview;
+    HWND hPlayWnd = pEvent->GetVideoWndHandle( );
+    HANDLE hPreview = ( HANDLE ) GetPlayHandle( hPlayWnd );
+    RemovePlayHandle( hPlayWnd );
 
     if ( NULL == hPreview ) {
         return;
@@ -92,26 +131,7 @@ void QJvsIPCThread::ProcessIPCLogoutEvent( QCameraEvent* pEvent )
 void QJvsIPCThread::ProcessIPCCleanupEvent( QCameraEvent* pEvent )
 {
     Q_UNUSED( pEvent )
-}
-
-void QJvsIPCThread::JwsConnect( QCameraEvent* pEvent, HANDLE hCtrl )
-{
-    char* pIP;
-
-    if ( TMCC_IsConnect( hCtrl ) ) {
-        return;
-    }
-
-    tmConnectInfo_t tConnInfo = { 0 };
-
-    tConnInfo.dwSize = sizeof ( tmConnectInfo_t );
-    strcpy( tConnInfo.pIp, pIP );
-    tConnInfo.iPort = 0;
-    strcpy( tConnInfo.szUser, 0 );
-    strcpy( tConnInfo.szPass, 0 );
-
-    int nRet = TMCC_Connect( hCtrl, &tConnInfo, TRUE );
-    Q_UNUSED( nRet )
+    ClearHash( );
 }
 
 void QJvsIPCThread::JwsCleanup( HANDLE hCtrl )

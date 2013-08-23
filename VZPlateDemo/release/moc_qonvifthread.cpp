@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qonvifthread.h'
 **
-** Created: Tue Aug 20 11:08:25 2013
+** Created: Fri Aug 23 15:10:30 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

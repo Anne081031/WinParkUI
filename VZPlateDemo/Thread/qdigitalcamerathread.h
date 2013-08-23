@@ -4,6 +4,9 @@
 #include <QThread>
 #include "qcameraevent.h"
 #include <QApplication>
+#include <QHash>
+#include "qcommon.h"
+#include "qplatethread.h"
 
 class QDigitalCameraThread : public QThread
 {
@@ -13,24 +16,43 @@ public:
     virtual void PostIPCStartupEvent( );
     virtual void PostIPCSetConnectTimeoutEvent( );
     virtual void PostIPCSetReconnectTimeEvent( );
-    virtual void PostIPCLoginEvent( );
-    virtual void PostIPCCaptureJPGEvent( );
-    virtual void PostIPCStartRealPlayEvent( );
-    virtual void PostIPCStopRealPlayEvent( );
-    virtual void PostIPCLogoutEvent( );
+    virtual void PostIPCLoginEvent( QString& strIP );
+    virtual void PostIPCCaptureJPGEvent( QString& strIP, QString& strFile, bool bRecognize, HWND hPlayWnd = NULL );
+    virtual void PostIPCStartRealPlayEvent( QString& strIP, bool bMainStream, HWND hPlayWnd );
+    virtual void PostIPCStopRealPlayEvent( HWND hPlayWnd );
+    virtual void PostIPCLogoutEvent( QString& strIP );
     virtual void PostIPCCleanupEvent( );
 
-    virtual void CaptureStaticImage( QString& strFile, int nChannel );
+    virtual void CaptureStaticImage( QString& strIP, QString& strFileName, HWND hPlayWnd = NULL );
 
 protected:
     explicit QDigitalCameraThread(QObject *parent = 0);
+
+    void SetUserID( QString& strIP, LONG lUserID );
+    LONG GetUserID( QString& strIP );
+    void RemoveUserID( QString& strIP );
+
+    void SetPlayHandle( HWND hPlayWnd, LONG lPlayHandle );
+    LONG GetPlayHandle( HWND hPlayWnd );
+    void RemovePlayHandle( HWND hPlayWnd );
+    void ClearHash( );
+
+    void SendCaptureImage( QString& strFile, QString& strIP );
+
+    QTextCodec* pCodec;
 
 private:
     inline void PostEvent( QCameraEvent* pEvent );
 
 private:
+    typedef QHash< QString, LONG > QIPLoginIDHash;
+    typedef QHash< HWND, LONG > QWndPlayHandleHash;
+
+    QIPLoginIDHash hashIP_UserHandle;
+    QWndPlayHandleHash hashWnd_PlayHandle;
 
 signals:
+    void CaptureImage( QString strFile, QString strIP );
     
 public slots:
     

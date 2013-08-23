@@ -22,12 +22,52 @@ CConfigurator* CConfigurator::CreateInstance( )
 
 void CConfigurator::ReadAppMainWindow( QString& strType )
 {   // Blacklist Demo
-    strType = pSettings->value( "AppMainWindow/Type", "Demo" ).toString( ).toUpper( );
+    strType = pSettings->value( "AppMainWindow/Type", "Demo" ).toString( );
 }
 
 void CConfigurator::WriteAppMainWindow( QString& strType )
 {   // Blacklist Demo
     pSettings->setValue( "AppMainWindow/Type", strType );
+}
+
+void CConfigurator::ReadVideoType( QString& strType )
+{   // HkAnalog TmAnalog HkIPC JwsIPC OnvifIPC
+    strType = pSettings->value( "VideoSource/Type", "OnvifIPC" ).toString( );
+}
+
+void CConfigurator::WriteVideoType( QString& strType )
+{   // HkAnalog TmAnalog HkIPC JwsIPC OvnifIPC
+    pSettings->setValue( "VideoSource/Type", strType );
+}
+
+void CConfigurator::ReadIpcIP( QString& strIP )
+{
+    strIP = pSettings->value( "IPC/IP", "127.0.0.1" ).toString( );
+}
+
+void CConfigurator::WriteIpcIP( QString& strIP )
+{
+    pSettings->setValue( "IPC/IP", strIP );
+}
+
+int CConfigurator::ReadPlateWay( )
+{
+    return pSettings->value( "Plate/Way", 1 ).toInt( );
+}
+
+void CConfigurator::WritePlateWay( int nWay )
+{
+     pSettings->setValue( "Plate/Way", nWay );
+}
+
+bool CConfigurator::ReadMainStream( )
+{
+    return pSettings->value( "IPC/MainStream", true ).toBool( );
+}
+
+void CConfigurator::WriteMainStream( bool bStream )
+{
+    pSettings->setValue( "IPC/MainStream", bStream );
 }
 
 void CConfigurator::ReadBlacklistPlate( QStringList& lstPlates )

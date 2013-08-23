@@ -21,6 +21,7 @@ public:
     void PostPlateInitEvent( int nFormat, int nChannel );
     void PostPlateUninitEvent( int nChannel );
     bool SetRecognizeFlag( );
+    void SetPlateWay( int nWay );
 
     ~QPlateThread( );
 
@@ -51,6 +52,7 @@ private:
     QTextCodec* pCodec;
     QString strPlatePath;
     bool bStopRecognize;
+    int nPlateWay;
     
 signals:
     void PlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );

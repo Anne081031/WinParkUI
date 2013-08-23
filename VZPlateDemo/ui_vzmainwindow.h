@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'vzmainwindow.ui'
 **
-** Created: Wed Aug 21 16:19:04 2013
+** Created: Fri Aug 23 12:19:39 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -42,10 +42,8 @@ public:
     QPushButton *btnPreFile;
     QPushButton *btnNextFile;
     QPushButton *btnClear;
-    QPushButton *btnAnalogCamera;
-    QPushButton *btnAnalogCaptureFile;
-    QPushButton *btnDigitalCamera;
-    QPushButton *btnIPCCaptureFile;
+    QPushButton *btnCamera;
+    QPushButton *btnCaptureFile;
     QPushButton *btnVideoFile;
     QPushButton *btnStopVideoRecognize;
     QLabel *lblVideo1;
@@ -151,29 +149,17 @@ public:
 
         horizontalLayout->addWidget(btnClear);
 
-        btnAnalogCamera = new QPushButton(layoutWidget);
-        btnAnalogCamera->setObjectName(QString::fromUtf8("btnAnalogCamera"));
-        btnAnalogCamera->setEnabled(false);
+        btnCamera = new QPushButton(layoutWidget);
+        btnCamera->setObjectName(QString::fromUtf8("btnCamera"));
+        btnCamera->setEnabled(true);
 
-        horizontalLayout->addWidget(btnAnalogCamera);
+        horizontalLayout->addWidget(btnCamera);
 
-        btnAnalogCaptureFile = new QPushButton(layoutWidget);
-        btnAnalogCaptureFile->setObjectName(QString::fromUtf8("btnAnalogCaptureFile"));
-        btnAnalogCaptureFile->setEnabled(false);
+        btnCaptureFile = new QPushButton(layoutWidget);
+        btnCaptureFile->setObjectName(QString::fromUtf8("btnCaptureFile"));
+        btnCaptureFile->setEnabled(true);
 
-        horizontalLayout->addWidget(btnAnalogCaptureFile);
-
-        btnDigitalCamera = new QPushButton(layoutWidget);
-        btnDigitalCamera->setObjectName(QString::fromUtf8("btnDigitalCamera"));
-        btnDigitalCamera->setEnabled(false);
-
-        horizontalLayout->addWidget(btnDigitalCamera);
-
-        btnIPCCaptureFile = new QPushButton(layoutWidget);
-        btnIPCCaptureFile->setObjectName(QString::fromUtf8("btnIPCCaptureFile"));
-        btnIPCCaptureFile->setEnabled(false);
-
-        horizontalLayout->addWidget(btnIPCCaptureFile);
+        horizontalLayout->addWidget(btnCaptureFile);
 
         btnVideoFile = new QPushButton(layoutWidget);
         btnVideoFile->setObjectName(QString::fromUtf8("btnVideoFile"));
@@ -183,7 +169,7 @@ public:
 
         btnStopVideoRecognize = new QPushButton(layoutWidget);
         btnStopVideoRecognize->setObjectName(QString::fromUtf8("btnStopVideoRecognize"));
-        btnStopVideoRecognize->setEnabled(false);
+        btnStopVideoRecognize->setEnabled(true);
 
         horizontalLayout->addWidget(btnStopVideoRecognize);
 
@@ -271,12 +257,10 @@ public:
         btnPreFile->setText(QApplication::translate("VZMainWindow", "\344\270\212\344\270\200\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
         btnNextFile->setText(QApplication::translate("VZMainWindow", "\344\270\213\344\270\200\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
         btnClear->setText(QApplication::translate("VZMainWindow", "\346\270\205\351\231\244\346\211\200\346\234\211", 0, QApplication::UnicodeUTF8));
-        btnAnalogCamera->setText(QApplication::translate("VZMainWindow", "\346\250\241\346\213\237\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
-        btnAnalogCaptureFile->setText(QApplication::translate("VZMainWindow", "\346\250\241\346\213\237\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
-        btnDigitalCamera->setText(QApplication::translate("VZMainWindow", "\346\225\260\345\255\227\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
-        btnIPCCaptureFile->setText(QApplication::translate("VZMainWindow", "\346\225\260\345\255\227\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
+        btnCamera->setText(QApplication::translate("VZMainWindow", "\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
+        btnCaptureFile->setText(QApplication::translate("VZMainWindow", "\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
         btnVideoFile->setText(QApplication::translate("VZMainWindow", "\350\247\206\351\242\221\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
-        btnStopVideoRecognize->setText(QApplication::translate("VZMainWindow", "\345\201\234\346\255\242\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
+        btnStopVideoRecognize->setText(QApplication::translate("VZMainWindow", "\345\274\200\345\220\257\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
         lblVideo1->setText(QString());
         lblVideo2->setText(QString());
         lblVideo3->setText(QString());

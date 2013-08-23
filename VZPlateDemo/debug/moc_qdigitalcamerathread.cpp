@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qdigitalcamerathread.h'
 **
-** Created: Mon Aug 19 17:17:34 2013
+** Created: Fri Aug 23 13:22:02 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,18 +23,22 @@ static const uint qt_meta_data_QDigitalCameraThread[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       0,    0, // methods
+       1,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       0,       // signalCount
+       1,       // signalCount
+
+ // signals: signature, parameters, type, tag, flags
+      36,   22,   21,   21, 0x05,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_QDigitalCameraThread[] = {
-    "QDigitalCameraThread\0"
+    "QDigitalCameraThread\0\0strFile,strIP\0"
+    "CaptureImage(QString,QString)\0"
 };
 
 const QMetaObject QDigitalCameraThread::staticMetaObject = {
@@ -64,6 +68,20 @@ int QDigitalCameraThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     _id = QThread::qt_metacall(_c, _id, _a);
     if (_id < 0)
         return _id;
+    if (_c == QMetaObject::InvokeMetaMethod) {
+        switch (_id) {
+        case 0: CaptureImage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        default: ;
+        }
+        _id -= 1;
+    }
     return _id;
+}
+
+// SIGNAL 0
+void QDigitalCameraThread::CaptureImage(QString _t1, QString _t2)
+{
+    void *_a[] = { 0, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_END_MOC_NAMESPACE

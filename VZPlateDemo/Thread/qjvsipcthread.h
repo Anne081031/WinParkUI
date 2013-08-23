@@ -10,6 +10,7 @@ class QJvsIPCThread : public QDigitalCameraThread
     Q_OBJECT
 public:
     static QDigitalCameraThread* GetInstance( );
+    void CaptureStaticImage( QString& strIP, QString& strFileName, HWND hPlayWnd = NULL );
 
 protected:
     void run( );
@@ -29,7 +30,7 @@ private:
     void ProcessIPCCleanupEvent( QCameraEvent* pEvent );
 
     inline void JwsCleanup( HANDLE hCtrl );
-    void JwsConnect( QCameraEvent* pEvent, HANDLE hCtrl );
+    void CapturePicture( QString& strFileName, HWND hPlayWnd );
 
 private:
     static QDigitalCameraThread* pThreadInstance;

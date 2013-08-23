@@ -187,7 +187,7 @@ void BlacklistMainWindow::on_btnNextFile_clicked()
 
 void BlacklistMainWindow::on_actBlacklist_triggered()
 {
-    CDlgBlacklist dlg;
+    CDlgBlacklist dlg( this );
     dlg.exec( );
 }
 
@@ -203,6 +203,6 @@ void BlacklistMainWindow::on_tableAlert_cellClicked(int row, int column)
 
 void BlacklistMainWindow::on_actParameter_triggered()
 {
-    CDlgConfig dlg;
+    CDlgConfig dlg( this );
     dlg.exec( );
 }

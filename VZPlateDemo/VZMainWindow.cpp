@@ -4,16 +4,14 @@
 #include <QDir>
 #include <QDebug>
 #include <QDateTime>
-#include "CDlgConfig.h"
 
 VZMainWindow::VZMainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::VZMainWindow)
 {
     ui->setupUi(this);
-    pAnalogCamera = NULL;
-    connect( QPlateThread::GetInstance( ), SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
-             this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
+    Initialize( );
+
     QCommon::GetPlatePicPath( strPlateDir );
     LoadLogoTitle( );
 
@@ -22,19 +20,108 @@ VZMainWindow::VZMainWindow(QWidget *parent) :
     aLables[ 1 ] = ui->lblVideo1;
     aLables[ 2 ] = ui->lblVideo2;
     aLables[ 3 ] = ui->lblVideo3;
+}
+
+VZMainWindow::~VZMainWindow()
+{
+    delete ui;
+}
+
+void VZMainWindow::FileButton( bool bEnable )
+{
+    ui->btnFile->setEnabled( bEnable );
+    ui->btnSingleFile->setEnabled( bEnable );
+    ui->btnPreFile->setEnabled( bEnable );
+    ui->btnNextFile->setEnabled( bEnable );
+}
+
+void VZMainWindow::VideoButton( bool bEnable )
+{
+    ui->btnCamera->setEnabled( bEnable );
+    ui->btnCaptureFile->setEnabled( bEnable );
+    ui->btnStopVideoRecognize->setEnabled( bEnable );
+    //ui->btnFile->setEnabled( bEnable );
+}
+
+void VZMainWindow::EnableButton( QString &strVideoType )
+{
+    if ( "PictureFile" == strVideoType ) {
+        FileButton( true );
+        VideoButton( false );
+    } else if ( "HkAnalog" == strVideoType ) {
+        FileButton( false );
+        VideoButton( true );
+    } else if ( "TmAnalog" == strVideoType ) {
+        FileButton( false );
+        VideoButton( true );
+    } else if ( "HkIPC" == strVideoType ) {
+        FileButton( false );
+        VideoButton( true );
+    } else if ( "JwsIPC" == strVideoType ) {
+        FileButton( false );
+        VideoButton( true );
+    } else if ( "OnvifIPC" == strVideoType ) {
+        FileButton( false );
+        VideoButton( true );
+    } else if ( "VideoFile" == strVideoType ) {
+
+    }
+}
+
+void VZMainWindow::Initialize( )
+{
+    pAnalogCamera = NULL;
+    pDigitalCamera = NULL;
+    pFileCamera = NULL;
+
+    pConfig = CConfigurator::CreateInstance( );
+
+    QString strVideoType;
+    pConfig->ReadVideoType( strVideoType );
+    pConfig->ReadIpcIP( strIpcIP );
+
+    nPlateWay = pConfig->ReadPlateWay( );
+    int nFormat = ImageFormatBGR;
+
+    EnableButton( strVideoType );
+
+    if ( "PictureFile" == strVideoType ) {
+        nFormat = ImageFormatBGR;
+        nPlateWay = 1;
+    } else if ( "HkAnalog" == strVideoType ) {
+        nFormat = ImageFormatYUV420COMPASS;
+        pAnalogCamera = QHkCaptureCardThread::GetInstance( );
+    } else if ( "TmAnalog" == strVideoType ) {
+        pAnalogCamera = QTmCaptureCardThread::GetInstance( );
+        nFormat = ImageFormatRGB;
+    } else if ( "HkIPC" == strVideoType ) {
+        pDigitalCamera = QDHkIPCThread::GetInstance( );
+    } else if ( "JwsIPC" == strVideoType ) {
+        pDigitalCamera = QJvsIPCThread::GetInstance( );
+    } else if ( "OnvifIPC" == strVideoType ) {
+        pDigitalCamera = QOnvifThread::GetInstance( );
+    } else if ( "VideoFile" == strVideoType ) {
+        pFileCamera = QFileCameraThread::GetInstance( );
+    }
+
+    pPlateThread = QPlateThread::GetInstance( );
+    pPlateThread->SetPlateWay( nPlateWay );
+
+    connect( pPlateThread, SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
+             this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
+
+    for ( int nIndex = 0; nIndex < nPlateWay; nIndex++ ) {
+        pPlateThread->PostPlateInitEvent( nFormat, nIndex );
+    }
+
     //ImageFormatYUV420COMPASS : ImageFormatBGR
-    QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatBGR, 0 ); // HK
+    //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatBGR, 0 ); // HK
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatBGR, 1 );
 
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 0 ); //TM
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 1 );
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 2 );
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 3 );
-}
-
-VZMainWindow::~VZMainWindow()
-{
-    delete ui;
 }
 
 void VZMainWindow::LoadLogoTitle( )
@@ -83,6 +170,11 @@ void VZMainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool 
 }
 
 void VZMainWindow::HandleCaptureImage( QString strFile, int nChannel )
+{
+
+}
+
+void VZMainWindow::HandleCaptureImage( QString strFile, QString strIP )
 {
 
 }
@@ -150,7 +242,7 @@ void VZMainWindow::on_btnSingleFile_clicked()
         ButtonEnable( false, true );
     }
 
-    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
+    pPlateThread->PostPlateFileRecognize( strFile, 0 );
 }
 
 void VZMainWindow::SingleFileRecognize( bool bPreFile )
@@ -172,7 +264,7 @@ void VZMainWindow::SingleFileRecognize( bool bPreFile )
     }
 
     QString strFile = lstFiles.at( nFileIndex ).absoluteFilePath( );
-    QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
+    pPlateThread->PostPlateFileRecognize( strFile, 0 );
 }
 
 void VZMainWindow::on_btnPreFile_clicked()
@@ -232,36 +324,43 @@ void VZMainWindow::on_btnClear_clicked()
     ui->lblVideo0->clear( );
 }
 
-void VZMainWindow::on_btnAnalogCamera_clicked()
+void VZMainWindow::StartVideo( )
 {
     if ( NULL != pAnalogCamera ) {
-        return;
-    }
+        connect( pAnalogCamera, SIGNAL( CaptureImage( QString, int ) ),
+                 this, SLOT( HandleCaptureImage( QString, int ) ) );
+        connect( pAnalogCamera, SIGNAL( NotifyMessage( QString, bool ) ),
+                 this, SLOT( HandleNotifyMessage( QString, bool ) ) );
+        connect( pAnalogCamera, SIGNAL( DetectInfo( int, bool ) ),
+                 this, SLOT( HandleDetectInfo( int, bool ) ) );
 
-    //pAnalogCamera = QTmCaptureCardThread::GetInstance( );
-    pAnalogCamera = QHkCaptureCardThread::GetInstance( );
+        pAnalogCamera->PostInitCaptureSDKEvent( winId( ) );
 
-    connect( pAnalogCamera, SIGNAL( CaptureImage( QString, int ) ),
-             this, SLOT( HandleCaptureImage( QString, int ) ) );
-    connect( pAnalogCamera, SIGNAL( NotifyMessage( QString, bool ) ),
-             this, SLOT( HandleNotifyMessage( QString, bool ) ) );
-    connect( pAnalogCamera, SIGNAL( DetectInfo( int, bool ) ),
-             this, SLOT( HandleDetectInfo( int, bool ) ) );
+        for ( int nChannel = 0; nChannel < nPlateWay; nChannel++ ) {
+            pAnalogCamera->PostOpenChannelEvent( nChannel );
+            pAnalogCamera->PostPlayVideoEvent( nChannel, aLables[ nChannel ]->winId( ) );
+            pAnalogCamera->PostStartCaptureEvent( nChannel );
+            pAnalogCamera->PostStartMotionDetectEvent( nChannel );
+            pAnalogCamera->PostStartSourceStreamEvent( nChannel, 0 == nChannel );
+        }
+    } else if ( NULL != pDigitalCamera ) {
+        connect( pDigitalCamera, SIGNAL( CaptureImage( QString, QString ) ),
+                 this, SLOT( HandleCaptureImage( QString, QString ) ) );
 
-    pAnalogCamera->PostInitCaptureSDKEvent( winId( ) );
+        pDigitalCamera->PostIPCStartupEvent( );
+        pDigitalCamera->PostIPCSetConnectTimeoutEvent( );
+        pDigitalCamera->PostIPCSetReconnectTimeEvent( );
+        pDigitalCamera->PostIPCLoginEvent( strIpcIP );
 
-    for ( int nChannel = 0; nChannel < CHANNEL_WAY - 2; nChannel++ ) {
-        pAnalogCamera->PostOpenChannelEvent( nChannel );
-        pAnalogCamera->PostPlayVideoEvent( nChannel, aLables[ nChannel ]->winId( ) );
-        pAnalogCamera->PostStartCaptureEvent( nChannel );
-        pAnalogCamera->PostStartMotionDetectEvent( nChannel );
-        pAnalogCamera->PostStartSourceStreamEvent( nChannel, 0 == nChannel );
+        for ( int nChannel = 0; nChannel < nPlateWay; nChannel++ ) {
+            pDigitalCamera->PostIPCStartRealPlayEvent( strIpcIP, pConfig->ReadMainStream( ), aLables[ nChannel ]->winId( ) );
+        }
     }
 }
 
-void VZMainWindow::on_btnDigitalCamera_clicked()
+void VZMainWindow::on_btnCamera_clicked()
 {
-
+    StartVideo( );
 }
 
 void VZMainWindow::on_btnVideoFile_clicked()
@@ -269,32 +368,31 @@ void VZMainWindow::on_btnVideoFile_clicked()
 
 }
 
-void VZMainWindow::on_btnAnalogCaptureFile_clicked()
+void VZMainWindow::CaptureImage( )
 {
-    if ( NULL == pAnalogCamera ) {
-        return;
+    if ( NULL != pAnalogCamera ) {
+        int nChannel = 0;
+        QString strFile = strPlateDir + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".JPG";
+        pAnalogCamera->PostCaptrueImageEvent( nChannel, strFile, true );
+    } else if ( NULL != pDigitalCamera ) {
+        QString strFile = strPlateDir + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".JPG";
+        pDigitalCamera->PostIPCCaptureJPGEvent( strIpcIP, strFile, true, ui->lblVideo0->winId( ) );
     }
-
-    int nChannel = 0;
-
-    QString strFile = strPlateDir + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".JPG";
-    pAnalogCamera->PostCaptrueImageEvent( nChannel, strFile, true );
 }
 
-void VZMainWindow::on_btnIPCCaptureFile_clicked()
+void VZMainWindow::on_btnCaptureFile_clicked()
 {
-
+    CaptureImage( );
 }
 
 void VZMainWindow::on_btnStopVideoRecognize_clicked()
 {
-    bool bFlag = QPlateThread::GetInstance( )->SetRecognizeFlag( );
-
+    bool bFlag = pPlateThread->SetRecognizeFlag( );
     ui->btnStopVideoRecognize->setText( bFlag ? "启动视频识别" : "停止视频识别" );
 }
 
 void VZMainWindow::on_actParameter_triggered()
 {
-    CDlgConfig dlg;
+    CDlgConfig dlg( this );
     dlg.exec( );
 }

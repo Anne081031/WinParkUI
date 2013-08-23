@@ -228,42 +228,22 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btnAnalogCamera">
+      <widget class="QPushButton" name="btnCamera">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
-        <string>模拟摄像机</string>
+        <string>摄像机</string>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="btnAnalogCaptureFile">
+      <widget class="QPushButton" name="btnCaptureFile">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
-        <string>模拟抓图</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnDigitalCamera">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>数字摄像机</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QPushButton" name="btnIPCCaptureFile">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="text">
-        <string>数字抓图</string>
+        <string>抓图</string>
        </property>
       </widget>
      </item>
@@ -280,10 +260,10 @@
      <item>
       <widget class="QPushButton" name="btnStopVideoRecognize">
        <property name="enabled">
-        <bool>false</bool>
+        <bool>true</bool>
        </property>
        <property name="text">
-        <string>停止视频识别</string>
+        <string>开启视频识别</string>
        </property>
       </widget>
      </item>

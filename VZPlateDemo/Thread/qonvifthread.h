@@ -7,10 +7,20 @@ class QOnvifThread : public QDigitalCameraThread
 {
     Q_OBJECT
 public:
+    static QDigitalCameraThread* GetInstance( );
+
+protected:
+    void run( );
+    void customEvent( QEvent *e );
+
+private:
     explicit QOnvifThread(QObject *parent = 0);
-    
+
+private:
+    static QDigitalCameraThread* pThreadInstance;
+
 signals:
-    
+
 public slots:
     
 };

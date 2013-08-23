@@ -1,0 +1,3 @@
+www.x.org XWindow Xt XLib XForms FLTK GTK Motif Athena wxWidigets
+
+wx-SDL Python£¨wxPython£©¡¢Perl£¨wxPerl£©¡¢Ruby£¨wxRuby£©¡¢Smalltalk£¨wxSmalltalk£©¡¢Java£¨wx4j£©¡¢JavaScript£¨wxjs£©

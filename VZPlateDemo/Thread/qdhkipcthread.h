@@ -9,7 +9,11 @@ class QDHkIPCThread : public QDigitalCameraThread
     Q_OBJECT
 public:
     static QDigitalCameraThread* GetInstance( );
-    void CaptureStaticImage( QString& strFile, int nChannel );
+    void CaptureStaticImage( QString &strIP, QString &strFileName, HWND hPlayWnd = NULL );
+
+    void SendNotify( DWORD dwType,
+                     LONG lUserID,
+                     LONG lHandle );
 
 protected:
     void run( );
@@ -27,6 +31,9 @@ private:
     void ProcessIPCStopRealPlayEvent( QCameraEvent* pEvent );
     void ProcessIPCLogoutEvent( QCameraEvent* pEvent );
     void ProcessIPCCleanupEvent( QCameraEvent* pEvent );
+    void ProcessIPCCaptureImage( QCameraEvent* pEvent );
+
+    void CapturePicture( QString& strIP, QString& strFile );
 
 private:
     static QDigitalCameraThread* pThreadInstance;

@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include "cconfigurator.h"
+#include <QComboBox>
 
 namespace Ui {
 class CDlgConfig;
@@ -19,6 +20,7 @@ public:
 private:
     void ReadConfig( );
     void Saveconfig( );
+    void FillComboBox( QComboBox* pCbx, QString strInfo[ ][ 2 ], int nRow, const QString& strCurItem );
     
 private slots:
     void on_btnOk_clicked();

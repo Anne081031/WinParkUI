@@ -88,6 +88,15 @@ void QAnalogCameraThread::PostStopCaptureEvent( int nChannel )
     PostEvent( pEvent );
 }
 
+void QAnalogCameraThread::PostCaptrueImageEvent( int nChannel, QString& strFile, bool bRecognize )
+{
+    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraCaptureImage );
+    pEvent->SetChannel( nChannel );
+    pEvent->SetImgFile( strFile );
+    pEvent->SetRecognize( bRecognize );
+    PostEvent( pEvent );
+}
+
 void QAnalogCameraThread::PostPlayVideoEvent( int nChannel, HWND hVideo )
 {
     QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStartPreview );
@@ -100,15 +109,6 @@ void QAnalogCameraThread::PostStopVideoEvent( int nChannel )
 {
     QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraStopPreview );
     pEvent->SetChannel( nChannel );
-    PostEvent( pEvent );
-}
-
-void QAnalogCameraThread::PostCaptrueImageEvent( int nChannel, QString& strFile, bool bRecognize )
-{
-    QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::CameraCaptureImage );
-    pEvent->SetChannel( nChannel );
-    pEvent->SetImgFile( strFile );
-    pEvent->SetRecognize( bRecognize );
     PostEvent( pEvent );
 }
 
