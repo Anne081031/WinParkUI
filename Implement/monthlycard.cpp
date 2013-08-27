@@ -1,5 +1,11 @@
 #include "Header/monthlycard.h"
-#include "ui_monthlycard.h"
+
+#ifdef NewUI
+    #include "ui_newmonthlycard.h"
+#else
+    #include "ui_monthlycard.h"
+#endif
+
 #include "Dialog/rechargedialog.h"
 #include "Common/CommonType.h"
 #include <Dialog/monthlycarddialog.h>
@@ -11,7 +17,13 @@
 
 CMonthlyCard::CMonthlyCard(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CMonthlyCard)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CMonthlyCard )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CMonthlyCard )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

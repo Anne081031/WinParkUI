@@ -7,7 +7,12 @@
 #include "mainwindow.h"
 
 namespace Ui {
-    class CSysLog;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CSysLog );
+#else
+    CONCAT_NEW_NAME( , CSysLog );
+#endif
 }
 
 class CSysLog : public QFrame
@@ -29,7 +34,12 @@ private:
     void ClearImage( );
 
 private:
-    Ui::CSysLog *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CSysLog )
+#else
+    Ui::CONCAT_NEW_NAME( , CSysLog )
+#endif
+     *ui;
     MainWindow* pParent;
     QHash< CommonDataType::BlobType, QLabel*> hashScaleImage;
 

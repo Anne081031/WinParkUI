@@ -1,11 +1,24 @@
 #include "Header/blacklist.h"
 #include "ui_blacklist.h"
+
+#ifdef NewUI
+    #include "ui_newblacklist.h"
+#else
+    #include "ui_blacklist.h"
+#endif
+
 #include "Common/commonfunction.h"
 #include "Dialog/dlgblacklistlocation.h"
 
 CBlacklist::CBlacklist(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CBlacklist)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CBlacklist )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CBlacklist )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

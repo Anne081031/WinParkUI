@@ -7,7 +7,12 @@
 #include "mainwindow.h"
 
 namespace Ui {
-    class CBlacklist;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CBlacklist );
+#else
+    CONCAT_NEW_NAME( , CBlacklist );
+#endif
 }
 
 class CBlacklist : public QFrame
@@ -33,7 +38,12 @@ private:
     bool DataExist( );
 
 private:
-    Ui::CBlacklist *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CBlacklist )
+#else
+    Ui::CONCAT_NEW_NAME( , CBlacklist )
+#endif
+     *ui;
     MainWindow* pParent;
     int nOperate; // 0 Add , 1 Delete , 2 Modify
 

@@ -8,7 +8,12 @@
 #include <QGroupBox>
 
 namespace Ui {
-    class CAccess2Records;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CAccess2Records );
+#else
+    CONCAT_NEW_NAME( , CAccess2Records );
+#endif
 }
 
 class CAccess2Records : public QFrame
@@ -35,7 +40,12 @@ private:
     inline bool Search( QComboBox* pCB, int nRow, int nCol );
 
 private:
-    Ui::CAccess2Records *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CAccess2Records )
+#else
+    Ui::CONCAT_NEW_NAME( , CAccess2Records )
+#endif
+     *ui;
     MainWindow* pParent;
     QLabel* lblImage[ 8 ];
     QGroupBox* gbImage[  8 ];

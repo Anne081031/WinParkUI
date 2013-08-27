@@ -1,5 +1,11 @@
 #include "Header/access2records.h"
-#include "ui_access2records.h"
+
+#ifdef NewUI
+    #include "ui_newaccess2records.h"
+#else
+    #include "ui_access2records.h"
+#endif
+
 #include "Common/commonfunction.h"
 #include "Common/logicinterface.h"
 #include "Header/picturescale.h"
@@ -7,7 +13,13 @@
 
 CAccess2Records::CAccess2Records(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CAccess2Records)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CAccess2Records )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CAccess2Records )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

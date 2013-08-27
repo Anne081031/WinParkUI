@@ -53,11 +53,12 @@ void QDigitalCameraThread::PostIPCCaptureJPGEvent( QString& strIP, QString& strF
     PostEvent( pEvent );
 }
 
-void QDigitalCameraThread::PostIPCStartRealPlayEvent( QString& strIP, bool bMainStream, HWND hPlayWnd )
+void QDigitalCameraThread::PostIPCStartRealPlayEvent( QString& strIP, bool bMainStream, bool bRealStream, HWND hPlayWnd )
 {
     QCameraEvent* pEvent = new QCameraEvent( ( QEvent::Type ) QCameraEvent::IPCStartRealPlay );
     pEvent->SetIpcIp( strIP );
     pEvent->SetMainStream( bMainStream );
+    pEvent->SetRealStream( bRealStream );
     pEvent->SetVideoWndHandle( hPlayWnd );
     PostEvent( pEvent );
 }
@@ -101,6 +102,21 @@ void QDigitalCameraThread::SetPlayHandle( HWND hPlayWnd, LONG lPlayHandle )
     }
 
     hashWnd_PlayHandle.insert( hPlayWnd, lPlayHandle );
+}
+
+void QDigitalCameraThread::SetIP( LONG lPlayHandle, QString& strIP )
+{
+    hashPlayHandle_IP.insert( lPlayHandle, strIP );
+}
+
+QString QDigitalCameraThread::GetIP( LONG lPlayHandle )
+{
+    return hashPlayHandle_IP.value( lPlayHandle );
+}
+
+void QDigitalCameraThread::RemoveIP( LONG lPlayHandle )
+{
+    hashPlayHandle_IP.remove( lPlayHandle );
 }
 
 LONG QDigitalCameraThread::GetUserID( QString& strIP )

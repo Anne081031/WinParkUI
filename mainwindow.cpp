@@ -258,7 +258,7 @@ void MainWindow::Singleton( )
         exit( 0 );
     }
 
-    CheckResolution( );
+    //CheckResolution( );
 }
 
 void MainWindow::RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray byData )
@@ -652,6 +652,23 @@ void MainWindow::HideCtrl( bool bVisible )
     ui->tbTime->setVisible( bVisible );
 }
 
+void MainWindow::SetMaxMinSize( )
+{
+    QRect rect;
+
+#ifdef NewUI
+    rect.setWidth( 1366 );
+    rect.setHeight( 768 );
+#else
+    rect.setWidth( 1440 );
+    rect.setHeight( 900 );
+#endif
+
+    setGeometry( rect );
+    setMaximumSize( rect.width( ), rect.height( ) );
+    setMinimumSize( rect.width( ), rect.height( ) );
+}
+
 MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     QMainWindow( parent, flags ),
     ui(new Ui::MainWindow), pDlgLogin( 0 )
@@ -660,6 +677,7 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     //startup.start( );
     //QEvent* pEvent = new QEvent( QEvent::User );
     //QApplication::postEvent( &startup, pEvent );
+    SetMaxMinSize( );
 
     CCommonFunction::ShowSplashMessage( "初始化时间格式开始。" );
     SetDateTimeFormat( );

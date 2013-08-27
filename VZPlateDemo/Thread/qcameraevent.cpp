@@ -7,6 +7,7 @@ QCameraEvent::QCameraEvent(Type evtType) : QEvent(evtType)
     nChannelNumber = -1;
     bRecognize = false;
     bMainStream = false;
+    bRealStream = true;
 }
 
 void QCameraEvent::SetChannel( int nChannel )
@@ -77,4 +78,14 @@ void QCameraEvent::SetMainStream( bool bMain )
 bool QCameraEvent::GetMainStream( )
 {
     return bMainStream;
+}
+
+void QCameraEvent::SetRealStream( bool bReal )
+{
+    bRealStream = bReal;
+}
+
+bool QCameraEvent::GetRealStream( )
+{
+    return bRealStream;
 }

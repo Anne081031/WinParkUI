@@ -11,10 +11,6 @@ public:
     static QDigitalCameraThread* GetInstance( );
     void CaptureStaticImage( QString &strIP, QString &strFileName, HWND hPlayWnd = NULL );
 
-    void SendNotify( DWORD dwType,
-                     LONG lUserID,
-                     LONG lHandle );
-
 protected:
     void run( );
     void customEvent( QEvent *e );
@@ -34,6 +30,15 @@ private:
     void ProcessIPCCaptureImage( QCameraEvent* pEvent );
 
     void CapturePicture( QString& strIP, QString& strFile );
+
+    static void CALLBACK ExceptionCallback( DWORD dwType, LONG lUserID, LONG lHandle, void* pUser );
+    void SendNotify( DWORD dwType, LONG lUserID, LONG lHandle );
+
+    static void CALLBACK RealDataStreamCallback( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, DWORD dwUser );
+    void RealStream( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize );
+
+    static void CALLBACK RealStandardDataStreamCallback( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, DWORD dwUser );
+    void RealStandardStream( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize );
 
 private:
     static QDigitalCameraThread* pThreadInstance;

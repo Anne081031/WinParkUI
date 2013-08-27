@@ -114,7 +114,7 @@ void VZMainWindow::Initialize( )
         pPlateThread->PostPlateInitEvent( nFormat, nIndex );
     }
 
-    //ImageFormatYUV420COMPASS : ImageFormatBGR
+    //ImageFormat YUV420COMPASS : ImageFormatBGR
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatBGR, 0 ); // HK
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatBGR, 1 );
 
@@ -353,7 +353,9 @@ void VZMainWindow::StartVideo( )
         pDigitalCamera->PostIPCLoginEvent( strIpcIP );
 
         for ( int nChannel = 0; nChannel < nPlateWay; nChannel++ ) {
-            pDigitalCamera->PostIPCStartRealPlayEvent( strIpcIP, pConfig->ReadMainStream( ), aLables[ nChannel ]->winId( ) );
+            pDigitalCamera->PostIPCStartRealPlayEvent( strIpcIP, pConfig->ReadMainStream( ),
+                                                       pConfig->ReadRealStream( ),
+                                                       aLables[ nChannel ]->winId( ) );
         }
     }
 }

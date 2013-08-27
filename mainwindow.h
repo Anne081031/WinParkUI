@@ -1,6 +1,8 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#define CONCAT_NEW_NAME( Prefix, Suffix ) Prefix##Suffix
+
 #include <QMainWindow>
 #include <QMdiArea>
 #include <QSignalMapper>
@@ -67,6 +69,7 @@ public:
     void DisplayAlert( QStringList& lstData );
 
 private:
+    void SetMaxMinSize( );
     void ClearAllFiles( );
     void ModiyToobar( );
     void CreateChildren( );

@@ -5,6 +5,7 @@ QDigitalCameraThread* QJvsIPCThread::pThreadInstance = NULL;
 QJvsIPCThread::QJvsIPCThread(QObject *parent) :
     QDigitalCameraThread(parent)
 {
+
 }
 
 QDigitalCameraThread* QJvsIPCThread::GetInstance( )
@@ -21,6 +22,44 @@ QDigitalCameraThread* QJvsIPCThread::GetInstance( )
 void QJvsIPCThread::run( )
 {
     exec( );
+}
+
+int QJvsIPCThread::RealDataStreamCallback( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo, void *pContext )
+{
+    int nRet = 0;
+
+    if ( NULL == pContext ) {
+        return nRet;
+    }
+
+    QJvsIPCThread* pThread = ( QJvsIPCThread* ) pContext;
+    pThread->RealStream( hTmCC, pStreamInfo );
+
+    return nRet;
+}
+
+void QJvsIPCThread::RealStream( HANDLE hTmCC, tmRealStreamInfo_t *pStreamInfo )
+{
+    QString strIP = GetIP( ( LONG ) hTmCC );
+}
+
+int QJvsIPCThread::RealStandardDataStreamCallback( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo, void *pContext )
+{
+    int nRet = 0;
+
+    if ( NULL == pContext ) {
+        return nRet;
+    }
+
+    QJvsIPCThread* pThread = ( QJvsIPCThread* ) pContext;
+    pThread->RealStandardStream( hTmCC, pStreamInfo );
+
+    return nRet;
+}
+
+void QJvsIPCThread::RealStandardStream( HANDLE hTmCC, tmRealStreamInfo_t *pStreamInfo )
+{
+    QString strIP = GetIP( ( LONG ) hTmCC );
 }
 
 void QJvsIPCThread::ProcessIPCStartupEvent( QCameraEvent* pEvent )
@@ -86,6 +125,7 @@ void QJvsIPCThread::ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent )
     QByteArray byData = strIP.toAscii( );
     byData.append( char( 0 ) );
     char* pIP = byData.data( );
+    bool bRealStream = pEvent->GetRealStream( );
 
     HWND hPlayWnd = pEvent->GetVideoWndHandle( );
     bool bMainStream = pEvent->GetMainStream( );
@@ -103,6 +143,13 @@ void QJvsIPCThread::ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent )
         return;
     }
 
+    if ( bRealStream ) {
+        TMCC_RegisterStreamCallBack( hPreview, RealDataStreamCallback, this );
+    } else {
+        TMCC_RegisterRtpStreamCallBack( hPreview, RealStandardDataStreamCallback, this );
+    }
+
+    SetIP( ( LONG ) hPreview, strIP );
     SetPlayHandle( hPlayWnd, ( LONG ) hPreview );
     int nRet = TMCC_SetAutoReConnect( hPreview, TRUE );
     nRet = TMCC_ConnectStream( hPreview, &tPlayInfo, hPlayWnd );
@@ -113,11 +160,13 @@ void QJvsIPCThread::ProcessIPCStopRealPlayEvent( QCameraEvent* pEvent )
     HWND hPlayWnd = pEvent->GetVideoWndHandle( );
     HANDLE hPreview = ( HANDLE ) GetPlayHandle( hPlayWnd );
     RemovePlayHandle( hPlayWnd );
+    RemoveIP( ( LONG ) hPreview );
 
     if ( NULL == hPreview ) {
         return;
     }
 
+    TMCC_RegisterStreamCallBack( hPreview, NULL, NULL );
     int nRet = TMCC_CloseStream( hPreview );
     nRet = TMCC_DisConnect( hPreview );
     JwsCleanup( hPreview );

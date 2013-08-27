@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'VZMainWindow.h'
 **
-** Created: Fri Aug 23 15:10:15 2013
+** Created: Mon Aug 26 12:02:52 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

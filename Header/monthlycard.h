@@ -8,7 +8,12 @@
 #include <QMenu>
 
 namespace Ui {
-    class CMonthlyCard;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CMonthlyCard );
+#else
+    CONCAT_NEW_NAME( , CMonthlyCard );
+#endif
 }
 
 class CMonthlyCard : public QFrame
@@ -54,7 +59,12 @@ private slots:
     void PositionRow( QString strCardID );
 
 private:
-    Ui::CMonthlyCard *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CMonthlyCard )
+#else
+    Ui::CONCAT_NEW_NAME( , CMonthlyCard )
+#endif
+     *ui;
     MainWindow* pParent;
     QMenu* pMenu;
     QStringList lstCarID;

@@ -1,11 +1,23 @@
 #include "Header/syslog.h"
-#include "ui_syslog.h"
+
+#ifdef NewUI
+    #include "ui_newsyslog.h"
+#else
+    #include "ui_syslog.h"
+#endif
+
 #include "Common/logicinterface.h"
 #include "Common/commonfunction.h"
 
 CSysLog::CSysLog(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CSysLog)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CSysLog )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CSysLog )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

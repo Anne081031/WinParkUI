@@ -115,10 +115,7 @@ void QDHkIPCThread::SendNotify( DWORD dwType, LONG lUserID, LONG lHandle )
     qDebug( ) << strText << NET_DVR_GetErrorMsg( ) << Q_FUNC_INFO << endl;
 }
 
-void CALLBACK ExceptionCallbackDemo( DWORD dwType,
-                                 LONG lUserID,
-                                 LONG lHandle,
-                                 void* pUser )
+void QDHkIPCThread::ExceptionCallback( DWORD dwType, LONG lUserID, LONG lHandle, void* pUser )
 {
     if ( NULL == pUser ) {
         return;
@@ -126,6 +123,36 @@ void CALLBACK ExceptionCallbackDemo( DWORD dwType,
 
     QDHkIPCThread* pThread = ( QDHkIPCThread* ) pUser;
     pThread->SendNotify( dwType, lUserID, lHandle );
+}
+
+void QDHkIPCThread::RealDataStreamCallback( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, DWORD dwUser )
+{
+    if ( 0 == dwUser ) {
+        return;
+    }
+
+    QDHkIPCThread* pThread = ( QDHkIPCThread* ) dwUser;
+    pThread->RealStream( lRealHandle, dwDataType, pBuffer, dwBufSize );
+}
+
+void QDHkIPCThread::RealStream( LONG lRealHandle, DWORD wdDataType, BYTE *pBuffer, DWORD dwBufSize )
+{
+    QString strIP = GetIP( lRealHandle );
+}
+
+void QDHkIPCThread::RealStandardDataStreamCallback( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, DWORD dwUser )
+{
+    if ( 0 == dwUser ) {
+        return;
+    }
+
+    QDHkIPCThread* pThread = ( QDHkIPCThread* ) dwUser;
+    pThread->RealStandardStream( lRealHandle, dwDataType, pBuffer, dwBufSize );
+}
+
+void QDHkIPCThread::RealStandardStream( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize )
+{
+    QString strIP = GetIP( lRealHandle );
 }
 
 void QDHkIPCThread::run( )
@@ -172,7 +199,7 @@ void QDHkIPCThread::ProcessIPCStartupEvent( QCameraEvent* pEvent )
     // Lookup SDK info log
     //bRet = NET_DVR_SetLogToFile( 3 );
 
-    bRet = NET_DVR_SetExceptionCallBack_V30( 0, NULL, ExceptionCallbackDemo, this );
+    bRet = NET_DVR_SetExceptionCallBack_V30( 0, NULL, ExceptionCallback, this );
 }
 
 void QDHkIPCThread::ProcessIPCSetConnectTimeoutEvent( QCameraEvent* pEvent )
@@ -234,6 +261,8 @@ void QDHkIPCThread::ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent )
     bool bMainStream = pEvent->GetMainStream( );
     HWND hPlayWnd = pEvent->GetVideoWndHandle( );
     LONG lPlayHandle = GetPlayHandle( hPlayWnd );
+    BOOL bRet = FALSE;
+    bool bRealStream = pEvent->GetRealStream( );
 
     if ( -1 != lPlayHandle ) {
         return;
@@ -245,6 +274,14 @@ void QDHkIPCThread::ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent )
     sClientInfo.hPlayWnd = hPlayWnd;
 
     lPlayHandle = NET_DVR_RealPlay_V30( lUserID, &sClientInfo, NULL );
+
+    if ( bRealStream ) {
+        bRet = NET_DVR_SetRealDataCallBack( lPlayHandle, RealDataStreamCallback, ( DWORD ) this );
+    } else {
+        bRet = NET_DVR_SetStandardDataCallBack( lPlayHandle, RealStandardDataStreamCallback, ( DWORD ) this );
+    }
+
+    SetIP( lPlayHandle, strIP );
     SetPlayHandle( hPlayWnd, lPlayHandle );
 }
 
@@ -252,15 +289,16 @@ void QDHkIPCThread::ProcessIPCStopRealPlayEvent( QCameraEvent* pEvent )
 {
     HWND hPlayWnd = pEvent->GetVideoWndHandle( );
     LONG lPlayHandle = GetPlayHandle( hPlayWnd );
+    RemoveIP( lPlayHandle );
+    RemovePlayHandle( hPlayWnd );
 
     if ( - 1 == lPlayHandle ) {
         return;
     }
 
     BOOL bRet = NET_DVR_StopRealPlay( lPlayHandle );
-    RemovePlayHandle( hPlayWnd );
-
-    Q_UNUSED( bRet )
+    bRet = NET_DVR_SetRealDataCallBack( lPlayHandle, NULL, 0 );
+    bRet = NET_DVR_SetStandardDataCallBack( lPlayHandle, NULL, 0 );
 }
 
 void QDHkIPCThread::ProcessIPCLogoutEvent( QCameraEvent* pEvent )

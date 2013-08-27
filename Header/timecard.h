@@ -8,7 +8,12 @@
 #include <QMenu>
 
 namespace Ui {
-    class CTimeCard;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CTimeCard );
+#else
+    CONCAT_NEW_NAME( , CTimeCard );
+#endif
 }
 
 class CTimeCard : public QFrame
@@ -53,7 +58,12 @@ private slots:
     void on_pushButton_8_clicked();
 
 private:
-    Ui::CTimeCard *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CTimeCard )
+#else
+    Ui::CONCAT_NEW_NAME( , CTimeCard )
+#endif
+     *ui;
     MainWindow* pParent;
     QMenu* pMenu;
 };

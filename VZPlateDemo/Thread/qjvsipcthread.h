@@ -32,6 +32,12 @@ private:
     inline void JwsCleanup( HANDLE hCtrl );
     void CapturePicture( QString& strFileName, HWND hPlayWnd );
 
+    static int CALLBACK RealDataStreamCallback( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo, void *pContext );
+    void RealStream( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo );
+
+    static int CALLBACK RealStandardDataStreamCallback( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo, void *pContext );
+    void RealStandardStream( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo );
+
 private:
     static QDigitalCameraThread* pThreadInstance;
     

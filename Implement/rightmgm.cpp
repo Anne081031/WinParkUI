@@ -1,5 +1,11 @@
 #include "Header/rightmgm.h"
-#include "ui_rightmgm.h"
+
+#ifdef NewUI
+    #include "ui_newrightmgm.h"
+#else
+    #include "ui_rightmgm.h"
+#endif
+
 #include <QGroupBox>
 #include <QTableWidget>
 #include <QString>
@@ -12,7 +18,13 @@
 
 CRightMgm::CRightMgm(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CRightMgm)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CRightMgm )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CRightMgm )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

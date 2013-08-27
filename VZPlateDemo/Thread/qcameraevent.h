@@ -62,6 +62,9 @@ public:
     void SetMainStream( bool bMain );
     bool GetMainStream( );
 
+    void SetRealStream( bool bReal );
+    bool GetRealStream( );
+
 private:
     int nChannelNumber;
     HWND hVideoWnd;
@@ -70,6 +73,7 @@ private:
     bool bRecognize;
     bool bMainStream;
     QString strIPCIP;
+    bool bRealStream;
 };
 
 #endif // QCAMERAEVENT_H

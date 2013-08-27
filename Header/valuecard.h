@@ -10,7 +10,12 @@
 #include <QTableWidget>
 
 namespace Ui {
-    class CValueCard;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CValueCard );
+#else
+    CONCAT_NEW_NAME( , CValueCard );
+#endif
 }
 
 class CValueCard : public QFrame
@@ -55,7 +60,12 @@ private slots:
     void CardLossProcess( );
 
 private:
-    Ui::CValueCard *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CValueCard )
+#else
+    Ui::CONCAT_NEW_NAME( , CValueCard )
+#endif
+     *ui;
     MainWindow* pParent;
     QMenu* pMenu;
     QStringList lstCarID;

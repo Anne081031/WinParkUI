@@ -28,6 +28,9 @@ public:
     bool ReadMainStream( );
     void WriteMainStream( bool bStream );
 
+    bool ReadRealStream( );
+    void WriteRealStream( bool bReal );
+
     void ReadBlacklistPlate( QStringList& lstPlates );
     void WriteBlacklistPlate( QStringList& lstPlates );
 

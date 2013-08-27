@@ -21,7 +21,12 @@
 #include "ThirdParty/scu.h"
 
 #include "Header/monitor.h"
+
+#ifdef NewUI
+#include "ui_newmonitor.h"
+#else
 #include "ui_monitor.h"
+#endif
 
 quint8 CMonitor::imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ] = { { 0 } };
 TH_PlateResult CMonitor::recogResult[ VIDEO_USEDWAY ][ RECOG_RES ] = { { 0 } };
@@ -271,7 +276,13 @@ void CMonitor::ControlGateButton( )
 
 CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CMonitor)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CMonitor )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CMonitor )
+        #endif
+        )
 {
     ui->setupUi(this);
 

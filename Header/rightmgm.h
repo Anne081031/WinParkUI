@@ -8,7 +8,12 @@
 #include "mainwindow.h"
 
 namespace Ui {
-    class CRightMgm;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CRightMgm );
+#else
+    CONCAT_NEW_NAME( , CRightMgm );
+#endif
 }
 
 class CRightMgm : public QFrame
@@ -34,7 +39,12 @@ private:
     inline bool IsAdministrator( );
 
 private:
-    Ui::CRightMgm *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CRightMgm )
+#else
+    Ui::CONCAT_NEW_NAME( , CRightMgm )
+#endif
+     *ui;
     MainWindow* pParent;
 
 private slots:

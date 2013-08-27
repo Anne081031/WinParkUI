@@ -70,6 +70,16 @@ void CConfigurator::WriteMainStream( bool bStream )
     pSettings->setValue( "IPC/MainStream", bStream );
 }
 
+bool CConfigurator::ReadRealStream( )
+{
+    return pSettings->value( "IPC/RealStream", false ).toBool( );
+}
+
+void CConfigurator::WriteRealStream( bool bReal )
+{
+    pSettings->setValue( "IPC/RealStream", bReal );
+}
+
 void CConfigurator::ReadBlacklistPlate( QStringList& lstPlates )
 {
     int nCount = pSettings->value( "Blacklist/PlateCount", 0 ).toInt( );

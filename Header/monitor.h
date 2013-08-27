@@ -28,7 +28,12 @@
 #define RECOG_RES     ( int ) ( 6 )
 
 namespace Ui {
-    class CMonitor;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CMonitor );
+#else
+    CONCAT_NEW_NAME( , CMonitor );
+#endif
 }
 
 class CMonitor : public QFrame
@@ -166,7 +171,12 @@ private:
     bool bSavePicture;
     bool bNetworkCamera;
 
-    Ui::CMonitor *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CMonitor )
+#else
+    Ui::CONCAT_NEW_NAME( , CMonitor )
+#endif
+     *ui;
     MainWindow* pParent;
     QStringList lstRows;
     HANDLE hChannelHandle[ ENCODECHANNEL ];

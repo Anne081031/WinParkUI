@@ -1,5 +1,11 @@
 #include "Header/timecard.h"
-#include "ui_timecard.h"
+
+#ifdef NewUI
+    #include "ui_newtimecard.h"
+#else
+    #include "ui_timecard.h"
+#endif
+
 #include "Common/commonfunction.h"
 #include "Dialog/timecarddialog.h"
 #include "Dialog/dlgserach.h"
@@ -8,7 +14,13 @@
 
 CTimeCard::CTimeCard(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CTimeCard)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CTimeCard )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CTimeCard )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

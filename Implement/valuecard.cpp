@@ -1,5 +1,11 @@
 #include "Header/valuecard.h"
-#include "ui_valuecard.h"
+
+#ifdef NewUI
+    #include "ui_newvaluecard.h"
+#else
+    #include "ui_valuecard.h"
+#endif
+
 #include "Dialog/valuecarddialog.h"
 #include "Common/commonfunction.h"
 #include "Common/CommonType.h"
@@ -11,7 +17,13 @@
 
 CValueCard::CValueCard(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CValueCard)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CValueCard )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CValueCard )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

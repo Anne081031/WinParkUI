@@ -18,7 +18,7 @@ public:
     virtual void PostIPCSetReconnectTimeEvent( );
     virtual void PostIPCLoginEvent( QString& strIP );
     virtual void PostIPCCaptureJPGEvent( QString& strIP, QString& strFile, bool bRecognize, HWND hPlayWnd = NULL );
-    virtual void PostIPCStartRealPlayEvent( QString& strIP, bool bMainStream, HWND hPlayWnd );
+    virtual void PostIPCStartRealPlayEvent( QString& strIP, bool bMainStream, bool bRealStream, HWND hPlayWnd );
     virtual void PostIPCStopRealPlayEvent( HWND hPlayWnd );
     virtual void PostIPCLogoutEvent( QString& strIP );
     virtual void PostIPCCleanupEvent( );
@@ -31,6 +31,10 @@ protected:
     void SetUserID( QString& strIP, LONG lUserID );
     LONG GetUserID( QString& strIP );
     void RemoveUserID( QString& strIP );
+
+    void SetIP( LONG lPlayHandle, QString& strIP );
+    QString GetIP( LONG lPlayHandle );
+    void RemoveIP( LONG lPlayHandle );
 
     void SetPlayHandle( HWND hPlayWnd, LONG lPlayHandle );
     LONG GetPlayHandle( HWND hPlayWnd );
@@ -47,9 +51,11 @@ private:
 private:
     typedef QHash< QString, LONG > QIPLoginIDHash;
     typedef QHash< HWND, LONG > QWndPlayHandleHash;
+    typedef QHash< LONG, QString > QPlayHandleIP;
 
     QIPLoginIDHash hashIP_UserHandle;
     QWndPlayHandleHash hashWnd_PlayHandle;
+    QPlayHandleIP hashPlayHandle_IP;
 
 signals:
     void CaptureImage( QString strFile, QString strIP );
