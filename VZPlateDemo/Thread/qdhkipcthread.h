@@ -40,6 +40,10 @@ private:
     static void CALLBACK RealStandardDataStreamCallback( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, DWORD dwUser );
     void RealStandardStream( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize );
 
+    void ProcessDataStream( LONG lRealHandle, BYTE *pBuffer, DWORD dwBufSize );
+    void ParseResolution( LONG lRealHandle, int& nWidth, int& nHeight );
+    void GetDeviceAbility( LONG lUserID, LONG lRealHandle );
+
 private:
     static QDigitalCameraThread* pThreadInstance;
     

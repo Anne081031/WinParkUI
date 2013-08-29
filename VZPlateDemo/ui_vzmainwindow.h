@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'vzmainwindow.ui'
 **
-** Created: Fri Aug 23 12:19:39 2013
+** Created: Thu Aug 29 11:54:28 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -260,7 +260,7 @@ public:
         btnCamera->setText(QApplication::translate("VZMainWindow", "\346\221\204\345\203\217\346\234\272", 0, QApplication::UnicodeUTF8));
         btnCaptureFile->setText(QApplication::translate("VZMainWindow", "\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
         btnVideoFile->setText(QApplication::translate("VZMainWindow", "\350\247\206\351\242\221\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
-        btnStopVideoRecognize->setText(QApplication::translate("VZMainWindow", "\345\274\200\345\220\257\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
+        btnStopVideoRecognize->setText(QApplication::translate("VZMainWindow", "\345\201\234\346\255\242\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
         lblVideo1->setText(QString());
         lblVideo2->setText(QString());
         lblVideo3->setText(QString());

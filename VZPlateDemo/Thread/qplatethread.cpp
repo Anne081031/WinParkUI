@@ -11,7 +11,7 @@ QPlateThread::QPlateThread(QObject *parent) :
 {
     pCodec = QCommon::GetTextCodec( );
     QCommon::GetPlatePicPath( strPlatePath );
-    bStopRecognize = true;
+    bStopRecognize = false;
     nPlateWay = 1;
 }
 
@@ -52,6 +52,17 @@ void QPlateThread::PostPlateFileRecognize( QString &strFile, int nChannel )
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
     pEvent->SetFilePath( strFile );
     pEvent->SetChannel( nChannel );
+    pEvent->SetIpcVideoSource( false );
+
+    PostEvent( pEvent );
+}
+
+void QPlateThread::PostPlateFileRecognize( QString &strFile, QString& strIP )
+{
+    QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
+    pEvent->SetFilePath( strFile );
+    pEvent->SetIpcIp( strIP );
+    pEvent->SetIpcVideoSource( true );
 
     PostEvent( pEvent );
 }
@@ -62,6 +73,7 @@ void QPlateThread::PostPlateFileRecognize( QByteArray& byData, QString &strFile,
     pEvent->SetFilePath( strFile );
     pEvent->SetChannel( nChannel );
     pEvent->SetByData( byData );
+    pEvent->SetIpcVideoSource( false );
 
     PostEvent( pEvent );
 }
@@ -73,6 +85,19 @@ void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int
     pEvent->SetChannel( nChannel );
     pEvent->SetVideoWidth( nWidth );
     pEvent->SetVideoHeight( nHeight );
+    pEvent->SetIpcVideoSource( false );
+
+    PostEvent( pEvent );
+}
+
+void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int nHeight, QString& strIP )
+{
+    QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateVideoRecognize );
+    pEvent->SetVideoFrame( byVideo );
+    pEvent->SetIpcIp( strIP );
+    pEvent->SetVideoWidth( nWidth );
+    pEvent->SetVideoHeight( nHeight );
+    pEvent->SetIpcVideoSource( true );
 
     PostEvent( pEvent );
 }
@@ -265,8 +290,12 @@ void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
     BOOL bRet = LPR_RGB888Ex( ( PBYTE ) byVideo.data( ), nWidth, nHeight, result, nNum, &rcRange, nChannel + 1 );
     QStringList lstResult;
 
-    if ( !bRet ) {
+    if ( !bRet || 0 == nNum ) {
         nNum = 1;
+
+        if ( 0 == nNum ) {
+            bRet = false;
+        }
     }
 
     GetResultInfo( lstResult, strFile, bRet, nNum, result );

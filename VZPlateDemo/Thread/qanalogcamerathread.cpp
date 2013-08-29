@@ -5,9 +5,16 @@
 QAnalogCameraThread::QAnalogCameraThread(QObject *parent) :
     QThread(parent)
 {
+    pPlateThread = QPlateThread::GetInstance( );
+
     for ( int nIndex = 0; nIndex < CHANNEL_WAY; nIndex++ ) {
         SendDetectInfo( nIndex, false );
     }
+}
+
+QPlateThread* QAnalogCameraThread::GetPlateThread( )
+{
+    return pPlateThread;
 }
 
 void QAnalogCameraThread::PostEvent( QCameraEvent *pEvent )

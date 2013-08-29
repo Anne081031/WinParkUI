@@ -82,6 +82,7 @@ void VZMainWindow::Initialize( )
 
     nPlateWay = pConfig->ReadPlateWay( );
     int nFormat = ImageFormatBGR;
+    bool bCapture = pConfig->ReadVideoCapture( );
 
     EnableButton( strVideoType );
 
@@ -89,7 +90,7 @@ void VZMainWindow::Initialize( )
         nFormat = ImageFormatBGR;
         nPlateWay = 1;
     } else if ( "HkAnalog" == strVideoType ) {
-        nFormat = ImageFormatYUV420COMPASS;
+        nFormat = bCapture ? ImageFormatBGR : ImageFormatYUV420COMPASS;
         pAnalogCamera = QHkCaptureCardThread::GetInstance( );
     } else if ( "TmAnalog" == strVideoType ) {
         pAnalogCamera = QTmCaptureCardThread::GetInstance( );
@@ -106,6 +107,11 @@ void VZMainWindow::Initialize( )
 
     pPlateThread = QPlateThread::GetInstance( );
     pPlateThread->SetPlateWay( nPlateWay );
+
+    if ( bCapture ) {
+        pPlateThread->SetRecognizeFlag( );
+        ui->btnStopVideoRecognize->setEnabled( false );
+    }
 
     connect( pPlateThread, SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
              this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
@@ -322,6 +328,8 @@ void VZMainWindow::on_btnClear_clicked()
     ui->lblPicture->clear( );
     ui->lblPlatePic->clear( );
     ui->lblVideo0->clear( );
+
+    LoadLogoTitle( );
 }
 
 void VZMainWindow::StartVideo( )

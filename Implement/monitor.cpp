@@ -1194,6 +1194,8 @@ void CMonitor::ControlDetection( int nChannel, bool bStart )
 
 void CMonitor::StartNewPlateRecog( )
 {
+    QPlateThread::GetInstance( )->SetPlateWay( nUsedWay );
+
     for ( int nIndex = 0; nIndex < nUsedWay; nIndex++ ) {
         if ( !bPlateStart[ nIndex ] ) {
             continue;

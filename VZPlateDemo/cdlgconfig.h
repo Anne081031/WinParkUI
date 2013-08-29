@@ -20,12 +20,17 @@ public:
 private:
     void ReadConfig( );
     void Saveconfig( );
-    void FillComboBox( QComboBox* pCbx, QString strInfo[ ][ 2 ], int nRow, const QString& strCurItem );
+    int FillComboBox( QComboBox* pCbx, QString strInfo[ ][ 2 ], int nRow, const QString& strCurItem );
+    void EnableAllControls( bool bEnable );
+    void EnableIPCControl( bool bEnable );
+    void EnbaleCaptureControl( bool bEnable );
     
 private slots:
     void on_btnOk_clicked();
 
     void on_btnClose_clicked();
+
+    void OnVideoType_currentIndexChanged( int index );
 
 private:
     Ui::CDlgConfig *ui;

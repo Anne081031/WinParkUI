@@ -38,6 +38,8 @@ private:
     static int CALLBACK RealStandardDataStreamCallback( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo, void *pContext );
     void RealStandardStream( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo );
 
+    void ProcessDataStream( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo );
+
 private:
     static QDigitalCameraThread* pThreadInstance;
     

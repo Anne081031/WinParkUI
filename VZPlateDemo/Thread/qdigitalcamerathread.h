@@ -24,6 +24,7 @@ public:
     virtual void PostIPCCleanupEvent( );
 
     virtual void CaptureStaticImage( QString& strIP, QString& strFileName, HWND hPlayWnd = NULL );
+    QPlateThread* GetPlateThread( );
 
 protected:
     explicit QDigitalCameraThread(QObject *parent = 0);
@@ -35,6 +36,10 @@ protected:
     void SetIP( LONG lPlayHandle, QString& strIP );
     QString GetIP( LONG lPlayHandle );
     void RemoveIP( LONG lPlayHandle );
+
+    void SetResolution( LONG lPlayHandle, QString& strResolution );
+    QString GetResolution( LONG lPlayHandle );
+    void RemoveResolution( LONG lPlayHandle );
 
     void SetPlayHandle( HWND hPlayWnd, LONG lPlayHandle );
     LONG GetPlayHandle( HWND hPlayWnd );
@@ -49,13 +54,18 @@ private:
     inline void PostEvent( QCameraEvent* pEvent );
 
 private:
+    QPlateThread* pPlateThread;
+
+private:
     typedef QHash< QString, LONG > QIPLoginIDHash;
     typedef QHash< HWND, LONG > QWndPlayHandleHash;
     typedef QHash< LONG, QString > QPlayHandleIP;
+    typedef QHash< LONG, QString > QPlayHandleResolution;
 
     QIPLoginIDHash hashIP_UserHandle;
     QWndPlayHandleHash hashWnd_PlayHandle;
     QPlayHandleIP hashPlayHandle_IP;
+    QPlayHandleResolution hashPlayHandle_Resolution;
 
 signals:
     void CaptureImage( QString strFile, QString strIP );

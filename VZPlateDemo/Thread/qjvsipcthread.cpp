@@ -40,7 +40,20 @@ int QJvsIPCThread::RealDataStreamCallback( HANDLE hTmCC, tmRealStreamInfo_t* pSt
 
 void QJvsIPCThread::RealStream( HANDLE hTmCC, tmRealStreamInfo_t *pStreamInfo )
 {
+    ProcessDataStream( hTmCC, pStreamInfo );
+}
+
+void QJvsIPCThread::ProcessDataStream(HANDLE hTmCC, tmRealStreamInfo_t *pStreamInfo)
+{
+    if ( 0 != pStreamInfo->byFrameType ) { //帧类型0-视频，1-音频，2-数据流头
+        return;
+    }
+
     QString strIP = GetIP( ( LONG ) hTmCC );
+    QByteArray byVideo;
+    byVideo.append( ( const char* ) pStreamInfo->pBuffer, pStreamInfo->iBufferSize );
+
+    GetPlateThread( )->PostPlateVideoRecognize( byVideo, pStreamInfo->iWidth, pStreamInfo->iHeight, strIP );
 }
 
 int QJvsIPCThread::RealStandardDataStreamCallback( HANDLE hTmCC, tmRealStreamInfo_t* pStreamInfo, void *pContext )
@@ -59,7 +72,7 @@ int QJvsIPCThread::RealStandardDataStreamCallback( HANDLE hTmCC, tmRealStreamInf
 
 void QJvsIPCThread::RealStandardStream( HANDLE hTmCC, tmRealStreamInfo_t *pStreamInfo )
 {
-    QString strIP = GetIP( ( LONG ) hTmCC );
+    ProcessDataStream( hTmCC, pStreamInfo );
 }
 
 void QJvsIPCThread::ProcessIPCStartupEvent( QCameraEvent* pEvent )
@@ -93,7 +106,7 @@ void QJvsIPCThread::ProcessIPCCaptureJPGEvent( QCameraEvent* pEvent )
     SendCaptureImage( strFile, strIP );
 
     if ( bRecognize ) {
-        QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
+        GetPlateThread( )->PostPlateFileRecognize( strFile, strIP );
     }
 }
 

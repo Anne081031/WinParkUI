@@ -21,6 +21,9 @@ public:
     void SetFilePath( QString& strFile );
     QString& GetFilePath( );
 
+    void SetIpcIp( QString& strIp );
+    QString& GetIpcIp( );
+
     void SetVideoFrame( QByteArray& byVideo );
     QByteArray& GetVideoFrame( );
 
@@ -39,6 +42,9 @@ public:
     void SetByData( QByteArray& byData );
     QByteArray& GetByData( );
 
+    void SetIpcVideoSource( bool bIPC );
+    bool GetIpcVideoSource( );
+
 private:
     QString strPicFile;
     QByteArray byVideoFrame;
@@ -47,6 +53,8 @@ private:
     int nVideoWidth;
     int nVideoHeight;
     QByteArray bySerialData;
+    QString strIpcIp;
+    bool bIpcVideoSource;
 };
 
 #endif // QPLATEEVENT_H

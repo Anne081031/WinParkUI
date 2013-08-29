@@ -263,7 +263,7 @@
         <bool>true</bool>
        </property>
        <property name="text">
-        <string>开启视频识别</string>
+        <string>停止视频识别</string>
        </property>
       </widget>
      </item>

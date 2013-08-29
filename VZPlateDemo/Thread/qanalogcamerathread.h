@@ -40,6 +40,8 @@ public:
 
     virtual void CaptureStaticImage( QString& strFile, int nChannel );
 
+    QPlateThread* GetPlateThread( );
+
 protected:
     explicit QAnalogCameraThread(QObject *parent = 0);
     void SendCaptureImage( QString& strFile, int nChannel );
@@ -51,6 +53,7 @@ private:
     inline void PostEvent( QCameraEvent* pEvent );
 
 private:
+    QPlateThread* pPlateThread;
 
 signals:
     void CaptureImage( QString strFile, int nChannel );

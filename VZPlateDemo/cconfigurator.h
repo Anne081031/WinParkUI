@@ -31,6 +31,9 @@ public:
     bool ReadRealStream( );
     void WriteRealStream( bool bReal );
 
+    bool ReadVideoCapture( );
+    void WriteVideoCapture( bool bCapture );
+
     void ReadBlacklistPlate( QStringList& lstPlates );
     void WriteBlacklistPlate( QStringList& lstPlates );
 

@@ -80,6 +80,16 @@ void CConfigurator::WriteRealStream( bool bReal )
     pSettings->setValue( "IPC/RealStream", bReal );
 }
 
+bool CConfigurator::ReadVideoCapture( )
+{
+    return pSettings->value( "Plate/Capture", false ).toBool( );
+}
+
+void CConfigurator::WriteVideoCapture( bool bCapture )
+{
+    pSettings->setValue( "Plate/Capture", bCapture );
+}
+
 void CConfigurator::ReadBlacklistPlate( QStringList& lstPlates )
 {
     int nCount = pSettings->value( "Blacklist/PlateCount", 0 ).toInt( );

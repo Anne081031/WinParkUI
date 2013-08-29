@@ -258,7 +258,7 @@ void MainWindow::Singleton( )
         exit( 0 );
     }
 
-    //CheckResolution( );
+    CheckResolution( );
 }
 
 void MainWindow::RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray byData )

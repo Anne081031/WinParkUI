@@ -18,6 +18,16 @@ QString& QPlateEvent::GetFilePath( )
     return strPicFile;
 }
 
+void QPlateEvent::SetIpcIp( QString& strIp )
+{
+    strIpcIp= strIp;
+}
+
+QString& QPlateEvent::GetIpcIp( )
+{
+    return strIpcIp;
+}
+
 void QPlateEvent::SetVideoFrame( QByteArray &byVideo )
 {
     byVideoFrame.append( byVideo );
@@ -76,4 +86,14 @@ void QPlateEvent::SetByData( QByteArray& byData )
 QByteArray& QPlateEvent::GetByData( )
 {
     return bySerialData;
+}
+
+void QPlateEvent::SetIpcVideoSource( bool bIPC )
+{
+    bIpcVideoSource = bIPC;
+}
+
+bool QPlateEvent::GetIpcVideoSource( )
+{
+    return bIpcVideoSource;
 }

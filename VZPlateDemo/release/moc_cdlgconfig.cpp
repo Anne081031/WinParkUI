@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'cdlgconfig.h'
 **
-** Created: Mon Aug 26 12:03:16 2013
+** Created: Thu Aug 29 14:31:44 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_CDlgConfig[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       3,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -33,13 +33,15 @@ static const uint qt_meta_data_CDlgConfig[] = {
  // slots: signature, parameters, type, tag, flags
       12,   11,   11,   11, 0x08,
       31,   11,   11,   11, 0x08,
+      59,   53,   11,   11, 0x08,
 
        0        // eod
 };
 
 static const char qt_meta_stringdata_CDlgConfig[] = {
     "CDlgConfig\0\0on_btnOk_clicked()\0"
-    "on_btnClose_clicked()\0"
+    "on_btnClose_clicked()\0index\0"
+    "on_cbxVideoType_currentIndexChanged(int)\0"
 };
 
 const QMetaObject CDlgConfig::staticMetaObject = {
@@ -73,9 +75,10 @@ int CDlgConfig::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: on_btnOk_clicked(); break;
         case 1: on_btnClose_clicked(); break;
+        case 2: on_cbxVideoType_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 3;
     }
     return _id;
 }

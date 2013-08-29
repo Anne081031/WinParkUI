@@ -162,6 +162,19 @@
     <string>网络相机主码流</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="chxVideoCapture">
+   <property name="geometry">
+    <rect>
+     <x>22</x>
+     <y>150</y>
+     <width>151</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>视频抓图识别</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

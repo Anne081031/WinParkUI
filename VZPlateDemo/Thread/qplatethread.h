@@ -15,9 +15,14 @@ class QPlateThread : public QThread
     Q_OBJECT
 public:
     static QPlateThread* GetInstance( );
+
     void PostPlateFileRecognize( QString& strFile, int nChannel );
+    void PostPlateFileRecognize( QString& strFile, QString& strIP );
     void PostPlateFileRecognize( QByteArray& byData, QString& strFile, int nChannel );
+
     void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, int nChannel );
+    void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, QString& strIP );
+
     void PostPlateInitEvent( int nFormat, int nChannel );
     void PostPlateUninitEvent( int nChannel );
     bool SetRecognizeFlag( );

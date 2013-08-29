@@ -5,7 +5,13 @@
 QDigitalCameraThread::QDigitalCameraThread(QObject *parent) :
     QThread(parent)
 {
+    pPlateThread = QPlateThread::GetInstance( );
     pCodec = QCommon::GetTextCodec( );
+}
+
+QPlateThread* QDigitalCameraThread::GetPlateThread( )
+{
+    return pPlateThread;
 }
 
 void QDigitalCameraThread::SendCaptureImage( QString& strFile, QString& strIP )
@@ -117,6 +123,21 @@ QString QDigitalCameraThread::GetIP( LONG lPlayHandle )
 void QDigitalCameraThread::RemoveIP( LONG lPlayHandle )
 {
     hashPlayHandle_IP.remove( lPlayHandle );
+}
+
+void QDigitalCameraThread::SetResolution( LONG lPlayHandle, QString& strResolution )
+{
+    hashPlayHandle_Resolution.insert( lPlayHandle, strResolution );
+}
+
+QString QDigitalCameraThread::GetResolution( LONG lPlayHandle )
+{
+    return hashPlayHandle_Resolution.value( lPlayHandle );
+}
+
+void QDigitalCameraThread::RemoveResolution( LONG lPlayHandle )
+{
+    hashPlayHandle_Resolution.remove( lPlayHandle );
 }
 
 LONG QDigitalCameraThread::GetUserID( QString& strIP )

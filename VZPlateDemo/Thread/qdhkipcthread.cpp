@@ -135,9 +135,42 @@ void QDHkIPCThread::RealDataStreamCallback( LONG lRealHandle, DWORD dwDataType, 
     pThread->RealStream( lRealHandle, dwDataType, pBuffer, dwBufSize );
 }
 
-void QDHkIPCThread::RealStream( LONG lRealHandle, DWORD wdDataType, BYTE *pBuffer, DWORD dwBufSize )
+void QDHkIPCThread::RealStream( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize )
+{
+    if ( NET_DVR_STREAMDATA != dwDataType ) {
+        return;
+    }
+
+    ProcessDataStream( lRealHandle, pBuffer, dwBufSize );
+}
+
+void QDHkIPCThread::ParseResolution( LONG lRealHandle, int &nWidth, int &nHeight )
+{
+    QString strResoluton = GetResolution( lRealHandle );
+    QStringList lstResoluton = strResoluton.split( "*" );
+    if ( 2 != lstResoluton.count( ) ) {
+        return;
+    }
+
+    nWidth = lstResoluton.at( 0 ).toInt( );
+    nHeight = lstResoluton.at( 1 ).toInt( );
+}
+
+void QDHkIPCThread::ProcessDataStream( LONG lRealHandle, BYTE *pBuffer, DWORD dwBufSize )
 {
     QString strIP = GetIP( lRealHandle );
+    QByteArray byVideo;
+    byVideo.append( ( const char* ) pBuffer, dwBufSize );
+
+    int nWidth = 0;
+    int nHeight = 0;
+    ParseResolution( lRealHandle, nWidth, nHeight );
+
+    if ( 0 == nWidth || 0 == nHeight ) {
+        return;
+    }
+
+    GetPlateThread( )->PostPlateVideoRecognize( byVideo, nWidth, nHeight, strIP );
 }
 
 void QDHkIPCThread::RealStandardDataStreamCallback( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, DWORD dwUser )
@@ -152,7 +185,11 @@ void QDHkIPCThread::RealStandardDataStreamCallback( LONG lRealHandle, DWORD dwDa
 
 void QDHkIPCThread::RealStandardStream( LONG lRealHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize )
 {
-    QString strIP = GetIP( lRealHandle );
+    if ( NET_DVR_STD_VIDEODATA != dwDataType ) {
+        return;
+    }
+
+    ProcessDataStream( lRealHandle, pBuffer, dwBufSize );
 }
 
 void QDHkIPCThread::run( )
@@ -250,8 +287,31 @@ void QDHkIPCThread::ProcessIPCCaptureJPGEvent( QCameraEvent* pEvent )
     SendCaptureImage( strFile, strIP );
 
     if ( bRecognize ) {
-        QPlateThread::GetInstance( )->PostPlateFileRecognize( strFile, 0 );
+        GetPlateThread( )->PostPlateFileRecognize( strFile, strIP );
     }
+}
+
+#include <QFile>
+
+void QDHkIPCThread::GetDeviceAbility( LONG lUserID, LONG lRealHandle )
+{
+    // #define  XML_BUF 3*1024*1024
+    //char cOutBuf[ 1024 ] = { 0 };
+    //char* pOutBuf = new char[ 1024 * 1024 * 3 ];
+    //BOOL bRet = FALSE;
+    //char* pInBuf = "<CurrentCompressInfo><ChannelNumber>1</ChannelNumber><VideoEncodeType>0</VideoEncodeType><VideoResolution>17</VideoResolution></CurrentCompressInfo>";
+
+    //bRet = NET_DVR_GetDeviceAbility( lUserID, DEVICE_ENCODE_ALL_ABILITY, NULL, 0, pOutBuf, 1024 * 1024 * 3  );
+    //qDebug( ) << QString( pOutBuf ) << Q_FUNC_INFO << endl;
+    //QString strFile = "d:/xml.txt";
+    //QString strData = QString( pOutBuf );
+    //QFile file( strFile );
+    //file.open( QFile::WriteOnly );
+    //file.write( strData.toAscii( ) );
+    //file.close( );
+
+    QString strResolution;
+    SetResolution( lRealHandle, strResolution );
 }
 
 void QDHkIPCThread::ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent )
@@ -283,6 +343,7 @@ void QDHkIPCThread::ProcessIPCStartRealPlayEvent( QCameraEvent* pEvent )
 
     SetIP( lPlayHandle, strIP );
     SetPlayHandle( hPlayWnd, lPlayHandle );
+    GetDeviceAbility( lUserID, lPlayHandle );
 }
 
 void QDHkIPCThread::ProcessIPCStopRealPlayEvent( QCameraEvent* pEvent )
@@ -299,6 +360,7 @@ void QDHkIPCThread::ProcessIPCStopRealPlayEvent( QCameraEvent* pEvent )
     BOOL bRet = NET_DVR_StopRealPlay( lPlayHandle );
     bRet = NET_DVR_SetRealDataCallBack( lPlayHandle, NULL, 0 );
     bRet = NET_DVR_SetStandardDataCallBack( lPlayHandle, NULL, 0 );
+    RemoveResolution( lPlayHandle );
 }
 
 void QDHkIPCThread::ProcessIPCLogoutEvent( QCameraEvent* pEvent )

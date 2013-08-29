@@ -14,60 +14,80 @@ CDlgConfig::~CDlgConfig()
     delete ui;
 }
 
-void CDlgConfig::FillComboBox( QComboBox *pCbx, QString strInfo[ ][ 2 ], int nRow, const QString& strCurItem )
+int CDlgConfig::FillComboBox( QComboBox *pCbx, QString strInfo[ ][ 2 ], int nRow, const QString& strCurItem )
 {
+    int nCurrentIndex = 0;
+
     for ( int nIndex = 0; nIndex < nRow; nIndex++ ) {
         QString& strUSerData = strInfo[ nIndex ][ 1 ];
         pCbx->insertItem( nIndex, strInfo[ nIndex ][ 0 ], strUSerData );
 
         if ( strUSerData == strCurItem ) {
+            nCurrentIndex = nIndex;
             pCbx->setCurrentIndex( nIndex );
         }
     }
+
+    return nCurrentIndex;
 }
 
 void CDlgConfig::ReadConfig( )
 {
-    CConfigurator* pCOnfig = CConfigurator::CreateInstance( );
+    CConfigurator* pConfig = CConfigurator::CreateInstance( );
     QString strType;
 
-    pCOnfig->ReadAppMainWindow( strType );
+    pConfig->ReadAppMainWindow( strType );
     QString strUIInfo[ 2 ][ 2 ] = { { "Demo界面", "Demo" }, { "黑名单报警界面", "Blacklist" } };
     FillComboBox( ui->cbxUIType, strUIInfo, 2, strType );
 
-    pCOnfig->ReadVideoType( strType );
-    QString strVideoInfo[ 7 ][ 2 ] = { { "图片文件", "PictureFile" },
+    pConfig->ReadVideoType( strType );
+    QString strVideoInfo[ 7 ][ 2 ] = { { "静态图片文件", "PictureFile" },
                                        { "海康采集卡", "HkAnalog" },
                                        { "天敏采集卡", "TmAnalog" },
                                        { "海康网络相机", "HkIPC" },
                                        { "捷威思网络相机", "JwsIPC" },
                                        { "ONVIF网络相机", "OnvifIPC" },
                                        { "视频文件", "VideoFile" } };
-    FillComboBox( ui->cbxVideoType, strVideoInfo, 7, strType );
+    int nIndex = FillComboBox( ui->cbxVideoType, strVideoInfo, 7, strType );
 
-    ui->spPlateWay->setValue( pCOnfig->ReadPlateWay( ) );
+    ui->spPlateWay->setValue( pConfig->ReadPlateWay( ) );
 
-    pCOnfig->ReadIpcIP( strType );
+    pConfig->ReadIpcIP( strType );
     ui->edtIpcIP->setText( strType );
 
-    ui->chxMainStream->setChecked( pCOnfig->ReadMainStream( ) );
+    ui->chxMainStream->setChecked( pConfig->ReadMainStream( ) );
+    ui->chxVideoCapture->setChecked( pConfig->ReadVideoCapture( ) );
+
+    connect( ui->cbxVideoType, SIGNAL( currentIndexChanged( int ) ),
+             this, SLOT( OnVideoType_currentIndexChanged( int ) ) );
+    ui->cbxVideoType->setCurrentIndex( -1 );
+    ui->cbxVideoType->setCurrentIndex( nIndex );
 }
 
 void CDlgConfig::Saveconfig( )
 {
-    CConfigurator* pCOnfig = CConfigurator::CreateInstance( );
+    CConfigurator* pConfig = CConfigurator::CreateInstance( );
+    int nIndex = ui->cbxUIType->currentIndex( );
 
-    QString strType = ui->cbxUIType->itemData( ui->cbxUIType->currentIndex( ) ).toString( );
-    pCOnfig->WriteAppMainWindow( strType );
+    QString strType = ui->cbxUIType->itemData( nIndex ).toString( );
+    pConfig->WriteAppMainWindow( strType );
 
-    strType = ui->cbxVideoType->itemData( ui->cbxVideoType->currentIndex( ) ).toString( );
-    pCOnfig->WriteVideoType( strType );
+    nIndex = ui->cbxVideoType->currentIndex( );
+    strType = ui->cbxVideoType->itemData( nIndex ).toString( );
+    pConfig->WriteVideoType( strType );
 
-    pCOnfig->WritePlateWay( ui->spPlateWay->value( ) );
+    int nWay = 1;
+    if ( 0 != nIndex ) { // PictureFile
+        nWay = ui->spPlateWay->value( );
+    }
+
+    pConfig->WritePlateWay( nWay );
 
     strType = ui->edtIpcIP->text( );
-    pCOnfig->WriteIpcIP( strType );
-    pCOnfig->WriteMainStream( ui->chxMainStream->isChecked( ) );
+    pConfig->WriteIpcIP( strType );
+    pConfig->WriteMainStream( ui->chxMainStream->isChecked( ) );
+    pConfig->WriteVideoCapture( ui->chxVideoCapture->isChecked( ) );
+
 }
 
 void CDlgConfig::on_btnOk_clicked()
@@ -80,4 +100,47 @@ void CDlgConfig::on_btnOk_clicked()
 void CDlgConfig::on_btnClose_clicked()
 {
     close( );
+}
+
+void CDlgConfig::EnableAllControls( bool bEnable )
+{
+    ui->spPlateWay->setEnabled( bEnable );
+    ui->edtIpcIP->setEnabled( bEnable );
+    ui->chxMainStream->setEnabled( bEnable );
+    ui->chxVideoCapture->setEnabled( bEnable );
+}
+
+void CDlgConfig::EnableIPCControl( bool bEnable )
+{
+    ui->edtIpcIP->setEnabled( bEnable );
+    ui->chxMainStream->setEnabled( bEnable );
+}
+
+void CDlgConfig::EnbaleCaptureControl( bool bEnable )
+{
+    ui->chxVideoCapture->setEnabled( bEnable );
+}
+
+void CDlgConfig::OnVideoType_currentIndexChanged( int index )
+{
+
+    EnableAllControls( true );
+
+    switch ( index ) {
+    case 0 : // Picture
+    case 6 :
+        EnableAllControls( false );
+        break;
+
+    case 1 : // Capture
+    case 2 :
+        EnableIPCControl( false );
+        break;
+
+    case 3 : // IPC
+    case 4 :
+    case 5 :
+
+        break;
+    }
 }
