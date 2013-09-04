@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1365</width>
-    <height>767</height>
+    <width>1366</width>
+    <height>768</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image:url(d:/WinParkUI/debug/Image/MainBG.jpg);</string>
+   <string notr="true">background-image:url(d:/WinParkUI/debug/Image/MainBG1366x768.jpg);</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -28,11 +28,20 @@
   <widget class="QLabel" name="lblLicence11">
    <property name="geometry">
     <rect>
-     <x>54</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>50</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -41,7 +50,7 @@
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -68,11 +77,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence12">
    <property name="geometry">
     <rect>
-     <x>95</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>90</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -81,7 +99,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -108,11 +126,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence13">
    <property name="geometry">
     <rect>
-     <x>137</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>130</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -121,7 +148,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -148,11 +175,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence14">
    <property name="geometry">
     <rect>
-     <x>179</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>170</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -161,7 +197,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -188,11 +224,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence15">
    <property name="geometry">
     <rect>
-     <x>221</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>210</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -201,7 +246,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -228,11 +273,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence16">
    <property name="geometry">
     <rect>
-     <x>263</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>250</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -241,7 +295,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -268,11 +322,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence17">
    <property name="geometry">
     <rect>
-     <x>305</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>290</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -281,7 +344,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -308,11 +371,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence18">
    <property name="geometry">
     <rect>
-     <x>347</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>330</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -321,7 +393,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -348,11 +420,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence21">
    <property name="geometry">
     <rect>
-     <x>514</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>490</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -361,7 +442,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -388,11 +469,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence28">
    <property name="geometry">
     <rect>
-     <x>807</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>770</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -401,7 +491,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -428,11 +518,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence27">
    <property name="geometry">
     <rect>
-     <x>765</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>730</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -441,7 +540,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -468,11 +567,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence22">
    <property name="geometry">
     <rect>
-     <x>555</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>530</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -481,7 +589,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -508,11 +616,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence23">
    <property name="geometry">
     <rect>
-     <x>597</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>570</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -521,7 +638,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -548,11 +665,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence24">
    <property name="geometry">
     <rect>
-     <x>638</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>610</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -561,7 +687,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -588,11 +714,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence26">
    <property name="geometry">
     <rect>
-     <x>723</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>690</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -601,7 +736,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -628,11 +763,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence25">
    <property name="geometry">
     <rect>
-     <x>681</x>
-     <y>480</y>
-     <width>37</width>
-     <height>37</height>
+     <x>650</x>
+     <y>410</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -641,7 +785,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -668,10 +812,10 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="video1">
    <property name="geometry">
     <rect>
-     <x>48</x>
-     <y>203</y>
-     <width>410</width>
-     <height>275</height>
+     <x>47</x>
+     <y>173</y>
+     <width>389</width>
+     <height>234</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -700,10 +844,10 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="video2">
    <property name="geometry">
     <rect>
-     <x>509</x>
-     <y>203</y>
-     <width>410</width>
-     <height>275</height>
+     <x>483</x>
+     <y>173</y>
+     <width>389</width>
+     <height>234</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -732,10 +876,10 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="video3">
    <property name="geometry">
     <rect>
-     <x>48</x>
-     <y>546</y>
-     <width>410</width>
-     <height>275</height>
+     <x>47</x>
+     <y>466</y>
+     <width>389</width>
+     <height>234</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -748,8 +892,8 @@ background-color: rgb(255, 255, 255);</string>
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image:url( );
-color: rgb(126,178,228);</string>
+    <string notr="true">background-image:url(none);
+background-color: rgb(255, 255, 255);</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -773,10 +917,10 @@ color: rgb(126,178,228);</string>
   <widget class="QLabel" name="video4">
    <property name="geometry">
     <rect>
-     <x>509</x>
-     <y>546</y>
-     <width>410</width>
-     <height>275</height>
+     <x>483</x>
+     <y>466</y>
+     <width>389</width>
+     <height>234</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -824,10 +968,10 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QTableWidget" name="tabRecord">
    <property name="geometry">
     <rect>
-     <x>1001</x>
-     <y>554</y>
-     <width>393</width>
-     <height>241</height>
+     <x>956</x>
+     <y>471</y>
+     <width>358</width>
+     <height>211</height>
     </rect>
    </property>
    <property name="palette">
@@ -951,7 +1095,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -1015,7 +1159,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="font">
      <font>
       <family>黑体</family>
-      <pointsize>12</pointsize>
+      <pointsize>9</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -1028,7 +1172,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="font">
      <font>
       <family>黑体</family>
-      <pointsize>12</pointsize>
+      <pointsize>9</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -1041,7 +1185,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="font">
      <font>
       <family>黑体</family>
-      <pointsize>12</pointsize>
+      <pointsize>9</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -1054,7 +1198,7 @@ background-color: rgb(255, 255, 255);</string>
     <property name="font">
      <font>
       <family>黑体</family>
-      <pointsize>12</pointsize>
+      <pointsize>9</pointsize>
       <weight>75</weight>
       <bold>true</bold>
      </font>
@@ -1099,10 +1243,10 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QPushButton" name="btnSysMan">
    <property name="geometry">
     <rect>
-     <x>257</x>
+     <x>244</x>
      <y>11</y>
-     <width>79</width>
-     <height>23</height>
+     <width>74</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1116,10 +1260,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnCardMan">
    <property name="geometry">
     <rect>
-     <x>351</x>
+     <x>334</x>
      <y>11</y>
-     <width>79</width>
-     <height>23</height>
+     <width>74</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1133,10 +1277,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnAdvSet">
    <property name="geometry">
     <rect>
-     <x>444</x>
+     <x>421</x>
      <y>11</y>
-     <width>79</width>
-     <height>23</height>
+     <width>74</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1150,10 +1294,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnReport">
    <property name="geometry">
     <rect>
-     <x>537</x>
+     <x>510</x>
      <y>11</y>
-     <width>79</width>
-     <height>23</height>
+     <width>74</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1167,10 +1311,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnHelp">
    <property name="geometry">
     <rect>
-     <x>630</x>
+     <x>598</x>
      <y>11</y>
-     <width>79</width>
-     <height>23</height>
+     <width>74</width>
+     <height>20</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1184,10 +1328,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnShift">
    <property name="geometry">
     <rect>
-     <x>177</x>
-     <y>57</y>
-     <width>97</width>
-     <height>97</height>
+     <x>167</x>
+     <y>48</y>
+     <width>92</width>
+     <height>83</height>
     </rect>
    </property>
    <property name="toolTip">
@@ -1204,14 +1348,14 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnMonthCard">
    <property name="geometry">
     <rect>
-     <x>307</x>
-     <y>57</y>
-     <width>97</width>
-     <height>97</height>
+     <x>290</x>
+     <y>48</y>
+     <width>92</width>
+     <height>83</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-image:url( );
+    <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/btnMonthCardnormal1366x768.JPG);
 border-style: outset; </string>
    </property>
    <property name="text">
@@ -1221,10 +1365,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnValueCard">
    <property name="geometry">
     <rect>
-     <x>435</x>
-     <y>57</y>
-     <width>97</width>
-     <height>97</height>
+     <x>412</x>
+     <y>48</y>
+     <width>92</width>
+     <height>83</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1238,10 +1382,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnTimeCard">
    <property name="geometry">
     <rect>
-     <x>564</x>
-     <y>57</y>
-     <width>97</width>
-     <height>97</height>
+     <x>536</x>
+     <y>48</y>
+     <width>92</width>
+     <height>83</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1255,10 +1399,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnPassRecord">
    <property name="geometry">
     <rect>
-     <x>692</x>
-     <y>57</y>
-     <width>97</width>
-     <height>97</height>
+     <x>658</x>
+     <y>48</y>
+     <width>92</width>
+     <height>83</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1272,10 +1416,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnEnterGateOpen">
    <property name="geometry">
     <rect>
-     <x>1015</x>
-     <y>250</y>
-     <width>88</width>
-     <height>97</height>
+     <x>962</x>
+     <y>213</y>
+     <width>83</width>
+     <height>82</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1289,10 +1433,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnEnterGateClose">
    <property name="geometry">
     <rect>
-     <x>1103</x>
-     <y>250</y>
-     <width>87</width>
-     <height>97</height>
+     <x>1045</x>
+     <y>212</y>
+     <width>83</width>
+     <height>83</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1306,10 +1450,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnLeaveGateClose">
    <property name="geometry">
     <rect>
-     <x>1292</x>
-     <y>250</y>
-     <width>87</width>
-     <height>97</height>
+     <x>1225</x>
+     <y>212</y>
+     <width>83</width>
+     <height>83</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1323,10 +1467,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnLeaveGateOpen">
    <property name="geometry">
     <rect>
-     <x>1204</x>
-     <y>250</y>
-     <width>88</width>
-     <height>97</height>
+     <x>1142</x>
+     <y>213</y>
+     <width>83</width>
+     <height>82</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1340,10 +1484,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnCenterControlerStatus">
    <property name="geometry">
     <rect>
-     <x>986</x>
-     <y>401</y>
-     <width>210</width>
-     <height>38</height>
+     <x>935</x>
+     <y>341</y>
+     <width>199</width>
+     <height>33</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1357,10 +1501,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnEnterPeripheralStatus">
    <property name="geometry">
     <rect>
-     <x>986</x>
-     <y>441</y>
-     <width>210</width>
-     <height>38</height>
+     <x>935</x>
+     <y>376</y>
+     <width>199</width>
+     <height>33</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1374,10 +1518,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnPublishLedInfo">
    <property name="geometry">
     <rect>
-     <x>1196</x>
-     <y>401</y>
-     <width>210</width>
-     <height>38</height>
+     <x>1135</x>
+     <y>341</y>
+     <width>199</width>
+     <height>33</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1391,10 +1535,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnLeavePeripheralStatus">
    <property name="geometry">
     <rect>
-     <x>986</x>
-     <y>481</y>
-     <width>210</width>
-     <height>38</height>
+     <x>935</x>
+     <y>411</y>
+     <width>199</width>
+     <height>33</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1408,10 +1552,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnCandinate">
    <property name="geometry">
     <rect>
-     <x>1196</x>
-     <y>481</y>
-     <width>210</width>
-     <height>38</height>
+     <x>1135</x>
+     <y>411</y>
+     <width>199</width>
+     <height>33</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1425,10 +1569,10 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnSmsNotification">
    <property name="geometry">
     <rect>
-     <x>1196</x>
-     <y>441</y>
-     <width>210</width>
-     <height>38</height>
+     <x>1135</x>
+     <y>376</y>
+     <width>199</width>
+     <height>33</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1442,16 +1586,16 @@ border-style: outset; </string>
   <widget class="QLabel" name="lblDateTime">
    <property name="geometry">
     <rect>
-     <x>870</x>
+     <x>784</x>
      <y>3</y>
-     <width>481</width>
-     <height>41</height>
+     <width>531</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>20</pointsize>
+     <pointsize>16</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -1498,10 +1642,10 @@ color: rgb(255, 0, 0);</string>
   <widget class="QPushButton" name="btnVerifyIn0">
    <property name="geometry">
     <rect>
-     <x>389</x>
-     <y>480</y>
-     <width>63</width>
-     <height>37</height>
+     <x>370</x>
+     <y>410</y>
+     <width>58</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1515,10 +1659,10 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QPushButton" name="btnVerifyOut0">
    <property name="geometry">
     <rect>
-     <x>849</x>
-     <y>480</y>
-     <width>63</width>
-     <height>37</height>
+     <x>806</x>
+     <y>410</y>
+     <width>58</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1532,8 +1676,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl11">
    <property name="geometry">
     <rect>
-     <x>1105</x>
-     <y>841</y>
+     <x>1049</x>
+     <y>718</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1551,8 +1695,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl12">
    <property name="geometry">
     <rect>
-     <x>1123</x>
-     <y>841</y>
+     <x>1067</x>
+     <y>718</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1570,8 +1714,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl13">
    <property name="geometry">
     <rect>
-     <x>1141</x>
-     <y>841</y>
+     <x>1085</x>
+     <y>718</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1589,8 +1733,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl14">
    <property name="geometry">
     <rect>
-     <x>1159</x>
-     <y>841</y>
+     <x>1103</x>
+     <y>718</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1608,8 +1752,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl23">
    <property name="geometry">
     <rect>
-     <x>1333</x>
-     <y>841</y>
+     <x>1267</x>
+     <y>718</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1627,8 +1771,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl24">
    <property name="geometry">
     <rect>
-     <x>1351</x>
-     <y>841</y>
+     <x>1285</x>
+     <y>718</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1646,8 +1790,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl22">
    <property name="geometry">
     <rect>
-     <x>1315</x>
-     <y>841</y>
+     <x>1249</x>
+     <y>718</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1665,8 +1809,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl21">
    <property name="geometry">
     <rect>
-     <x>1297</x>
-     <y>841</y>
+     <x>1231</x>
+     <y>718</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1684,8 +1828,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl34">
    <property name="geometry">
     <rect>
-     <x>1158</x>
-     <y>810</y>
+     <x>1102</x>
+     <y>687</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1703,8 +1847,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl33">
    <property name="geometry">
     <rect>
-     <x>1140</x>
-     <y>810</y>
+     <x>1084</x>
+     <y>687</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1722,8 +1866,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl31">
    <property name="geometry">
     <rect>
-     <x>1104</x>
-     <y>810</y>
+     <x>1048</x>
+     <y>687</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1741,8 +1885,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl32">
    <property name="geometry">
     <rect>
-     <x>1122</x>
-     <y>810</y>
+     <x>1066</x>
+     <y>687</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1760,8 +1904,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl41">
    <property name="geometry">
     <rect>
-     <x>1296</x>
-     <y>809</y>
+     <x>1230</x>
+     <y>686</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1779,8 +1923,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl42">
    <property name="geometry">
     <rect>
-     <x>1314</x>
-     <y>809</y>
+     <x>1248</x>
+     <y>686</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1798,8 +1942,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl43">
    <property name="geometry">
     <rect>
-     <x>1332</x>
-     <y>809</y>
+     <x>1266</x>
+     <y>686</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1817,8 +1961,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lbl44">
    <property name="geometry">
     <rect>
-     <x>1350</x>
-     <y>809</y>
+     <x>1284</x>
+     <y>686</y>
      <width>18</width>
      <height>22</height>
     </rect>
@@ -1837,7 +1981,7 @@ background-color: rgb(255, 255, 255);</string>
    <property name="geometry">
     <rect>
      <x>48</x>
-     <y>187</y>
+     <y>157</y>
      <width>10</width>
      <height>10</height>
     </rect>
@@ -1852,8 +1996,8 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lblMoving2">
    <property name="geometry">
     <rect>
-     <x>509</x>
-     <y>187</y>
+     <x>486</x>
+     <y>158</y>
      <width>10</width>
      <height>10</height>
     </rect>
@@ -1868,10 +2012,10 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lblDir1">
    <property name="geometry">
     <rect>
-     <x>396</x>
-     <y>180</y>
+     <x>375</x>
+     <y>156</y>
      <width>61</width>
-     <height>21</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="font">
@@ -1893,10 +2037,10 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblDir2">
    <property name="geometry">
     <rect>
-     <x>856</x>
-     <y>180</y>
+     <x>810</x>
+     <y>156</y>
      <width>61</width>
-     <height>21</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="font">
@@ -1931,10 +2075,10 @@ color: rgb(255, 0, 0);</string>
   <widget class="QPushButton" name="btnVerifyIn1">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>825</y>
-     <width>63</width>
-     <height>37</height>
+     <x>370</x>
+     <y>704</y>
+     <width>58</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1948,11 +2092,20 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lblLicence37">
    <property name="geometry">
     <rect>
-     <x>306</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>290</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -1961,7 +2114,7 @@ background-color: rgb(255, 255, 255);</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -1988,11 +2141,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence31">
    <property name="geometry">
     <rect>
-     <x>55</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>50</x>
+     <y>703</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2001,7 +2163,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2028,11 +2190,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence33">
    <property name="geometry">
     <rect>
-     <x>138</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>130</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2041,7 +2212,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2068,11 +2239,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence35">
    <property name="geometry">
     <rect>
-     <x>222</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>210</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2081,7 +2261,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2108,11 +2288,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence32">
    <property name="geometry">
     <rect>
-     <x>96</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>90</x>
+     <y>703</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2121,7 +2310,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2148,11 +2337,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence34">
    <property name="geometry">
     <rect>
-     <x>180</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>170</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2161,7 +2359,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2188,11 +2386,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence38">
    <property name="geometry">
     <rect>
-     <x>348</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>330</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2201,7 +2408,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2228,11 +2435,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence36">
    <property name="geometry">
     <rect>
-     <x>264</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>250</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2241,7 +2457,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2268,10 +2484,10 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QPushButton" name="btnVerifyOut1">
    <property name="geometry">
     <rect>
-     <x>850</x>
-     <y>825</y>
-     <width>63</width>
-     <height>37</height>
+     <x>806</x>
+     <y>704</y>
+     <width>58</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -2285,11 +2501,20 @@ background-color: rgb(255, 255, 255);</string>
   <widget class="QLabel" name="lblLicence45">
    <property name="geometry">
     <rect>
-     <x>682</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>650</x>
+     <y>705</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2298,7 +2523,7 @@ background-color: rgb(255, 255, 255);</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2325,11 +2550,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence43">
    <property name="geometry">
     <rect>
-     <x>598</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>570</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2338,7 +2572,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2365,11 +2599,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence28_2">
    <property name="geometry">
     <rect>
-     <x>808</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>770</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2378,7 +2621,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2405,11 +2648,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence44">
    <property name="geometry">
     <rect>
-     <x>639</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>610</x>
+     <y>705</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2418,7 +2670,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2445,11 +2697,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence46">
    <property name="geometry">
     <rect>
-     <x>724</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>690</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2458,7 +2719,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2485,11 +2746,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence47">
    <property name="geometry">
     <rect>
-     <x>766</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>730</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2498,7 +2768,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2525,11 +2795,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence41">
    <property name="geometry">
     <rect>
-     <x>515</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>490</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2538,7 +2817,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2565,11 +2844,20 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblLicence42">
    <property name="geometry">
     <rect>
-     <x>556</x>
-     <y>825</y>
-     <width>37</width>
-     <height>37</height>
+     <x>530</x>
+     <y>704</y>
+     <width>34</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>黑体</family>
+     <pointsize>20</pointsize>
+     <weight>50</weight>
+     <italic>false</italic>
+     <bold>false</bold>
+    </font>
    </property>
    <property name="autoFillBackground">
     <bool>false</bool>
@@ -2578,7 +2866,7 @@ font: 25pt &quot;黑体&quot;;</string>
     <string notr="true">background-image:url( );
 background-color: rgb(20, 37, 81);
 color: rgb(255, 255, 255);
-font: 25pt &quot;黑体&quot;;</string>
+font: 20pt &quot;黑体&quot;;</string>
    </property>
    <property name="frameShape">
     <enum>QFrame::Panel</enum>
@@ -2605,8 +2893,8 @@ font: 25pt &quot;黑体&quot;;</string>
   <widget class="QLabel" name="lblDir4">
    <property name="geometry">
     <rect>
-     <x>856</x>
-     <y>529</y>
+     <x>810</x>
+     <y>449</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -2630,8 +2918,8 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblDir3">
    <property name="geometry">
     <rect>
-     <x>396</x>
-     <y>529</y>
+     <x>370</x>
+     <y>450</y>
      <width>61</width>
      <height>16</height>
     </rect>
@@ -2655,8 +2943,8 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblMoving4">
    <property name="geometry">
     <rect>
-     <x>509</x>
-     <y>529</y>
+     <x>486</x>
+     <y>451</y>
      <width>10</width>
      <height>10</height>
     </rect>
@@ -2672,7 +2960,7 @@ color: rgb(255, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>48</x>
-     <y>529</y>
+     <y>452</y>
      <width>10</width>
      <height>10</height>
     </rect>
@@ -2687,8 +2975,8 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblTitle1">
    <property name="geometry">
     <rect>
-     <x>152</x>
-     <y>180</y>
+     <x>130</x>
+     <y>150</y>
      <width>211</width>
      <height>16</height>
     </rect>
@@ -2696,7 +2984,7 @@ color: rgb(255, 0, 0);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>50</weight>
      <bold>false</bold>
     </font>
@@ -2715,8 +3003,8 @@ color: rgb(116,205,125);</string>
   <widget class="QLabel" name="lblTitle2">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>180</y>
+     <x>560</x>
+     <y>150</y>
      <width>211</width>
      <height>16</height>
     </rect>
@@ -2724,7 +3012,7 @@ color: rgb(116,205,125);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>50</weight>
      <bold>false</bold>
     </font>
@@ -2743,8 +3031,8 @@ color: rgb(126,178,228);</string>
   <widget class="QLabel" name="lblTitle3">
    <property name="geometry">
     <rect>
-     <x>152</x>
-     <y>527</y>
+     <x>130</x>
+     <y>448</y>
      <width>211</width>
      <height>16</height>
     </rect>
@@ -2752,7 +3040,7 @@ color: rgb(126,178,228);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>50</weight>
      <bold>false</bold>
     </font>
@@ -2771,8 +3059,8 @@ color: rgb(116,205,125);</string>
   <widget class="QLabel" name="lblTitle4">
    <property name="geometry">
     <rect>
-     <x>610</x>
-     <y>527</y>
+     <x>550</x>
+     <y>447</y>
      <width>211</width>
      <height>16</height>
     </rect>
@@ -2780,7 +3068,7 @@ color: rgb(116,205,125);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>50</weight>
      <bold>false</bold>
     </font>
@@ -2799,16 +3087,16 @@ color: rgb(126,178,228);</string>
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>940</x>
-     <y>70</y>
-     <width>41</width>
+     <x>900</x>
+     <y>60</y>
+     <width>31</width>
      <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -2824,8 +3112,8 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblNumber0">
    <property name="geometry">
     <rect>
-     <x>990</x>
-     <y>70</y>
+     <x>940</x>
+     <y>60</y>
      <width>81</width>
      <height>20</height>
     </rect>
@@ -2833,7 +3121,7 @@ color: rgb(255, 0, 0);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -2849,8 +3137,8 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblNumber1">
    <property name="geometry">
     <rect>
-     <x>1080</x>
-     <y>70</y>
+     <x>1030</x>
+     <y>60</y>
      <width>81</width>
      <height>20</height>
     </rect>
@@ -2858,7 +3146,7 @@ color: rgb(255, 0, 0);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -2874,16 +3162,16 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblNumber2">
    <property name="geometry">
     <rect>
-     <x>35</x>
-     <y>70</y>
-     <width>151</width>
+     <x>34</x>
+     <y>57</y>
+     <width>125</width>
      <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>14</pointsize>
+     <pointsize>12</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -2899,8 +3187,8 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblNumber4">
    <property name="geometry">
     <rect>
-     <x>1320</x>
-     <y>70</y>
+     <x>1250</x>
+     <y>60</y>
      <width>81</width>
      <height>20</height>
     </rect>
@@ -2908,7 +3196,7 @@ color: rgb(255, 0, 0);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -2924,8 +3212,8 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblNumber3">
    <property name="geometry">
     <rect>
-     <x>1240</x>
-     <y>70</y>
+     <x>1170</x>
+     <y>60</y>
      <width>81</width>
      <height>20</height>
     </rect>
@@ -2933,7 +3221,7 @@ color: rgb(255, 0, 0);</string>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -2949,16 +3237,16 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>1170</x>
-     <y>70</y>
-     <width>61</width>
+     <x>1120</x>
+     <y>60</y>
+     <width>51</width>
      <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>12</pointsize>
+     <pointsize>11</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -2974,10 +3262,10 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblAlert">
    <property name="geometry">
     <rect>
-     <x>790</x>
+     <x>750</x>
      <y>60</y>
-     <width>141</width>
-     <height>61</height>
+     <width>111</width>
+     <height>41</height>
     </rect>
    </property>
    <property name="font">
@@ -3010,16 +3298,16 @@ color: rgb(255, 0, 0);</string>
   <widget class="QLabel" name="lblNumber5">
    <property name="geometry">
     <rect>
-     <x>35</x>
-     <y>93</y>
-     <width>151</width>
+     <x>34</x>
+     <y>80</y>
+     <width>125</width>
      <height>20</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>黑体</family>
-     <pointsize>14</pointsize>
+     <pointsize>12</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
@@ -3103,8 +3391,8 @@ color: rgb(255, 0, 0);</string>
   <widget class="QPushButton" name="pushButton_2">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>180</y>
+     <x>350</x>
+     <y>120</y>
      <width>75</width>
      <height>23</height>
     </rect>

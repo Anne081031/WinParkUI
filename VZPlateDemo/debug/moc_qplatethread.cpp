@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qplatethread.h'
 **
-** Created: Tue Aug 27 11:24:02 2013
+** Created: Tue Sep 3 10:08:08 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_QPlateThread[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-       2,   14, // methods
+       4,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -34,6 +34,10 @@ static const uint qt_meta_data_QPlateThread[] = {
       53,   14,   13,   13, 0x05,
      173,   92,   13,   13, 0x05,
 
+ // slots: signature, parameters, type, tag, flags
+     241,   14,   13,   13, 0x08,
+     286,   92,   13,   13, 0x08,
+
        0        // eod
 };
 
@@ -43,6 +47,9 @@ static const char qt_meta_stringdata_QPlateThread[] = {
     "strPlate,nChannel,bSuccess,bVideo,nWidth,nHeight,nConfidence,strDirect"
     "ion,byData\0"
     "UIPlateResult(QString,int,bool,bool,int,int,int,QString,QByteArray)\0"
+    "HandlePlateResult(QStringList,int,bool,bool)\0"
+    "HandleUIPlateResult(QString,int,bool,bool,int,int,int,QString,QByteArr"
+    "ay)\0"
 };
 
 const QMetaObject QPlateThread::staticMetaObject = {
@@ -76,9 +83,11 @@ int QPlateThread::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: PlateResult((*reinterpret_cast< QStringList(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
         case 1: UIPlateResult((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< QString(*)>(_a[8])),(*reinterpret_cast< QByteArray(*)>(_a[9]))); break;
+        case 2: HandlePlateResult((*reinterpret_cast< QStringList(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
+        case 3: HandleUIPlateResult((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< QString(*)>(_a[8])),(*reinterpret_cast< QByteArray(*)>(_a[9]))); break;
         default: ;
         }
-        _id -= 2;
+        _id -= 4;
     }
     return _id;
 }

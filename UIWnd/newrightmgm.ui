@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1390</width>
-    <height>818</height>
+    <width>1320</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>权限设置</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);</string>
+   <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::NoFrame</enum>
@@ -27,8 +27,8 @@
     <rect>
      <x>40</x>
      <y>50</y>
-     <width>1301</width>
-     <height>681</height>
+     <width>1231</width>
+     <height>591</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -42,8 +42,8 @@
      <rect>
       <x>10</x>
       <y>20</y>
-      <width>1281</width>
-      <height>651</height>
+      <width>1211</width>
+      <height>521</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -438,24 +438,11 @@
      </property>
     </item>
    </widget>
-  </widget>
-  <widget class="QWidget" name="wgButton" native="true">
-   <property name="geometry">
-    <rect>
-     <x>490</x>
-     <y>750</y>
-     <width>401</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="styleSheet">
-    <string notr="true">background-image:url(none);</string>
-   </property>
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>0</x>
-      <y>0</y>
+      <x>460</x>
+      <y>560</y>
       <width>401</width>
       <height>25</height>
      </rect>
@@ -507,6 +494,19 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QWidget" name="wgButton" native="true">
+   <property name="geometry">
+    <rect>
+     <x>490</x>
+     <y>750</y>
+     <width>401</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image:url(none);</string>
+   </property>
+  </widget>
   <widget class="QLabel" name="lblTitle">
    <property name="geometry">
     <rect>
@@ -533,8 +533,8 @@ color: rgb(170, 0, 0);</string>
   <widget class="QLabel" name="lblClose">
    <property name="geometry">
     <rect>
-     <x>1350</x>
-     <y>6</y>
+     <x>1280</x>
+     <y>4</y>
      <width>30</width>
      <height>15</height>
     </rect>

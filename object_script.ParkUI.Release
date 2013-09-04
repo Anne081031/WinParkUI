@@ -158,6 +158,7 @@ INPUT(
 ./release/qdirectoryevent.o
 ./release/qdigitalcamerathread.o
 ./release/dlgblacklistlocation.o
+./release/qmypushbutton.o
 ./release/moc_valuecard.o
 ./release/moc_tolldiscounttypeset.o
 ./release/moc_timecard.o
@@ -293,4 +294,5 @@ INPUT(
 ./release/moc_qdhkipcthread.o
 ./release/moc_qdigitalcamerathread.o
 ./release/moc_dlgblacklistlocation.o
+./release/moc_qmypushbutton.o
 );

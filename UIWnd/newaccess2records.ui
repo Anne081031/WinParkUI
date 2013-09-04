@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1390</width>
-    <height>818</height>
+    <width>1320</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>出入记录</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);</string>
+   <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -26,8 +26,8 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>60</y>
-     <width>1301</width>
+     <y>50</y>
+     <width>1231</width>
      <height>731</height>
     </rect>
    </property>
@@ -39,8 +39,8 @@
      <rect>
       <x>0</x>
       <y>40</y>
-      <width>1301</width>
-      <height>311</height>
+      <width>1221</width>
+      <height>201</height>
      </rect>
     </property>
     <property name="toolTip">
@@ -131,8 +131,8 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>360</y>
-      <width>1411</width>
+      <y>250</y>
+      <width>1221</width>
       <height>321</height>
      </rect>
     </property>
@@ -571,8 +571,8 @@
    <widget class="QPushButton" name="btnMinimalize">
     <property name="geometry">
      <rect>
-      <x>683</x>
-      <y>700</y>
+      <x>520</x>
+      <y>585</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -589,7 +589,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1301</width>
+      <width>1201</width>
       <height>31</height>
      </rect>
     </property>
@@ -819,7 +819,7 @@ color: rgb(170, 0, 0);</string>
   <widget class="QLabel" name="lblClose">
    <property name="geometry">
     <rect>
-     <x>1350</x>
+     <x>1200</x>
      <y>8</y>
      <width>30</width>
      <height>15</height>

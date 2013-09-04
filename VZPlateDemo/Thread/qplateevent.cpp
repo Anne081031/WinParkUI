@@ -6,6 +6,8 @@ QPlateEvent::QPlateEvent( Type evtType ) : QEvent( evtType )
     nInOutChannel = 0;
     nVideoWidth = 0;
     nVideoHeight = 0;
+    bMultiThread = false;
+    bIpcVideoSource = false;
 }
 
 void QPlateEvent::SetFilePath( QString &strFile )
@@ -96,4 +98,14 @@ void QPlateEvent::SetIpcVideoSource( bool bIPC )
 bool QPlateEvent::GetIpcVideoSource( )
 {
     return bIpcVideoSource;
+}
+
+void QPlateEvent::SetMultiThread( bool bMulti )
+{
+   bMultiThread = bMulti;
+}
+
+bool QPlateEvent::GetMultiThread( )
+{
+    return bMultiThread;
 }

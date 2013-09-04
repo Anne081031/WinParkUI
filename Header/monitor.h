@@ -193,6 +193,17 @@ private:
     QSettings* pSysSet;
     QSettings* pSystem;
     int nRealTimeRecord;
+    QStringList lstEnterCanOpen;
+    QStringList lstEnterCanClose;
+    QStringList lstLeaveCanOpen;
+    QStringList lstLeaveCanClose;
+
+    inline void ReadDefaultCan( QStringList& lstCan, bool bEnter, bool bOpen );
+    inline void WriteDefaultCan( QStringList& lstCan, bool bEnter, bool bOpen );
+    bool ConfigDefaultCan( QStringList& lstCan, bool bEnter, bool bOpen );
+    QStringList& GetDefaultGateCan( bool bEnter, bool bOpen );
+    void CreateGateButton( );
+
     void PlayVideo( int nIndex, QFrame* pVideo );
     void StopVideo( int nIndex );
     inline void ControlGate( bool bOpen, bool bEnter, QObject* sender );
@@ -203,6 +214,7 @@ private:
     void PlateSort( QHash< QString, int > hash[ ], QString& strPlate );
 
 private slots:
+    void GateButtonRightClicked( );
     void on_tabRecord_cellDoubleClicked(int row, int column);
     void onBtnVerifyInClicked();
     void onBtnVerifyOutClicked();

@@ -245,7 +245,11 @@ void CTollDiscountTypeSet::resizeEvent( QResizeEvent* )
 
 void CTollDiscountTypeSet::CalculatePos( )
 {
+#ifdef NewUI
+    move( 123, 46 );
+#else
     move( 123, 177 );
+#endif
     return;
     QRect rectWnd = this->geometry( );
 

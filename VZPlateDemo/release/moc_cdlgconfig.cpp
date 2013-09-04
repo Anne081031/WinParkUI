@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'cdlgconfig.h'
 **
-** Created: Thu Aug 29 14:31:44 2013
+** Created: Fri Aug 30 10:21:06 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -41,7 +41,7 @@ static const uint qt_meta_data_CDlgConfig[] = {
 static const char qt_meta_stringdata_CDlgConfig[] = {
     "CDlgConfig\0\0on_btnOk_clicked()\0"
     "on_btnClose_clicked()\0index\0"
-    "on_cbxVideoType_currentIndexChanged(int)\0"
+    "OnVideoType_currentIndexChanged(int)\0"
 };
 
 const QMetaObject CDlgConfig::staticMetaObject = {
@@ -75,7 +75,7 @@ int CDlgConfig::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         switch (_id) {
         case 0: on_btnOk_clicked(); break;
         case 1: on_btnClose_clicked(); break;
-        case 2: on_cbxVideoType_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 2: OnVideoType_currentIndexChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
         _id -= 3;

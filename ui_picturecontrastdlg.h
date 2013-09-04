@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'picturecontrastdlg.ui'
 **
-** Created: Mon Jul 29 16:02:11 2013
+** Created: Tue Sep 3 15:34:19 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -131,7 +131,7 @@ public:
     {
         if (CPictureContrastDlg->objectName().isEmpty())
             CPictureContrastDlg->setObjectName(QString::fromUtf8("CPictureContrastDlg"));
-        CPictureContrastDlg->resize(950, 780);
+        CPictureContrastDlg->resize(950, 768);
         CPictureContrastDlg->setStyleSheet(QString::fromUtf8("background-image:url(d:/WinParkUI/debug/Image/NewIcon/FeeBG-normal.jpg);"));
         widget_2 = new QWidget(CPictureContrastDlg);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));

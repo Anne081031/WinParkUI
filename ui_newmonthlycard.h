@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newmonthlycard.ui'
 **
-** Created: Mon Aug 26 16:13:16 2013
+** Created: Tue Sep 3 13:45:36 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -115,13 +115,13 @@ public:
     {
         if (NewCMonthlyCard->objectName().isEmpty())
             NewCMonthlyCard->setObjectName(QString::fromUtf8("NewCMonthlyCard"));
-        NewCMonthlyCard->resize(1390, 818);
-        NewCMonthlyCard->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);"));
+        NewCMonthlyCard->resize(1320, 685);
+        NewCMonthlyCard->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);"));
         NewCMonthlyCard->setFrameShape(QFrame::StyledPanel);
         NewCMonthlyCard->setFrameShadow(QFrame::Raised);
         widget = new QWidget(NewCMonthlyCard);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(40, 60, 1301, 731));
+        widget->setGeometry(QRect(40, 50, 1241, 641));
         widget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableMonthly = new QTableWidget(widget);
         if (tableMonthly->columnCount() < 11)
@@ -149,7 +149,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem10 = new QTableWidgetItem();
         tableMonthly->setHorizontalHeaderItem(10, __qtablewidgetitem10);
         tableMonthly->setObjectName(QString::fromUtf8("tableMonthly"));
-        tableMonthly->setGeometry(QRect(0, 0, 1301, 221));
+        tableMonthly->setGeometry(QRect(0, 0, 1231, 146));
         tableMonthly->setContextMenuPolicy(Qt::CustomContextMenu);
         tableMonthly->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableMonthly->setSelectionBehavior(QAbstractItemView::SelectItems);
@@ -157,7 +157,7 @@ public:
         tableMonthly->verticalHeader()->setVisible(true);
         tabWidget = new QTabWidget(widget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(0, 230, 1301, 461));
+        tabWidget->setGeometry(QRect(0, 150, 1231, 431));
         tabWidget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tabWidget->setTabShape(QTabWidget::Rounded);
         tabWidget->setUsesScrollButtons(true);
@@ -168,10 +168,10 @@ public:
         tab->setObjectName(QString::fromUtf8("tab"));
         gbOwner = new QGroupBox(tab);
         gbOwner->setObjectName(QString::fromUtf8("gbOwner"));
-        gbOwner->setGeometry(QRect(0, 10, 1091, 401));
+        gbOwner->setGeometry(QRect(10, 30, 1051, 371));
         layoutWidget = new QWidget(gbOwner);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 120, 391, 22));
+        layoutWidget->setGeometry(QRect(10, 100, 391, 22));
         horizontalLayout_2 = new QHBoxLayout(layoutWidget);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
         horizontalLayout_2->setContentsMargins(0, 0, 0, 0);
@@ -187,7 +187,7 @@ public:
 
         layoutWidget1 = new QWidget(gbOwner);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 150, 391, 22));
+        layoutWidget1->setGeometry(QRect(10, 130, 391, 22));
         horizontalLayout_3 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -203,7 +203,7 @@ public:
 
         layoutWidget2 = new QWidget(gbOwner);
         layoutWidget2->setObjectName(QString::fromUtf8("layoutWidget2"));
-        layoutWidget2->setGeometry(QRect(10, 180, 391, 22));
+        layoutWidget2->setGeometry(QRect(10, 160, 391, 22));
         horizontalLayout_5 = new QHBoxLayout(layoutWidget2);
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         horizontalLayout_5->setContentsMargins(0, 0, 0, 0);
@@ -219,7 +219,7 @@ public:
 
         groupBox_4 = new QGroupBox(gbOwner);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(410, 30, 235, 351));
+        groupBox_4->setGeometry(QRect(410, 10, 235, 351));
         lblOwner = new QLabel(groupBox_4);
         lblOwner->setObjectName(QString::fromUtf8("lblOwner"));
         lblOwner->setGeometry(QRect(10, 20, 214, 321));
@@ -230,10 +230,10 @@ public:
         lblOwner->setScaledContents(true);
         groupBox_3 = new QGroupBox(gbOwner);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(660, 30, 421, 351));
+        groupBox_3->setGeometry(QRect(660, 10, 371, 351));
         lblCar = new QLabel(groupBox_3);
         lblCar->setObjectName(QString::fromUtf8("lblCar"));
-        lblCar->setGeometry(QRect(10, 20, 401, 321));
+        lblCar->setGeometry(QRect(10, 20, 341, 321));
         lblCar->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblCar->setFrameShape(QFrame::Panel);
         lblCar->setFrameShadow(QFrame::Sunken);
@@ -247,7 +247,7 @@ public:
         lblCardNo->setGeometry(QRect(430, 60, 54, 12));
         layoutWidget3 = new QWidget(gbOwner);
         layoutWidget3->setObjectName(QString::fromUtf8("layoutWidget3"));
-        layoutWidget3->setGeometry(QRect(11, 90, 391, 22));
+        layoutWidget3->setGeometry(QRect(11, 70, 391, 22));
         horizontalLayout_16 = new QHBoxLayout(layoutWidget3);
         horizontalLayout_16->setObjectName(QString::fromUtf8("horizontalLayout_16"));
         horizontalLayout_16->setContentsMargins(0, 0, 0, 0);
@@ -263,7 +263,7 @@ public:
 
         layoutWidget4 = new QWidget(gbOwner);
         layoutWidget4->setObjectName(QString::fromUtf8("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(10, 60, 391, 22));
+        layoutWidget4->setGeometry(QRect(10, 40, 391, 22));
         horizontalLayout_17 = new QHBoxLayout(layoutWidget4);
         horizontalLayout_17->setObjectName(QString::fromUtf8("horizontalLayout_17"));
         horizontalLayout_17->setContentsMargins(0, 0, 0, 0);
@@ -279,100 +279,100 @@ public:
 
         cbxCarType = new QComboBox(gbOwner);
         cbxCarType->setObjectName(QString::fromUtf8("cbxCarType"));
-        cbxCarType->setGeometry(QRect(250, 210, 149, 20));
+        cbxCarType->setGeometry(QRect(250, 190, 149, 20));
         label_15 = new QLabel(gbOwner);
         label_15->setObjectName(QString::fromUtf8("label_15"));
-        label_15->setGeometry(QRect(11, 211, 36, 16));
+        label_15->setGeometry(QRect(11, 191, 36, 16));
         label_2 = new QLabel(gbOwner);
         label_2->setObjectName(QString::fromUtf8("label_2"));
-        label_2->setGeometry(QRect(11, 31, 36, 16));
+        label_2->setGeometry(QRect(11, 14, 36, 16));
         cbxSex = new QComboBox(gbOwner);
         cbxSex->setObjectName(QString::fromUtf8("cbxSex"));
-        cbxSex->setGeometry(QRect(339, 31, 61, 20));
+        cbxSex->setGeometry(QRect(339, 14, 61, 20));
         label_8 = new QLabel(gbOwner);
         label_8->setObjectName(QString::fromUtf8("label_8"));
-        label_8->setGeometry(QRect(290, 31, 36, 16));
+        label_8->setGeometry(QRect(290, 14, 36, 16));
         edtName = new QLineEdit(gbOwner);
         edtName->setObjectName(QString::fromUtf8("edtName"));
-        edtName->setGeometry(QRect(53, 31, 221, 20));
+        edtName->setGeometry(QRect(53, 14, 221, 20));
         edtVechileID6 = new QLineEdit(gbOwner);
         edtVechileID6->setObjectName(QString::fromUtf8("edtVechileID6"));
         edtVechileID6->setEnabled(false);
-        edtVechileID6->setGeometry(QRect(271, 271, 129, 20));
+        edtVechileID6->setGeometry(QRect(271, 250, 129, 20));
         label_19 = new QLabel(gbOwner);
         label_19->setObjectName(QString::fromUtf8("label_19"));
-        label_19->setGeometry(QRect(211, 271, 54, 16));
+        label_19->setGeometry(QRect(211, 250, 54, 16));
         edtVechileID9 = new QLineEdit(gbOwner);
         edtVechileID9->setObjectName(QString::fromUtf8("edtVechileID9"));
         edtVechileID9->setEnabled(false);
-        edtVechileID9->setGeometry(QRect(271, 361, 129, 20));
+        edtVechileID9->setGeometry(QRect(271, 340, 129, 20));
         label_22 = new QLabel(gbOwner);
         label_22->setObjectName(QString::fromUtf8("label_22"));
-        label_22->setGeometry(QRect(211, 361, 54, 16));
+        label_22->setGeometry(QRect(211, 340, 54, 16));
         edtVechileID3 = new QLineEdit(gbOwner);
         edtVechileID3->setObjectName(QString::fromUtf8("edtVechileID3"));
         edtVechileID3->setEnabled(false);
-        edtVechileID3->setGeometry(QRect(71, 331, 129, 20));
+        edtVechileID3->setGeometry(QRect(71, 310, 129, 20));
         label_16 = new QLabel(gbOwner);
         label_16->setObjectName(QString::fromUtf8("label_16"));
-        label_16->setGeometry(QRect(11, 331, 54, 16));
+        label_16->setGeometry(QRect(11, 310, 54, 16));
         label_23 = new QLabel(gbOwner);
         label_23->setObjectName(QString::fromUtf8("label_23"));
-        label_23->setGeometry(QRect(11, 271, 54, 16));
+        label_23->setGeometry(QRect(11, 250, 54, 16));
         edtVechileID1 = new QLineEdit(gbOwner);
         edtVechileID1->setObjectName(QString::fromUtf8("edtVechileID1"));
         edtVechileID1->setEnabled(false);
-        edtVechileID1->setGeometry(QRect(71, 271, 129, 20));
+        edtVechileID1->setGeometry(QRect(71, 250, 129, 20));
         edtVechileID4 = new QLineEdit(gbOwner);
         edtVechileID4->setObjectName(QString::fromUtf8("edtVechileID4"));
         edtVechileID4->setEnabled(false);
-        edtVechileID4->setGeometry(QRect(71, 361, 129, 20));
+        edtVechileID4->setGeometry(QRect(71, 340, 129, 20));
         label_17 = new QLabel(gbOwner);
         label_17->setObjectName(QString::fromUtf8("label_17"));
-        label_17->setGeometry(QRect(11, 361, 54, 16));
+        label_17->setGeometry(QRect(11, 340, 54, 16));
         edtVechileID8 = new QLineEdit(gbOwner);
         edtVechileID8->setObjectName(QString::fromUtf8("edtVechileID8"));
         edtVechileID8->setEnabled(false);
-        edtVechileID8->setGeometry(QRect(271, 331, 129, 20));
+        edtVechileID8->setGeometry(QRect(271, 310, 129, 20));
         label_21 = new QLabel(gbOwner);
         label_21->setObjectName(QString::fromUtf8("label_21"));
-        label_21->setGeometry(QRect(211, 331, 54, 16));
+        label_21->setGeometry(QRect(211, 310, 54, 16));
         label_24 = new QLabel(gbOwner);
         label_24->setObjectName(QString::fromUtf8("label_24"));
-        label_24->setGeometry(QRect(11, 241, 54, 16));
+        label_24->setGeometry(QRect(11, 220, 54, 16));
         edtVechileID0 = new QLineEdit(gbOwner);
         edtVechileID0->setObjectName(QString::fromUtf8("edtVechileID0"));
-        edtVechileID0->setGeometry(QRect(71, 241, 129, 20));
+        edtVechileID0->setGeometry(QRect(71, 220, 129, 20));
         label_20 = new QLabel(gbOwner);
         label_20->setObjectName(QString::fromUtf8("label_20"));
-        label_20->setGeometry(QRect(211, 301, 54, 16));
+        label_20->setGeometry(QRect(211, 280, 54, 16));
         edtVechileID7 = new QLineEdit(gbOwner);
         edtVechileID7->setObjectName(QString::fromUtf8("edtVechileID7"));
         edtVechileID7->setEnabled(false);
-        edtVechileID7->setGeometry(QRect(271, 301, 129, 20));
+        edtVechileID7->setGeometry(QRect(271, 280, 129, 20));
         edtVechileID5 = new QLineEdit(gbOwner);
         edtVechileID5->setObjectName(QString::fromUtf8("edtVechileID5"));
         edtVechileID5->setEnabled(false);
-        edtVechileID5->setGeometry(QRect(271, 241, 129, 20));
+        edtVechileID5->setGeometry(QRect(271, 220, 129, 20));
         label_18 = new QLabel(gbOwner);
         label_18->setObjectName(QString::fromUtf8("label_18"));
-        label_18->setGeometry(QRect(211, 241, 54, 16));
+        label_18->setGeometry(QRect(211, 220, 54, 16));
         label_13 = new QLabel(gbOwner);
         label_13->setObjectName(QString::fromUtf8("label_13"));
-        label_13->setGeometry(QRect(11, 301, 54, 16));
+        label_13->setGeometry(QRect(11, 280, 54, 16));
         edtVechileID2 = new QLineEdit(gbOwner);
         edtVechileID2->setObjectName(QString::fromUtf8("edtVechileID2"));
         edtVechileID2->setEnabled(false);
-        edtVechileID2->setGeometry(QRect(71, 301, 129, 20));
+        edtVechileID2->setGeometry(QRect(71, 280, 129, 20));
         edtCarModel = new QLineEdit(gbOwner);
         edtCarModel->setObjectName(QString::fromUtf8("edtCarModel"));
-        edtCarModel->setGeometry(QRect(71, 210, 328, 20));
+        edtCarModel->setGeometry(QRect(71, 190, 328, 20));
         btnMonthRecharge = new QPushButton(tab);
         btnMonthRecharge->setObjectName(QString::fromUtf8("btnMonthRecharge"));
-        btnMonthRecharge->setGeometry(QRect(1110, 390, 75, 23));
+        btnMonthRecharge->setGeometry(QRect(1070, 371, 75, 23));
         btnMonthSave = new QPushButton(tab);
         btnMonthSave->setObjectName(QString::fromUtf8("btnMonthSave"));
-        btnMonthSave->setGeometry(QRect(1200, 390, 75, 23));
+        btnMonthSave->setGeometry(QRect(1150, 371, 75, 23));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
@@ -390,7 +390,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem15 = new QTableWidgetItem();
         tableRecharge->setHorizontalHeaderItem(4, __qtablewidgetitem15);
         tableRecharge->setObjectName(QString::fromUtf8("tableRecharge"));
-        tableRecharge->setGeometry(QRect(10, 10, 1281, 401));
+        tableRecharge->setGeometry(QRect(10, 10, 1201, 381));
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
         tab_3->setObjectName(QString::fromUtf8("tab_3"));
@@ -408,14 +408,14 @@ public:
         QTableWidgetItem *__qtablewidgetitem20 = new QTableWidgetItem();
         tableAccess->setHorizontalHeaderItem(4, __qtablewidgetitem20);
         tableAccess->setObjectName(QString::fromUtf8("tableAccess"));
-        tableAccess->setGeometry(QRect(10, 10, 841, 411));
+        tableAccess->setGeometry(QRect(10, 10, 761, 381));
         tableAccess->setMaximumSize(QSize(961, 431));
         groupBox_6 = new QGroupBox(tab_3);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(1080, 0, 211, 211));
+        groupBox_6->setGeometry(QRect(1000, 0, 211, 201));
         lblImg2 = new QLabel(groupBox_6);
         lblImg2->setObjectName(QString::fromUtf8("lblImg2"));
-        lblImg2->setGeometry(QRect(5, 16, 201, 191));
+        lblImg2->setGeometry(QRect(5, 16, 201, 181));
         lblImg2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg2->setFrameShape(QFrame::Panel);
         lblImg2->setFrameShadow(QFrame::Sunken);
@@ -423,10 +423,10 @@ public:
         lblImg2->setScaledContents(true);
         groupBox_8 = new QGroupBox(tab_3);
         groupBox_8->setObjectName(QString::fromUtf8("groupBox_8"));
-        groupBox_8->setGeometry(QRect(1080, 210, 211, 211));
+        groupBox_8->setGeometry(QRect(1000, 200, 211, 201));
         lblImg4 = new QLabel(groupBox_8);
         lblImg4->setObjectName(QString::fromUtf8("lblImg4"));
-        lblImg4->setGeometry(QRect(5, 16, 201, 191));
+        lblImg4->setGeometry(QRect(5, 16, 201, 181));
         lblImg4->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg4->setFrameShape(QFrame::Panel);
         lblImg4->setFrameShadow(QFrame::Sunken);
@@ -434,10 +434,10 @@ public:
         lblImg4->setScaledContents(true);
         groupBox_7 = new QGroupBox(tab_3);
         groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
-        groupBox_7->setGeometry(QRect(860, 210, 211, 211));
+        groupBox_7->setGeometry(QRect(780, 200, 211, 201));
         lblImg3 = new QLabel(groupBox_7);
         lblImg3->setObjectName(QString::fromUtf8("lblImg3"));
-        lblImg3->setGeometry(QRect(5, 16, 201, 191));
+        lblImg3->setGeometry(QRect(5, 16, 201, 181));
         lblImg3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg3->setFrameShape(QFrame::Panel);
         lblImg3->setFrameShadow(QFrame::Sunken);
@@ -445,10 +445,10 @@ public:
         lblImg3->setScaledContents(true);
         groupBox_5 = new QGroupBox(tab_3);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
-        groupBox_5->setGeometry(QRect(860, 0, 211, 211));
+        groupBox_5->setGeometry(QRect(780, 0, 211, 201));
         lblImg1 = new QLabel(groupBox_5);
         lblImg1->setObjectName(QString::fromUtf8("lblImg1"));
-        lblImg1->setGeometry(QRect(5, 16, 201, 191));
+        lblImg1->setGeometry(QRect(5, 16, 201, 181));
         lblImg1->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg1->setFrameShape(QFrame::Panel);
         lblImg1->setFrameShadow(QFrame::Sunken);
@@ -473,16 +473,16 @@ public:
         QTableWidgetItem *__qtablewidgetitem24 = new QTableWidgetItem();
         tableEntranceRight->setHorizontalHeaderItem(3, __qtablewidgetitem24);
         tableEntranceRight->setObjectName(QString::fromUtf8("tableEntranceRight"));
-        tableEntranceRight->setGeometry(QRect(10, 10, 1281, 371));
+        tableEntranceRight->setGeometry(QRect(10, 10, 1201, 361));
         tableEntranceRight->setMaximumSize(QSize(1391, 401));
         tableEntranceRight->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         btnSaveRight = new QPushButton(tab_4);
         btnSaveRight->setObjectName(QString::fromUtf8("btnSaveRight"));
-        btnSaveRight->setGeometry(QRect(1200, 400, 75, 23));
+        btnSaveRight->setGeometry(QRect(1140, 380, 75, 23));
         tabWidget->addTab(tab_4, QString());
         btnMinimalize = new QPushButton(widget);
         btnMinimalize->setObjectName(QString::fromUtf8("btnMinimalize"));
-        btnMinimalize->setGeometry(QRect(683, 700, 75, 23));
+        btnMinimalize->setGeometry(QRect(560, 590, 75, 23));
         btnMinimalize->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblTitle = new QLabel(NewCMonthlyCard);
         lblTitle->setObjectName(QString::fromUtf8("lblTitle"));
@@ -495,7 +495,7 @@ public:
 "color: rgb(170, 0, 0);"));
         lblClose = new QLabel(NewCMonthlyCard);
         lblClose->setObjectName(QString::fromUtf8("lblClose"));
-        lblClose->setGeometry(QRect(1350, 7, 30, 15));
+        lblClose->setGeometry(QRect(1280, 5, 30, 15));
         lblClose->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblClose->setAlignment(Qt::AlignCenter);
 

@@ -37,6 +37,90 @@ TH_PlateResult CMonitor::structPlates[ VIDEO_USEDWAY ] = { { 0 } };
 CMonitor* pMainWnd = NULL;
 QString CMonitor::strPlates[ VIDEO_USEDWAY ] = { "" };
 
+#include "qmypushbutton.h"
+
+void CMonitor::GateButtonRightClicked( )
+{
+    QPushButton* pButton = ( QPushButton* ) sender( );
+
+    if ( ui->btnEnterGateOpen == pButton ) {
+        if ( ConfigDefaultCan( lstEnterCanOpen, true, true ) ) {
+            ControlGate( true, true, NULL );
+        }
+    } else if ( ui->btnEnterGateClose == pButton ) {
+        if ( ConfigDefaultCan( lstEnterCanClose, true, false ) ) {
+            ControlGate( true, false, NULL );
+        }
+    } else if ( ui->btnLeaveGateOpen == pButton ) {
+        if ( ConfigDefaultCan( lstLeaveCanOpen, false, true ) ) {
+            ControlGate( false, true, NULL );
+        }
+    } else if ( ui->btnLeaveGateClose == pButton ) {
+        if ( ConfigDefaultCan( lstLeaveCanClose, false, false ) ) {
+            ControlGate( false, false, NULL );
+        }
+    }
+}
+
+void CMonitor::CreateGateButton( )
+{
+    ui->btnEnterGateOpen->setParent( NULL );
+    ui->btnEnterGateOpen = new QMyPushButton(this);
+    ui->btnEnterGateOpen->setObjectName(QString::fromUtf8("btnEnterGateOpen"));
+    ui->btnEnterGateOpen->setGeometry(
+            #ifdef NewUI
+                QRect(962, 213, 83, 82)
+            #else
+                QRect(1015, 250, 88, 97)
+            #endif
+                );
+    ui->btnEnterGateOpen->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
+"border-style: outset; "));
+    connect( ui->btnEnterGateOpen, SIGNAL( RightClick( ) ), this, SLOT( GateButtonRightClicked( ) ) );
+
+    ui->btnEnterGateClose->setParent( NULL );
+    ui->btnEnterGateClose = new QMyPushButton(this);
+    ui->btnEnterGateClose->setObjectName(QString::fromUtf8("btnEnterGateClose"));
+    ui->btnEnterGateClose->setGeometry(
+            #ifdef NewUI
+                QRect(1045, 212, 83, 83)
+            #else
+                QRect(1103, 250, 87, 97)
+            #endif
+                );
+    ui->btnEnterGateClose->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
+"border-style: outset; "));
+    connect( ui->btnEnterGateClose, SIGNAL( RightClick( ) ), this, SLOT( GateButtonRightClicked( ) ) );
+
+    ui->btnLeaveGateClose->setParent( NULL );
+    ui->btnLeaveGateClose = new QMyPushButton(this);
+    ui->btnLeaveGateClose->setObjectName(QString::fromUtf8("btnLeaveGateClose"));
+    ui->btnLeaveGateClose->setGeometry(
+            #ifdef NewUI
+                QRect(1225, 212, 83, 83)
+            #else
+                QRect(1292, 250, 87, 97)
+            #endif
+                                       );
+    ui->btnLeaveGateClose->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
+"border-style: outset; "));
+    connect( ui->btnLeaveGateClose, SIGNAL( RightClick( ) ), this, SLOT( GateButtonRightClicked( ) ) );
+
+    ui->btnLeaveGateOpen->setParent( NULL );
+    ui->btnLeaveGateOpen = new QMyPushButton(this);
+    ui->btnLeaveGateOpen->setObjectName(QString::fromUtf8("btnLeaveGateOpen"));
+    ui->btnLeaveGateOpen->setGeometry(
+            #ifdef NewUI
+                QRect(1142, 213, 83, 82)
+            #else
+                QRect(1204, 250, 88, 97)
+            #endif
+                                      );
+    ui->btnLeaveGateOpen->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
+"border-style: outset; "));
+    connect( ui->btnLeaveGateOpen, SIGNAL( RightClick( ) ), this, SLOT( GateButtonRightClicked( ) ) );
+}
+
 void CMonitor::CaptureNewImage( QString& strFile, int nChannel, CommonDataType::CaptureImageType capType )
 {
     if ( QFile::exists( strFile ) ) {
@@ -285,6 +369,10 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
         )
 {
     ui->setupUi(this);
+    CreateGateButton( );
+
+    pSysSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
+    pSystem= CCommonFunction::GetSettings( CommonDataType::CfgSystem );
 
     ui->pushButton_2->setVisible( false );
     ui->pushButton->setVisible( false );
@@ -295,10 +383,14 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     GetCanParkIndexNum( );
     nRefreshParkspaceTime = 1000 * 60;
 
+    ReadDefaultCan( lstEnterCanOpen, true, true );
+    ReadDefaultCan( lstEnterCanClose, true, false );
+    ReadDefaultCan( lstLeaveCanOpen, false, true );
+    ReadDefaultCan( lstLeaveCanClose, false, false );
+
     pParent = dynamic_cast< MainWindow* > ( mainWnd );
     //qobject_cast()
-    pSysSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
-    pSystem= CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+
     nRealTimeRecord = pSystem->value( "CommonCfg/RealTimeRecord", 100 ).toInt( );
     bPlateVideo = pSystem->value( "CommonCfg/PlateVideo", true ).toBool( );
     bSavePicture = pSystem->value( "CommonCfg/SavePicture", false ).toBool( );
@@ -410,10 +502,46 @@ void CMonitor::InitVideoPlateUI( )
         nRealIndex = nIndex + 1;
         if ( bAuto ) {
             nMode = nIndex % 2;
-            rect.setX( nMode ? 509 : 48 );
-            rect.setY( nIndex - nMode ? 546 : 203 );
-            rect.setWidth( 410 );
-            rect.setHeight( 275 );
+            rect.setX( nMode ?
+               #ifdef NewUI
+                       483
+               #else
+                       509
+               #endif
+                            :
+               #ifdef NewUI
+                       47
+               #else
+                       48
+               #endif
+                           );
+            rect.setY( nIndex - nMode ?
+               #ifdef NewUI
+                       466
+               #else
+                       546
+               #endif
+                         :
+               #ifdef NewUI
+                       173
+               #else
+                       203
+               #endif
+                           );
+            rect.setWidth(
+                #ifdef NewUI
+                        389
+                #else
+                        410
+                #endif
+                           );
+            rect.setHeight(
+                #ifdef NewUI
+                        234
+                #else
+                        275
+                #endif
+                            );
             lblVideoWnd[ nIndex ] = new CMyLabel( nIndex, rect, bNetworkCamera, this );
             QString strKey = QString( "CommonCfg/Video%1" ).arg( nIndex + 1 );
             QString strCan = pSystem->value( strKey, "0" ).toString( );
@@ -831,9 +959,18 @@ void CMonitor::BtnReleased( )
 
 void CMonitor::SwitchImage( QPushButton *pBtn, bool bDown, bool bPermission )
 {
-    QString strStyle = strButtonStyle.arg( strImagePath, pBtn->objectName( ).remove( "2"), bPermission ? ( bDown ? "clicked" : "normal" ) : "disabled" );
+    QString strStyle = strButtonStyle.arg( strImagePath, pBtn->objectName( ).remove( "2"), bPermission ? ( bDown ?
+                                                                                                               pParent->GetPictureName( "clicked%1" ) :
+                                                                                                               pParent->GetPictureName( "normal%1" ) ) :
+                                                                                                         pParent->GetPictureName( "disabled%1" ) );
     //qDebug( ) << strStyle << endl << "Down" << bDown << endl;
     pBtn->setStyleSheet( strStyle );
+    qDebug( ) << Q_FUNC_INFO << strStyle << endl;
+
+    QFont font;
+    font.setFamily( "黑体" );
+    font.setPointSize( 16 );
+    ui->lblLicence11->setFont( font );
 }
 
 QLabel* CMonitor::GetDateTimeCtrl( )
@@ -851,7 +988,7 @@ void CMonitor::ControlDataGrid( QTableWidget& tw )
 
     pHeader = tw.horizontalHeader( );
     pHeader->setResizeMode( QHeaderView::Fixed );
-
+    pHeader->setShown( true );
     pHeader->resizeSection( 0, 80 );
     pHeader->resizeSection( 1, 80 );
     pHeader->resizeSection( 2, 80 );
@@ -1627,7 +1764,7 @@ void CMonitor::GetAllParkSpaceLot( bool bChannel, bool bEnter )
     }
 
     CParkSpaceLotDialog dlg( this );
-    dlg.InitDlg( bChannel, lstRows, bEnter );
+    dlg.InitDlg( bChannel, lstRows, bEnter, lstEnterCanOpen );
     dlg.exec( );
 
     if ( !bChannel ) {
@@ -1933,58 +2070,102 @@ void CMonitor::on_btnGateChannel2_clicked()
     GetAllParkSpaceLot( true, false );
 }
 
-void CMonitor::ControlGate( bool bOpen, bool bEnter, QObject* sender )
+void CMonitor::ReadDefaultCan( QStringList& lstCan, bool bEnter, bool bOpen )
 {
-    QPushButton* pSender = qobject_cast< QPushButton* >( sender );
-    pSender->setEnabled( false );
-    //bool bEnter = ( 0 != cCan % 2 ); // 1 2 3 4
-    SetGateImg( bOpen, bEnter );
+    lstCan.clear( );
+    QString strKey = QString( "CommonCfg/%1DefaultCan%2" ).arg( bEnter ? "Enter" : "Leave",
+                                                                bOpen ? "Open" : "Close" );
+    QString strValue = pSystem->value( strKey, "" ).toString( );
+    if ( !strValue.isEmpty( ) ) {
+        lstCan = strValue.split( "," );
+    }
+}
 
+void CMonitor::WriteDefaultCan( QStringList& lstCan, bool bEnter, bool bOpen )
+{
+    QString strKey = QString( "CommonCfg/%1DefaultCan%2" ).arg( bEnter ? "Enter" : "Leave",
+                                                                bOpen ? "Open" : "Close" );
+    QString strValue = lstCan.join( "," );
+    pSystem->setValue( strKey, strValue );
+}
+
+bool CMonitor::ConfigDefaultCan( QStringList& lstCan, bool bEnter, bool bOpen )
+{
     CParkSpaceLotDialog dlg;
     QString strSql = QString ( "Select distinct shebeiname, shebeiadr From roadconerinfo \
                                where video1ip ='%1' and shebeiadr % 2 %2= 0" ).arg(
                                        CCommonFunction::GetHostIP( ), bEnter ? "!" : "" );
     QStringList lstRows;
     CLogicInterface::GetInterface( )->ExecuteSql( strSql, lstRows );
-    QVector< char > vecCan;
+    dlg.InitDlg( true, lstRows, bEnter, lstCan );
+    dlg.setWindowTitle( dlg.windowTitle( ) + ( bOpen ? QString( "——开闸" ) : QString( "——关闸" ) ) );
+    if ( CParkSpaceLotDialog::Rejected == dlg.exec( ) ) {
+        return false;
+    }
+
+    dlg.GetCanAddress( lstCan );
+
+    if ( 0 != lstCan.count( ) ) {
+        WriteDefaultCan( lstCan, bEnter, bOpen );
+    } else {
+        ReadDefaultCan( lstCan, bEnter, bOpen );
+    }
+
+    return true;
+}
+
+QStringList& CMonitor::GetDefaultGateCan( bool bEnter, bool bOpen )
+{
+    if ( bEnter ) {
+        return ( bOpen ? lstEnterCanOpen : lstEnterCanClose );
+    } else {
+        return ( bOpen ? lstLeaveCanOpen : lstLeaveCanClose );
+    }
+}
+
+void CMonitor::ControlGate( bool bOpen, bool bEnter, QObject* sender )
+{
+    //QPushButton* pSender = qobject_cast< QPushButton* >( sender );
+    //pSender->setEnabled( false );
+    //bool bEnter = ( 0 != cCan % 2 ); // 1 2 3 4
+    SetGateImg( bOpen, bEnter );
+
     int nCount = 0;
     CProcessData* pProcessor = CProcessData::GetProcessor( pParent->GetSerialPort( ), pParent );
     QString strWhere;
     QString strType = "手动开关闸";
     QString strText;
-    QString strContent;
+    QString strContent = QString( "%1口 %2闸" ).arg( bEnter ? "入" : "出", bOpen ? "开" : "关" );
     QDateTime dtDateTime = QDateTime::currentDateTime( );
     CCommonFunction::DateTime2String( dtDateTime, strText );
 
-    if ( 0 == lstRows.count( ) ) {
-        goto ENABLEBUTTON;
+    QStringList& lstCan = GetDefaultGateCan( bEnter, bOpen );
+    nCount = lstCan.count( );
+    if ( 0 == nCount ) {
+        ConfigDefaultCan( lstCan, bEnter, bOpen );
+        nCount = lstCan.count( );
+        if ( 0 == nCount ) {
+            CCommonFunction::MsgBox( NULL, "提示", strContent + " 没配置CAN地址。", QMessageBox::Information );
+            return;
+        }
     }
-
-    dlg.InitDlg( true, lstRows, bEnter );
-    dlg.setWindowTitle( dlg.windowTitle( ) + ( bOpen ? QString( "——开闸" ) : QString( "——关闸" ) ) );
-    if ( 2 != lstRows.count( ) && CParkSpaceLotDialog::Rejected == dlg.exec( ) ) {
-        goto ENABLEBUTTON;
-    }
-
-    dlg.GetCanAddress( vecCan );
-    nCount = vecCan.count( );
 
     for ( int nIndex = 0; nIndex < nCount; nIndex++ ) {
-        pProcessor->ControlGate( bOpen, vecCan[ nIndex ] );
+        char cCan = ( char ) lstCan.at( nIndex ).toShort( );
+        pProcessor->ControlGate( bOpen, cCan );
 
-        if ( 0 == nIndex ) {
-            strContent = QString( "%1口 %2闸" ).arg( bEnter ? "入" : "出", bOpen ? "开" : "关" );
-            pParent->WriteLog( strType, strContent, CommonDataType::ManualGateLog, dtDateTime, vecCan[ nIndex ] );
+        if ( 33 > cCan ) {
+            pParent->WriteLog( strType, strContent, CommonDataType::ManualGateLog, dtDateTime, cCan );
         }
 
         strWhere = QString( " where infooperator = '%1' and infokind = '%2' and infotext = '%3' and infotime = '%4'" ).arg(
                     pParent->GetUserName( ), strType, strContent, strText );
 
-        pProcessor->CaptureManualGateImage( vecCan[ nIndex ], strWhere );
+        pProcessor->CaptureManualGateImage( cCan, strWhere );
     }
 
-    ENABLEBUTTON:
-    pSender->setEnabled( true );
+    //ENABLEBUTTON:
+    //pSender->setEnabled( true );
 }
 
 void CMonitor::GateOpen1()

@@ -61,7 +61,11 @@ void CPublishLEDInfo::FillTable( )
 
 void CPublishLEDInfo::CalculatePos( )
 {
+#ifdef NewUI
+    move( 123, 46 );
+#else
     move( 123, 177 );
+#endif
 }
 
 void CPublishLEDInfo::on_btnDownload_clicked( )

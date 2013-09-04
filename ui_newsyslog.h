@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newsyslog.ui'
 **
-** Created: Mon Aug 26 16:13:16 2013
+** Created: Tue Sep 3 12:24:20 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -52,7 +52,7 @@ public:
     QLabel *lblImg2;
     QGroupBox *groupBox_7;
     QLabel *lblImg3;
-    QWidget *widget1;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QLabel *label;
     QDateTimeEdit *dtStart;
@@ -67,21 +67,21 @@ public:
     {
         if (NewCSysLog->objectName().isEmpty())
             NewCSysLog->setObjectName(QString::fromUtf8("NewCSysLog"));
-        NewCSysLog->resize(1390, 818);
-        NewCSysLog->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);"));
+        NewCSysLog->resize(1320, 685);
+        NewCSysLog->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);"));
         NewCSysLog->setFrameShape(QFrame::NoFrame);
         NewCSysLog->setFrameShadow(QFrame::Raised);
         widget = new QWidget(NewCSysLog);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(40, 40, 1301, 741));
+        widget->setGeometry(QRect(40, 30, 1241, 671));
         widget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         groupBox_2 = new QGroupBox(widget);
         groupBox_2->setObjectName(QString::fromUtf8("groupBox_2"));
-        groupBox_2->setGeometry(QRect(10, 20, 1281, 671));
+        groupBox_2->setGeometry(QRect(10, 12, 1221, 571));
         groupBox_2->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tabWidget = new QTabWidget(groupBox_2);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(10, 50, 1261, 361));
+        tabWidget->setGeometry(QRect(10, 50, 1201, 291));
         tabWidget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
@@ -101,7 +101,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem4 = new QTableWidgetItem();
         tableShift->setVerticalHeaderItem(1, __qtablewidgetitem4);
         tableShift->setObjectName(QString::fromUtf8("tableShift"));
-        tableShift->setGeometry(QRect(10, 10, 1231, 351));
+        tableShift->setGeometry(QRect(9, 10, 1178, 251));
         tableShift->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
@@ -122,7 +122,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
         tableCardMgm->setVerticalHeaderItem(1, __qtablewidgetitem9);
         tableCardMgm->setObjectName(QString::fromUtf8("tableCardMgm"));
-        tableCardMgm->setGeometry(QRect(10, 10, 1231, 351));
+        tableCardMgm->setGeometry(QRect(9, 10, 1178, 251));
         tabWidget->addTab(tab_2, QString());
         tab_5 = new QWidget();
         tab_5->setObjectName(QString::fromUtf8("tab_5"));
@@ -142,7 +142,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
         tablDeleteData->setVerticalHeaderItem(1, __qtablewidgetitem14);
         tablDeleteData->setObjectName(QString::fromUtf8("tablDeleteData"));
-        tablDeleteData->setGeometry(QRect(10, 10, 1231, 351));
+        tablDeleteData->setGeometry(QRect(9, 10, 1178, 251));
         tabWidget->addTab(tab_5, QString());
         tab_6 = new QWidget();
         tab_6->setObjectName(QString::fromUtf8("tab_6"));
@@ -162,7 +162,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
         tableManualGate->setVerticalHeaderItem(1, __qtablewidgetitem19);
         tableManualGate->setObjectName(QString::fromUtf8("tableManualGate"));
-        tableManualGate->setGeometry(QRect(10, 10, 1231, 351));
+        tableManualGate->setGeometry(QRect(9, 10, 1178, 251));
         tabWidget->addTab(tab_6, QString());
         tab_7 = new QWidget();
         tab_7->setObjectName(QString::fromUtf8("tab_7"));
@@ -182,19 +182,19 @@ public:
         QTableWidgetItem *__qtablewidgetitem24 = new QTableWidgetItem();
         tableHardware->setVerticalHeaderItem(1, __qtablewidgetitem24);
         tableHardware->setObjectName(QString::fromUtf8("tableHardware"));
-        tableHardware->setGeometry(QRect(10, 10, 1231, 351));
+        tableHardware->setGeometry(QRect(9, 10, 1178, 251));
         tabWidget->addTab(tab_7, QString());
         groupBox_3 = new QGroupBox(groupBox_2);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(10, 420, 1261, 251));
+        groupBox_3->setGeometry(QRect(10, 350, 1201, 211));
         groupBox_3->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         groupBox_4 = new QGroupBox(groupBox_3);
         groupBox_4->setObjectName(QString::fromUtf8("groupBox_4"));
-        groupBox_4->setGeometry(QRect(10, 20, 241, 221));
+        groupBox_4->setGeometry(QRect(10, 10, 241, 191));
         groupBox_4->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblImg0 = new QLabel(groupBox_4);
         lblImg0->setObjectName(QString::fromUtf8("lblImg0"));
-        lblImg0->setGeometry(QRect(6, 15, 231, 201));
+        lblImg0->setGeometry(QRect(6, 15, 231, 171));
         lblImg0->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg0->setFrameShape(QFrame::Panel);
         lblImg0->setFrameShadow(QFrame::Sunken);
@@ -202,11 +202,11 @@ public:
         lblImg0->setScaledContents(true);
         groupBox_5 = new QGroupBox(groupBox_3);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
-        groupBox_5->setGeometry(QRect(350, 20, 241, 221));
+        groupBox_5->setGeometry(QRect(320, 10, 241, 191));
         groupBox_5->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblImg1 = new QLabel(groupBox_5);
         lblImg1->setObjectName(QString::fromUtf8("lblImg1"));
-        lblImg1->setGeometry(QRect(6, 15, 231, 201));
+        lblImg1->setGeometry(QRect(6, 15, 231, 171));
         lblImg1->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg1->setFrameShape(QFrame::Panel);
         lblImg1->setFrameShadow(QFrame::Sunken);
@@ -214,11 +214,11 @@ public:
         lblImg1->setScaledContents(true);
         groupBox_6 = new QGroupBox(groupBox_3);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(680, 20, 241, 221));
+        groupBox_6->setGeometry(QRect(640, 10, 241, 191));
         groupBox_6->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblImg2 = new QLabel(groupBox_6);
         lblImg2->setObjectName(QString::fromUtf8("lblImg2"));
-        lblImg2->setGeometry(QRect(6, 15, 231, 201));
+        lblImg2->setGeometry(QRect(6, 15, 231, 171));
         lblImg2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg2->setFrameShape(QFrame::Panel);
         lblImg2->setFrameShadow(QFrame::Sunken);
@@ -226,52 +226,52 @@ public:
         lblImg2->setScaledContents(true);
         groupBox_7 = new QGroupBox(groupBox_3);
         groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
-        groupBox_7->setGeometry(QRect(1010, 20, 241, 221));
+        groupBox_7->setGeometry(QRect(945, 10, 241, 191));
         groupBox_7->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblImg3 = new QLabel(groupBox_7);
         lblImg3->setObjectName(QString::fromUtf8("lblImg3"));
-        lblImg3->setGeometry(QRect(6, 15, 231, 201));
+        lblImg3->setGeometry(QRect(6, 15, 231, 171));
         lblImg3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg3->setFrameShape(QFrame::Panel);
         lblImg3->setFrameShadow(QFrame::Sunken);
         lblImg3->setLineWidth(2);
         lblImg3->setScaledContents(true);
-        widget1 = new QWidget(groupBox_2);
-        widget1->setObjectName(QString::fromUtf8("widget1"));
-        widget1->setGeometry(QRect(11, 20, 497, 25));
-        horizontalLayout = new QHBoxLayout(widget1);
+        layoutWidget = new QWidget(groupBox_2);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(11, 20, 497, 25));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
         horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        label = new QLabel(widget1);
+        label = new QLabel(layoutWidget);
         label->setObjectName(QString::fromUtf8("label"));
 
         horizontalLayout->addWidget(label);
 
-        dtStart = new QDateTimeEdit(widget1);
+        dtStart = new QDateTimeEdit(layoutWidget);
         dtStart->setObjectName(QString::fromUtf8("dtStart"));
         dtStart->setCalendarPopup(true);
 
         horizontalLayout->addWidget(dtStart);
 
-        label_2 = new QLabel(widget1);
+        label_2 = new QLabel(layoutWidget);
         label_2->setObjectName(QString::fromUtf8("label_2"));
 
         horizontalLayout->addWidget(label_2);
 
-        dtEnd = new QDateTimeEdit(widget1);
+        dtEnd = new QDateTimeEdit(layoutWidget);
         dtEnd->setObjectName(QString::fromUtf8("dtEnd"));
         dtEnd->setCalendarPopup(true);
 
         horizontalLayout->addWidget(dtEnd);
 
-        btnQuery = new QPushButton(widget1);
+        btnQuery = new QPushButton(layoutWidget);
         btnQuery->setObjectName(QString::fromUtf8("btnQuery"));
 
         horizontalLayout->addWidget(btnQuery);
 
         btnMinimalize = new QPushButton(widget);
         btnMinimalize->setObjectName(QString::fromUtf8("btnMinimalize"));
-        btnMinimalize->setGeometry(QRect(613, 710, 75, 23));
+        btnMinimalize->setGeometry(QRect(490, 600, 75, 23));
         btnMinimalize->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblTitle = new QLabel(NewCSysLog);
         lblTitle->setObjectName(QString::fromUtf8("lblTitle"));
@@ -284,7 +284,7 @@ public:
 "color: rgb(170, 0, 0);"));
         lblClose = new QLabel(NewCSysLog);
         lblClose->setObjectName(QString::fromUtf8("lblClose"));
-        lblClose->setGeometry(QRect(1350, 6, 30, 15));
+        lblClose->setGeometry(QRect(1280, 3, 30, 15));
 
         retranslateUi(NewCSysLog);
 

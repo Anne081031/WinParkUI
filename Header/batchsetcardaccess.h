@@ -7,7 +7,12 @@
 #include "mainwindow.h"
 
 namespace Ui {
-    class CBatchSetCardAccess;
+    class
+        #if defined( NewUI )
+            CONCAT_NEW_NAME( New, CBatchSetCardAccess );
+        #else
+            CONCAT_NEW_NAME( , CBatchSetCardAccess );
+        #endif
 }
 
 class CBatchSetCardAccess : public QFrame
@@ -34,7 +39,12 @@ private:
     void DisplayData( int nIndex, QString& strWhere );
 
 private:
-    Ui::CBatchSetCardAccess *ui;
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CBatchSetCardAccess )
+#else
+    Ui::CONCAT_NEW_NAME( , CBatchSetCardAccess )
+#endif
+     *ui;
     MainWindow* pParent;
 
 private slots:

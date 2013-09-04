@@ -59,7 +59,21 @@ void CParkSpaceLotDialog::GetCanAddress( QVector< char >& vecCan )
     }
 }
 
-void CParkSpaceLotDialog::InitDlg( bool bChannel, QStringList& lstRows, bool bEneter )
+void CParkSpaceLotDialog::GetCanAddress( QStringList& lstCan )
+{
+    lstCan.clear( );
+
+    int nRows = ui->tableWidget->rowCount( );
+
+    for ( int nIndex = 0; nIndex < nRows; nIndex++ ) {
+        if ( Qt::Checked == ui->tableWidget->item( nIndex, 0 )->checkState( ) ) {
+            QString strCan = ui->tableWidget->item( nIndex, 0 )->text( ).split( "=" )[ 1 ];
+            lstCan << strCan;
+        }
+    }
+}
+
+void CParkSpaceLotDialog::InitDlg( bool bChannel, QStringList& lstRows, bool bEneter, QStringList& lstCan )
 {
     int nIndex = 0;
     int nItems = lstRows.count( );
@@ -72,10 +86,12 @@ void CParkSpaceLotDialog::InitDlg( bool bChannel, QStringList& lstRows, bool bEn
     if ( bChannel ) {
         ui->tableWidget->setRowCount( nItems / 2 );
         while ( nIndex < nItems ) {
-            pItem = new QTableWidgetItem( lstRows[ nIndex ]  + "=" + lstRows[ nIndex + 1 ] );
+            QString& strCan = lstRows[ nIndex + 1 ];
+            bool bContain = lstCan.contains( strCan );
+            pItem = new QTableWidgetItem( lstRows[ nIndex ]  + "=" + strCan );
             ui->tableWidget->setItem( nIndex / 2, 0, pItem );
             pItem->setFlags( Qt::ItemIsSelectable | Qt::ItemIsUserCheckable | Qt::ItemIsEnabled );
-            pItem->setCheckState( Qt::Unchecked );
+            pItem->setCheckState( bContain ? Qt::Checked : Qt::Unchecked );
             nIndex += 2;
         }
 

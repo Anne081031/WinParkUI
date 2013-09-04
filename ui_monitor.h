@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'monitor.ui'
 **
-** Created: Mon Jul 29 16:02:10 2013
+** Created: Fri Aug 30 16:19:58 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -1170,9 +1170,21 @@ public:
         btnValueCard->setText(QString());
         btnTimeCard->setText(QString());
         btnPassRecord->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        btnEnterGateOpen->setToolTip(QApplication::translate("CMonitor", "\345\217\263\351\224\256\351\205\215\347\275\256CAN\345\234\260\345\235\200", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         btnEnterGateOpen->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        btnEnterGateClose->setToolTip(QApplication::translate("CMonitor", "\345\217\263\351\224\256\351\205\215\347\275\256CAN\345\234\260\345\235\200", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         btnEnterGateClose->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        btnLeaveGateClose->setToolTip(QApplication::translate("CMonitor", "\345\217\263\351\224\256\351\205\215\347\275\256CAN\345\234\260\345\235\200", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         btnLeaveGateClose->setText(QString());
+#ifndef QT_NO_TOOLTIP
+        btnLeaveGateOpen->setToolTip(QApplication::translate("CMonitor", "\345\217\263\351\224\256\351\205\215\347\275\256CAN\345\234\260\345\235\200", 0, QApplication::UnicodeUTF8));
+#endif // QT_NO_TOOLTIP
         btnLeaveGateOpen->setText(QString());
         btnCenterControlerStatus->setText(QString());
         btnEnterPeripheralStatus->setText(QString());

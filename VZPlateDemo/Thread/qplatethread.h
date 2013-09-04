@@ -16,12 +16,12 @@ class QPlateThread : public QThread
 public:
     static QPlateThread* GetInstance( );
 
-    void PostPlateFileRecognize( QString& strFile, int nChannel );
-    void PostPlateFileRecognize( QString& strFile, QString& strIP );
-    void PostPlateFileRecognize( QByteArray& byData, QString& strFile, int nChannel );
+    void PostPlateFileRecognize( QString& strFile, int nChannel, bool bMultiThread = false );
+    void PostPlateFileRecognize( QString& strFile, QString& strIP, bool bMultiThread = false );
+    void PostPlateFileRecognize( QByteArray& byData, QString& strFile, int nChannel, bool bMultiThread = false );
 
-    void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, int nChannel );
-    void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, QString& strIP );
+    void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, int nChannel, bool bMultiThread = false );
+    void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, QString& strIP, bool bMultiThread = false );
 
     void PostPlateInitEvent( int nFormat, int nChannel );
     void PostPlateUninitEvent( int nChannel );
@@ -52,12 +52,16 @@ private:
     void GetResultInfo( QStringList& lstResult, QString& strFile, bool bSuccess, qint32 nNum, TH_PlateResult* pResult );
     void SendUIResult( int nChannel, bool bSuccess, qint32 nNum, TH_PlateResult* pResult, bool bVideo, QByteArray& byData );
 
+    QPlateThread* CreateSubThread( QString& strThreadKey );
+    static QPlateThread* NewThread( );
+
 private:
     static QPlateThread* pThreadInstance;
     QTextCodec* pCodec;
     QString strPlatePath;
     bool bStopRecognize;
     int nPlateWay;
+    QHash< QString, QPlateThread* > pSubThreadHash;
     
 signals:
     void PlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );
@@ -65,8 +69,11 @@ signals:
                         bool bVideo, int nWidth, int nHeight, int nConfidence,
                         QString strDirection, QByteArray byData );
     
-public slots:
-    
+private slots:
+    void HandlePlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );
+    void HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
+                        bool bVideo, int nWidth, int nHeight, int nConfidence,
+                        QString strDirection, QByteArray byData );
 };
 
 #endif // QPLATETHREAD_H

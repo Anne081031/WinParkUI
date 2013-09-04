@@ -22,12 +22,52 @@ QPlateThread::~QPlateThread( )
 QPlateThread* QPlateThread::GetInstance( )
 {
     if ( NULL == pThreadInstance ) {
-        pThreadInstance = new QPlateThread( );
-        pThreadInstance->moveToThread( pThreadInstance );
-        pThreadInstance->start( );
+        pThreadInstance = NewThread( );
     }
 
     return pThreadInstance;
+}
+
+void QPlateThread::HandlePlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo )
+{
+    emit PlateResult( lstPlateParam, nChannel, bSuccess, bVideo );
+}
+
+void QPlateThread::HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
+                    bool bVideo, int nWidth, int nHeight, int nConfidence,
+                    QString strDirection, QByteArray byData )
+{
+    emit UIPlateResult( strPlate, nChannel, bSuccess,
+                        bVideo, nWidth, nHeight, nConfidence,
+                        strDirection, byData );
+}
+
+QPlateThread* QPlateThread::CreateSubThread( QString &strThreadKey )
+{
+    QPlateThread* pThread = this; // MainThread---SubThread
+
+    if ( 0 == pSubThreadHash.count( ) ) {
+        pSubThreadHash.insert( strThreadKey, this );
+    } else if ( NULL == ( pThread = pSubThreadHash.value( strThreadKey, NULL ) ) ) {
+        pThread = NewThread( );
+        connect( pThread, SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
+                 this, SLOT(HandlePlateResult( QStringList, int, bool, bool ) ) );
+        connect( pThread, SIGNAL(UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ),
+                 this, SLOT(HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ) );
+
+        pSubThreadHash.insert( strThreadKey, pThread );
+    }
+
+    return pThread;
+}
+
+QPlateThread* QPlateThread::NewThread( )
+{
+    QPlateThread* pThread = new QPlateThread( );
+    pThread->moveToThread( pThread );
+    pThread->start( );
+
+    return pThread;
 }
 
 bool QPlateThread::SetRecognizeFlag( )
@@ -47,38 +87,41 @@ void QPlateThread::run( )
     exec( );
 }
 
-void QPlateThread::PostPlateFileRecognize( QString &strFile, int nChannel )
+void QPlateThread::PostPlateFileRecognize( QString &strFile, int nChannel, bool bMultiThread )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
     pEvent->SetFilePath( strFile );
     pEvent->SetChannel( nChannel );
     pEvent->SetIpcVideoSource( false );
+    pEvent->SetMultiThread( bMultiThread );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateFileRecognize( QString &strFile, QString& strIP )
+void QPlateThread::PostPlateFileRecognize( QString &strFile, QString& strIP, bool bMultiThread )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
     pEvent->SetFilePath( strFile );
     pEvent->SetIpcIp( strIP );
     pEvent->SetIpcVideoSource( true );
+    pEvent->SetMultiThread( bMultiThread );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateFileRecognize( QByteArray& byData, QString &strFile, int nChannel )
+void QPlateThread::PostPlateFileRecognize( QByteArray& byData, QString &strFile, int nChannel, bool bMultiThread )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
     pEvent->SetFilePath( strFile );
     pEvent->SetChannel( nChannel );
     pEvent->SetByData( byData );
     pEvent->SetIpcVideoSource( false );
+    pEvent->SetMultiThread( bMultiThread );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int nHeight, int nChannel )
+void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int nHeight, int nChannel, bool bMultiThread )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateVideoRecognize );
     pEvent->SetVideoFrame( byVideo );
@@ -86,11 +129,12 @@ void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int
     pEvent->SetVideoWidth( nWidth );
     pEvent->SetVideoHeight( nHeight );
     pEvent->SetIpcVideoSource( false );
+    pEvent->SetMultiThread( bMultiThread );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int nHeight, QString& strIP )
+void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int nHeight, QString& strIP, bool bMultiThread )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateVideoRecognize );
     pEvent->SetVideoFrame( byVideo );
@@ -98,6 +142,7 @@ void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int
     pEvent->SetVideoWidth( nWidth );
     pEvent->SetVideoHeight( nHeight );
     pEvent->SetIpcVideoSource( true );
+    pEvent->SetMultiThread( bMultiThread );
 
     PostEvent( pEvent );
 }
@@ -121,7 +166,16 @@ void QPlateThread::PostPlateUninitEvent( int nChannel )
 
 void QPlateThread::PostEvent( QPlateEvent *pEvent )
 {
-    qApp->postEvent( this, pEvent );
+    bool bMultiThread = pEvent->GetMultiThread( );
+    QPlateThread* pReceiver = this;
+
+    if ( bMultiThread ) {
+        bool bIpcIP = pEvent->GetIpcVideoSource( );
+        QString strThreadKey = bIpcIP ? pEvent->GetIpcIp( ) : QString::number( pEvent->GetChannel( ) );
+        pReceiver = CreateSubThread( strThreadKey );
+    }
+
+    qApp->postEvent( pReceiver, pEvent );
 }
 
 QString QPlateThread::GetPlateMoveDirection( int nDirection )

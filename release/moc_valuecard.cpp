@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'valuecard.h'
 **
-** Created: Tue Aug 27 16:41:41 2013
+** Created: Tue Sep 3 15:41:50 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

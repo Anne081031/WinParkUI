@@ -1287,6 +1287,9 @@ border-style: outset; </string>
      <height>97</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>右键配置CAN地址</string>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-image:url( );
 border-style: outset; </string>
@@ -1303,6 +1306,9 @@ border-style: outset; </string>
      <width>87</width>
      <height>97</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>右键配置CAN地址</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-image:url( );
@@ -1321,6 +1327,9 @@ border-style: outset; </string>
      <height>97</height>
     </rect>
    </property>
+   <property name="toolTip">
+    <string>右键配置CAN地址</string>
+   </property>
    <property name="styleSheet">
     <string notr="true">background-image:url( );
 border-style: outset; </string>
@@ -1337,6 +1346,9 @@ border-style: outset; </string>
      <width>88</width>
      <height>97</height>
     </rect>
+   </property>
+   <property name="toolTip">
+    <string>右键配置CAN地址</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-image:url( );

@@ -5,6 +5,27 @@
 #include <QDebug>
 #include <QDateTime>
 
+/*
+ QT UI事件处理 MVC 中V C完全分离
+ 同一类控件，每一个事件使用同一个Handler，内部通过 pCtl == ( Control ) sender( )来加以区分
+ connect( ctl0, SIGNAL( clicked() ), this, SLOT( Handler( ) ) );
+
+ 事件处理逻辑，若能独立，就写一个单独的类来处理 Logic
+
+
+ inline Control* GetControl( ); 每个控件 一个函数
+ inline void SetControlEnable( bool bEnable ); 每个控件 一个函数
+
+ void Handler( )
+ {
+   if ( GetControl0() == ( Control ) sender( ) ) {
+    pLogic->Handler0( );
+   } else if ( GetControl1() == ( Control ) sender( ) ) {
+    pLogic->Handler1( );
+   }
+ }
+*/
+
 VZMainWindow::VZMainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::VZMainWindow)
@@ -82,7 +103,7 @@ void VZMainWindow::Initialize( )
 
     nPlateWay = pConfig->ReadPlateWay( );
     int nFormat = ImageFormatBGR;
-    bool bCapture = pConfig->ReadVideoCapture( );
+    bCapture = pConfig->ReadVideoCapture( );
 
     EnableButton( strVideoType );
 
@@ -110,8 +131,10 @@ void VZMainWindow::Initialize( )
 
     if ( bCapture ) {
         pPlateThread->SetRecognizeFlag( );
-        ui->btnStopVideoRecognize->setEnabled( false );
     }
+
+    EnableCaptureButton( false );
+    EnableStopButton( false );
 
     connect( pPlateThread, SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
              this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
@@ -128,6 +151,16 @@ void VZMainWindow::Initialize( )
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 1 );
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 2 );
     //QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, 3 );
+}
+
+void VZMainWindow::EnableCaptureButton( bool bEnable )
+{
+    ui->btnCaptureFile->setEnabled( bEnable );
+}
+
+void VZMainWindow::EnableStopButton( bool bEnable )
+{
+    ui->btnStopVideoRecognize->setEnabled( bEnable );
 }
 
 void VZMainWindow::LoadLogoTitle( )
@@ -371,6 +404,9 @@ void VZMainWindow::StartVideo( )
 void VZMainWindow::on_btnCamera_clicked()
 {
     StartVideo( );
+
+    EnableCaptureButton( bCapture );
+    EnableStopButton( !bCapture );
 }
 
 void VZMainWindow::on_btnVideoFile_clicked()
@@ -380,12 +416,12 @@ void VZMainWindow::on_btnVideoFile_clicked()
 
 void VZMainWindow::CaptureImage( )
 {
+    QString strFile = strPlateDir + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".JPG";
+
     if ( NULL != pAnalogCamera ) {
         int nChannel = 0;
-        QString strFile = strPlateDir + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".JPG";
         pAnalogCamera->PostCaptrueImageEvent( nChannel, strFile, true );
     } else if ( NULL != pDigitalCamera ) {
-        QString strFile = strPlateDir + QString::number( QDateTime::currentMSecsSinceEpoch( ) ) + ".JPG";
         pDigitalCamera->PostIPCCaptureJPGEvent( strIpcIP, strFile, true, ui->lblVideo0->winId( ) );
     }
 }

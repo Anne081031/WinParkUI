@@ -67,6 +67,7 @@ public:
     void SetAlertMsg( const QString& strText );
     bool ShiftDlgISVisible( );
     void DisplayAlert( QStringList& lstData );
+    QString GetPictureName( QString strName );
 
 private:
     void SetMaxMinSize( );

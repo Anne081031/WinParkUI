@@ -15,9 +15,10 @@ public:
     explicit CParkSpaceLotDialog(QWidget *parent = 0);
     ~CParkSpaceLotDialog();
 
-    void InitDlg( bool bChannel, QStringList& lstRows, bool bEneter );
+    void InitDlg( bool bChannel, QStringList& lstRows, bool bEneter, QStringList& lstCan );
     void GetParkName( QString& strName );
     void GetCanAddress( QVector< char >& vecCan );
+    void GetCanAddress( QStringList& lstCan );
 
 private:
     Ui::CParkSpaceLotDialog *ui;

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newrightmgm.ui'
 **
-** Created: Mon Aug 26 16:13:16 2013
+** Created: Tue Sep 3 12:07:57 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -30,13 +30,13 @@ class Ui_NewCRightMgm
 public:
     QGroupBox *gbRight;
     QTableWidget *tableRight;
-    QWidget *wgButton;
     QWidget *layoutWidget;
     QHBoxLayout *hbLayout;
     QPushButton *btnNew;
     QPushButton *btnEdit;
     QPushButton *btnDelete;
     QPushButton *btnExit;
+    QWidget *wgButton;
     QLabel *lblTitle;
     QLabel *lblClose;
 
@@ -44,13 +44,13 @@ public:
     {
         if (NewCRightMgm->objectName().isEmpty())
             NewCRightMgm->setObjectName(QString::fromUtf8("NewCRightMgm"));
-        NewCRightMgm->resize(1390, 818);
-        NewCRightMgm->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);"));
+        NewCRightMgm->resize(1320, 685);
+        NewCRightMgm->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);"));
         NewCRightMgm->setFrameShape(QFrame::NoFrame);
         NewCRightMgm->setFrameShadow(QFrame::Raised);
         gbRight = new QGroupBox(NewCRightMgm);
         gbRight->setObjectName(QString::fromUtf8("gbRight"));
-        gbRight->setGeometry(QRect(40, 50, 1301, 681));
+        gbRight->setGeometry(QRect(40, 50, 1231, 591));
         gbRight->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableRight = new QTableWidget(gbRight);
         if (tableRight->columnCount() < 33)
@@ -208,15 +208,11 @@ public:
         __qtablewidgetitem61->setCheckState(Qt::Checked);
         tableRight->setItem(0, 29, __qtablewidgetitem61);
         tableRight->setObjectName(QString::fromUtf8("tableRight"));
-        tableRight->setGeometry(QRect(10, 20, 1281, 651));
+        tableRight->setGeometry(QRect(10, 20, 1211, 521));
         tableRight->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
-        wgButton = new QWidget(NewCRightMgm);
-        wgButton->setObjectName(QString::fromUtf8("wgButton"));
-        wgButton->setGeometry(QRect(490, 750, 401, 31));
-        wgButton->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
-        layoutWidget = new QWidget(wgButton);
+        layoutWidget = new QWidget(gbRight);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(0, 0, 401, 25));
+        layoutWidget->setGeometry(QRect(460, 560, 401, 25));
         layoutWidget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         hbLayout = new QHBoxLayout(layoutWidget);
         hbLayout->setObjectName(QString::fromUtf8("hbLayout"));
@@ -245,6 +241,10 @@ public:
 
         hbLayout->addWidget(btnExit);
 
+        wgButton = new QWidget(NewCRightMgm);
+        wgButton->setObjectName(QString::fromUtf8("wgButton"));
+        wgButton->setGeometry(QRect(490, 750, 401, 31));
+        wgButton->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblTitle = new QLabel(NewCRightMgm);
         lblTitle->setObjectName(QString::fromUtf8("lblTitle"));
         lblTitle->setGeometry(QRect(30, 5, 141, 21));
@@ -256,7 +256,7 @@ public:
 "color: rgb(170, 0, 0);"));
         lblClose = new QLabel(NewCRightMgm);
         lblClose->setObjectName(QString::fromUtf8("lblClose"));
-        lblClose->setGeometry(QRect(1350, 6, 30, 15));
+        lblClose->setGeometry(QRect(1280, 4, 30, 15));
 
         retranslateUi(NewCRightMgm);
 

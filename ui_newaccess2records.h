@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newaccess2records.ui'
 **
-** Created: Mon Aug 26 16:13:17 2013
+** Created: Tue Sep 3 13:45:36 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -91,13 +91,13 @@ public:
     {
         if (NewCAccess2Records->objectName().isEmpty())
             NewCAccess2Records->setObjectName(QString::fromUtf8("NewCAccess2Records"));
-        NewCAccess2Records->resize(1390, 818);
-        NewCAccess2Records->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);"));
+        NewCAccess2Records->resize(1320, 685);
+        NewCAccess2Records->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);"));
         NewCAccess2Records->setFrameShape(QFrame::StyledPanel);
         NewCAccess2Records->setFrameShadow(QFrame::Raised);
         widget = new QWidget(NewCAccess2Records);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(40, 60, 1301, 731));
+        widget->setGeometry(QRect(40, 50, 1231, 731));
         widget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableAccessRecord = new QTableWidget(widget);
         if (tableAccessRecord->columnCount() < 14)
@@ -131,13 +131,13 @@ public:
         QTableWidgetItem *__qtablewidgetitem13 = new QTableWidgetItem();
         tableAccessRecord->setHorizontalHeaderItem(13, __qtablewidgetitem13);
         tableAccessRecord->setObjectName(QString::fromUtf8("tableAccessRecord"));
-        tableAccessRecord->setGeometry(QRect(0, 40, 1301, 311));
+        tableAccessRecord->setGeometry(QRect(0, 40, 1221, 201));
         tableAccessRecord->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableAccessRecord->setSelectionMode(QAbstractItemView::SingleSelection);
         tableAccessRecord->setSelectionBehavior(QAbstractItemView::SelectRows);
         tabWidget = new QTabWidget(widget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(0, 360, 1411, 321));
+        tabWidget->setGeometry(QRect(0, 250, 1221, 321));
         tabWidget->setMaximumSize(QSize(1421, 321));
         tabWidget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tab = new QWidget();
@@ -258,11 +258,11 @@ public:
         tabWidget->addTab(tab_2, QString());
         btnMinimalize = new QPushButton(widget);
         btnMinimalize->setObjectName(QString::fromUtf8("btnMinimalize"));
-        btnMinimalize->setGeometry(QRect(683, 700, 75, 23));
+        btnMinimalize->setGeometry(QRect(520, 585, 75, 23));
         btnMinimalize->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         frame = new QFrame(widget);
         frame->setObjectName(QString::fromUtf8("frame"));
-        frame->setGeometry(QRect(0, 0, 1301, 31));
+        frame->setGeometry(QRect(0, 0, 1201, 31));
         frame->setFrameShape(QFrame::StyledPanel);
         frame->setFrameShadow(QFrame::Raised);
         layoutWidget = new QWidget(frame);
@@ -389,7 +389,7 @@ public:
 "color: rgb(170, 0, 0);"));
         lblClose = new QLabel(NewCAccess2Records);
         lblClose->setObjectName(QString::fromUtf8("lblClose"));
-        lblClose->setGeometry(QRect(1350, 8, 30, 15));
+        lblClose->setGeometry(QRect(1200, 8, 30, 15));
         lblClose->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         cb1 = new QComboBox(NewCAccess2Records);
         cb1->setObjectName(QString::fromUtf8("cb1"));

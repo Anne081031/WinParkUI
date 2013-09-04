@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1390</width>
-    <height>818</height>
+    <width>1320</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>系统日志</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);</string>
+   <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::NoFrame</enum>
@@ -26,9 +26,9 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>40</y>
-     <width>1301</width>
-     <height>741</height>
+     <y>30</y>
+     <width>1241</width>
+     <height>671</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -38,9 +38,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
-      <width>1281</width>
-      <height>671</height>
+      <y>12</y>
+      <width>1221</width>
+      <height>571</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -54,8 +54,8 @@
       <rect>
        <x>10</x>
        <y>50</y>
-       <width>1261</width>
-       <height>361</height>
+       <width>1201</width>
+       <height>291</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -71,10 +71,10 @@
       <widget class="QTableWidget" name="tableShift">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>9</x>
          <y>10</y>
-         <width>1231</width>
-         <height>351</height>
+         <width>1178</width>
+         <height>251</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -114,10 +114,10 @@
       <widget class="QTableWidget" name="tableCardMgm">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>9</x>
          <y>10</y>
-         <width>1231</width>
-         <height>351</height>
+         <width>1178</width>
+         <height>251</height>
         </rect>
        </property>
        <row>
@@ -154,10 +154,10 @@
       <widget class="QTableWidget" name="tablDeleteData">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>9</x>
          <y>10</y>
-         <width>1231</width>
-         <height>351</height>
+         <width>1178</width>
+         <height>251</height>
         </rect>
        </property>
        <row>
@@ -194,10 +194,10 @@
       <widget class="QTableWidget" name="tableManualGate">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>9</x>
          <y>10</y>
-         <width>1231</width>
-         <height>351</height>
+         <width>1178</width>
+         <height>251</height>
         </rect>
        </property>
        <row>
@@ -234,10 +234,10 @@
       <widget class="QTableWidget" name="tableHardware">
        <property name="geometry">
         <rect>
-         <x>10</x>
+         <x>9</x>
          <y>10</y>
-         <width>1231</width>
-         <height>351</height>
+         <width>1178</width>
+         <height>251</height>
         </rect>
        </property>
        <row>
@@ -272,9 +272,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>420</y>
-       <width>1261</width>
-       <height>251</height>
+       <y>350</y>
+       <width>1201</width>
+       <height>211</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -287,9 +287,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>20</y>
+        <y>10</y>
         <width>241</width>
-        <height>221</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -304,7 +304,7 @@
          <x>6</x>
          <y>15</y>
          <width>231</width>
-         <height>201</height>
+         <height>171</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -330,10 +330,10 @@
      <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>20</y>
+        <x>320</x>
+        <y>10</y>
         <width>241</width>
-        <height>221</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -348,7 +348,7 @@
          <x>6</x>
          <y>15</y>
          <width>231</width>
-         <height>201</height>
+         <height>171</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -374,10 +374,10 @@
      <widget class="QGroupBox" name="groupBox_6">
       <property name="geometry">
        <rect>
-        <x>680</x>
-        <y>20</y>
+        <x>640</x>
+        <y>10</y>
         <width>241</width>
-        <height>221</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -392,7 +392,7 @@
          <x>6</x>
          <y>15</y>
          <width>231</width>
-         <height>201</height>
+         <height>171</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -418,10 +418,10 @@
      <widget class="QGroupBox" name="groupBox_7">
       <property name="geometry">
        <rect>
-        <x>1010</x>
-        <y>20</y>
+        <x>945</x>
+        <y>10</y>
         <width>241</width>
-        <height>221</height>
+        <height>191</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -436,7 +436,7 @@
          <x>6</x>
          <y>15</y>
          <width>231</width>
-         <height>201</height>
+         <height>171</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -460,7 +460,7 @@
       </widget>
      </widget>
     </widget>
-    <widget class="QWidget" name="">
+    <widget class="QWidget" name="layoutWidget">
      <property name="geometry">
       <rect>
        <x>11</x>
@@ -517,8 +517,8 @@
    <widget class="QPushButton" name="btnMinimalize">
     <property name="geometry">
      <rect>
-      <x>613</x>
-      <y>710</y>
+      <x>490</x>
+      <y>600</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -557,8 +557,8 @@ color: rgb(170, 0, 0);</string>
   <widget class="QLabel" name="lblClose">
    <property name="geometry">
     <rect>
-     <x>1350</x>
-     <y>6</y>
+     <x>1280</x>
+     <y>3</y>
      <width>30</width>
      <height>15</height>
     </rect>

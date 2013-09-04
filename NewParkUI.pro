@@ -199,7 +199,8 @@ SOURCES += mainwindow.cpp \
     VZPlateDemo/Thread/qfilecamerathread.cpp \
     VZPlateDemo/Thread/qdirectoryevent.cpp \
     VZPlateDemo/Thread/qdigitalcamerathread.cpp \
-    Dialog/dlgblacklistlocation.cpp
+    Dialog/dlgblacklistlocation.cpp \
+    qmypushbutton.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -362,7 +363,8 @@ HEADERS  += Header/valuecard.h \
     VZPlateDemo/Thread/qdhkipcthread.h \
     VZPlateDemo/Thread/qdirectoryevent.h \
     VZPlateDemo/Thread/qdigitalcamerathread.h \
-    Dialog/dlgblacklistlocation.h
+    Dialog/dlgblacklistlocation.h \
+    qmypushbutton.h
 
 FORMS    += UIWnd/newvaluecard.ui \
     UIWnd/tolldiscounttypeset.ui \
@@ -371,7 +373,7 @@ FORMS    += UIWnd/newvaluecard.ui \
     UIWnd/newsyslog.ui \
     UIWnd/shiftlogout.ui \
     UIWnd/newrightmgm.ui \
-    UIWnd/reewalrecords.ui \
+    UIWnd/newreewalrecords.ui \
     UIWnd/pwdmodification.ui \
     UIWnd/publishledinfo.ui \
     UIWnd/printyearlyreport.ui \
@@ -383,7 +385,7 @@ FORMS    += UIWnd/newvaluecard.ui \
     UIWnd/discountsummaryreport.ui \
     UIWnd/deviceconfig.ui \
     UIWnd/dbmaintenance.ui \
-    UIWnd/batchsetcardaccess.ui \
+    UIWnd/newbatchsetcardaccess.ui \
     UIWnd/newaccess2records.ui \
     UIWnd/logindialog.ui \
     UIWnd/toolbardockwidget.ui \

@@ -18,7 +18,12 @@ CMyLabel::CMyLabel( int nIndexFps, const QRect& rect, bool bIPC, QWidget *parent
     setFrameShadow( Sunken );
     setLineWidth( 4 );
 
-    recWholeSize = QRect( 48, 203, 871, 659 );
+    recWholeSize =
+        #ifdef NewUI
+            QRect( 47, 173, 825, 527 );
+        #else
+            QRect( 48, 203, 871, 659 );
+        #endif
 
     QString strStyle = "background-image:url(none);\r\nbackground-color: rgb(255, 255, 255);";
     setStyleSheet( strStyle );

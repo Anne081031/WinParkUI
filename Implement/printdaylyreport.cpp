@@ -27,7 +27,12 @@ CPrintDaylyReport::CPrintDaylyReport(QWidget* mainWnd, QWidget *parent) :
 
     QDateTime date = QDateTime::currentDateTime( );
     SetDateTime( date, date );
+
+#ifdef NewUI
+    move( 123, 46 );
+#else
     move( 123, 177 );
+#endif
 }
 
 void CPrintDaylyReport::GetParameter( )

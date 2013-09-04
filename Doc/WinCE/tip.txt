@@ -18,3 +18,6 @@ MATLAB 可视化数值计算处理 Simulink 模拟器 MATLAB和Mathematica、Maple并称为三大数
 Protel EDA软件
 AutoCAD CAD软件 CAM软件
 MapInfo ArcGIS GEOCONCEPT gvSIG(Open Source)/ GIS WebGIS
+
+GDAL GIS基本都在使用的开源库
+http://www.gdal.org/

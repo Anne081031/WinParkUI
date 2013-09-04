@@ -466,7 +466,11 @@ void CTariffSetting::closeEvent( QCloseEvent *event )
 
 void CTariffSetting::CalculatePos( )
 {
+#ifdef NewUI
+    move( 123, 43 );
+#else
     move( 123, 177 );
+#endif
 #if 0
     QRect rectWnd = this->geometry( );
 

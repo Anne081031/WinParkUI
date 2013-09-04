@@ -1,12 +1,24 @@
 #include "Header/batchsetcardaccess.h"
-#include "ui_batchsetcardaccess.h"
+
+#ifdef NewUI
+    #include "ui_newbatchsetcardaccess.h"
+#else
+    #include "ui_batchsetcardaccess.h"
+#endif
+
 #include "Common/commonfunction.h"
 #include "Common/logicinterface.h"
 #include "Dialog/dlgreadcardid.h"
 
 CBatchSetCardAccess::CBatchSetCardAccess(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CBatchSetCardAccess)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CBatchSetCardAccess )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CBatchSetCardAccess )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

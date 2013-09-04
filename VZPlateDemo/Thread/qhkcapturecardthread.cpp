@@ -160,7 +160,7 @@ void QHkCaptureCardThread::ProcessStopPreviewEvent( QCameraEvent* pEvent )
 void QHkCaptureCardThread::MotionDetectCB( ULONG channelNumber, BOOL bMotionDetected, void *context )
 {
     Q_UNUSED( context )
-    qDebug( ) << Q_FUNC_INFO << endl;
+    //qDebug( ) << Q_FUNC_INFO << endl;
 
     if ( NULL != pThreadInstance ) {
         pThreadInstance->SendDetectInfo( channelNumber, bMotionDetected );

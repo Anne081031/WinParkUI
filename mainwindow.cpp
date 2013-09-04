@@ -124,9 +124,25 @@ void MainWindow::SetAlertMsg( const QString &strText )
     pMonitor->SetAlertMsg( strText );
 }
 
+QString MainWindow::GetPictureName( QString strName )
+{
+    int nWidth = width( );
+    int nHeight = height( );
+
+    QString strTmp = "%1x%2";
+
+    if ( 1440 == nWidth && 900== nHeight ) {
+        strTmp.clear( );
+    } else if ( 1366 == nWidth && 768 == nHeight ) {
+        strTmp = strTmp.arg( QString::number( nWidth ), QString::number( nHeight ) );
+    }
+
+    return strName.arg( strTmp );
+}
+
 void MainWindow::LoadUIImage( )
 {
-    QString strStyle= "background-image:url(" + strIconPath + "MainBG.jpg);";
+    QString strStyle= "background-image:url(" + strIconPath + GetPictureName( "MainBG%1.jpg);" );
     CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
     pMonitor->setStyleSheet( strStyle );
 
@@ -258,7 +274,7 @@ void MainWindow::Singleton( )
         exit( 0 );
     }
 
-    CheckResolution( );
+    //CheckResolution( );
 }
 
 void MainWindow::RecognizePlate( QString strPlate, int nChannel, int nConfidence, bool bNocard, QByteArray byData )
@@ -1564,8 +1580,8 @@ QWidget* MainWindow::CreateChildWnd( CommonDataType::ChildWndType childType )
             pFrame->setWindowState( Qt::WindowNoState );
 
             if ( NULL == pFrame->parent( ) ) {
-                QString strStyle = QString( "background-image:url(%1NewIcon/Common%2BG-normal.jpg)" ).arg(
-                        strIconPath, bMiddle ? "Middle" : ( bCommon ? "" : "Big" ) );
+                QString strStyle = QString( "background-image:url(%1NewIcon/Common%2BG-normal%3.jpg)" ).arg(
+                            strIconPath, bMiddle ? "Middle" : ( bCommon ? "" : "Big" ), GetPictureName( "%1" ) );
                 pFrame->setStyleSheet( strStyle );
             }
         }

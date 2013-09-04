@@ -199,7 +199,8 @@ SOURCES += mainwindow.cpp \
     VZPlateDemo/Thread/qfilecamerathread.cpp \
     VZPlateDemo/Thread/qdirectoryevent.cpp \
     VZPlateDemo/Thread/qdigitalcamerathread.cpp \
-    Dialog/dlgblacklistlocation.cpp
+    Dialog/dlgblacklistlocation.cpp \
+    qmypushbutton.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -362,7 +363,8 @@ HEADERS  += Header/valuecard.h \
     VZPlateDemo/Thread/qdhkipcthread.h \
     VZPlateDemo/Thread/qdirectoryevent.h \
     VZPlateDemo/Thread/qdigitalcamerathread.h \
-    Dialog/dlgblacklistlocation.h
+    Dialog/dlgblacklistlocation.h \
+    qmypushbutton.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \

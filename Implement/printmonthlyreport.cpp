@@ -11,7 +11,11 @@ CPrintMonthlyReport::CPrintMonthlyReport(QWidget* mainWnd, QWidget *parent) :
     nPlateChannel = 0;
     nPlateIndex = 0;
 
+#ifdef NewUI
+    move( 47, 430 );
+#else
     move( 48, 546 );
+#endif
 
     InitUI( );
 }

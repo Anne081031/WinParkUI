@@ -1,11 +1,23 @@
 #include "Header/reewalrecords.h"
-#include "ui_reewalrecords.h"
+
+#ifdef NewUI
+    #include "ui_newreewalrecords.h"
+#else
+    #include "ui_reewalrecords.h"
+#endif
+
 #include "Common/commonfunction.h"
 #include "Common/logicinterface.h"
 
 CRenewalRecords::CRenewalRecords(QWidget* mainWnd, QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::CRenewalRecords)
+    ui(
+        #ifdef NewUI
+            new Ui::CONCAT_NEW_NAME( New , CRenewalRecords )
+        #else
+            new Ui::CONCAT_NEW_NAME( , CRenewalRecords )
+        #endif
+        )
 {
     ui->setupUi(this);
     pParent = dynamic_cast< MainWindow* > ( mainWnd );

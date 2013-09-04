@@ -8,6 +8,21 @@
 //Q_IMPORT_PLUGIN(qgif)
 //Q_IMPORT_PLUGIN(qkrcodecs)
 
+/*
+  存储过程采用一个调用入口方式
+  SpEntance( in xmlParam, out xmlInfo )
+<Params>
+<Host>127.0.0.1</Host>
+<User></User>
+<-- Call SP -->
+<SubSP>Test</SubSP> switch call sub SP
+<Operation>Insert Update Delete</Operation> switch
+<Data>
+<p0>...</p0>
+</Data>
+</Params>
+*/
+
 
 int main(int argc, char *argv[])
 {

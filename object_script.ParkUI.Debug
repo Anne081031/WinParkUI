@@ -158,6 +158,7 @@ INPUT(
 ./debug/qdirectoryevent.o
 ./debug/qdigitalcamerathread.o
 ./debug/dlgblacklistlocation.o
+./debug/qmypushbutton.o
 ./debug/moc_valuecard.o
 ./debug/moc_tolldiscounttypeset.o
 ./debug/moc_timecard.o
@@ -293,4 +294,5 @@ INPUT(
 ./debug/moc_qdhkipcthread.o
 ./debug/moc_qdigitalcamerathread.o
 ./debug/moc_dlgblacklistlocation.o
+./debug/moc_qmypushbutton.o
 );

@@ -45,6 +45,9 @@ private:
     void FileButton( bool bEnable );
     void VideoButton( bool bEnable );
 
+    inline void EnableCaptureButton( bool bEnable );
+    inline void EnableStopButton( bool bEnable );
+
 private:
     QAnalogCameraThread* pAnalogCamera;
     QDigitalCameraThread* pDigitalCamera;
@@ -90,6 +93,7 @@ private:
     QString strIpcIP;
     int nPlateWay;
     CConfigurator* pConfig;
+    bool bCapture;
 };
 
 #endif // MAINWINDOW_H

@@ -7,7 +7,12 @@
 #include "mainwindow.h"
 
 namespace Ui {
-    class CRenewalRecords;
+    class
+#if defined( NewUI )
+    CONCAT_NEW_NAME( New, CRenewalRecords );
+#else
+    CONCAT_NEW_NAME( , CRenewalRecords );
+#endif;
 }
 
 class CRenewalRecords : public QFrame
@@ -29,7 +34,14 @@ private:
     void ControlDataGrid( );
 
 private:
-    Ui::CRenewalRecords *ui;
+
+#if defined( NewUI )
+    Ui::CONCAT_NEW_NAME( New, CRenewalRecords )
+#else
+    Ui::CONCAT_NEW_NAME( , CRenewalRecords )
+#endif
+     *ui;
+
     MainWindow* pParent;
 
 private slots:

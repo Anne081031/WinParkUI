@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newvaluecard.ui'
 **
-** Created: Mon Aug 26 16:13:16 2013
+** Created: Tue Sep 3 13:45:36 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -35,8 +35,6 @@ public:
     QTableWidget *tableValue;
     QTabWidget *tabWidget;
     QWidget *tab;
-    QPushButton *btnValueRecharge;
-    QPushButton *btnValueSave;
     QGroupBox *gbOwner;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_2;
@@ -90,6 +88,8 @@ public:
     QLabel *label_16;
     QLabel *label_23;
     QLineEdit *edtVechileID1;
+    QPushButton *btnValueSave;
+    QPushButton *btnValueRecharge;
     QWidget *tab_2;
     QTableWidget *tableRecharge;
     QWidget *tab_3;
@@ -115,13 +115,13 @@ public:
     {
         if (NewCValueCard->objectName().isEmpty())
             NewCValueCard->setObjectName(QString::fromUtf8("NewCValueCard"));
-        NewCValueCard->resize(1390, 818);
-        NewCValueCard->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);"));
+        NewCValueCard->resize(1320, 685);
+        NewCValueCard->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);"));
         NewCValueCard->setFrameShape(QFrame::StyledPanel);
         NewCValueCard->setFrameShadow(QFrame::Raised);
         widget = new QWidget(NewCValueCard);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(40, 60, 1301, 731));
+        widget->setGeometry(QRect(40, 50, 1231, 611));
         widget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableValue = new QTableWidget(widget);
         if (tableValue->columnCount() < 10)
@@ -147,26 +147,18 @@ public:
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
         tableValue->setHorizontalHeaderItem(9, __qtablewidgetitem9);
         tableValue->setObjectName(QString::fromUtf8("tableValue"));
-        tableValue->setGeometry(QRect(0, 0, 1301, 221));
+        tableValue->setGeometry(QRect(0, 0, 1231, 146));
         tableValue->setContextMenuPolicy(Qt::CustomContextMenu);
         tableValue->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tabWidget = new QTabWidget(widget);
         tabWidget->setObjectName(QString::fromUtf8("tabWidget"));
-        tabWidget->setGeometry(QRect(0, 230, 1301, 451));
+        tabWidget->setGeometry(QRect(0, 150, 1231, 431));
         tabWidget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tab = new QWidget();
         tab->setObjectName(QString::fromUtf8("tab"));
-        btnValueRecharge = new QPushButton(tab);
-        btnValueRecharge->setObjectName(QString::fromUtf8("btnValueRecharge"));
-        btnValueRecharge->setGeometry(QRect(1120, 390, 75, 23));
-        btnValueRecharge->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
-        btnValueSave = new QPushButton(tab);
-        btnValueSave->setObjectName(QString::fromUtf8("btnValueSave"));
-        btnValueSave->setGeometry(QRect(1210, 390, 75, 23));
-        btnValueSave->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         gbOwner = new QGroupBox(tab);
         gbOwner->setObjectName(QString::fromUtf8("gbOwner"));
-        gbOwner->setGeometry(QRect(10, 10, 1091, 401));
+        gbOwner->setGeometry(QRect(10, 0, 1201, 401));
         layoutWidget = new QWidget(gbOwner);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
         layoutWidget->setGeometry(QRect(10, 120, 391, 22));
@@ -228,10 +220,10 @@ public:
         lblOwner->setScaledContents(true);
         groupBox_3 = new QGroupBox(gbOwner);
         groupBox_3->setObjectName(QString::fromUtf8("groupBox_3"));
-        groupBox_3->setGeometry(QRect(660, 30, 421, 351));
+        groupBox_3->setGeometry(QRect(660, 30, 351, 351));
         lblCar = new QLabel(groupBox_3);
         lblCar->setObjectName(QString::fromUtf8("lblCar"));
-        lblCar->setGeometry(QRect(10, 20, 401, 321));
+        lblCar->setGeometry(QRect(10, 20, 331, 321));
         lblCar->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblCar->setFrameShape(QFrame::Panel);
         lblCar->setFrameShadow(QFrame::Sunken);
@@ -362,6 +354,14 @@ public:
         edtVechileID1->setObjectName(QString::fromUtf8("edtVechileID1"));
         edtVechileID1->setEnabled(false);
         edtVechileID1->setGeometry(QRect(71, 271, 129, 20));
+        btnValueSave = new QPushButton(gbOwner);
+        btnValueSave->setObjectName(QString::fromUtf8("btnValueSave"));
+        btnValueSave->setGeometry(QRect(1120, 360, 75, 23));
+        btnValueSave->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
+        btnValueRecharge = new QPushButton(gbOwner);
+        btnValueRecharge->setObjectName(QString::fromUtf8("btnValueRecharge"));
+        btnValueRecharge->setGeometry(QRect(1030, 360, 75, 23));
+        btnValueRecharge->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tabWidget->addTab(tab, QString());
         tab_2 = new QWidget();
         tab_2->setObjectName(QString::fromUtf8("tab_2"));
@@ -379,7 +379,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem14 = new QTableWidgetItem();
         tableRecharge->setHorizontalHeaderItem(4, __qtablewidgetitem14);
         tableRecharge->setObjectName(QString::fromUtf8("tableRecharge"));
-        tableRecharge->setGeometry(QRect(10, 10, 1281, 371));
+        tableRecharge->setGeometry(QRect(10, 10, 1201, 381));
         tableRecharge->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tabWidget->addTab(tab_2, QString());
         tab_3 = new QWidget();
@@ -398,13 +398,13 @@ public:
         QTableWidgetItem *__qtablewidgetitem19 = new QTableWidgetItem();
         tableAccess->setHorizontalHeaderItem(4, __qtablewidgetitem19);
         tableAccess->setObjectName(QString::fromUtf8("tableAccess"));
-        tableAccess->setGeometry(QRect(10, 10, 841, 411));
+        tableAccess->setGeometry(QRect(10, 10, 761, 381));
         groupBox_5 = new QGroupBox(tab_3);
         groupBox_5->setObjectName(QString::fromUtf8("groupBox_5"));
-        groupBox_5->setGeometry(QRect(860, 1, 211, 211));
+        groupBox_5->setGeometry(QRect(790, 1, 211, 201));
         lblImg1 = new QLabel(groupBox_5);
         lblImg1->setObjectName(QString::fromUtf8("lblImg1"));
-        lblImg1->setGeometry(QRect(5, 16, 201, 191));
+        lblImg1->setGeometry(QRect(5, 16, 201, 181));
         lblImg1->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg1->setFrameShape(QFrame::Panel);
         lblImg1->setFrameShadow(QFrame::Sunken);
@@ -412,10 +412,10 @@ public:
         lblImg1->setScaledContents(true);
         groupBox_6 = new QGroupBox(tab_3);
         groupBox_6->setObjectName(QString::fromUtf8("groupBox_6"));
-        groupBox_6->setGeometry(QRect(1080, 0, 211, 211));
+        groupBox_6->setGeometry(QRect(1010, 0, 211, 201));
         lblImg2 = new QLabel(groupBox_6);
         lblImg2->setObjectName(QString::fromUtf8("lblImg2"));
-        lblImg2->setGeometry(QRect(5, 16, 201, 191));
+        lblImg2->setGeometry(QRect(5, 16, 201, 181));
         lblImg2->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg2->setFrameShape(QFrame::Panel);
         lblImg2->setFrameShadow(QFrame::Sunken);
@@ -423,10 +423,10 @@ public:
         lblImg2->setScaledContents(true);
         groupBox_7 = new QGroupBox(tab_3);
         groupBox_7->setObjectName(QString::fromUtf8("groupBox_7"));
-        groupBox_7->setGeometry(QRect(860, 210, 211, 211));
+        groupBox_7->setGeometry(QRect(790, 200, 211, 201));
         lblImg3 = new QLabel(groupBox_7);
         lblImg3->setObjectName(QString::fromUtf8("lblImg3"));
-        lblImg3->setGeometry(QRect(5, 16, 201, 191));
+        lblImg3->setGeometry(QRect(5, 16, 201, 181));
         lblImg3->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg3->setFrameShape(QFrame::Panel);
         lblImg3->setFrameShadow(QFrame::Sunken);
@@ -434,10 +434,10 @@ public:
         lblImg3->setScaledContents(true);
         groupBox_8 = new QGroupBox(tab_3);
         groupBox_8->setObjectName(QString::fromUtf8("groupBox_8"));
-        groupBox_8->setGeometry(QRect(1080, 210, 211, 211));
+        groupBox_8->setGeometry(QRect(1010, 200, 211, 201));
         lblImg4 = new QLabel(groupBox_8);
         lblImg4->setObjectName(QString::fromUtf8("lblImg4"));
-        lblImg4->setGeometry(QRect(5, 16, 201, 191));
+        lblImg4->setGeometry(QRect(5, 16, 201, 181));
         lblImg4->setStyleSheet(QString::fromUtf8("background-color: rgb(255, 255, 255);"));
         lblImg4->setFrameShape(QFrame::Panel);
         lblImg4->setFrameShadow(QFrame::Sunken);
@@ -461,17 +461,17 @@ public:
         QTableWidgetItem *__qtablewidgetitem23 = new QTableWidgetItem();
         tableEntranceRight->setHorizontalHeaderItem(3, __qtablewidgetitem23);
         tableEntranceRight->setObjectName(QString::fromUtf8("tableEntranceRight"));
-        tableEntranceRight->setGeometry(QRect(10, 10, 1281, 371));
+        tableEntranceRight->setGeometry(QRect(10, 10, 1201, 361));
         btnEntranceSave = new QPushButton(tab_4);
         btnEntranceSave->setObjectName(QString::fromUtf8("btnEntranceSave"));
         btnEntranceSave->setGeometry(QRect(1330, 390, 75, 23));
         btnSaveRight = new QPushButton(tab_4);
         btnSaveRight->setObjectName(QString::fromUtf8("btnSaveRight"));
-        btnSaveRight->setGeometry(QRect(1200, 400, 75, 23));
+        btnSaveRight->setGeometry(QRect(1140, 380, 75, 23));
         tabWidget->addTab(tab_4, QString());
         btnMinimalize = new QPushButton(widget);
         btnMinimalize->setObjectName(QString::fromUtf8("btnMinimalize"));
-        btnMinimalize->setGeometry(QRect(683, 700, 75, 23));
+        btnMinimalize->setGeometry(QRect(600, 587, 75, 23));
         btnMinimalize->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         lblTitle = new QLabel(NewCValueCard);
         lblTitle->setObjectName(QString::fromUtf8("lblTitle"));
@@ -484,7 +484,7 @@ public:
 "color: rgb(170, 0, 0);"));
         lblClose = new QLabel(NewCValueCard);
         lblClose->setObjectName(QString::fromUtf8("lblClose"));
-        lblClose->setGeometry(QRect(1351, 7, 30, 15));
+        lblClose->setGeometry(QRect(1280, 4, 30, 15));
 
         retranslateUi(NewCValueCard);
 
@@ -517,8 +517,6 @@ public:
         ___qtablewidgetitem8->setText(QApplication::translate("NewCValueCard", "\345\244\207\346\263\250", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem9 = tableValue->horizontalHeaderItem(9);
         ___qtablewidgetitem9->setText(QApplication::translate("NewCValueCard", "\347\231\273\350\256\260\350\200\205", 0, QApplication::UnicodeUTF8));
-        btnValueRecharge->setText(QApplication::translate("NewCValueCard", "\345\205\205\345\200\274\345\215\241\345\205\205\345\200\274", 0, QApplication::UnicodeUTF8));
-        btnValueSave->setText(QApplication::translate("NewCValueCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
         gbOwner->setTitle(QApplication::translate("NewCValueCard", "\350\265\204\346\226\231", 0, QApplication::UnicodeUTF8));
         label_10->setText(QApplication::translate("NewCValueCard", "\345\215\225\344\275\215\357\274\232", 0, QApplication::UnicodeUTF8));
         label_12->setText(QApplication::translate("NewCValueCard", "\345\234\260\345\235\200\357\274\232", 0, QApplication::UnicodeUTF8));
@@ -549,6 +547,8 @@ public:
         label_17->setText(QApplication::translate("NewCValueCard", "\350\275\246\347\211\214\345\217\2674\357\274\232", 0, QApplication::UnicodeUTF8));
         label_16->setText(QApplication::translate("NewCValueCard", "\350\275\246\347\211\214\345\217\2673\357\274\232", 0, QApplication::UnicodeUTF8));
         label_23->setText(QApplication::translate("NewCValueCard", "\350\275\246\347\211\214\345\217\2671\357\274\232", 0, QApplication::UnicodeUTF8));
+        btnValueSave->setText(QApplication::translate("NewCValueCard", "\344\277\235\345\255\230", 0, QApplication::UnicodeUTF8));
+        btnValueRecharge->setText(QApplication::translate("NewCValueCard", "\345\205\205\345\200\274\345\215\241\345\205\205\345\200\274", 0, QApplication::UnicodeUTF8));
         tabWidget->setTabText(tabWidget->indexOf(tab), QApplication::translate("NewCValueCard", "\344\270\232\344\270\273\344\277\241\346\201\257", 0, QApplication::UnicodeUTF8));
         QTableWidgetItem *___qtablewidgetitem10 = tableRecharge->horizontalHeaderItem(0);
         ___qtablewidgetitem10->setText(QApplication::translate("NewCValueCard", "\346\224\266\350\264\271\351\207\221\351\242\235", 0, QApplication::UnicodeUTF8));

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newblacklist.ui'
 **
-** Created: Mon Aug 26 17:21:18 2013
+** Created: Tue Sep 3 13:45:37 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -57,13 +57,13 @@ public:
     {
         if (NewCBlacklist->objectName().isEmpty())
             NewCBlacklist->setObjectName(QString::fromUtf8("NewCBlacklist"));
-        NewCBlacklist->resize(1319, 691);
-        NewCBlacklist->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);"));
+        NewCBlacklist->resize(1320, 685);
+        NewCBlacklist->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);"));
         NewCBlacklist->setFrameShape(QFrame::StyledPanel);
         NewCBlacklist->setFrameShadow(QFrame::Raised);
         widget = new QWidget(NewCBlacklist);
         widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(40, 60, 1201, 621));
+        widget->setGeometry(QRect(40, 50, 1231, 591));
         widget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         tableBlacklist = new QTableWidget(widget);
         if (tableBlacklist->columnCount() < 4)
@@ -77,15 +77,15 @@ public:
         QTableWidgetItem *__qtablewidgetitem3 = new QTableWidgetItem();
         tableBlacklist->setHorizontalHeaderItem(3, __qtablewidgetitem3);
         tableBlacklist->setObjectName(QString::fromUtf8("tableBlacklist"));
-        tableBlacklist->setGeometry(QRect(0, 0, 1191, 491));
+        tableBlacklist->setGeometry(QRect(0, 0, 1221, 491));
         tableBlacklist->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         widget_2 = new QWidget(widget);
         widget_2->setObjectName(QString::fromUtf8("widget_2"));
-        widget_2->setGeometry(QRect(0, 500, 1191, 111));
+        widget_2->setGeometry(QRect(0, 510, 1191, 91));
         widget_2->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         layoutWidget = new QWidget(widget_2);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 70, 701, 25));
+        layoutWidget->setGeometry(QRect(10, 50, 701, 25));
         layoutWidget->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -138,7 +138,7 @@ public:
 
         layoutWidget1 = new QWidget(widget_2);
         layoutWidget1->setObjectName(QString::fromUtf8("layoutWidget1"));
-        layoutWidget1->setGeometry(QRect(10, 30, 701, 22));
+        layoutWidget1->setGeometry(QRect(10, 10, 701, 22));
         layoutWidget1->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         horizontalLayout_2 = new QHBoxLayout(layoutWidget1);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
@@ -193,7 +193,7 @@ public:
 "color: rgb(170, 0, 0);"));
         lblClose = new QLabel(NewCBlacklist);
         lblClose->setObjectName(QString::fromUtf8("lblClose"));
-        lblClose->setGeometry(QRect(1350, 7, 30, 15));
+        lblClose->setGeometry(QRect(1281, 5, 30, 15));
 
         retranslateUi(NewCBlacklist);
 

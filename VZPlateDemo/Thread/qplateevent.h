@@ -45,6 +45,9 @@ public:
     void SetIpcVideoSource( bool bIPC );
     bool GetIpcVideoSource( );
 
+    void SetMultiThread( bool bMulti );
+    bool GetMultiThread( );
+
 private:
     QString strPicFile;
     QByteArray byVideoFrame;
@@ -55,6 +58,7 @@ private:
     QByteArray bySerialData;
     QString strIpcIp;
     bool bIpcVideoSource;
+    bool bMultiThread;
 };
 
 #endif // QPLATEEVENT_H

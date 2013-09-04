@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1390</width>
-    <height>818</height>
+    <width>1320</width>
+    <height>685</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>储值卡</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal.jpg);</string>
+   <string notr="true">background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);</string>
   </property>
   <property name="frameShape">
    <enum>QFrame::StyledPanel</enum>
@@ -26,9 +26,9 @@
    <property name="geometry">
     <rect>
      <x>40</x>
-     <y>60</y>
-     <width>1301</width>
-     <height>731</height>
+     <y>50</y>
+     <width>1231</width>
+     <height>611</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -39,8 +39,8 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>1301</width>
-      <height>221</height>
+      <width>1231</width>
+      <height>146</height>
      </rect>
     </property>
     <property name="contextMenuPolicy">
@@ -104,9 +104,9 @@
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>230</y>
-      <width>1301</width>
-      <height>451</height>
+      <y>150</y>
+      <width>1231</width>
+      <height>431</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -119,44 +119,12 @@
      <attribute name="title">
       <string>业主信息</string>
      </attribute>
-     <widget class="QPushButton" name="btnValueRecharge">
-      <property name="geometry">
-       <rect>
-        <x>1120</x>
-        <y>390</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image:url(none);</string>
-      </property>
-      <property name="text">
-       <string>充值卡充值</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="btnValueSave">
-      <property name="geometry">
-       <rect>
-        <x>1210</x>
-        <y>390</y>
-        <width>75</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">background-image:url(none);</string>
-      </property>
-      <property name="text">
-       <string>保存</string>
-      </property>
-     </widget>
      <widget class="QGroupBox" name="gbOwner">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
-        <width>1091</width>
+        <y>0</y>
+        <width>1201</width>
         <height>401</height>
        </rect>
       </property>
@@ -275,7 +243,7 @@
         <rect>
          <x>660</x>
          <y>30</y>
-         <width>421</width>
+         <width>351</width>
          <height>351</height>
         </rect>
        </property>
@@ -287,7 +255,7 @@
          <rect>
           <x>10</x>
           <y>20</y>
-          <width>401</width>
+          <width>331</width>
           <height>321</height>
          </rect>
         </property>
@@ -717,6 +685,38 @@
         </rect>
        </property>
       </widget>
+      <widget class="QPushButton" name="btnValueSave">
+       <property name="geometry">
+        <rect>
+         <x>1120</x>
+         <y>360</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-image:url(none);</string>
+       </property>
+       <property name="text">
+        <string>保存</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnValueRecharge">
+       <property name="geometry">
+        <rect>
+         <x>1030</x>
+         <y>360</y>
+         <width>75</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-image:url(none);</string>
+       </property>
+       <property name="text">
+        <string>充值卡充值</string>
+       </property>
+      </widget>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_2">
@@ -728,8 +728,8 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>1281</width>
-        <height>371</height>
+        <width>1201</width>
+        <height>381</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -771,8 +771,8 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>841</width>
-        <height>411</height>
+        <width>761</width>
+        <height>381</height>
        </rect>
       </property>
       <column>
@@ -804,10 +804,10 @@
      <widget class="QGroupBox" name="groupBox_5">
       <property name="geometry">
        <rect>
-        <x>860</x>
+        <x>790</x>
         <y>1</y>
         <width>211</width>
-        <height>211</height>
+        <height>201</height>
        </rect>
       </property>
       <property name="title">
@@ -819,7 +819,7 @@
          <x>5</x>
          <y>16</y>
          <width>201</width>
-         <height>191</height>
+         <height>181</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -845,10 +845,10 @@
      <widget class="QGroupBox" name="groupBox_6">
       <property name="geometry">
        <rect>
-        <x>1080</x>
+        <x>1010</x>
         <y>0</y>
         <width>211</width>
-        <height>211</height>
+        <height>201</height>
        </rect>
       </property>
       <property name="title">
@@ -860,7 +860,7 @@
          <x>5</x>
          <y>16</y>
          <width>201</width>
-         <height>191</height>
+         <height>181</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -886,10 +886,10 @@
      <widget class="QGroupBox" name="groupBox_7">
       <property name="geometry">
        <rect>
-        <x>860</x>
-        <y>210</y>
+        <x>790</x>
+        <y>200</y>
         <width>211</width>
-        <height>211</height>
+        <height>201</height>
        </rect>
       </property>
       <property name="title">
@@ -901,7 +901,7 @@
          <x>5</x>
          <y>16</y>
          <width>201</width>
-         <height>191</height>
+         <height>181</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -927,10 +927,10 @@
      <widget class="QGroupBox" name="groupBox_8">
       <property name="geometry">
        <rect>
-        <x>1080</x>
-        <y>210</y>
+        <x>1010</x>
+        <y>200</y>
         <width>211</width>
-        <height>211</height>
+        <height>201</height>
        </rect>
       </property>
       <property name="title">
@@ -942,7 +942,7 @@
          <x>5</x>
          <y>16</y>
          <width>201</width>
-         <height>191</height>
+         <height>181</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -988,8 +988,8 @@
        <rect>
         <x>10</x>
         <y>10</y>
-        <width>1281</width>
-        <height>371</height>
+        <width>1201</width>
+        <height>361</height>
        </rect>
       </property>
       <column>
@@ -1029,8 +1029,8 @@
      <widget class="QPushButton" name="btnSaveRight">
       <property name="geometry">
        <rect>
-        <x>1200</x>
-        <y>400</y>
+        <x>1140</x>
+        <y>380</y>
         <width>75</width>
         <height>23</height>
        </rect>
@@ -1044,8 +1044,8 @@
    <widget class="QPushButton" name="btnMinimalize">
     <property name="geometry">
      <rect>
-      <x>683</x>
-      <y>700</y>
+      <x>600</x>
+      <y>587</y>
       <width>75</width>
       <height>23</height>
      </rect>
@@ -1084,8 +1084,8 @@ color: rgb(170, 0, 0);</string>
   <widget class="QLabel" name="lblClose">
    <property name="geometry">
     <rect>
-     <x>1351</x>
-     <y>7</y>
+     <x>1280</x>
+     <y>4</y>
      <width>30</width>
      <height>15</height>
     </rect>
