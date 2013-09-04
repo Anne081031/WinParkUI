@@ -185,7 +185,8 @@ void QHkCaptureCardThread::ImageStreamCB( UINT channelNumber, void *context )
     QByteArray byVideo;
     byVideo.append( pThread->GetChannelVideo( channelNumber ) );
 
-    pThread->GetPlateThread( )->PostPlateVideoRecognize( byVideo, 704, 576, channelNumber );
+    QPlateThread* pPlate = pThread->GetPlateThread( );
+    pPlate->PostPlateVideoRecognize( byVideo, 704, 576, channelNumber );
 }
 
 void QHkCaptureCardThread::ProcessStartMotionDetectEvent( QCameraEvent* pEvent )

@@ -50,10 +50,11 @@ QPlateThread* QPlateThread::CreateSubThread( QString &strThreadKey )
         pSubThreadHash.insert( strThreadKey, this );
     } else if ( NULL == ( pThread = pSubThreadHash.value( strThreadKey, NULL ) ) ) {
         pThread = NewThread( );
+        pThread->SetPlateWay( nPlateWay );
         connect( pThread, SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
-                 this, SLOT(HandlePlateResult( QStringList, int, bool, bool ) ) );
+                 this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
         connect( pThread, SIGNAL(UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ),
-                 this, SLOT(HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ) );
+                 this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ) );
 
         pSubThreadHash.insert( strThreadKey, pThread );
     }

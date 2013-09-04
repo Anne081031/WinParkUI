@@ -41,6 +41,11 @@ VZMainWindow::VZMainWindow(QWidget *parent) :
     aLables[ 1 ] = ui->lblVideo1;
     aLables[ 2 ] = ui->lblVideo2;
     aLables[ 3 ] = ui->lblVideo3;
+
+    aResult[ 0 ] = ui->lblRes0;
+    aResult[ 1 ] = ui->lblRes1;
+    aResult[ 2 ] = ui->lblRes2;
+    aResult[ 3 ] = ui->lblRes3;
 }
 
 VZMainWindow::~VZMainWindow()
@@ -139,6 +144,9 @@ void VZMainWindow::Initialize( )
     connect( pPlateThread, SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
              this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
 
+    connect( pPlateThread, SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ),
+             this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ) );
+
     for ( int nIndex = 0; nIndex < nPlateWay; nIndex++ ) {
         pPlateThread->PostPlateInitEvent( nFormat, nIndex );
     }
@@ -187,6 +195,15 @@ void VZMainWindow::LoadLogoTitle( )
     QString strSuffix = "." + fileInfo.suffix( ).toLower( );
     strSuffix = fileInfo.baseName( ).toLower( ).remove( "logo_" ).remove( strSuffix );
     setWindowTitle( strSuffix );
+}
+
+void VZMainWindow::HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
+                    bool bVideo, int nWidth, int nHeight, int nConfidence,
+                    QString strDirection, QByteArray byData )
+{
+    QString strRes = QString( "%1 %2*%3 %4" ).arg( strPlate, QString::number( nWidth ),
+                                                   QString::number( nHeight ), strDirection );
+    aResult[ nChannel ]->setText( strRes );
 }
 
 void VZMainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool bSuccess, bool bVideo )
@@ -361,6 +378,10 @@ void VZMainWindow::on_btnClear_clicked()
     ui->lblPicture->clear( );
     ui->lblPlatePic->clear( );
     ui->lblVideo0->clear( );
+
+    for( int nIndex = 0; nIndex < 4; nIndex++ ) {
+        aResult[ nIndex ]->clear( );
+    }
 
     LoadLogoTitle( );
 }

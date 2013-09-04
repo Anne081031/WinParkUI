@@ -6,20 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1221</width>
-    <height>682</height>
+    <width>1350</width>
+    <height>730</height>
    </rect>
-  </property>
-  <property name="minimumSize">
-   <size>
-    <width>1221</width>
-    <height>662</height>
-   </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>1221</width>
-    <height>682</height>
+    <width>1350</width>
+    <height>730</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -31,7 +25,7 @@
      <rect>
       <x>870</x>
       <y>10</y>
-      <width>341</width>
+      <width>461</width>
       <height>261</height>
      </rect>
     </property>
@@ -56,7 +50,7 @@
      <rect>
       <x>870</x>
       <y>280</y>
-      <width>341</width>
+      <width>461</width>
       <height>51</height>
      </rect>
     </property>
@@ -81,8 +75,8 @@
      <rect>
       <x>870</x>
       <y>340</y>
-      <width>341</width>
-      <height>281</height>
+      <width>461</width>
+      <height>301</height>
      </rect>
     </property>
     <column>
@@ -180,7 +174,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>630</y>
+      <y>683</y>
       <width>902</width>
       <height>25</height>
      </rect>
@@ -313,7 +307,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>320</y>
+      <y>348</y>
       <width>421</width>
       <height>300</height>
      </rect>
@@ -353,7 +347,7 @@
     <property name="geometry">
      <rect>
       <x>440</x>
-      <y>320</y>
+      <y>348</y>
       <width>421</width>
       <height>300</height>
      </rect>
@@ -389,13 +383,133 @@
      <set>Qt::NoTextInteraction</set>
     </property>
    </widget>
+   <widget class="QLabel" name="lblRes0">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>314</y>
+      <width>421</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRes1">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>314</y>
+      <width>421</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRes2">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>652</y>
+      <width>421</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="lblRes3">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>652</y>
+      <width>421</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>黑体</family>
+      <pointsize>12</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::Panel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Sunken</enum>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1221</width>
+     <width>1350</width>
      <height>19</height>
     </rect>
    </property>

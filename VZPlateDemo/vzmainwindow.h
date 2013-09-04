@@ -55,6 +55,9 @@ private:
     QPlateThread* pPlateThread;
 
 private slots:
+    void HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
+                        bool bVideo, int nWidth, int nHeight, int nConfidence,
+                        QString strDirection, QByteArray byData );
     void HandlePlateResult( QStringList lstResult, int nChannel, bool bSuccess, bool bVideo );
     void HandleCaptureImage( QString strFile, int nChannel );
     void HandleCaptureImage( QString strFile, QString strIP );
@@ -88,6 +91,7 @@ private:
     Ui::VZMainWindow *ui;
     QString strPlateDir;
     QLabel* aLables[ CHANNEL_WAY ];
+    QLabel* aResult[ CHANNEL_WAY ];
     int nFileIndex;
     QFileInfoList lstFiles;
     QString strIpcIP;

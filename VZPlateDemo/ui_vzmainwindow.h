@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'vzmainwindow.ui'
 **
-** Created: Thu Aug 29 11:54:28 2013
+** Created: Wed Sep 4 16:13:03 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -49,6 +49,10 @@ public:
     QLabel *lblVideo1;
     QLabel *lblVideo2;
     QLabel *lblVideo3;
+    QLabel *lblRes0;
+    QLabel *lblRes1;
+    QLabel *lblRes2;
+    QLabel *lblRes3;
     QMenuBar *menuBar;
     QMenu *menu;
 
@@ -56,23 +60,22 @@ public:
     {
         if (VZMainWindow->objectName().isEmpty())
             VZMainWindow->setObjectName(QString::fromUtf8("VZMainWindow"));
-        VZMainWindow->resize(1221, 682);
-        VZMainWindow->setMinimumSize(QSize(1221, 662));
-        VZMainWindow->setMaximumSize(QSize(1221, 682));
+        VZMainWindow->resize(1350, 730);
+        VZMainWindow->setMaximumSize(QSize(1350, 730));
         actParameter = new QAction(VZMainWindow);
         actParameter->setObjectName(QString::fromUtf8("actParameter"));
         centralWidget = new QWidget(VZMainWindow);
         centralWidget->setObjectName(QString::fromUtf8("centralWidget"));
         lblPicture = new QLabel(centralWidget);
         lblPicture->setObjectName(QString::fromUtf8("lblPicture"));
-        lblPicture->setGeometry(QRect(870, 10, 341, 261));
+        lblPicture->setGeometry(QRect(870, 10, 461, 261));
         lblPicture->setFrameShape(QFrame::Panel);
         lblPicture->setFrameShadow(QFrame::Sunken);
         lblPicture->setScaledContents(true);
         lblPicture->setAlignment(Qt::AlignCenter);
         lblPlatePic = new QLabel(centralWidget);
         lblPlatePic->setObjectName(QString::fromUtf8("lblPlatePic"));
-        lblPlatePic->setGeometry(QRect(870, 280, 341, 51));
+        lblPlatePic->setGeometry(QRect(870, 280, 461, 51));
         lblPlatePic->setFrameShape(QFrame::Panel);
         lblPlatePic->setFrameShadow(QFrame::Sunken);
         lblPlatePic->setScaledContents(false);
@@ -101,7 +104,7 @@ public:
         QTableWidgetItem *__qtablewidgetitem9 = new QTableWidgetItem();
         tabResult->setHorizontalHeaderItem(9, __qtablewidgetitem9);
         tabResult->setObjectName(QString::fromUtf8("tabResult"));
-        tabResult->setGeometry(QRect(870, 340, 341, 281));
+        tabResult->setGeometry(QRect(870, 340, 461, 301));
         lblVideo0 = new QLabel(centralWidget);
         lblVideo0->setObjectName(QString::fromUtf8("lblVideo0"));
         lblVideo0->setGeometry(QRect(10, 10, 421, 300));
@@ -116,7 +119,7 @@ public:
         lblVideo0->setTextInteractionFlags(Qt::NoTextInteraction);
         layoutWidget = new QWidget(centralWidget);
         layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 630, 902, 25));
+        layoutWidget->setGeometry(QRect(10, 683, 902, 25));
         horizontalLayout = new QHBoxLayout(layoutWidget);
         horizontalLayout->setSpacing(6);
         horizontalLayout->setContentsMargins(11, 11, 11, 11);
@@ -187,7 +190,7 @@ public:
         lblVideo1->setTextInteractionFlags(Qt::NoTextInteraction);
         lblVideo2 = new QLabel(centralWidget);
         lblVideo2->setObjectName(QString::fromUtf8("lblVideo2"));
-        lblVideo2->setGeometry(QRect(10, 320, 421, 300));
+        lblVideo2->setGeometry(QRect(10, 348, 421, 300));
         lblVideo2->setAutoFillBackground(true);
         lblVideo2->setFrameShape(QFrame::Panel);
         lblVideo2->setFrameShadow(QFrame::Sunken);
@@ -199,7 +202,7 @@ public:
         lblVideo2->setTextInteractionFlags(Qt::NoTextInteraction);
         lblVideo3 = new QLabel(centralWidget);
         lblVideo3->setObjectName(QString::fromUtf8("lblVideo3"));
-        lblVideo3->setGeometry(QRect(440, 320, 421, 300));
+        lblVideo3->setGeometry(QRect(440, 348, 421, 300));
         lblVideo3->setAutoFillBackground(true);
         lblVideo3->setFrameShape(QFrame::Panel);
         lblVideo3->setFrameShadow(QFrame::Sunken);
@@ -209,10 +212,43 @@ public:
         lblVideo3->setWordWrap(false);
         lblVideo3->setOpenExternalLinks(false);
         lblVideo3->setTextInteractionFlags(Qt::NoTextInteraction);
+        lblRes0 = new QLabel(centralWidget);
+        lblRes0->setObjectName(QString::fromUtf8("lblRes0"));
+        lblRes0->setGeometry(QRect(10, 314, 421, 30));
+        QFont font;
+        font.setFamily(QString::fromUtf8("\351\273\221\344\275\223"));
+        font.setPointSize(12);
+        font.setBold(true);
+        font.setWeight(75);
+        lblRes0->setFont(font);
+        lblRes0->setFrameShape(QFrame::Panel);
+        lblRes0->setFrameShadow(QFrame::Sunken);
+        lblRes0->setAlignment(Qt::AlignCenter);
+        lblRes1 = new QLabel(centralWidget);
+        lblRes1->setObjectName(QString::fromUtf8("lblRes1"));
+        lblRes1->setGeometry(QRect(440, 314, 421, 30));
+        lblRes1->setFont(font);
+        lblRes1->setFrameShape(QFrame::Panel);
+        lblRes1->setFrameShadow(QFrame::Sunken);
+        lblRes1->setAlignment(Qt::AlignCenter);
+        lblRes2 = new QLabel(centralWidget);
+        lblRes2->setObjectName(QString::fromUtf8("lblRes2"));
+        lblRes2->setGeometry(QRect(10, 652, 421, 30));
+        lblRes2->setFont(font);
+        lblRes2->setFrameShape(QFrame::Panel);
+        lblRes2->setFrameShadow(QFrame::Sunken);
+        lblRes2->setAlignment(Qt::AlignCenter);
+        lblRes3 = new QLabel(centralWidget);
+        lblRes3->setObjectName(QString::fromUtf8("lblRes3"));
+        lblRes3->setGeometry(QRect(440, 652, 421, 30));
+        lblRes3->setFont(font);
+        lblRes3->setFrameShape(QFrame::Panel);
+        lblRes3->setFrameShadow(QFrame::Sunken);
+        lblRes3->setAlignment(Qt::AlignCenter);
         VZMainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(VZMainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1221, 19));
+        menuBar->setGeometry(QRect(0, 0, 1350, 19));
         menu = new QMenu(menuBar);
         menu->setObjectName(QString::fromUtf8("menu"));
         VZMainWindow->setMenuBar(menuBar);
@@ -264,6 +300,10 @@ public:
         lblVideo1->setText(QString());
         lblVideo2->setText(QString());
         lblVideo3->setText(QString());
+        lblRes0->setText(QString());
+        lblRes1->setText(QString());
+        lblRes2->setText(QString());
+        lblRes3->setText(QString());
         menu->setTitle(QApplication::translate("VZMainWindow", "\347\263\273\347\273\237\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
