@@ -11,6 +11,7 @@ CLedInfoDialog::CLedInfoDialog(QWidget *parent) :
     ui->setupUi(this);
     ui->lblTitle->setText( windowTitle( ) );
     CCommonFunction::ConnectCloseButton( ui->lblClose );
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CLedInfoDialog::~CLedInfoDialog()

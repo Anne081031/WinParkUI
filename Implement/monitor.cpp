@@ -38,6 +38,7 @@ CMonitor* pMainWnd = NULL;
 QString CMonitor::strPlates[ VIDEO_USEDWAY ] = { "" };
 
 #include "qmypushbutton.h"
+#include "VZPlateDemo/qtransparentframe.h"
 
 void CMonitor::GateButtonRightClicked( )
 {
@@ -69,7 +70,7 @@ void CMonitor::CreateGateButton( )
     ui->btnEnterGateOpen->setObjectName(QString::fromUtf8("btnEnterGateOpen"));
     ui->btnEnterGateOpen->setGeometry(
             #ifdef NewUI
-                QRect(962, 213, 83, 82)
+                QRect(963, 213, 83, 83)
             #else
                 QRect(1015, 250, 88, 97)
             #endif
@@ -83,7 +84,7 @@ void CMonitor::CreateGateButton( )
     ui->btnEnterGateClose->setObjectName(QString::fromUtf8("btnEnterGateClose"));
     ui->btnEnterGateClose->setGeometry(
             #ifdef NewUI
-                QRect(1045, 212, 83, 83)
+                QRect(1046, 213, 83, 83)
             #else
                 QRect(1103, 250, 87, 97)
             #endif
@@ -97,7 +98,7 @@ void CMonitor::CreateGateButton( )
     ui->btnLeaveGateClose->setObjectName(QString::fromUtf8("btnLeaveGateClose"));
     ui->btnLeaveGateClose->setGeometry(
             #ifdef NewUI
-                QRect(1225, 212, 83, 83)
+                QRect(1226, 213, 83, 83)
             #else
                 QRect(1292, 250, 87, 97)
             #endif
@@ -111,7 +112,7 @@ void CMonitor::CreateGateButton( )
     ui->btnLeaveGateOpen->setObjectName(QString::fromUtf8("btnLeaveGateOpen"));
     ui->btnLeaveGateOpen->setGeometry(
             #ifdef NewUI
-                QRect(1142, 213, 83, 82)
+                QRect(1143, 213, 83, 83)
             #else
                 QRect(1204, 250, 88, 97)
             #endif
@@ -164,8 +165,13 @@ void CMonitor::HandleDetectInfo( int nChannel, bool bMotion )
 void CMonitor::HandleUIPlateResult( QString strPlate, int nChannel,
                                     bool bSuccess, bool bVideo, int nWidth,
                                     int nHeight, int nConfidence,
-                                    QString strDirection, QByteArray byData )
+                                    QString strDirection, QByteArray byData,
+                                    QRect rectPlate, QRect rectVideo )
 {
+    if ( bVideo && bPlateBox ) {
+        QTransparentFrame::CreateFrame( lblVideoWnd[ nChannel ]->winId( ), rectPlate, rectVideo );
+    }
+
     if ( bVideo && ( !bSuccess || strPlate.isEmpty( ) ) ) {
         return;
     }
@@ -391,6 +397,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     pParent = dynamic_cast< MainWindow* > ( mainWnd );
     //qobject_cast()
 
+    bPlateBox = pSystem->value( "CommonCfg/PlateBox", false ).toBool( );
     nRealTimeRecord = pSystem->value( "CommonCfg/RealTimeRecord", 100 ).toInt( );
     bPlateVideo = pSystem->value( "CommonCfg/PlateVideo", true ).toBool( );
     bSavePicture = pSystem->value( "CommonCfg/SavePicture", false ).toBool( );
@@ -966,11 +973,6 @@ void CMonitor::SwitchImage( QPushButton *pBtn, bool bDown, bool bPermission )
     //qDebug( ) << strStyle << endl << "Down" << bDown << endl;
     pBtn->setStyleSheet( strStyle );
     qDebug( ) << Q_FUNC_INFO << strStyle << endl;
-
-    QFont font;
-    font.setFamily( "ºÚÌå" );
-    font.setPointSize( 16 );
-    ui->lblLicence11->setFont( font );
 }
 
 QLabel* CMonitor::GetDateTimeCtrl( )
@@ -1353,8 +1355,8 @@ void CMonitor::StartNewPlateRecog( )
         }
     }
 
-    connect( QPlateThread::GetInstance( ), SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ),
-             this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ) );
+    connect( QPlateThread::GetInstance( ), SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ),
+             this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ) );
 }
 
 void CMonitor::StartPlateRecog( )
@@ -1704,6 +1706,7 @@ void CMonitor::ControlSelf( )
 
 void CMonitor::closeEvent( QCloseEvent *event )
 {
+    QTransparentFrame::DestroyFrame( );
     event->ignore( );
 }
 
@@ -1945,39 +1948,52 @@ void CMonitor::LoadImg( )
     QString strInfo = "";
     GetImgBasePath( strInfo );
 
-    QString strTmp = strInfo + "logo";
+    //QString strTmp = strInfo + "logo";
     for ( int nIndex = nUsedWay; nIndex < 4; nIndex++ ) {
         LoadVideoWndBg( nIndex );
     }
 
     // Enter
-    strTmp = strButtonStyle.arg( strInfo, ui->btnVerifyIn0->objectName( ), "normal" );
-    ui->btnVerifyIn0->setStyleSheet( strTmp );
-    strTmp = strButtonStyle.arg( strInfo, ui->btnVerifyIn1->objectName( ), "normal" );
-    ui->btnVerifyIn1->setStyleSheet( strTmp );
-    strTmp = strButtonStyle.arg( strInfo, ui->btnVerifyOut0->objectName( ), "normal" );
-    ui->btnVerifyOut0->setStyleSheet( strTmp );
-    strTmp = strButtonStyle.arg( strInfo, ui->btnVerifyOut1->objectName( ), "normal" );
-    ui->btnVerifyOut1->setStyleSheet( strTmp );
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnVerifyIn0->objectName( ), "normal" );
+    //ui->btnVerifyIn0->setStyleSheet( strTmp );
+    SwitchImage( ui->btnVerifyIn0, false );
+
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnVerifyIn1->objectName( ), "normal" );
+    //ui->btnVerifyIn1->setStyleSheet( strTmp );
+    SwitchImage( ui->btnVerifyIn1, false );
+
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnVerifyOut0->objectName( ), "normal" );
+    //ui->btnVerifyOut0->setStyleSheet( strTmp );
+    SwitchImage( ui->btnVerifyOut0, false );
+
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnVerifyOut1->objectName( ), "normal" );
+    //ui->btnVerifyOut1->setStyleSheet( strTmp );
+    SwitchImage( ui->btnVerifyOut1, false );
 
     ////
-    strTmp = strButtonStyle.arg( strInfo, ui->btnCenterControlerStatus->objectName( ), "normal" );
-    ui->btnCenterControlerStatus->setStyleSheet( strTmp );
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnCenterControlerStatus->objectName( ), "normal" );
+    //ui->btnCenterControlerStatus->setStyleSheet( strTmp );
+    SwitchImage( ui->btnCenterControlerStatus, false );
 
-    strTmp = strButtonStyle.arg( strInfo, ui->btnPublishLedInfo->objectName( ), "normal" );
-    ui->btnPublishLedInfo->setStyleSheet( strTmp );
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnPublishLedInfo->objectName( ), "normal" );
+    //ui->btnPublishLedInfo->setStyleSheet( strTmp );
+    SwitchImage( ui->btnPublishLedInfo, false );
 
-    strTmp = strButtonStyle.arg( strInfo, ui->btnEnterPeripheralStatus->objectName( ), "normal" );
-    ui->btnEnterPeripheralStatus->setStyleSheet( strTmp );
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnEnterPeripheralStatus->objectName( ), "normal" );
+    //ui->btnEnterPeripheralStatus->setStyleSheet( strTmp );
+    SwitchImage( ui->btnEnterPeripheralStatus, false );
 
-    strTmp = strButtonStyle.arg( strInfo, ui->btnSmsNotification->objectName( ), "normal" );
-    ui->btnSmsNotification->setStyleSheet( strTmp );
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnSmsNotification->objectName( ), "normal" );
+    //ui->btnSmsNotification->setStyleSheet( strTmp );
+    SwitchImage( ui->btnSmsNotification, false );
 
-    strTmp = strButtonStyle.arg( strInfo, ui->btnLeavePeripheralStatus->objectName( ), "normal" );
-    ui->btnLeavePeripheralStatus->setStyleSheet( strTmp );
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnLeavePeripheralStatus->objectName( ), "normal" );
+    //ui->btnLeavePeripheralStatus->setStyleSheet( strTmp );
+    SwitchImage( ui->btnLeavePeripheralStatus, false );
 
-    strTmp = strButtonStyle.arg( strInfo, ui->btnCandinate->objectName( ), "normal" );
-    ui->btnCandinate->setStyleSheet( strTmp );
+    //strTmp = strButtonStyle.arg( strInfo, ui->btnCandinate->objectName( ), "normal" );
+    //ui->btnCandinate->setStyleSheet( strTmp );
+    SwitchImage( ui->btnCandinate, false );
 
     LoadDigital( 1, nTotalParkSpace, 'g' );
 

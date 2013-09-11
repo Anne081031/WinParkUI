@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'monitor.h'
 **
-** Created: Mon Sep 2 12:18:54 2013
+** Created: Wed Sep 11 12:00:34 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -66,10 +66,10 @@ static const uint qt_meta_data_CMonitor[] = {
      941,  927,    9,    9, 0x08,
      964,  957,    9,    9, 0x08,
      988,  957,    9,    9, 0x08,
-    1091, 1010,    9,    9, 0x08,
-    1182, 1165,    9,    9, 0x08,
-    1209,    9,    9,    9, 0x08,
-    1233,    9,    9,    9, 0x08,
+    1111, 1010,    9,    9, 0x08,
+    1214, 1197,    9,    9, 0x08,
+    1241,    9,    9,    9, 0x08,
+    1265,    9,    9,    9, 0x08,
 
        0        // eod
 };
@@ -105,9 +105,9 @@ static const char qt_meta_stringdata_CMonitor[] = {
     "nPlateChannel\0ClearPlate(int)\0strMsg\0"
     "DisplayDbError(QString)\0HandleIPCMsg(QString)\0"
     "strPlate,nChannel,bSuccess,bVideo,nWidth,nHeight,nConfidence,strDirect"
-    "ion,byData\0"
+    "ion,byData,rectPlate,rectVideo\0"
     "HandleUIPlateResult(QString,int,bool,bool,int,int,int,QString,QByteArr"
-    "ay)\0"
+    "ay,QRect,QRect)\0"
     "nChannel,bMotion\0HandleDetectInfo(int,bool)\0"
     "on_pushButton_clicked()\0"
     "on_pushButton_2_clicked()\0"
@@ -175,7 +175,7 @@ int CMonitor::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 30: ClearPlate((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 31: DisplayDbError((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 32: HandleIPCMsg((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 33: HandleUIPlateResult((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< QString(*)>(_a[8])),(*reinterpret_cast< QByteArray(*)>(_a[9]))); break;
+        case 33: HandleUIPlateResult((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< QString(*)>(_a[8])),(*reinterpret_cast< QByteArray(*)>(_a[9])),(*reinterpret_cast< QRect(*)>(_a[10])),(*reinterpret_cast< QRect(*)>(_a[11]))); break;
         case 34: HandleDetectInfo((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< bool(*)>(_a[2]))); break;
         case 35: on_pushButton_clicked(); break;
         case 36: on_pushButton_2_clicked(); break;

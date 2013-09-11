@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'picturecontrastdlg.h'
 **
-** Created: Thu Aug 1 11:47:30 2013
+** Created: Thu Sep 5 10:12:05 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

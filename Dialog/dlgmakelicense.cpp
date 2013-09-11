@@ -21,6 +21,7 @@ CDlgMakeLicense::CDlgMakeLicense(QWidget *parent) :
     pHeader->resizeSection( 1, pHeader->sectionSize( 1 ) + 20 );
     pHeader->resizeSection( 2, pHeader->sectionSize( 2 ) + 20 );
     pHeader->resizeSection( 3, pHeader->sectionSize( 3 ) + 20 );
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CDlgMakeLicense::~CDlgMakeLicense()

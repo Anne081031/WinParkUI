@@ -22,6 +22,8 @@ CLoginDialog::CLoginDialog(QWidget *parent) :
     //SetCapture( winId( ) );
     ui->pushButton->setVisible( false );
     bLicense = false;
+
+    setStyleSheet( QString( "background-image:url(%1)" ).arg( strImagePath ) );
 }
 
 CLoginDialog::~CLoginDialog()
@@ -63,6 +65,7 @@ void CLoginDialog::EmployeeCard( QString &strCardno )
 
 void CLoginDialog::resizeEvent( QResizeEvent *event )
 {
+    return;
     QWidget::resizeEvent( event );
 
     QPixmap bgimage( strImagePath );
@@ -71,6 +74,8 @@ void CLoginDialog::resizeEvent( QResizeEvent *event )
                                                             Qt::IgnoreAspectRatio,
                                                             Qt::SmoothTransformation ) ) );
     setPalette(pal);
+
+    //CCommonFunction::MsgBox( NULL, "", strImagePath, QMessageBox::Information );
 }
 
 void CLoginDialog::showEvent( QShowEvent *event )

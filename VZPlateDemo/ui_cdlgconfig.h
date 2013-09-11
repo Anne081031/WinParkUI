@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'cdlgconfig.ui'
 **
-** Created: Thu Aug 29 12:14:43 2013
+** Created: Mon Sep 9 18:46:55 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -52,6 +52,7 @@ public:
     QLineEdit *edtIpcIP;
     QCheckBox *chxMainStream;
     QCheckBox *chxVideoCapture;
+    QCheckBox *chxPlateThread;
 
     void setupUi(QDialog *CDlgConfig)
     {
@@ -149,6 +150,9 @@ public:
         chxVideoCapture = new QCheckBox(CDlgConfig);
         chxVideoCapture->setObjectName(QString::fromUtf8("chxVideoCapture"));
         chxVideoCapture->setGeometry(QRect(22, 150, 151, 16));
+        chxPlateThread = new QCheckBox(CDlgConfig);
+        chxPlateThread->setObjectName(QString::fromUtf8("chxPlateThread"));
+        chxPlateThread->setGeometry(QRect(22, 170, 151, 16));
 
         retranslateUi(CDlgConfig);
 
@@ -166,6 +170,7 @@ public:
         label_4->setText(QApplication::translate("CDlgConfig", "\347\275\221\347\273\234\347\233\270\346\234\272IP", 0, QApplication::UnicodeUTF8));
         chxMainStream->setText(QApplication::translate("CDlgConfig", "\347\275\221\347\273\234\347\233\270\346\234\272\344\270\273\347\240\201\346\265\201", 0, QApplication::UnicodeUTF8));
         chxVideoCapture->setText(QApplication::translate("CDlgConfig", "\350\247\206\351\242\221\346\212\223\345\233\276\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
+        chxPlateThread->setText(QApplication::translate("CDlgConfig", "\350\275\246\347\211\214\350\257\206\345\210\253\345\244\232\347\272\277\347\250\213\346\226\271\345\274\217", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 
 };

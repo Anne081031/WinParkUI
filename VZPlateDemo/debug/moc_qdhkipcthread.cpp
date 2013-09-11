@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qdhkipcthread.h'
 **
-** Created: Tue Sep 3 10:08:28 2013
+** Created: Mon Sep 9 18:48:09 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

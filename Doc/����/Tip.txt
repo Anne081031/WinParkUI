@@ -1,5 +1,7 @@
 P42
 
+http://pgina.org/ Windows GINA
+
 ES--Elementary  Streams  (原始流)是直接从编码器出来的数据流
 PES--Packetized  Elementary Streams  (分组的ES)，ES形成的分组称为PES分组，是用来传递ES的一种数据结构。
 PS 和TS流 ProgramStream包结构是可变长度 TransportStream固定长度的包结构

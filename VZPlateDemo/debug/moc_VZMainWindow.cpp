@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'VZMainWindow.h'
 **
-** Created: Wed Sep 4 16:03:41 2013
+** Created: Mon Sep 9 18:47:45 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -31,23 +31,23 @@ static const uint qt_meta_data_VZMainWindow[] = {
        0,       // signalCount
 
  // slots: signature, parameters, type, tag, flags
-      95,   14,   13,   13, 0x08,
-     204,  169,   13,   13, 0x08,
-     266,  249,   13,   13, 0x08,
-     312,  298,   13,   13, 0x08,
-     364,  348,   13,   13, 0x08,
-     415,  398,   13,   13, 0x08,
-     442,   13,   13,   13, 0x08,
-     463,   13,   13,   13, 0x08,
-     490,   13,   13,   13, 0x08,
-     514,   13,   13,   13, 0x08,
-     550,  539,   13,   13, 0x08,
-     584,   13,   13,   13, 0x08,
-     606,   13,   13,   13, 0x08,
-     629,   13,   13,   13, 0x08,
-     655,   13,   13,   13, 0x08,
-     683,   13,   13,   13, 0x08,
-     718,   13,   13,   13, 0x08,
+     115,   14,   13,   13, 0x08,
+     236,  201,   13,   13, 0x08,
+     298,  281,   13,   13, 0x08,
+     344,  330,   13,   13, 0x08,
+     396,  380,   13,   13, 0x08,
+     447,  430,   13,   13, 0x08,
+     474,   13,   13,   13, 0x08,
+     495,   13,   13,   13, 0x08,
+     522,   13,   13,   13, 0x08,
+     546,   13,   13,   13, 0x08,
+     582,  571,   13,   13, 0x08,
+     616,   13,   13,   13, 0x08,
+     638,   13,   13,   13, 0x08,
+     661,   13,   13,   13, 0x08,
+     687,   13,   13,   13, 0x08,
+     715,   13,   13,   13, 0x08,
+     750,   13,   13,   13, 0x08,
 
        0        // eod
 };
@@ -55,9 +55,9 @@ static const uint qt_meta_data_VZMainWindow[] = {
 static const char qt_meta_stringdata_VZMainWindow[] = {
     "VZMainWindow\0\0"
     "strPlate,nChannel,bSuccess,bVideo,nWidth,nHeight,nConfidence,strDirect"
-    "ion,byData\0"
+    "ion,byData,rectPlate,rectVideo\0"
     "HandleUIPlateResult(QString,int,bool,bool,int,int,int,QString,QByteArr"
-    "ay)\0"
+    "ay,QRect,QRect)\0"
     "lstResult,nChannel,bSuccess,bVideo\0"
     "HandlePlateResult(QStringList,int,bool,bool)\0"
     "strFile,nChannel\0HandleCaptureImage(QString,int)\0"
@@ -104,7 +104,7 @@ int VZMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
         switch (_id) {
-        case 0: HandleUIPlateResult((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< QString(*)>(_a[8])),(*reinterpret_cast< QByteArray(*)>(_a[9]))); break;
+        case 0: HandleUIPlateResult((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4])),(*reinterpret_cast< int(*)>(_a[5])),(*reinterpret_cast< int(*)>(_a[6])),(*reinterpret_cast< int(*)>(_a[7])),(*reinterpret_cast< QString(*)>(_a[8])),(*reinterpret_cast< QByteArray(*)>(_a[9])),(*reinterpret_cast< QRect(*)>(_a[10])),(*reinterpret_cast< QRect(*)>(_a[11]))); break;
         case 1: HandlePlateResult((*reinterpret_cast< QStringList(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2])),(*reinterpret_cast< bool(*)>(_a[3])),(*reinterpret_cast< bool(*)>(_a[4]))); break;
         case 2: HandleCaptureImage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< int(*)>(_a[2]))); break;
         case 3: HandleCaptureImage((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;

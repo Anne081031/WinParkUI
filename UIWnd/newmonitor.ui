@@ -815,7 +815,7 @@ font: 20pt &quot;黑体&quot;;</string>
      <x>47</x>
      <y>173</y>
      <width>389</width>
-     <height>234</height>
+     <height>235</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -879,7 +879,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>47</x>
      <y>466</y>
      <width>389</width>
-     <height>234</height>
+     <height>235</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -920,7 +920,7 @@ background-color: rgb(255, 255, 255);</string>
      <x>483</x>
      <y>466</y>
      <width>389</width>
-     <height>234</height>
+     <height>235</height>
     </rect>
    </property>
    <property name="maximumSize">
@@ -1126,7 +1126,7 @@ background-color: rgb(255, 255, 255);</string>
     <enum>Qt::CustomDashLine</enum>
    </property>
    <attribute name="horizontalHeaderVisible">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <attribute name="horizontalHeaderDefaultSectionSize">
     <number>100</number>
@@ -1328,8 +1328,8 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnShift">
    <property name="geometry">
     <rect>
-     <x>167</x>
-     <y>48</y>
+     <x>168</x>
+     <y>49</y>
      <width>92</width>
      <height>83</height>
     </rect>
@@ -1348,8 +1348,8 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnMonthCard">
    <property name="geometry">
     <rect>
-     <x>290</x>
-     <y>48</y>
+     <x>291</x>
+     <y>49</y>
      <width>92</width>
      <height>83</height>
     </rect>
@@ -1365,8 +1365,8 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnValueCard">
    <property name="geometry">
     <rect>
-     <x>412</x>
-     <y>48</y>
+     <x>413</x>
+     <y>49</y>
      <width>92</width>
      <height>83</height>
     </rect>
@@ -1382,8 +1382,8 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnTimeCard">
    <property name="geometry">
     <rect>
-     <x>536</x>
-     <y>48</y>
+     <x>537</x>
+     <y>49</y>
      <width>92</width>
      <height>83</height>
     </rect>
@@ -1399,8 +1399,8 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnPassRecord">
    <property name="geometry">
     <rect>
-     <x>658</x>
-     <y>48</y>
+     <x>659</x>
+     <y>49</y>
      <width>92</width>
      <height>83</height>
     </rect>
@@ -1417,9 +1417,9 @@ border-style: outset; </string>
    <property name="geometry">
     <rect>
      <x>962</x>
-     <y>213</y>
+     <y>212</y>
      <width>83</width>
-     <height>82</height>
+     <height>83</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1453,7 +1453,7 @@ border-style: outset; </string>
      <x>1225</x>
      <y>212</y>
      <width>83</width>
-     <height>83</height>
+     <height>82</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -1468,7 +1468,7 @@ border-style: outset; </string>
    <property name="geometry">
     <rect>
      <x>1142</x>
-     <y>213</y>
+     <y>212</y>
      <width>83</width>
      <height>82</height>
     </rect>
@@ -1490,8 +1490,11 @@ border-style: outset; </string>
      <height>33</height>
     </rect>
    </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
    <property name="styleSheet">
-    <string notr="true">background-image:url( );
+    <string notr="true">background-image:url();
 border-style: outset; </string>
    </property>
    <property name="text">
@@ -1518,7 +1521,7 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnPublishLedInfo">
    <property name="geometry">
     <rect>
-     <x>1135</x>
+     <x>1136</x>
      <y>341</y>
      <width>199</width>
      <height>33</height>
@@ -1552,7 +1555,7 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnCandinate">
    <property name="geometry">
     <rect>
-     <x>1135</x>
+     <x>1136</x>
      <y>411</y>
      <width>199</width>
      <height>33</height>
@@ -1569,7 +1572,7 @@ border-style: outset; </string>
   <widget class="QPushButton" name="btnSmsNotification">
    <property name="geometry">
     <rect>
-     <x>1135</x>
+     <x>1136</x>
      <y>376</y>
      <width>199</width>
      <height>33</height>

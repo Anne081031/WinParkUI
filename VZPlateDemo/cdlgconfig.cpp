@@ -57,6 +57,7 @@ void CDlgConfig::ReadConfig( )
 
     ui->chxMainStream->setChecked( pConfig->ReadMainStream( ) );
     ui->chxVideoCapture->setChecked( pConfig->ReadVideoCapture( ) );
+    ui->chxPlateThread->setChecked( pConfig->ReadPlateMultiThread( ) );
 
     connect( ui->cbxVideoType, SIGNAL( currentIndexChanged( int ) ),
              this, SLOT( OnVideoType_currentIndexChanged( int ) ) );
@@ -87,6 +88,7 @@ void CDlgConfig::Saveconfig( )
     pConfig->WriteIpcIP( strType );
     pConfig->WriteMainStream( ui->chxMainStream->isChecked( ) );
     pConfig->WriteVideoCapture( ui->chxVideoCapture->isChecked( ) );
+    pConfig->WritePlateMultiThread( ui->chxPlateThread->isChecked( ) );
 
 }
 

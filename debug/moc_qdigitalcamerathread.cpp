@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'qdigitalcamerathread.h'
 **
-** Created: Tue Sep 3 10:03:13 2013
+** Created: Tue Sep 10 12:18:28 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

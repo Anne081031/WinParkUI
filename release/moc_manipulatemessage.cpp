@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'manipulatemessage.h'
 **
-** Created: Mon Jul 29 16:46:32 2013
+** Created: Thu Sep 5 10:13:51 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

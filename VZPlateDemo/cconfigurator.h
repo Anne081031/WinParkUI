@@ -31,6 +31,9 @@ public:
     bool ReadRealStream( );
     void WriteRealStream( bool bReal );
 
+    bool ReadPlateMultiThread( );
+    void WritePlateMultiThread( bool bMulti );
+
     bool ReadVideoCapture( );
     void WriteVideoCapture( bool bCapture );
 

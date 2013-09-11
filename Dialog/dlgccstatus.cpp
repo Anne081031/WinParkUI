@@ -17,6 +17,8 @@ CDlgCCStatus::CDlgCCStatus(QWidget *parent) :
     ui->chxDisplay->setChecked( pSettings->value( strKey, true ).toBool( ) );
     ui->lblTitle->setText( windowTitle( ) );
     setWindowFlags( Qt::FramelessWindowHint );
+
+setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CDlgCCStatus::~CDlgCCStatus()

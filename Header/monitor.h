@@ -197,6 +197,7 @@ private:
     QStringList lstEnterCanClose;
     QStringList lstLeaveCanOpen;
     QStringList lstLeaveCanClose;
+    bool bPlateBox;
 
     inline void ReadDefaultCan( QStringList& lstCan, bool bEnter, bool bOpen );
     inline void WriteDefaultCan( QStringList& lstCan, bool bEnter, bool bOpen );
@@ -248,7 +249,7 @@ private slots:
     void HandleIPCMsg( QString strMsg );
     void HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
                               bool bVideo, int nWidth, int nHeight, int nConfidence,
-                              QString strDirection, QByteArray byData );
+                              QString strDirection, QByteArray byData, QRect rectPlate, QRect rectVideo );
     void HandleDetectInfo( int nChannel, bool bMotion );
 
     void on_pushButton_clicked();

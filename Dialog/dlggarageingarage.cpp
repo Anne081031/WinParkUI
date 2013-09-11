@@ -23,6 +23,8 @@ CDlgGarageInGarage::CDlgGarageInGarage(QWidget *parent) :
 
     pFrmDisplayPic->move( geometry( ).width( ) - pFrmDisplayPic->width( ),
                           geometry( ).height( ) - pFrmDisplayPic->height( ) );
+
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CDlgGarageInGarage::~CDlgGarageInGarage()

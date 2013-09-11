@@ -26,6 +26,8 @@ CDlgAlert::CDlgAlert(QWidget *parent) :
     CCommonFunction::GetPath( strSnapPath, CommonDataType::PathSnapshot );
     setWindowFlags( Qt::FramelessWindowHint );
     move( 123, 177 );
+
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CDlgAlert::~CDlgAlert( )

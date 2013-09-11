@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newmonitor.ui'
 **
-** Created: Tue Sep 3 15:34:19 2013
+** Created: Thu Sep 5 15:03:35 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -390,7 +390,7 @@ public:
         lblLicence25->setAlignment(Qt::AlignCenter);
         video1 = new QLabel(NewCMonitor);
         video1->setObjectName(QString::fromUtf8("video1"));
-        video1->setGeometry(QRect(47, 173, 389, 234));
+        video1->setGeometry(QRect(47, 173, 389, 235));
         video1->setMaximumSize(QSize(461, 311));
         video1->setStyleSheet(QString::fromUtf8("background-image:url(none);\n"
 "background-color: rgb(255, 255, 255);"));
@@ -408,7 +408,7 @@ public:
         video2->setLineWidth(4);
         video3 = new QLabel(NewCMonitor);
         video3->setObjectName(QString::fromUtf8("video3"));
-        video3->setGeometry(QRect(47, 466, 389, 234));
+        video3->setGeometry(QRect(47, 466, 389, 235));
         video3->setMaximumSize(QSize(461, 311));
         video3->setAutoFillBackground(false);
         video3->setStyleSheet(QString::fromUtf8("background-image:url(none);\n"
@@ -420,7 +420,7 @@ public:
         video3->setAlignment(Qt::AlignCenter);
         video4 = new QLabel(NewCMonitor);
         video4->setObjectName(QString::fromUtf8("video4"));
-        video4->setGeometry(QRect(483, 466, 389, 234));
+        video4->setGeometry(QRect(483, 466, 389, 235));
         video4->setMaximumSize(QSize(461, 311));
         QFont font1;
         font1.setPointSize(22);
@@ -508,7 +508,7 @@ public:
         tabRecord->setHorizontalScrollMode(QAbstractItemView::ScrollPerItem);
         tabRecord->setShowGrid(true);
         tabRecord->setGridStyle(Qt::CustomDashLine);
-        tabRecord->horizontalHeader()->setVisible(true);
+        tabRecord->horizontalHeader()->setVisible(false);
         tabRecord->horizontalHeader()->setDefaultSectionSize(100);
         tabRecord->horizontalHeader()->setProperty("showSortIndicator", QVariant(false));
         tabRecord->horizontalHeader()->setStretchLastSection(true);
@@ -544,32 +544,32 @@ public:
 "border-style: outset; "));
         btnShift = new QPushButton(NewCMonitor);
         btnShift->setObjectName(QString::fromUtf8("btnShift"));
-        btnShift->setGeometry(QRect(167, 48, 92, 83));
+        btnShift->setGeometry(QRect(168, 49, 92, 83));
         btnShift->setStyleSheet(QString::fromUtf8("background-image:url();\n"
 "border-style: outset; "));
         btnMonthCard = new QPushButton(NewCMonitor);
         btnMonthCard->setObjectName(QString::fromUtf8("btnMonthCard"));
-        btnMonthCard->setGeometry(QRect(290, 48, 92, 83));
+        btnMonthCard->setGeometry(QRect(291, 49, 92, 83));
         btnMonthCard->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/btnMonthCardnormal1366x768.JPG);\n"
 "border-style: outset; "));
         btnValueCard = new QPushButton(NewCMonitor);
         btnValueCard->setObjectName(QString::fromUtf8("btnValueCard"));
-        btnValueCard->setGeometry(QRect(412, 48, 92, 83));
+        btnValueCard->setGeometry(QRect(413, 49, 92, 83));
         btnValueCard->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         btnTimeCard = new QPushButton(NewCMonitor);
         btnTimeCard->setObjectName(QString::fromUtf8("btnTimeCard"));
-        btnTimeCard->setGeometry(QRect(536, 48, 92, 83));
+        btnTimeCard->setGeometry(QRect(537, 49, 92, 83));
         btnTimeCard->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         btnPassRecord = new QPushButton(NewCMonitor);
         btnPassRecord->setObjectName(QString::fromUtf8("btnPassRecord"));
-        btnPassRecord->setGeometry(QRect(658, 48, 92, 83));
+        btnPassRecord->setGeometry(QRect(659, 49, 92, 83));
         btnPassRecord->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         btnEnterGateOpen = new QPushButton(NewCMonitor);
         btnEnterGateOpen->setObjectName(QString::fromUtf8("btnEnterGateOpen"));
-        btnEnterGateOpen->setGeometry(QRect(962, 213, 83, 82));
+        btnEnterGateOpen->setGeometry(QRect(962, 212, 83, 83));
         btnEnterGateOpen->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         btnEnterGateClose = new QPushButton(NewCMonitor);
@@ -579,18 +579,19 @@ public:
 "border-style: outset; "));
         btnLeaveGateClose = new QPushButton(NewCMonitor);
         btnLeaveGateClose->setObjectName(QString::fromUtf8("btnLeaveGateClose"));
-        btnLeaveGateClose->setGeometry(QRect(1225, 212, 83, 83));
+        btnLeaveGateClose->setGeometry(QRect(1225, 212, 83, 82));
         btnLeaveGateClose->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         btnLeaveGateOpen = new QPushButton(NewCMonitor);
         btnLeaveGateOpen->setObjectName(QString::fromUtf8("btnLeaveGateOpen"));
-        btnLeaveGateOpen->setGeometry(QRect(1142, 213, 83, 82));
+        btnLeaveGateOpen->setGeometry(QRect(1142, 212, 83, 82));
         btnLeaveGateOpen->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         btnCenterControlerStatus = new QPushButton(NewCMonitor);
         btnCenterControlerStatus->setObjectName(QString::fromUtf8("btnCenterControlerStatus"));
         btnCenterControlerStatus->setGeometry(QRect(935, 341, 199, 33));
-        btnCenterControlerStatus->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
+        btnCenterControlerStatus->setAutoFillBackground(false);
+        btnCenterControlerStatus->setStyleSheet(QString::fromUtf8("background-image:url();\n"
 "border-style: outset; "));
         btnEnterPeripheralStatus = new QPushButton(NewCMonitor);
         btnEnterPeripheralStatus->setObjectName(QString::fromUtf8("btnEnterPeripheralStatus"));
@@ -599,7 +600,7 @@ public:
 "border-style: outset; "));
         btnPublishLedInfo = new QPushButton(NewCMonitor);
         btnPublishLedInfo->setObjectName(QString::fromUtf8("btnPublishLedInfo"));
-        btnPublishLedInfo->setGeometry(QRect(1135, 341, 199, 33));
+        btnPublishLedInfo->setGeometry(QRect(1136, 341, 199, 33));
         btnPublishLedInfo->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         btnLeavePeripheralStatus = new QPushButton(NewCMonitor);
@@ -609,12 +610,12 @@ public:
 "border-style: outset; "));
         btnCandinate = new QPushButton(NewCMonitor);
         btnCandinate->setObjectName(QString::fromUtf8("btnCandinate"));
-        btnCandinate->setGeometry(QRect(1135, 411, 199, 33));
+        btnCandinate->setGeometry(QRect(1136, 411, 199, 33));
         btnCandinate->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         btnSmsNotification = new QPushButton(NewCMonitor);
         btnSmsNotification->setObjectName(QString::fromUtf8("btnSmsNotification"));
-        btnSmsNotification->setGeometry(QRect(1135, 376, 199, 33));
+        btnSmsNotification->setGeometry(QRect(1136, 376, 199, 33));
         btnSmsNotification->setStyleSheet(QString::fromUtf8("background-image:url( );\n"
 "border-style: outset; "));
         lblDateTime = new QLabel(NewCMonitor);

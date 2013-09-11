@@ -156,13 +156,16 @@ void CPictureContrastDlg::resizeEvent( QResizeEvent *event )
 {
     QWidget::resizeEvent( event );
 
+    //QString strFile = strImagePath + "NewIcon/FeeBG-normal.jpg";
+    //QPixmap bgimage( strFile );
+    //QPalette pal( palette( ) );
+    //pal.setBrush( QPalette::Window, QBrush( bgimage.scaled( event->size( ),
+                                                            //Qt::IgnoreAspectRatio,
+                                                            //Qt::SmoothTransformation ) ) );
+    //setPalette(pal);
+
     QString strFile = strImagePath + "NewIcon/FeeBG-normal.jpg";
-    QPixmap bgimage( strFile );
-    QPalette pal( palette( ) );
-    pal.setBrush( QPalette::Window, QBrush( bgimage.scaled( event->size( ),
-                                                            Qt::IgnoreAspectRatio,
-                                                            Qt::SmoothTransformation ) ) );
-    setPalette(pal);
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( strFile ) );
 
     CCommonFunction::WindowCenter( *this );
 }

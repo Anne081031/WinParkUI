@@ -537,6 +537,10 @@ void MainWindow::Login( bool bStart )
     ReleaseCapture( );
 
     GetCardEntityInfo( );
+
+    bool bDisplay = pSettings->value( "CommonCfg/SerialAnalog", false ).toBool( );
+    frmSerial.setParent( NULL );
+    frmSerial.setVisible( bDisplay );
 }
 
 CLogicInterface* MainWindow::GetLogicInterface( )

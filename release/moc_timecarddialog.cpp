@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'timecarddialog.h'
 **
-** Created: Mon Jul 29 16:44:16 2013
+** Created: Thu Sep 5 10:11:35 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

@@ -85,6 +85,16 @@ bool CConfigurator::ReadVideoCapture( )
     return pSettings->value( "Plate/Capture", false ).toBool( );
 }
 
+bool CConfigurator::ReadPlateMultiThread( )
+{
+    return pSettings->value( "Plate/MultiThread", false ).toBool( );
+}
+
+void CConfigurator::WritePlateMultiThread( bool bMulti )
+{
+    pSettings->setValue( "Plate/MultiThread", bMulti );
+}
+
 void CConfigurator::WriteVideoCapture( bool bCapture )
 {
     pSettings->setValue( "Plate/Capture", bCapture );

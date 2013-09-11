@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'picturecontrastdlg.ui'
 **
-** Created: Tue Sep 3 15:34:19 2013
+** Created: Thu Sep 5 09:57:49 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

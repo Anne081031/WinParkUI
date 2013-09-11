@@ -16,6 +16,9 @@ LIBS += ../lib/libLPKernelEx.a
 LIBS += ../lib/libDs40xxSDK.a
 LIBS += ../HKIPC/lib/libHCNetSDK.a
 LIBS += ../JWSIPC/lib/libtmControlClient.a
+LIBS += ../lib/libgdi32.a
+
+DEFINES += _WIN32_WINNT=0x0500
 
 TARGET = VZPlateDemo
 TEMPLATE = app
@@ -40,7 +43,8 @@ SOURCES += main.cpp\
     blacklistmainwindow.cpp \
     cconfigurator.cpp \
     cdlgblacklist.cpp \
-    cdlgconfig.cpp
+    cdlgconfig.cpp \
+    qtransparentframe.cpp
 
 HEADERS  += VZMainWindow.h \
     Thread/qplatethread.h \
@@ -60,11 +64,13 @@ HEADERS  += VZMainWindow.h \
     blacklistmainwindow.h \
     cconfigurator.h \
     cdlgblacklist.h \
-    cdlgconfig.h
+    cdlgconfig.h \
+    qtransparentframe.h
 
 FORMS    += vzmainwindow.ui \
     blacklistmainwindow.ui \
     cdlgblacklist.ui \
-    cdlgconfig.ui
+    cdlgconfig.ui \
+    qtransparentframe.ui
 
 RESOURCES +=

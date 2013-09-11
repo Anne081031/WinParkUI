@@ -70,6 +70,10 @@ void MainWindow::ReadFile( )
     ui->edtParkID->setText( pSystemCfg->value( "CommonCfg/ParkID", "5101070001" ).toString( ) );
     ui->chkBlacklist->setChecked( pSystemCfg->value( "Blacklist/Start", false ).toBool( ) );
 
+    ui->chkSerialAnalog->setChecked( pSystemCfg->value( "CommonCfg/SerialAnalog", false ).toBool( ) );
+    ui->chkPlateBox->setChecked( pSystemCfg->value( "CommonCfg/PlateBox", false ).toBool( ) );
+    ui->chkPlateThread->setChecked( pSystemCfg->value( "CommonCfg/PlateMultiThread", false ).toBool( ) );
+
     QString strKey = "CommonCfg/Video%1";
     QString strChannelKey = "CommonCfg/Name%1";
     QString strCbxKey = "CommonCfg/CatpureOpportunity%1";
@@ -99,6 +103,7 @@ void MainWindow::ReadFile( )
 
     ui->chkVideo->setChecked( pSysSetCfg->value( "VideoMode/AutoVideo", false ).toBool( ) );
     ui->chkPlate->setChecked( pSysSetCfg->value( "CarLicence/AutoRecognize", false ).toBool( ) );
+    ui->chkPlateReal->setChecked( pSystemCfg->value( "CommonCfg/Succession", false ).toBool( ) );
     ui->chkBroadcastData->setChecked( pSystemCfg->value( "CommonCfg/BroadCastData", false ).toBool( ) );
 
     ui->chkPublish->setChecked( pSystemCfg->value( "ThirdParty/ScuMsgCenter", false ).toBool( ) );
@@ -156,6 +161,10 @@ void MainWindow::WriteFile( )
     pSystemCfg->setValue( "CommonCfg/ParkID", ui->edtParkID->text( ) );
     pSystemCfg->setValue( "CommonCfg/BroadCastData", ui->chkBroadcastData->isChecked( ) );
 
+    pSystemCfg->setValue( "CommonCfg/SerialAnalog", ui->chkSerialAnalog->isChecked( ) );
+    pSystemCfg->setValue( "CommonCfg/PlateBox", ui->chkPlateBox->isChecked( ) );
+    pSystemCfg->setValue( "CommonCfg/PlateMultiThread", ui->chkPlateThread->isChecked( ) );
+
     pSystemCfg->setValue( "Blacklist/Start", ui->chkBlacklist->isChecked( ) );
 
     QString strKey = "CommonCfg/Video%1";
@@ -190,6 +199,7 @@ void MainWindow::WriteFile( )
 
     pSysSetCfg->setValue( "VideoMode/AutoVideo", ui->chkVideo->isChecked( ) );
     pSysSetCfg->setValue( "CarLicence/AutoRecognize", ui->chkPlate->isChecked( ) );
+    pSystemCfg->setValue( "CommonCfg/Succession", ui->chkPlateReal->isChecked( ) );
 
     pSystemCfg->setValue( "ThirdParty/ScuMsgCenter", ui->chkPublish->isChecked( ) );
     pSystemCfg->setValue( "ThirdParty/ScuMsgCenterIP", ui->edtPublishIP->text( ) );

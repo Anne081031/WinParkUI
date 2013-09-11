@@ -7,6 +7,7 @@
 *.so
 ParkUI.exe
 NewParkUI.exe
+*.ipch
 
 # Compiled Static libraries
 *.lai

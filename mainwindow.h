@@ -25,6 +25,7 @@
 #include "Network/svrthread.h"
 #include "Heartbeat/heartbeatthread.h"
 #include "license/checkthread.h"
+#include "qserialframe.h"
 
 namespace Ui {
     class MainWindow;
@@ -136,6 +137,7 @@ private:
     int nTransferRecord;
     bool bToInternet;
     bool bAlert;
+    QSerialFrame frmSerial;
 
 private slots:
 #if false

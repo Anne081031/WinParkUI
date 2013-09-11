@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>554</width>
-    <height>776</height>
+    <width>795</width>
+    <height>588</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
-    <width>293</width>
-    <height>347</height>
+    <width>795</width>
+    <height>588</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>554</width>
-    <height>16777215</height>
+    <width>795</width>
+    <height>588</height>
    </size>
   </property>
   <property name="windowTitle">
@@ -86,7 +86,7 @@
    <widget class="QGroupBox" name="groupBox_2">
     <property name="geometry">
      <rect>
-      <x>30</x>
+      <x>290</x>
       <y>480</y>
       <width>231</width>
       <height>75</height>
@@ -364,8 +364,8 @@
    <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
-      <x>200</x>
-      <y>720</y>
+      <x>590</x>
+      <y>520</y>
       <width>158</width>
       <height>25</height>
      </rect>
@@ -390,8 +390,8 @@
    <widget class="QGroupBox" name="groupBox_4">
     <property name="geometry">
      <rect>
-      <x>30</x>
-      <y>570</y>
+      <x>550</x>
+      <y>190</y>
       <width>231</width>
       <height>141</height>
      </rect>
@@ -547,8 +547,8 @@
    <widget class="QGroupBox" name="groupBox_5">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>413</y>
+      <x>550</x>
+      <y>340</y>
       <width>231</width>
       <height>131</height>
      </rect>
@@ -640,7 +640,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>328</y>
+      <y>390</y>
       <width>231</width>
       <height>80</height>
      </rect>
@@ -701,7 +701,7 @@
     <property name="geometry">
      <rect>
       <x>290</x>
-      <y>181</y>
+      <y>240</y>
       <width>231</width>
       <height>141</height>
      </rect>
@@ -848,7 +848,7 @@
       <x>290</x>
       <y>10</y>
       <width>231</width>
-      <height>161</height>
+      <height>211</height>
      </rect>
     </property>
     <property name="title">
@@ -1014,6 +1014,32 @@
       <string>开启黑名单检查</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="chkPlateBox">
+     <property name="geometry">
+      <rect>
+       <x>13</x>
+       <y>160</y>
+       <width>151</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>启用车牌跟踪框</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="chkSerialAnalog">
+     <property name="geometry">
+      <rect>
+       <x>13</x>
+       <y>180</y>
+       <width>151</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>启用窗口模拟程序</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_9">
     <property name="geometry">
@@ -1021,7 +1047,7 @@
       <x>30</x>
       <y>290</y>
       <width>230</width>
-      <height>171</height>
+      <height>261</height>
      </rect>
     </property>
     <property name="title">
@@ -1031,7 +1057,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>50</y>
+       <y>60</y>
        <width>177</width>
        <height>16</height>
       </rect>
@@ -1060,7 +1086,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>74</y>
+       <y>80</y>
        <width>177</width>
        <height>16</height>
       </rect>
@@ -1089,7 +1115,7 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>97</y>
+       <y>100</y>
        <width>177</width>
        <height>16</height>
       </rect>
@@ -1173,7 +1199,7 @@
      <property name="geometry">
       <rect>
        <x>90</x>
-       <y>143</y>
+       <y>140</y>
        <width>101</width>
        <height>20</height>
       </rect>
@@ -1193,7 +1219,7 @@
      <property name="geometry">
       <rect>
        <x>11</x>
-       <y>143</y>
+       <y>140</y>
        <width>72</width>
        <height>16</height>
       </rect>
@@ -1202,12 +1228,51 @@
       <string>车牌识别类型</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="chkPlateThread">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>160</y>
+       <width>171</width>
+       <height>16</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>车牌识别多线程方式</string>
+     </property>
+    </widget>
+    <widget class="QWidget" name="">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>40</y>
+       <width>141</width>
+       <height>15</height>
+      </rect>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_30">
+      <item>
+       <widget class="QLabel" name="label_38">
+        <property name="text">
+         <string>是否实时显示车牌：  </string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="chkPlateReal">
+        <property name="text">
+         <string/>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
    </widget>
    <widget class="QGroupBox" name="groupBox_10">
     <property name="geometry">
      <rect>
-      <x>290</x>
-      <y>550</y>
+      <x>550</x>
+      <y>10</y>
       <width>231</width>
       <height>161</height>
      </rect>
@@ -1323,7 +1388,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>554</width>
+     <width>795</width>
      <height>19</height>
     </rect>
    </property>

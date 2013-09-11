@@ -352,6 +352,9 @@
    <property name="text">
     <string>连数据库</string>
    </property>
+   <property name="visible">
+    <bool>false</bool>
+   </property>
   </action>
   <action name="actStartVideoOne">
    <property name="text">

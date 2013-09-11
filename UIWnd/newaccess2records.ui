@@ -819,8 +819,8 @@ color: rgb(170, 0, 0);</string>
   <widget class="QLabel" name="lblClose">
    <property name="geometry">
     <rect>
-     <x>1200</x>
-     <y>8</y>
+     <x>1281</x>
+     <y>6</y>
      <width>30</width>
      <height>15</height>
     </rect>

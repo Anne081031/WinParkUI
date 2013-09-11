@@ -26,7 +26,11 @@ public:
     void PostPlateInitEvent( int nFormat, int nChannel );
     void PostPlateUninitEvent( int nChannel );
     bool SetRecognizeFlag( );
+    void SetRecognizeFlag( bool bRecognize );
+    bool GetRecognizeFlag( );
     void SetPlateWay( int nWay );
+    void SetPlateMultiThread( bool bMulti );
+    bool GetPlateMultiThread( );
 
     ~QPlateThread( );
 
@@ -50,7 +54,7 @@ private:
     QString GetWidthHeight( TH_PlateResult* pResult );
     QString GetPlateColor( qint32 nColor );
     void GetResultInfo( QStringList& lstResult, QString& strFile, bool bSuccess, qint32 nNum, TH_PlateResult* pResult );
-    void SendUIResult( int nChannel, bool bSuccess, qint32 nNum, TH_PlateResult* pResult, bool bVideo, QByteArray& byData );
+    void SendUIResult( int nChannel, bool bSuccess, qint32 nNum, TH_PlateResult* pResult, bool bVideo, QPlateEvent* pEvent );
 
     QPlateThread* CreateSubThread( QString& strThreadKey );
     static QPlateThread* NewThread( );
@@ -61,19 +65,20 @@ private:
     QString strPlatePath;
     bool bStopRecognize;
     int nPlateWay;
+    bool bPlateMultiThread;
     QHash< QString, QPlateThread* > pSubThreadHash;
     
 signals:
     void PlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );
     void UIPlateResult( QString strPlate, int nChannel, bool bSuccess,
                         bool bVideo, int nWidth, int nHeight, int nConfidence,
-                        QString strDirection, QByteArray byData );
+                        QString strDirection, QByteArray byData, QRect rectPlate, QRect rectVideo );
     
 private slots:
     void HandlePlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );
     void HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
                         bool bVideo, int nWidth, int nHeight, int nConfidence,
-                        QString strDirection, QByteArray byData );
+                        QString strDirection, QByteArray byData, QRect rectPlate, QRect rectVideo );
 };
 
 #endif // QPLATETHREAD_H

@@ -83,6 +83,8 @@ CDlgSerach::CDlgSerach( CommonDataType::CardType nType, QWidget *parent) :
     ui->lblTitle->setText( QString( "%1¿¨ÐÅÏ¢¼ìË÷" ).arg( strTitle[ nCardType ] ) );
 
     setWindowFlags( Qt::FramelessWindowHint );
+
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( strImagePath ) );
 }
 
 CDlgSerach::~CDlgSerach()

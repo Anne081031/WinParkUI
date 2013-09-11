@@ -19,6 +19,7 @@ INPUT(
 ./release/cconfigurator.o
 ./release/cdlgblacklist.o
 ./release/cdlgconfig.o
+./release/qtransparentframe.o
 ./release/moc_VZMainWindow.o
 ./release/moc_qplatethread.o
 ./release/moc_qanalogcamerathread.o
@@ -35,4 +36,5 @@ INPUT(
 ./release/moc_cconfigurator.o
 ./release/moc_cdlgblacklist.o
 ./release/moc_cdlgconfig.o
+./release/moc_qtransparentframe.o
 );

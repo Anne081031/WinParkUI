@@ -48,7 +48,13 @@ VZMainWindow::VZMainWindow(QWidget *parent) :
     aResult[ 3 ] = ui->lblRes3;
 }
 
-VZMainWindow::~VZMainWindow()
+void VZMainWindow::closeEvent(QCloseEvent *)
+{
+    //QTransparentFrame::DestroyFrame( );
+    qApp->exit( );
+}
+
+VZMainWindow::~VZMainWindow( )
 {
     delete ui;
 }
@@ -114,7 +120,7 @@ void VZMainWindow::Initialize( )
 
     if ( "PictureFile" == strVideoType ) {
         nFormat = ImageFormatBGR;
-        nPlateWay = 1;
+        nPlateWay = 2;
     } else if ( "HkAnalog" == strVideoType ) {
         nFormat = bCapture ? ImageFormatBGR : ImageFormatYUV420COMPASS;
         pAnalogCamera = QHkCaptureCardThread::GetInstance( );
@@ -138,14 +144,17 @@ void VZMainWindow::Initialize( )
         pPlateThread->SetRecognizeFlag( );
     }
 
+    pPlateThread->SetPlateMultiThread( pConfig->ReadPlateMultiThread( ) );
+
     EnableCaptureButton( false );
     EnableStopButton( false );
+    ButtonEnable( false, false );
 
     connect( pPlateThread, SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
              this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
 
-    connect( pPlateThread, SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ),
-             this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray ) ) );
+    connect( pPlateThread, SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ),
+             this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ) );
 
     for ( int nIndex = 0; nIndex < nPlateWay; nIndex++ ) {
         pPlateThread->PostPlateInitEvent( nFormat, nIndex );
@@ -199,11 +208,55 @@ void VZMainWindow::LoadLogoTitle( )
 
 void VZMainWindow::HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
                     bool bVideo, int nWidth, int nHeight, int nConfidence,
-                    QString strDirection, QByteArray byData )
+                    QString strDirection, QByteArray byData, QRect rectPlate, QRect rectVideo )
 {
     QString strRes = QString( "%1 %2*%3 %4" ).arg( strPlate, QString::number( nWidth ),
                                                    QString::number( nHeight ), strDirection );
     aResult[ nChannel ]->setText( strRes );
+
+    QTransparentFrame::CreateFrame( aLables[ nChannel ]->winId( ), rectPlate, rectVideo );
+    //frmPlates[ nChannel ].ShowWnd( aLables[ nChannel ]->winId( ), rect );
+    //DramBox( aLables[ nChannel ]->winId( ), rect );
+}
+
+void VZMainWindow::DramBox( HWND hVideoWnd, QRect& rect )
+{
+    if ( rect.left( ) <= 0 || rect.top( ) <= 0 ||
+         rect.right( ) <= 0 || rect.bottom( ) <= 0 ) {
+        return;
+    }
+
+    POINT pos;
+    pos.x = rect.x( );
+    pos.y = rect.y( );
+    BOOL bRet = FALSE;
+    setParent( NULL );
+
+    HDC hVideoDc = GetDC( hVideoWnd );
+    HPEN hMyPen = CreatePen( PS_SOLID, 5, RGB( 0,0,0 ) );
+    HGDIOBJ hRawObj = SelectObject( hVideoDc, hMyPen );
+
+    POINT poplyPoint[ 5 ];
+    poplyPoint[ 0 ].x = rect.left( );
+    poplyPoint[ 0 ].y = rect.top( );
+
+    poplyPoint[ 1 ].x = rect.right( );
+    poplyPoint[ 1 ].y = rect.top( );
+
+    poplyPoint[ 2 ].x = rect.right( );
+    poplyPoint[ 2 ].y = rect.bottom( );
+
+    poplyPoint[ 3 ].x = rect.left( );
+    poplyPoint[ 3 ].y = rect.bottom( );
+
+    poplyPoint[ 4 ].x = rect.left( );
+    poplyPoint[ 4 ].y = rect.top( );
+
+    bRet = Polyline( hVideoDc, poplyPoint, 5 );
+
+    hRawObj = SelectObject( hVideoDc, hRawObj );
+    bRet = DeleteObject( hMyPen );
+    bRet = ReleaseDC( hVideoWnd, hVideoDc );
 }
 
 void VZMainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool bSuccess, bool bVideo )
@@ -298,7 +351,7 @@ void VZMainWindow::on_btnSingleFile_clicked()
         ButtonEnable( false, true );
     }
 
-    pPlateThread->PostPlateFileRecognize( strFile, 0 );
+    pPlateThread->PostPlateFileRecognize( strFile, 0, true );
 }
 
 void VZMainWindow::SingleFileRecognize( bool bPreFile )
@@ -320,7 +373,8 @@ void VZMainWindow::SingleFileRecognize( bool bPreFile )
     }
 
     QString strFile = lstFiles.at( nFileIndex ).absoluteFilePath( );
-    pPlateThread->PostPlateFileRecognize( strFile, 0 );
+    pPlateThread->PostPlateFileRecognize( strFile, 0, true );
+    pPlateThread->PostPlateFileRecognize( strFile, 1, true );
 }
 
 void VZMainWindow::on_btnPreFile_clicked()

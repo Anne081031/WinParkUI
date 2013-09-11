@@ -22,6 +22,8 @@ CDlgInconformity::CDlgInconformity(QWidget *parent) :
     edtCntrl[ 1 ][ 4 ] = ui->edtInfo14;
 
     move( 980, 520 );
+
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CDlgInconformity::~CDlgInconformity()

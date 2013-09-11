@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'vzmainwindow.ui'
 **
-** Created: Wed Sep 4 16:13:03 2013
+** Created: Mon Sep 9 11:08:43 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -108,7 +108,8 @@ public:
         lblVideo0 = new QLabel(centralWidget);
         lblVideo0->setObjectName(QString::fromUtf8("lblVideo0"));
         lblVideo0->setGeometry(QRect(10, 10, 421, 300));
-        lblVideo0->setAutoFillBackground(true);
+        lblVideo0->setAutoFillBackground(false);
+        lblVideo0->setStyleSheet(QString::fromUtf8(""));
         lblVideo0->setFrameShape(QFrame::Panel);
         lblVideo0->setFrameShadow(QFrame::Sunken);
         lblVideo0->setTextFormat(Qt::RichText);

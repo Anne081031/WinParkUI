@@ -25,6 +25,8 @@ CDlgBulkRegister::CDlgBulkRegister( CommonDataType::CardType card, QTableWidget*
     if ( NULL != pSet ) {
         nBulkEndMonth = pSet->value( "CommonCfg/CardBulkRegEndTime", 1 ).toInt( );
     }
+
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CDlgBulkRegister::~CDlgBulkRegister()

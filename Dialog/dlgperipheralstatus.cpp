@@ -37,6 +37,8 @@ CDlgPeripheralStatus::CDlgPeripheralStatus( bool bEnter, QWidget *parent ) :
     if ( bEnter ) {
         ui->chkForbidden->setChecked( pSettings->value( "UserRequest/EntranceForbidden", false ).toBool( ) );
     }
+
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CDlgPeripheralStatus::~CDlgPeripheralStatus()

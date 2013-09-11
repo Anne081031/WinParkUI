@@ -29,6 +29,7 @@ CSysSettingDialog::CSysSettingDialog(QWidget *parent) :
 
     ui->lblTilte->setText( windowTitle( ) );
     move( 123, 177 );
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CSysSettingDialog::~CSysSettingDialog()

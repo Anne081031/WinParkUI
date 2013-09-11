@@ -18,6 +18,7 @@
 #include "Thread/qfilecamerathread.h"
 
 #include "CDlgConfig.h"
+#include "qtransparentframe.h"
 
 namespace Ui {
 class VZMainWindow;
@@ -30,6 +31,9 @@ class VZMainWindow : public QMainWindow
 public:
     explicit VZMainWindow(QWidget *parent = 0);
     ~VZMainWindow();
+
+protected:
+    void closeEvent(QCloseEvent *);
 
 private:
     void LoadImg( QLabel* lblCtrlLeft, QLabel* lblCtrlRight, QLabel* lblCtrlDown, int nRow );
@@ -48,6 +52,8 @@ private:
     inline void EnableCaptureButton( bool bEnable );
     inline void EnableStopButton( bool bEnable );
 
+    void DramBox( HWND hVideoWnd, QRect& rect );
+
 private:
     QAnalogCameraThread* pAnalogCamera;
     QDigitalCameraThread* pDigitalCamera;
@@ -57,7 +63,7 @@ private:
 private slots:
     void HandleUIPlateResult( QString strPlate, int nChannel, bool bSuccess,
                         bool bVideo, int nWidth, int nHeight, int nConfidence,
-                        QString strDirection, QByteArray byData );
+                        QString strDirection, QByteArray byData, QRect rectPlate, QRect rectVideo );
     void HandlePlateResult( QStringList lstResult, int nChannel, bool bSuccess, bool bVideo );
     void HandleCaptureImage( QString strFile, int nChannel );
     void HandleCaptureImage( QString strFile, QString strIP );

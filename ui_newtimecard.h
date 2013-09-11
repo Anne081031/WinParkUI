@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newtimecard.ui'
 **
-** Created: Tue Sep 3 13:23:32 2013
+** Created: Thu Sep 5 16:20:11 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -53,7 +53,7 @@ public:
     {
         if (NewCTimeCard->objectName().isEmpty())
             NewCTimeCard->setObjectName(QString::fromUtf8("NewCTimeCard"));
-        NewCTimeCard->resize(1425, 806);
+        NewCTimeCard->resize(1320, 685);
         NewCTimeCard->setStyleSheet(QString::fromUtf8("background-image:url(D:/WinParkUI/debug/Image/NewIcon/CommonBigBG-normal1366x768.jpg);"));
         NewCTimeCard->setFrameShape(QFrame::StyledPanel);
         NewCTimeCard->setFrameShadow(QFrame::Raised);

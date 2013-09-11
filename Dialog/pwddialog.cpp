@@ -18,6 +18,7 @@ CPwdDialog::CPwdDialog(QWidget *parent) :
     setStatusTip( strPath );
 
     ui->lblTitle->setText( windowTitle( ) );
+    setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
 CPwdDialog::~CPwdDialog()

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newaccess2records.ui'
 **
-** Created: Tue Sep 3 13:45:36 2013
+** Created: Thu Sep 5 16:20:11 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -389,7 +389,7 @@ public:
 "color: rgb(170, 0, 0);"));
         lblClose = new QLabel(NewCAccess2Records);
         lblClose->setObjectName(QString::fromUtf8("lblClose"));
-        lblClose->setGeometry(QRect(1200, 8, 30, 15));
+        lblClose->setGeometry(QRect(1281, 6, 30, 15));
         lblClose->setStyleSheet(QString::fromUtf8("background-image:url(none);"));
         cb1 = new QComboBox(NewCAccess2Records);
         cb1->setObjectName(QString::fromUtf8("cb1"));

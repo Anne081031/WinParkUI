@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'mgmtthread.h'
 **
-** Created: Mon Jul 29 16:26:39 2013
+** Created: Thu Sep 5 10:43:01 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
