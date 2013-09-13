@@ -40,6 +40,9 @@ public:
     void ReadBlacklistPlate( QStringList& lstPlates );
     void WriteBlacklistPlate( QStringList& lstPlates );
 
+    void ReadPlateProvider( QString& strProvider );
+    bool ReadPlateDongleWay( );
+
 private:
     explicit CConfigurator(QObject *parent = 0);
 

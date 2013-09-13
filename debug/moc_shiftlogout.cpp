@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'shiftlogout.h'
 **
-** Created: Wed Sep 11 11:57:58 2013
+** Created: Thu Sep 12 12:32:01 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!

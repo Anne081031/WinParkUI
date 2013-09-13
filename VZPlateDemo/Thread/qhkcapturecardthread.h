@@ -50,7 +50,7 @@ private:
     static QAnalogCameraThread* pThreadInstance;
     HANDLE hChannels[ CHANNEL_WAY ];
     QByteArray objVideoStream[ CHANNEL_WAY ];
-    
+
 signals:
     
 public slots:

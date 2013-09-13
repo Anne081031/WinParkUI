@@ -138,3 +138,13 @@ void CConfigurator::WriteBlacklistPlate( QStringList& lstPlates )
 
     pSettings->sync( );
 }
+
+void CConfigurator::ReadPlateProvider( QString &strProvider )
+{
+    strProvider = pSettings->value( "Plate/Provider", "VZ" ).toString( );
+}
+
+bool CConfigurator::ReadPlateDongleWay( )
+{
+    return pSettings->value( "Plate/DongleOneWay", false ).toBool( );
+}

@@ -159,6 +159,9 @@ INPUT(
 ./release/qdigitalcamerathread.o
 ./release/dlgblacklistlocation.o
 ./release/qmypushbutton.o
+./release/qserialframe.o
+./release/qanalogthread.o
+./release/qtransparentframe.o
 ./release/moc_valuecard.o
 ./release/moc_tolldiscounttypeset.o
 ./release/moc_timecard.o
@@ -295,4 +298,7 @@ INPUT(
 ./release/moc_qdigitalcamerathread.o
 ./release/moc_dlgblacklistlocation.o
 ./release/moc_qmypushbutton.o
+./release/moc_qserialframe.o
+./release/moc_qanalogthread.o
+./release/moc_qtransparentframe.o
 );

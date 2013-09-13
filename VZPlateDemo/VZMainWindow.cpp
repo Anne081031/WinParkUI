@@ -137,6 +137,10 @@ void VZMainWindow::Initialize( )
         pFileCamera = QFileCameraThread::GetInstance( );
     }
 
+    EnableCaptureButton( false );
+    EnableStopButton( false );
+    ButtonEnable( false, false );
+
     pPlateThread = QPlateThread::GetInstance( );
     pPlateThread->SetPlateWay( nPlateWay );
 
@@ -144,11 +148,12 @@ void VZMainWindow::Initialize( )
         pPlateThread->SetRecognizeFlag( );
     }
 
-    pPlateThread->SetPlateMultiThread( pConfig->ReadPlateMultiThread( ) );
+    bool bMultihread = pConfig->ReadPlateMultiThread( );
+    pPlateThread->SetPlateMultiThread( bMultihread );
 
-    EnableCaptureButton( false );
-    EnableStopButton( false );
-    ButtonEnable( false, false );
+    if ( !bMultihread ) {
+        pPlateThread->SetDongleOneWay( pConfig->ReadPlateDongleWay( ) );
+    }
 
     connect( pPlateThread, SIGNAL( PlateResult( QStringList, int, bool, bool ) ),
              this, SLOT( HandlePlateResult( QStringList, int, bool, bool ) ) );
@@ -156,8 +161,10 @@ void VZMainWindow::Initialize( )
     connect( pPlateThread, SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ),
              this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ) );
 
+    pConfig->ReadPlateProvider( strVideoType );
+    bMultihread = strVideoType.toUpper( ) == "WT";
     for ( int nIndex = 0; nIndex < nPlateWay; nIndex++ ) {
-        pPlateThread->PostPlateInitEvent( nFormat, nIndex );
+        pPlateThread->PostPlateInitEvent( nFormat, nIndex, bMultihread );
     }
 
     //ImageFormat YUV420COMPASS : ImageFormatBGR

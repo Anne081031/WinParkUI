@@ -23,14 +23,15 @@ public:
     void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, int nChannel, bool bMultiThread = false );
     void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, QString& strIP, bool bMultiThread = false );
 
-    void PostPlateInitEvent( int nFormat, int nChannel );
-    void PostPlateUninitEvent( int nChannel );
+    void PostPlateInitEvent( int nFormat, int nChannel, bool bMultiThread = false );
+    void PostPlateUninitEvent( int nChannel, bool bMultiThread = false );
     bool SetRecognizeFlag( );
     void SetRecognizeFlag( bool bRecognize );
     bool GetRecognizeFlag( );
     void SetPlateWay( int nWay );
     void SetPlateMultiThread( bool bMulti );
     bool GetPlateMultiThread( );
+    void SetDongleOneWay( bool bOneWay );
 
     ~QPlateThread( );
 
@@ -65,8 +66,10 @@ private:
     QString strPlatePath;
     bool bStopRecognize;
     int nPlateWay;
+    bool bDongleOneWay;
     bool bPlateMultiThread;
-    QHash< QString, QPlateThread* > pSubThreadHash;
+    typedef QHash< QString, QPlateThread* > QThreadHash;
+    QThreadHash objSubThreadHash;
     
 signals:
     void PlateResult( QStringList lstPlateParam, int nChannel, bool bSuccess, bool bVideo );

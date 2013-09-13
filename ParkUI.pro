@@ -201,7 +201,9 @@ SOURCES += mainwindow.cpp \
     VZPlateDemo/Thread/qdigitalcamerathread.cpp \
     Dialog/dlgblacklistlocation.cpp \
     qmypushbutton.cpp \
-    qserialframe.cpp
+    qserialframe.cpp \
+    qanalogthread.cpp \
+    VZPlateDemo/qtransparentframe.cpp
 
 HEADERS  += Header/valuecard.h \
     Header/tolldiscounttypeset.h \
@@ -366,7 +368,9 @@ HEADERS  += Header/valuecard.h \
     VZPlateDemo/Thread/qdigitalcamerathread.h \
     Dialog/dlgblacklistlocation.h \
     qmypushbutton.h \
-    qserialframe.h
+    qserialframe.h \
+    qanalogthread.h \
+    VZPlateDemo/qtransparentframe.h
 
 FORMS    += UIWnd/valuecard.ui \
     UIWnd/tolldiscounttypeset.ui \
@@ -436,7 +440,8 @@ FORMS    += UIWnd/valuecard.ui \
     Dialog/cdlgquerywhere.ui \
     UIWnd/ipcvideoframe.ui \
     Dialog/dlgblacklistlocation.ui \
-    qserialframe.ui
+    qserialframe.ui \
+    VZPlateDemo/qtransparentframe.ui
 
 OTHER_FILES += \
     Doc/LedProtocol.doc \

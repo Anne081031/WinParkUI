@@ -13,6 +13,7 @@ QPlateThread::QPlateThread(QObject *parent) :
     QCommon::GetPlatePicPath( strPlatePath );
     bStopRecognize = false;
     nPlateWay = 1;
+    bDongleOneWay = false;
     bPlateMultiThread = false;
 }
 
@@ -47,9 +48,9 @@ QPlateThread* QPlateThread::CreateSubThread( QString &strThreadKey )
 {
     QPlateThread* pThread = this; // MainThread---SubThread
 
-    if ( 0 == pSubThreadHash.count( ) ) {
-        pSubThreadHash.insert( strThreadKey, this );
-    } else if ( NULL == ( pThread = pSubThreadHash.value( strThreadKey, NULL ) ) ) {
+    if ( 0 == objSubThreadHash.count( ) ) {
+        objSubThreadHash.insert( strThreadKey, this );
+    } else if ( NULL == ( pThread = objSubThreadHash.value( strThreadKey, NULL ) ) ) {
         pThread = NewThread( );
         pThread->SetPlateWay( nPlateWay );
         pThread->SetRecognizeFlag( GetRecognizeFlag( ) );
@@ -59,7 +60,7 @@ QPlateThread* QPlateThread::CreateSubThread( QString &strThreadKey )
         connect( pThread, SIGNAL(UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ),
                  this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ) );
 
-        pSubThreadHash.insert( strThreadKey, pThread );
+        objSubThreadHash.insert( strThreadKey, pThread );
     }
 
     return pThread;
@@ -78,7 +79,7 @@ bool QPlateThread::SetRecognizeFlag( )
 {
     bStopRecognize = !bStopRecognize;
 
-    foreach( QPlateThread* pThread, pSubThreadHash ) {
+    foreach( QPlateThread* pThread, objSubThreadHash ) {
         if ( this != pThread ) {
             pThread->SetRecognizeFlag( );
         }
@@ -100,6 +101,11 @@ void QPlateThread::SetPlateMultiThread( bool bMulti )
 bool QPlateThread::GetPlateMultiThread( )
 {
     return bPlateMultiThread;
+}
+
+void QPlateThread::SetDongleOneWay( bool bOneWay )
+{
+    bDongleOneWay = bOneWay;
 }
 
 bool QPlateThread::GetRecognizeFlag( )
@@ -182,19 +188,21 @@ void QPlateThread::PostPlateVideoRecognize( QByteArray &byVideo, int nWidth, int
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateInitEvent( int nFormat, int nChannel )
+void QPlateThread::PostPlateInitEvent( int nFormat, int nChannel, bool bMultiThread )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateInit );
     pEvent->SetImageFormat( nFormat );
     pEvent->SetChannel( ++nChannel );
+    pEvent->SetMultiThread( bMultiThread );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateUninitEvent( int nChannel )
+void QPlateThread::PostPlateUninitEvent( int nChannel, bool bMultiThread )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateUninit );
     pEvent->SetChannel( ++nChannel );
+    pEvent->SetMultiThread( bMultiThread );
 
     PostEvent( pEvent );
 }
@@ -204,7 +212,7 @@ void QPlateThread::PostEvent( QPlateEvent *pEvent )
     bool bMultiThread = pEvent->GetMultiThread( );
     QPlateThread* pReceiver = this;
 
-    if ( bMultiThread ) {
+    if ( bMultiThread && !bDongleOneWay ) {
         bool bIpcIP = pEvent->GetIpcVideoSource( );
         QString strThreadKey = bIpcIP ? pEvent->GetIpcIp( ) : QString::number( pEvent->GetChannel( ) );
         pReceiver = CreateSubThread( strThreadKey );
@@ -335,7 +343,7 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
 
     if ( nChannel >= nPlateWay ) {
         return;
-    }
+    }  
 
     int nNum = 0;
     TH_RECT rcRange = { 0 };
@@ -349,7 +357,7 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
     QByteArray byPath = pCodec->fromUnicode( strPlatePath );
     char* pPath = byPath.data( );
 
-    BOOL bRet = LPR_FileEx( pFile, pPath, result, nNum, &rcRange, nChannel + 1 );
+    BOOL bRet = LPR_FileEx( pFile, pPath, result, nNum, &rcRange, bDongleOneWay ? 1 : nChannel + 1 );
     QStringList lstResult;
 
     if ( !bRet || 0 == nNum ) {
@@ -388,7 +396,7 @@ void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
     ZeroMemory( result, sizeof ( result ) );
     QString strFile;
 
-    BOOL bRet = LPR_RGB888Ex( ( PBYTE ) byVideo.data( ), nWidth, nHeight, result, nNum, &rcRange, nChannel + 1 );
+    BOOL bRet = LPR_RGB888Ex( ( PBYTE ) byVideo.data( ), nWidth, nHeight, result, nNum, &rcRange, bDongleOneWay ? 1 : nChannel + 1 );
     QStringList lstResult;
 
     if ( !bRet || 0 == nNum ) {
@@ -421,6 +429,11 @@ BOOL QPlateThread::InitVZSDK( int nFormat, qint32 nChannel )
 {
     // nChannel 1 2 3 4
     //ImageFormatYUV420COMPASS : ImageFormatBGR
+
+    if ( bDongleOneWay && 1 != nChannel ) {
+        return TRUE;
+    }
+
     BOOL bRet = LPR_SetImageFormat ( FALSE, FALSE, nFormat,
                                      FALSE, 60, 400, TRUE, FALSE, FALSE, nChannel );
     if ( !bRet ) {
@@ -432,8 +445,8 @@ BOOL QPlateThread::InitVZSDK( int nFormat, qint32 nChannel )
         return bRet;
     }
 
-    bRet = LPR_SetPlateType( TRUE, FALSE, FALSE, FALSE, FALSE,
-                                                  FALSE, FALSE, FALSE, FALSE, nChannel ); //此处设置为识别双层黄牌。可以对这个函数设置，取默认值。
+    bRet = LPR_SetPlateType( TRUE, TRUE, TRUE, TRUE, TRUE,
+                                                  FALSE, TRUE, TRUE, FALSE, nChannel ); //此处设置为识别双层黄牌。可以对这个函数设置，取默认值。
     if ( !bRet ) {
         return bRet;
     }
@@ -446,6 +459,10 @@ BOOL QPlateThread::InitVZSDK( int nFormat, qint32 nChannel )
 
 void QPlateThread::UninitVZSDK( qint32 nChannel )
 {
+    if ( bDongleOneWay && 1 != nChannel ) {
+        return;
+    }
+
     LPR_UninitEx( nChannel );
 }
 

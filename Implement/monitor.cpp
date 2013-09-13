@@ -254,7 +254,7 @@ void CMonitor::PictureRegconize( QString &strFile, int nChannel, QByteArray& byD
         return;
     }
 
-    QPlateThread::GetInstance( )->PostPlateFileRecognize( byData, strFile, nChannel );
+    pPlateThread->PostPlateFileRecognize( byData, strFile, nChannel, bMultiThread );
     SavePicture( strFile );
 
     //bool bNoCard = pSystem->value( "CommonCfg/NoCardWork", false ).toBool( );
@@ -379,6 +379,10 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
 
     pSysSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
     pSystem= CCommonFunction::GetSettings( CommonDataType::CfgSystem );
+
+    bMultiThread = pSystem->value( "CommonCfg/PlateMultiThread", false ).toBool( );
+    bDongleOneWay = pSystem->value( "CommonCfg/DongleOneWay", false ).toBool( );
+    pPlateThread = QPlateThread::GetInstance( );
 
     ui->pushButton_2->setVisible( false );
     ui->pushButton->setVisible( false );
@@ -1333,7 +1337,14 @@ void CMonitor::ControlDetection( int nChannel, bool bStart )
 
 void CMonitor::StartNewPlateRecog( )
 {
-    QPlateThread::GetInstance( )->SetPlateWay( nUsedWay );
+    QPlateThread* pThread = pPlateThread;
+    pThread->SetPlateWay( nUsedWay );
+    pThread->SetPlateMultiThread( bMultiThread );
+    if ( !bMultiThread ) {
+        pThread->SetDongleOneWay( bDongleOneWay );
+    }
+
+    bool bWtProvider = pSystem->value( "CommonCfg/PlateProvider", "VZ" ).toString( ).toUpper( ) == "WT";
 
     for ( int nIndex = 0; nIndex < nUsedWay; nIndex++ ) {
         if ( !bPlateStart[ nIndex ] ) {
@@ -1341,21 +1352,21 @@ void CMonitor::StartNewPlateRecog( )
         }
 
         if ( bNetworkCamera ) {
-           QPlateThread::GetInstance( )->PostPlateInitEvent( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR, nIndex ); // Format / Channel
+           pThread->PostPlateInitEvent( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR, nIndex, bWtProvider ); // Format / Channel
         } else {
             switch ( nCapture ) {
             case CMultimedia::HikSdk :
-                QPlateThread::GetInstance( )->PostPlateInitEvent( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR, nIndex ); // HK
+                pThread->PostPlateInitEvent( bPlateVideo ? ImageFormatYUV420COMPASS : ImageFormatBGR, nIndex, bWtProvider ); // HK
                break;
 
             case CMultimedia::TmSDK :
-               QPlateThread::GetInstance( )->PostPlateInitEvent( ImageFormatRGB, nIndex ); //TM
+               pThread->PostPlateInitEvent( ImageFormatRGB, nIndex, bWtProvider ); //TM
                break;
             }
         }
     }
 
-    connect( QPlateThread::GetInstance( ), SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ),
+    connect( pThread, SIGNAL( UIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ),
              this, SLOT( HandleUIPlateResult( QString, int, bool, bool, int, int, int, QString, QByteArray, QRect, QRect ) ) );
 }
 

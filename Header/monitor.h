@@ -158,6 +158,9 @@ private:
     int nCurrentTotal[ 6 ];
     QString strCapture;
     int nCapture;
+    bool bMultiThread;
+    QPlateThread* pPlateThread;
+    bool bDongleOneWay;
 
     //bool bPlateFilter[ VIDEO_USEDWAY ];
     //bool bSuccession[ VIDEO_USEDWAY ];
