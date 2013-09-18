@@ -111,7 +111,6 @@ void QTmCaptureCardThread::customEvent( QEvent *e )
             break;
 
         case QCameraEvent::CameraStartMotionDetect :
-
             ProcessStartMotionDetectEvent( pEvent );
             break;
 

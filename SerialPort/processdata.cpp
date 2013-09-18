@@ -2359,6 +2359,14 @@ bool CProcessData::MonthNoCardWorkMode( )
     return bRet;
 }
 
+bool CProcessData::NoPlateOpenGate( )
+{
+    QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
+    bool bRet = !pSet->value( "CarLicence/AutoRecognize", false ).toBool( );
+
+    return bRet;
+}
+
 bool CProcessData::MonthCardWorkMode( QString& strCardNo )
 {
     QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSysSet );
@@ -2592,9 +2600,9 @@ bool CProcessData::WriteInOutRecord( QByteArray& byData ) // 地感开闸
         //SpaceChange( bEnter, cCan );
     } else { //库中库
         strSql = QString( "Insert Into GarageInGarage( CardID, ChannelName, Level, DateTime, \
-                          InOutFlag, PlateID ) VALUES( '%1', '%2', %3, '%4', %5, '%6' )" ).arg( strCardNumber,
+                          InOutFlag, PlateID, CardKind ) VALUES( '%1', '%2', %3, '%4', %5, '%6', '%7' )" ).arg( strCardNumber,
                                                                                                                      strChannel, QString::number( cLevel ),
-                                                                                                                     strDateTime, bEnter ? "1" : "0", strPlate );
+                                                                                                                     strDateTime, bEnter ? "1" : "0", strPlate, strCardType );
     }
 
     int nFee = 0;
@@ -2689,17 +2697,17 @@ void CProcessData::WriteInOutRecord( bool bEnter, QString& strCardNumber, QStrin
 
     if ( 1 != cLevel ) {  
         strSql = QString( "Insert IGNORE Into GarageInGarage( CardID, ChannelName, Level, DateTime, \
-                          InOutFlag, PlateID ) VALUES( '%1', '%2', %3, '%4', %5, '%6' )" ).arg(
+                          InOutFlag, PlateID, CardKind ) VALUES( '%1', '%2', %3, '%4', %5, '%6', '%7' )" ).arg(
                 bMonthMultipleCard ? strMonthMultipleCardNo : strCardNumber,
                  strChannel, QString::number( cLevel ),
-                 strDateTime, bEnter ? "1" : "0", strPlate );
+                 strDateTime, bEnter ? "1" : "0", strPlate, strCardType );
         if ( GetDirectDb( ) ) {
             CLogicInterface::GetInterface( )->ExecuteSql( strSql );
         } else {
             SendDbWriteMessage( CDbEvent::SQLInternal, strSql, CCommonFunction::GetHistoryDb( ), false, false );
         }
         ControlVehicleImage( strCardNumber, true, nChannel, cLevel, bMonthMultipleCard,
-                             bMonthMultipleCard, strMonthMultipleCardNo, true );
+                             bMonthCard, strMonthMultipleCardNo, true );
         DeleteCapturedFile( strCardNumber, nChannel,bEnter,  dtCurrent, strPlate );
         return;
     }
@@ -3000,7 +3008,7 @@ void CProcessData::ControlVehicleImage( QString &strCardNo, bool bSave2Db, int n
     QString strWhere;
     if ( bFreeCard ) { // 无卡号
         if ( bGarage ) {
-
+            strWhere = QString( bMonth ? " Where id = ( select stoprdid from Garagestoprdid where cardno = '%1' )" : " Where id = '%1'" ).arg( strCardNo );
         } else {
             strWhere = QString(  " Where stoprdid = ( select stoprdid from cardstoprdid where cardno = '%1' )" ).arg( bMonth ? strMonth : strCardNo );
         }
@@ -3526,7 +3534,7 @@ void CProcessData::ProcessCmd( QByteArray &byData, CPortCmd::PortUpCmd cmdType )
         BallotSense( byData, vData, bEnter, true );
         CaptureSenseImage( byData, CommonDataType::CaptureJPG );
         //Sleep( 1000 );
-        if ( !MonthNoCardWorkMode( ) && WriteInOutRecord( byData ) ) {
+        if ( NoPlateOpenGate( ) && WriteInOutRecord( byData ) ) {
             SenseOpenGate( byData );
         }
         break;
@@ -3539,7 +3547,7 @@ void CProcessData::ProcessCmd( QByteArray &byData, CPortCmd::PortUpCmd cmdType )
         BallotSense( byData, vData, bEnter, true );
         CaptureSenseImage( byData, CommonDataType::CaptureJPG );
         //Sleep( 1000 );
-        if ( !MonthNoCardWorkMode( ) && WriteInOutRecord( byData ) ) {
+        if ( NoPlateOpenGate( ) && WriteInOutRecord( byData ) ) {
             SenseOpenGate( byData );
         }
         break;

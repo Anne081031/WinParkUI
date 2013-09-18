@@ -44,7 +44,8 @@ SOURCES += main.cpp\
     cconfigurator.cpp \
     cdlgblacklist.cpp \
     cdlgconfig.cpp \
-    qtransparentframe.cpp
+    qtransparentframe.cpp \
+    Thread/quv200thread.cpp
 
 HEADERS  += VZMainWindow.h \
     Thread/qplatethread.h \
@@ -65,7 +66,8 @@ HEADERS  += VZMainWindow.h \
     cconfigurator.h \
     cdlgblacklist.h \
     cdlgconfig.h \
-    qtransparentframe.h
+    qtransparentframe.h \
+    Thread/quv200thread.h
 
 FORMS    += vzmainwindow.ui \
     blacklistmainwindow.ui \

@@ -1,0 +1,3 @@
+MySQL MariaDB PostgreSQL BackleyDB Sqlite
+
+PhoneGap PhoneJS http://www.devexpress.com/

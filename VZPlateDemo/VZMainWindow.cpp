@@ -51,6 +51,10 @@ VZMainWindow::VZMainWindow(QWidget *parent) :
 void VZMainWindow::closeEvent(QCloseEvent *)
 {
     //QTransparentFrame::DestroyFrame( );
+    if ( NULL != pAnalogCamera ) {
+        pAnalogCamera->PostStopVideoEvent( 0 );
+    }
+
     qApp->exit( );
 }
 
@@ -84,6 +88,9 @@ void VZMainWindow::EnableButton( QString &strVideoType )
         FileButton( false );
         VideoButton( true );
     } else if ( "TmAnalog" == strVideoType ) {
+        FileButton( false );
+        VideoButton( true );
+    } else if ( "TmUV200" == strVideoType ) {
         FileButton( false );
         VideoButton( true );
     } else if ( "HkIPC" == strVideoType ) {
@@ -126,6 +133,9 @@ void VZMainWindow::Initialize( )
         pAnalogCamera = QHkCaptureCardThread::GetInstance( );
     } else if ( "TmAnalog" == strVideoType ) {
         pAnalogCamera = QTmCaptureCardThread::GetInstance( );
+        nFormat = ImageFormatRGB;
+    } else if ( "TmUV200" == strVideoType ) {
+        pAnalogCamera = QUv200Thread::GetInstance( );
         nFormat = ImageFormatRGB;
     } else if ( "HkIPC" == strVideoType ) {
         pDigitalCamera = QDHkIPCThread::GetInstance( );

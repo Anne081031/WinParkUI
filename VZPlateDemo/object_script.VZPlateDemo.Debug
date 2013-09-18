@@ -20,6 +20,7 @@ INPUT(
 ./debug/cdlgblacklist.o
 ./debug/cdlgconfig.o
 ./debug/qtransparentframe.o
+./debug/quv200thread.o
 ./debug/moc_VZMainWindow.o
 ./debug/moc_qplatethread.o
 ./debug/moc_qanalogcamerathread.o
@@ -37,4 +38,5 @@ INPUT(
 ./debug/moc_cdlgblacklist.o
 ./debug/moc_cdlgconfig.o
 ./debug/moc_qtransparentframe.o
+./debug/moc_quv200thread.o
 );

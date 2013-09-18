@@ -248,7 +248,7 @@ LPKERNELEX_API BOOL WINAPI LPR_RGB888Ex(unsigned char *pImg, int nWidth, int  nH
 {
 	#pragma EXPORT
 
-	return FALSE; // Not supprot video stream
+	//return FALSE; // Not supprot video stream
 
 	BOOL bRet = ValidateChannel( nChannel );
 

@@ -279,13 +279,13 @@ void CAccess2Records::on_tableAccessRecord_cellDoubleClicked(int row, int column
     CCommonFunction::GetPath( strImagePath, CommonDataType::PathUIImage );
     strImagePath +="NewIcon/CommonMiddleBG-normal.jpg";
 
-    //QString strWhere = QString( " Where CardId = '%1' and DateTime between '%2' and '%3' " ).arg(
-    //            tab->item( row, 0 )->text( ),
-    //            tab->item( row, 7 )->text( ),
-    //            tab->item( row, 9 )->text( ) );
+    QString strWhere = QString( " Where CardId = '%1' and DateTime between '%2' and '%3' " ).arg(
+                tab->item( row, 0 )->text( ),
+                tab->item( row, 7 )->text( ),
+                tab->item( row, 9 )->text( ) );
 
-    QString strWhere = QString( " Where CardId = '%1' " ).arg(
-                tab->item( row, 0 )->text( ) );
+    //QString strWhere = QString( " Where CardId = '%1' " ).arg(
+    //            tab->item( row, 0 )->text( ) );
 
     CDlgGarageInGarage dlg;
     dlg.setStatusTip( strImagePath );

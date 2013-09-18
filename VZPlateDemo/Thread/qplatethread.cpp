@@ -339,6 +339,11 @@ void QPlateThread::GetResultInfo( QStringList &lstResult, QString &strFile, bool
 void QPlateThread::FileRecognize( QPlateEvent *pEvent )
 {
     QString& strFile = pEvent->GetFilePath( );
+
+    if ( !QFile::exists( strFile ) ) {
+        return;
+    }
+
     int nChannel = pEvent->GetChannel( );
 
     if ( nChannel >= nPlateWay ) {
@@ -380,6 +385,11 @@ void QPlateThread::VideoRecognize( QPlateEvent *pEvent )
     }
 
     QByteArray& byVideo = pEvent->GetVideoFrame( );
+
+    if ( 0 == byVideo.length( ) ) {
+        return;
+    }
+
     int nChannel = pEvent->GetChannel( );
 
     if ( nChannel >= nPlateWay ) {

@@ -41,14 +41,15 @@ void CDlgConfig::ReadConfig( )
     FillComboBox( ui->cbxUIType, strUIInfo, 2, strType );
 
     pConfig->ReadVideoType( strType );
-    QString strVideoInfo[ 7 ][ 2 ] = { { "静态图片文件", "PictureFile" },
+    QString strVideoInfo[ 8 ][ 2 ] = { { "静态图片文件", "PictureFile" },
                                        { "海康采集卡", "HkAnalog" },
                                        { "天敏采集卡", "TmAnalog" },
+                                       { "天敏采集棒UV200", "TmUV200" },
                                        { "海康网络相机", "HkIPC" },
                                        { "捷威思网络相机", "JwsIPC" },
                                        { "ONVIF网络相机", "OnvifIPC" },
                                        { "视频文件", "VideoFile" } };
-    int nIndex = FillComboBox( ui->cbxVideoType, strVideoInfo, 7, strType );
+    int nIndex = FillComboBox( ui->cbxVideoType, strVideoInfo, 8, strType );
 
     ui->spPlateWay->setValue( pConfig->ReadPlateWay( ) );
 

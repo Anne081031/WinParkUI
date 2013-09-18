@@ -106,6 +106,45 @@ typedef enum
 	MPEG4_AVIFILE_CALLBACK = 2		//存为MPEG文件并回调
 }MP4MODEL;
 
+//输入视频源端口
+typedef enum
+{
+/*    VIDEO_IN_1 = 0, //AV视频源1
+    VIDEO_IN_2 = 1, //AV视频源2
+    VIDEO_IN_3 = 2, //AV视频源3
+    VIDEO_IN_4 = 3, //AV视频源4
+    SVIDEO_IN  = 4  //SVIDEO视频源
+*/
+    Source_SV = 0,
+    Source_AV = 1
+}VIDEOSOURCE;
+
+typedef enum
+{
+    VideoSubType_None	= -1,
+    VideoSubType_RGB555 = 0,
+    VideoSubType_RGB24,
+    VideoSubType_YUY2,
+    VideoSubType_RGB8,
+    VideoSubType_RGB32,
+    VideoSubType_UYVY		//ZL_08.8.19
+} VideoSubType;
+
+//图像格式
+typedef enum
+{
+    IMAGE_BMP = 1,	//BMP文件格式
+    IMAGE_JPG = 2   //JPG文件格式
+}enImageType;
+
+typedef enum
+{
+    Even_Field = 0, //偶场
+    Odd_Field,		//奇场
+    Odd_Even_Field, //奇场、偶场
+    Interlaced_Field//复合场
+}VideoFieldType;
+
 typedef enum  
 {          //@enum Field frequency
     FIELD_FREQ_50HZ = 0,        //@emem source is 50 Hz (PAL)
@@ -182,6 +221,11 @@ typedef struct
 /////////////////////////////////////////////////////////////////////////////////////////////////
 //VC4000/VC8000/VC404P公有函数
 /////////////////////////////////////////////////////////////////////////////////////////////////
+
+//动态检测回调
+typedef void (CALLBACK *PrcCbMotionDetectUV200 )( long lnCardID, BOOL bMove, LPVOID lpContext );
+//捕获原始流回调
+typedef void (CALLBACK *PrcCapSourceStream)( long lnCardID, long pBuf, long lnWidth, long lnHeight, long lnBiCount );
 
 //动态检测回调，
 //如果VCAEnableMotionDetect 参数nPersistTime = －1;则回调运动检测地图。取消（开始、停止）回调。bMove将无效。

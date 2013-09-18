@@ -182,15 +182,15 @@ void CMonitor::HandleUIPlateResult( QString strPlate, int nChannel,
                                                 QString::number( nHeight ) );
     lblDirection[ nChannel ]->setText( strWindth + strDirection );
     bool bSuccession = pSystem->value( "CommonCfg/Succession", false ).toBool( );
-    if ( bSuccession && bPlateVideo && !bNocardwork ) {
+    if ( bSuccession && bPlateVideo && !bSenseGate && !bNocardwork ) {
         CCommonFunction::DisplayPlateChar( lblLicense[ nChannel ], nChannel, strPlate );
-        emit OnRecognizePlate( strPlate, nChannel, nConfidence, bNocardwork, byData ); //自动开闸
+        emit OnRecognizePlate( strPlate, nChannel, nConfidence, bSenseGate || bNocardwork, byData ); //自动开闸
         return;
     }
 
     if ( !bVideo ) { // File
         CCommonFunction::DisplayPlateChar( lblLicense[ nChannel ], nChannel, strPlate );
-        emit OnRecognizePlate( strPlate, nChannel, nConfidence, bNocardwork, byData ); //自动开闸
+        emit OnRecognizePlate( strPlate, nChannel, nConfidence, bSenseGate || bNocardwork, byData ); //自动开闸
     } else { // Video
         if ( bBallotSense[ nChannel ] ) { // 车压地感了
             return;
@@ -238,7 +238,7 @@ void CMonitor::SetNewBallotSense( bool bSense, int nChannel, QByteArray& byData 
             strPlate.append( strKey );
         }
 
-        emit OnRecognizePlate( strPlate, nChannel, 0, bNocardwork, byData ); //自动开闸
+        emit OnRecognizePlate( strPlate, nChannel, 0, bSenseGate || bNocardwork, byData ); //自动开闸
     } else {
         for ( int nIndex = 0; nIndex < 8; nIndex++ ) {
             plateResult[ nChannel ][ nIndex ].clear( );
@@ -408,6 +408,7 @@ CMonitor::CMonitor(QWidget* mainWnd, QWidget *parent) :
     bNetworkCamera = pSystem->value( "CommonCfg/NetworkCamera", false ).toBool( );
     pNewAnalogVideo = NULL;
     bNocardwork = pSystem->value( "CommonCfg/NoCardWork", false ).toBool( );
+    bSenseGate = pSystem->value( "CommonCfg/SenseOpenGate", false ).toBool( );
 
     InitChannelHandle( );
 

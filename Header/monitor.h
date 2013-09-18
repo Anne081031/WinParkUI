@@ -102,6 +102,7 @@ public:
     static bool GetPlateSuccession( bool bFilter, int nIndex );
     static QString strPlates[ VIDEO_USEDWAY ];
     bool bNocardwork;
+    bool bSenseGate;
 
 protected:
     void closeEvent ( QCloseEvent * event );

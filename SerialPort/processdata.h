@@ -182,6 +182,7 @@ private:
 
     inline bool MonthCardWorkMode( QString& strCardNo );
     inline bool MonthNoCardWorkMode( );
+    inline bool NoPlateOpenGate( );
     //void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard );
     //void SendDbWriteMessage( CDbEvent::UserEvent event, QString &strSql, bool bHistory, bool bTimerCard, CommonDataType::BlobType blob, QByteArray &byData );
     inline bool GetDirectDb( );
