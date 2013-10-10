@@ -41,6 +41,10 @@ private:
     typedef HRESULT ( WINAPI *VCAEnableCapSourceStream ) ( int nCards, BOOL bCapStream,
                                                            VideoFieldType enVideoFieldType,
                                                            PrcCapSourceStream pCapStream );
+    typedef HRESULT ( WINAPI *VCAStartCapture ) ( int nCards );
+    typedef HRESULT ( WINAPI *VCAStopCapture ) ( int nCards );
+    typedef HRESULT ( WINAPI *VCASetCaptureFile ) ( int nCards, LPCSTR szFileName );
+    typedef HRESULT ( WINAPI *VCASetCurrentVideoCompressor ) ( int nCards, LPCSTR pCompDevName );
 
     VCAInitSdk MyVCAInitSdk;
     VCAUnInitSdk MyVCAUnInitSdk;
@@ -52,6 +56,10 @@ private:
     VCAPause MyVCAPause;
     VCAStop MyVCAStop;
     VCAEnableCapSourceStream MyVCAEnableCapSourceStream;
+    VCAStartCapture MyVCAStartCapture;
+    VCAStopCapture MyVCAStopCapture;
+    VCASetCaptureFile MyVCASetCaptureFile;
+    VCASetCurrentVideoCompressor MyVCASetCurrentVideoCompressor;
 
     HMODULE hDllMod;
     

@@ -17,6 +17,8 @@ LIBS += ../lib/libDs40xxSDK.a
 LIBS += ../HKIPC/lib/libHCNetSDK.a
 LIBS += ../JWSIPC/lib/libtmControlClient.a
 LIBS += ../lib/libgdi32.a
+LIBS += ../lib/libole32.a
+LIBS += ../lib/libUsbCameraDll.a
 
 DEFINES += _WIN32_WINNT=0x0500
 
@@ -45,7 +47,9 @@ SOURCES += main.cpp\
     cdlgblacklist.cpp \
     cdlgconfig.cpp \
     qtransparentframe.cpp \
-    Thread/quv200thread.cpp
+    Thread/quv200thread.cpp \
+    Thread/cusbcamerathread.cpp \
+    qdlgdevice.cpp
 
 HEADERS  += VZMainWindow.h \
     Thread/qplatethread.h \
@@ -67,12 +71,15 @@ HEADERS  += VZMainWindow.h \
     cdlgblacklist.h \
     cdlgconfig.h \
     qtransparentframe.h \
-    Thread/quv200thread.h
+    Thread/quv200thread.h \
+    Thread/cusbcamerathread.h \
+    qdlgdevice.h
 
 FORMS    += vzmainwindow.ui \
     blacklistmainwindow.ui \
     cdlgblacklist.ui \
     cdlgconfig.ui \
-    qtransparentframe.ui
+    qtransparentframe.ui \
+    qdlgdevice.ui
 
 RESOURCES +=

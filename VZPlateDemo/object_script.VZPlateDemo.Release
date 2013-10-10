@@ -21,6 +21,8 @@ INPUT(
 ./release/cdlgconfig.o
 ./release/qtransparentframe.o
 ./release/quv200thread.o
+./release/cusbcamerathread.o
+./release/qdlgdevice.o
 ./release/moc_VZMainWindow.o
 ./release/moc_qplatethread.o
 ./release/moc_qanalogcamerathread.o
@@ -39,4 +41,6 @@ INPUT(
 ./release/moc_cdlgconfig.o
 ./release/moc_qtransparentframe.o
 ./release/moc_quv200thread.o
+./release/moc_cusbcamerathread.o
+./release/moc_qdlgdevice.o
 );

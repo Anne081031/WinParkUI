@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'qtransparentframe.ui'
 **
-** Created: Mon Sep 9 10:38:41 2013
+** Created: Wed Oct 9 14:51:44 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

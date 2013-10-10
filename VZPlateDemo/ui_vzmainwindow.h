@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'vzmainwindow.ui'
 **
-** Created: Mon Sep 9 11:08:43 2013
+** Created: Wed Oct 9 14:51:44 2013
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
@@ -14,6 +14,7 @@
 #include <QtGui/QAction>
 #include <QtGui/QApplication>
 #include <QtGui/QButtonGroup>
+#include <QtGui/QFrame>
 #include <QtGui/QHBoxLayout>
 #include <QtGui/QHeaderView>
 #include <QtGui/QLabel>
@@ -35,6 +36,14 @@ public:
     QLabel *lblPlatePic;
     QTableWidget *tabResult;
     QLabel *lblVideo0;
+    QLabel *lblVideo1;
+    QLabel *lblVideo2;
+    QLabel *lblVideo3;
+    QLabel *lblRes0;
+    QLabel *lblRes1;
+    QLabel *lblRes2;
+    QLabel *lblRes3;
+    QFrame *frame;
     QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout;
     QPushButton *btnFile;
@@ -46,13 +55,9 @@ public:
     QPushButton *btnCaptureFile;
     QPushButton *btnVideoFile;
     QPushButton *btnStopVideoRecognize;
-    QLabel *lblVideo1;
-    QLabel *lblVideo2;
-    QLabel *lblVideo3;
-    QLabel *lblRes0;
-    QLabel *lblRes1;
-    QLabel *lblRes2;
-    QLabel *lblRes3;
+    QFrame *frame_2;
+    QPushButton *btnUsbOpen;
+    QPushButton *btnUsbClose;
     QMenuBar *menuBar;
     QMenu *menu;
 
@@ -118,65 +123,6 @@ public:
         lblVideo0->setWordWrap(false);
         lblVideo0->setOpenExternalLinks(false);
         lblVideo0->setTextInteractionFlags(Qt::NoTextInteraction);
-        layoutWidget = new QWidget(centralWidget);
-        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
-        layoutWidget->setGeometry(QRect(10, 683, 902, 25));
-        horizontalLayout = new QHBoxLayout(layoutWidget);
-        horizontalLayout->setSpacing(6);
-        horizontalLayout->setContentsMargins(11, 11, 11, 11);
-        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
-        horizontalLayout->setContentsMargins(0, 0, 0, 0);
-        btnFile = new QPushButton(layoutWidget);
-        btnFile->setObjectName(QString::fromUtf8("btnFile"));
-
-        horizontalLayout->addWidget(btnFile);
-
-        btnSingleFile = new QPushButton(layoutWidget);
-        btnSingleFile->setObjectName(QString::fromUtf8("btnSingleFile"));
-
-        horizontalLayout->addWidget(btnSingleFile);
-
-        btnPreFile = new QPushButton(layoutWidget);
-        btnPreFile->setObjectName(QString::fromUtf8("btnPreFile"));
-        btnPreFile->setEnabled(false);
-
-        horizontalLayout->addWidget(btnPreFile);
-
-        btnNextFile = new QPushButton(layoutWidget);
-        btnNextFile->setObjectName(QString::fromUtf8("btnNextFile"));
-        btnNextFile->setEnabled(false);
-
-        horizontalLayout->addWidget(btnNextFile);
-
-        btnClear = new QPushButton(layoutWidget);
-        btnClear->setObjectName(QString::fromUtf8("btnClear"));
-
-        horizontalLayout->addWidget(btnClear);
-
-        btnCamera = new QPushButton(layoutWidget);
-        btnCamera->setObjectName(QString::fromUtf8("btnCamera"));
-        btnCamera->setEnabled(true);
-
-        horizontalLayout->addWidget(btnCamera);
-
-        btnCaptureFile = new QPushButton(layoutWidget);
-        btnCaptureFile->setObjectName(QString::fromUtf8("btnCaptureFile"));
-        btnCaptureFile->setEnabled(true);
-
-        horizontalLayout->addWidget(btnCaptureFile);
-
-        btnVideoFile = new QPushButton(layoutWidget);
-        btnVideoFile->setObjectName(QString::fromUtf8("btnVideoFile"));
-        btnVideoFile->setEnabled(false);
-
-        horizontalLayout->addWidget(btnVideoFile);
-
-        btnStopVideoRecognize = new QPushButton(layoutWidget);
-        btnStopVideoRecognize->setObjectName(QString::fromUtf8("btnStopVideoRecognize"));
-        btnStopVideoRecognize->setEnabled(true);
-
-        horizontalLayout->addWidget(btnStopVideoRecognize);
-
         lblVideo1 = new QLabel(centralWidget);
         lblVideo1->setObjectName(QString::fromUtf8("lblVideo1"));
         lblVideo1->setGeometry(QRect(440, 10, 421, 300));
@@ -246,6 +192,81 @@ public:
         lblRes3->setFrameShape(QFrame::Panel);
         lblRes3->setFrameShadow(QFrame::Sunken);
         lblRes3->setAlignment(Qt::AlignCenter);
+        frame = new QFrame(centralWidget);
+        frame->setObjectName(QString::fromUtf8("frame"));
+        frame->setGeometry(QRect(10, 680, 901, 28));
+        frame->setFrameShape(QFrame::StyledPanel);
+        frame->setFrameShadow(QFrame::Raised);
+        layoutWidget = new QWidget(frame);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 0, 902, 25));
+        horizontalLayout = new QHBoxLayout(layoutWidget);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
+        horizontalLayout->setContentsMargins(0, 0, 0, 0);
+        btnFile = new QPushButton(layoutWidget);
+        btnFile->setObjectName(QString::fromUtf8("btnFile"));
+
+        horizontalLayout->addWidget(btnFile);
+
+        btnSingleFile = new QPushButton(layoutWidget);
+        btnSingleFile->setObjectName(QString::fromUtf8("btnSingleFile"));
+
+        horizontalLayout->addWidget(btnSingleFile);
+
+        btnPreFile = new QPushButton(layoutWidget);
+        btnPreFile->setObjectName(QString::fromUtf8("btnPreFile"));
+        btnPreFile->setEnabled(false);
+
+        horizontalLayout->addWidget(btnPreFile);
+
+        btnNextFile = new QPushButton(layoutWidget);
+        btnNextFile->setObjectName(QString::fromUtf8("btnNextFile"));
+        btnNextFile->setEnabled(false);
+
+        horizontalLayout->addWidget(btnNextFile);
+
+        btnClear = new QPushButton(layoutWidget);
+        btnClear->setObjectName(QString::fromUtf8("btnClear"));
+
+        horizontalLayout->addWidget(btnClear);
+
+        btnCamera = new QPushButton(layoutWidget);
+        btnCamera->setObjectName(QString::fromUtf8("btnCamera"));
+        btnCamera->setEnabled(true);
+
+        horizontalLayout->addWidget(btnCamera);
+
+        btnCaptureFile = new QPushButton(layoutWidget);
+        btnCaptureFile->setObjectName(QString::fromUtf8("btnCaptureFile"));
+        btnCaptureFile->setEnabled(true);
+
+        horizontalLayout->addWidget(btnCaptureFile);
+
+        btnVideoFile = new QPushButton(layoutWidget);
+        btnVideoFile->setObjectName(QString::fromUtf8("btnVideoFile"));
+        btnVideoFile->setEnabled(false);
+
+        horizontalLayout->addWidget(btnVideoFile);
+
+        btnStopVideoRecognize = new QPushButton(layoutWidget);
+        btnStopVideoRecognize->setObjectName(QString::fromUtf8("btnStopVideoRecognize"));
+        btnStopVideoRecognize->setEnabled(true);
+
+        horizontalLayout->addWidget(btnStopVideoRecognize);
+
+        frame_2 = new QFrame(centralWidget);
+        frame_2->setObjectName(QString::fromUtf8("frame_2"));
+        frame_2->setGeometry(QRect(920, 680, 171, 28));
+        frame_2->setFrameShape(QFrame::StyledPanel);
+        frame_2->setFrameShadow(QFrame::Raised);
+        btnUsbOpen = new QPushButton(frame_2);
+        btnUsbOpen->setObjectName(QString::fromUtf8("btnUsbOpen"));
+        btnUsbOpen->setGeometry(QRect(0, 0, 75, 23));
+        btnUsbClose = new QPushButton(frame_2);
+        btnUsbClose->setObjectName(QString::fromUtf8("btnUsbClose"));
+        btnUsbClose->setGeometry(QRect(90, 0, 75, 23));
         VZMainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(VZMainWindow);
         menuBar->setObjectName(QString::fromUtf8("menuBar"));
@@ -289,6 +310,13 @@ public:
         QTableWidgetItem *___qtablewidgetitem9 = tabResult->horizontalHeaderItem(9);
         ___qtablewidgetitem9->setText(QApplication::translate("VZMainWindow", "\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
         lblVideo0->setText(QString());
+        lblVideo1->setText(QString());
+        lblVideo2->setText(QString());
+        lblVideo3->setText(QString());
+        lblRes0->setText(QString());
+        lblRes1->setText(QString());
+        lblRes2->setText(QString());
+        lblRes3->setText(QString());
         btnFile->setText(QApplication::translate("VZMainWindow", "\350\257\206\345\210\253\346\211\200\346\234\211\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
         btnSingleFile->setText(QApplication::translate("VZMainWindow", "\350\257\206\345\210\253\345\215\225\344\270\200\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
         btnPreFile->setText(QApplication::translate("VZMainWindow", "\344\270\212\344\270\200\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
@@ -298,13 +326,8 @@ public:
         btnCaptureFile->setText(QApplication::translate("VZMainWindow", "\346\212\223\345\233\276", 0, QApplication::UnicodeUTF8));
         btnVideoFile->setText(QApplication::translate("VZMainWindow", "\350\247\206\351\242\221\346\226\207\344\273\266", 0, QApplication::UnicodeUTF8));
         btnStopVideoRecognize->setText(QApplication::translate("VZMainWindow", "\345\201\234\346\255\242\350\247\206\351\242\221\350\257\206\345\210\253", 0, QApplication::UnicodeUTF8));
-        lblVideo1->setText(QString());
-        lblVideo2->setText(QString());
-        lblVideo3->setText(QString());
-        lblRes0->setText(QString());
-        lblRes1->setText(QString());
-        lblRes2->setText(QString());
-        lblRes3->setText(QString());
+        btnUsbOpen->setText(QApplication::translate("VZMainWindow", "\350\216\267\345\217\226USB\350\256\276\345\244\207", 0, QApplication::UnicodeUTF8));
+        btnUsbClose->setText(QApplication::translate("VZMainWindow", "\345\205\263\351\227\255USB\350\256\276\345\244\207", 0, QApplication::UnicodeUTF8));
         menu->setTitle(QApplication::translate("VZMainWindow", "\347\263\273\347\273\237\351\205\215\347\275\256", 0, QApplication::UnicodeUTF8));
     } // retranslateUi
 

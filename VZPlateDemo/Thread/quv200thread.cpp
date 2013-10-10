@@ -51,6 +51,10 @@ void QUv200Thread::GetFunctionPointer( )
     MyVCAPause = ( VCAPause ) GetProcAddress( hDllMod, "VCAPause" );
     MyVCAStop = ( VCAStop ) GetProcAddress( hDllMod, "VCAStop" );
     MyVCAEnableCapSourceStream = ( VCAEnableCapSourceStream ) GetProcAddress( hDllMod, "VCAEnableCapSourceStream" );
+    MyVCAStartCapture = ( VCAStartCapture ) GetProcAddress( hDllMod, "VCAStartCapture" );
+    MyVCAStopCapture = ( VCAStopCapture ) GetProcAddress( hDllMod, "VCAStopCapture" );
+    MyVCASetCaptureFile = ( VCASetCaptureFile ) GetProcAddress( hDllMod, "VCASetCaptureFile" );
+    MyVCASetCurrentVideoCompressor = ( VCASetCurrentVideoCompressor ) GetProcAddress( hDllMod, "VCASetCurrentVideoCompressor" );
 }
 
 void QUv200Thread::run( )
@@ -144,12 +148,18 @@ void QUv200Thread::ProcessCloseChannelEvent( QCameraEvent* pEvent )
 
 void QUv200Thread::ProcessStartCaptureEvent( QCameraEvent* pEvent )
 {
-    Q_UNUSED( pEvent )
+    int nChannel = pEvent->GetChannel( );
+    int nRet = MyVCASetCaptureFile( nChannel, ( char* ) "c:\\20130923-110456.avi" );
+    nRet = MyVCASetCurrentVideoCompressor( nChannel, ( char* ) "XviD MPEG-4 Code");
+    nRet = MyVCAStartCapture( nChannel );
+    nRet = 0;
 }
 
 void QUv200Thread::ProcessStopCaptureEvent( QCameraEvent* pEvent )
 {
-    Q_UNUSED( pEvent )
+    int nChannel = pEvent->GetChannel( );
+    int nRet = MyVCAStopCapture( nChannel );
+    nRet = 0;
 }
 
 void QUv200Thread::VidCapCallBack( long lnCardID, long pBuf, long lnWidth, long lnHeight, long lnBiCount )
@@ -186,8 +196,8 @@ void QUv200Thread::ProcessStartPreviewEvent( QCameraEvent* pEvent )
     nSize.cx = 720;
     nSize.cy = 576;
 
-    MyVCAEnableCapSourceStream( nChannel, TRUE, Odd_Even_Field, VidCapCallBack );
     nRet = MyVCAConnectDevice( nChannel, FALSE, hVideoWnd, nSize, Source_AV, 15, VideoSubType_RGB24 );
+    nRet = MyVCAEnableCapSourceStream( nChannel, TRUE, Odd_Even_Field, VidCapCallBack );
     //nRet = MyVCARun( nChannel );
     nRet = 0;
 }

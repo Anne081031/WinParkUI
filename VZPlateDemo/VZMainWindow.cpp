@@ -4,6 +4,7 @@
 #include <QDir>
 #include <QDebug>
 #include <QDateTime>
+#include "qdlgdevice.h"
 
 /*
  QT UI事件处理 MVC 中V C完全分离
@@ -113,6 +114,8 @@ void VZMainWindow::Initialize( )
     pDigitalCamera = NULL;
     pFileCamera = NULL;
 
+    pUsbCamera = dynamic_cast< CUsbCameraThread* > ( CUsbCameraThread::GetInstance( ) );
+
     pConfig = CConfigurator::CreateInstance( );
 
     QString strVideoType;
@@ -146,6 +149,11 @@ void VZMainWindow::Initialize( )
     } else if ( "VideoFile" == strVideoType ) {
         pFileCamera = QFileCameraThread::GetInstance( );
     }
+
+    ////////
+    nFormat = ImageFormatBGR;
+    nPlateWay = 1;
+    //////////
 
     EnableCaptureButton( false );
     EnableStopButton( false );
@@ -533,4 +541,24 @@ void VZMainWindow::on_actParameter_triggered()
 {
     CDlgConfig dlg( this );
     dlg.exec( );
+}
+
+void VZMainWindow::on_btnUsbOpen_clicked( )
+{
+    QStringList lstDevice;
+    pUsbCamera->GetDevice( lstDevice, aLables[ 0 ]->winId( ) );
+
+    QDlgDevice dlg( this );
+    dlg.AddDevice( lstDevice );
+    if ( QDlgDevice::Accepted != dlg.exec( ) ) {
+        return;
+    }
+
+    int nIndex = dlg.GetDeviceIndex( );
+    pUsbCamera->PostPlayVideoEvent( nIndex, NULL );
+}
+
+void VZMainWindow::on_btnUsbClose_clicked( )
+{
+    pUsbCamera->PostStopVideoEvent( 0 );
 }

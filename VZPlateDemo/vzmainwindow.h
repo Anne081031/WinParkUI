@@ -15,6 +15,7 @@
 #include "Thread/qjvsipcthread.h"
 #include "Thread/qonvifthread.h"
 #include "Thread/quv200thread.h"
+#include "Thread/cusbcamerathread.h"
 
 #include "Thread/qfilecamerathread.h"
 
@@ -57,6 +58,7 @@ private:
 
 private:
     QAnalogCameraThread* pAnalogCamera;
+    CUsbCameraThread* pUsbCamera;
     QDigitalCameraThread* pDigitalCamera;
     QFileCameraThread* pFileCamera;
     QPlateThread* pPlateThread;
@@ -93,6 +95,10 @@ private slots:
     void on_btnStopVideoRecognize_clicked();
 
     void on_actParameter_triggered();
+
+    void on_btnUsbOpen_clicked();
+
+    void on_btnUsbClose_clicked();
 
 private:
     Ui::VZMainWindow *ui;

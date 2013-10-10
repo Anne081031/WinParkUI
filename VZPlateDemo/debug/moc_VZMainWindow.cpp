@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'VZMainWindow.h'
 **
-** Created: Wed Sep 18 15:53:38 2013
+** Created: Wed Oct 9 17:09:21 2013
 **      by: The Qt Meta Object Compiler version 62 (Qt 4.7.4)
 **
 ** WARNING! All changes made in this file will be lost!
@@ -23,7 +23,7 @@ static const uint qt_meta_data_VZMainWindow[] = {
        5,       // revision
        0,       // classname
        0,    0, // classinfo
-      17,   14, // methods
+      19,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -48,6 +48,8 @@ static const uint qt_meta_data_VZMainWindow[] = {
      687,   13,   13,   13, 0x08,
      715,   13,   13,   13, 0x08,
      750,   13,   13,   13, 0x08,
+     778,   13,   13,   13, 0x08,
+     802,   13,   13,   13, 0x08,
 
        0        // eod
 };
@@ -73,6 +75,8 @@ static const char qt_meta_stringdata_VZMainWindow[] = {
     "on_btnCaptureFile_clicked()\0"
     "on_btnStopVideoRecognize_clicked()\0"
     "on_actParameter_triggered()\0"
+    "on_btnUsbOpen_clicked()\0"
+    "on_btnUsbClose_clicked()\0"
 };
 
 const QMetaObject VZMainWindow::staticMetaObject = {
@@ -121,9 +125,11 @@ int VZMainWindow::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
         case 14: on_btnCaptureFile_clicked(); break;
         case 15: on_btnStopVideoRecognize_clicked(); break;
         case 16: on_actParameter_triggered(); break;
+        case 17: on_btnUsbOpen_clicked(); break;
+        case 18: on_btnUsbClose_clicked(); break;
         default: ;
         }
-        _id -= 17;
+        _id -= 19;
     }
     return _id;
 }
