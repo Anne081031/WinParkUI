@@ -49,7 +49,8 @@ SOURCES += main.cpp\
     qtransparentframe.cpp \
     Thread/quv200thread.cpp \
     Thread/cusbcamerathread.cpp \
-    qdlgdevice.cpp
+    qdlgdevice.cpp \
+    Thread/quv200timerthread.cpp
 
 HEADERS  += VZMainWindow.h \
     Thread/qplatethread.h \
@@ -73,7 +74,8 @@ HEADERS  += VZMainWindow.h \
     qtransparentframe.h \
     Thread/quv200thread.h \
     Thread/cusbcamerathread.h \
-    qdlgdevice.h
+    qdlgdevice.h \
+    Thread/quv200timerthread.h
 
 FORMS    += vzmainwindow.ui \
     blacklistmainwindow.ui \

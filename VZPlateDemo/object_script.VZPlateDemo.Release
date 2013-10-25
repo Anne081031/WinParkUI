@@ -23,6 +23,7 @@ INPUT(
 ./release/quv200thread.o
 ./release/cusbcamerathread.o
 ./release/qdlgdevice.o
+./release/quv200timerthread.o
 ./release/moc_VZMainWindow.o
 ./release/moc_qplatethread.o
 ./release/moc_qanalogcamerathread.o
@@ -43,4 +44,5 @@ INPUT(
 ./release/moc_quv200thread.o
 ./release/moc_cusbcamerathread.o
 ./release/moc_qdlgdevice.o
+./release/moc_quv200timerthread.o
 );

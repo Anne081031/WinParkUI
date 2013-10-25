@@ -123,7 +123,7 @@ void QPlateThread::run( )
     exec( );
 }
 
-void QPlateThread::PostPlateFileRecognize( QString &strFile, int nChannel, bool bMultiThread )
+void QPlateThread::PostPlateFileRecognize( QString &strFile, int nChannel, bool bMultiThread, bool bDeleteFile )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
     pEvent->SetFilePath( strFile );
@@ -131,11 +131,12 @@ void QPlateThread::PostPlateFileRecognize( QString &strFile, int nChannel, bool 
     pEvent->SetIpcVideoSource( false );
     bMultiThread = bPlateMultiThread;
     pEvent->SetMultiThread( bMultiThread );
+    pEvent->SetDeletFile( bDeleteFile );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateFileRecognize( QString &strFile, QString& strIP, bool bMultiThread )
+void QPlateThread::PostPlateFileRecognize( QString &strFile, QString& strIP, bool bMultiThread, bool bDeleteFile )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
     pEvent->SetFilePath( strFile );
@@ -143,11 +144,12 @@ void QPlateThread::PostPlateFileRecognize( QString &strFile, QString& strIP, boo
     pEvent->SetIpcVideoSource( true );
     bMultiThread = bPlateMultiThread;
     pEvent->SetMultiThread( bMultiThread );
+    pEvent->SetDeletFile( bDeleteFile );
 
     PostEvent( pEvent );
 }
 
-void QPlateThread::PostPlateFileRecognize( QByteArray& byData, QString &strFile, int nChannel, bool bMultiThread )
+void QPlateThread::PostPlateFileRecognize( QByteArray& byData, QString &strFile, int nChannel, bool bMultiThread, bool bDeleteFile )
 {
     QPlateEvent* pEvent = new QPlateEvent( ( QPlateEvent::Type ) QPlateEvent::PlateFileRecognize );
     pEvent->SetFilePath( strFile );
@@ -156,6 +158,7 @@ void QPlateThread::PostPlateFileRecognize( QByteArray& byData, QString &strFile,
     pEvent->SetIpcVideoSource( false );
     bMultiThread = bPlateMultiThread;
     pEvent->SetMultiThread( bMultiThread );
+    pEvent->SetDeletFile( bDeleteFile );
 
     PostEvent( pEvent );
 }
@@ -376,6 +379,10 @@ void QPlateThread::FileRecognize( QPlateEvent *pEvent )
     GetResultInfo( lstResult, strFile, bRet, nNum, result );
     emit PlateResult( lstResult, nChannel, bRet, false );
     SendUIResult( nChannel, bRet, nNum, result, false, pEvent );
+
+    if ( pEvent->GetDeletFile( ) ) {
+        //QFile::remove( strFile );
+    }
 }
 
 void QPlateThread::VideoRecognize( QPlateEvent *pEvent )

@@ -23,6 +23,7 @@ INPUT(
 ./debug/quv200thread.o
 ./debug/cusbcamerathread.o
 ./debug/qdlgdevice.o
+./debug/quv200timerthread.o
 ./debug/moc_VZMainWindow.o
 ./debug/moc_qplatethread.o
 ./debug/moc_qanalogcamerathread.o
@@ -43,4 +44,5 @@ INPUT(
 ./debug/moc_quv200thread.o
 ./debug/moc_cusbcamerathread.o
 ./debug/moc_qdlgdevice.o
+./debug/moc_quv200timerthread.o
 );

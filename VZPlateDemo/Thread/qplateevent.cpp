@@ -8,6 +8,7 @@ QPlateEvent::QPlateEvent( Type evtType ) : QEvent( evtType )
     nVideoHeight = 0;
     bMultiThread = false;
     bIpcVideoSource = false;
+    bDeleteFile = false;
 }
 
 void QPlateEvent::SetFilePath( QString &strFile )
@@ -108,4 +109,14 @@ void QPlateEvent::SetMultiThread( bool bMulti )
 bool QPlateEvent::GetMultiThread( )
 {
     return bMultiThread;
+}
+
+void QPlateEvent::SetDeletFile( bool bDelete )
+{
+    bDeleteFile = bDelete;
+}
+
+bool QPlateEvent::GetDeletFile( )
+{
+    return bDeleteFile;
 }

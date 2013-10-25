@@ -1,29 +1,9 @@
-﻿Build started 2013-9-16 14:01:59.
-     1>Project "D:\WinParkUI\VSPark\LPKernelEx\LPKernelEx.vcxproj" on node 2 (build target(s)).
-     1>InitializeBuildStatus:
-         Creating "Release\LPKernelEx.unsuccessfulbuild" because "AlwaysCreate" was specified.
-       ClCompile:
-         All outputs are up-to-date.
-         All outputs are up-to-date.
-         All outputs are up-to-date.
-       ResourceCompile:
-         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /D _UNICODE /D UNICODE /l"0x0409" /nologo /fo"Release\LPKernelEx.res" LPKernelEx.rc 
-       Link:
-         f:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\WinParkUI\VSPark\Release\LPKernelEx.dll" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Release\LPKernelEx.dll.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"D:\WinParkUI\VSPark\Release\LPKernelEx.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\WinParkUI\VSPark\Release\LPKernelEx.lib" /MACHINE:X86 /DLL Release\LPKernelEx.res
-         Release\dllmain.obj
-         Release\LPKernelEx.obj
-         Release\stdafx.obj
-            Creating library D:\WinParkUI\VSPark\Release\LPKernelEx.lib and object D:\WinParkUI\VSPark\Release\LPKernelEx.exp
-         Generating code
-         Finished generating code
-         LPKernelEx.vcxproj -> D:\WinParkUI\VSPark\Release\LPKernelEx.dll
-       Manifest:
-         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /outputresource:"D:\WinParkUI\VSPark\Release\LPKernelEx.dll;#2" /manifest Release\LPKernelEx.dll.intermediate.manifest
-       FinalizeBuildStatus:
-         Deleting file "Release\LPKernelEx.unsuccessfulbuild".
-         Touching "Release\LPKernelEx.lastbuildstate".
-     1>Done Building Project "D:\WinParkUI\VSPark\LPKernelEx\LPKernelEx.vcxproj" (build target(s)).
+﻿Build started 2013-10-24 17:09:25.
+     1>Project "D:\WinParkUI\VSPark\LPKernelEx\LPKernelEx.vcxproj" on node 2 (clean target(s)).
+     1>_PrepareForClean:
+         Deleting file "Release\LPKernelEx.lastbuildstate".
+     1>Done Building Project "D:\WinParkUI\VSPark\LPKernelEx\LPKernelEx.vcxproj" (clean target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:01.59
+Time Elapsed 00:00:00.07

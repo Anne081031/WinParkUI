@@ -1,0 +1,13 @@
+P101
+
+Window station
+Desktop
+Handle Object Interface
+
+The volatile registers, stacks, and private storage area are called the thread¡¯s context.
+
+User-Mode Scheduler Kernel-Mode Scheduler
+
+A job object allows groups of processes to be managed as a unit.
+
+A thread pool is a collection of worker threads that efficiently execute asynchronous callbacks on behalf of the application. 

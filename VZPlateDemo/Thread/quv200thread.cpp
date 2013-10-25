@@ -8,6 +8,7 @@ QUv200Thread::QUv200Thread(QObject *parent) :
     QAnalogCameraThread(parent)
 {
     GetFunctionPointer( );
+    bDeleteFile = false;
 }
 
 QUv200Thread::~QUv200Thread( )
@@ -18,6 +19,11 @@ QUv200Thread::~QUv200Thread( )
 
         }
     }
+}
+
+void QUv200Thread::SetDeleteFile( bool bDelete )
+{
+    bDeleteFile = bDelete;
 }
 
 QAnalogCameraThread* QUv200Thread::GetInstance( )
@@ -148,6 +154,7 @@ void QUv200Thread::ProcessCloseChannelEvent( QCameraEvent* pEvent )
 
 void QUv200Thread::ProcessStartCaptureEvent( QCameraEvent* pEvent )
 {
+    return;
     int nChannel = pEvent->GetChannel( );
     int nRet = MyVCASetCaptureFile( nChannel, ( char* ) "c:\\20130923-110456.avi" );
     nRet = MyVCASetCurrentVideoCompressor( nChannel, ( char* ) "XviD MPEG-4 Code");
@@ -157,6 +164,7 @@ void QUv200Thread::ProcessStartCaptureEvent( QCameraEvent* pEvent )
 
 void QUv200Thread::ProcessStopCaptureEvent( QCameraEvent* pEvent )
 {
+    return;
     int nChannel = pEvent->GetChannel( );
     int nRet = MyVCAStopCapture( nChannel );
     nRet = 0;
@@ -197,7 +205,7 @@ void QUv200Thread::ProcessStartPreviewEvent( QCameraEvent* pEvent )
     nSize.cy = 576;
 
     nRet = MyVCAConnectDevice( nChannel, FALSE, hVideoWnd, nSize, Source_AV, 15, VideoSubType_RGB24 );
-    nRet = MyVCAEnableCapSourceStream( nChannel, TRUE, Odd_Even_Field, VidCapCallBack );
+    //nRet = MyVCAEnableCapSourceStream( nChannel, TRUE, Odd_Even_Field, VidCapCallBack );
     //nRet = MyVCARun( nChannel );
     nRet = 0;
 }
@@ -242,7 +250,7 @@ void QUv200Thread::CaptureStaticImage(QString &strFile, int nChannel)
     QByteArray byData = QCommon::GetTextCodec( )->fromUnicode( strFile );
     char* pFile = byData.data( );
     nRet = MyVCACapturePicture( nChannel, pFile, IMAGE_JPG, NULL, 80, 1, TRUE );
-    Sleep( 1000 );
+    Sleep( 20 );
     nRet = 0;
 }
 
@@ -256,6 +264,6 @@ void QUv200Thread::ProcessCaptureImageEvent( QCameraEvent* pEvent )
     SendCaptureImage( strFile, nChannel );
 
     if ( bRecognize ) {
-        GetPlateThread( )->PostPlateFileRecognize( strFile, nChannel );
+        GetPlateThread( )->PostPlateFileRecognize( strFile, nChannel, false, bDeleteFile );
     }
 }

@@ -16,9 +16,9 @@ class QPlateThread : public QThread
 public:
     static QPlateThread* GetInstance( );
 
-    void PostPlateFileRecognize( QString& strFile, int nChannel, bool bMultiThread = false );
-    void PostPlateFileRecognize( QString& strFile, QString& strIP, bool bMultiThread = false );
-    void PostPlateFileRecognize( QByteArray& byData, QString& strFile, int nChannel, bool bMultiThread = false );
+    void PostPlateFileRecognize( QString& strFile, int nChannel, bool bMultiThread = false, bool bDeleteFile = false );
+    void PostPlateFileRecognize( QString& strFile, QString& strIP, bool bMultiThread = false, bool bDeleteFile = false );
+    void PostPlateFileRecognize( QByteArray& byData, QString& strFile, int nChannel, bool bMultiThread = false, bool bDeleteFile = false );
 
     void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, int nChannel, bool bMultiThread = false );
     void PostPlateVideoRecognize( QByteArray& byVideo, int nWidth, int nHeight, QString& strIP, bool bMultiThread = false );

@@ -51,9 +51,30 @@ VZMainWindow::VZMainWindow(QWidget *parent) :
 
 void VZMainWindow::closeEvent(QCloseEvent *)
 {
-    //QTransparentFrame::DestroyFrame( );
     if ( NULL != pAnalogCamera ) {
-        pAnalogCamera->PostStopVideoEvent( 0 );
+        for ( int nChannel = 0; nChannel < nPlateWay; nChannel++ ) {
+            pAnalogCamera->PostStopMotionDetectEvent( nChannel );
+            pAnalogCamera->PostStopSourceStreamEvent( nChannel );
+            pAnalogCamera->PostStopCaptureEvent( nChannel );
+            pAnalogCamera->PostStopVideoEvent( nChannel );
+            pAnalogCamera->PostCloseChannelEvent( nChannel );
+        }
+
+        pAnalogCamera->PostUninitCaptureSDKEvent( );
+    } else if ( NULL != pDigitalCamera ) {
+        for ( int nChannel = 0; nChannel < nPlateWay; nChannel++ ) {
+            pDigitalCamera->PostIPCStopRealPlayEvent( aLables[ nChannel ]->winId( ) );
+        }
+
+        pDigitalCamera->PostIPCLogoutEvent( strIpcIP );
+        pDigitalCamera->PostIPCCleanupEvent( );
+    }
+
+    QDir dir( strPlateDir );
+    QStringList lstFiles = dir.entryList( QDir::Files | QDir::NoDotAndDotDot );
+    foreach ( const QString& str, lstFiles ) {
+        QFile file( strPlateDir+ str );
+        file.remove( );
     }
 
     qApp->exit( );
@@ -114,7 +135,7 @@ void VZMainWindow::Initialize( )
     pDigitalCamera = NULL;
     pFileCamera = NULL;
 
-    pUsbCamera = dynamic_cast< CUsbCameraThread* > ( CUsbCameraThread::GetInstance( ) );
+    //pUsbCamera = dynamic_cast< CUsbCameraThread* > ( CUsbCameraThread::GetInstance( ) );
 
     pConfig = CConfigurator::CreateInstance( );
 
@@ -138,7 +159,8 @@ void VZMainWindow::Initialize( )
         pAnalogCamera = QTmCaptureCardThread::GetInstance( );
         nFormat = ImageFormatRGB;
     } else if ( "TmUV200" == strVideoType ) {
-        pAnalogCamera = QUv200Thread::GetInstance( );
+        bUv200Video = !bCapture;
+        pAnalogCamera = QUV200TimerThread::GetInstance( bUv200Video );
         nFormat = ImageFormatRGB;
     } else if ( "HkIPC" == strVideoType ) {
         pDigitalCamera = QDHkIPCThread::GetInstance( );
@@ -151,8 +173,8 @@ void VZMainWindow::Initialize( )
     }
 
     ////////
-    nFormat = ImageFormatBGR;
-    nPlateWay = 1;
+    //nFormat = ImageFormatBGR;
+    //nPlateWay = 1;
     //////////
 
     EnableCaptureButton( false );
@@ -297,7 +319,13 @@ void VZMainWindow::HandlePlateResult( QStringList lstResult, int nChannel, bool 
         ui->tabResult->setItem( 0, nCol++, pItem );
     }
 
-    if ( !bVideo ) {
+    if ( bUv200Video ) {
+        //QString strFile = ui->tabResult->item( 0, 7 )->text( );
+        //bool bRet = QFile::remove( strFile );
+        //bRet = false;
+    }
+
+    if ( !bVideo && !bUv200Video ) {
         LoadImg( ui->lblVideo0, ui->lblPicture, ui->lblPlatePic, 0 );
     }
      //qDebug( ) << Q_FUNC_INFO << ":" << lstResult.join( "," ) << endl;
@@ -545,6 +573,7 @@ void VZMainWindow::on_actParameter_triggered()
 
 void VZMainWindow::on_btnUsbOpen_clicked( )
 {
+    return;
     QStringList lstDevice;
     pUsbCamera->GetDevice( lstDevice, aLables[ 0 ]->winId( ) );
 
@@ -560,5 +589,6 @@ void VZMainWindow::on_btnUsbOpen_clicked( )
 
 void VZMainWindow::on_btnUsbClose_clicked( )
 {
+    return;
     pUsbCamera->PostStopVideoEvent( 0 );
 }

@@ -10,6 +10,7 @@ class QUv200Thread : public QAnalogCameraThread
 public:
     static QAnalogCameraThread* GetInstance( );
     ~QUv200Thread( );
+    void SetDeleteFile( bool bDelete );
 
     void CaptureStaticImage( QString &strFile, int nChannel );
 
@@ -89,6 +90,7 @@ private:
     void ProcessCaptureImageEvent( QCameraEvent* pEvent );
 
     static QAnalogCameraThread* pThreadInstance;
+    bool bDeleteFile;
 
 signals:
 

@@ -14,7 +14,7 @@
 #include "Thread/qdhkipcthread.h"
 #include "Thread/qjvsipcthread.h"
 #include "Thread/qonvifthread.h"
-#include "Thread/quv200thread.h"
+#include "Thread/quv200timerthread.h"
 #include "Thread/cusbcamerathread.h"
 
 #include "Thread/qfilecamerathread.h"
@@ -111,6 +111,7 @@ private:
     int nPlateWay;
     CConfigurator* pConfig;
     bool bCapture;
+    bool bUv200Video;
 };
 
 #endif // MAINWINDOW_H

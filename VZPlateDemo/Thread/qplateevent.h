@@ -48,6 +48,9 @@ public:
     void SetMultiThread( bool bMulti );
     bool GetMultiThread( );
 
+    void SetDeletFile( bool bDelete );
+    bool GetDeletFile( );
+
 private:
     QString strPicFile;
     QByteArray byVideoFrame;
@@ -59,6 +62,7 @@ private:
     QString strIpcIp;
     bool bIpcVideoSource;
     bool bMultiThread;
+    bool bDeleteFile;
 };
 
 #endif // QPLATEEVENT_H
