@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WcfRoadHost</RootNamespace>
     <AssemblyName>WcfRoadHost</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -70,6 +71,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="App.config" />
     <None Include="Properties\Settings.settings">
@@ -96,6 +98,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\WcfCommonLib\WcfCommonLib.csproj">
+      <Project>{7B2F7F24-46A3-439A-934C-28E6D55FEFBC}</Project>
+      <Name>WcfCommonLib</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WcfRoadService\WcfRoadService.csproj">
       <Project>{1C44AAEF-E99F-4599-9455-6FF844C7FB1C}</Project>
       <Name>WcfRoadService</Name>

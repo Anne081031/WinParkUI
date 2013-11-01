@@ -28,36 +28,85 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.btnTest = new System.Windows.Forms.Button();
+            this.components = new System.ComponentModel.Container();
+            this.btnClearLog = new System.Windows.Forms.Button();
+            this.timerReconnect = new System.Windows.Forms.Timer(this.components);
+            this.txtLog = new System.Windows.Forms.RichTextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // btnTest
+            // btnClearLog
             // 
-            this.btnTest.Location = new System.Drawing.Point(12, 12);
-            this.btnTest.Name = "btnTest";
-            this.btnTest.Size = new System.Drawing.Size(74, 30);
-            this.btnTest.TabIndex = 0;
-            this.btnTest.Text = "Test";
-            this.btnTest.UseVisualStyleBackColor = true;
-            this.btnTest.Click += new System.EventHandler(this.btnTest_Click);
+            this.btnClearLog.Location = new System.Drawing.Point(8, 8);
+            this.btnClearLog.Name = "btnClearLog";
+            this.btnClearLog.Size = new System.Drawing.Size(75, 23);
+            this.btnClearLog.TabIndex = 0;
+            this.btnClearLog.Text = "清除日志";
+            this.btnClearLog.UseVisualStyleBackColor = true;
+            this.btnClearLog.Click += new System.EventHandler(this.btnTest_Click);
+            // 
+            // timerReconnect
+            // 
+            this.timerReconnect.Enabled = true;
+            this.timerReconnect.Interval = 10000;
+            this.timerReconnect.Tick += new System.EventHandler(this.timerReconnect_Tick);
+            // 
+            // txtLog
+            // 
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Location = new System.Drawing.Point(0, 0);
+            this.txtLog.Name = "txtLog";
+            this.txtLog.ReadOnly = true;
+            this.txtLog.Size = new System.Drawing.Size(792, 530);
+            this.txtLog.TabIndex = 2;
+            this.txtLog.Text = "";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.btnClearLog);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(792, 36);
+            this.panel1.TabIndex = 3;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.txtLog);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(0, 36);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(792, 530);
+            this.panel2.TabIndex = 4;
             // 
             // RoadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 266);
-            this.Controls.Add(this.btnTest);
+            this.ClientSize = new System.Drawing.Size(792, 566);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Name = "RoadForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "路边Web Service";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RoadForm_FormClosed);
             this.Load += new System.EventHandler(this.RoadForm_Load);
+            this.panel1.ResumeLayout(false);
+            this.panel2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button btnTest;
+        private System.Windows.Forms.Button btnClearLog;
+        private System.Windows.Forms.Timer timerReconnect;
+        private System.Windows.Forms.RichTextBox txtLog;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel2;
     }
 }
 

@@ -78,6 +78,9 @@ namespace WcfRoadHost.WcfCenterSvcReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WcfCenterSvcReference.ICenterService")]
     public interface ICenterService {
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICenterService/GetInOutImage", ReplyAction="http://tempuri.org/ICenterService/GetInOutImageResponse")]
+        void GetInOutImage(string strLocationID, string strRecordID, bool bEnter);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICenterService/GetData", ReplyAction="http://tempuri.org/ICenterService/GetDataResponse")]
         string GetData(int value);
         
@@ -110,6 +113,10 @@ namespace WcfRoadHost.WcfCenterSvcReference {
         
         public CenterServiceClient(System.ServiceModel.Channels.Binding binding, System.ServiceModel.EndpointAddress remoteAddress) : 
                 base(binding, remoteAddress) {
+        }
+        
+        public void GetInOutImage(string strLocationID, string strRecordID, bool bEnter) {
+            base.Channel.GetInOutImage(strLocationID, strRecordID, bEnter);
         }
         
         public string GetData(int value) {

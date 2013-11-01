@@ -4,9 +4,12 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using Newtonsoft.Json;
 
 namespace WcfCenterService
 {
+    // > PM Install-Package Newtonsoft.Json
+    //http://james.newtonking.com/json/help/index.html
     // NOTE: You can use the "Rename" command on the "Refactor" menu to change the class name "Service1" in both code and config file together.
     public delegate void Test(int value);
 
@@ -14,6 +17,16 @@ namespace WcfCenterService
     public class CenterService : ICenterService
     {
         static public Test t;
+
+        //
+        // Get vehicle record image
+        // Get peer socket by strLocationID 
+        // Get an image from roadserver by strRecordID, bEnter
+        //
+        public bool GetInOutImage(string strLocationID, string strRecordID, bool bEnter)
+        {
+            return true;
+        }
 
         public string GetData(int value)
         {

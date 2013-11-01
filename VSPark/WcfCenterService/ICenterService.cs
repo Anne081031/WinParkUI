@@ -11,6 +11,18 @@ namespace WcfCenterService
     [ServiceContract]
     public interface ICenterService
     {
+        //
+        // Get vehicle record image
+        //
+        
+        [OperationContract]
+        bool GetInOutImage(string strLocationID, string strRecordID, bool bEnter );
+
+        //[OperationContract(IsOneWay=true)]
+        //void WriteData2Db();
+        //[OperationContract]
+       // void GetDataFromDb();
+
         [OperationContract]
         string GetData(int value);
 
