@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -55,11 +56,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Service References\WcfRoadSvcReference\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </Compile>
     <EmbeddedResource Include="CenterForm.resx">
       <DependentUpon>CenterForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -85,19 +81,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <None Include="Service References\WcfRoadSvcReference\item.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WcfRoadSvcReference\item1.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WcfRoadSvcReference\item2.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\WcfRoadSvcReference\RoadService.wsdl" />
-    <None Include="Service References\WcfRoadSvcReference\WcfCenterHost.WcfRoadSvcReference.CompositeType.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WcfCenterService\WcfCenterService.csproj">
@@ -111,21 +94,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\WcfRoadSvcReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\WcfRoadSvcReference\configuration91.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\WcfRoadSvcReference\configuration.svcinfo" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\WcfRoadSvcReference\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

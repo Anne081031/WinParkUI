@@ -22,5 +22,26 @@ namespace TestApp
         {
             webClient.PostString();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            sqlConnection1.Open();
+            //mySqlConnection1.Open();
+            //bool bRet = mySqlConnection1.Ping();
+            richTextBox1.Clear();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                webClient.PostString();
+            }
+            catch (Exception ex)
+            {
+                richTextBox1.AppendText(ex.Message);
+                richTextBox1.AppendText("\n");
+            }
+        }
     }
 }

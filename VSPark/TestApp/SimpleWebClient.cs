@@ -18,7 +18,7 @@ namespace TestApp
 
         public void PostString()
         {
-            string strResponse = client.UploadString("", "5101080001001001|123");
+            string strResponse = client.UploadString("", "5101080001001006|39");
             System.Diagnostics.Debug.Print( strResponse );
         }
     }

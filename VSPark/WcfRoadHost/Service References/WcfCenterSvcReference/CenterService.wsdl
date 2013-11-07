@@ -1,212 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="CenterService" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
-  <wsp:Policy wsu:Id="WSHttpBinding_ICenterService_policy">
+  <wsp:Policy wsu:Id="BasicHttpBinding_ICenterService_policy">
     <wsp:ExactlyOne>
       <wsp:All>
-        <sp:SymmetricBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:ProtectionToken>
-              <wsp:Policy>
-                <sp:SecureConversationToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
-                  <wsp:Policy>
-                    <sp:RequireDerivedKeys />
-                    <sp:BootstrapPolicy>
-                      <wsp:Policy>
-                        <sp:SignedParts>
-                          <sp:Body />
-                          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-                          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-                          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-                          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-                          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-                          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-                          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-                        </sp:SignedParts>
-                        <sp:EncryptedParts>
-                          <sp:Body />
-                        </sp:EncryptedParts>
-                        <sp:SymmetricBinding>
-                          <wsp:Policy>
-                            <sp:ProtectionToken>
-                              <wsp:Policy>
-                                <sp:SpnegoContextToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
-                                  <wsp:Policy>
-                                    <sp:RequireDerivedKeys />
-                                  </wsp:Policy>
-                                </sp:SpnegoContextToken>
-                              </wsp:Policy>
-                            </sp:ProtectionToken>
-                            <sp:AlgorithmSuite>
-                              <wsp:Policy>
-                                <sp:Basic256 />
-                              </wsp:Policy>
-                            </sp:AlgorithmSuite>
-                            <sp:Layout>
-                              <wsp:Policy>
-                                <sp:Strict />
-                              </wsp:Policy>
-                            </sp:Layout>
-                            <sp:IncludeTimestamp />
-                            <sp:EncryptSignature />
-                            <sp:OnlySignEntireHeadersAndBody />
-                          </wsp:Policy>
-                        </sp:SymmetricBinding>
-                        <sp:Wss11>
-                          <wsp:Policy />
-                        </sp:Wss11>
-                        <sp:Trust10>
-                          <wsp:Policy>
-                            <sp:MustSupportIssuedTokens />
-                            <sp:RequireClientEntropy />
-                            <sp:RequireServerEntropy />
-                          </wsp:Policy>
-                        </sp:Trust10>
-                      </wsp:Policy>
-                    </sp:BootstrapPolicy>
-                  </wsp:Policy>
-                </sp:SecureConversationToken>
-              </wsp:Policy>
-            </sp:ProtectionToken>
-            <sp:AlgorithmSuite>
-              <wsp:Policy>
-                <sp:Basic256 />
-              </wsp:Policy>
-            </sp:AlgorithmSuite>
-            <sp:Layout>
-              <wsp:Policy>
-                <sp:Strict />
-              </wsp:Policy>
-            </sp:Layout>
-            <sp:IncludeTimestamp />
-            <sp:EncryptSignature />
-            <sp:OnlySignEntireHeadersAndBody />
-          </wsp:Policy>
-        </sp:SymmetricBinding>
-        <sp:Wss11 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy />
-        </sp:Wss11>
-        <sp:Trust10 xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <wsp:Policy>
-            <sp:MustSupportIssuedTokens />
-            <sp:RequireClientEntropy />
-            <sp:RequireServerEntropy />
-          </wsp:Policy>
-        </sp:Trust10>
-        <wsaw:UsingAddressing />
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_ICenterService_GetInOutImage_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_ICenterService_GetInOutImage_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_ICenterService_GetData_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_ICenterService_GetData_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_ICenterService_GetDataUsingDataContract_Input_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
-      </wsp:All>
-    </wsp:ExactlyOne>
-  </wsp:Policy>
-  <wsp:Policy wsu:Id="WSHttpBinding_ICenterService_GetDataUsingDataContract_output_policy">
-    <wsp:ExactlyOne>
-      <wsp:All>
-        <sp:SignedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-          <sp:Header Name="To" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="From" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="FaultTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="ReplyTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="MessageID" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="RelatesTo" Namespace="http://www.w3.org/2005/08/addressing" />
-          <sp:Header Name="Action" Namespace="http://www.w3.org/2005/08/addressing" />
-        </sp:SignedParts>
-        <sp:EncryptedParts xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
-          <sp:Body />
-        </sp:EncryptedParts>
+        <wsoma:OptimizedMimeSerialization xmlns:wsoma="http://schemas.xmlsoap.org/ws/2004/09/policy/optimizedmimeserialization" />
       </wsp:All>
     </wsp:ExactlyOne>
   </wsp:Policy>
@@ -214,14 +11,22 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:9001/WcfCenterService/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:9001/WcfCenterService/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:9001/WcfCenterService/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/WcfCenterService" />
+      <xsd:import schemaLocation="http://localhost:9001/WcfCenterService/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System.Text" />
+      <xsd:import schemaLocation="http://localhost:9001/WcfCenterService/?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+      <xsd:import schemaLocation="http://localhost:9001/WcfCenterService/?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/WcfCenterService" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="ICenterService_GetInOutImage_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetInOutImage" />
+  <wsdl:message name="ICenterService_UploadInOutImage_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadInOutImage" />
   </wsdl:message>
-  <wsdl:message name="ICenterService_GetInOutImage_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetInOutImageResponse" />
+  <wsdl:message name="ICenterService_GetFeeData_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeeData" />
+  </wsdl:message>
+  <wsdl:message name="ICenterService_GetFeeData_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetFeeDataResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICenterService_UploadRecordData_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadRecordData" />
   </wsdl:message>
   <wsdl:message name="ICenterService_GetData_InputMessage">
     <wsdl:part name="parameters" element="tns:GetData" />
@@ -236,9 +41,15 @@
     <wsdl:part name="parameters" element="tns:GetDataUsingDataContractResponse" />
   </wsdl:message>
   <wsdl:portType name="ICenterService">
-    <wsdl:operation name="GetInOutImage">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICenterService/GetInOutImage" message="tns:ICenterService_GetInOutImage_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICenterService/GetInOutImageResponse" message="tns:ICenterService_GetInOutImage_OutputMessage" />
+    <wsdl:operation name="UploadInOutImage">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICenterService/UploadInOutImage" message="tns:ICenterService_UploadInOutImage_InputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetFeeData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICenterService/GetFeeData" message="tns:ICenterService_GetFeeData_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICenterService/GetFeeDataResponse" message="tns:ICenterService_GetFeeData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadRecordData">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICenterService/UploadRecordData" message="tns:ICenterService_UploadRecordData_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetData">
       <wsdl:input wsaw:Action="http://tempuri.org/ICenterService/GetData" message="tns:ICenterService_GetData_InputMessage" />
@@ -249,52 +60,52 @@
       <wsdl:output wsaw:Action="http://tempuri.org/ICenterService/GetDataUsingDataContractResponse" message="tns:ICenterService_GetDataUsingDataContract_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
-  <wsdl:binding name="WSHttpBinding_ICenterService" type="tns:ICenterService">
-    <wsp:PolicyReference URI="#WSHttpBinding_ICenterService_policy" />
-    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetInOutImage">
-      <soap12:operation soapAction="http://tempuri.org/ICenterService/GetInOutImage" style="document" />
+  <wsdl:binding name="BasicHttpBinding_ICenterService" type="tns:ICenterService">
+    <wsp:PolicyReference URI="#BasicHttpBinding_ICenterService_policy" />
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="UploadInOutImage">
+      <soap:operation soapAction="http://tempuri.org/ICenterService/UploadInOutImage" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSHttpBinding_ICenterService_GetInOutImage_Input_policy" />
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetFeeData">
+      <soap:operation soapAction="http://tempuri.org/ICenterService/GetFeeData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSHttpBinding_ICenterService_GetInOutImage_output_policy" />
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="GetData">
-      <soap12:operation soapAction="http://tempuri.org/ICenterService/GetData" style="document" />
+    <wsdl:operation name="UploadRecordData">
+      <soap:operation soapAction="http://tempuri.org/ICenterService/UploadRecordData" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSHttpBinding_ICenterService_GetData_Input_policy" />
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+    </wsdl:operation>
+    <wsdl:operation name="GetData">
+      <soap:operation soapAction="http://tempuri.org/ICenterService/GetData" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSHttpBinding_ICenterService_GetData_output_policy" />
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
     <wsdl:operation name="GetDataUsingDataContract">
-      <soap12:operation soapAction="http://tempuri.org/ICenterService/GetDataUsingDataContract" style="document" />
+      <soap:operation soapAction="http://tempuri.org/ICenterService/GetDataUsingDataContract" style="document" />
       <wsdl:input>
-        <wsp:PolicyReference URI="#WSHttpBinding_ICenterService_GetDataUsingDataContract_Input_policy" />
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:input>
       <wsdl:output>
-        <wsp:PolicyReference URI="#WSHttpBinding_ICenterService_GetDataUsingDataContract_output_policy" />
-        <soap12:body use="literal" />
+        <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
   </wsdl:binding>
   <wsdl:service name="CenterService">
-    <wsdl:port name="WSHttpBinding_ICenterService" binding="tns:WSHttpBinding_ICenterService">
-      <soap12:address location="http://localhost:9001/WcfCenterService/CenterService" />
-      <wsa10:EndpointReference>
-        <wsa10:Address>http://localhost:9001/WcfCenterService/CenterService</wsa10:Address>
-        <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
-          <Dns>localhost</Dns>
-        </Identity>
-      </wsa10:EndpointReference>
+    <wsdl:port name="BasicHttpBinding_ICenterService" binding="tns:BasicHttpBinding_ICenterService">
+      <soap:address location="http://localhost:9001/WcfCenterService/CenterService" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>

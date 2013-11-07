@@ -17,7 +17,7 @@ namespace WcfCommonLib
         private Int32 nPort = 9012;
         private IPEndPoint endPoint = null;
         private AsyncCallback asyncAccept = null;
-        private AsyncCallback asyncSendt = null;
+        private AsyncCallback asyncSend= null;
 
         private class SendState
         {
@@ -70,7 +70,7 @@ namespace WcfCommonLib
             nPort = Convert.ToInt32(strPort);
             endPoint = new IPEndPoint(IPAddress.Any, nPort);
             peerSocks = new Hashtable();
-            asyncSendt = new AsyncCallback(SendCB);
+            asyncSend = new AsyncCallback(SendCB);
         }
 
         private Socket GetPeerSocket(string strParkID)
@@ -88,7 +88,7 @@ namespace WcfCommonLib
             }
 
             byte[] byBuffer = Encoding.UTF8.GetBytes(strData);
-            peer.BeginSend(byBuffer, 0, byBuffer.Length, SocketFlags.None, asyncSendt, peer);
+            peer.BeginSend(byBuffer, 0, byBuffer.Length, SocketFlags.None, asyncSend, peer);
         }
 
         private void SendCB(IAsyncResult ar)

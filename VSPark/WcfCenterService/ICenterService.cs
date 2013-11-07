@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
+using System.IO;
+using System.Data;
 
 namespace WcfCenterService
 {
@@ -15,13 +17,16 @@ namespace WcfCenterService
         // Get vehicle record image
         //
         
-        [OperationContract]
-        bool GetInOutImage(string strLocationID, string strRecordID, bool bEnter );
+        [OperationContract(IsOneWay=true)]
+        void UploadInOutImage( string strLocationID, string strRecordID, byte[] inImage, byte[] outImage);
+        //void UploadInOutImage(string strLocationID, string strRecordID, MemoryStream streamInImage, MemoryStream streamOutImage );
+        //void UploadInOutImage(byte[] inImag);
 
-        //[OperationContract(IsOneWay=true)]
-        //void WriteData2Db();
-        //[OperationContract]
-       // void GetDataFromDb();
+        [OperationContract(IsOneWay=false)]
+        StringBuilder GetFeeData(string strParkID);
+
+        [OperationContract(IsOneWay = true)]
+        void UploadRecordData(DataTable table);
 
         [OperationContract]
         string GetData(int value);

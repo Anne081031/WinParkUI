@@ -8,7 +8,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.ServiceModel;
 using WcfCenterService;
-using WcfCenterHost.WcfRoadSvcReference;
 using System.Diagnostics;
 using WcfCommonLib;
 using System.Net.Sockets;
@@ -19,7 +18,6 @@ namespace WcfCenterHost
     public partial class CenterForm : Form
     {
         private ServiceHost svcHost = null;
-        //private RoadServiceClient client = null;
         private SimpleWebSerer webServer = null;
         private WcfCommonLib.TcpServer tcpServer = null;
         private SynchronizationContext mainSC = null;
@@ -36,15 +34,6 @@ namespace WcfCenterHost
             txtLog.AppendText("\n");
         }
 
-        private void Test(int value)
-        {
-            Debug.Print(value.ToString());
-
-            //RoadServiceClient client = new RoadServiceClient();
-            //client.CenterCall( );
-            //client.Close();
-        }
-
         private void CenterForm_Load(object sender, EventArgs e)
         {
             if (SingleApp.AppExist("C024F8AB-3F9A-495D-B6B4-044FF802BD5C"))
@@ -54,14 +43,10 @@ namespace WcfCenterHost
 
             mainSC = SynchronizationContext.Current;
             scCallback = new SendOrPostCallback(MainScCallback);
+
             svcHost = new ServiceHost(typeof(CenterService));
-            //svcHost = new ServiceHost( new CenterService( ) );
             svcHost.Open();
-
-            //objCenter = svcHost.SingletonInstance as CenterService;
-            //CenterService.t += Test;
-
-            //client = new RoadServiceClient();
+            CenterService.logCB += DisplayLog;
 
             webServer = new SimpleWebSerer();
             webServer.QueryEvent += new SimpleWebSerer.QueryEventHandler(webServer_QueryEvent);
@@ -83,11 +68,7 @@ namespace WcfCenterHost
 
         private void webServer_QueryEvent(object sender, SimpleWebSerer.WebEVentArgs e)
         {
-            // LocationID | RecordID 
-            // Data comes from IIS.
-
-            //DisplayLog(e.QueryString);
-            mainSC.Post(scCallback, e.QueryString);
+            mainSC.Post(scCallback, "【获取图像】" + e.QueryString);
             
             string[] strQuery = e.QueryString.Split( new char[ ] { '|' } );
             if (strQuery.Length < 2)
@@ -101,7 +82,7 @@ namespace WcfCenterHost
             }
             
             string strLocationID = strQuery[0].Substring(0, 10);
-            tcpServer.Send2Client(strLocationID, strQuery[1]);
+            tcpServer.Send2Client(strLocationID, e.QueryString);
         }
 
         private void CenterForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -111,7 +92,6 @@ namespace WcfCenterHost
                 return;
             }
 
-            //client.Close();
             tcpServer.StopServer();
             svcHost.Close();
             webServer.StopServer();

@@ -1,1 +1,0 @@
-D:\WinParkUI\VSPark\WcfCenterService\obj\Release\ResolveAssemblyReference.cache

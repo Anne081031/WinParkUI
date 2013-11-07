@@ -1,3 +1,0 @@
-D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Release\ResolveAssemblyReference.cache
-D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Release\GenerateResource-ResGen.read.1.tlog
-D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Release\GenerateResource-ResGen.write.1.tlog

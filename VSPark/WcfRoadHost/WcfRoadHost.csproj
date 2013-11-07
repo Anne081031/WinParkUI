@@ -35,6 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
@@ -93,6 +94,12 @@
     <None Include="Service References\WcfCenterSvcReference\item2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\WcfCenterSvcReference\item3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\WcfCenterSvcReference\item4.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\WcfCenterSvcReference\WcfRoadHost.WcfCenterSvcReference.CompositeType.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -101,10 +108,6 @@
     <ProjectReference Include="..\WcfCommonLib\WcfCommonLib.csproj">
       <Project>{7B2F7F24-46A3-439A-934C-28E6D55FEFBC}</Project>
       <Name>WcfCommonLib</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WcfRoadService\WcfRoadService.csproj">
-      <Project>{1C44AAEF-E99F-4599-9455-6FF844C7FB1C}</Project>
-      <Name>WcfRoadService</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

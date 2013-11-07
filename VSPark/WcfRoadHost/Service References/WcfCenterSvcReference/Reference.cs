@@ -78,8 +78,14 @@ namespace WcfRoadHost.WcfCenterSvcReference {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="WcfCenterSvcReference.ICenterService")]
     public interface ICenterService {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICenterService/GetInOutImage", ReplyAction="http://tempuri.org/ICenterService/GetInOutImageResponse")]
-        void GetInOutImage(string strLocationID, string strRecordID, bool bEnter);
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ICenterService/UploadInOutImage")]
+        void UploadInOutImage(string strLocationID, string strRecordID, byte[] inImage, byte[] outImage);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICenterService/GetFeeData", ReplyAction="http://tempuri.org/ICenterService/GetFeeDataResponse")]
+        System.Text.StringBuilder GetFeeData(string strParkID);
+        
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ICenterService/UploadRecordData")]
+        void UploadRecordData(System.Data.DataTable table);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICenterService/GetData", ReplyAction="http://tempuri.org/ICenterService/GetDataResponse")]
         string GetData(int value);
@@ -115,8 +121,16 @@ namespace WcfRoadHost.WcfCenterSvcReference {
                 base(binding, remoteAddress) {
         }
         
-        public void GetInOutImage(string strLocationID, string strRecordID, bool bEnter) {
-            base.Channel.GetInOutImage(strLocationID, strRecordID, bEnter);
+        public void UploadInOutImage(string strLocationID, string strRecordID, byte[] inImage, byte[] outImage) {
+            base.Channel.UploadInOutImage(strLocationID, strRecordID, inImage, outImage);
+        }
+        
+        public System.Text.StringBuilder GetFeeData(string strParkID) {
+            return base.Channel.GetFeeData(strParkID);
+        }
+        
+        public void UploadRecordData(System.Data.DataTable table) {
+            base.Channel.UploadRecordData(table);
         }
         
         public string GetData(int value) {
