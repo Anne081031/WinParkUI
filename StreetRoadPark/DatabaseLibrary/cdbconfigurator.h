@@ -22,6 +22,8 @@ public:
     QString GetParkID( );
     bool GetDisplayDynamicLog( );
     QString GetDateTime( );
+    QString GetHttpHost( );
+    int GetHttpPort( );
 
     QTextCodec* GetTextCodec( );
 

@@ -42,7 +42,10 @@ SOURCES += databasecontroller.cpp \
     qthreadpooltask.cpp \
     qdbdataprocess.cpp \
     qjson2sqlparser.cpp \
-    Constant.cpp
+    Constant.cpp \
+    qdatauploadthread.cpp \
+    qdatadownloadthread.cpp \
+    qdatauploadevent.cpp
 
 HEADERS += databasecontroller.h\
         DatabaseLibrary_global.h \
@@ -56,7 +59,10 @@ HEADERS += databasecontroller.h\
     qjson2sqlparser.h \
     qdbcommon.h \
     qjsonstruct.h \
-    Constant.h
+    Constant.h \
+    qdatauploadthread.h \
+    qdatadownloadthread.h \
+    qdatauploadevent.h
 
 unix:!symbian {
     maemo5 {

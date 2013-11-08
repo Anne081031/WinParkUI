@@ -54,5 +54,5 @@ void QUdpMulticast::MulticastData( QByteArray &byJson, qint32 nMulticastType  )
     writeDatagram( byJson, multiIP, nMulticastPort + ( bTimeSync ? 1 : 0 ));
     flush( );
     waitForBytesWritten( );
-    qDebug( ) << Q_FUNC_INFO << errorString( ) << endl;
+    //qDebug( ) << Q_FUNC_INFO << errorString( ) << endl;
 }

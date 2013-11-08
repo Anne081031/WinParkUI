@@ -77,6 +77,16 @@ QString CDbConfigurator::GetDateTime( )
     return QDateTime::currentDateTime( ).toString( "yyyy-MM-dd hh:mm:ss" );
 }
 
+QString CDbConfigurator::GetHttpHost( )
+{
+    return pSettings->value( "Network/HttpHost", "127.0.0.1" ).toString( );
+}
+
+int CDbConfigurator::GetHttpPort( )
+{
+    return pSettings->value( "Network/HttpPort", 9010 ).toInt( );
+}
+
 QTextCodec* CDbConfigurator::GetTextCodec( )
 {
     static QTextCodec* pCodec = NULL;

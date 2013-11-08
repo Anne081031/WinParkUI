@@ -48,6 +48,7 @@ void QMulticastThread::run( )
 
 void QMulticastThread::PrintIntervalTime( )
 {
+    return;
     QString strTime = QTime::currentTime( ).toString( "hh:mm:ss" );
     qDebug( ) << Q_FUNC_INFO << strTime << endl;
 }

@@ -9,6 +9,9 @@ INPUT(
 ./debug\qdbdataprocess.o
 ./debug\qjson2sqlparser.o
 ./debug\Constant.o
+./debug\qdatauploadthread.o
+./debug\qdatadownloadthread.o
+./debug\qdatauploadevent.o
 ./debug\moc_databasecontroller.o
 ./debug\moc_mysqldatabase.o
 ./debug\moc_cdbconfigurator.o
@@ -16,4 +19,6 @@ INPUT(
 ./debug\moc_qdatabaseprocessor.o
 ./debug\moc_qdbdataprocess.o
 ./debug\moc_qjson2sqlparser.o
+./debug\moc_qdatauploadthread.o
+./debug\moc_qdatadownloadthread.o
 );
