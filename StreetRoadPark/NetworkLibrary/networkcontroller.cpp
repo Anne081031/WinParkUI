@@ -30,9 +30,12 @@ NetworkController::NetworkController( QObject *parent ) : QObject( parent )
 {
     qRegisterMetaType< qintptr >( "qintptr" );
     pListenerThread = QListenerThread::CreateThread( );
-    pMulticastThread = QMulticastThread::CreateThread( );
+    pMulticastThread = QLikeBroadcastThread::CreateThread( );
+    byTokenData = DATA_TOKEN;
 
     connect( pListenerThread, SIGNAL( Log( QString, bool ) ),
+             this, SLOT( HandleLog( QString, bool ) ) );
+    connect( pMulticastThread, SIGNAL( Log( QString, bool ) ),
              this, SLOT( HandleLog( QString, bool ) ) );
 }
 
@@ -64,14 +67,40 @@ void NetworkController::StartListen( quint16 nPort, qint32 nMaxConn )
     pListenerThread->PostStartListenEvent( nPort, nMaxConn );
 }
 
+void NetworkController::StartMultiCastListen( )
+{
+    pMulticastThread->PostStartListenEvent( );
+}
+
 void NetworkController::StopListen( )
 {
     pListenerThread->PostStopListenEvent( );
 }
 
+void NetworkController::StopMultiCastListen( )
+{
+    pMulticastThread->PostStopListenEvent( );
+}
+
 void NetworkController::MulticastData( QByteArray& byJson, qint32 nMulticastType )
 {
-    pMulticastThread->PostUDPMultiDataEvent( byJson, nMulticastType );
+    //pMulticastThread->PostUDPMultiDataEvent( byJson, nMulticastType );
+    quint32 nBodyDataLen = byJson.length( );
+    quint32 nDataSize = sizeof ( quint32 );
+
+    qint32 nType = qToBigEndian< qint32 >( nMulticastType );
+    byJson.insert( 0, ( const char* ) &nType, nDataSize );
+
+    quint32 nReserved = qToBigEndian< quint32 >( 0 );
+    byJson.insert( 0, ( const char* ) &nReserved, nDataSize );
+
+    qint32 nDataLen = byTokenData.length( ) + nDataSize * 3 + nBodyDataLen;
+    nDataLen = qToBigEndian< quint32 >( nDataLen );
+    byJson.insert( 0, ( const char* ) &nDataLen, nDataSize );
+
+    byJson.insert( 0, byTokenData );
+
+    pMulticastThread->PostMulticastSocketEvent( byJson );
 }
 
 void NetworkController::HandleLog( QString strLog, bool bStatic )

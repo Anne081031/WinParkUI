@@ -109,6 +109,8 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
     bool bSpSuccess = ( -1 != sHead.nFlag );
     bool bFromDbMsg = false;
 
+    qDebug( ) << "Sp Data " << QString( byData ) << endl;
+
     if ( bSpSuccess ) {
         switch ( nPkType ) {
         case Constant::TypeGroupInfo :
@@ -146,7 +148,8 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
                 sHead.sValues.strTypeCode = Constant::TypeCode.strCodeRemoveRecord;
             } else if ( Constant::TypeCode.strCodeTabletManualData == sHead.sValues.strTypeCode ) {
                 bFromDbMsg = true;
-                bMulticast = false;
+                //bMulticast = false;
+                sHead.sValues.strTypeCode = Constant::TypeCode.strCodeRemoveRecord;
             } else if ( Constant::TypeCode.strCodeUnhandledSensorData == sHead.sValues.strTypeCode ) {
                 bMulticast = false;
                 bUnicast = true;
@@ -194,7 +197,11 @@ void QDbDataProcess::CallSP( QByteArray &byData, JsonStruct::JsonHead &sHead, in
             bUnicast = false;
             bFeedback = false;
             break;
-
+        case Constant::TypeFeeInfo :
+            bMulticast = false;
+            bFeedback = false;
+            bUnicast = true;
+            break;
         }
     } else {
         bFeedback = true;
@@ -304,6 +311,10 @@ void QDbDataProcess::ProcessSocketData( qint32 nPackageType, QByteArray &byJson 
     case Constant::TypeDataInfo :
         parserJson2Sql.ParseDataJson(byJson, sHead );
         break;
+
+    case Constant::TypeFeeInfo :
+        parserJson2Sql.ParseFeeJson(byJson, sHead );
+        break;
     }
 
     PrintPackageType( nPackageType );
@@ -334,6 +345,10 @@ void QDbDataProcess::PrintPackageType( qint32 nPackageType )
 
     case Constant::TypeDataInfo :
         strMsg = "Constant::TypeDataInfo";
+        break;
+
+    case Constant::TypeFeeInfo :
+        strMsg = "Constant::TypeFeeInfo";
         break;
 
     default :

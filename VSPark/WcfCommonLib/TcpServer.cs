@@ -55,7 +55,6 @@ namespace WcfCommonLib
                 //state.workSocket = handler;
                 //handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 //new AsyncCallback(ReadCallback), state);
-
             }
 
             if (objListener.IsBound)
@@ -82,7 +81,7 @@ namespace WcfCommonLib
         public void Send2Client(string strParkID, string strData)
         {
             Socket peer = GetPeerSocket(strParkID);
-            if (null == peer)
+            if (null == peer || !peer.Connected )
             {
                 return;
             }

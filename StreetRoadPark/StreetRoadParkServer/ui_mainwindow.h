@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'mainwindow.ui'
 **
-** Created by: Qt User Interface Compiler version 5.1.0
+** Created by: Qt User Interface Compiler version 5.1.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -111,7 +111,7 @@ public:
         btnPortCmd->setGeometry(QRect(830, 12, 75, 23));
         layoutWidget = new QWidget(tabPort);
         layoutWidget->setObjectName(QStringLiteral("layoutWidget"));
-        layoutWidget->setGeometry(QRect(380, 12, 374, 24));
+        layoutWidget->setGeometry(QRect(380, 12, 386, 24));
         horizontalLayout_2 = new QHBoxLayout(layoutWidget);
         horizontalLayout_2->setSpacing(6);
         horizontalLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -228,7 +228,7 @@ public:
 
         layoutWidget4 = new QWidget(tabNetwork);
         layoutWidget4->setObjectName(QStringLiteral("layoutWidget4"));
-        layoutWidget4->setGeometry(QRect(10, 11, 281, 24));
+        layoutWidget4->setGeometry(QRect(10, 11, 331, 24));
         horizontalLayout_4 = new QHBoxLayout(layoutWidget4);
         horizontalLayout_4->setSpacing(6);
         horizontalLayout_4->setContentsMargins(11, 11, 11, 11);

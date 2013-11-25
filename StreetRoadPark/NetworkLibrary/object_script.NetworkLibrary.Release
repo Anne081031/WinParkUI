@@ -9,6 +9,7 @@ INPUT(
 ./release\cnetconfigurator.o
 ./release\qudpmulticast.o
 ./release\qmulticastthread.o
+./release\qlikebroadcastthread.o
 ./release\moc_networkcontroller.o
 ./release\moc_qsocketthread.o
 ./release\moc_qsocketdispatcherthread.o
@@ -18,4 +19,5 @@ INPUT(
 ./release\moc_cnetconfigurator.o
 ./release\moc_qudpmulticast.o
 ./release\moc_qmulticastthread.o
+./release\moc_qlikebroadcastthread.o
 );

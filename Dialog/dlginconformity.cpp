@@ -26,6 +26,20 @@ CDlgInconformity::CDlgInconformity(QWidget *parent) :
     setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
+void CDlgInconformity::closeEvent(QCloseEvent *)
+{
+    ClearData( );
+}
+
+void CDlgInconformity::ClearData( )
+{
+    for ( int nRow = 0; nRow < 2; nRow++ ) {
+        for ( int nCol = 0; nCol < 5; nCol++ ) {
+            edtCntrl[ nRow ][ nCol ]->clear( );
+        }
+    }
+}
+
 CDlgInconformity::~CDlgInconformity()
 {
     delete ui;

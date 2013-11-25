@@ -26,7 +26,7 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="UploadRecordData">
+  <xs:element name="UploadRecordData2">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="table" nillable="true">
@@ -42,6 +42,13 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="UploadRecordData">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/System.Text" minOccurs="0" name="builder" nillable="true" type="q2:StringBuilder" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -62,14 +69,14 @@
   <xs:element name="GetDataUsingDataContract">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q2="http://schemas.datacontract.org/2004/07/WcfCenterService" minOccurs="0" name="composite" nillable="true" type="q2:CompositeType" />
+        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WcfCenterService" minOccurs="0" name="composite" nillable="true" type="q3:CompositeType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="GetDataUsingDataContractResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/WcfCenterService" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q3:CompositeType" />
+        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/WcfCenterService" minOccurs="0" name="GetDataUsingDataContractResult" nillable="true" type="q4:CompositeType" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

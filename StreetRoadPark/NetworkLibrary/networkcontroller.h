@@ -5,6 +5,7 @@
 #include <QObject>
 #include "qlistenerthread.h"
 #include "qmulticastthread.h"
+#include "qlikebroadcastthread.h"
 
 class NetworkController : public QObject
 {
@@ -16,6 +17,9 @@ public:
     void StartListen( quint16 nPort, qint32 nMaxConn );
     void StopListen( );
 
+    void StartMultiCastListen( );
+    void StopMultiCastListen( );
+
     void MulticastData( QByteArray& byJson, qint32 nMulticastType );
 
 private:
@@ -23,8 +27,9 @@ private:
     ~NetworkController( );
 
     QListenerThread* pListenerThread;
-    QMulticastThread* pMulticastThread;
+    QLikeBroadcastThread* pMulticastThread;
     static NetworkController* pController;
+    QByteArray byTokenData;
 
 signals:
     void Log( QString strLog, bool bStatic );

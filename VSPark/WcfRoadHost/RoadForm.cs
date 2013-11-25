@@ -14,9 +14,14 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Configuration;
 using System.IO;
+using Newtonsoft.Json;
+using System.Xml;
 
 namespace WcfRoadHost
 {
+    // ResourceManager
+    // 缺省文化资源嵌入主【程序集】中，其他文化资源【卫星程序集】的方式存在
+    //
     public partial class RoadForm : Form
     {
         private CenterServiceClient wcfClient = null;
@@ -27,6 +32,7 @@ namespace WcfRoadHost
         private WaitCallback dataCallback = null;
         private StringBuilder strBuilder = new StringBuilder();
         private MySQLAccessor dbMySQL = new MySQLAccessor();
+        private string strParkID = null;
 
         private class MainScCallbackState
         {
@@ -40,10 +46,42 @@ namespace WcfRoadHost
             public object data = "";
         }
 
-        private void DisplayLog(string strText)
+        private void DisplayLog(object strText)
         {
-            txtLog.AppendText(strText);
+            txtLog.AppendText("【" + DateTime.Now.ToString()+"】"); 
+            txtLog.AppendText(strText.ToString());
             txtLog.AppendText("\n");
+        }
+
+        private void FillTableData(DataTable table, StringBuilder builder)
+        {
+            string json = @"{'DocumentElement':{'Test':[{'RecordID':'39','LocationID':'5101070001001006','EnterTime':'2013-11-01 17:00:53','LeaveTime':'2013-11-01 17:00:56','EnterPlate':'1123','LeavePlate':'456','State':'1'},{'RecordID':'40','LocationID':'5101070001001007','EnterTime':'2013-11-01 17:03:55','LeaveTime':'2013-11-01 17:00:56','EnterPlate':'1324','LeavePlate':'4353','State':'1'}]}}";
+            table.Columns.Add("RecordID", typeof(Int32));
+            table.Columns.Add("LocationID", typeof(string));
+            table.Columns.Add("EnterTime", typeof(string));
+            table.Columns.Add("LeaveTime", typeof(string));
+            table.Columns.Add("EnterPlate", typeof(string));
+            table.Columns.Add("LeavePlate", typeof(string));
+            table.Columns.Add("State", typeof(Int32));
+            table.RemotingFormat = SerializationFormat.Binary;
+
+            XmlDocument doc = (XmlDocument)JsonConvert.DeserializeXmlNode(json);
+
+            System.Diagnostics.Debug.Print(doc.InnerXml);
+            builder.Clear();
+            builder.Append(doc.InnerXml);
+            StringReader reader = new StringReader(doc.InnerXml);
+            table.ReadXml(reader);
+
+            StringWriter writer = new StringWriter();
+            table.WriteXml(writer);
+            string xml = writer.ToString();
+
+            doc = new XmlDocument();
+            doc.LoadXml(xml);
+            json = JsonConvert.SerializeXmlNode(doc);
+
+            System.Diagnostics.Debug.Print(json);
         }
 
         private void GetUploadData(object state)
@@ -55,21 +93,21 @@ namespace WcfRoadHost
 
             // to Center
             StringBuilder builder = new StringBuilder();
-            DataTable table = new DataTable("TestUpload");
             try
             {
                 dbMySQL.GetRecordData(builder);
-                mainState.data = builder.ToString();
+
+                mainState.data = builder;
                 sc.Post(scCallback, mainState);
 
                 if (0 != builder.Length)
                 {
-                    wcfClient.UploadRecordData(table);
+                    wcfClient.UploadRecordData(builder);
                 }
             }
             catch (Exception ex)
             {
-                mainState.data = ex.Message;
+                mainState.data = CommonFunction.GetExceptionMessage(ex);
                 mainSC.Post(scCallback, mainState);
             }
         }
@@ -110,7 +148,7 @@ namespace WcfRoadHost
                 //MemoryStream streamIn = new MemoryStream(inImage);
                 //MemoryStream streamOut = new MemoryStream(outImage);
                 //wcfClient.GetData(123);
-                mainState.data = builder.ToString( );
+                mainState.data = builder;
                 mainSC.Post(scCallback, mainState);
 
                 if (bTransfered)
@@ -120,7 +158,7 @@ namespace WcfRoadHost
             }
             catch (Exception ex)
             {
-                mainState.data = ex.Message;
+                mainState.data = CommonFunction.GetExceptionMessage(ex);
                 mainSC.Post(scCallback, mainState);
             }
         }
@@ -136,6 +174,8 @@ namespace WcfRoadHost
             {
                 Application.Exit();
             }
+
+            strParkID = ConfigurationManager.AppSettings.Get("ParkID");
 
             mainSC = SynchronizationContext.Current;
             scCallback = new SendOrPostCallback(MainScCallback);
@@ -164,13 +204,19 @@ namespace WcfRoadHost
 
         private void MainScCallback(object state)
         {
-            if (null == state)
+            if (null == state || string.Empty == state )
             {
                 return;
             }
 
             MainScCallbackState scState = state as MainScCallbackState;
             strBuilder.Clear();
+
+            string strData = scState.data.ToString();
+            if (string.Empty == strData)
+            {
+                return;
+            }
 
             switch (scState.type)
             {
@@ -183,8 +229,8 @@ namespace WcfRoadHost
                     break;
             }
 
-            strBuilder.Append(scState.data.ToString());
-            DisplayLog(strBuilder.ToString( ));
+            strBuilder.Append(strData);
+            DisplayLog(strBuilder);
         }
 
         private void RoadForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -202,7 +248,7 @@ namespace WcfRoadHost
             }
             catch (Exception ex)
             {
-                DisplayLog(ex.Message);
+                DisplayLog(CommonFunction.GetExceptionMessage(ex));
             }
         }
 
@@ -216,7 +262,7 @@ namespace WcfRoadHost
             }
             catch (Exception ex)
             {
-                DisplayLog(ex.Message);
+                DisplayLog(CommonFunction.GetExceptionMessage(ex));
             }
 
             timerReconnect.Enabled = true;
@@ -234,12 +280,26 @@ namespace WcfRoadHost
 
         private void button1_Click(object sender, EventArgs e)
         {
-            StringBuilder builder = wcfClient.GetFeeData("5101080001");
-            if (null == builder)
+            GetInitializeData();
+        }
+
+        private void GetInitializeData()
+        {
+            try
             {
-                return;
+                StringBuilder builder = wcfClient.GetFeeData(strParkID);
+                if (null == builder)
+                {
+                    return;
+                }
+
+                DisplayLog(builder);
+                dbMySQL.WriteData(builder);
             }
-            DisplayLog( builder.ToString( ));
+            catch (Exception ex)
+            {
+                DisplayLog(CommonFunction.GetExceptionMessage(ex));
+            }
         }
     }
 }

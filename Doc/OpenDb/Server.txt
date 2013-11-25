@@ -1,0 +1,6 @@
+虚拟主机(网站空间 Apache) VPS(虚拟专用服务器 VMWare VirtualServer VirtualBox Xen实现) 独立主机(独立物理服务器) 云主机(云计算技术 集群 负载均衡)
+
+VPN属于远程访问技术，简单地说就是利用公网链路架设私有网络。
+
+SAAS--PAAS--IAAS CAAS NAAS
+OpenStack EC2

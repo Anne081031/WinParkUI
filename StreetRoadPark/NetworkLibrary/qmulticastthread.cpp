@@ -34,7 +34,7 @@ void QMulticastThread::InitializeSubThread( )
     pMulticast = new QUdpMulticast( );
 
     if ( 0 < nTimeSyncInterval ) {
-        nTimeSyncTimerID = startTimer( nTimeSyncInterval );
+        //nTimeSyncTimerID = startTimer( nTimeSyncInterval );
     }
 }
 
@@ -102,6 +102,8 @@ void QMulticastThread::ProcessMultiDataEvent( QThreadEvent* pEvent )
 
 QMulticastThread* QMulticastThread::CreateThread( QObject *pParent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+
     QMulticastThread* pThread = new QMulticastThread( pParent );
 
     pThread->start( );

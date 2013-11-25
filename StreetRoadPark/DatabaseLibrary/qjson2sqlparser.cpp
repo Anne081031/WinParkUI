@@ -62,6 +62,19 @@ void QJson2SqlParser::GetDataRecordData( JsonStruct::JsonDataRecord& sRecord )
     }
 }
 
+void QJson2SqlParser::GetFeeRecordData( JsonStruct::JsonFeeRecord& sRecord )
+{
+    if ( Constant::TypeCode.strCodeGetFeeRate == sRecord.sHead.sValues.strTypeCode ) {
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strParkID,
+                        sRecord.sData.sValues.strParkID );
+    } else if ( Constant::TypeCode.strCodeGetFreeType == sRecord.sHead.sValues.strTypeCode ) {
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strParkID,
+                        sRecord.sData.sValues.strParkID );
+    }
+}
+
 void QJson2SqlParser::GetDeviceRecordData( JsonStruct::JsonDeviceRecord& sRecord )
 {
     if ( Constant::TypeCode.strCodeConfigInfo == sRecord.sHead.sValues.strTypeCode ) {
@@ -180,6 +193,18 @@ void QJson2SqlParser::GetInOutRecordData( JsonStruct::JsonInOutRecord &sRecord )
         GetStringValue( sRecord.sHead.sValues.jsonData,
                         sRecord.sData.sKeys.strState,
                         sRecord.sData.sValues.strState );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strRecordType,
+                        sRecord.sData.sValues.strRecordType );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strFeeReceivable,
+                        sRecord.sData.sValues.strFeeReceivable );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strFreeType,
+                        sRecord.sData.sValues.strFreeType );
     } else if ( Constant::TypeCode.strCodeTabletManualData == sRecord.sHead.sValues.strTypeCode ) {
         GetStringValue( sRecord.sHead.sValues.jsonData,
                         sRecord.sData.sKeys.strLocationID,
@@ -228,6 +253,18 @@ void QJson2SqlParser::GetInOutRecordData( JsonStruct::JsonInOutRecord &sRecord )
         GetStringValue( sRecord.sHead.sValues.jsonData,
                         sRecord.sData.sKeys.strState,
                         sRecord.sData.sValues.strState );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strRecordType,
+                        sRecord.sData.sValues.strRecordType );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strFeeReceivable,
+                        sRecord.sData.sValues.strFeeReceivable );
+
+        GetStringValue( sRecord.sHead.sValues.jsonData,
+                        sRecord.sData.sKeys.strFreeType,
+                        sRecord.sData.sValues.strFreeType );
     } else if ( Constant::TypeCode.strCodeUnhandledSensorData == sRecord.sHead.sValues.strTypeCode ) {
         GetStringValue( sRecord.sHead.sValues.jsonData,
                         sRecord.sData.sKeys.strLocationID,
@@ -405,6 +442,10 @@ void QJson2SqlParser::GetSpName( QString &strTypeCode, QString& strSpName )
         strSpName = Constant::SpName.strSpQueryCommonRecord;
     } else if ( Constant::TypeCode.strCodeTabletUploadInOutRecord == strTypeCode ) {
         strSpName = Constant::SpName.strSpUploadInOutRecord;
+    } else if ( Constant::TypeCode.strCodeGetFeeRate == strTypeCode ) {
+        strSpName = Constant::SpName.strSpGetFeeRateRecord;
+    } else if ( Constant::TypeCode.strCodeGetFreeType == strTypeCode ) {
+        strSpName = Constant::SpName.strSpGetFreeTypeRecord;
     }
 }
 
@@ -418,6 +459,21 @@ void QJson2SqlParser::ParseDataJson( QByteArray &byJson, JsonStruct::JsonHead &s
 
     QString strXml;
     GetDataXmlData( sRecordRequest, strXml );
+    byJson.append( strXml );
+
+    sHead = sRecordRequest.sHead;
+}
+
+void QJson2SqlParser::ParseFeeJson( QByteArray &byJson, JsonStruct::JsonHead &sHead )
+{
+    JsonStruct::JsonFeeRecord sRecordRequest;
+
+    GetJsonObject( byJson, sRecordRequest.sHead );
+    GetSpName( sRecordRequest.sHead.sValues.strTypeCode, sRecordRequest.sHead.strSpName );
+    GetFeeRecordData( sRecordRequest );
+
+    QString strXml;
+    GetFeeXmlData( sRecordRequest, strXml );
     byJson.append( strXml );
 
     sHead = sRecordRequest.sHead;
@@ -443,6 +499,19 @@ void QJson2SqlParser::GetDataXmlData( JsonStruct::JsonDataRecord &sRecord, QStri
     if ( Constant::TypeCode.strCodeDataInfo == sRecord.sHead.sValues.strTypeCode ) {
         strXml = Constant::SpXmlPattern.strXmlDataInfo.arg(
                              sRecord.sData.sValues.strDataType,
+                             sRecord.sHead.strLog );
+    }
+}
+
+void QJson2SqlParser::GetFeeXmlData( JsonStruct::JsonFeeRecord &sRecord, QString &strXml )
+{
+    if ( Constant::TypeCode.strCodeGetFeeRate == sRecord.sHead.sValues.strTypeCode ) {
+        strXml = Constant::SpXmlPattern.strXmlGetFeeRate.arg(
+                             sRecord.sData.sValues.strParkID,
+                             sRecord.sHead.strLog );
+    } else if ( Constant::TypeCode.strCodeGetFreeType == sRecord.sHead.sValues.strTypeCode ) {
+        strXml = Constant::SpXmlPattern.strXmlGetFreeType.arg(
+                             sRecord.sData.sValues.strParkID,
                              sRecord.sHead.strLog );
     }
 }
@@ -494,6 +563,9 @@ void QJson2SqlParser::GetInOutXmlData( JsonStruct::JsonInOutRecord &sRecord, QSt
                              sRecord.sData.sValues.strImage,
                              sRecord.sHead.strLog,
                              sRecord.sHead.sValues.strUserID );
+        strXml = strXml.arg( sRecord.sData.sValues.strFeeReceivable,
+                             sRecord.sData.sValues.strRecordType,
+                             sRecord.sData.sValues.strFreeType);
     } else if ( Constant::TypeCode.strCodeTabletManualData == sRecord.sHead.sValues.strTypeCode ) {
         strXml = Constant::SpXmlPattern.strXmlTabletManualRecord.arg(
                              sRecord.sData.sValues.strLocationID,
@@ -505,6 +577,9 @@ void QJson2SqlParser::GetInOutXmlData( JsonStruct::JsonInOutRecord &sRecord, QSt
                              sRecord.sHead.strLog,
                              sRecord.sHead.sValues.strUserID,
                              pConfig->GetDateTime( ) );
+        strXml = strXml.arg( sRecord.sData.sValues.strFeeReceivable,
+                             sRecord.sData.sValues.strRecordType,
+                             sRecord.sData.sValues.strFreeType);
     } else if ( Constant::TypeCode.strCodeUnhandledSensorData == sRecord.sHead.sValues.strTypeCode ) {
         strXml = Constant::SpXmlPattern.strXmlUnhandledSensorRecord.arg(
                              sRecord.sData.sValues.strLocationID,

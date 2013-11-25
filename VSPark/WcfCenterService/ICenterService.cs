@@ -26,7 +26,10 @@ namespace WcfCenterService
         StringBuilder GetFeeData(string strParkID);
 
         [OperationContract(IsOneWay = true)]
-        void UploadRecordData(DataTable table);
+        void UploadRecordData2(DataTable table);
+
+        [OperationContract(IsOneWay = true)]
+        void UploadRecordData(StringBuilder builder);
 
         [OperationContract]
         string GetData(int value);

@@ -8,6 +8,8 @@ CSenderThread::CSenderThread( Win_QextSerialPort* pPort, QObject *parent) :
 
 CSenderThread* CSenderThread::CreateThread( Win_QextSerialPort* pPort, QObject* parent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+
     CSenderThread* pThread = new CSenderThread( pPort, parent );
 
     pThread->start( );

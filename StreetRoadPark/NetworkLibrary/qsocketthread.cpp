@@ -41,22 +41,23 @@ void QSocketThread::PostEvent( QThreadEvent *pEvent )
     qApp->postEvent( this, pEvent);
 }
 
-void QSocketThread::PostAttachSocketEvent( qintptr nSocket )
+void QSocketThread::PostAttachSocketEvent( qintptr nSocket, int nPort )
 {
     QThreadEvent* pEvent = QThreadEvent::CreateThreadEvent( QThreadEvent::ThreadSocket, QThreadEvent::EventAttachSocketDescriptor );
     pEvent->SetSocketDescriptor( nSocket );
+    pEvent->SetListenPort( nPort );
 
     PostEvent( pEvent );
 }
 
 QSocketThread* QSocketThread::CreateThread( QObject *pParent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+
     QSocketThread* pThread = new QSocketThread( pParent );
 
     pThread->start( );
     pThread->moveToThread( pThread );
-
-    qDebug( ) << Q_FUNC_INFO << endl;
 
     return pThread;
 }
@@ -143,8 +144,10 @@ void QSocketThread::ProcessServerAttachSocketEvent( QThreadEvent* pEvent )
     qintptr nDescriptor = pEvent->GetSocketDescriptor( );
     bool bRet = pSocket->setSocketDescriptor( nDescriptor );
 
-    QString strLog = QString( "Client【%1】 connect to server %2" ).arg(
+    QString strLog = QString( "Client【%1:%2】 connect to server【%3】 %4" ).arg(
                 pSocket->peerAddress( ).toString( ),
+                QString::number( pSocket->peerPort( ) ),
+                QString::number( pEvent->GetListenPort( ) ),
                 bRet ? "Successfully." : QString( "Unsuccessfully.%1" ).arg( pSocket->errorString( ) ) );
 
     SendLog( strLog, false );
@@ -206,8 +209,9 @@ void QSocketThread::RemoveSocketFromQueue( QSocketQueue* pQueue, QTcpSocket* pSo
 void QSocketThread::HandleDisconnectFinished( )
 {
     QTcpSocket* pSocket = ( QTcpSocket* ) sender( );
-    QString strLog = QString( "Client【%1】 disconnect to server." ).arg(
-                pSocket->peerAddress( ).toString( ) );
+    QString strLog = QString( "Client【%1:%2】 disconnect to server." ).arg(
+                pSocket->peerAddress( ).toString( ),
+                QString::number( pSocket->peerPort( ) ) );
 
     SendLog( strLog, false );
 

@@ -41,7 +41,8 @@ SOURCES += networkcontroller.cpp \
     qmytcpserver.cpp \
     cnetconfigurator.cpp \
     qudpmulticast.cpp \
-    qmulticastthread.cpp
+    qmulticastthread.cpp \
+    qlikebroadcastthread.cpp
 
 HEADERS += networkcontroller.h\
         NetworkLibrary_global.h \
@@ -53,7 +54,8 @@ HEADERS += networkcontroller.h\
     qmytcpserver.h \
     cnetconfigurator.h \
     qudpmulticast.h \
-    qmulticastthread.h
+    qmulticastthread.h \
+    qlikebroadcastthread.h
 
 unix:!symbian {
     maemo5 {

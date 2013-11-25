@@ -46,10 +46,11 @@ void QSocketDispatcherThread::PostEvent( QThreadEvent *pEvent )
     qApp->postEvent( this,  pEvent );
 }
 
-void QSocketDispatcherThread::PostDispatchSocketEvent( qintptr nSocket )
+void QSocketDispatcherThread::PostDispatchSocketEvent( qintptr nSocket, int nPort )
 {
     QThreadEvent* pEvent = QThreadEvent::CreateThreadEvent( QThreadEvent::ThreadDispatcher, QThreadEvent::EventDispatchSocket );
     pEvent->SetSocketDescriptor( nSocket );
+    pEvent->SetListenPort( nPort );
 
     PostEvent( pEvent );
 }
@@ -64,6 +65,8 @@ void QSocketDispatcherThread::PostSocketDisconnectionEvent( QTcpSocket *pSocket 
 
 QSocketDispatcherThread* QSocketDispatcherThread::CreateThread( QObject *pParent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+
     QSocketDispatcherThread* pThread = new QSocketDispatcherThread( pParent );
 
     pThread->start( );
@@ -187,7 +190,7 @@ QSocketThread* QSocketDispatcherThread::FindSocketThread( )
 void QSocketDispatcherThread::ProcessSocketDispatchEvent( QThreadEvent* pEvent )
 {
     QSocketThread* pThread = FindSocketThread( );
-    pThread->PostAttachSocketEvent( pEvent->GetSocketDescriptor( ) );
+    pThread->PostAttachSocketEvent( pEvent->GetSocketDescriptor( ), pEvent->GetListenPort( ) );
 }
 
 void QSocketDispatcherThread::ProcessSocketDisconnectionEvent( QThreadEvent* pEvent )

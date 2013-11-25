@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <QLineEdit>
 #include <QResizeEvent>
+#include <QCloseEvent>
 
 namespace Ui {
     class CDlgInconformity;
@@ -22,11 +23,13 @@ public:
 
 protected:
     void resizeEvent(QResizeEvent * event );
+    void closeEvent(QCloseEvent *);
 signals:
     void Pass( QString strCardNo, char cCan, QString strPlate);
 
 private:
     void FillCntrl( QStringList& lstRows, bool bCard );
+    void ClearData( );
 
 private:
     Ui::CDlgInconformity *ui;

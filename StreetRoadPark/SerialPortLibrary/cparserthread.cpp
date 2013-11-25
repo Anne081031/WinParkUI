@@ -17,6 +17,8 @@ CParserThread::CParserThread( QString& strParkID, QObject *parent ) :
 
 CParserThread* CParserThread::CreateThread( QString& strParkID, QObject* parent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+
     CParserThread* pThread = new CParserThread( strParkID, parent );
 
     pThread->start( );

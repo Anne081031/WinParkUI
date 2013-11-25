@@ -28,9 +28,10 @@ namespace WcfCenterHost
             InitializeComponent();
         }
 
-        private void DisplayLog(string strLog)
+        private void DisplayLog(object strLog)
         {
-            txtLog.AppendText(strLog);
+            txtLog.AppendText("【" + DateTime.Now.ToString() + "】"); 
+            txtLog.AppendText(strLog.ToString());
             txtLog.AppendText("\n");
         }
 
@@ -63,7 +64,7 @@ namespace WcfCenterHost
                 return;
             }
 
-            DisplayLog(state.ToString());
+            DisplayLog(state);
         }
 
         private void webServer_QueryEvent(object sender, SimpleWebSerer.WebEVentArgs e)
@@ -82,7 +83,15 @@ namespace WcfCenterHost
             }
             
             string strLocationID = strQuery[0].Substring(0, 10);
-            tcpServer.Send2Client(strLocationID, e.QueryString);
+
+            try
+            {
+                tcpServer.Send2Client(strLocationID, e.QueryString);
+            }
+            catch (Exception ex)
+            {
+                mainSC.Post(scCallback, CommonFunction.GetExceptionMessage(ex));
+            }
         }
 
         private void CenterForm_FormClosed(object sender, FormClosedEventArgs e)

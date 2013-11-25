@@ -33,6 +33,7 @@ void QDatabaseProcessor::SetDataDispatcher(QThread *pDispatcher)
 
 QDatabaseProcessor* QDatabaseProcessor::CreateThread( bool bPoolThread, QObject *parent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
     QDatabaseProcessor* pThread = new QDatabaseProcessor( bPoolThread, parent );
 
     pThread->start( );

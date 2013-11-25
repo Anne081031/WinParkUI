@@ -32,11 +32,11 @@ void QDataUploadThread::PostUploadEvent(const QByteArray &byData, QDataUploadEve
 QDataUploadThread* QDataUploadThread::CreateThread( QObject *parent )
 {
     if ( NULL == pThreadInstance ) {
+        qDebug( ) << Q_FUNC_INFO << endl;
+
         pThreadInstance = new QDataUploadThread( parent );
         pThreadInstance->start( );
         pThreadInstance->moveToThread( pThreadInstance );
-
-        qDebug( ) << Q_FUNC_INFO << endl;
     }
 
     return pThreadInstance;

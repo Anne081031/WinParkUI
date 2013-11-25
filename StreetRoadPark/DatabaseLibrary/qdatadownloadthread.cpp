@@ -11,11 +11,11 @@ QDataDownloadThread::QDataDownloadThread(QObject *parent) :
 QDataDownloadThread* QDataDownloadThread::CreateThread( QObject *parent )
 {
     if ( NULL == pThreadInstance ) {
+        qDebug( ) << Q_FUNC_INFO << endl;
+
         pThreadInstance = new QDataDownloadThread( parent );
         pThreadInstance->start( );
         pThreadInstance->moveToThread( pThreadInstance );
-
-        qDebug( ) << Q_FUNC_INFO << endl;
     }
 
     return pThreadInstance;

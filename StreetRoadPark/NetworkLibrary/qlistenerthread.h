@@ -3,6 +3,7 @@
 
 #include "qmytcpserver.h"
 #include "qsocketdispatcherthread.h"
+#include "qlikebroadcastthread.h"
 
 class QListenerThread : public QThread
 {

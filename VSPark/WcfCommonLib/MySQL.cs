@@ -107,7 +107,11 @@ namespace WcfCommonLib
             if (null != arrRecord)
             {
                 string strRecord = Encoding.UTF8.GetString(arrRecord);
-                builder.Append(strRecord);
+
+                if ("|" != strRecord)
+                {
+                    builder.Append(strRecord);
+                }
             }
 
             //reader.Close();
@@ -130,7 +134,14 @@ namespace WcfCommonLib
 
             sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
             sqlCmd.CommandText = "DownloadFeeRate";
-            CreateParameter(sqlCmd, null, "@feeRate", MySqlDbType.LongText, System.Data.ParameterDirection.Input);
+            //
+            // MySQL 字符编码为UTF8
+            // Encoding.UTF8 represents a UTF-8 encoding of Unicode characters.
+            // GetBytes Encoding GetString Decoding
+            // 字符(在字库中)-->编码(码表 内存表达)-->字符
+
+            byte [] byUtf8 =  Encoding.UTF8.GetBytes( builder.ToString( ) );
+            CreateParameter(sqlCmd, byUtf8, "@feeRate", MySqlDbType.LongText, System.Data.ParameterDirection.Input);
 
             sqlConn.Open();
             //MySqlDataReader reader = 

@@ -80,7 +80,63 @@ BEGIN
 	select @FeeData = FeeRate from #FeeRateResult;
 	--select FeeRate from #FeeRateResult;
 END
+
+        ALTER PROCEDURE [dbo].[InOutXML]
+	@RecordXML xml
+AS
+BEGIN
+	DECLARE 
+    @nItem INT, 
+    @nTotal INT,
+	--@RecordXML xml,
+	@Row XML,
+
+	@RecordID varchar(64),
+	@LocationID varchar(64),
+	@EnterTime varchar(64),
+	@LeaveTime varchar(64),
+	@EnterPlate varchar(64),
+	@LeavePlate varchar(64),
+	@State varchar(64);
+
+	--select @RecordXML = '<TestUpload><TestUpload><RecordID>39</RecordID><LocationID>5101070001001006</LocationID><EnterTime>2013-11-01 17:00:53</EnterTime><LeaveTime>2013-11-01 17:00:56</LeaveTime><EnterPlate>1123</EnterPlate><LeavePlate>川A12456</LeavePlate><State>1</State></TestUpload><TestUpload><RecordID>40</RecordID><LocationID>5101070001001006</LocationID><EnterTime>2013-11-01 17:00:53</EnterTime><LeaveTime>2013-11-01 17:00:56</LeaveTime><EnterPlate>1123</EnterPlate><LeavePlate>川A12456</LeavePlate><State>1</State></TestUpload></TestUpload>';
+ 
+	SELECT @nItem = 1, @nTotal = @RecordXML.value( 'count(/TestUpload/TestUpload)','INT' );
+
+	WHILE @nItem <= @nTotal BEGIN
+		SELECT @Row = @RecordXML.query('/TestUpload/TestUpload[position()=sql:variable("@nItem")]');
+
+		select  @RecordID = CAST( T.C.query('/TestUpload/RecordID/text( )') as VARCHAR(64) ),
+			    @LocationID = CAST( T.C.query('/TestUpload/LocationID/text( )') as VARCHAR(64) ),
+				@EnterTime = CAST( T.C.query('/TestUpload/EnterTime/text( )') as VARCHAR(64) ),
+				@LeaveTime = CAST( T.C.query('/TestUpload/LeaveTime/text( )') as VARCHAR(64) ),
+				@EnterPlate = CAST( T.C.query('/TestUpload/EnterPlate/text( )') as VARCHAR(64) ),
+				@LeavePlate = CAST( T.C.query('/TestUpload/LeavePlate/text( )') as VARCHAR(64) ),
+				@State = CAST( T.C.query('/TestUpload/State/text( )') as VARCHAR(64) ) from @Row.nodes('.') as T(C);
+/*
+		PRINT 'RecordID: ' + @RecordID;
+		PRINT 'LocationID: ' + @LocationID;
+		PRINT 'EnterTime: ' + @EnterTime;
+		PRINT 'LeaveTime: ' + @LeaveTime;
+		PRINT 'EnterPlate: ' + @EnterPlate;
+		PRINT 'LeavePlate: ' + @LeavePlate;
+		PRINT 'State: ' + @State;
+		PRINT '';
+*/
+		if '' = @LeaveTime select @LeaveTime = null;
+		if '' = @EnterPlate select @EnterPlate = null;
+		if '' = @LeavePlate select @LeavePlate = null;
+
+		IF EXISTS ( SELECT RecordID, LocationID FROM TestUpload WHERE RecordID = @RecordID and LocationID = @LocationID )
+			update TestUpload set LeaveTime = @LeaveTime, LeavePlate = @LeavePlate, State = @State where  RecordID = @RecordID and LocationID = @LocationID;
+		else
+			Insert into TestUpload( RecordID, LocationID, EnterTime, LeaveTime, EnterPlate, LeavePlate, State ) 
+                        values( @RecordID, @LocationID, @EnterTime, @LeaveTime, @EnterPlate, @LeavePlate, @State );
+		SELECT @nItem = @nItem + 1;
+	END
+END
 #endif
+        // RowType TableType 行变量 表变量
         //UI<-->DataRowView(DataRow)<-->DataView(DataRowView)
         //(各种操作功能-插入 删除 编辑 排序 多视图模式 部分浏览等等)
         //<-->DataTable(DataRow DataColumn)
@@ -163,29 +219,65 @@ END
 
         public void WriteRecordData(DataTable table)
         {
+            if (null == table || 0 == table.Rows.Count)
+            {
+                return;
+            }
             // Inset Value( )
             // Insert Values( )
             // BulkCopy
             // Table Value Parameters 2008
-            SqlBulkCopy sqlBulk = new SqlBulkCopy(strConnString);
-
-            table.Columns.Add("a", typeof(Int32));
-            table.Columns.Add("b", typeof(string));
-            DataRow row = table.NewRow();
-            row[0] = 1;
-            row[1] = "qwe";
-            table.Rows.Add(row);
-
-            row = table.NewRow();
-            row[0] = 2;
-            row[1] = "qwedsfsdf";
-            table.Rows.Add(row);
-
+            // Create Table IGNORE_DUP_KEY = { ON | OFF } set ON 忽略主键重复问题
+            SqlBulkCopy sqlBulk = new SqlBulkCopy(strConnString, SqlBulkCopyOptions.KeepIdentity);
             sqlBulk.BulkCopyTimeout = 60;
-            sqlBulk.DestinationTableName = "TestUpload";
+            sqlBulk.DestinationTableName = table.TableName;
             sqlBulk.BatchSize = table.Rows.Count;
             sqlBulk.WriteToServer(table);
             sqlBulk.Close();
+        }
+
+        public void WriteRecordData(string strXml)
+        {
+            if (null == strXml || string.Empty == strXml)
+            {
+                return;
+            }
+
+            SqlConnection sqlConn = new SqlConnection(strConnString);
+            SqlCommand sqlCmd = sqlConn.CreateCommand();
+            sqlCmd.Connection = sqlConn;
+
+            sqlCmd.CommandType = CommandType.StoredProcedure;
+            sqlCmd.CommandText = "InOutXML";
+
+
+            CreateParameter(sqlCmd, strXml, "@RecordXML", SqlDbType.Xml, -1, ParameterDirection.Input);
+
+            sqlConn.Open();
+
+            SqlTransaction trans = sqlConn.BeginTransaction();
+            sqlCmd.Transaction = trans;
+            Exception exRethrow = null;
+            try
+            {
+                sqlCmd.ExecuteNonQuery();
+                trans.Commit();
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                exRethrow = ex;
+            }
+
+            trans.Dispose();
+            sqlCmd.Dispose();
+            sqlConn.Close();
+            sqlConn.Dispose();
+
+            if (null != exRethrow)
+            {
+                throw exRethrow;
+            }
         }
     }
 }

@@ -1,3 +1,14 @@
+Fee
+{
+	"ClientID":"-1",
+	"TypeCode":"GetFreeType", //GetFeeRate
+	"UserID":"-1",
+	"Data": 
+	{
+		"ParkID":"5101080001"
+	}
+}
+
 GroupRecord
 {
 	"ClientID":"-1",

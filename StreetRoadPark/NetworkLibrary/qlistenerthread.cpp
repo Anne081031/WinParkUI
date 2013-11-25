@@ -32,6 +32,8 @@ void QListenerThread::HandleLog( QString strLog, bool bStatic )
 
 QListenerThread* QListenerThread::CreateThread( QObject *pParent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+
     QListenerThread* pThread = new QListenerThread( pParent );
     pThread->start( );
     pThread->moveToThread( pThread );
@@ -108,14 +110,13 @@ void QListenerThread::customEvent( QEvent *event )
 
 void QListenerThread::HandleAccept( qintptr socketDescriptor )
 {
-    pSocketDispatcher->PostDispatchSocketEvent( socketDescriptor );
+    pSocketDispatcher->PostDispatchSocketEvent( socketDescriptor, pTcpServer->serverPort( ) );
 }
 
 void QListenerThread::PostStartListenEvent( quint16 nPort, qint32 nMaxConn )
 {
     QThreadEvent* pEvent = QThreadEvent::CreateThreadEvent( QThreadEvent::ThreadListener,
                                                             QThreadEvent::EventStartListen );
-
     pEvent->SetListenPort( nPort );
     pEvent->SetMaxPendingConnection( nMaxConn );
     PostEvent( pEvent );

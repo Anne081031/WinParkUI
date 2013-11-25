@@ -55,12 +55,12 @@ void QDataParserThread::InitializeSubThread( )
 
 QDataParserThread* QDataParserThread::CreateThread( QObject *pParent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+
     QDataParserThread* pThread = new QDataParserThread( pParent );
 
     pThread->start( );
     pThread->moveToThread( pThread );
-
-    qDebug( ) << Q_FUNC_INFO << endl;
 
     return pThread;
 }

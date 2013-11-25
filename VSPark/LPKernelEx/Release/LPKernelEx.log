@@ -1,5 +1,9 @@
-﻿Build started 2013-11-7 16:22:51.
+﻿Build started 2013-11-25 10:45:06.
+     1>Project "D:\WinParkUI\VSPark\LPKernelEx\LPKernelEx.vcxproj" on node 2 (clean target(s)).
+     1>_PrepareForClean:
+         Deleting file "Release\LPKernelEx.lastbuildstate".
+     1>Done Building Project "D:\WinParkUI\VSPark\LPKernelEx\LPKernelEx.vcxproj" (clean target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:00.01
+Time Elapsed 00:00:00.18

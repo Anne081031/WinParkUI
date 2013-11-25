@@ -25,6 +25,9 @@
   <wsdl:message name="ICenterService_GetFeeData_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetFeeDataResponse" />
   </wsdl:message>
+  <wsdl:message name="ICenterService_UploadRecordData2_InputMessage">
+    <wsdl:part name="parameters" element="tns:UploadRecordData2" />
+  </wsdl:message>
   <wsdl:message name="ICenterService_UploadRecordData_InputMessage">
     <wsdl:part name="parameters" element="tns:UploadRecordData" />
   </wsdl:message>
@@ -47,6 +50,9 @@
     <wsdl:operation name="GetFeeData">
       <wsdl:input wsaw:Action="http://tempuri.org/ICenterService/GetFeeData" message="tns:ICenterService_GetFeeData_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICenterService/GetFeeDataResponse" message="tns:ICenterService_GetFeeData_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UploadRecordData2">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICenterService/UploadRecordData2" message="tns:ICenterService_UploadRecordData2_InputMessage" />
     </wsdl:operation>
     <wsdl:operation name="UploadRecordData">
       <wsdl:input wsaw:Action="http://tempuri.org/ICenterService/UploadRecordData" message="tns:ICenterService_UploadRecordData_InputMessage" />
@@ -77,6 +83,12 @@
       <wsdl:output>
         <soap:body use="literal" />
       </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UploadRecordData2">
+      <soap:operation soapAction="http://tempuri.org/ICenterService/UploadRecordData2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
     </wsdl:operation>
     <wsdl:operation name="UploadRecordData">
       <soap:operation soapAction="http://tempuri.org/ICenterService/UploadRecordData" style="document" />

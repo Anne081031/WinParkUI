@@ -19,6 +19,7 @@ QDataDispactherThread::~QDataDispactherThread( )
 
 QDataDispactherThread* QDataDispactherThread::CreateThread( QObject *parent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
     QDataDispactherThread* pThread = new QDataDispactherThread( parent );
 
     pThread->start( );

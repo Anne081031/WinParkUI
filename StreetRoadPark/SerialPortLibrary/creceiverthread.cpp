@@ -9,6 +9,8 @@ CReceiverThread::CReceiverThread( Win_QextSerialPort* pPort, QObject *parent) :
 
 CReceiverThread* CReceiverThread::CreateThread( Win_QextSerialPort* pPort, QObject* parent )
 {
+    qDebug( ) << Q_FUNC_INFO << endl;
+
     CReceiverThread* pThread = new CReceiverThread( pPort, parent );
 
     pThread->start( );

@@ -10,7 +10,7 @@ public:
     static QSocketDispatcherThread* CreateThread( QObject* pParent = 0 );
     ~QSocketDispatcherThread( );
 
-    void PostDispatchSocketEvent( qintptr nSocket );
+    void PostDispatchSocketEvent( qintptr nSocket, int nPort);
     void PostSocketDisconnectionEvent( QTcpSocket* pSocket );
 
 protected:

@@ -20,7 +20,8 @@ namespace TestApp
 
         private void button1_Click(object sender, EventArgs e)
         {
-            webClient.PostString();
+            string strWhere = textBox1.Text + "|" + textBox2.Text;
+            webClient.PostString(strWhere);
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -35,13 +36,25 @@ namespace TestApp
         {
             try
             {
-                webClient.PostString();
+                string strWhere = textBox1.Text + "|" + textBox2.Text;
+                webClient.PostString(strWhere);
             }
             catch (Exception ex)
             {
                 richTextBox1.AppendText(ex.Message);
                 richTextBox1.AppendText("\n");
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            timer1.Interval = ( int ) numericUpDown1.Value;
+            timer1.Enabled = true;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            timer1.Enabled = false;
         }
     }
 }

@@ -9,6 +9,7 @@ INPUT(
 ./debug\cnetconfigurator.o
 ./debug\qudpmulticast.o
 ./debug\qmulticastthread.o
+./debug\qlikebroadcastthread.o
 ./debug\moc_networkcontroller.o
 ./debug\moc_qsocketthread.o
 ./debug\moc_qsocketdispatcherthread.o
@@ -18,4 +19,5 @@ INPUT(
 ./debug\moc_cnetconfigurator.o
 ./debug\moc_qudpmulticast.o
 ./debug\moc_qmulticastthread.o
+./debug\moc_qlikebroadcastthread.o
 );

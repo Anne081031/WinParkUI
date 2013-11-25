@@ -13,7 +13,7 @@ public:
     void SetThreadStartSleepTime(  );
     bool TimerRecycle( qint32 nInterval /*Minute*/ );
 
-    void PostAttachSocketEvent( qintptr nSocket );
+    void PostAttachSocketEvent( qintptr nSocket, int nPort );
     void SetDataParser( QDataParserThread* pThread );
 
 protected:

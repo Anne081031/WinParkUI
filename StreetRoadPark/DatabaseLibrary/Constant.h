@@ -11,7 +11,8 @@ public:
         TypeInOutRecordInfo,
         TypeSystemInfo,
         TypeDataInfo,
-        TypeSensorInfo
+        TypeSensorInfo,
+        TypeFeeInfo
     } DataPackageType;
 
     typedef struct __TypeCode {
@@ -61,6 +62,9 @@ public:
         QString strCodeTimeSync; // Server=>Tablet
         QString strCodeConfigInfo;
 
+        QString strCodeGetFreeType;
+        QString strCodeGetFeeRate;
+
         //TypeDataInfo
         QString strCodeDataInfo;
 
@@ -93,6 +97,8 @@ public:
             strCodeDataInfo = "DataInfo";
 
             strCodeSensorData = "SensorData";
+            strCodeGetFreeType = "GetFreeType";
+            strCodeGetFeeRate = "GetFeeRate";
         }
     } TTypeCode;
 
@@ -111,6 +117,8 @@ public:
         QString strSpQueryCommonRecord;
         QString strSpVehicleShiftRecord;
         QString strSpUploadInOutRecord;
+        QString strSpGetFreeTypeRecord;
+        QString strSpGetFeeRateRecord;
 
         __SpName( )
         {
@@ -128,6 +136,8 @@ public:
             strSpQueryCommonRecord = "QueryCommonRecord";
             strSpVehicleShiftRecord = "VehicleShiftRecord";
             strSpUploadInOutRecord = "UploadInOutRecord";
+            strSpGetFreeTypeRecord = "GetFreeType";
+            strSpGetFeeRateRecord = "GetFeeRate";
         }
     } TSpName;
 
@@ -153,6 +163,8 @@ public:
 
         QString strXmlConfigRecord;
         QString strXmlDataInfo;
+        QString strXmlGetFeeRate;
+        QString strXmlGetFreeType;
 
         __SpXmlPattern( )
         {
@@ -160,6 +172,7 @@ public:
                                "<ClientID>%2</ClientID>"
                                "<TypeCode>%3</TypeCode>"
                                "<UserID>%4</UserID>";
+
             strXmlSensorRecord = "<Data><LocationID>%1%2%3</LocationID> \
                                            <DateTime>%4</DateTime> \
                                            <Accessor>Localhost</Accessor></Data>";
@@ -171,7 +184,10 @@ public:
                                            <Time>%5</Time> \
                                            <Image>%6</Image> \
                                            <Accessor>%7</Accessor> \
-                                           <UserID>%8</UserID></Data>";
+                                           <UserID>%8</UserID> \
+                                           <FeeReceivable>%9</FeeReceivable> \
+                                           <RecordType>%10</RecordType> \
+                                           <FreeType>%11</FreeType></Data>";
 
             strXmlTabletManualRecord = "<Data><LocationID>%1</LocationID> \
                                         <Plate>%2</Plate> \
@@ -181,7 +197,10 @@ public:
                                         <Image>%6</Image> \
                                         <Accessor>%7</Accessor> \
                                         <UserID>%8</UserID> \
-                                        <SensorTime>%9</SensorTime></Data>";
+                                        <SensorTime>%9</SensorTime> \
+                                        <FeeReceivable>%10</FeeReceivable> \
+                                        <RecordType>%11</RecordType> \
+                                        <FreeType>%12</FreeType></Data>";
 
             strXmlTabletQueryLocationRecord = "<Data><LocationID>%1</LocationID> \
                                                <EnterStartTime>%2</EnterStartTime> \
@@ -230,6 +249,8 @@ public:
             strXmlGroupRecord = "<Data><UnitID>%1</UnitID><Accessor>%2</Accessor></Data>";
             strXmlConfigRecord = "<Data><DeviceID>%1</DeviceID><Accessor>%2</Accessor></Data>";
             strXmlDataInfo = "<Data><DataType>%1</DataType><Accessor>%2</Accessor></Data>";
+            strXmlGetFeeRate = "<Data><ParkID>%1</ParkID><Accessor>%2</Accessor></Data>";
+            strXmlGetFreeType = "<Data><ParkID>%1</ParkID><Accessor>%2</Accessor></Data>";
             strXmlTabletVehicleShiftRecord = "<Data><SrcLocationID>%1</SrcLocationID><DstLocationID>%2</DstLocationID><Accessor>%3</Accessor></Data>";
             strXmlTabletUploadInOutRecord = "<Row><LocationID>%1</LocationID> \
                                              <State>%2</State> \

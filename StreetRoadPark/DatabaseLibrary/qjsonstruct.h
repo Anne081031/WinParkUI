@@ -172,6 +172,10 @@ public:
                QString strSrcLocationID;
                QString strDstLocationID;
 
+               QString strFeeReceivable;
+               QString strFreeType;
+               QString strRecordType;
+
                QString strList;
 
                __Keys( )
@@ -212,6 +216,10 @@ public:
                    strLeaveTime = "LeaveTime";
                    strPrepaymentUserID = "PrepaymentUserID";
                    strPaymentUserID = "PaymentUserID";
+
+                   strFeeReceivable = "FeeReceivable";
+                   strFreeType = "FreeType";
+                   strRecordType = "RecordType";
                }
             } sKeys;
 
@@ -251,6 +259,10 @@ public:
 
                 QString strSrcLocationID;
                 QString strDstLocationID;
+
+                QString strFeeReceivable;
+                QString strFreeType;
+                QString strRecordType;
 
                 QString strList;
             } sValues;
@@ -315,6 +327,24 @@ public:
             } sValues;
         } sData;
     } JsonDataRecord, *PJsonDataRecord;
+
+    typedef struct __JsonFeeRecord {
+        JsonHead sHead;
+        struct __JsonData {
+            struct __Keys {
+                QString strParkID;
+
+               __Keys( )
+               {
+                   strParkID = "ParkID";
+               }
+            } sKeys;
+
+            struct __Values {
+                QString strParkID;
+            } sValues;
+        } sData;
+    } JsonFeeRecord, *PJsonFeeRecord;
 };
 
 #endif // QJSONSTRUCT_H

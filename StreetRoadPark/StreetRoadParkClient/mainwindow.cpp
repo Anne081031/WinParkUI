@@ -11,12 +11,12 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     // 224.0.1.255
-    QHostAddress addr( "224.0.1.10" );
+    //QHostAddress addr( "224.0.1.10" );
     //QHostAddress addr( "224.0.1.255" );
     udpSocket.bind(QHostAddress::AnyIPv4, 60000, QUdpSocket::ShareAddress);
     bool bRet = connect( &udpSocket, SIGNAL( readyRead( ) ),
                          this, SLOT( IncomingUdpData( ) ) );
-    bRet = udpSocket.joinMulticastGroup( addr );
+    //bRet = udpSocket.joinMulticastGroup( addr );
     bRet = false;
 }
 
@@ -257,14 +257,17 @@ void MainWindow::on_btnEnter_clicked()
 {
     QString strJson = "{\"ClientID\":\"1234567890\",";
     strJson += "\"TypeCode\":\"TabletNormalData\",";
-    strJson += "\"UserID\":\"1\",";
+    strJson += "\"UserID\":\"002\",";
     strJson += "\"Data\":{";
-    strJson += "\"LocationID\":\"5101070001001006\",";
-    strJson += "\"Plate\":\"川A88888\",";
+    strJson += "\"LocationID\":\"5107010001001012\",";
+    strJson += "\"Plate\":\"川A12345\",";
     strJson += "\"Payment\":\"35\",";
     strJson += "\"Operator\":\"张三\",";
     strJson += "\"PaymentTime\":\"2013-03-18 12:23:45\",";
     strJson += "\"State\":\"1\",";
+    strJson += "\"FeeReceivable\":\"11\",";
+    strJson += "\"RecordType\":\"2\",";
+    strJson += "\"FreeType\":\"3\",";
     strJson += "\"Image\":\"%1\"}}";
 
     QString strBase64;
@@ -280,14 +283,17 @@ void MainWindow::on_btnLeave_clicked()
 {
     QString strJson = "{\"ClientID\":\"1234567890\",";
     strJson += "\"TypeCode\":\"TabletNormalData\",";
-    strJson += "\"UserID\":\"1\",";
+    strJson += "\"UserID\":\"002\",";
     strJson += "\"Data\":{";
-    strJson += "\"LocationID\":\"5101070001001006\",";
-    strJson += "\"Plate\":\"川A88888\",";
+    strJson += "\"LocationID\":\"5107010001001012\",";
+    strJson += "\"Plate\":\"川A12345\",";
     strJson += "\"Payment\":\"30\",";
     strJson += "\"Operator\":\"张三\",";
     strJson += "\"PaymentTime\":\"2013-03-19 12:23:45\",";
     strJson += "\"State\":\"0\",";
+    strJson += "\"FeeReceivable\":\"11\",";
+    strJson += "\"RecordType\":\"2\",";
+    strJson += "\"FreeType\":\"3\",";
     strJson += "\"Image\":\"%1\"}}";
 
     QString strBase64;
@@ -303,14 +309,17 @@ void MainWindow::on_pushButton_clicked()
 {
     QString strJson = "{\"ClientID\":\"1234567890\",";
     strJson += "\"TypeCode\":\"TabletManualData\",";
-    strJson += "\"UserID\":\"1\",";
+    strJson += "\"UserID\":\"002\",";
     strJson += "\"Data\":{";
-    strJson += "\"LocationID\":\"5101070001001006\",";
+    strJson += "\"LocationID\":\"5107010001001006\",";
     strJson += "\"Plate\":\"川A88888\",";
     strJson += "\"Payment\":\"30\",";
     strJson += "\"Operator\":\"张三\",";
     strJson += "\"PaymentTime\":\"2013-03-19 12:23:45\",";
     strJson += "\"State\":\"1\",";
+    strJson += "\"FeeReceivable\":\"11\",";
+    strJson += "\"RecordType\":\"2\",";
+    strJson += "\"FreeType\":\"3\",";
     strJson += "\"Image\":\"%1\"}}";
 
     QString strBase64;
@@ -326,14 +335,17 @@ void MainWindow::on_pushButton_2_clicked()
 {
     QString strJson = "{\"ClientID\":\"1234567890\",";
     strJson += "\"TypeCode\":\"TabletManualData\",";
-    strJson += "\"UserID\":\"1\",";
+    strJson += "\"UserID\":\"002\",";
     strJson += "\"Data\":{";
-    strJson += "\"LocationID\":\"5101070001001006\",";
+    strJson += "\"LocationID\":\"5107010001001006\",";
     strJson += "\"Plate\":\"川A88888\",";
     strJson += "\"Payment\":\"30\",";
     strJson += "\"Operator\":\"张三\",";
     strJson += "\"PaymentTime\":\"2013-03-19 12:23:45\",";
     strJson += "\"State\":\"0\",";
+    strJson += "\"FeeReceivable\":\"11\",";
+    strJson += "\"RecordType\":\"2\",";
+    strJson += "\"FreeType\":\"3\",";
     strJson += "\"Image\":\"%1\"}}";
 
     QString strBase64;
@@ -360,4 +372,12 @@ void MainWindow::on_pushButton_3_clicked()
     int nLen = GetTextCodec( )->fromUnicode( strJson ).count( );
     ui->edtLength->setText( QString::number( nLen ) );
     ui->txtData->appendPlainText( strJson );
+}
+
+void MainWindow::on_pushButton_4_clicked()
+{
+    tcpSocket.connectToHost( ui->edtServerIP->text( ), 60000 );
+
+    connect( &tcpSocket, SIGNAL( readyRead( ) ),
+             this, SLOT( IncomingData( ) ) );
 }

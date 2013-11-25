@@ -16,9 +16,9 @@ namespace TestApp
             client.BaseAddress = "http://127.0.0.1:9011/";
         }
 
-        public void PostString()
+        public void PostString(string strWhere)
         {
-            string strResponse = client.UploadString("", "5101080001001006|39");
+            string strResponse = client.UploadString("", strWhere);
             System.Diagnostics.Debug.Print( strResponse );
         }
     }

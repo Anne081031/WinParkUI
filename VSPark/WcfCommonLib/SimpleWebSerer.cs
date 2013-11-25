@@ -52,12 +52,17 @@ namespace WcfCommonLib
         private void ListenerCallback(IAsyncResult iResult)
         {
             HttpListener listener = (HttpListener)iResult.AsyncState;
+            if (!listener.IsListening)
+            {
+                return;
+            }
+
             // Call EndGetContext to complete the asynchronous operation.
 
             HttpListenerContext context = listener.EndGetContext(iResult);
             HttpListenerRequest request = context.Request;
 
-            if (request.HttpMethod.ToUpper() == "POST" && request.HasEntityBody )
+            if (request.HttpMethod.ToUpper() == "POST" && request.HasEntityBody)
             {
                 Stream body = request.InputStream;
                 Encoding coding = request.ContentEncoding;
@@ -72,7 +77,7 @@ namespace WcfCommonLib
 
                 WebEVentArgs e = new WebEVentArgs();
                 e.QueryString = strBody;
-                OnQueryEvent( e );
+                OnQueryEvent(e);
             }
             // Obtain a response object.
 

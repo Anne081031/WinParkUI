@@ -126,7 +126,7 @@ void MainWindow::InitializeCmd( QComboBox *pCB )
                            "检测器读数据$",
                            "检测器读数据R",
                            "检测器读数据A",
-                           "检测器强强复位",
+                           "检测器强制复位",
                            "检测器修改ID",
                            "检测器修改信道",
                            "检测器通信测试建立",
@@ -239,11 +239,14 @@ void MainWindow::on_btnStartListen_clicked()
 
     pNetController->StartListen( nPort, nMaxConn );
     pConfig->WritePortMaxConn( nPort, nMaxConn );
+
+    pNetController->StartMultiCastListen( );
 }
 
 void MainWindow::on_btnStopListen_clicked()
 {
     pNetController->StopListen( );
+    pNetController->StopMultiCastListen( );
 }
 
 void MainWindow::on_btnConnectDb_clicked()

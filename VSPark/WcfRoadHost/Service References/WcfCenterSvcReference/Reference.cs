@@ -84,8 +84,11 @@ namespace WcfRoadHost.WcfCenterSvcReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICenterService/GetFeeData", ReplyAction="http://tempuri.org/ICenterService/GetFeeDataResponse")]
         System.Text.StringBuilder GetFeeData(string strParkID);
         
+        [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ICenterService/UploadRecordData2")]
+        void UploadRecordData2(System.Data.DataTable table);
+        
         [System.ServiceModel.OperationContractAttribute(IsOneWay=true, Action="http://tempuri.org/ICenterService/UploadRecordData")]
-        void UploadRecordData(System.Data.DataTable table);
+        void UploadRecordData(System.Text.StringBuilder builder);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICenterService/GetData", ReplyAction="http://tempuri.org/ICenterService/GetDataResponse")]
         string GetData(int value);
@@ -129,8 +132,12 @@ namespace WcfRoadHost.WcfCenterSvcReference {
             return base.Channel.GetFeeData(strParkID);
         }
         
-        public void UploadRecordData(System.Data.DataTable table) {
-            base.Channel.UploadRecordData(table);
+        public void UploadRecordData2(System.Data.DataTable table) {
+            base.Channel.UploadRecordData2(table);
+        }
+        
+        public void UploadRecordData(System.Text.StringBuilder builder) {
+            base.Channel.UploadRecordData(builder);
         }
         
         public string GetData(int value) {
