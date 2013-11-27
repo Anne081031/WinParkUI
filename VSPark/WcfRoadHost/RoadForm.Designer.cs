@@ -33,9 +33,9 @@
             this.timerReconnect = new System.Windows.Forms.Timer(this.components);
             this.txtLog = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.btnGetFeeRate = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.timerUploadData = new System.Windows.Forms.Timer(this.components);
-            this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -67,13 +67,23 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btnGetFeeRate);
             this.panel1.Controls.Add(this.btnClearLog);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(792, 36);
             this.panel1.TabIndex = 3;
+            // 
+            // btnGetFeeRate
+            // 
+            this.btnGetFeeRate.Location = new System.Drawing.Point(88, 8);
+            this.btnGetFeeRate.Name = "btnGetFeeRate";
+            this.btnGetFeeRate.Size = new System.Drawing.Size(75, 23);
+            this.btnGetFeeRate.TabIndex = 1;
+            this.btnGetFeeRate.Text = "获取费率";
+            this.btnGetFeeRate.UseVisualStyleBackColor = true;
+            this.btnGetFeeRate.Click += new System.EventHandler(this.btnGetFeeRate_Click);
             // 
             // panel2
             // 
@@ -89,16 +99,6 @@
             this.timerUploadData.Interval = 60000;
             this.timerUploadData.Tick += new System.EventHandler(this.timerUploadData_Tick);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(111, 8);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 1;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // RoadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -109,6 +109,7 @@
             this.Name = "RoadForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "路边Web Service";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.RoadForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.RoadForm_FormClosed);
             this.Load += new System.EventHandler(this.RoadForm_Load);
             this.panel1.ResumeLayout(false);
@@ -125,7 +126,7 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Timer timerUploadData;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnGetFeeRate;
     }
 }
 

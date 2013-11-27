@@ -84,6 +84,7 @@
             this.Name = "CenterForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "中心Web Service";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.CenterForm_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.CenterForm_FormClosed);
             this.Load += new System.EventHandler(this.CenterForm_Load);
             this.panel1.ResumeLayout(false);

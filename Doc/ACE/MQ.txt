@@ -1,0 +1,10 @@
+面向消息的中间件（MOM）系统
+
+MSMQ
+ZeroMQ
+RabbitMQ 实现
+AMQP 协议
+
+JMS /Apache ActiveMQ/Apache Qpid/OpenJMS
+
+LUA / IDE Decoda

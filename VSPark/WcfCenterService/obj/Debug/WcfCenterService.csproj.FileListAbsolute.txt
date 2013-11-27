@@ -1,0 +1,11 @@
+D:\WinParkUI\VSPark\WcfCenterService\bin\Debug\WcfCenterService.dll.config
+D:\WinParkUI\VSPark\WcfCenterService\bin\Debug\WcfCenterService.dll
+D:\WinParkUI\VSPark\WcfCenterService\bin\Debug\WcfCenterService.pdb
+D:\WinParkUI\VSPark\WcfCenterService\bin\Debug\Newtonsoft.Json.dll
+D:\WinParkUI\VSPark\WcfCenterService\bin\Debug\WcfCommonLib.dll
+D:\WinParkUI\VSPark\WcfCenterService\bin\Debug\MySql.Data.dll
+D:\WinParkUI\VSPark\WcfCenterService\bin\Debug\WcfCommonLib.pdb
+D:\WinParkUI\VSPark\WcfCenterService\bin\Debug\Newtonsoft.Json.xml
+D:\WinParkUI\VSPark\WcfCenterService\obj\Debug\ResolveAssemblyReference.cache
+D:\WinParkUI\VSPark\WcfCenterService\obj\Debug\WcfCenterService.dll
+D:\WinParkUI\VSPark\WcfCenterService\obj\Debug\WcfCenterService.pdb

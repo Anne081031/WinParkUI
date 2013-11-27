@@ -110,5 +110,10 @@ namespace WcfCenterHost
         {
             txtLog.Clear();
         }
+
+        private void CenterForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
+        }
     }
 }

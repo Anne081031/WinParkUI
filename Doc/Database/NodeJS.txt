@@ -2,6 +2,8 @@ http://nodejsdb.org/
 
 https://npmjs.org/
 
+kraken-js
+
 pecl
 
 php eio
@@ -10,3 +12,9 @@ libev
 libevent
 
 php serial http://www.thebyteworks.com/
+
+www.CodePlex.com
+
+PTVS Python Tools for Visual Studio
+
+NTVS Node.js Tools for Visual Studio

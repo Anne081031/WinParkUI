@@ -1,0 +1,6 @@
+D:\WinParkUI\VSPark\WcfRoadService\bin\Debug\WcfRoadService.dll.config
+D:\WinParkUI\VSPark\WcfRoadService\bin\Debug\WcfRoadService.dll
+D:\WinParkUI\VSPark\WcfRoadService\bin\Debug\WcfRoadService.pdb
+D:\WinParkUI\VSPark\WcfRoadService\obj\Debug\ResolveAssemblyReference.cache
+D:\WinParkUI\VSPark\WcfRoadService\obj\Debug\WcfRoadService.dll
+D:\WinParkUI\VSPark\WcfRoadService\obj\Debug\WcfRoadService.pdb

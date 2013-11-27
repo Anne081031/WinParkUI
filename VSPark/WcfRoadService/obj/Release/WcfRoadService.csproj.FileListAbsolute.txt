@@ -1,0 +1,6 @@
+D:\WinParkUI\VSPark\WcfRoadService\bin\Release\WcfRoadService.dll.config
+D:\WinParkUI\VSPark\WcfRoadService\bin\Release\WcfRoadService.dll
+D:\WinParkUI\VSPark\WcfRoadService\bin\Release\WcfRoadService.pdb
+D:\WinParkUI\VSPark\WcfRoadService\obj\Release\ResolveAssemblyReference.cache
+D:\WinParkUI\VSPark\WcfRoadService\obj\Release\WcfRoadService.dll
+D:\WinParkUI\VSPark\WcfRoadService\obj\Release\WcfRoadService.pdb

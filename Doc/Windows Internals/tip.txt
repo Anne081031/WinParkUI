@@ -2,7 +2,7 @@
 
 移动终端(手机 平板等) 接入网络(卫星网络 蜂窝网络-2G 3G 4G等 无线城域网-WiMax 无线局域网-WLAN 蓝牙无线个域网) 应用服务(Serach,SNS,Video/Audio Stream)
 
-P101
+P107
 
 Window station
 Desktop

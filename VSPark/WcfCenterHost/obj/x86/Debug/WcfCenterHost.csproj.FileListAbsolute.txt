@@ -1,0 +1,17 @@
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\WcfCenterHost.exe.config
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\WcfCenterHost.exe
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\WcfCenterHost.pdb
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\WcfCenterService.dll
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\WcfCommonLib.dll
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\Newtonsoft.Json.dll
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\MySql.Data.dll
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\WcfCenterService.pdb
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\WcfCommonLib.pdb
+D:\WinParkUI\VSPark\WcfCenterHost\bin\Debug\Newtonsoft.Json.xml
+D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Debug\ResolveAssemblyReference.cache
+D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Debug\WcfCenterHost.CenterForm.resources
+D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Debug\WcfCenterHost.Properties.Resources.resources
+D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Debug\GenerateResource.read.1.tlog
+D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Debug\GenerateResource.write.1.tlog
+D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Debug\WcfCenterHost.exe
+D:\WinParkUI\VSPark\WcfCenterHost\obj\x86\Debug\WcfCenterHost.pdb

@@ -192,6 +192,8 @@ namespace WcfRoadHost
 
             SetTimer(timerReconnect, "ReconnectTimer");
             SetTimer(timerUploadData, "UploadTimer");
+
+            GetInitializeData();
         }
 
         private void SetTimer(System.Windows.Forms.Timer objTimer, string strName)
@@ -278,7 +280,7 @@ namespace WcfRoadHost
             txtLog.Clear();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnGetFeeRate_Click(object sender, EventArgs e)
         {
             GetInitializeData();
         }
@@ -300,6 +302,11 @@ namespace WcfRoadHost
             {
                 DisplayLog(CommonFunction.GetExceptionMessage(ex));
             }
+        }
+
+        private void RoadForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            e.Cancel = true;
         }
     }
 }

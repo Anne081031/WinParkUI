@@ -1,0 +1,6 @@
+D:\WinParkUI\VSPark\WcfCommonLib\bin\Release\WcfCommonLib.dll
+D:\WinParkUI\VSPark\WcfCommonLib\bin\Release\WcfCommonLib.pdb
+D:\WinParkUI\VSPark\WcfCommonLib\bin\Release\MySql.Data.dll
+D:\WinParkUI\VSPark\WcfCommonLib\obj\Release\ResolveAssemblyReference.cache
+D:\WinParkUI\VSPark\WcfCommonLib\obj\Release\WcfCommonLib.dll
+D:\WinParkUI\VSPark\WcfCommonLib\obj\Release\WcfCommonLib.pdb

@@ -1,0 +1,15 @@
+D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\WcfRoadHost.exe.config
+D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\WcfRoadHost.exe
+D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\WcfRoadHost.pdb
+D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\Newtonsoft.Json.dll
+D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\WcfCommonLib.dll
+D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\MySql.Data.dll
+D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\WcfCommonLib.pdb
+D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\Newtonsoft.Json.xml
+D:\WinParkUI\VSPark\WcfRoadHost\obj\x86\Release\ResolveAssemblyReference.cache
+D:\WinParkUI\VSPark\WcfRoadHost\obj\x86\Release\WcfRoadHost.RoadForm.resources
+D:\WinParkUI\VSPark\WcfRoadHost\obj\x86\Release\WcfRoadHost.Properties.Resources.resources
+D:\WinParkUI\VSPark\WcfRoadHost\obj\x86\Release\GenerateResource.read.1.tlog
+D:\WinParkUI\VSPark\WcfRoadHost\obj\x86\Release\GenerateResource.write.1.tlog
+D:\WinParkUI\VSPark\WcfRoadHost\obj\x86\Release\WcfRoadHost.exe
+D:\WinParkUI\VSPark\WcfRoadHost\obj\x86\Release\WcfRoadHost.pdb
