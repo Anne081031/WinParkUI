@@ -36,6 +36,7 @@
             this.btnGetFeeRate = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.timerUploadData = new System.Windows.Forms.Timer(this.components);
+            this.timerClear = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -99,6 +100,11 @@
             this.timerUploadData.Interval = 60000;
             this.timerUploadData.Tick += new System.EventHandler(this.timerUploadData_Tick);
             // 
+            // timerClear
+            // 
+            this.timerClear.Interval = 86400000;
+            this.timerClear.Tick += new System.EventHandler(this.timerClear_Tick);
+            // 
             // RoadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -127,6 +133,7 @@
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.Timer timerUploadData;
         private System.Windows.Forms.Button btnGetFeeRate;
+        private System.Windows.Forms.Timer timerClear;
     }
 }
 

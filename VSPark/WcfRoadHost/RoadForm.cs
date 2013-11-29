@@ -308,5 +308,10 @@ namespace WcfRoadHost
         {
             e.Cancel = true;
         }
+
+        private void timerClear_Tick(object sender, EventArgs e)
+        {
+            txtLog.Clear();
+        }
     }
 }

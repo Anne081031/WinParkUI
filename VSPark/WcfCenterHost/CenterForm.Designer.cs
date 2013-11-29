@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.txtLog = new System.Windows.Forms.RichTextBox();
             this.btnClearLog = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.timerClear = new System.Windows.Forms.Timer(this.components);
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.SuspendLayout();
@@ -74,6 +76,12 @@
             this.panel2.Size = new System.Drawing.Size(792, 530);
             this.panel2.TabIndex = 3;
             // 
+            // timerClear
+            // 
+            this.timerClear.Enabled = true;
+            this.timerClear.Interval = 86400000;
+            this.timerClear.Tick += new System.EventHandler(this.timerClear_Tick);
+            // 
             // CenterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -99,6 +107,7 @@
         private System.Windows.Forms.Button btnClearLog;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Timer timerClear;
 
     }
 }
