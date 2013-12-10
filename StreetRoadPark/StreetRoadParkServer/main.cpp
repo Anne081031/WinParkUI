@@ -15,7 +15,6 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale( pCodec );
 
     DatabaseController::MySQLLibraryInit( 0, NULL );
-    DatabaseController::CreateDbThreadPool( );
 
     QApplication a(argc, argv);
     MainWindow w;

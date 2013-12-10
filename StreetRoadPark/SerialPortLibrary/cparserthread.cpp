@@ -78,7 +78,8 @@ void CParserThread::SendLog( QByteArray& byCmd, bool bStatic )
     }
 
     QString strLog( byCmd );
-    emit Log( strLog, bStatic );
+    QString strTmp = QDateTime::currentDateTime().toString( "【yyyy-MM-dd hh:mm:ss】%1" ).arg( strLog ) ;
+    emit Log( strTmp, bStatic );
 }
 
 void CParserThread::SendLog(QString &strLog, bool bStatic )
@@ -87,7 +88,8 @@ void CParserThread::SendLog(QString &strLog, bool bStatic )
         return;
     }
 
-    emit Log( strLog, bStatic );
+    QString strTmp = QDateTime::currentDateTime().toString( "【yyyy-MM-dd hh:mm:ss】%1" ).arg( strLog ) ;
+    emit Log( strTmp, bStatic );
 }
 
 bool CParserThread::GetVersionInfo( QByteArray &byData )

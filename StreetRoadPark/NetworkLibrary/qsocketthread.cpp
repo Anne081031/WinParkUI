@@ -33,7 +33,8 @@ void QSocketThread::SendLog( QString& strLog, bool bStatic )
         return;
     }
 
-    emit Log( strLog, bStatic );
+    QString strTmp = QDateTime::currentDateTime().toString( "【yyyy-MM-dd hh:mm:ss】%1" ).arg( strLog ) ;
+    emit Log( strTmp, bStatic );
 }
 
 void QSocketThread::PostEvent( QThreadEvent *pEvent )

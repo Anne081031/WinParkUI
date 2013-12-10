@@ -125,12 +125,14 @@ QSocketDispatcherThread::QSocketThreadQueue* QSocketDispatcherThread::FindSocket
 
 void QSocketDispatcherThread::HandleLog( QString strLog, bool bStatic )
 {
-    SendLog( strLog, bStatic );
+    //SendLog( strLog, bStatic );
+    emit Log( strLog, bStatic );
 }
 
 void QSocketDispatcherThread::SendLog( QString& strLog, bool bStatic )
 {
-    emit Log( strLog, bStatic );
+    QString strTmp = QDateTime::currentDateTime().toString( "【yyyy-MM-dd hh:mm:ss】%1" ).arg( strLog ) ;
+    emit Log( strTmp, bStatic );
 }
 
 QSocketThread* QSocketDispatcherThread::FindSocketThread( )

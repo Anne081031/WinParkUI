@@ -110,7 +110,7 @@ void CMainConfigurator::ReadComM77R( QComboBox &comboBox, QStringList& lstCom )
     GetPorts( lstPorts );
     int nItem = 0;
 
-    for ( qint32 nIndex = 0; nIndex < nCount; nIndex++ ) {
+    for ( qint32 nIndex = 1; nIndex <= nCount; nIndex++ ) {
         strValue = pSettings->value( strKey.arg( nIndex ), "" ).toString( );
         lstValue = strValue.split( strSperator );
 

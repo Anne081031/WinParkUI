@@ -144,6 +144,8 @@ BEGIN
 	select @UserData = UserInfo from #UserResult;
 END
 
+-- ================================================-- Template generated from Template Explorer using:-- Create Procedure (New Menu).SQL---- Use the Specify Values for Template Parameters -- command (Ctrl-Shift-M) to fill in the parameter -- values below.---- This block of comments will not be included in-- the definition of the procedure.-- ================================================SET ANSI_NULLS ONGOSET QUOTED_IDENTIFIER ONGO-- =============================================-- Author:		<Author,,Name>-- Create date: <Create Date,,>-- Description:	<Description,,>-- =============================================CREATE PROCEDURE GetParkInfo	@ParkID varchar(45),	@ParkData varchar(max) outputASBEGIN	declare ResultData CURSOR for select '("' + ccbh + '","' + ccjc + '")' from tccxx where ccbh = @ParkID;	declare @RowData varchar(1024);	--DECLARE @ptrval binary(16);	declare @ByteLen int;	declare @TmpLen int;	declare @First tinyint;	SET NOCOUNT ON;	CREATE TABLE #ParkResult(	[ParkInfo] varchar(max) COLLATE Chinese_PRC_CI_AS NULL CONSTRAINT [DF_ParkResult_User]  DEFAULT (''),	[ID] [int] NOT NULL CONSTRAINT [DF_ParkResult_Key]  DEFAULT ((1))	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];	insert #ParkResult( ID, ParkInfo ) Values( 1, '' );	--select @ptrval = TEXTPTR( FeeRate ) from #FeeRateResult;	select @ByteLen = 0;	select @TmpLen = 0;	set @First = 1;	open ResultData;	fetch next from ResultData into @RowData;		while 0 = @@fetch_status	begin		if ( 0 = @First ) set @RowData = ',' + @RowData;--SELECT STUFF(@RowData, 1, 0, ',');		--updatetext #FeeRateResult.FeeRate @ptrval @ByteLen 0 @RowData;		UPDATE #ParkResult set ParkInfo .write( @RowData, @ByteLen, 0 ) where ID = 1;		--select @TmpLen = Len( @RowData );		select @TmpLen = DATALENGTH( @RowData );		fetch next from ResultData into @RowData;		select @ByteLen = @ByteLen + @TmpLen;		set @First = 0;	end	close ResultData;	Deallocate ResultData;	select @ParkData = ParkInfo from #ParkResult;ENDGO
+
 
 USE [ParkDb]
 GO
@@ -208,86 +210,7 @@ END
 USE [ParkDb]
 GO
 /****** 对象:  StoredProcedure [dbo].[GetFeeRate]    脚本日期: 11/18/2013 10:29:00 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-
-
-
-
-
-
-
-
-
-
--- =============================================
--- Author:		<Author,,Name>
--- Create date: <Create Date,,>
--- Description:	<Description,,>
--- =============================================
-CREATE PROCEDURE [dbo].[GetFeeRate]
-	@ParkID varchar(45),
-	@FeeData varchar(max) output
-AS
-BEGIN
-	declare ResultData CURSOR for select '("' +  ParkID + '","' + FeeRateCode + '","' + cast( FreeTime as varchar( 45 ) ) + '","' +
-										 DomainCode + '","' + DomainName + '","' + TimeSectionCode + '","' + SectionStartTime + '","' +
-										 SectionEndTime + '","' + TimeSecion + '","' + StopType + '","' + StopName + '","' +
-										 ViehcleType + '","' + ViehcleName + '","' + cast( StartPrice as varchar( 45 ) ) + '","' +
-										 cast( StartPriceTime as varchar( 45 ) ) + '","' +
-										 cast( ContinuePrice as varchar(  45 ) ) + '","' + cast( ContinuePriceTime as varchar( 45 ) ) + 
-										 '","' + IfSection + '","' + cast( MaxFee as varchar( 45 ) ) + '")' 
-										 from FeeView where ParkID = @ParkID;
-
-	declare @RowData varchar(1024);
-	--DECLARE @ptrval binary(16);
-	declare @ByteLen int;
-	declare @TmpLen int;
-	declare @First tinyint;
-	declare @User varchar(max);
-	declare @FreeType varchar(max);
-
-	SET NOCOUNT ON;
-
-	CREATE TABLE #FeeRateResult(
-	[FeeRate] varchar(max) COLLATE Chinese_PRC_CI_AS NULL CONSTRAINT [DF_FeeRateResult_FeeRate]  DEFAULT (''),
-	[ID] [int] NOT NULL CONSTRAINT [DF_FeeRateResult_Key]  DEFAULT ((1))
-	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];
-
-	insert #FeeRateResult( ID, FeeRate ) Values( 1, '' );
-
-	--select @ptrval = TEXTPTR( FeeRate ) from #FeeRateResult;
-	select @ByteLen = 0;
-	select @TmpLen = 0;
-	set @First = 1;
-
-	open ResultData;
-	fetch next from ResultData into @RowData;
-	
-	while 0 = @@fetch_status
-	begin
-		if ( 0 = @First ) set @RowData = ',' + @RowData;--SELECT STUFF(@RowData, 1, 0, ',');
-		--updatetext #FeeRateResult.FeeRate @ptrval @ByteLen 0 @RowData;
-		UPDATE #FeeRateResult set FeeRate .write( @RowData, @ByteLen, 0 ) where ID = 1;
-		--select @TmpLen = Len( @RowData );
-		select @TmpLen = DATALENGTH( @RowData );
-		fetch next from ResultData into @RowData;
-		select @ByteLen = @ByteLen + @TmpLen;
-		set @First = 0;
-	end
-
-	close ResultData;
-	Deallocate ResultData;
-
-	select @FeeData = FeeRate from #FeeRateResult;
-
-select @FeeData = '("510108001","001","15","002","武侯","003","07:00","20:00","07:00-20:00","004","临时停放","005","小型车","100","2","1","30", 0, "20"),("510108002","001","15","002","武侯","003","07:00","20:00","07:00-20:00","004","临时停放","005","小型车","100","2","1","30", 1, "20")';
-	exec GetUserInfo @ParkID, @User OUTPUT;
-	exec GetFreeType @FreeType output;
-	select @FeeData = '<Data><Fee>' + @FeeData + '</Fee><User>' + @User + '</User><FreeType>' + @FreeType + '</FreeType></Data>';
-END
+set ANSI_NULLS ONset QUOTED_IDENTIFIER ONgoALTER PROCEDURE [dbo].[GetFeeRate]	@ParkID varchar(45),	@FeeData varchar(max) outputASBEGIN	declare ResultData CURSOR for select '("' +  ParkID + '","' + FeeRateCode + '","' + cast( FreeTime as varchar( 45 ) ) + '","' +										 DomainCode + '","' + DomainName + '","' + TimeSectionCode + '","' + SectionStartTime + '","' +										 SectionEndTime + '","' + TimeSecion + '","' + StopType + '","' + StopName + '","' +										 ViehcleType + '","' + ViehcleName + '","' + cast( StartPrice as varchar( 45 ) ) + '","' +										 cast( StartPriceTime as varchar( 45 ) ) + '","' +										 cast( ContinuePrice as varchar(  45 ) ) + '","' + cast( ContinuePriceTime as varchar( 45 ) ) + 										 '",' + IfSection + ',"' + cast( MaxFee as varchar( 45 ) ) + '")' 										 from FeeView where ParkID = @ParkID;	declare @RowData varchar(1024);	--DECLARE @ptrval binary(16);	declare @ByteLen int;	declare @TmpLen int;	declare @First tinyint;	declare @User varchar(max);	declare @FreeType varchar(max);	declare @ParkData varchar(max);	SET NOCOUNT ON;	CREATE TABLE #FeeRateResult(	[FeeRate] varchar(max) COLLATE Chinese_PRC_CI_AS NULL CONSTRAINT [DF_FeeRateResult_FeeRate]  DEFAULT (''),	[ID] [int] NOT NULL CONSTRAINT [DF_FeeRateResult_Key]  DEFAULT ((1))	) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY];	insert #FeeRateResult( ID, FeeRate ) Values( 1, '' );	--select @ptrval = TEXTPTR( FeeRate ) from #FeeRateResult;	select @ByteLen = 0;	select @TmpLen = 0;	set @First = 1;	open ResultData;	fetch next from ResultData into @RowData;		while 0 = @@fetch_status	begin		if ( 0 = @First ) set @RowData = ',' + @RowData;--SELECT STUFF(@RowData, 1, 0, ',');		--updatetext #FeeRateResult.FeeRate @ptrval @ByteLen 0 @RowData;		UPDATE #FeeRateResult set FeeRate .write( @RowData, @ByteLen, 0 ) where ID = 1;		--select @TmpLen = Len( @RowData );		select @TmpLen = DATALENGTH( @RowData );		fetch next from ResultData into @RowData;		select @ByteLen = @ByteLen + @TmpLen;		set @First = 0;	end	close ResultData;	Deallocate ResultData;	select @FeeData = FeeRate from #FeeRateResult;--select @FeeData = '("510108001","001","15","002","武侯","003","07:00","20:00","07:00-20:00","004","临时停放","005","小型车","100","2","1","30", 0, "20"),("510108002","001","15","002","武侯","003","07:00","20:00","07:00-20:00","004","临时停放","005","小型车","100","2","1","30", 1, "20")';	exec GetUserInfo @ParkID, @User OUTPUT;	exec GetFreeType @FreeType output;	exec GetParkInfo @ParkID, @ParkData output;	select @FeeData = '<Data><Fee>' + @FeeData + '</Fee><User>' + @User + '</User><FreeType>' + @FreeType + '</FreeType><ParkInfo>' + @ParkData + '</ParkInfo></Data>';END
 
 
 

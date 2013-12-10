@@ -24,6 +24,7 @@ public:
     QString GetDateTime( );
     QString GetHttpHost( );
     int GetHttpPort( );
+    void DetectorID2LocationID( QString& strDetectorID );
 
     QTextCodec* GetTextCodec( );
 

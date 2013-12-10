@@ -2,3 +2,16 @@ http://nodejsdb.org nodejs database interface
 var dbDriver = require( 'db-X' ); // x mysql oracle sqlserver postgres
 npm install threads_a_gogo
 npm install db-mysql
+
+CommonJS 实现
+事件和异步 NIO
+Node.js Vert.x Netty(JBOSS) MINA(Apache) Grizzly(GlassFish) xsocket org.apache.catalina.comet / jetty6 Continous(利用其中WebServer WebClient ServletServer 功能)
+
+WebSocket 模拟库 SockJS
+
+Make NMake QMake ANT MSBuild Maven Gradle 构建工具
+
+CVS SVN VSS Git GitHub TFS 版本管理
+
+Java WebService Framework
+AXIS2(Apache)

@@ -27,7 +27,8 @@ void QListenerThread::HandleAcceptError( QAbstractSocket::SocketError socketErro
 
 void QListenerThread::HandleLog( QString strLog, bool bStatic )
 {
-    SendLog( strLog, bStatic );
+    //SendLog( strLog, bStatic );
+    emit Log( strLog, bStatic );
 }
 
 QListenerThread* QListenerThread::CreateThread( QObject *pParent )
@@ -67,7 +68,8 @@ void QListenerThread::StopServer( )
 
 void QListenerThread::SendLog( QString& strLog, bool bStatic )
 {
-    emit Log( strLog, bStatic );
+    QString strTmp = QDateTime::currentDateTime().toString( "【yyyy-MM-dd hh:mm:ss】%1" ).arg( strLog ) ;
+    emit Log( strTmp, bStatic );
 }
 
 void QListenerThread::ConnectAccept( bool bConnect )

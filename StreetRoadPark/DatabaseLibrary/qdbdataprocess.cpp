@@ -30,7 +30,8 @@ void QDbDataProcess::SetDatabase( CMySqlDatabase *pDb )
 
 void QDbDataProcess::SendLog( QString &strLog, bool bStatic )
 {
-    emit Log( strLog, bStatic );
+    QString strTmp = QDateTime::currentDateTime().toString( "【yyyy-MM-dd hh:mm:ss】%1" ).arg( strLog ) ;
+    emit Log( strTmp, bStatic );
 }
 
 void QDbDataProcess::PostData2PeerThread( QTcpSocket *pSocket, QByteArray &byData, int nPkType )
@@ -57,6 +58,11 @@ QString QDbDataProcess::GetDateTime( )
     return QDateTime::currentDateTime( ).toString( "yyyy-MM-dd HH:mm:ss" );
 }
 
+void QDbDataProcess::DetectorID2LocationID( QString& strDetectorID )
+{
+    pConfig->DetectorID2LocationID( strDetectorID );
+}
+
 void QDbDataProcess::ProcessComPortData( qint32 nPackageType, QByteArray &byData, QString& strParkID )
 {
     // 24 30 30 31 2C 30 30 2C 30 36 2C 30 0d 0a 00 Anlog Result
@@ -81,6 +87,7 @@ void QDbDataProcess::ProcessComPortData( qint32 nPackageType, QByteArray &byData
 
     QString strDateTime = GetDateTime( );
     QString strDetectorID = QString( "%1" ).arg( lstData.at( 2 ).toShort( ), 3, 10, QChar( '0' ) );
+    DetectorID2LocationID( strDetectorID );
     QString strXml = Constant::SpXmlPattern.strXmlSensorRecord.arg(
                     strParkID, lstData.at( 0 ), strDetectorID, strDateTime );
 

@@ -4,6 +4,7 @@
 #include <QEvent>
 #include <QDebug>
 #include <QGuiApplication>
+#include <QDateTime>
 #include "ccomconfigurator.h"
 
 class CComThreadEvent : public QEvent

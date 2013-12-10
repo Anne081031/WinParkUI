@@ -6,6 +6,10 @@ MainWindow::MainWindow(QWidget *parent) :
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    Qt::WindowFlags nFlags = windowFlags( ) &
+            ( ~Qt::WindowMaximizeButtonHint ) &
+            ( ~Qt::WindowCloseButtonHint );
+    setWindowFlags( nFlags );
 
     HideCtrl( );
     Initialize( );
@@ -23,11 +27,20 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::closeEvent( QCloseEvent *e )
+{
+    e->ignore( );
+}
+
 void MainWindow::Initialize( )
 {
-    pPortController = SerialPortController::GetController( );
     pNetController = NetworkController::GetController( );
+    //Sleep( 3000 );
     pDbController = DatabaseController::GetController( );
+    DatabaseController::CreateDbThreadPool( );
+    //Sleep( 2000 );
+    pPortController = SerialPortController::GetController( );
+    //Sleep( 1000 );
 
     pConfig = CMainConfigurator::GetConfigurator( );
     ui->btnHide->setVisible( false );
@@ -144,18 +157,30 @@ void MainWindow::InitializeCmd( QComboBox *pCB )
 void MainWindow::DisplayPortLog( QString strLog, bool bStatic )
 {
     QPlainTextEdit* pCtrl = bStatic ? ui->txtPortStaticLog : ui->txtPortDynamicLog;
+
+    if ( !bStatic && 100 <= pCtrl->blockCount() ) {
+        pCtrl->clear( );
+    }
     pCtrl->appendPlainText( strLog );
 }
 
 void MainWindow::DisplayNetworkLog( QString strLog, bool bStatic )
 {
     QPlainTextEdit* pCtrl = bStatic ? ui->txtNetworkStaticLog : ui->txtNetworkDynamicLog;
+
+    if ( !bStatic && 100 <= pCtrl->blockCount() ) {
+        pCtrl->clear( );
+    }
     pCtrl->appendPlainText( strLog );
 }
 
 void MainWindow::DisplayDatabaseLog( QString strLog, bool bStatic )
 {
     QPlainTextEdit* pCtrl = bStatic ? ui->txtDatabaseStaticLog : ui->txtDatabaseDynamicLog;
+
+    if ( !bStatic && 100 <= pCtrl->blockCount() ) {
+        pCtrl->clear( );
+    }
     pCtrl->appendPlainText( strLog );
 }
 

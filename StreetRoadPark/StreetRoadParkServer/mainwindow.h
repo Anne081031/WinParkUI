@@ -11,6 +11,7 @@
 #include <QLabel>
 #include <QSpinBox>
 #include <QComboBox>
+#include <QCloseEvent>
 
 namespace Ui {
 class MainWindow;
@@ -23,6 +24,9 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
+protected:
+    void closeEvent( QCloseEvent * e );
 
 private:
     void Initialize( );

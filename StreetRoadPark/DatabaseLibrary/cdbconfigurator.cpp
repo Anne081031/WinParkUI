@@ -118,3 +118,8 @@ QTextCodec* CDbConfigurator::GetTextCodec( )
     pCodec = QTextCodec::codecForName( strText.toLatin1( ) );
     return pCodec;
 }
+
+void CDbConfigurator::DetectorID2LocationID( QString& strDetectorID )
+{
+    strDetectorID = pSettings->value( QString( "DetectorID2LocationID/DetectorID%1" ).arg( strDetectorID ), "001" ).toString( );
+}

@@ -30,6 +30,7 @@ private:
     void CallSP( QByteArray& byData, JsonStruct::JsonHead& sHead, int nPkType );
     void FeedbackData( JsonStruct::JsonHead& sHead, QString& strMessage, qint32 nPackageType, bool bSuccess );
     void PrintPackageType( qint32 nPackageType );
+    inline void DetectorID2LocationID( QString& strDetectorID );
 private:
     CMySqlDatabase* pDatabase;
     QTcpSocket* pPeerSocket;

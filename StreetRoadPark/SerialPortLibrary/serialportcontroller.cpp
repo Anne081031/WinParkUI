@@ -125,7 +125,7 @@ void SerialPortController::SendCmd( const QString &strCOMx, CmdPort eCmd, quint3
         break;
 
     case CmdDetectorForceReset :
-        pFormat = ( char* ) "#%03d,*r%02d";
+        pFormat = ( char* ) "#%03d,#r%02d";
         nParamCount = 2;
         break;
 

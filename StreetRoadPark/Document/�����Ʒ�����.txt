@@ -16,3 +16,6 @@
 如果需要输入域，请输入：115.29.149.133
 
 SQLServer用户 sa/ParkDB 密码 [Guid(EC1CC096-0327-424A-8300-57AA6A104EA5)]
+
+
+IPC Park lubiantong20131201

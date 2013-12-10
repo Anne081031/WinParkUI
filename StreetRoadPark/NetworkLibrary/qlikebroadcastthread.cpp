@@ -99,7 +99,8 @@ void QLikeBroadcastThread::StopServer( )
 
 void QLikeBroadcastThread::SendLog( QString &strLog, bool bStatic )
 {
-    emit Log( strLog, bStatic );
+    QString strTmp = QDateTime::currentDateTime().toString( "【yyyy-MM-dd hh:mm:ss】%1" ).arg( strLog ) ;
+    emit Log( strTmp, bStatic );
 }
 
 void QLikeBroadcastThread::HandleAcceptError( QAbstractSocket::SocketError socketError )
