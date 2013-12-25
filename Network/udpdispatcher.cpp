@@ -50,6 +50,7 @@ void CUdpDispatcher::GetDatagrams( )
     QHostAddress sender;
     quint16 senderPort;
     QString strIP;
+    QString strRawIP = pSettings->value( "ServerInfo/ImageRequestRaw", "" ).toString( );
 
     while ( pUdpServer->hasPendingDatagrams( ) ) {
         QByteArray byData;
@@ -60,7 +61,8 @@ void CUdpDispatcher::GetDatagrams( )
         strIP = sender.toString( );
 #if true
         pSettings->setValue( "ServerInfo/ImageRequest", strIP );
-        if ( strIP == "192.168.1.52" ) { //杨全波未改，改了就注释掉
+        pSettings->setValue( "ServerInfo/ImageRequest1", strRawIP );
+        if ( strIP == strRawIP ) { //杨全波未改，改了就注释掉 192.168.1.52
             QByteArray byToken = QString( "FutureInternet" ).toAscii( );
             qint32 nMsgLen = sizeof ( quint32 );
             quint32 nTotal = byToken.length( ) + nMsgLen + byData.length( );

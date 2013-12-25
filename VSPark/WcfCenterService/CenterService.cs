@@ -155,16 +155,17 @@ namespace WcfCenterService
             DataTable table = new DataTable(doc.DocumentElement.Name);
             table.Columns.Add("LocationID", typeof(string));
             table.Columns.Add("RecordID", typeof(UInt64));
+            table.Columns.Add("FreeType", typeof(string));
             table.Columns.Add("Prepayment", typeof(Int16));
             table.Columns.Add("Payment", typeof(Int16));
+            table.Columns.Add("FeeReceivable", typeof(Int16));
             //table.Columns.Add("PrepaymentOperator", typeof(string));
-            table.Columns.Add("PrepaymentTime", typeof(string));
-            table.Columns.Add("PaymentTime", typeof(string));
+            table.Columns.Add("PrepaymentTime", typeof(DateTime));
+            table.Columns.Add("PaymentTime", typeof(DateTime));
             //table.Columns.Add("PaymentOperator", typeof(string));
             table.Columns.Add("PrepaymentUserID", typeof(string));
             table.Columns.Add("PaymentUserID", typeof(string));
-            table.Columns.Add("FeeReceivable", typeof(Int16));
-            table.Columns.Add("FreeType", typeof(Int16));
+            //table.Columns.Add("FreeType", typeof(Int16));
 
             StringReader reader = new StringReader(doc.OuterXml);
             table.ReadXml(reader);

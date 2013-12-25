@@ -109,6 +109,8 @@ QString CNetClient::GetIP( ClientType client, bool bCenterServer )
         break;
     }
 
+    qDebug( ) << strIP << endl;
+
     return strIP;
 }
 

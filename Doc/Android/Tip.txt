@@ -231,3 +231,5 @@ Source Insight是一个面向项目开发的程序编辑器和代码浏览器，它拥有内置的对C/C++, C
 Google Android开发入门与实战.pdf p224
 android-src.pdf P83
 
+Android开发从入门到精.pdf p30
+Android开发入门经典.pdf p27

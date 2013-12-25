@@ -54,7 +54,20 @@ namespace WcfCenterHost
             webServer.StartServer();
 
             tcpServer = new WcfCommonLib.TcpServer();
+            tcpServer.MessageEvent += new TcpServer.MessageEventHandler(tcpServer_MessageEvent);
             tcpServer.StartServer();
+        }
+
+        void tcpServer_MessageEvent(object sender, TcpServer.MessageEventArgs e)
+        {
+            if (e.bCrossThread)
+            {
+                mainSC.Post(scCallback, e.strMessage);
+            }
+            else
+            {
+                DisplayLog(e.strMessage);
+            }
         }
 
         private void MainScCallback( object state )

@@ -39,7 +39,8 @@ namespace WcfRoadHost
             public enum CallbackType
             {
                 TypeGetImage,
-                TypeUploadData
+                TypeUploadData,
+                TypeMessage
             }
 
             public CallbackType type;
@@ -118,6 +119,8 @@ namespace WcfRoadHost
             mainState.type = MainScCallbackState.CallbackType.TypeGetImage;
             StringBuilder builder = new StringBuilder(e.QueryString );
             bool bTransfered = true;
+            bool bIn = true;
+            bool bOut = true;
             
             try
             {
@@ -129,15 +132,17 @@ namespace WcfRoadHost
 
                 if (null == inImage)
                 {
-                    bTransfered = false;
+                    bIn = false;
                     builder.Append(" 进入图像为空");
                 }
 
                 if (null == outImage)
                 {
-                    bTransfered = false;
+                    bOut = false;
                     builder.Append(" 离开图像为空");
                 }
+
+                bTransfered = bIn || bOut;
 
                 //byte[] tmpInImage = new byte[10000000];
                 //inImage.CopyTo(tmpInImage, 0);
@@ -182,6 +187,7 @@ namespace WcfRoadHost
 
             tcpClient = new WcfCommonLib.TcpClient();
             tcpClient.QueryEvent += new WcfCommonLib.TcpClient.QueryEventHandler(tcpClient_QueryEvent);
+            tcpClient.MessageEvent += new WcfCommonLib.TcpClient.MessageEventHandler(tcpClient_MessageEvent);
 
             dataCallback = new WaitCallback(GetUploadData);
 
@@ -196,6 +202,22 @@ namespace WcfRoadHost
             GetInitializeData();
         }
 
+        void tcpClient_MessageEvent(object sender, WcfCommonLib.TcpClient.MessageEventArgs e)
+        {
+            if (e.bCrossThread)
+            {
+                MainScCallbackState mainState = new MainScCallbackState();
+                mainState.type = MainScCallbackState.CallbackType.TypeMessage;
+
+                mainState.data = e.strMessage;
+                mainSC.Post(scCallback, mainState);
+            }
+            else
+            {
+                DisplayLog(e.strMessage);
+            }
+        }
+
         private void SetTimer(System.Windows.Forms.Timer objTimer, string strName)
         {
             string strInterval = ConfigurationManager.AppSettings.Get(strName);
@@ -206,7 +228,7 @@ namespace WcfRoadHost
 
         private void MainScCallback(object state)
         {
-            if (null == state || string.Empty == state )
+            if (null == state || string.Empty == state.ToString() )
             {
                 return;
             }
@@ -229,6 +251,9 @@ namespace WcfRoadHost
                 case MainScCallbackState.CallbackType.TypeUploadData :
                     strBuilder.Append("【上传记录数据】");
                     break;
+
+                case MainScCallbackState.CallbackType.TypeMessage:
+                    break;
             }
 
             strBuilder.Append(strData);
@@ -246,7 +271,7 @@ namespace WcfRoadHost
         {
             try
             {
-                tcpClient.ConnectServer();
+                tcpClient.ConnectServer(false);
             }
             catch (Exception ex)
             {

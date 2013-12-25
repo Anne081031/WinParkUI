@@ -6,12 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using WcfCommonLib;
 
 namespace TestApp
 {
     public partial class Form1 : Form
     {
         private SimpleWebClient webClient = new SimpleWebClient( );
+        private SimpleWebSerer webServer = new SimpleWebSerer( );
 
         public Form1()
         {
@@ -55,6 +57,11 @@ namespace TestApp
         private void button4_Click(object sender, EventArgs e)
         {
             timer1.Enabled = false;
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            webServer.StartServer();
         }
     }
 }

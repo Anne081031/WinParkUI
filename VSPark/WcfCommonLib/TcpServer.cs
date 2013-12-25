@@ -21,32 +21,80 @@ namespace WcfCommonLib
 
         private class SendState
         {
-            public Socket peer = null;
+            public Socket peerSocket = null;
             public string strParkID = null;
-            public string strData = null;
         }
 
-        private void AsyncCallbaclAsync(IAsyncResult iResult)
+        public class MessageEventArgs : EventArgs
+        {
+            public MessageEventArgs(string strMessage, bool bCrossThread)
+            {
+                this.strMessage = strMessage;
+                this.bCrossThread = bCrossThread;
+            }
+
+            public string strMessage;
+            public bool bCrossThread;
+        }
+
+        protected void OnMessageEvent(MessageEventArgs e)
+        {
+            if (null == MessageEvent)
+            {
+                return;
+            }
+
+            MessageEvent(this, e);
+        }
+
+        public delegate void MessageEventHandler(object sender, MessageEventArgs e);
+        public event MessageEventHandler MessageEvent;
+
+        private void SendMessage(Socket peerSocket, string strParkID, bool bCrossThread, string strExtra)
+        {
+            StringBuilder builder = new StringBuilder();
+
+            IPEndPoint clientIP = peerSocket.RemoteEndPoint as IPEndPoint;
+            IPEndPoint peerIP = peerSocket.LocalEndPoint as IPEndPoint;
+
+            builder.AppendFormat("【ParkID:{0}】【Client {1}:{2}】【Peer {3}:{4}】{5}", strParkID,
+                clientIP.Address.ToString(), clientIP.Port,
+                peerIP.Address.ToString(), peerIP.Port,
+                strExtra );
+
+            OnMessageEvent(new MessageEventArgs(builder.ToString(), bCrossThread));
+        }
+
+        private void AsyncAcceptCB(IAsyncResult iResult)
         {
             Socket objListener = (Socket)iResult.AsyncState;
 
             byte[] parkIDBuffer;
             Int32 nTransferSize = 0;
             Socket peerSocket = objListener.EndAccept(out parkIDBuffer, out nTransferSize, iResult);
+            string strExtra = "Connected";
+
+            string strParkID = Encoding.UTF8.GetString(parkIDBuffer, 0, nTransferSize);
+            StringBuilder builder = new StringBuilder();
+            builder.AppendFormat("Accept to receive data【{0} Size = {1}】", strParkID, nTransferSize);
+            OnMessageEvent(new MessageEventArgs(builder.ToString(), true));
 
             if (nParkIDSize <= nTransferSize)
             {
-                string strParkID = Encoding.UTF8.GetString(parkIDBuffer, 0, nParkIDSize);
+                strParkID = Encoding.UTF8.GetString(parkIDBuffer, 0, nParkIDSize);
+
+                lock(this)
 
                 if (peerSocks.ContainsKey(strParkID))
                 {
-                    Socket peer = (Socket ) peerSocks[strParkID];
+                    Socket peer = GetPeerSocket(strParkID);
                     if (null != peer)
                     {
                         peer.Close();
                     }
 
                     peerSocks.Remove(strParkID);
+                    strExtra += "【Remove existence】";
                 }
 
                 peerSocks.Add(strParkID, peerSocket);
@@ -55,6 +103,8 @@ namespace WcfCommonLib
                 //state.workSocket = handler;
                 //handler.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0,
                 //new AsyncCallback(ReadCallback), state);
+
+                SendMessage(peerSocket, strParkID, true, strExtra);
             }
 
             if (objListener.IsBound)
@@ -80,21 +130,37 @@ namespace WcfCommonLib
 
         public void Send2Client(string strParkID, string strData)
         {
-            Socket peer = GetPeerSocket(strParkID);
+            Socket peer = null;
+            lock(this)
+
+            peer = GetPeerSocket(strParkID);
             if (null == peer || !peer.Connected )
             {
+                if (null != peer)
+                {
+                    //peer.Close();
+                    //peerSocks.Remove(strParkID);
+                    OnMessageEvent(new MessageEventArgs("Send2Client Peer Disconnected", true));
+                }
+
+                OnMessageEvent(new MessageEventArgs(null == peer ? "Send2Client null == peer" : "Send2Client false == Connected", true));
                 return;
             }
 
             byte[] byBuffer = Encoding.UTF8.GetBytes(strData);
-            peer.BeginSend(byBuffer, 0, byBuffer.Length, SocketFlags.None, asyncSend, peer);
+            SendState state = new SendState();
+            state.peerSocket = peer;
+            state.strParkID = strParkID;
+            peer.BeginSend(byBuffer, 0, byBuffer.Length, SocketFlags.None, asyncSend, state);
         }
 
         private void SendCB(IAsyncResult ar)
         {
-            Socket peer = (Socket)ar.AsyncState;
-            Int32 nRet = peer.EndSend(ar);
-            System.Diagnostics.Debug.Print("Server send to client ");
+            SendState state = (SendState)ar.AsyncState;
+            Int32 nRet = state.peerSocket.EndSend(ar);
+            string strExtra = "Server send to client size : " + nRet.ToString();
+
+            SendMessage(state.peerSocket, state.strParkID, true, strExtra);
         }
 
         public void StartServer()
@@ -111,7 +177,7 @@ namespace WcfCommonLib
 
             if (null == asyncAccept)
             {
-                asyncAccept = new AsyncCallback(AsyncCallbaclAsync);
+                asyncAccept = new AsyncCallback(AsyncAcceptCB);
             }
 
             listener.Bind(endPoint);
