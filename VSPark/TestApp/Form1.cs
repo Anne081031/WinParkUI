@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using WcfCommonLib;
+using System.IO;
 
 namespace TestApp
 {
@@ -61,7 +62,34 @@ namespace TestApp
 
         private void button5_Click(object sender, EventArgs e)
         {
-            webServer.StartServer();
+            //webServer.StartServer();
+
+            //a\r\n\b\r\n
+
+            StringBuilder builderQuery = new StringBuilder();
+            builderQuery.Append("xyza\nb\nc");
+            string strQuery = builderQuery.ToString();
+
+            string strSeperator = "\n";
+            int nStartIndex = 0;
+            int nIndex = strQuery.IndexOf(strSeperator);
+            if (-1 == nIndex || 0 == nIndex)
+            {
+                return;
+            }
+
+            string strResult = null;
+
+            while (-1 != nIndex)
+            {
+                strResult = strQuery.Substring(nStartIndex, nIndex - nStartIndex);
+                
+                ++nIndex;
+                builderQuery.Remove(0, nIndex - nStartIndex);
+                nStartIndex = nIndex;
+                nIndex = strQuery.IndexOf(strSeperator, nStartIndex);
+            }
+
         }
     }
 }

@@ -1,3 +1,0 @@
-D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\WcfRoadHost.exe
-D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\WcfCommonLib.dll
-D:\WinParkUI\VSPark\WcfRoadHost\bin\Release\MySql.Data.dll

@@ -30,6 +30,11 @@ namespace WcfCenterHost
 
         private void DisplayLog(object strLog)
         {
+            if (null == strLog)
+            {
+                return;
+            }
+
             txtLog.AppendText("【" + DateTime.Now.ToString() + "】"); 
             txtLog.AppendText(strLog.ToString());
             txtLog.AppendText("\n");
@@ -60,6 +65,11 @@ namespace WcfCenterHost
 
         void tcpServer_MessageEvent(object sender, TcpServer.MessageEventArgs e)
         {
+            if (null == e.strMessage)
+            {
+                return;
+            }
+
             if (e.bCrossThread)
             {
                 mainSC.Post(scCallback, e.strMessage);
@@ -82,6 +92,11 @@ namespace WcfCenterHost
 
         private void webServer_QueryEvent(object sender, SimpleWebSerer.WebEVentArgs e)
         {
+            if (null == e.QueryString)
+            {
+                return;
+            }
+
             mainSC.Post(scCallback, "【获取图像】" + e.QueryString);
             
             string[] strQuery = e.QueryString.Split( new char[ ] { '|' } );

@@ -69,6 +69,40 @@ namespace WcfCommonLib
             sqlConn.Dispose();
         }
 
+        public void DeleteUploadRecordData()
+        {
+            MySqlConnection sqlConn = new MySqlConnection(strConnString);
+            MySqlCommand sqlCmd = sqlConn.CreateCommand();
+
+            sqlCmd.CommandType = System.Data.CommandType.StoredProcedure;
+            sqlCmd.CommandText = "DeleteUploadRecordData";
+
+            sqlConn.Open();
+            MySqlTransaction trans = sqlConn.BeginTransaction();
+            Exception exRethrow = null;
+            try
+            {
+                sqlCmd.Transaction = trans;
+                sqlCmd.ExecuteNonQuery();
+                trans.Commit();
+            }
+            catch (Exception ex)
+            {
+                trans.Rollback();
+                exRethrow = ex;
+            }
+
+            trans.Dispose();
+            sqlCmd.Dispose();
+            sqlConn.Close();
+            sqlConn.Dispose();
+
+            if (null != exRethrow)
+            {
+                throw exRethrow;
+            }
+        }
+
         public void GetRecordData(StringBuilder builder)
         {
             // JSON Format

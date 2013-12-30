@@ -179,10 +179,10 @@ namespace WcfCommonLib
 
             try
             {
-                byte[] tmp = new byte[1];
+                byte[] tmp = Encoding.UTF8.GetBytes("Heartbeat");//new byte[1];
 
                 //client.Blocking = true;
-                int nRet = client.Send(tmp, 1, SocketFlags.None );
+                int nRet = client.Send(tmp, tmp.Length, SocketFlags.None);
                 //SendMessage(client, false, "Ping Size = " + nRet.ToString( ) );
             }
             catch (SocketException e)
@@ -226,7 +226,7 @@ namespace WcfCommonLib
             }
 
             client = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
-
+            client.Blocking = false;
             client.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.Linger, new LingerOption(false, 0));
             client.BeginConnect(endPoint, asyncConnectCB, client);
         }

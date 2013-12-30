@@ -2,5 +2,5 @@
 
 VPN属于远程访问技术，简单地说就是利用公网链路架设私有网络。
 
-SAAS--PAAS--IAAS CAAS NAAS
+SAAS--PAAS--IAAS CAAS(Communications) NAAS)Network) DAAS(Desktop)
 OpenStack EC2

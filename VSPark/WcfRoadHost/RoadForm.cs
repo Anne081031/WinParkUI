@@ -33,6 +33,7 @@ namespace WcfRoadHost
         private StringBuilder strBuilder = new StringBuilder();
         private MySQLAccessor dbMySQL = new MySQLAccessor();
         private string strParkID = null;
+        private StringBuilder builderQuery = new StringBuilder();
 
         private class MainScCallbackState
         {
@@ -104,6 +105,78 @@ namespace WcfRoadHost
                 if (0 != builder.Length)
                 {
                     wcfClient.UploadRecordData(builder);
+                    dbMySQL.DeleteUploadRecordData();
+                }
+            }
+            catch (Exception ex)
+            {
+                mainState.data = CommonFunction.GetExceptionMessage(ex);
+                mainSC.Post(scCallback, mainState);
+            }
+        }
+
+        private void ParseQueryString(WcfCommonLib.TcpClient.SocketEVentArgs e)
+        {
+            builderQuery.Append(e.QueryString);
+            string strQuery = builderQuery.ToString();
+
+            string strSeperator = "\n";
+            int nStartIndex = 0;
+            int nIndex = strQuery.IndexOf(strSeperator);
+            if (-1 == nIndex || 0 == nIndex)
+            {
+                return;
+            }
+
+            string strResult = null;
+
+            while (-1 != nIndex)
+            {
+                strResult = strQuery.Substring(nStartIndex, nIndex - nStartIndex);
+                ProcessQuery(strResult);
+                ++nIndex;
+                builderQuery.Remove(0, nIndex - nStartIndex);
+                nStartIndex = nIndex;
+                nIndex = strQuery.IndexOf(strSeperator, nStartIndex);
+            }
+        }
+
+        private void ProcessQuery(string strQueryString)
+        {
+            MainScCallbackState mainState = new MainScCallbackState();
+            mainState.type = MainScCallbackState.CallbackType.TypeGetImage;
+            StringBuilder builder = new StringBuilder(strQueryString);
+            bool bTransfered = true;
+            bool bIn = true;
+            bool bOut = true;
+
+            try
+            {
+                // ParkID|RecordID
+                string[] strQuery = strQueryString.Split(new char[] { '|' });
+                byte[] inImage;
+                byte[] outImage;
+                dbMySQL.GetImage(strQuery[1], out inImage, out outImage);
+
+                if (null == inImage)
+                {
+                    bIn = false;
+                    builder.Append(" 进入图像为空");
+                }
+
+                if (null == outImage)
+                {
+                    bOut = false;
+                    builder.Append(" 离开图像为空");
+                }
+
+                bTransfered = bIn || bOut;
+                mainState.data = builder;
+                mainSC.Post(scCallback, mainState);
+
+                if (bTransfered)
+                {
+                    wcfClient.UploadInOutImage(strQuery[0], strQuery[1], inImage, outImage);
                 }
             }
             catch (Exception ex)
@@ -115,9 +188,13 @@ namespace WcfRoadHost
 
         private void tcpClient_QueryEvent(object sender, WcfCommonLib.TcpClient.SocketEVentArgs e)
         {
+            ParseQueryString(e);
+            return;
+
             MainScCallbackState mainState = new MainScCallbackState();
             mainState.type = MainScCallbackState.CallbackType.TypeGetImage;
             StringBuilder builder = new StringBuilder(e.QueryString );
+            builderQuery.Append(e.QueryString);
             bool bTransfered = true;
             bool bIn = true;
             bool bOut = true;
