@@ -1,0 +1,384 @@
+Sip揭秘.pdf p90
+
+Internet 由互相连接的计算机网络构成(交换机 路由器 TCP/IP)
+万维网由互相连接(Hyperlink)的超文本(Hypertext)组成(MainWebPage WebPage HTML/CSS/Script Website HTTPs FTP SMTP/POP3/IMAP WebBrowser Webserver WebApp WebAppServer URI(URL URN) DNS) 是一Internet服务
+
+IP Host to Host(联网) / Port Endpoint to Entpoint 代表一服务 复用/去复用
+
+Socket 实现复用 去复用机制 屏蔽了协议的复杂性
+SCTP Stream Control Transmission Protocol 同时具备TCP UDP特性的传输层协议
+
+应用层协议 代表具体的应用实现
+
+多播数据 由路由器自我繁殖发送 IGMP
+
+QoS / RSVP 资源预留分配与释放
+
+
+插件机制 Plugin plug-in addin add-in addon add-on extension theme
+
+ScreenShot 截图软件
+
+PJSIP实现SIP SDP STUN TURN ICE协议的开源库 PJNATH简化PJSIP NAT穿越的帮助库 
+
+音视频编解码 A/D把模拟信号数字化后采用算法压缩 以高质量、低码率的形式存储、传输，然后采用解码算法解码，基本还原到压缩前的数据，然后把数字信号转换到模拟信号播放D/A
+
+http://baike.baidu.com/view/16102.htm
+http://zhaisj.blog.51cto.com/219066/58651
+http://baike.baidu.com/view/1580678.htm?tp=0_01
+
+HTTP / TCP
+
+HTTPU / Unicast UDP
+HTTPMU / Multicast UDP
+SSDP / Simple Service Discovery Protocol
+
+SOAP / HTTP
+GENA/HTTP Generic Event Notification Archietecture
+
+Application Delivery Networking ADN （F5公司）
+Content Delivery Networking CDN
+Software Definition Networking SDN
+
+Cache服务器 把访问过的内容存储起来，再次访问时本地优先 ( Client===CacheServer===RemoteServer)
+镜像服务器 访问时仅访问ImageServer,真实服务器定时与镜像服务器同步内容
+
+软件负载均衡 硬件负载均衡(交换机 路由器)
+负载均衡 A 把一庞大的任务分解多个小任务，每个小任务分散到各节点处理后汇总给用户(集群方式) B 大量并发访问分散到不同的服务器处理
+
+采用服务器群集负载均衡(把一庞大的任务分解多个小任务，每个小任务分散到各节点处理后汇总给用户)
+交换机负载均衡 采用算法决定把请求发给相关链接端
+DNS解析负载均衡(DomainName===> IP0......IPn 采用算法实现IP轮换) 
+NAT地址转换实现负载均衡(定义内部地址池 Http:80==>Http1:80.....Httpn:80 内网n太Web服务器 NAT采用轮询等方式来访问内部的Http服务器)
+代理服务器(把客户请求分发到内部不同服务器上处理，然后再把处理结果返回给客户 正向代理-私网访问公网 方向代理-公网访问私网)
+
+静态NAT PrivateIP<===>固定WAN IP 优势 外网可以对内网的特定设备进行访问
+动态NAT PrivateIP<===>在WAN IP Pool中随机选择
+NAPT NAT 可以采用一个WAN IP，通过改变端口来实现，也可IP Port同时变化 由于端口不固定所以WAN机不能访问内网机，如内网IP Port与外网IP Port都固定则可以(端口映射)
+
+出去NAT修改SourceIP:Port，回来NAT修改DestinationIP:Port 
+
+NAT WAN_IP固定 可变 一般在路由器上实现 Network Address Translator
+Port address Translation,PAT NAPT
+可以改变IP
+（IP1，Port1）映射成（IP5，Port1）
+（IP2，Port1）映射成（IP5，Port2）
+（IP3，Port2）映射成（IP5，Port3）
+（IP4，Port2）映射成（IP5，Port4）
+
+Full cone NAT iIP:Port<===>eIP:Port(映射的公网IP)<===>anyHost:anyPort 内网通过ePort:Port出，外网也通ePort:Port到达iIP:Port
+Address-Restricted cone NAT iIP:Port1<===>eIP:Port<===>hostIP:anyPort 只有内网向其发送过的外网主机才能通ePort:Port到达iIP:Port 就是在NAT表中已存在了的外网IP才能回访
+Port-Restricted cone NAT iIP:Port1<===>eIP:Port<===>hostIP:hostPort 只有NAT表中存在了hostIP:hostPort的外网主机才能回访
+Symmetric NAT（对称NAT）iIP:Portx<====>eIP:Porty<===>hostIP:hostPort 不同的会话都不同的Portx Porty值，数据可以往返了 路边占道实现方式就是这个 每会话的eIP:Porty不一样
+
+TCP/UDP端口NAT映射 PAT
+可以将不同的TCP端口绑定至不同的内部IP地址，从而只使用一个合法的IP地址，即可在允许内部所有服务器被Internet访问的同时，实现内部所有主机对Internet访问。
+
+穿透方法
+目前常用的针对UDP的NAT 穿透（NAT Traversal）方法主要有：
+STUN。
+TURN。
+ICE。
+uPnP等。
+其中ICE方式由于其结合合了STUN和TURN的特点，所以使用最为广泛。
+针对TCP的NAT 穿透技术目前仍为难点。实用的技术仍然不多。
+NAT ( natthew)
+
+NAT Table
+|---------------------------------------
+|LocapIP:Port      | GlobalIP:Port     |
+|---------------------------------------
+|192.168.1.20:5000 |118.113.216.84:6000|
+|---------------------------------------
+
+NAT-T Traversal (横向)往返移动
+Session Traversal Utilities for NAT (STUN) 探测NAT为自己分配与自己私有IP:Port对应的公网IP:Port
+
+Traversal Using Relays around NAT (TURN):
+     Relay Extensions to Session Traversal Utilities for NAT (STUN)
+
+ICE
+   (Interactive Connectivity Establishment)
+
+Universal Plug and Play (UPnP)
+ Internet Gateway Device - Port Control Protocol Interworking Function
+                             (IGD-PCP IWF)
+P2P问题
+内网主机IP是私有的，外部主机看不到，也无法主动发起连接
+即使知道了内网IP，但NAT会丢弃没有在影射表的数据包
+内网主机可以作为客户端访问外网，但不能作为服务器提供服务
+当两个主机都位于各自的NAT之后，要实现P2P的连接，就不仅是谁主动的问题，而是如何解决在两个NAT上同时有对方映射表项的问题。
+///////////////////////////////////////////////////////////////////
+             				  \ | /
+                                     +---------------+
+                                     |Regional Router|
+                                     +---------------+
+                                   WAN |           | WAN
+                                       |           |
+                   Stub A .............|....   ....|............ Stub B
+                                       |           |
+                     {s=198.76.29.7,^  |           |  v{s=198.76.29.7,
+                      d=198.76.28.4}^  |           |  v d=198.76.28.4}
+                       +-----------------+       +-----------------+
+                       |Stub Router w/NAT|       |Stub Router w/NAT|
+                       +-----------------+       +-----------------+
+                             |                         |
+                             |  LAN               LAN  |
+                       -------------             -------------
+                                 |                 |
+               {s=10.33.96.5, ^  |                 |  v{s=198.76.29.7,
+                d=198.76.28.4}^ +--+             +--+ v d=10.81.13.22}
+                                |--|             |--|
+                               /____\           /____\
+                             10.33.96.5       10.81.13.22
+/////////////////////////////////////////////////////////////////////
+STUN Protocol / Client/Server   UDP      
+客户端通过服务器获取连接公网NAT的地址端口，客户(请求)<--->NAT<-->服务器(响应中包含请求源IP:Port，即NAT分配的公网IP:Port)
+                               /-----\
+                             // STUN  \\
+                            |   Server  |
+                             \\       //
+                               \-----/
+
+
+
+
+                          +--------------+             Public Internet
+          ................|     NAT 2    |.......................
+                          +--------------+
+
+
+
+                          +--------------+             Private NET 2
+          ................|     NAT 1    |.......................
+                          +--------------+
+
+
+
+
+                              /-----\
+                            //  STUN \\ APP
+                           |    Client |
+                            \\       //               Private NET 1
+                              \-----/
+Transport Address:  The combination of an IP address and port number
+
+Reflexive Transport Address:  A transport address learned by a client
+      that identifies that client as seen by another host on an IP
+      network, typically a STUN server.  When there is an intervening
+      NAT between the client and the other host, the reflexive transport
+      address represents the mapped address allocated to the client on
+      the public side of the NAT.  Reflexive transport addresses are
+      learned from the mapped address attribute (MAPPED-ADDRESS or XOR-
+      MAPPED-ADDRESS) in STUN responses.
+http://tools.ietf.org/html/rfc5389 stun 7.2.1.  Sending over UDP
+http://tools.ietf.org/html/rfc5766 turn
+http://tools.ietf.org/html/rfc5245 ice
+http://tools.ietf.org/html/rfc4566 SDP
+http://wenku.baidu.com/view/3e59517b1711cc7931b71654.html SIP
+
+UDP 可靠性通过Request/Response 加重传方式提高 Indication方式只有请求无回应不可靠
+
+自定义协议
+报文固定头+报文可变头(TLV方式表达 Figure4)+报文体
+
+各个域的充分运用(位的运用)
+
+不变内容传输可以使用固定代码，然后去翻译
+
+最大传输单元（Maximum Transmission Unit，MTU）是指一种通信协议的某一层上面所能通过的最大数据包大小（以字节为单位）。 Path / hop
+STUN Indication:  A STUN message that does not receive a response.
+// Endpoints A direct communication path
+FingerPrint指纹 手印 FootPrint足迹 脚印
+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |0 0|     STUN Message Type     | Message Length不含固定头长度  |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                         Magic Cookie                          |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                                                               |
+      |                     Transaction ID (96 bits)                  |
+      |                                                               |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+ The most significant 2 bits of every STUN message MUST be zeroes.
+   This can be used to differentiate STUN packets from other protocols
+   when STUN is multiplexed with other protocols on the same port.
+最高两位用来区分不同的协议，同时也作为自己的包间区分，Magic Cookie作为Token用来区分
+
+       0                   1                   2                   3
+       0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |         Type                  |            Length             |
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+      |                         Value (variable)                ....
+      +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+考虑对齐Align 补丁Padding
+完整性 通过算出某部分的SHA CRC MD5码来保证 发送前算一次 接收算一次 比较结果码相等未被篡改
+                    Figure 4: Format of STUN Attributes
+
+//////////////////////////////////////////////////////////////////////////////
+Header: 
+Method-->Binding 获取NAT分配的IP:Port /This is called a reflexive transport address.
+Class-->Request/Response/Indication
+Attribute-->Zero Or More
+//////////////////////////////////////////////////////////////////////
+
+It allows a client to communicate with multiple peers using a single relay address.
+TURN
+
+The client does this by obtaining an IP address and port on the
+   server, called the relayed transport address. 
+客户可以通过转发地址，把数据转发给多个Peers,每个客户在服务器上有一【分配】数据结构实例(包含服务器转发地址，唯一标识一个分配)
+/////////////////////////
+                                        Peer A
+                                        Server-Reflexive    +---------+
+                                        Transport Address   |         |
+                                        192.0.2.150:32102   |         |
+                                            |              /|         |
+                          TURN              |            / ^|  Peer A |
+    Client's              Server            |           /  ||         |
+    Host Transport        Transport         |         //   ||         |
+    Address               Address           |       //     |+---------+
+   10.1.1.2:49721       192.0.2.15:3478     |+-+  //     Peer A
+            |               |               ||N| /       Host Transport
+            |   +-+         |               ||A|/        Address
+            |   | |         |               v|T|     192.168.100.2:49582
+            |   | |         |               /+-+
+ +---------+|   | |         |+---------+   /              +---------+
+ |         ||   |N|         ||         | //               |         |
+ | TURN    |v   | |         v| TURN    |/                 |         |
+ | Client  |----|A|----------| Server  |------------------|  Peer B |
+ |         |    | |^         |         |^                ^|         |
+ |         |    |T||         |         ||                ||         |
+ +---------+    | ||         +---------+|                |+---------+
+                | ||                    |                |
+                | ||                    |                |
+                +-+|                    |                |
+                   |                    |                |
+                   |                    |                |
+             Client's                   |            Peer B
+             Server-Reflexive    Relayed             Transport
+             Transport Address   Transport Address   Address
+             192.0.2.1:7000      192.0.2.15:50000     192.0.2.210:49191
+////////////////
+ TURN                                 TURN           Peer          Peer
+  client                               server          A             B
+    |                                    |             |             |
+    |--- Allocate request -------------->|             |             |
+    |    Transaction-Id=0xA56250D3F17ABE679422DE85     |             |
+    |    SOFTWARE="Example client, version 1.03"       |             |
+    |    LIFETIME=3600 (1 hour)          |             |             |
+    |    REQUESTED-TRANSPORT=17 (UDP)    |             |             |
+    |    DONT-FRAGMENT                   |             |             |
+    |                                    |             |             |
+    |<-- Allocate error response --------|             |             |
+    |    Transaction-Id=0xA56250D3F17ABE679422DE85     |             |
+    |    SOFTWARE="Example server, version 1.17"       |             |
+    |    ERROR-CODE=401 (Unauthorized)   |             |             |
+    |    REALM="example.com"             |             |             |
+    |    NONCE="adl7W7PeDU4hKE72jdaQvbAMcr6h39sm"      |             |
+    |                                    |             |             |
+    |--- Allocate request -------------->|             |             |
+    |    Transaction-Id=0xC271E932AD7446A32C234492     |             |
+    |    SOFTWARE="Example client 1.03"  |             |             |
+    |    LIFETIME=3600 (1 hour)          |             |             |
+    |    REQUESTED-TRANSPORT=17 (UDP)    |             |             |
+    |    DONT-FRAGMENT                   |             |             |
+    |    USERNAME="George"               |             |             |
+    |    REALM="example.com"             |             |             |
+    |    NONCE="adl7W7PeDU4hKE72jdaQvbAMcr6h39sm"      |             |
+    |    MESSAGE-INTEGRITY=...           |             |             |
+    |                                    |             |             |
+    |<-- Allocate success response ------|             |             |
+    |    Transaction-Id=0xC271E932AD7446A32C234492     |             |
+    |    SOFTWARE="Example server, version 1.17"       |             |
+    |    LIFETIME=1200 (20 minutes)      |             |             |
+    |    XOR-RELAYED-ADDRESS=192.0.2.15:50000          |             |
+    |    XOR-MAPPED-ADDRESS=192.0.2.1:7000             |             |
+    |    MESSAGE-INTEGRITY=...           |             |             |
+
+ TURN                                 TURN           Peer          Peer
+  client                               server          A             B
+    |--- Send indication --------------->|             |             |
+    |    Transaction-Id=0x1278E9ACA2711637EF7D3328     |             |
+    |    XOR-PEER-ADDRESS=192.0.2.150:32102            |             |
+    |    DONT-FRAGMENT                   |             |             |
+    |    DATA=...                        |             |             |
+    |                                    |-- UDP dgm ->|             |
+    |                                    |  data=...   |             |
+    |                                    |             |             |
+    |                                    |<- UDP dgm --|             |
+    |                                    |  data=...   |             |
+    |<-- Data indication ----------------|             |             |
+    |    Transaction-Id=0x8231AE8F9242DA9FF287FEFF     |             |
+    |    XOR-PEER-ADDRESS=192.0.2.150:32102            |             |
+    |    DATA=...                        |             |             |
+
+TURN                                 TURN           Peer          Peer
+  client                               server          A             B
+    |--- ChannelBind request ----------->|             |             |
+    |    Transaction-Id=0x6490D3BC175AFF3D84513212     |             |
+    |    CHANNEL-NUMBER=0x4000           |             |             |
+    |    XOR-PEER-ADDRESS=192.0.2.210:49191            |             |
+    |    USERNAME="George"               |             |             |
+    |    REALM="example.com"             |             |             |
+    |    NONCE="adl7W7PeDU4hKE72jdaQvbAMcr6h39sm"      |             |
+    |    MESSAGE-INTEGRITY=...           |             |             |
+    |                                    |             |             |
+    |<-- ChannelBind success response ---|             |             |
+    |    Transaction-Id=0x6490D3BC175AFF3D84513212     |             |
+    |    MESSAGE-INTEGRITY=...           |             |             |
+
+
+TURN                                 TURN           Peer          Peer
+  client                               server          A             B
+    |--- ChannelData ------------------->|             |             |
+    |    Channel-number=0x4000           |--- UDP datagram --------->|
+    |    Data=...                        |    Data=...               |
+    |                                    |             |             |
+    |                                    |<-- UDP datagram ----------|
+    |                                    |    Data=... |             |
+    |<-- ChannelData --------------------|             |             |
+    |    Channel-number=0x4000           |             |             |
+    |    Data=...                        |             |             |
+
+
+/////////////////////
+
+Client(内容包含192.0.2.150:32102)-->192.0.2.15:3478再使用192.0.2.15:50000转发给192.0.2.150:32102 
+PeerA直接回复给【192.0.2.15:50000】【192.0.2.15:50000】然后转发给【192.0.2.1:7000】
+传输协议
+ 	   +----------------------------+---------------------+
+           | TURN client to TURN server | TURN server to peer |
+           +----------------------------+---------------------+
+           |             UDP            |         UDP         |
+           |             TCP            |         UDP         |
+           |        TLS over TCP        |         UDP         |
+           +----------------------------+---------------------+
+At the client, the 5-tuple consists of the client's host
+   transport address, the server transport address, and the transport
+   protocol used by the client to communicate with the server.
+【Client's Host Transport Address】+【TURN Server Transport Address】【Protocol Type】
+
+  At theserver, the 5-tuple value is the same except that the client's host
+   transport address is replaced by the client's server-reflexive
+   address, since that is the client's address as seen by the server.
+【Client's Server-Reflexive Transport Address】+【TURN Server Transport Address】【Protocol Type】
+
+
+////////////////////////////////////////////////////////////////////////////
+ICE 探测NAT类型 首先探测Peers间能否直接通信，能就采用STUN方式，否则采用TURN方式 采用多地址选择的方式
+探索网络拓扑，找出通信路径
+本地地址 服务器反身地址 服务器转发地址 看那些组地址合能互通(连接检测)
+
+/////////////////////////////////////////
+SIP===>INVITE REGISTER LocationService(采用URI到注册数据库查找目的地址)
+SIP要素，包含，用户代理客户端UAC User Agent Client和服务器Server，无状态和有状态代理服务器UAS User Agent Server和注册服务器
+
+address-of-record(AOR)
+FDM模拟网络 TDM数字网络
+SIP 包交换网络信令(路由器) SS7电路交换网络信令(交换机)
+
+SIP实体: UA(User Agent) RS(Redirection Server) PS(Proxy Server ForkProxy) Registrars LS(Location Server DNS)

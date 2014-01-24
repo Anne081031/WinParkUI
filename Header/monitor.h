@@ -143,7 +143,7 @@ private:
     void PublishSpaceInfo( int nTotal, int nUsed );
 
 private:
-    static quint8 imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ];
+    //static quint8 imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ];
     static TH_PlateResult recogResult[ VIDEO_USEDWAY ][ RECOG_RES ];
     static TH_PlateResult structPlates[ VIDEO_USEDWAY ];
     QLabel* lblDirection[ VIDEO_USEDWAY ];

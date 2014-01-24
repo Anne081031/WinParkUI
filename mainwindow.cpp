@@ -733,7 +733,8 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     CreateChildren( );
     CCommonFunction::ShowSplashMessage( "创建子窗体结束。" );
 
-    pCheckThread = &CCheckThread::GetInstance( this );
+    //2014 Dongle
+    //pCheckThread = &CCheckThread::GetInstance( this );
 
     CCommonFunction::ShowSplashMessage( "用户登录。" );
     StartSycnTime( );
@@ -742,8 +743,9 @@ MainWindow::MainWindow(QWidget *parent, Qt::WindowFlags flags) :
     StartupMgmt( );
 
     // License
-    connect( pCheckThread, SIGNAL( ExpirationSender( QString, bool, bool ) ), this, SLOT( Expiration( QString, bool, bool ) ) );
-    StartLicense( );
+    //2014 Dongle
+    //connect( pCheckThread, SIGNAL( ExpirationSender( QString, bool, bool ) ), this, SLOT( Expiration( QString, bool, bool ) ) );
+    //StartLicense( );
 
     CCommonFunction::ShowSplashMessage( "加载图片结束。" );
     IconLoad( *this );
@@ -829,6 +831,7 @@ void MainWindow::ProcessGateCommand( QStringList &lstData )
 
 void MainWindow::ProcessCpuidRequest( QStringList &lstData )
 {
+    return; //2014 Dongle
     if ( 3 > lstData.count( ) ) {
             return;
     }
@@ -873,6 +876,8 @@ bool MainWindow::GenerateLicense( QString &strSpecialUser, QString& strSpecialPw
 
 void MainWindow::StartLicense( )
 {
+    //2014 Dongle
+    return;
     CLicense::CreateSingleton( false ).GetDongle( )->SetVerifyDate( true );
     QString strParkID = CCommonFunction::GetParkID( );
     pCheckThread->GetBlob( strParkID );
@@ -947,21 +952,28 @@ void MainWindow::ServerFunction( )
     ui->actLicense->setVisible( bSyncServer );
     ui->actLicense->setEnabled( bSyncServer );
 
-     CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
-     pMonitor->HideAlert( );
+    CMonitor* pMonitor = dynamic_cast< CMonitor* >( CreateChildWnd( CommonDataType::MonitorWnd ) );
+    pMonitor->HideAlert( );
 
-    CFtp::GetCommonParams( );
-    g_pFtp = new CFtp( );
-    g_pFtp->start( );
-    //g_pFtp->moveToThread( g_pFtp );
+    ////////////////////////2014
+    //CDbBackupThread::GetInstance( true, false, this ).start( );
+    //CRdAutoDeleteThread::GetInstance( this ).start( );
+    //return;
+    ////////////////////////
 
     // Maintance Database
     CRdAutoDeleteThread::GetInstance( this ).start( );
     CDbBackupThread::GetInstance( true, false, this ).start( );
 
+    //return;
     if ( !bToInternet ) {
         return;
     }
+
+    CFtp::GetCommonParams( );
+    g_pFtp = new CFtp( );
+    g_pFtp->start( );
+    //g_pFtp->moveToThread( g_pFtp );
 
     //QTextCodec* pCodec = CCommonFunction::GetTextCodec( );
     //CNetClient::GetInstance( false, bSyncServer, pCodec, this ); // Communicate with center server

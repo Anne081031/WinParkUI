@@ -8,7 +8,7 @@ CLoginDialog::CLoginDialog(QWidget *parent) :
     ui(new Ui::CLoginDialog)
 {
     ui->setupUi(this);
-
+    ui->btnImport->setVisible( false );
     ui->edtUserPwd->setEchoMode( QLineEdit::Password );
     ui->edtUserPwd->setFocus( );
 
@@ -38,11 +38,14 @@ void CLoginDialog::SetIsLicense( bool bLicenseValue )
 
 bool CLoginDialog::GetIsLicense( )
 {
+    return false;//2014 Dongle
     return bLicense;
 }
 
 void CLoginDialog::HideLicenseButton( bool bServer )
 {
+    //2014 Dongle
+    return;
     ui->btnImport->setVisible( bServer );
 }
 

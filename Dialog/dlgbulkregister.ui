@@ -62,9 +62,9 @@ color: rgb(85, 0, 0);</string>
    <property name="geometry">
     <rect>
      <x>45</x>
-     <y>71</y>
+     <y>91</y>
      <width>631</width>
-     <height>531</height>
+     <height>511</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -116,12 +116,12 @@ color: rgb(85, 0, 0);</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>40</x>
      <y>44</y>
-     <width>651</width>
+     <width>641</width>
      <height>22</height>
     </rect>
    </property>
@@ -239,12 +239,83 @@ color: rgb(85, 0, 0);</string>
     </item>
    </layout>
   </widget>
+  <widget class="QFrame" name="frame">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>72</y>
+     <width>641</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-image: url(none);</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QWidget" name="layoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>641</width>
+      <height>18</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QCheckBox" name="chkEnterCard">
+       <property name="whatsThis">
+        <string>1</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-image: url(none);</string>
+       </property>
+       <property name="text">
+        <string>入场必须刷卡</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkLeaveCard">
+       <property name="whatsThis">
+        <string>2</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-image: url(none);</string>
+       </property>
+       <property name="text">
+        <string>出场必须刷卡</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QCheckBox" name="chkMIO">
+       <property name="whatsThis">
+        <string>3</string>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-image: url(none);</string>
+       </property>
+       <property name="text">
+        <string>多进多出</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <zorder>layoutWidget</zorder>
   <zorder>layoutWidget</zorder>
   <zorder>edtCardID</zorder>
   <zorder>lblTitle</zorder>
   <zorder>lblClose</zorder>
   <zorder>tabRecord</zorder>
+  <zorder>frame</zorder>
  </widget>
  <resources/>
  <connections/>

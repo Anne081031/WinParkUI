@@ -16,6 +16,7 @@ CLicense* CLicense::pInstance = NULL;
 CLicense::CLicense( bool bVerify, QObject *parent) :
     QObject(parent)
 {
+    //2014 Dongle ≤È’“◊¢ ÕΩ‚√‹π∑
     //RegisterCOM( );
     //QString strFile = "CryptComDLL.dll";
     QString strFile = "OpenSoucreCrypt.dll";

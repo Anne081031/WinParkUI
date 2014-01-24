@@ -47,7 +47,7 @@ int main(int argc, char *argv[])
     w.show();
     CCommonFunction::CleanupSplash( &w );
 
-    CMySqlDatabase::MySQLLibrayEnd( );
+    //CMySqlDatabase::MySQLLibrayEnd( );
 
     return a.exec( );
 }

@@ -28,7 +28,7 @@
 #include "ui_monitor.h"
 #endif
 
-quint8 CMonitor::imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ] = { { 0 } };
+//quint8 CMonitor::imgData[ VIDEO_USEDWAY ][ VIDEO_BUF ] = { { 0 } };
 TH_PlateResult CMonitor::recogResult[ VIDEO_USEDWAY ][ RECOG_RES ] = { { 0 } };
 bool CMonitor::bStartRecognization[ VIDEO_USEDWAY ] = { false, false };
 //bool CMonitor::bPlateFilter = false;
@@ -1103,7 +1103,7 @@ void CMonitor::ImageStreamCallback( UINT nChannel, PVOID pContent )
     //qDebug( ) << "Time1 " << QDateTime::currentDateTime( ).toMSecsSinceEpoch( ) << endl;
     nResult = RECOG_RES;
     quint8* pData = new quint8[ VIDEO_BUF ];
-    memcpy( pData, imgData[ nChannel ], VIDEO_BUF );//imgData[ nChannel ]
+    //memcpy( pData, imgData[ nChannel ], VIDEO_BUF );//imgData[ nChannel ]
     bool bRet;// = pVehicle->RecognizeVideo( pData, 704, 576, recogResult[ nChannel ], nResult, nChannel );
     strInfo += "RecognizeVideo\r\n";
 
@@ -1654,7 +1654,7 @@ void CMonitor::StartAvSdk( )
             nRet = pMultimedia->MotionDetection( hChannelHandle[ nIndex ], true );
             nRet = pMultimedia->TmEnablePicMessage( ( int ) hChannelHandle[ nIndex ], TRUE, PrcPicMessage );
 
-            nRet = pMultimedia->GetStreamData( hChannelHandle[ nIndex ], TRUE, imgData[ nIndex ], 3 );
+            //nRet = pMultimedia->GetStreamData( hChannelHandle[ nIndex ], TRUE, imgData[ nIndex ], 3 );
         }
     }
 }

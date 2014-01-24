@@ -15,17 +15,20 @@ CDlgBulkRegister::CDlgBulkRegister( CommonDataType::CardType card, QTableWidget*
 
     AddColumn( );
 
+    ui->frame->setEnabled( CommonDataType::MonthlyCard == card );
+
     QString strType [ ] = { "月租", "储值", "计时" };
     CCommonFunction::ConnectCloseButton( ui->lblClose );
     ui->lblTitle->setText( statusTip( ).arg( strType[ cardType ] ) );
     setWindowFlags( Qt::FramelessWindowHint );
 
     QSettings* pSet = CCommonFunction::GetSettings( CommonDataType::CfgSystem );
-    nBulkEndMonth = 1;
+    nBulkEndMonth = 0;
     if ( NULL != pSet ) {
         nBulkEndMonth = pSet->value( "CommonCfg/CardBulkRegEndTime", 1 ).toInt( );
     }
 
+    ui->spMonth->setValue( nBulkEndMonth );
     setStyleSheet( QString( "background-image:url(%1);" ).arg( statusTip( ) ) );
 }
 
@@ -87,11 +90,13 @@ void CDlgBulkRegister::OnBulkMonth( int nMonth )
     QDateTime dtStart;
 
     for ( int nRow = 0; nRow < ui->tabRecord->rowCount( ); nRow++ ) {
-        pDt = ( QDateTimeEdit* ) ui->tabRecord->cellWidget( nRow, 4 );
+        pDt = ( QDateTimeEdit* ) ui->tabRecord->cellWidget( nRow, 5 );
         dtStart = pDt->dateTime( );
 
-        pDt = ( QDateTimeEdit* ) ui->tabRecord->cellWidget( nRow, 5 );
-        pDt->setDateTime( dtStart.addMonths( nMonth ) );
+        pDt = ( QDateTimeEdit* ) ui->tabRecord->cellWidget( nRow, 6 );
+        dtStart = dtStart.addMonths( nMonth );
+        //qDebug( ) << dtStart.toString( ) << endl;
+        pDt->setDateTime( dtStart );
     }
 }
 
@@ -609,4 +614,39 @@ void CDlgBulkRegister::on_chkID_clicked(bool checked)
 {
     ui->spValue->setEnabled( checked );
     ui->spDigit->setEnabled( checked );
+}
+
+void CDlgBulkRegister::on_chkEnterCard_clicked()
+{
+    ChangeCheckBoxStatus( ( QCheckBox* ) sender( ) );
+}
+
+void CDlgBulkRegister::on_chkLeaveCard_clicked()
+{
+    ChangeCheckBoxStatus( ( QCheckBox* ) sender( ) );
+}
+
+void CDlgBulkRegister::on_chkMIO_clicked()
+{
+    ChangeCheckBoxStatus( ( QCheckBox* ) sender( ) );
+}
+
+void CDlgBulkRegister::ChangeCheckBoxStatus(QCheckBox *pChk)
+{
+    int nIndex = pChk->whatsThis( ).toInt( );
+
+    for ( int nRow = 0; nRow < ui->tabRecord->rowCount( ); nRow++ ) {
+        QTableWidgetItem* pItem = ui->tabRecord->item( nRow, nIndex );
+
+        switch( pItem->checkState( ) )
+        {
+        case Qt::Checked :
+            pItem->setCheckState( Qt::Unchecked );
+            break;
+
+        case Qt::Unchecked :
+            pItem->setCheckState( Qt::Checked );
+            break;
+        }
+    }
 }

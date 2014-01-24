@@ -4,6 +4,7 @@
 #include <QDialog>
 #include "Common/logicinterface.h"
 #include <QResizeEvent>
+#include <QCheckBox>
 
 namespace Ui {
     class CDlgBulkRegister;
@@ -23,6 +24,7 @@ protected:
     void resizeEvent(QResizeEvent * event );
 
 private:
+    void ChangeCheckBoxStatus( QCheckBox* pChk );
     void AddRecord( const QString& strCardID );
     void AddColumn( );
     void AddMonthRow( const QString& strCardID );
@@ -58,6 +60,12 @@ private slots:
     void OnBulkCarType( int nIndex );
 
     void OnBulkMonth( int nMonth );
+
+    void on_chkEnterCard_clicked();
+
+    void on_chkLeaveCard_clicked();
+
+    void on_chkMIO_clicked();
 
 private:
     CommonDataType::CardType cardType;

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'newaccess2records.ui'
 **
-** Created: Thu Sep 5 16:20:11 2013
+** Created: Tue Jan 7 17:42:46 2014
 **      by: Qt User Interface Compiler version 4.7.4
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!

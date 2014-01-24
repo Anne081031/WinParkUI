@@ -452,7 +452,7 @@ BOOL QPlateThread::InitVZSDK( int nFormat, qint32 nChannel )
     }
 
     BOOL bRet = LPR_SetImageFormat ( FALSE, FALSE, nFormat,
-                                     FALSE, 60, 400, TRUE, TRUE, FALSE, nChannel );
+                                     FALSE, 60, 400, TRUE, FALSE, FALSE, nChannel );
     if ( !bRet ) {
         return bRet;
     }
